@@ -1,0 +1,6 @@
+framework module Pods___2_0 {
+  umbrella header "Pods-日记2.0-umbrella.h"
+
+  export *
+  module * { export * }
+}
