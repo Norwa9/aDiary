@@ -199,7 +199,7 @@ class monthVC: UIViewController {
         calendar.appearance.headerTitleColor = .black
         calendar.appearance.weekdayTextColor = .black
         calendar.appearance.eventDefaultColor = .black
-        calendar.appearance.selectionColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
+        calendar.appearance.selectionColor = #colorLiteral(red: 0.2, green: 0.231372549, blue: 0.2509803922, alpha: 1)
         calendar.appearance.headerDateFormat = "yyyy年M月"
         calendar.appearance.caseOptions = .weekdayUsesSingleUpperCase//设置为一、二···
         calendar.headerHeight = 0//移除年月份栏
@@ -289,6 +289,8 @@ class monthVC: UIViewController {
     @objc func filterButtonDidTapped(sender:topbarButton){
         sender.bounceAnimation(usingSpringWithDamping: 0.5)
         
+        let arrowPoint = CGPoint(x: sender.frame.minX, y:sender.frame.maxY + topbar.frame.height)
+        
         //popover view
         let viewSize = CGSize(width: 315, height:260 )
         popoverView = filterMenu(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: viewSize))
@@ -299,10 +301,12 @@ class monthVC: UIViewController {
             .type(.auto),
             .cornerRadius(20.0),
           .animationIn(0.3),
-          .arrowSize(CGSize(width: 5, height: 5))
+//          .arrowSize(CGSize(width: 10, height: 10)),
+            .springDamping(0.7),
           ] as [PopoverOption]
         popover = Popover(options: options, showHandler: nil, dismissHandler: {print("popover dismiss")})
-        popover.show(popoverView, fromView: sender)
+//        popover.show(popoverView, fromView: sender)
+        popover.show(popoverView, point: arrowPoint)
         
     }
     
@@ -419,8 +423,9 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
         let row = indexPath.row
         let diary = filteredDiaries[row]
         cell.text = diary.content
+//        cell.contentLabel.attributedText = loadAttributedString(date_string: diary.date!)
         cell.tags = diary.tags
-        cell.dataLabel.text = diary.date
+        cell.dateLabel.text = diary.date! + "，" + getWeekDayFromDateString(string: diary.date!)
         cell.wordNum = diary.content.count
         cell.isLike = diary.islike
         cell.moodType = diary.mood

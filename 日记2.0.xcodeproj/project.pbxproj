@@ -15,7 +15,6 @@
 		EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA51D19F25D04D7E0007BDFA /* filterMenu.xib */; };
 		EA51D1C725D3A9D70007BDFA /* backToCurMonthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1C625D3A9D70007BDFA /* backToCurMonthButton.swift */; };
 		EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1F625D7FCE10007BDFA /* dataContainer.swift */; };
-		EA51D1FA25D8094B0007BDFA /* daygram2020.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA51D1F925D8094B0007BDFA /* daygram2020.txt */; };
 		EA9A3D7425CB07FB00B6715F /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA9A3D7325CB07FB00B6715F /* test.jpg */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
@@ -58,7 +57,6 @@
 		EA51D19F25D04D7E0007BDFA /* filterMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = filterMenu.xib; sourceTree = "<group>"; };
 		EA51D1C625D3A9D70007BDFA /* backToCurMonthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backToCurMonthButton.swift; sourceTree = "<group>"; };
 		EA51D1F625D7FCE10007BDFA /* dataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataContainer.swift; sourceTree = "<group>"; };
-		EA51D1F925D8094B0007BDFA /* daygram2020.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = daygram2020.txt; sourceTree = "<group>"; };
 		EA9A3D7325CB07FB00B6715F /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				EAF206B225E41DBF004A9329 /* test2.jpeg */,
 				EA9A3D7325CB07FB00B6715F /* test.jpg */,
 				EA51D15425CECCC20007BDFA /* NotoSansHans-Regular.otf */,
-				EA51D1F925D8094B0007BDFA /* daygram2020.txt */,
 				EA3ABAD625DFE05400911902 /* demoDiaries.txt */,
 			);
 			path = resource;
@@ -328,7 +325,6 @@
 				EAA29E6B25C5909400AA6971 /* face.png in Resources */,
 				EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
-				EA51D1FA25D8094B0007BDFA /* daygram2020.txt in Resources */,
 				EAF206B325E41DBF004A9329 /* test2.jpeg in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
 				EAA29E3625C5768600AA6971 /* Assets.xcassets in Resources */,

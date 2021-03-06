@@ -14,6 +14,7 @@ class tagsCell: UITableViewCell {
     var bar:UIView!
     var barFrame:CGRect!
     var contentViewFrame:CGRect!
+    var tagsLabelFrame:CGRect!
     var hasGetCorrectFrame = false
     @IBOutlet weak var tagsLabel:UILabel!
     var hasSelected:Bool = false{
@@ -32,11 +33,11 @@ class tagsCell: UITableViewCell {
         //bar view
         bar = UIView()
         bar.layer.cornerRadius = 2
-//        bar.backgroundColor = UIColor.lightGray
-        bar.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         bar.clipsToBounds = true
+        self.bar.backgroundColor = .white
         bar.layer.masksToBounds = true
-        self.insertSubview(bar, belowSubview: tagsLabel)
+        self.addSubview(bar)
+        self.sendSubviewToBack(bar)
     }
     
     override func layoutSubviews() {
@@ -51,22 +52,32 @@ class tagsCell: UITableViewCell {
             bar.center.y = tagsLabel.frame.maxY + 2
             barFrame = bar.frame//bar的原始frame
             contentViewFrame = contentView.frame//contentView的原始frame
+            tagsLabelFrame = CGRect(//tagsLabel的原始frame
+                x: contentViewFrame.midX - tagsLabel.frame.width / 2.0,
+                y: tagsLabel.frame.origin.y,
+                width: tagsLabel.frame.width,
+                height: tagsLabel.frame.height
+            )
         }
         
     }
     
     func animateSelectedView(setTo animate:Bool,duration:TimeInterval = 0.35){
+        //取消选中
         if animate == false{
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseIn) {
                 self.bar.frame = self.barFrame
                 self.bar.layer.cornerRadius = 2
+                self.bar.backgroundColor = .white
             } completion: { (_) in
                 
             }
         }else{
+        //选中
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut) {
-                self.bar.frame = self.contentViewFrame.insetBy(dx: 30, dy: 8)
+                self.bar.frame = self.tagsLabelFrame.insetBy(dx: -3, dy: -1)
                 self.bar.layer.cornerRadius = 10
+                self.bar.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.9490196078, blue: 0.9490196078, alpha: 1).withAlphaComponent(0.7)
             } completion: { (_) in
             }
         }

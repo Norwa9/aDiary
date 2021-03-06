@@ -59,7 +59,7 @@ class moodButton: UIButton {
             hasSelected = true
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.holderView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-                self.holderView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+                self.holderView.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
             } completion: { (_) in
                 
             }

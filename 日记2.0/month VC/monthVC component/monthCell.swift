@@ -12,7 +12,7 @@ class monthCell: UICollectionViewCell {
     private lazy var containerView = UIView()
     var contentLabel:UILabel = UILabel()
     
-    var dataLabel:UILabel = UILabel()
+    var dateLabel:UILabel = UILabel()
     var tagsLabel:UILabel = UILabel()
     var moodImageView:UIImageView = UIImageView()
     var islikeImageView:UIImageView = UIImageView()
@@ -98,9 +98,9 @@ class monthCell: UICollectionViewCell {
         tagsLabel.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         //data Label
-        containerView.addSubview(dataLabel)
-        dataLabel.font = UIFont(name: "Noto Sans S Chinese", size: 11)
-        dataLabel.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(dateLabel)
+        dateLabel.font = UIFont(name: "Noto Sans S Chinese", size: 11)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
         //word Number Label
         containerView.addSubview(wordNumLabel)
         wordNumLabel.textAlignment = .right
@@ -116,26 +116,27 @@ class monthCell: UICollectionViewCell {
        
         
         islikeImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        //MARK:-Auto layout
         NSLayoutConstraint.activate([
             //contentLabel
             contentLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
             contentLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15.0),
             contentLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10.0),
             contentLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 150),
-            contentLabel.bottomAnchor.constraint(equalTo: dataLabel.topAnchor, constant: -50.0),
+            contentLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -25.0),
             
             //tags Label
             tagsLabel.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor),
             tagsLabel.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
-//            tagsLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor,constant: 5),
             tagsLabel.heightAnchor.constraint(equalToConstant: 20),
-            tagsLabel.bottomAnchor.constraint(equalTo: dataLabel.topAnchor, constant: -5),
+            tagsLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -5),
             
-            //data Label
-            dataLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
-            dataLabel.heightAnchor.constraint(equalToConstant: 20),
-            dataLabel.widthAnchor.constraint(equalToConstant: 130),
-            dataLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
+            //date Label
+            dateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
+            dateLabel.heightAnchor.constraint(equalToConstant: 20),
+            dateLabel.widthAnchor.constraint(equalToConstant: 130),
+            dateLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
             
             //word Number Label
             wordNumLabel.trailingAnchor.constraint(equalTo: islikeImageView.leadingAnchor, constant: -5),
@@ -145,13 +146,13 @@ class monthCell: UICollectionViewCell {
             
             //islikeImageView
             islikeImageView.trailingAnchor.constraint(equalTo: moodImageView.leadingAnchor, constant: -5),
-            islikeImageView.bottomAnchor.constraint(equalTo: dataLabel.bottomAnchor),
+            islikeImageView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
             islikeImageView.heightAnchor.constraint(equalToConstant: 20),
             islikeImageView.widthAnchor.constraint(equalToConstant: 20),
             
             //moodImageView
             moodImageView.trailingAnchor.constraint(equalTo: contentLabel.trailingAnchor),
-            moodImageView.bottomAnchor.constraint(equalTo: dataLabel.bottomAnchor),
+            moodImageView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
             moodImageView.heightAnchor.constraint(equalToConstant: 20),
             moodImageView.widthAnchor.constraint(equalToConstant: 20),
             

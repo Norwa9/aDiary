@@ -37,7 +37,7 @@ func loadAttributedString(date_string:String) -> NSAttributedString?{
                 url: path_file_name,
                 options: [.documentType:NSAttributedString.DocumentType.rtfd],
                 documentAttributes: nil)
-            print("load \(date_string) attributedString")
+//            print("load \(date_string) attributedString")
             return aString
         }catch{
             //

@@ -6,6 +6,7 @@ target '日记2.0' do
   use_frameworks!
 pod 'FSCalendar'
 pod 'Popover'
+pod 'JXPhotoBrowser', '~> 3.0'
   # Pods for 日记2.0
 
 end

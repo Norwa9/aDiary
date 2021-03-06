@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import JXPhotoBrowser
 
 class todayVC: UIViewController {
     var todayDiary:diaryInfo!
@@ -33,8 +34,12 @@ class todayVC: UIViewController {
     func configureTodayView(){
         //textView
         textView.delegate = self
-        let tap = UITapGestureRecognizer(target: self, action: #selector(enterEditingTextView))
-        view.addGestureRecognizer(tap)
+        //tap on self.view
+        let tapEnterTextView = UITapGestureRecognizer(target: self, action: #selector(enterEditingTextView))
+        view.addGestureRecognizer(tapEnterTextView)
+        //tap on image
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnImage(_:)))
+        textView.addGestureRecognizer(tap)
         
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: 414, height: 40))
@@ -43,6 +48,8 @@ class todayVC: UIViewController {
         keyBoardToolsBar.todayVC = self
         self.view.addSubview(keyBoardToolsBar)
         keyBoardToolsBar.alpha = 0
+        
+        
     }
     
     func configureTopbar(){
@@ -150,7 +157,7 @@ class todayVC: UIViewController {
 //            print("keyBoardToolsBar.frame:\(keyBoardToolsBar.frame)")
 //            print("keyboardViewEndFrame:\(keyboardViewEndFrame)")
             keyBoardToolsBar.alpha = 1
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height * 2, right: 0)
         }
         scrollView.scrollIndicatorInsets = scrollView.contentInset//确保滑动条跟scrollview内容保持一致
         let selectedRange = textView.selectedRange
@@ -161,6 +168,7 @@ class todayVC: UIViewController {
 extension todayVC:UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
+        print("scroll view content off set : \(y)")
         if y < -150{
             if isPhotosViewHidding{
 //                animatePhothsView(isHide: isPhotosViewHidding)
@@ -229,35 +237,15 @@ extension todayVC:UIViewControllerTransitioningDelegate{
     }
 }
 
-extension todayVC:UITextViewDelegate{
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        //如果日记为空，清除placeholder，开始输入
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        todayDiary.content = textView.text
-        saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
-    }
-    
-    @objc func enterEditingTextView(){
-        textView.becomeFirstResponder()
-    }
-}
-
 extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     func importPicture() {
         let picker = UIImagePickerController()
-        picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.editedImage] as? UIImage else { return }
+        guard let image = info[.originalImage] as? UIImage else { return }
         insertPictureToTextView(image: image)
         dismiss(animated: true)
     }
@@ -311,12 +299,87 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
     }
 }
 
+extension todayVC:UITextViewDelegate{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        //如果日记为空，清除placeholder，开始输入
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        //如果用户没有使用保存button而是直接滑向了monthVC，
+        //在滑向monthVC后，先调用了viewDidDisappear，再收起键盘调用textViewDidEndEditing。
+        //然而因为在viewDidDisappear中，我们对textView的内容进行了清空（防止monthVC卡顿），
+        //所以将会导致清空后的空textView被存入到todayDiary，所以要对textView的内容进行检查。
+        if textView.text != ""{
+            todayDiary.content = textView.text
+            saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
+        }
+    }
+    
+    @objc func enterEditingTextView(){
+        textView.becomeFirstResponder()
+        textView.selectedRange = NSMakeRange(textView.text.count, 0)
+    }
+    
+    //MARK:-富文本图片点击
+    @objc func tapOnImage(_ sender: UITapGestureRecognizer){
+        //参考自：https://stackoverflow.com/questions/48498366/detect-tap-on-images-attached-in-nsattributedstring-while-uitextview-editing-is
+        guard let textView = sender.view as? UITextView else{
+            return
+        }
+        let layoutManager = textView.layoutManager
+        var location = sender.location(in: textView)
+        location.x -= textView.textContainerInset.left
+        location.y -= textView.textContainerInset.top
+        
+        //推算触摸点处的字符下标
+        let characterIndex = layoutManager.characterIndex(
+            for: location,
+            in: textView.textContainer,
+            fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        if characterIndex < textView.textStorage.length{
+            //识别字符下标characterIndex处的富文本信息
+            let attachment = textView.attributedText.attribute(NSAttributedString.Key.attachment,
+                                                               at: characterIndex,
+                                                               effectiveRange: nil) as? NSTextAttachment
+            //1.字符下标characterIndex处为图片附件，则展示它
+            if let attachment = attachment{
+                textView.resignFirstResponder()
+                //获取image
+                guard let attachImage = attachment.image(forBounds: textView.bounds, textContainer: textView.textContainer, characterIndex: characterIndex)else{
+                    print("无法获取image")
+                    return
+                }
+                
+                //展示image
+                let browser = JXPhotoBrowser()
+                browser.numberOfItems = {
+                    1
+                }
+                browser.reloadCellAtIndex = { context in
+                    let browserCell = context.cell as? JXPhotoBrowserImageCell
+                    browserCell?.imageView.image = attachImage
+                }
+                browser.show()
+            //2.字符下标characterIndex处为字符，则将光标移到触摸的字符下标
+            }else{
+                textView.becomeFirstResponder()
+                textView.selectedRange = NSMakeRange(characterIndex, 0)
+            }
+        }
+    }
+}
+
 extension todayVC{
     //MARK:-生命周期
     //读入选中的日记
-    func configureTodayData(){
+    func loadTodayData(){
         todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
-        
+        print("configureTodayData，selectedDiary.content:\(DataContainerSingleton.sharedDataContainer.selectedDiary.content)")
         //load pictures
         for uuid in todayDiary.uuidofPictures {
             let path = getDocumentsDirectory().appendingPathComponent(uuid)
@@ -356,20 +419,31 @@ extension todayVC{
         configureTopbar()
         configurePhotosCollectionView()
         configureTodayView()
-        configureTodayData()
+        loadTodayData()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         //获取欲展示的日记
-        configureTodayData()
+        loadTodayData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        if textView.textColor == UIColor.lightGray{
+            return
+        }
         //更新数据库里对应的日记
+//        print("today viewWillDisappear, content:\(todayDiary.content)")
+        //保存textView.attributedText
+        saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
+        //保存textView.text
+        todayDiary.content = textView.text
         DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
     }
     override func viewDidDisappear(_ animated: Bool) {
+        print("todayVC viewDidDisappear")
+        textView.text = nil
         textView.attributedText = nil
+//        print("DataContainerSingleton.sharedDataContainer.selectedDiary.content:\(DataContainerSingleton.sharedDataContainer.selectedDiary.content)")
     }
 }

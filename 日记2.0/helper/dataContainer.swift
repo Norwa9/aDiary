@@ -147,7 +147,7 @@ func txt2String(fileName:String) -> [Date:String]{
 //MARK:-获取指定日期的日记
 func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
     let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
-    print("diariesForMonth() called,diaryDict.count:\(diaryDict.count)")
+//    print("diariesForMonth() called,diaryDict.count:\(diaryDict.count)")
     var tempDiaries = [diaryInfo?]()
     
     if forYear == 0 && forMonth == 0{
@@ -155,7 +155,18 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
         for (_,diary) in diaryDict{
             tempDiaries.append(diary)
         }
-        return tempDiaries
+        
+        //返回日期降序的所有日记
+        let dateFomatter = DateFormatter()
+        dateFomatter.dateFormat = "yyyy年M月d日"
+        return tempDiaries.sorted { (d1, d2) -> Bool in
+            if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
+                if date1.compare(date2) ==  .orderedAscending{
+                    return true
+                }
+            }
+            return false
+        }
     }
     
     for i in 1...howManyDaysInThisMonth(year: forYear, month: forMonth){
@@ -172,7 +183,7 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
 func diariesForConditions(
     keywords:String?,selectedMood:moodTypes?,selectedTags:[String],numsToShow:Int)->[diaryInfo?]{
     let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
-    //DataContainerSingleton.sharedDataContainer.diaryDict.count:463
+
     var resultDiaries = [diaryInfo?]()
     
     //筛选指定条件的日记
