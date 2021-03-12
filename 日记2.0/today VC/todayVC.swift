@@ -256,16 +256,15 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         //设置附件的大小
         let imageAspectRatio = image.size.height / image.size.width
         let peddingX:CGFloat =  0
-        let imageWidth = textView.frame.width - 2 * peddingX
-        let imageHeight = imageWidth * imageAspectRatio
+        let width = textView.frame.width - 2 * peddingX
+        let height = width * imageAspectRatio
         //设置照片附件
 //        let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth, height: imageHeight))
 //        let compressedImage = image
 //        attachment.image = compressedImage
-        attachment.image = UIImage(data: image.jpegData(compressionQuality: 0.5)!)
-        attachment.bounds = CGRect(x: 0, y: 0,
-                                   width: imageWidth,
-                                   height: imageHeight)
+//        attachment.image = UIImage(data: image.jpegData(compressionQuality: 0.5)!)
+        attachment.image = image.compressPic(toSize: CGSize(width: width, height: height))
+        attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
         //将附件转成NSAttributedString类型的属性化文本
         let attStr = NSAttributedString(attachment: attachment)
         //获取textView的所有文本，转成可变的文本
@@ -282,19 +281,22 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
     
     private func prepareTextImages(aString:NSAttributedString) -> NSMutableAttributedString {
         let mutableText = NSMutableAttributedString(attributedString: aString)
-        let width  = self.textView.frame.width
-        mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [width] (object, range, pointer) in
-            let textViewAsAny: Any = self.textView!
-            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: self.textView.bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
-                let aspect = img.size.width / img.size.height
-                if img.size.width <= width {
-                    attachment.bounds = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
-                    return
+        let width = self.textView.frame.width
+        let bounds = self.textView.bounds
+        DispatchQueue.global(qos: .background).async{ [self] in
+            mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [width] (object, range, pointer) in
+                let textViewAsAny: Any = self.textView!
+                if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
+                    let aspect = img.size.width / img.size.height
+                    if img.size.width <= width {
+                        attachment.bounds = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
+                        return
+                    }
+                    let height = width / aspect
+                    attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
                 }
-                let height = width / aspect
-                attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
-            }
-            })
+                })
+        }
         return mutableText
     }
 }
@@ -378,37 +380,50 @@ extension todayVC{
     //MARK:-生命周期
     //读入选中的日记
     func loadTodayData(){
-        todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
-        print("configureTodayData，selectedDiary.content:\(DataContainerSingleton.sharedDataContainer.selectedDiary.content)")
-        //load pictures
-        for uuid in todayDiary.uuidofPictures {
-            let path = getDocumentsDirectory().appendingPathComponent(uuid)
-            photoImages.append(UIImage(contentsOfFile: path.path)!)
-        }
+        DispatchQueue.global(qos: .background).async{ [self] in
+            todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
+            //load pictures
+            photoImages.removeAll()
+            for uuid in todayDiary.uuidofPictures {
+                let path = getDocumentsDirectory().appendingPathComponent(uuid)
+                photoImages.append(UIImage(contentsOfFile: path.path)!)
+            }
         
         //load txt
         if todayDiary.content.count == 0{
             //palce holder
-            textView.text = "今天发生了什么..."
-            textView.textColor = UIColor.lightGray
+            DispatchQueue.main.async {
+                textView.text = "今天发生了什么..."
+                textView.textColor = UIColor.lightGray
+            }
         }else{
-            textView.text = todayDiary.content
-            textView.textColor = UIColor.black
-            if let aString = loadAttributedString(date_string: todayDiary.date!){
-                textView.attributedText = prepareTextImages(aString: aString)
+            DispatchQueue.main.async {
+                textView.text = todayDiary.content
+                textView.textColor = UIColor.black
+            }
+            DispatchQueue.global(qos: .background).async{ [self] in
+                if let aString = loadAttributedString(date_string: todayDiary.date!){
+                    DispatchQueue.main.async {
+                        let preparedText = prepareTextImages(aString: aString)
+                        textView.attributedText = preparedText
+                    }
+                }
             }
             
         }
         
-        //load ohter info
-        topbar.dataLable1.text = todayDiary.date
-        topbar.dataLable2.text = getWeekDayFromDateString(string: todayDiary.date!)
-        if todayDiary.date == getTodayDate(){
-            topbar.dataLable2.text! += "*"
+            //load ohter info
+            DispatchQueue.main.async {
+                topbar.dataLable1.text = todayDiary.date
+                topbar.dataLable2.text = getWeekDayFromDateString(string: todayDiary.date!)
+                if todayDiary.date == getTodayDate(){
+                    topbar.dataLable2.text! += "*"
+                }
+                topbar.dataLable1.sizeToFit()
+                
+                topbar.button1.islike = todayDiary.islike
+            }
         }
-        topbar.dataLable1.sizeToFit()
-        
-        topbar.button1.islike = todayDiary.islike
     }
     
     override func viewDidLoad() {
@@ -429,21 +444,30 @@ extension todayVC{
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+//        if textView.textColor == UIColor.lightGray{
+//            return
+//        }
+        //1、保存textView.attributedText
+//        DispatchQueue.global(qos: .background).async{ [self] in
+//            saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
+//            //2、保存textView.text
+//            todayDiary.content = textView.text
+//            DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
+//        }
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        print("todayVC viewDidDisappear")
         if textView.textColor == UIColor.lightGray{
             return
         }
-        //更新数据库里对应的日记
-//        print("today viewWillDisappear, content:\(todayDiary.content)")
         //保存textView.attributedText
         saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
         //保存textView.text
         todayDiary.content = textView.text
         DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        print("todayVC viewDidDisappear")
-        textView.text = nil
-        textView.attributedText = nil
+        
+//        textView.text = nil
+//        textView.attributedText = nil
 //        print("DataContainerSingleton.sharedDataContainer.selectedDiary.content:\(DataContainerSingleton.sharedDataContainer.selectedDiary.content)")
     }
 }
