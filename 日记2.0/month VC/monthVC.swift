@@ -566,12 +566,8 @@ extension monthVC{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //更新数据
         print("MonthVC viewDidAppear")
-        self.collectionView.performBatchUpdates({
-                            let indexSet = IndexSet(integersIn: 0...0)
-                            self.collectionView.reloadSections(indexSet)
-                        }, completion: nil)
+        
     }
 }
 

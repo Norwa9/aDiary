@@ -62,7 +62,7 @@ class toolsBar: UIView {
     
     @objc func insertImageToTextView(){
         todayVC.importPicture()
-//        todayVC.insertPictureToTextView(image: UIImage(named: "test2.jpeg")!)
+
     }
     
 //MARK:-以下内容不需要修改

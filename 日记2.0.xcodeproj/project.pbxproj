@@ -16,6 +16,7 @@
 		EA51D1C725D3A9D70007BDFA /* backToCurMonthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1C625D3A9D70007BDFA /* backToCurMonthButton.swift */; };
 		EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1F625D7FCE10007BDFA /* dataContainer.swift */; };
 		EA9A3D7425CB07FB00B6715F /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA9A3D7325CB07FB00B6715F /* test.jpg */; };
+		EA9AE73C260625CC00D44221 /* UIApplication_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
 		EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E3225C5768200AA6971 /* Main.storyboard */; };
@@ -58,6 +59,7 @@
 		EA51D1C625D3A9D70007BDFA /* backToCurMonthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backToCurMonthButton.swift; sourceTree = "<group>"; };
 		EA51D1F625D7FCE10007BDFA /* dataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataContainer.swift; sourceTree = "<group>"; };
 		EA9A3D7325CB07FB00B6715F /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
+		EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication_Extension.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				EAF206AF25E40F55004A9329 /* classWrapper.swift */,
 				EAF206BA25E4DA49004A9329 /* attribuedStringStorage.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataContainer.swift */,
+				EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
+				EA9AE73C260625CC00D44221 /* UIApplication_Extension.swift in Sources */,
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,

@@ -12,7 +12,11 @@ class pageViewContainer: UIViewController {
     @IBOutlet var pageControl: UIPageControl!
     
     var topBar:topbarView!
-    weak var currentVC:UIViewController!
+    lazy var pageViewController:customPageViewController = {
+        let customPageVC = storyboard?.instantiateViewController(identifier: "customPageVC") as! customPageViewController
+        return customPageVC
+    }()
+    
     var currenVCindex:Int = 0
     
     override func viewDidLoad() {
@@ -29,9 +33,8 @@ class pageViewContainer: UIViewController {
     }
     
     func configurePageVC(){
-        guard let pageViewController = storyboard?.instantiateViewController(identifier: "customPageVC") as? customPageViewController else{
-            return
-        }
+        
+        print("configurePageVC")
         
         pageViewController.pageViewContainer = self
         
@@ -46,6 +49,7 @@ class pageViewContainer: UIViewController {
             containView.leadingAnchor.constraint(equalTo: pageViewController.view.leadingAnchor),
             containView.trailingAnchor.constraint(equalTo: pageViewController.view.trailingAnchor),
         ])
+        
     }
 }
 

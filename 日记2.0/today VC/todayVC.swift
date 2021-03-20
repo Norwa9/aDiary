@@ -283,46 +283,60 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         let mutableText = NSMutableAttributedString(attributedString: aString)
         let width = self.textView.frame.width
         let bounds = self.textView.bounds
-        DispatchQueue.global(qos: .background).async{ [self] in
-            mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [width] (object, range, pointer) in
-                let textViewAsAny: Any = self.textView!
-                if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
-                    let aspect = img.size.width / img.size.height
-                    if img.size.width <= width {
-                        attachment.bounds = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
-                        return
-                    }
-                    let height = width / aspect
-                    attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [width] (object, range, pointer) in
+            let textViewAsAny: Any = self.textView!
+            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
+                let aspect = img.size.width / img.size.height
+                if img.size.width <= width {
+                    attachment.bounds = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
+                    return
                 }
-                })
-        }
+                let height = width / aspect
+                attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+            }
+            })
         return mutableText
     }
 }
 
+//MARK:-UITextViewDelegate
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
+        //关闭左右滑动
+        let customPageVC = UIApplication.getcustomPageViewController()
+        customPageVC.pageScrollView.isScrollEnabled = false
+        
         //如果日记为空，清除placeholder，开始输入
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
         }
+        
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
-        //如果用户没有使用保存button而是直接滑向了monthVC，
-        //在滑向monthVC后，先调用了viewDidDisappear，再收起键盘调用textViewDidEndEditing。
-        //然而因为在viewDidDisappear中，我们对textView的内容进行了清空（防止monthVC卡顿），
-        //所以将会导致清空后的空textView被存入到todayDiary，所以要对textView的内容进行检查。
+        print("textViewDidEndEditing")
+        
+        //开启左右滑动
+        let customPageVC = UIApplication.getcustomPageViewController()
+        customPageVC.pageScrollView.isScrollEnabled = true
+        
         if textView.text != ""{
             todayDiary.content = textView.text
             saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
+            
+            //更新monthVC的UI
+            let monthVC = UIApplication.getMonthVC()
+            monthVC.collectionView.performBatchUpdates({
+                                let indexSet = IndexSet(integersIn: 0...0)
+                                monthVC.collectionView.reloadSections(indexSet)
+                            }, completion: nil)
         }
     }
     
     @objc func enterEditingTextView(){
         textView.becomeFirstResponder()
+        //定位到文字最末端
         textView.selectedRange = NSMakeRange(textView.text.count, 0)
     }
     
@@ -380,50 +394,36 @@ extension todayVC{
     //MARK:-生命周期
     //读入选中的日记
     func loadTodayData(){
-        DispatchQueue.global(qos: .background).async{ [self] in
-            todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
-            //load pictures
-            photoImages.removeAll()
-            for uuid in todayDiary.uuidofPictures {
-                let path = getDocumentsDirectory().appendingPathComponent(uuid)
-                photoImages.append(UIImage(contentsOfFile: path.path)!)
-            }
-        
+        todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
+        //load pictures
+        photoImages.removeAll()
+        for uuid in todayDiary.uuidofPictures {
+            let path = getDocumentsDirectory().appendingPathComponent(uuid)
+            photoImages.append(UIImage(contentsOfFile: path.path)!)
+        }
         //load txt
         if todayDiary.content.count == 0{
             //palce holder
-            DispatchQueue.main.async {
-                textView.text = "今天发生了什么..."
-                textView.textColor = UIColor.lightGray
-            }
+            textView.text = "今天发生了什么..."
+            textView.textColor = UIColor.lightGray
         }else{
-            DispatchQueue.main.async {
-                textView.text = todayDiary.content
-                textView.textColor = UIColor.black
+            textView.text = todayDiary.content
+            textView.textColor = UIColor.black
+            if let aString = loadAttributedString(date_string: todayDiary.date!){
+                    let preparedText = prepareTextImages(aString: aString)
+                    textView.attributedText = preparedText
             }
-            DispatchQueue.global(qos: .background).async{ [self] in
-                if let aString = loadAttributedString(date_string: todayDiary.date!){
-                    DispatchQueue.main.async {
-                        let preparedText = prepareTextImages(aString: aString)
-                        textView.attributedText = preparedText
-                    }
-                }
-            }
-            
         }
         
-            //load ohter info
-            DispatchQueue.main.async {
-                topbar.dataLable1.text = todayDiary.date
-                topbar.dataLable2.text = getWeekDayFromDateString(string: todayDiary.date!)
-                if todayDiary.date == getTodayDate(){
-                    topbar.dataLable2.text! += "*"
-                }
-                topbar.dataLable1.sizeToFit()
-                
-                topbar.button1.islike = todayDiary.islike
-            }
+        //load ohter info
+        topbar.dataLable1.text = todayDiary.date
+        topbar.dataLable2.text = getWeekDayFromDateString(string: todayDiary.date!)
+        if todayDiary.date == getTodayDate(){
+            topbar.dataLable2.text! += "*"
         }
+        topbar.dataLable1.sizeToFit()
+        topbar.button1.islike = todayDiary.islike
+        
     }
     
     override func viewDidLoad() {
@@ -448,13 +448,12 @@ extension todayVC{
 //            return
 //        }
         //1、保存textView.attributedText
-//        DispatchQueue.global(qos: .background).async{ [self] in
 //            saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
 //            //2、保存textView.text
 //            todayDiary.content = textView.text
 //            DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
-//        }
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         print("todayVC viewDidDisappear")
         if textView.textColor == UIColor.lightGray{
@@ -466,8 +465,7 @@ extension todayVC{
         todayDiary.content = textView.text
         DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
         
-//        textView.text = nil
-//        textView.attributedText = nil
-//        print("DataContainerSingleton.sharedDataContainer.selectedDiary.content:\(DataContainerSingleton.sharedDataContainer.selectedDiary.content)")
+        textView.text = nil
+        textView.attributedText = nil
     }
 }
