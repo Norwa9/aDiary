@@ -29,6 +29,8 @@ class topbarView: UIView {
     var buttonSize:CGSize!
     var rectBar2:UIView!
     
+    var topbarButtons:[topbarButton] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTodayTopBarUI()
@@ -98,6 +100,8 @@ class topbarView: UIView {
         
         rectBar1.isHidden = true
         rectBar2.isHidden = true
+        
+        topbarButtons = [button1,button2,button3]
     }
     
     func setupUIconstraint(){
@@ -182,5 +186,17 @@ extension topbarView{
         
         self.button3.buttonImageView.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
         self.tempButtonImageView3.alpha = (currenVCindex != 0) ? 1 - percentComplete : percentComplete
+    }
+}
+
+extension topbarView{
+    func changeButtonImageView(topbarButtonIndex buttonIndex:Int,toImage:UIImage){
+        self.topbarButtons[buttonIndex].buttonImageView.image = toImage
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: []) {
+            self.topbarButtons[buttonIndex].buttonImageView.transform  = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            self.topbarButtons[buttonIndex].buttonImageView.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        } completion: { (_) in}
+        
+        
     }
 }

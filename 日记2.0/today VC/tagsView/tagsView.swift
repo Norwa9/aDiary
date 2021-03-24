@@ -23,17 +23,6 @@ class tagsView: UIViewController {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //add panGesture
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
-        view.addGestureRecognizer(panGesture)
-        
-        restoreDate()
-        configTagsView()
-    }
-    
     func configTagsView(){
         //configure drag bar
         dragBar.layer.cornerRadius = 4
@@ -56,7 +45,6 @@ class tagsView: UIViewController {
         tagsTableView.dataSource = self
         tagsTableView.separatorStyle = .none
         
-        
     }
     
     //button target
@@ -70,6 +58,12 @@ class tagsView: UIViewController {
         }
         sender.animateSelectedView()
         selectedMood = sender.moodType
+        //状态从未选改变到选中，则触发topbarButton的动画
+        if sender.hasSelected{
+            let topbarView = UIApplication.getTopbarView()
+            topbarView.changeButtonImageView(topbarButtonIndex: 1, toImage: UIImage(named: sender.moodType.rawValue)!)
+        }
+        
     }
     
     //done button
@@ -95,7 +89,6 @@ class tagsView: UIViewController {
         
         // setting x as 0 because we don't want users to move the frame side ways!! Only want straight up or down
         view.frame.origin = CGPoint(x: 0, y: self.pointOrigin!.y + translation.y)
-//        print("view.frame.height:\(view.frame.height)")
         if sender.state == .ended {
             let dragVelocity = sender.velocity(in: view)
             if dragVelocity.y >= 1300 || translation.y > 200{
@@ -125,6 +118,7 @@ class tagsView: UIViewController {
 
 }
 
+//MARK:-UITableViewDelegate
 extension tagsView:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -135,9 +129,13 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: tagsCell.reusableId) as! tagsCell
         let row = indexPath.row
         cell.tagsLabel.text = DataContainerSingleton.sharedDataContainer.tags[row]
-        //恢复以选取的tags
-        if selectedTags.contains(DataContainerSingleton.sharedDataContainer.tags[row]) && cell.hasGetCorrectFrame{
+        //令cell调用layoutSubviews()以获取真实的cell frame，为接下来恢复tags选取状态做准备。
+        cell.layoutSubviews()
+        //恢复tags的选取状态
+        if selectedTags.contains(DataContainerSingleton.sharedDataContainer.tags[row]) {
             cell.hasSelected = true
+        }else{
+            cell.hasSelected = false
         }
         return cell
     }
@@ -168,32 +166,45 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
 //    }
 }
 
+//MARK:-life cycle
 extension tagsView{
-    //MARK:-life cycle
-    func restoreDate(){
+
+    func configureDate(){
         //恢复数据
         selectedMood = diary.mood
         selectedTags = diary.tags
+        
+        //恢复选择状态
+        for button in moodButtons{
+            if button.hasSelected{
+                button.animateSelectedView()
+            }
+        }
+        if let mood = selectedMood{
+            let index = moodTypes.allCases.firstIndex(of: mood)! as Int
+            moodButtons[index].animateSelectedView()
+        }
+        tagsTableView.reloadData()
+
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //add panGesture
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
+        view.addGestureRecognizer(panGesture)
+        
+        configTagsView()
+        
+    }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        print("tags view viewWillAppear")
-//        let index = moodTypes.allCases.firstIndex(of: selectedMood!)! as Int
-//        moodButtons[index].animateSelectedView(duration: 0.05)
-//        tagsTableView.reloadData()
-//    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //恢复数据的动画
-//        print("tags view viewDidAppear")
-        let index = moodTypes.allCases.firstIndex(of: selectedMood!)! as Int
-        moodButtons[index].animateSelectedView()
-        tagsTableView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        print("tagsView viewWillAppear")
+        configureDate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        print("tags view viewWillDisappear，tags:\(selectedTags)")
+        //保存tags和mood的选项
         if let selectedMood = selectedMood{
             diary.mood = selectedMood
         }

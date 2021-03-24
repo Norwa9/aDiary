@@ -17,6 +17,8 @@
 		EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1F625D7FCE10007BDFA /* dataContainer.swift */; };
 		EA9A3D7425CB07FB00B6715F /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA9A3D7325CB07FB00B6715F /* test.jpg */; };
 		EA9AE73C260625CC00D44221 /* UIApplication_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */; };
+		EA9AE73F26063DC100D44221 /* todayVC_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */; };
+		EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
 		EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E3225C5768200AA6971 /* Main.storyboard */; };
@@ -60,6 +62,8 @@
 		EA51D1F625D7FCE10007BDFA /* dataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataContainer.swift; sourceTree = "<group>"; };
 		EA9A3D7325CB07FB00B6715F /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication_Extension.swift; sourceTree = "<group>"; };
+		EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todayVC_Extension.swift; sourceTree = "<group>"; };
+		EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -222,11 +226,13 @@
 			children = (
 				EAA29E7825C59AD000AA6971 /* UIView_Extension.swift */,
 				EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */,
+				EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */,
 				EAA29E9D25C832F900AA6971 /* extension.swift */,
 				EAF206AF25E40F55004A9329 /* classWrapper.swift */,
 				EAF206BA25E4DA49004A9329 /* attribuedStringStorage.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataContainer.swift */,
 				EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */,
+				EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage_Extension.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
+				EA9AE73F26063DC100D44221 /* todayVC_Extension.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
@@ -409,6 +416,7 @@
 				EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */,
 				EAA29E4325C577DC00AA6971 /* customPageViewController.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
+				EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
 				EAA29E7925C59AD000AA6971 /* UIView_Extension.swift in Sources */,
 				EAF206BB25E4DA49004A9329 /* attribuedStringStorage.swift in Sources */,

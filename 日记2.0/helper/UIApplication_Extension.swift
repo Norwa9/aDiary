@@ -18,4 +18,9 @@ extension UIApplication{
         let Container = UIApplication.shared.windows[0].rootViewController as! pageViewContainer
         return  Container.pageViewController
     }
+    
+    static func getTopbarView()->topbarView {
+        let Container = UIApplication.shared.windows[0].rootViewController as! pageViewContainer
+        return Container.topBar
+    }
 }

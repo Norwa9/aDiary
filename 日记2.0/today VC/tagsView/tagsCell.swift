@@ -11,10 +11,9 @@ class tagsCell: UITableViewCell {
     weak var tagsView:tagsView!
     static let reusableId = "tagsCell"
     var tagString:String!
-    var bar:UIView!
     var barFrame:CGRect!
-    var contentViewFrame:CGRect!
-    var tagsLabelFrame:CGRect!
+    var contentViewFrame:CGRect?
+    var tagsLabelFrame:CGRect?
     var hasGetCorrectFrame = false
     @IBOutlet weak var tagsLabel:UILabel!
     var hasSelected:Bool = false{
@@ -22,42 +21,63 @@ class tagsCell: UITableViewCell {
             animateSelectedView(setTo: hasSelected)
         }
     }
+    
+    lazy var tagSelectedIcon:UIImageView = {
+        let image = UIImage(named: "tagSelected")!
+        let view = UIImageView(image: image)
+        view.alpha = 0
+        view.contentMode = .scaleAspectFill
+        self.addSubview(view)
+        return view
+    }()
+    
+    lazy var tagSelectedBGView:UIView = {
+        let view = UIView()
+        view.alpha = 0
+        view.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
+        self.addSubview(view)
+        return view
+    }()
      
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        configUI()
+        setupCellView()
     }
 
-    func configUI(){
-        //bar view
-        bar = UIView()
-        bar.layer.cornerRadius = 2
-        bar.clipsToBounds = true
-        self.bar.backgroundColor = .white
-        bar.layer.masksToBounds = true
-        self.addSubview(bar)
-        self.sendSubviewToBack(bar)
+    func setupCellView(){
+        print("setupCellView called")
+        
+        
     }
     
+    //cell里子视图的布局都应该在layoutSubviews()里设置
+    //layoutSubviews再每次布局发生变化时调用
     override func layoutSubviews() {
-        //layoutSubviews再每次布局发生变化时调用
-//        print("tagsCell layoutSubviews called")
-        if !hasGetCorrectFrame{//开关
-            hasGetCorrectFrame = true
-            //获取正确的contentView frame和tagsLabel frame，并设置bar的正确的frame
-            tagsLabel.sizeToFit()
-            bar.frame = CGRect(x: 0, y: 0, width: tagsLabel.frame.width, height: 2)
-            bar.center.x = contentView.center.x
-            bar.center.y = tagsLabel.frame.maxY + 2
-            barFrame = bar.frame//bar的原始frame
-            contentViewFrame = contentView.frame//contentView的原始frame
-            tagsLabelFrame = CGRect(//tagsLabel的原始frame
-                x: contentViewFrame.midX - tagsLabel.frame.width / 2.0,
-                y: tagsLabel.frame.origin.y,
-                width: tagsLabel.frame.width,
-                height: tagsLabel.frame.height
+        //获取cell的真实frame
+        tagsLabel.sizeToFit()
+        contentViewFrame = contentView.frame//contentView的原始frame
+        tagsLabelFrame = CGRect(//tagsLabel的原始frame
+            x: contentViewFrame!.midX - tagsLabel.frame.width / 2.0,
+            y: tagsLabel.frame.origin.y,
+            width: tagsLabel.frame.width,
+            height: tagsLabel.frame.height
+        )
+        
+        if let tagsLabelFrame = tagsLabelFrame{
+            //布局tagSelectedIcon
+            tagSelectedIcon.frame.origin = CGPoint(x: tagsLabelFrame.maxX + 5, y: tagsLabelFrame.minY)
+            tagSelectedIcon.frame.size = CGSize(width: tagsLabelFrame.height, height: tagsLabelFrame.height)
+            
+            //布局tagSelectedBGView
+            tagSelectedBGView.frame.origin = CGPoint(x: tagsLabelFrame.minX - 4, y: tagsLabelFrame.minY - 2)
+            tagSelectedBGView.frame.size = CGSize(
+                width: tagSelectedIcon.frame.maxX - tagsLabelFrame.minX + 4,
+                height: tagsLabelFrame.height + 4
             )
+            
         }
         
     }
@@ -65,19 +85,16 @@ class tagsCell: UITableViewCell {
     func animateSelectedView(setTo animate:Bool,duration:TimeInterval = 0.35){
         //取消选中
         if animate == false{
-            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseIn) {
-                self.bar.frame = self.barFrame
-                self.bar.layer.cornerRadius = 2
-                self.bar.backgroundColor = .white
+            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut) { [self] in
+                tagSelectedIcon.alpha = 0
+                tagSelectedBGView.alpha = 0
             } completion: { (_) in
-                
             }
         }else{
         //选中
-            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut) {
-                self.bar.frame = self.tagsLabelFrame.insetBy(dx: -3, dy: -1)
-                self.bar.layer.cornerRadius = 10
-                self.bar.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.9490196078, blue: 0.9490196078, alpha: 1).withAlphaComponent(0.7)
+            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut) { [self] in
+                tagSelectedIcon.alpha = 1
+//                tagSelectedBGView.alpha = 1
             } completion: { (_) in
             }
         }
@@ -89,6 +106,12 @@ class tagsCell: UITableViewCell {
         self.selectionStyle = .none
     }
     
+    override func prepareForReuse() {
+//        print("prepareForReuse(),text:\(self.tagsLabel.text)")
+        tagSelectedIcon.alpha = 0
+//        tagSelectedBGView.alpha = 0
+    }
+    
 }
 
 extension tagsCell:UITextFieldDelegate{
@@ -96,3 +119,5 @@ extension tagsCell:UITextFieldDelegate{
         
     }
 }
+
+

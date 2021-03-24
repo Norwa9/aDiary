@@ -13,6 +13,14 @@ class todayVC: UIViewController {
     
     weak var topbar:topbarView!
     
+    lazy var tagsViewController:tagsView = {
+        //配置tagsView
+        let tagsViewController = tagsView()
+        tagsViewController.transitioningDelegate = self
+        tagsViewController.modalPresentationStyle = .custom//模态
+        return tagsViewController
+    }()
+    
     @IBOutlet weak var contentView:UIView!
     @IBOutlet weak var photosView:UIView!
     @IBOutlet weak var photosCollectionView:UICollectionView!
@@ -103,13 +111,10 @@ class todayVC: UIViewController {
             todayDiary.islike = button.islike
             break
         case 2,3:
-            let vc = tagsView()
-            //配置tagsView
-            vc.diary = todayDiary
-            
-            vc.transitioningDelegate = self
-            vc.modalPresentationStyle = .custom//模态
-            self.present(vc, animated: true, completion: nil)
+            //传递当前的diary
+            tagsViewController.diary = todayDiary
+            //call viewDidLoad()
+            self.present(tagsViewController, animated: true, completion: nil)
             break
         default:
             return
@@ -259,18 +264,19 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         let width = textView.frame.width - 2 * peddingX
         let height = width * imageAspectRatio
         //设置照片附件
-//        let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth, height: imageHeight))
-//        let compressedImage = image
-//        attachment.image = compressedImage
-//        attachment.image = UIImage(data: image.jpegData(compressionQuality: 0.5)!)
-        attachment.image = image.compressPic(toSize: CGSize(width: width, height: height))
+        let imageData = image.jpegData(compressionQuality: 0.2)
+        let image = UIImage(data: imageData!)!.compressPic(toSize: CGSize(width: width, height: height))
+        attachment.image = image
+//        attachment.image = image.compressPic(toSize: CGSize(width: width, height: height))
         attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        print("insert,bounds:\(attachment.bounds)")
         //将附件转成NSAttributedString类型的属性化文本
         let attStr = NSAttributedString(attachment: attachment)
         //获取textView的所有文本，转成可变的文本
         let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
         //获得目前光标的位置
         let selectedRange = textView.selectedRange
+        
         //插入附件
         mutableStr.insert(attStr, at: selectedRange.location)
         mutableStr.insert(NSAttributedString(string: "\n"), at: selectedRange.location+1)
@@ -279,23 +285,36 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         textView.attributedText = mutableStr
     }
     
-    private func prepareTextImages(aString:NSAttributedString) -> NSMutableAttributedString {
+    private func prepareTextImages(aString:NSAttributedString,returnCleanText:Bool = false) -> NSMutableAttributedString {
+        let cleanText = NSMutableAttributedString(attributedString: aString)
         let mutableText = NSMutableAttributedString(attributedString: aString)
         let width = self.textView.frame.width
         let bounds = self.textView.bounds
         mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [width] (object, range, pointer) in
             let textViewAsAny: Any = self.textView!
             if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
+                
+                cleanText.replaceCharacters(in: range, with: "P")
+                
                 let aspect = img.size.width / img.size.height
                 if img.size.width <= width {
                     attachment.bounds = CGRect(x: 0, y: 0, width: img.size.width, height: img.size.height)
-                    return
+                    print("img.size.width <= width,bounds:\(attachment.bounds)")
+                    return 
                 }
                 let height = width / aspect
                 attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+//                print("bounds:\(attachment.bounds)")
+                
             }
             })
-        return mutableText
+        
+        if returnCleanText{
+            return cleanText
+        }else{
+            return mutableText
+        }
+        
     }
 }
 
@@ -313,6 +332,7 @@ extension todayVC:UITextViewDelegate{
         }
         
     }
+    
 
     func textViewDidEndEditing(_ textView: UITextView) {
         print("textViewDidEndEditing")
@@ -322,8 +342,12 @@ extension todayVC:UITextViewDelegate{
         customPageVC.pageScrollView.isScrollEnabled = true
         
         if textView.text != ""{
-            todayDiary.content = textView.text
+            //存储纯文本
+            let string = prepareTextImages(aString: textView.attributedText, returnCleanText: true).string
+            todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+            //存储富文本
             saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
+            DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
             
             //更新monthVC的UI
             let monthVC = UIApplication.getMonthVC()
@@ -390,8 +414,8 @@ extension todayVC:UITextViewDelegate{
     }
 }
 
+//MARK:-生命周期
 extension todayVC{
-    //MARK:-生命周期
     //读入选中的日记
     func loadTodayData(){
         todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
@@ -401,7 +425,8 @@ extension todayVC{
             let path = getDocumentsDirectory().appendingPathComponent(uuid)
             photoImages.append(UIImage(contentsOfFile: path.path)!)
         }
-        //load txt
+        
+        //load textView
         if todayDiary.content.count == 0{
             //palce holder
             textView.text = "今天发生了什么..."
@@ -423,8 +448,9 @@ extension todayVC{
         }
         topbar.dataLable1.sizeToFit()
         topbar.button1.islike = todayDiary.islike
-        
+        topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood.rawValue)
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -443,28 +469,12 @@ extension todayVC{
         loadTodayData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-//        if textView.textColor == UIColor.lightGray{
-//            return
-//        }
-        //1、保存textView.attributedText
-//            saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
-//            //2、保存textView.text
-//            todayDiary.content = textView.text
-//            DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
-    }
     
     override func viewDidDisappear(_ animated: Bool) {
         print("todayVC viewDidDisappear")
         if textView.textColor == UIColor.lightGray{
             return
         }
-        //保存textView.attributedText
-        saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
-        //保存textView.text
-        todayDiary.content = textView.text
-        DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
-        
         textView.text = nil
         textView.attributedText = nil
     }

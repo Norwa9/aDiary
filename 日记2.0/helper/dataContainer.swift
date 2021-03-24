@@ -46,7 +46,6 @@ class DataContainerSingleton {
     
     var goToBackgroundObserver: AnyObject?
     init(){
-        print("init() called")
         let defaults = UserDefaults.standard
         //-----------------------------------------------------------------------------
         //读取。从UserDefaults读取
@@ -63,8 +62,6 @@ class DataContainerSingleton {
         //-----------------------------------------------------------------------------
         //保存。当app退出到后台，保存数据到UserDefaults
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
-            print("我进入后台了")
-        
             let defaults = UserDefaults.standard
             defaults.setValue(self.hasInitialized, forKey: DefaultsKeys.hasInitialized)
             defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
@@ -91,6 +88,7 @@ class DataContainerSingleton {
 
 //MARK:-导入日记
 func initialDiaryDict(){
+    print("initialDiaryDict() called")
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
     //如果之前没有导入过

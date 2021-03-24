@@ -28,7 +28,7 @@ func saveAttributedString(date_string:String,aString:NSAttributedString?) {
     
 }
 
-//MARK:-根据日期信息读取从文件目录富文本
+//MARK:-根据日期string读取从文件目录富文本
 func loadAttributedString(date_string:String) -> NSAttributedString?{
     if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
         let path_file_name = dir.appendingPathComponent (date_string)
