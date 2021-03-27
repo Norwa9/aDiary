@@ -42,6 +42,7 @@ class todayVC: UIViewController {
     func configureTodayView(){
         //textView
         textView.delegate = self
+        textView.font = UIFont(name: "Noto Sans S Chinese", size: 20)
         //tap on self.view
         let tapEnterTextView = UITapGestureRecognizer(target: self, action: #selector(enterEditingTextView))
         view.addGestureRecognizer(tapEnterTextView)
@@ -251,6 +252,10 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
+//        guard let url = info[.imageURL] as? URL else { return }
+//        if let image = UIImage(contentsOfFile: url.path){
+//            insertPictureToTextView(image: image)
+//        }
         insertPictureToTextView(image: image)
         dismiss(animated: true)
     }
@@ -260,16 +265,11 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         let attachment = NSTextAttachment()
         //设置附件的大小
         let imageAspectRatio = image.size.height / image.size.width
-        let peddingX:CGFloat =  0
-        let width = textView.frame.width - 2 * peddingX
-        let height = width * imageAspectRatio
         //设置照片附件
-        let imageData = image.jpegData(compressionQuality: 0.2)
-        let image = UIImage(data: imageData!)!.compressPic(toSize: CGSize(width: width, height: height))
-        attachment.image = image
-//        attachment.image = image.compressPic(toSize: CGSize(width: width, height: height))
+        let width = textView.bounds.width
+        let height = width * imageAspectRatio
+        attachment.image = image.compressPic(toSize: CGSize(width: width, height: height))
         attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
-        print("insert,bounds:\(attachment.bounds)")
         //将附件转成NSAttributedString类型的属性化文本
         let attStr = NSAttributedString(attachment: attachment)
         //获取textView的所有文本，转成可变的文本
@@ -305,7 +305,7 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
                 let height = width / aspect
                 attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
 //                print("bounds:\(attachment.bounds)")
-                
+                print("img.imageOrientation:\(img.imageOrientation)")
             }
             })
         
@@ -357,8 +357,10 @@ extension todayVC:UITextViewDelegate{
                             }, completion: nil)
         }
     }
+
     
     @objc func enterEditingTextView(){
+        print("self.view tapped")
         textView.becomeFirstResponder()
         //定位到文字最末端
         textView.selectedRange = NSMakeRange(textView.text.count, 0)
@@ -432,7 +434,7 @@ extension todayVC{
             textView.text = "今天发生了什么..."
             textView.textColor = UIColor.lightGray
         }else{
-            textView.text = todayDiary.content
+//            textView.text = todayDiary.content
             textView.textColor = UIColor.black
             if let aString = loadAttributedString(date_string: todayDiary.date!){
                     let preparedText = prepareTextImages(aString: aString)
@@ -469,13 +471,17 @@ extension todayVC{
         loadTodayData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        
+    }
+    
     
     override func viewDidDisappear(_ animated: Bool) {
         print("todayVC viewDidDisappear")
         if textView.textColor == UIColor.lightGray{
             return
         }
-        textView.text = nil
-        textView.attributedText = nil
+//        textView.text = nil
+//        textView.attributedText = nil
     }
 }

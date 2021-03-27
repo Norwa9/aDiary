@@ -12,7 +12,8 @@ func saveAttributedString(date_string:String,aString:NSAttributedString?) {
     do {
         let file = try aString?.fileWrapper (
             from: NSMakeRange(0, aString!.length),
-            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd])
+            documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd
+                                 ,.characterEncoding:String.Encoding.utf8])
         
         if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
             let path_file_name = dir.appendingPathComponent (date_string)
@@ -35,7 +36,8 @@ func loadAttributedString(date_string:String) -> NSAttributedString?{
         do{
             let aString = try NSAttributedString(
                 url: path_file_name,
-                options: [.documentType:NSAttributedString.DocumentType.rtfd],
+                options: [.documentType:NSAttributedString.DocumentType.rtfd,
+                          .characterEncoding:String.Encoding.utf8],
                 documentAttributes: nil)
 //            print("load \(date_string) attributedString")
             return aString

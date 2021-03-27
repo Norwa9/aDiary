@@ -7,6 +7,7 @@ target '日记2.0' do
 pod 'FSCalendar'
 pod 'Popover'
 pod 'JXPhotoBrowser', '~> 3.0'
+pod 'XLYTextKitExtension', :git => "https://github.com/kaizeiyimi/XLYTextKitExtension.git"
   # Pods for 日记2.0
 
 end
