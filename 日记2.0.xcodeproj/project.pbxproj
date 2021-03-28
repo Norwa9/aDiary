@@ -19,6 +19,8 @@
 		EA9AE73C260625CC00D44221 /* UIApplication_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */; };
 		EA9AE73F26063DC100D44221 /* todayVC_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */; };
 		EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */; };
+		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
+		EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7C52610790900D44221 /* settingViewController.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
 		EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E3225C5768200AA6971 /* Main.storyboard */; };
@@ -44,7 +46,6 @@
 		EAA29EB225C864ED00AA6971 /* UIImage_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */; };
 		EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC425C9840F00AA6971 /* monthCell.swift */; };
 		EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC725C9925B00AA6971 /* monthButton.swift */; };
-		EAF206B025E40F55004A9329 /* classWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF206AF25E40F55004A9329 /* classWrapper.swift */; };
 		EAF206B325E41DBF004A9329 /* test2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EAF206B225E41DBF004A9329 /* test2.jpeg */; };
 		EAF206BB25E4DA49004A9329 /* attribuedStringStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF206BA25E4DA49004A9329 /* attribuedStringStorage.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,8 @@
 		EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication_Extension.swift; sourceTree = "<group>"; };
 		EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todayVC_Extension.swift; sourceTree = "<group>"; };
 		EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
+		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
+		EA9AE7C52610790900D44221 /* settingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingViewController.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,7 +94,6 @@
 		EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage_Extension.swift; sourceTree = "<group>"; };
 		EAA29EC425C9840F00AA6971 /* monthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthCell.swift; sourceTree = "<group>"; };
 		EAA29EC725C9925B00AA6971 /* monthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthButton.swift; sourceTree = "<group>"; };
-		EAF206AF25E40F55004A9329 /* classWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classWrapper.swift; sourceTree = "<group>"; };
 		EAF206B225E41DBF004A9329 /* test2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpeg; sourceTree = "<group>"; };
 		EAF206BA25E4DA49004A9329 /* attribuedStringStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = attribuedStringStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +165,14 @@
 			path = "todayVC component";
 			sourceTree = "<group>";
 		};
+		EA9AE7C4261078ED00D44221 /* setting VC */ = {
+			isa = PBXGroup;
+			children = (
+				EA9AE7C52610790900D44221 /* settingViewController.swift */,
+			);
+			path = "setting VC";
+			sourceTree = "<group>";
+		};
 		EAA29E2025C5768200AA6971 = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +200,7 @@
 				EAA29E5525C5785100AA6971 /* pageVC */,
 				EAA29E8425C5A79100AA6971 /* today VC */,
 				EAA29E5B25C5801F00AA6971 /* month VC */,
+				EA9AE7C4261078ED00D44221 /* setting VC */,
 				EAA29E8B25C8245700AA6971 /* filterVC */,
 				EAA29E3525C5768600AA6971 /* Assets.xcassets */,
 				EAA29E3725C5768600AA6971 /* LaunchScreen.storyboard */,
@@ -224,15 +235,15 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */,
 				EAA29E7825C59AD000AA6971 /* UIView_Extension.swift */,
 				EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */,
 				EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */,
+				EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */,
 				EAA29E9D25C832F900AA6971 /* extension.swift */,
-				EAF206AF25E40F55004A9329 /* classWrapper.swift */,
 				EAF206BA25E4DA49004A9329 /* attribuedStringStorage.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataContainer.swift */,
-				EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */,
-				EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */,
+				EA9AE7B3260F634200D44221 /* userDefaultManager.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -406,15 +417,16 @@
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
 				EAA29E8D25C8248C00AA6971 /* tagsVC.swift in Sources */,
-				EAF206B025E40F55004A9329 /* classWrapper.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
 				EA51D1C725D3A9D70007BDFA /* backToCurMonthButton.swift in Sources */,
 				EAA29E4925C5782300AA6971 /* pageViewContainer.swift in Sources */,
 				EAA29E8825C7093000AA6971 /* photoCell.swift in Sources */,
+				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */,
 				EAA29E4325C577DC00AA6971 /* customPageViewController.swift in Sources */,
+				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,

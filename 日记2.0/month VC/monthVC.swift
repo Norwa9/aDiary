@@ -88,7 +88,6 @@ class monthVC: UIViewController {
     var tableViewDiaryDataSource = [diaryInfo]()
     var filteredDiaries = [diaryInfo]()
     
-    //异步
     func configureDataSource(dataSource:[diaryInfo?],configFilteredDiariesOnly:Bool = false){
 //        DispatchQueue.global(qos: .background).async{ [self] in
             filteredDiaries.removeAll()
@@ -442,7 +441,9 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
 extension monthVC:UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        print(y)
+        guard isFilterMode else{
+            return
+        }
         cellCountLabel.text = "\(filteredDiaries.count)篇"
         cellCountLabel.sizeToFit()
         cellCountLabel.alpha = y<0 ? (-(y+5)/40) : 0

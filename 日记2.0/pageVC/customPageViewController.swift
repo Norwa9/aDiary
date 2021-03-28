@@ -104,7 +104,11 @@ extension customPageViewController:UIPageViewControllerDataSource,UIPageViewCont
     }
     
     func slideToTodayVC(completion: (() -> Void)?) {
-        self.setViewControllers([viewControllerList[0]], direction: .reverse, animated: true, completion: {[weak self] (complete: Bool) -> Void in
+        guard let todayVC = viewControllerList[0] as? todayVC else{
+            return
+        }
+        
+        self.setViewControllers([todayVC], direction: .reverse, animated: true, completion: {[weak self] (complete: Bool) -> Void in
         if (complete) {
             self?.curVCIndex = 0
           completion?()
