@@ -54,6 +54,7 @@ class monthCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        print("init month cell")
         globalSetup()
     }
     
@@ -63,8 +64,11 @@ class monthCell: UICollectionViewCell {
     
     private func globalSetup() {
         setupContainerView()
-        setupContentLabels()
+        setupContentLabelsConstraints()
+        
     }
+    
+    
     
     private func setupContainerView() {
         contentView.addSubview(containerView)
@@ -75,7 +79,7 @@ class monthCell: UICollectionViewCell {
         containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 95.0).isActive = true
         containerView.widthAnchor.constraint(equalToConstant: 384).isActive = true//限制住contentView的宽度，使之能够在高度根据contentLabel自适应
-        
+        self.layoutIfNeeded()
         //custom containerView
 //        containerView.layer.borderWidth = 1
         containerView.backgroundColor = .white
@@ -85,26 +89,28 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    private func setupContentLabels() {
+    private func setupContentLabelsConstraints() {
+        print("private func setupContentLabelsConstraints()")
         //contentLabel
         contentLabel.numberOfLines = 0
         containerView.addSubview(contentLabel)
-        contentLabel.font = UIFont(name: "Noto Sans S Chinese", size: 14)
+        contentLabel.font = UIFont(name: userDefaultManager.fontName, size: 14)
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         //tags Label
         containerView.addSubview(tagsLabel)
         tagsLabel.numberOfLines = 0
-        tagsLabel.font = UIFont(name: "Noto Sans S Chinese", size: 11)
+        tagsLabel.font = UIFont(name: userDefaultManager.fontName, size: 11)
         tagsLabel.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         //data Label
         containerView.addSubview(dateLabel)
-        dateLabel.font = UIFont(name: "Noto Sans S Chinese", size: 11)
+        dateLabel.font = UIFont(name: userDefaultManager.fontName, size: 11)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         //word Number Label
         containerView.addSubview(wordNumLabel)
         wordNumLabel.textAlignment = .right
-        wordNumLabel.font = UIFont(name: "Noto Sans S Chinese", size: 11)
+        wordNumLabel.font = UIFont(name: userDefaultManager.fontName, size: 11)
         wordNumLabel.translatesAutoresizingMaskIntoConstraints = false
         //islikeImageView
         containerView.addSubview(islikeImageView)
@@ -124,7 +130,7 @@ class monthCell: UICollectionViewCell {
             contentLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15.0),
             contentLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10.0),
             contentLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 150),
-            contentLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -25.0),
+            contentLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -20.0),
             
             //tags Label
             tagsLabel.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor),
@@ -160,6 +166,36 @@ class monthCell: UICollectionViewCell {
         
         
         
+    }
+    
+    //self-sizeing所必须实现的
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        newFrame.size.height = size.height
+        newFrame.size.width = 384
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
+    }
+    
+    
+    func fillCell(diary:diaryInfo){
+        //如果没有这句，cell的自适应高度不准确。
+        self.layoutIfNeeded()//(？)这里需要 layoutIfNeeded 一下，否则我们不能同步拿到contentSize，参考自：https://blog.csdn.net/ssy0082/article/details/81711240
+        self.text = diary.content
+        self.tags = diary.tags
+        self.dateLabel.text = diary.date! + "，" + getWeekDayFromDateString(string: diary.date!)
+        self.wordNum = diary.content.count
+        self.isLike = diary.islike
+        self.moodType = diary.mood
+        contentLabel.font = UIFont(name: userDefaultManager.fontName, size: 14)
+        tagsLabel.font = UIFont(name: userDefaultManager.fontName, size: 11)
+        dateLabel.font = UIFont(name: userDefaultManager.fontName, size: 11)
+        wordNumLabel.font = UIFont(name: userDefaultManager.fontName, size: 11)
+        //如果没有这句，cell的自适应高度不准确。
+        self.layoutSubviews()
     }
     
 }

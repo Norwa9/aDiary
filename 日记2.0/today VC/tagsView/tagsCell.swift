@@ -22,22 +22,19 @@ class tagsCell: UITableViewCell {
         }
     }
     
-    lazy var tagSelectedIcon:UIImageView = {
+    var tagSelectedIcon:UIImageView = {
         let image = UIImage(named: "tagSelected")!
         let view = UIImageView(image: image)
         view.alpha = 0
         view.contentMode = .scaleAspectFill
-        self.addSubview(view)
         return view
     }()
     
-    lazy var tagSelectedBGView:UIView = {
+    var tagSelectedBGView:UIView = {
         let view = UIView()
-        view.alpha = 0
         view.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 5
-        self.addSubview(view)
         return view
     }()
      
@@ -48,9 +45,8 @@ class tagsCell: UITableViewCell {
     }
 
     func setupCellView(){
-        print("setupCellView called")
-        
-        
+        self.addSubview(tagSelectedIcon)
+        self.insertSubview(tagSelectedBGView, belowSubview: tagSelectedIcon)
     }
     
     //cell里子视图的布局都应该在layoutSubviews()里设置
@@ -58,26 +54,17 @@ class tagsCell: UITableViewCell {
     override func layoutSubviews() {
         //获取cell的真实frame
         tagsLabel.sizeToFit()
-        contentViewFrame = contentView.frame//contentView的原始frame
-        tagsLabelFrame = CGRect(//tagsLabel的原始frame
-            x: contentViewFrame!.midX - tagsLabel.frame.width / 2.0,
-            y: tagsLabel.frame.origin.y,
-            width: tagsLabel.frame.width,
-            height: tagsLabel.frame.height
-        )
+        contentViewFrame = contentView.frame//contentView的真实frame
+        tagsLabelFrame = tagsLabel.frame//tagsLabel的真实frame
         
         if let tagsLabelFrame = tagsLabelFrame{
             //布局tagSelectedIcon
-            tagSelectedIcon.frame.origin = CGPoint(x: tagsLabelFrame.maxX + 5, y: tagsLabelFrame.minY)
-            tagSelectedIcon.frame.size = CGSize(width: tagsLabelFrame.height, height: tagsLabelFrame.height)
+            let iconWidth = tagsLabelFrame.height
+            tagSelectedIcon.frame.origin = CGPoint(x: tagsLabelFrame.minX - iconWidth - 2, y: tagsLabelFrame.minY)
+            tagSelectedIcon.frame.size = CGSize(width: iconWidth, height: iconWidth)
             
             //布局tagSelectedBGView
-            tagSelectedBGView.frame.origin = CGPoint(x: tagsLabelFrame.minX - 4, y: tagsLabelFrame.minY - 2)
-            tagSelectedBGView.frame.size = CGSize(
-                width: tagSelectedIcon.frame.maxX - tagsLabelFrame.minX + 4,
-                height: tagsLabelFrame.height + 4
-            )
-            
+            tagSelectedBGView.frame = tagSelectedIcon.frame.insetBy(dx: -1, dy: -1)
         }
         
     }
@@ -85,16 +72,16 @@ class tagsCell: UITableViewCell {
     func animateSelectedView(setTo animate:Bool,duration:TimeInterval = 0.35){
         //取消选中
         if animate == false{
-            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut) { [self] in
+            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.5, options: .curveEaseInOut) { [self] in
                 tagSelectedIcon.alpha = 0
-                tagSelectedBGView.alpha = 0
+                tagSelectedIcon.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             } completion: { (_) in
             }
         }else{
         //选中
-            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseOut) { [self] in
+            UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.5, options: .curveEaseInOut) { [self] in
                 tagSelectedIcon.alpha = 1
-//                tagSelectedBGView.alpha = 1
+                tagSelectedIcon.transform = .identity
             } completion: { (_) in
             }
         }
@@ -108,7 +95,7 @@ class tagsCell: UITableViewCell {
     
     override func prepareForReuse() {
 //        print("prepareForReuse(),text:\(self.tagsLabel.text)")
-        tagSelectedIcon.alpha = 0
+//        tagSelectedIcon.alpha = 0
 //        tagSelectedBGView.alpha = 0
     }
     

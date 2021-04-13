@@ -13,10 +13,12 @@ class toolsBar: UIView {
     @IBOutlet weak var saveButton:UIButton!
     @IBOutlet weak var insertTimeButton:UIButton!
     @IBOutlet weak var insertImageButton:UIButton!
+    @IBOutlet weak var numberListButton:UIButton!
     var saveButtonImageView:UIImageView!
     var insertTimeButtonImageView:UIImageView!
     var insertImageButtonImageView:UIImageView!
-
+    var numberListButtonImageView:UIImageView!
+    
     func configureUI(){
         //save button
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
@@ -50,6 +52,17 @@ class toolsBar: UIView {
         width = insertImageButton.frame.width
         height = insertImageButton.frame.height
         insertImageButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
+        
+        //create number list
+        numberListButton.addTarget(self, action: #selector(setNumberList), for: .touchUpInside)
+        numberListButton.layer.cornerRadius = 10
+        numberListButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
+        numberListButtonImageView = UIImageView(image: UIImage(named: "numberList"))
+        numberListButton.contentMode = .scaleAspectFit
+        numberListButton.addSubview(numberListButtonImageView)
+        width = numberListButton.frame.width
+        height = numberListButton.frame.height
+        numberListButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
     }
     
     @objc func saveButtonTapped(){
@@ -62,7 +75,11 @@ class toolsBar: UIView {
     
     @objc func insertImageToTextView(){
         todayVC.importPicture()
-
+    }
+    
+    @objc func setNumberList(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.orderedList()
     }
     
 //MARK:-以下内容不需要修改

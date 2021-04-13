@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="insertImageButton" destination="Kiz-fx-37o" id="GyN-37-fOY"/>
                 <outlet property="insertTimeButton" destination="3hl-P5-9lK" id="uJa-IG-WOV"/>
+                <outlet property="numberListButton" destination="c2P-wk-5YV" id="IfL-8V-Cg3"/>
                 <outlet property="saveButton" destination="Pyo-XQ-goJ" id="mIs-Mk-eio"/>
             </connections>
         </placeholder>
@@ -31,6 +32,11 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fx-37o">
                     <rect key="frame" x="285" y="5" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2P-wk-5YV">
+                    <rect key="frame" x="10" y="5" width="30" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                 </button>

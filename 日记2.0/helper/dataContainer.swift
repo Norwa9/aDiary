@@ -61,6 +61,7 @@ class DataContainerSingleton {
         }
         //-----------------------------------------------------------------------------
         //保存。当app退出到后台，保存数据到UserDefaults
+        print("进入后台，保存数据")
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
             let defaults = UserDefaults.standard
             defaults.setValue(self.hasInitialized, forKey: DefaultsKeys.hasInitialized)

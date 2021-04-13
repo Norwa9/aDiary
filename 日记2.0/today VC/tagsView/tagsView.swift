@@ -209,5 +209,10 @@ extension tagsView{
             diary.mood = selectedMood
         }
         diary.tags = selectedTags
+        let monthVC = UIApplication.getMonthVC()
+        monthVC.collectionView.performBatchUpdates({
+                            let indexSet = IndexSet(integersIn: 0...0)
+                            monthVC.collectionView.reloadSections(indexSet)
+                        }, completion: nil)
     }
 }

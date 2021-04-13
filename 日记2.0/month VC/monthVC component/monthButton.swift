@@ -32,6 +32,7 @@ class monthButton: UIButton {
         
         //monthLabel
         containView.addSubview(monthLabel)
+        monthLabel.font = UIFont.appMonthButtonFont()
         monthLabel.fillSuperview()
         monthLabel.textAlignment = .center
         monthLabel.textColor = .black

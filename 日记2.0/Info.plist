@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>获取Face ID以进入app</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -53,14 +55,19 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string></string>
-	</array>
 	<key>Item 0</key>
 	<string>NotoSansHans-Regular.otf</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>访问相册以添加照片</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FZFengYKSJ.ttf</string>
+		<string>FZFWZhuZGDLHJW.ttf</string>
+		<string>FZHeiLJW_Xian.ttf</string>
+		<string>FZSKBXKK.ttf</string>
+		<string>FZYDZHJW.ttf</string>
+		<string>FZDuHJW_Xian.ttf</string>
+	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -32,7 +32,7 @@ class todayVC: UIViewController {
     func configureTodayView(){
         //textView
         textView.delegate = self
-        textView.font = UIFont(name: "Noto Sans S Chinese", size: 20)
+        textView.font = UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)
         textView.layoutManager.allowsNonContiguousLayout = false
         //tap on image
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnImage(_:)))
@@ -55,12 +55,6 @@ class todayVC: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(todayButtonsTapped(sender:)), name: NSNotification.Name("todayButtonsTapped"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//        notificationCenter.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){ [self](note: Notification!) -> Void in
-//            print("todayVC进入后台了")
-//            saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
-//        }
-//        notificationCenter.addObserver(self, selector: #selector(),name: UIApplication.willResignActiveNotification, object: nil)
-        
     }
     
     @objc func todayButtonsTapped(sender: NSNotification){
@@ -70,6 +64,8 @@ class todayVC: UIViewController {
         case 1:
             button.islike.toggle()
             todayDiary.islike = button.islike
+            let monthVC = UIApplication.getMonthVC()
+            monthVC.calendar.reloadData()
             break
         case 2,3:
             //传递当前的diary
@@ -99,8 +95,6 @@ class todayVC: UIViewController {
             let x = keyBoardToolsBarFrame.origin.x
             let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - topbar.frame.height - 4//4是screen坐标系转换到view坐标系产生的误差
             keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
-//            print("keyBoardToolsBar.frame:\(keyBoardToolsBar.frame)")
-//            print("keyboardViewEndFrame:\(keyboardViewEndFrame)")
             keyBoardToolsBar.alpha = 1
             textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
         }
@@ -109,13 +103,14 @@ class todayVC: UIViewController {
     
 }
 
-
+//MARK:-tagsVC
 extension todayVC:UIViewControllerTransitioningDelegate{
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return tagsVC(presentedViewController: presented, presenting: presenting)
     }
 }
 
+//MARK:-插入图片
 extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     func importPicture() {
         let picker = UIImagePickerController()
@@ -157,17 +152,21 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         mutableStr.insert(attStr, at: insertLoaction)
         mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)
         //格式化mutableStr
-        mutableStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: "Noto Sans S Chinese", size: 20)!, range: NSMakeRange(0,mutableStr.length))
+        mutableStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!, range: NSMakeRange(0,mutableStr.length))
         textView.attributedText = mutableStr
         //从插入图片的下一行继续编辑
         textView.selectedRange = NSRange(location: insertLoaction + 2, length: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
     }
     
-    private func prepareTextImages(aString:NSAttributedString,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
+    //处理从本地读取的富文本
+    //功能1：设置图片附件的显示大小，添加用户偏好的文本属性
+    //功能2：将富文本清洗成collection view cell显示的纯文本
+    private func processAttrString(aString:NSAttributedString,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
         let cleanText = NSMutableAttributedString(attributedString: aString)
         let mutableText = NSMutableAttributedString(attributedString: aString)
         let bounds = self.textView.bounds
+        //1、调整图片，让图片显示正确的大小
         mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [] (object, range, pointer) in
             let textViewAsAny: Any = self.textView!
             if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
@@ -191,17 +190,22 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
                 }
             }
             })
+        //2、施加用户自定义格式
+        let attrText = mutableText.addUserDefaultAttributes()
         
+        //3、返回处理后的结果
         if returnCleanText{
             return cleanText
         }else{
-            return mutableText
+            return attrText
         }
         
     }
+    
+    
 }
 
-//MARK:-UITextViewDelegate
+//MARK:-UITextView
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         //关闭左右滑动
@@ -216,16 +220,13 @@ extension todayVC:UITextViewDelegate{
         
     }
     
-
     func textViewDidEndEditing(_ textView: UITextView) {
-        print("textViewDidEndEditing")
-        
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
         customPageVC.pageScrollView.isScrollEnabled = true
         
         //存储纯文本
-        let string = prepareTextImages(aString: textView.attributedText, returnCleanText: true).string
+        let string = processAttrString(aString: textView.attributedText, returnCleanText: true).string
         todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
         //存储富文本
         saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
@@ -233,14 +234,23 @@ extension todayVC:UITextViewDelegate{
         
         //更新monthVC的UI
         let monthVC = UIApplication.getMonthVC()
-        monthVC.collectionView.performBatchUpdates({
-                            let indexSet = IndexSet(integersIn: 0...0)
-                            monthVC.collectionView.reloadSections(indexSet)
-                        }, completion: nil)
+        monthVC.reloadCollectionViewData()
+        monthVC.calendar.reloadData()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        //当换行时，调用addNewLine()来处理递增数字列表的任务
+        if text == "\n"{
+            let textFormatter = TextFormatter(textView: textView)
+            textFormatter.addNewLine()
+            return false
+        }
+        //除了换行符，其他的字符无需处理，正常输出即可
+        return true//若为false，键入的新字符不会递给storage
     }
 
     
-    //MARK:-富文本图片点击
+    //富文本图片点击
     @objc func tapOnImage(_ sender: UITapGestureRecognizer){
         print("tap on textView")
         //参考自：https://stackoverflow.com/questions/48498366/detect-tap-on-images-attached-in-nsattributedstring-while-uitextview-editing-is
@@ -263,6 +273,7 @@ extension todayVC:UITextViewDelegate{
             in: textView.textContainer,
             fractionOfDistanceBetweenInsertionPoints: nil)
         
+        print("characterIndex:\(characterIndex)")
         if characterIndex < textView.textStorage.length{
             //识别字符下标characterIndex处的富文本信息
             let attachment = textView.attributedText.attribute(NSAttributedString.Key.attachment,
@@ -270,6 +281,13 @@ extension todayVC:UITextViewDelegate{
                                                                effectiveRange: nil) as? NSTextAttachment
             //1.字符下标characterIndex处为图片附件，则展示它
             if let attachment = attachment{
+                //当日记的最后一个字符是图片时，进入编辑模式时自动将光标另起一行
+                if characterIndex == textView.textStorage.length - 1{
+                    textView.insertText("\n")
+                    textView.selectedRange = NSMakeRange(characterIndex + 2, 0)
+                    textView.becomeFirstResponder()
+                    return
+                }
                 textView.resignFirstResponder()
                 //获取image
                 guard let attachImage = attachment.image(forBounds: textView.bounds, textContainer: textView.textContainer, characterIndex: characterIndex)else{
@@ -287,14 +305,18 @@ extension todayVC:UITextViewDelegate{
                     browserCell?.imageView.image = attachImage
                 }
                 browser.show()
-            //2.字符下标characterIndex处为字符，则将光标移到触摸的字符下标
+            //2.字符下标characterIndex处不是图片附件而是字符，则将光标移到触摸的字符下标
             }else{
                 //bug：点击新的下标时，先调用唤醒了keyboardWillChangeFrameNotification，再调用了tapOnImage()
                 //在下标还没有被赋予新值之前（点击textView瞬间），调用了observer，将视角滑向了旧下标。
                 if !textView.isFirstResponder{
                     textView.becomeFirstResponder()
                 }
-                textView.selectedRange = NSMakeRange(characterIndex, 0)
+                if characterIndex == textView.textStorage.length - 1{
+                    textView.selectedRange = NSMakeRange(characterIndex + 1, 0)
+                }else{
+                    textView.selectedRange = NSMakeRange(characterIndex, 0)
+                }
                 textView.scrollRangeToVisible(textView.selectedRange)
             }
         }
@@ -323,11 +345,10 @@ extension todayVC{
             textView.text = "今天发生了什么..."
             textView.textColor = UIColor.lightGray
         }else{
-//            textView.text = todayDiary.content
             textView.textColor = UIColor.black
             if let aString = loadAttributedString(date_string: todayDiary.date!){
                 //暂时用空白图片填充
-                let preparedText = prepareTextImages(aString: aString,fillWithEmptyImage: true)
+                let preparedText = processAttrString(aString: aString,fillWithEmptyImage: true)
                 textView.attributedText = preparedText
             }
         }
@@ -362,8 +383,6 @@ extension todayVC{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        print("lastDiary:\(lastDiary)")
-//        print("todayDiart:\(todayDiary.date!)")
         if lastDiary == todayDiary.date!{
             return
         }else{
@@ -374,7 +393,7 @@ extension todayVC{
             }
             print("将新日记的图片填入空白")
             if let aString = loadAttributedString(date_string: todayDiary.date!){
-                let preparedText = prepareTextImages(aString: aString,fillWithEmptyImage: false)
+                let preparedText = processAttrString(aString: aString,fillWithEmptyImage: false)
                 textView.attributedText = preparedText
             }
         }
@@ -393,8 +412,6 @@ extension todayVC{
         if textView.textColor == UIColor.lightGray{
             return
         }
-//        textView.text = nil
-//        textView.attributedText = nil
     }
     
 }

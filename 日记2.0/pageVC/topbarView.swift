@@ -24,6 +24,7 @@ class topbarView: UIView {
     
     var button1:topbarButton!
     var button2:topbarButton!
+    var tempButtonImageView2:UIImageView!
     var button3:topbarButton!
     var tempButtonImageView3:UIImageView!
     var buttonSize:CGSize!
@@ -54,14 +55,14 @@ class topbarView: UIView {
         
         //datalabe1
         dataLable1 = UILabel(frame: CGRect(x: 16, y: 49, width: 195, height: 33))
-        dataLable1.font = UIFont.boldSystemFont(ofSize: 24)
+        dataLable1.font = appDefaultFonts.dateLable1Font
         dataLable1.text = "\(curYear)年\(curMonth)月\(curDay)日"
         dataLable1.sizeToFit()
         self.addSubview(dataLable1)
         //dataLable2
         dataLable2 = UILabel(frame: CGRect(x: 16, y: 76, width: 159, height: 25))
         dataLable2.text = getWeekDayFromDateString(string: dataLable1.text!)
-        dataLable2.font = UIFont.boldSystemFont(ofSize: 18)
+        dataLable2.font = appDefaultFonts.dateLable2Font
 //        dataLable2.text = curWeekDay
         self.addSubview(dataLable2)
         //rectbar1
@@ -127,9 +128,15 @@ class topbarView: UIView {
         tempLabel2.alpha = 0
         self.addSubview(tempLabel2)
         
+        tempButtonImageView2 = UIImageView(frame: button2.buttonImageView.frame)
+        tempButtonImageView2.contentMode = .scaleAspectFill
+        tempButtonImageView2.image = UIImage(named: "setting")
+        tempButtonImageView2.alpha = 0
+        button2.addSubview(tempButtonImageView2)
+        
         tempButtonImageView3 = UIImageView(frame: button3.buttonImageView.frame)
         tempButtonImageView3.contentMode = .scaleAspectFill
-        tempButtonImageView3.image = UIImage(named: "search")
+        tempButtonImageView3.image = UIImage(named: "search")?.withHorizontallyFlippedOrientation()
         tempButtonImageView3.alpha = 0
         tempButtonImageView3.tag = 99
         button3.addSubview(tempButtonImageView3)
@@ -142,10 +149,10 @@ class topbarView: UIView {
         print("topbar view currentVCindex:\(currentVCindex)")
         let notificationCenter = NotificationCenter.default
         if currentVCindex == 0{
-            //post to todayVC
+            //todayVC才能收到通知
             notificationCenter.post(name: Notification.Name("todayButtonsTapped"), object: nil, userInfo: ["buttonTag":sender])
         }else if currentVCindex == 1{
-            //post to monthVC
+            //monthVC才能收到通知
             notificationCenter.post(name: Notification.Name("monthButtonsTapped"), object: nil, userInfo: ["buttonTag":sender])
         }
         
@@ -153,6 +160,7 @@ class topbarView: UIView {
     }
 }
 
+//MARK:-当左右滑动切换todayVC和monthVC时，用以下函数来实现topbar的切换动画
 extension topbarView{
     func animateBars(currenVCindex:Int,percentComplete:CGFloat){
         //animate rect bars
@@ -181,8 +189,11 @@ extension topbarView{
     
     func animateButtons(currenVCindex:Int,percentComplete:CGFloat){
         //animate buttons
+        //button1消失
         self.button1.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
-        self.button2.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
+        //button2和button3切换图标
+        self.button2.buttonImageView.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
+        self.tempButtonImageView2.alpha = (currenVCindex != 0) ? 1 - percentComplete : percentComplete
         
         self.button3.buttonImageView.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
         self.tempButtonImageView3.alpha = (currenVCindex != 0) ? 1 - percentComplete : percentComplete
