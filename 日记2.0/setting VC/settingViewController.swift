@@ -10,6 +10,7 @@ import UIKit
 class settingViewController: UIViewController {
     @IBOutlet weak var saveButton:UIButton!
     //font setting
+    @IBOutlet weak var imageSizeSegment:UISegmentedControl!
     @IBOutlet weak var fontSettingContainer:UIView!
     @IBOutlet weak var textView:UITextView!
     @IBOutlet weak var fontSizeLabel:UILabel!
@@ -17,6 +18,7 @@ class settingViewController: UIViewController {
     @IBOutlet weak var lineSpacingStepper:UIStepper!
     @IBOutlet weak var fontStylePicker:UIPickerView!
     var familyFonts:[String]!
+    var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
     var tempFontName:String = userDefaultManager.fontName
     var tempLineSpacing:CGFloat = userDefaultManager.lineSpacing
@@ -25,18 +27,25 @@ class settingViewController: UIViewController {
     @IBOutlet weak var securitySettingContainer:UIView!
     @IBOutlet weak var BiometricsSwitch:UISwitch!
     @IBOutlet weak var passwordSwitch:UISwitch!
-
+    
+    //back up setting
+    @IBOutlet weak var backupSettingContainer:UIView!
+    var activityIndicator:UIActivityIndicatorView!//进度条
+    var vSpinner : UIView?
+    
 //MARK:-IBActions
     @IBAction func save(_ sender: Any) {
         //保存设置
         userDefaultManager.fontSize = tempFontSize
         userDefaultManager.fontName = tempFontName
         userDefaultManager.lineSpacing = tempLineSpacing
+        userDefaultManager.imageSizeStyle = tempImageSizeStyle
         
         //更新textView和monthCell的字体
         let todayVC = UIApplication.getTodayVC()
         if let attrString = todayVC.textView.attributedText{
-            todayVC.textView.attributedText = attrString.addUserDefaultAttributes()
+            todayVC.textView.attributedText = nil//这样才能刷新图片大小，否则textView会使用缓存
+            todayVC.textView.attributedText = attrString.processAttrString(textView: todayVC.textView)
         }
         let monthVC = UIApplication.getMonthVC()
         monthVC.collectionView.reloadData()
@@ -75,18 +84,22 @@ class settingViewController: UIViewController {
         //开启密码
         if sender.isOn{
             let ac = UIAlertController(title: "设置密码", message: "请输入App密码", preferredStyle: .alert)
+            ac.view.setupShadow()
             ac.addTextField()
             ac.addTextField()
+            ac.textFields?[0].placeholder = "输入密码"
+            ac.textFields?[1].placeholder = "重复密码"
             ac.addAction(UIAlertAction(title: "取消", style: .cancel){ [weak self]_ in
                 //取消密码设置
                 sender.setOn(false, animated: true)
                 self!.BiometricsSwitch.setOn(false, animated: true)
                 self!.useBiometricsSwitchDidChange(self!.BiometricsSwitch)//调用didchange，目的是同步userDefaultManager
+                userDefaultManager.usePassword = sender.isOn//保存选项
             })
             ac.addAction(UIAlertAction(title: "提交", style: .default){[weak self] _ in
                 //进行密码设置
-                guard let password1 = ac.textFields?[0].text else {return}
-                guard let password2 = ac.textFields?[1].text else {return}
+                guard let textField1 = ac.textFields?[0], let textField2 = ac.textFields?[1] else {return}
+                guard let password1 = textField1.text,let password2 = textField2.text else {return}
                 if password1 == password2{
                     userDefaultManager.password = password1
                 }else{
@@ -113,6 +126,17 @@ class settingViewController: UIViewController {
         
     }
     
+    @IBAction func exportAll(){
+        showSpinner(onView: self.view)
+    
+        
+        exportManager.shared.exportAll(){ [self] in
+            print("stopAnimating")
+            removeSpinner()
+        }
+        
+    }
+    
 }
 
 //MARK:-UITextView
@@ -128,6 +152,15 @@ extension settingViewController{
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
         textView.attributedText = mutableAttr
+    }
+}
+
+//MARK:-UISegmentControl
+extension settingViewController{
+    @objc func segmentedControlChanged(_ sender:UISegmentedControl){
+        print("ImageSizeStyle:\(tempImageSizeStyle)")
+        tempImageSizeStyle = sender.selectedSegmentIndex
+        setupExampleTextView(imageScalingFactor: CGFloat(tempImageSizeStyle+1))
     }
 }
 
@@ -167,6 +200,7 @@ extension settingViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         familyFonts = UIFont.familyNames
+//        查看所有能用的字体
 //        for fontFamily in UIFont.familyNames{
 //            print("fontFamily:\(fontFamily)")
 //            for fontName in UIFont.fontNames(forFamilyName: fontFamily){
@@ -174,10 +208,9 @@ extension settingViewController{
 //            }
 //        }
         
-        //text view
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.black.cgColor
-        textView.layer.cornerRadius = 5
+        //image size segment control
+        imageSizeSegment.selectedSegmentIndex = userDefaultManager.imageSizeStyle
+        imageSizeSegment.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
         
         //font size stepper
         fontSizeStepper.stepValue = 1
@@ -203,12 +236,88 @@ extension settingViewController{
         BiometricsSwitch.isOn = userDefaultManager.useBiometrics
         
         //add shadow & round corner
-        fontSettingContainer.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
-        securitySettingContainer.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        fontSettingContainer.setupShadow()
+        securitySettingContainer.setupShadow()
+        backupSettingContainer.setupShadow()
         fontSettingContainer.layer.cornerRadius = 10
         securitySettingContainer.layer.cornerRadius = 10
+        backupSettingContainer.layer.cornerRadius = 10
         
+        setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
         
-        updateExampleTextView(withFontSize: userDefaultManager.fontSize, withFontStyle: userDefaultManager.fontName, withLineSpacing: userDefaultManager.lineSpacing)
+    }
+    
+    func setupExampleTextView(imageScalingFactor:CGFloat){
+        textView.attributedText = nil
+        //插入图片
+        let attachment = NSTextAttachment()
+        let image = UIImage(named: "jayChou")!
+        let imageAspectRatio = image.size.height / image.size.width
+        let imageWidth = textView.frame.width
+        let imageHeight = imageWidth * imageAspectRatio
+        let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))
+        attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
+        attachment.bounds = CGRect(x: 0, y: 0,
+                                   width: imageWidth / imageScalingFactor,
+                                   height: imageHeight / imageScalingFactor)
+        let attStr = NSAttributedString(attachment: attachment)
+        let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
+        mutableStr.insert(attStr, at: textView.attributedText.length)
+        
+        //插入文字
+        let text =
+        """
+
+        一路向北
+        Jay Chou
+        2005 
+        """
+        mutableStr.insert(NSAttributedString(string: text), at: 1)
+        textView.attributedText = mutableStr
+        
+        //更新textView的字体等信息
+        updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
+        
+//        textView.layer.borderWidth = 1
+//        textView.layer.borderColor = UIColor.black.cgColor
+//        textView.layer.cornerRadius = 5
+    }
+    
+}
+
+extension settingViewController {
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(style: .large)
+        ai.color = .black
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        spinnerView.alpha = 0
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+            UIView.animate(withDuration: 0.5) {
+                spinnerView.alpha = 1
+            } completion: { (_) in
+                
+            }
+
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async { [self] in
+            UIView.animate(withDuration: 0.5) {
+                vSpinner?.alpha = 0
+            } completion: { (_) in
+                vSpinner?.removeFromSuperview()
+                vSpinner = nil
+            }
+            
+        }
     }
 }

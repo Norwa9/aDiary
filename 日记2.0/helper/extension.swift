@@ -16,8 +16,15 @@ enum moodTypes:String,CaseIterable,Codable{
     case unhappy = "unhappy"
 }
 
+enum sortStyle:Int {
+    case dateDescending
+    case dateAscending
+    case wordDescending
+    case wordAscending
+}
 
-let weekDaysCN:Dictionary<String,String> = ["Mon":"星期一","Tue":"星期二","Wed":"星期三","Thu":"星期四","Fri":"星期五","Sat":"星期六","Sun":"星期天"]
+
+let weekDaysCN:Dictionary<String,String> = ["Mon":"周一","Tue":"周二","Wed":"周三","Thu":"周四","Fri":"周五","Sat":"周六","Sun":"周天"]
 
 enum dateInfo {
     case day
@@ -38,17 +45,6 @@ func getDateComponent(for date:Date,for key:dateInfo) -> Int{
         return dateComponents.year!
     case .weekDay:
         return dateComponents.weekday! - 1
-    }
-}
-
-func getWeekDayFromDateString(string:String) -> String{
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy年M月d日"
-    if let date = formatter.date(from: string){
-        formatter.dateFormat = "EEE"
-        return weekDaysCN[formatter.string(from: date)]!
-    }else{
-        return "Unknow"
     }
 }
 
@@ -93,14 +89,28 @@ func getDocumentsDirectory() -> URL {
 
 
 
-func initalSelectedDiary()->diaryInfo{
-    let dateTodayString = getTodayDate()
-    //如果今天已经有日记，返回今天日记；没有的话就创建一个空的模板
-    if let diary = DataContainerSingleton.sharedDataContainer.diaryDict[dateTodayString]{
-        return diary
-    }else{
-        return diaryInfo(dateString: dateTodayString)
+extension Date{
+    //获取当前星期几
+    func getWeekday()->String{
+        let weekDays = [NSNull.init(),"周日","周一","周二","周三","周四","周五","周六"] as [Any]
+        let calendar = NSCalendar.init(calendarIdentifier: .gregorian)
+        let timeZone = NSTimeZone.init(name: "Asia/Shanghai")
+        calendar?.timeZone = timeZone! as TimeZone
+        let calendarUnit = NSCalendar.Unit.weekday
+        let theComponents = calendar?.components(calendarUnit, from: self)
+        return weekDays[(theComponents?.weekday)!] as! String
+    }
+    
+    func getWeekday(dateString:String) -> String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy年M月d日"
+        let date = formatter.date(from: dateString)
+        formatter.dateFormat = "EEE"
+        let string =  formatter.string(from: date!)
+        #if targetEnvironment(simulator)
+        return weekDaysCN[string]!
+        #endif
+        return string
     }
 }
-
 

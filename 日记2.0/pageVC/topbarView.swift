@@ -20,7 +20,6 @@ class topbarView: UIView {
     var dataLable2:UILabel!
     var tempLabel1:UILabel!
     var tempLabel2:UILabel!
-    var rectBar1:UIView!
     
     var button1:topbarButton!
     var button2:topbarButton!
@@ -28,7 +27,6 @@ class topbarView: UIView {
     var button3:topbarButton!
     var tempButtonImageView3:UIImageView!
     var buttonSize:CGSize!
-    var rectBar2:UIView!
     
     var topbarButtons:[topbarButton] = []
     
@@ -61,46 +59,34 @@ class topbarView: UIView {
         self.addSubview(dataLable1)
         //dataLable2
         dataLable2 = UILabel(frame: CGRect(x: 16, y: 76, width: 159, height: 25))
-        dataLable2.text = getWeekDayFromDateString(string: dataLable1.text!)
+        dataLable2.text = Date().getWeekday()
         dataLable2.font = appDefaultFonts.dateLable2Font
 //        dataLable2.text = curWeekDay
         self.addSubview(dataLable2)
-        //rectbar1
-        rectBar1 = UIView(frame: CGRect(x: 14, y: 44, width: dataLable1.frame.size.width, height: 5))
-        rectBar1.backgroundColor = .white
-        rectBar1.layer.cornerRadius = 2
-        rectBar1.setupShadow(opacity: 0.35, radius: 1, offset: CGSize(width: 1, height: 1), color: .black)
-        self.addSubview(rectBar1)
         
+        let screenRightedgeX = UIScreen.main.bounds.width
         buttonSize = CGSize(width: 40, height: 40)
-        //button1
-        button1 = topbarButton(frame: CGRect(origin: CGPoint(x: 255, y: 52), size: buttonSize))
-        button1.image = UIImage(named: "star1")
-        button1.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
-        button1.tag = 1
-        self.addSubview(button1)
-        //button2
-        button2 = topbarButton(frame: CGRect(origin: CGPoint(x: button1.frame.minX + 50, y: 52), size: buttonSize))
-        button2.image = UIImage(named: "calm")
-        button2.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
-        button2.tag = 2
-        self.addSubview(button2)
         //button3
-        button3 = topbarButton(frame: CGRect(origin: CGPoint(x: button2.frame.minX + 50, y: 52), size: buttonSize))
+        button3 = topbarButton(frame: CGRect(origin: CGPoint(x: screenRightedgeX - buttonSize.width - 14, y: 52), size: buttonSize))
         button3.image = UIImage(named: "tag")
         button3.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button3.tag = 3
         self.addSubview(button3)
-        //rectbar2
-        rectBar2 = UIView(frame: CGRect(x: button1.frame.minX, y: 44, width: button3.frame.maxX-button1.frame.minX, height: 5))
-        rectBar2.backgroundColor = .white
-        rectBar2.layer.cornerRadius = 2
-        rectBar2.setupShadow(opacity: 0.35, radius: 1, offset: CGSize(width: 1, height: 1), color: .black)
-        self.addSubview(rectBar2)
         
+        //button2
+        button2 = topbarButton(frame: CGRect(origin: CGPoint(x: button3.frame.minX - 50, y: 52), size: buttonSize))
+        button2.image = UIImage(named: "calm")
+        button2.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
+        button2.tag = 2
+        self.addSubview(button2)
         
-        rectBar1.isHidden = true
-        rectBar2.isHidden = true
+        //button1
+        button1 = topbarButton(frame: CGRect(origin: CGPoint(x: button2.frame.minX - 50, y: 52), size: buttonSize))
+        button1.image = UIImage(named: "star1")
+        button1.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
+        button1.tag = 1
+        self.addSubview(button1)
+        
         
         topbarButtons = [button1,button2,button3]
     }
@@ -162,22 +148,6 @@ class topbarView: UIView {
 
 //MARK:-当左右滑动切换todayVC和monthVC时，用以下函数来实现topbar的切换动画
 extension topbarView{
-    func animateBars(currenVCindex:Int,percentComplete:CGFloat){
-        //animate rect bars
-        let tempLabel1Width = self.tempLabel1.frame.size.width
-        let dateLabel1Width = self.dataLable1.frame.size.width
-        self.rectBar1.frame.size.width = (currenVCindex != 0) ?
-            tempLabel1Width + (dateLabel1Width - tempLabel1Width) * (percentComplete) :
-            tempLabel1Width + (dateLabel1Width - tempLabel1Width) * (1.0 - percentComplete)
-        
-        self.rectBar2.frame.origin.x = (currenVCindex != 0) ?
-            self.button3.frame.minX - (self.button3.frame.minX - self.button1.frame.minX) * (percentComplete) :
-            self.button1.frame.minX + (self.button3.frame.minX - self.button1.frame.minX) * (percentComplete)
-        self.rectBar2.frame.size.width = (currenVCindex != 0) ?
-            (self.button3.frame.maxX - self.button3.frame.minX) + (self.button3.frame.minX - self.button1.frame.minX) * (percentComplete) :
-            (self.button3.frame.maxX - self.button1.frame.minX) - (self.button3.frame.minX - self.button1.frame.minX) * (percentComplete)
-    }
-    
     func animateDateLabels(currenVCindex:Int,percentComplete:CGFloat){
         //animate labels
         self.dataLable1.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete

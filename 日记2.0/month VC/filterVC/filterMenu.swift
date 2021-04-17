@@ -10,11 +10,15 @@ import UIKit
 class filterMenu: UIView {
     weak var monthVC:monthVC!
     var contentView:UIView!
-    @IBOutlet weak var pickerView:UIPickerView!
     @IBOutlet weak var tableView:UITableView!
+    
+    let buttonSize = CGSize(width: 40, height: 40)
     @IBOutlet weak var doneButton:UIButton!
     lazy var buttons = [moodButton]()
-    var pickerDataSource = [Int]()
+    @IBOutlet weak var sortStyleSegmentControl:UISegmentedControl!
+    
+    var selectedSortstyle:sortStyle = .dateDescending
+    
     
     var keywords:String?
     var selectedMood:moodTypes?
@@ -23,27 +27,20 @@ class filterMenu: UIView {
     
     //初始化默认属性配置
     func configureUI(){
+        //sort style
+        sortStyleSegmentControl.addTarget(self, action: #selector(sortStyleChange(_:)), for: .valueChanged)
         
-        //buttons
         
+        //mood buttons
         for i in 0..<3 {
-            let button = moodButton(frame: CGRect(x: 130 + CGFloat(i) * 50, y: 103, width: 40, height: 40))
+            let button = moodButton(frame: CGRect(origin: CGPoint(x: 130 + CGFloat(i) * 50, y: 103), size: buttonSize))
             button.moodType = moodTypes.allCases[i]
             button.addTarget(self, action: #selector(moodButtonTapped(sender:)), for: .touchUpInside)
             self.addSubview(button)
             buttons.append(button)
         }
         doneButton.layer.cornerRadius = 5
-        doneButton.setupShadow(opacity: 1, radius: 2, offset: .zero, color: .lightGray)
-        
-        //picker view
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        for i in 1...10{
-            pickerDataSource.append(i*10)
-        }
-        pickerView.selectRow(0, inComponent: 0, animated: true)
-        selectedNum = pickerDataSource[0]
+        doneButton.setupShadow()
         
         //table view
         tableView.delegate = self
@@ -52,7 +49,10 @@ class filterMenu: UIView {
         tableView.register(nib, forCellReuseIdentifier: tagsCell.reusableId)
         tableView.separatorStyle = .none
 
-        
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        //布局相关设置：layoutSubviews()中可以获取autolayout后view的准确frame
     }
     
     //button target
@@ -71,17 +71,17 @@ class filterMenu: UIView {
     @IBAction func done(){
         monthVC.popover.dismiss()
         //获取符合筛选条件的日记
-        let filteredDiaries = diariesForConditions(keywords: keywords,selectedMood: selectedMood, selectedTags: selectedTags, numsToShow: selectedNum)
+        let filteredDiaries = diariesForConditions(keywords: keywords,selectedMood: selectedMood, selectedTags: selectedTags, sortStyle: selectedSortstyle)
         
         monthVC.configureDataSource(dataSource: filteredDiaries)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        //布局相关设置：layoutSubviews()中可以获取autolayout后view的准确frame
-        
-
+    @objc func sortStyleChange(_ sender:UISegmentedControl){
+        let index = sender.selectedSegmentIndex
+        selectedSortstyle = sortStyle.init(rawValue: index)!
     }
+    
+   
     
     //初始化时将xib中的view添加进来
     override init(frame: CGRect) {
@@ -116,33 +116,6 @@ class filterMenu: UIView {
     func setUpConstraint(){
         contentView.fillSuperview()
     }
-
-}
-
-extension filterMenu:UIPickerViewDelegate,UIPickerViewDataSource{
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        pickerDataSource.count + 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if row == pickerDataSource.count{
-            return "所有"
-        }
-        return String(pickerDataSource[row])
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //选择了：展示所有
-        if row == pickerDataSource.count{
-            selectedNum = 0
-            return
-        }
-        selectedNum = pickerDataSource[row]
-    }
     
 }
 
@@ -171,3 +144,4 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
     }
     
 }
+

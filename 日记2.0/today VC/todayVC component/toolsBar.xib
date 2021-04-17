@@ -20,29 +20,58 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hl-P5-9lK">
-                    <rect key="frame" x="320" y="5" width="30" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hl-P5-9lK">
+                    <rect key="frame" x="50" y="5" width="30" height="30"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="Bq1-WD-0iv"/>
+                        <constraint firstAttribute="height" constant="30" id="s1W-Yz-dvh"/>
+                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyo-XQ-goJ">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyo-XQ-goJ">
                     <rect key="frame" x="355" y="5" width="49" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="O2p-Ef-dD6"/>
+                        <constraint firstAttribute="width" constant="49" id="ad2-rx-c3G"/>
+                    </constraints>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fx-37o">
-                    <rect key="frame" x="285" y="5" width="30" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2P-wk-5YV">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2P-wk-5YV">
                     <rect key="frame" x="10" y="5" width="30" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="KNA-qh-pAl"/>
+                        <constraint firstAttribute="width" constant="30" id="aUy-Oh-8wg"/>
+                    </constraints>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fx-37o">
+                    <rect key="frame" x="90" y="5" width="30" height="30"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="QR0-u8-CuT"/>
+                        <constraint firstAttribute="height" constant="30" id="g8A-4l-Tlk"/>
+                    </constraints>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Pyo-XQ-goJ" secondAttribute="bottom" constant="5" id="1Js-oE-yq2"/>
+                <constraint firstItem="Pyo-XQ-goJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="3wK-0L-V9L"/>
+                <constraint firstItem="3hl-P5-9lK" firstAttribute="leading" secondItem="c2P-wk-5YV" secondAttribute="trailing" constant="10" id="4Wo-ts-Vtc"/>
+                <constraint firstItem="Kiz-fx-37o" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="6eC-OF-xi9"/>
+                <constraint firstItem="3hl-P5-9lK" firstAttribute="leading" secondItem="c2P-wk-5YV" secondAttribute="trailing" constant="10" id="79W-gG-GIU"/>
+                <constraint firstItem="c2P-wk-5YV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="7QY-Qo-RUP"/>
+                <constraint firstItem="3hl-P5-9lK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="G8P-wC-dBI"/>
+                <constraint firstAttribute="bottom" secondItem="c2P-wk-5YV" secondAttribute="bottom" constant="5" id="Hm8-8P-BLD"/>
+                <constraint firstAttribute="bottom" secondItem="c2P-wk-5YV" secondAttribute="bottom" constant="5" id="Ndb-WL-lMw"/>
+                <constraint firstItem="c2P-wk-5YV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="XR9-PP-YyH"/>
+                <constraint firstAttribute="bottom" secondItem="Kiz-fx-37o" secondAttribute="bottom" constant="5" id="YRU-6j-MO8"/>
+                <constraint firstItem="c2P-wk-5YV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="eyy-ir-YsY"/>
+                <constraint firstAttribute="trailing" secondItem="Pyo-XQ-goJ" secondAttribute="trailing" constant="10" id="mLw-W3-eor"/>
+                <constraint firstItem="Kiz-fx-37o" firstAttribute="leading" secondItem="3hl-P5-9lK" secondAttribute="trailing" constant="10" id="pdF-rA-a31"/>
+                <constraint firstAttribute="bottom" secondItem="3hl-P5-9lK" secondAttribute="bottom" constant="5" id="ye7-Dp-YQc"/>
+            </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

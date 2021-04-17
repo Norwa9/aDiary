@@ -62,6 +62,15 @@ extension UIImage{
                     callBack(image!)
                 })
             }
+        /*
+         用法：
+         let compressedImage = UIImage(data: image.jpegData(compressionQuality: 0.6)!)!
+         compressedImage.createRoundedRectImage(size: compressedImage.size,radius: image.size.width / 25) { (RRimg) in
+             //RRimg即在后台线程渲染完成后返回的UIImage对象
+             attachment.image = RRimg
+         }
+         */
+        
     }
     
     func createRoundedRectImage(size: CGSize,radius:CGFloat)->UIImage {

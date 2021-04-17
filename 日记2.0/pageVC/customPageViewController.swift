@@ -120,14 +120,14 @@ extension customPageViewController:UIPageViewControllerDataSource,UIPageViewCont
 extension customPageViewController:UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let point = scrollView.contentOffset
-        if (curVCIndex == 0 && point.x < 414.0) || (curVCIndex == 1 && point.x > 414.0){
+        let screenWidth = UIScreen.main.bounds.width
+        if (curVCIndex == 0 && point.x < screenWidth) || (curVCIndex == 1 && point.x > screenWidth){
             return
         }
         //计算左右滑动的完成进度
         percentComplete = abs(point.x - self.view.frame.size.width)/self.view.frame.size.width
         
         //animate topbar
-        pageViewContainer.topBar.animateBars(currenVCindex: curVCIndex, percentComplete: percentComplete)
         pageViewContainer.topBar.animateButtons(currenVCindex: curVCIndex, percentComplete: percentComplete)
         pageViewContainer.topBar.animateDateLabels(currenVCindex: curVCIndex, percentComplete: percentComplete)
     }

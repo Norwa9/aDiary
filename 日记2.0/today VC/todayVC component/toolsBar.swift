@@ -21,6 +21,7 @@ class toolsBar: UIView {
     
     func configureUI(){
         //save button
+        saveButton.backgroundColor = .systemBackground
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 10
         saveButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -32,6 +33,7 @@ class toolsBar: UIView {
         saveButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         //add time button
+        insertTimeButton.backgroundColor = .systemBackground
         insertTimeButton.addTarget(self, action: #selector(insertTimeToTextView), for: .touchUpInside)
         insertTimeButton.layer.cornerRadius = 10
         insertTimeButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -43,6 +45,7 @@ class toolsBar: UIView {
         insertTimeButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         //insert picture button
+        insertImageButton.backgroundColor = .systemBackground
         insertImageButton.addTarget(self, action: #selector(insertImageToTextView), for: .touchUpInside)
         insertImageButton.layer.cornerRadius = 10
         insertImageButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -54,6 +57,7 @@ class toolsBar: UIView {
         insertImageButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         //create number list
+        numberListButton.backgroundColor = .systemBackground
         numberListButton.addTarget(self, action: #selector(setNumberList), for: .touchUpInside)
         numberListButton.layer.cornerRadius = 10
         numberListButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)

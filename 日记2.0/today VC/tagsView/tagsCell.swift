@@ -37,6 +37,10 @@ class tagsCell: UITableViewCell {
         view.layer.cornerRadius = 5
         return view
     }()
+    
+//    var cellBGView:UIView = {
+//        
+//    }()
      
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -94,9 +98,7 @@ class tagsCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-//        print("prepareForReuse(),text:\(self.tagsLabel.text)")
-//        tagSelectedIcon.alpha = 0
-//        tagSelectedBGView.alpha = 0
+        hasSelected = false
     }
     
 }

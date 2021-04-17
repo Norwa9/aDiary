@@ -17,6 +17,8 @@ class customAlertView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(cancel), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {

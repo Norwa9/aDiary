@@ -38,17 +38,21 @@ struct DefaultsKeys
 class DataContainerSingleton {
     static let sharedDataContainer = DataContainerSingleton()
     
+    //是否导入外部日记
     var hasInitialized = false
+    //日记的纯文本
     var diaryDict = [String:diaryInfo]()
+    //日记的富文本
     var attributedDiaryDict = [String:NSAttributedString]()
+    //todayVC展示的日记
     var selectedDiary:diaryInfo!
+    //用户保存的标签
     var tags = [String]()
     
     var goToBackgroundObserver: AnyObject?
     init(){
         let defaults = UserDefaults.standard
-        //-----------------------------------------------------------------------------
-        //读取。从UserDefaults读取
+        //1、读取：从UserDefaults读取
         hasInitialized = defaults.value(forKey: DefaultsKeys.hasInitialized) as? Bool ?? false
         tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? [String]()
         if let savedNotes = defaults.object(forKey: DefaultsKeys.diaryDict) as? Data {
@@ -56,12 +60,10 @@ class DataContainerSingleton {
             do {
                 diaryDict = try jsonDecoder.decode([String:diaryInfo].self, from: savedNotes)
             } catch {
-                print("Failed to load dict")
+                print("Failed to load diary dict")
             }
         }
-        //-----------------------------------------------------------------------------
-        //保存。当app退出到后台，保存数据到UserDefaults
-        print("进入后台，保存数据")
+        //2、保存：当app退出到后台，保存数据到UserDefaults
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
             let defaults = UserDefaults.standard
             defaults.setValue(self.hasInitialized, forKey: DefaultsKeys.hasInitialized)
@@ -70,12 +72,15 @@ class DataContainerSingleton {
             if let storedData = try? jsonEncoder.encode(self.diaryDict) {
                 defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
             } else {
-              print("Failed to save dict.")
+              print("Failed to save diary dict.")
             }
         }
-        //-----------------------------------------------------------------------------
-        //初始化今日界面的数据：初始化selected Diary为今日的日记
-        //如果今天已经有日记，返回今天日记；没有的话就创建一个空的模板
+
+        /*
+        3、读取app首页数据
+        初始化今日界面的数据：初始化selected Diary为今日的日记
+        如果今天已经有日记，返回今天日记；没有的话就创建一个空的模板
+        */
         let dateTodayString = getTodayDate()
         if let diary = diaryDict[dateTodayString]{
             selectedDiary =  diary
@@ -84,10 +89,18 @@ class DataContainerSingleton {
             selectedDiary = diaryDict[dateTodayString]
         }
     }
+    
+    func getTotalWordcount()->Int{
+        var count = 0
+        for diary in diaryDict.values{
+            count += diary.content.count
+        }
+        return count
+    }
 }
 
 
-//MARK:-导入日记
+//MARK:-导入demo日记
 func initialDiaryDict(){
     print("initialDiaryDict() called")
     let formatter = DateFormatter()
@@ -110,6 +123,7 @@ func initialDiaryDict(){
     }
 }
 
+//从txt文件解析出日记的日期和文本
 func txt2String(fileName:String) -> [Date:String]{
     let formatter = DateFormatter()
     formatter.dateFormat = "MMMM d EEEE yyyy"
@@ -180,12 +194,12 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
 
 //MARK:-获取符合筛选条件的所有日记
 func diariesForConditions(
-    keywords:String?,selectedMood:moodTypes?,selectedTags:[String],numsToShow:Int)->[diaryInfo?]{
+    keywords:String?,selectedMood:moodTypes?,selectedTags:[String],sortStyle:sortStyle)->[diaryInfo?]{
     let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
 
     var resultDiaries = [diaryInfo?]()
     
-    //筛选指定条件的日记
+    //筛选：心情和标签
     for (_,diary) in diaryDict{
         if selectedMood != nil && diary.mood != selectedMood{
             continue
@@ -196,7 +210,7 @@ func diariesForConditions(
         resultDiaries.append(diary)
     }
     
-    //如果有指定关键词，再继续筛选出包含关键词的日记
+    //2、筛选：关键字
     if keywords != ""{
         resultDiaries = resultDiaries.filter { (item: diaryInfo?) -> Bool in
             // If dataItem matches the searchText, return true to include it
@@ -204,16 +218,33 @@ func diariesForConditions(
         }
     }
     
-    //按字数排序结果
-    resultDiaries = resultDiaries.sorted(by:{$0!.content.count > $1!.content.count})
-    
-    if numsToShow == 0{//0表示特例：展示所有
-        return resultDiaries.reversed()
-    }
-    else if resultDiaries.count > numsToShow{
-        return resultDiaries.dropLast(resultDiaries.count - numsToShow).reversed()
-    }else{
-        return resultDiaries.reversed()
+    //3、筛选：排序方式
+    let dateFomatter = DateFormatter()
+    dateFomatter.dateFormat = "yyyy年M月d日"
+    switch sortStyle {
+        case .dateDescending:
+            return resultDiaries.sorted { (d1, d2) -> Bool in
+                if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
+                    if date1.compare(date2) ==  .orderedAscending{
+                        return true
+                    }
+                }
+                return false
+            }
+        case .dateAscending:
+            return resultDiaries.sorted { (d1, d2) -> Bool in
+                if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
+                    if date1.compare(date2) ==  .orderedDescending{
+                        return true
+                    }
+                }
+                return false
+            }
+        case .wordDescending:
+            return resultDiaries.sorted(by:{$0!.content.count > $1!.content.count})
+        case .wordAscending:
+            return resultDiaries.sorted(by:{$0!.content.count < $1!.content.count})
+        
     }
 }
 

@@ -28,6 +28,7 @@ class tagsView: UIViewController {
         dragBar.layer.cornerRadius = 4
         
         //configure mood buttons
+        iconsContainer.backgroundColor = .systemBackground
         let frame = iconsContainer.frame
         let pedding = (frame.width - frame.height * 3) / 4
         for i in 0..<moodTypes.allCases.count{
@@ -37,6 +38,7 @@ class tagsView: UIViewController {
             iconsContainer.addSubview(button)
             moodButtons.append(button)
         }
+        
         
         //configure table view
         let nib = UINib(nibName: tagsCell.reusableId, bundle: Bundle.main)
@@ -83,12 +85,16 @@ class tagsView: UIViewController {
     //2
     @objc func panGestureRecognizerAction(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
+        print("translation:\(translation.x),\(translation.y)")
+//        if translation.x != 0 {
+//            return
+//        }
         
         // Not allowing the user to drag the view upward
         guard translation.y >= 0 else { return }
         
         // setting x as 0 because we don't want users to move the frame side ways!! Only want straight up or down
-        view.frame.origin = CGPoint(x: 0, y: self.pointOrigin!.y + translation.y)
+        view.frame.origin.y = self.pointOrigin!.y + translation.y
         if sender.state == .ended {
             let dragVelocity = sender.velocity(in: view)
             if dragVelocity.y >= 1300 || translation.y > 200{
@@ -96,7 +102,7 @@ class tagsView: UIViewController {
             } else {
                 // Set back to original position of the view controller
                 UIView.animate(withDuration: 0.3) {
-                    self.view.frame.origin = self.pointOrigin ?? CGPoint(x: 0, y: 400)
+                    self.view.frame.origin.y = self.pointOrigin?.y ?? 400
                 }
             }
         }
@@ -110,10 +116,63 @@ class tagsView: UIViewController {
             guard let tag = ac.textFields?[0].text else{
                 return
             }
-            DataContainerSingleton.sharedDataContainer.tags.append(tag)
-            self.tagsTableView.reloadData()
+            if !DataContainerSingleton.sharedDataContainer.tags.contains(tag){
+                DataContainerSingleton.sharedDataContainer.tags.append(tag)
+                self.tagsTableView.reloadData()
+            }
         }))
+        ac.view.setupShadow()
         self.present(ac, animated: true, completion: nil)
+    }
+    
+    @IBAction func deleteSelectedTags(){
+        if selectedTags.count != 0{
+            //从selectedTags数组中获取当前选取的cell的indexPath
+            var indexPaths = [IndexPath]()
+            let allTags = DataContainerSingleton.sharedDataContainer.tags
+            for tag in selectedTags{
+                if let index = allTags.firstIndex(of: tag){
+                    indexPaths.append(IndexPath(row: index, section: 0))
+                }
+            }
+            print(indexPaths)
+            //提示是否要删除
+            let ac = UIAlertController(title: "是否删除当前选中的\(indexPaths.count)个标签？", message: "这些标签会从所有日记中移除", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            let ok = UIAlertAction(title: "删除", style: .destructive, handler: {[weak self] _ in
+                //确认删除选中标签
+                //1、更新tableView数据源
+                for tag in self!.selectedTags {
+                    if let tagIndex = DataContainerSingleton.sharedDataContainer.tags.firstIndex(of: tag){
+                        DataContainerSingleton.sharedDataContainer.tags.remove(at: tagIndex)
+                    }
+                }
+                //2、更新tableView
+                //注意顺序问题，在deleteRows之前，必须更新dataSource
+                self!.tagsTableView.deleteRows(at: indexPaths, with: .fade)
+                //3、更新monthVC cell中的tags
+                for diary in DataContainerSingleton.sharedDataContainer.diaryDict.values{
+                    let newDiaryTags = diary.tags.filter { (item) -> Bool in
+                        if self!.selectedTags.contains(item){
+                            return false
+                        }else{
+                            return true
+                        }
+                    }
+                    diary.tags = newDiaryTags
+                }
+                let monthVC = UIApplication.getMonthVC()
+                monthVC.reloadCollectionViewData()
+                //3、更新selectedTags，当前没有cell被选中
+                self!.selectedTags.removeAll()
+            })
+            ac.addAction(cancel)
+            ac.addAction(ok)
+            ac.view.setupShadow()
+            self.present(ac, animated: true, completion: nil)
+        }else{
+            return
+        }
     }
 
 }
@@ -210,9 +269,6 @@ extension tagsView{
         }
         diary.tags = selectedTags
         let monthVC = UIApplication.getMonthVC()
-        monthVC.collectionView.performBatchUpdates({
-                            let indexSet = IndexSet(integersIn: 0...0)
-                            monthVC.collectionView.reloadSections(indexSet)
-                        }, completion: nil)
+        monthVC.reloadCollectionViewData()
     }
 }

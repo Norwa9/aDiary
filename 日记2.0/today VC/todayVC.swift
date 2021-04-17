@@ -33,13 +33,17 @@ class todayVC: UIViewController {
         //textView
         textView.delegate = self
         textView.font = UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)
-        textView.layoutManager.allowsNonContiguousLayout = false
-        //tap on image
+//        textView.layoutManager.allowsNonContiguousLayout = false
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnImage(_:)))
         textView.addGestureRecognizer(tap)
+//        let mail = UIMenuItem(title:"邮件", action: #selector(mailAction))
+//
+//        let menu=UIMenuController()
+//
+//        menu.menuItems = [mail]
         
         //tools bar
-        keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: 414, height: 40))
+        keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
         keyBoardToolsBarFrame = keyBoardToolsBar.frame
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.todayVC = self
@@ -129,29 +133,33 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         let attachment = NSTextAttachment()
         let imageAspectRatio = image.size.height / image.size.width
         let pedding:CGFloat = 10
-        let imageWidth = textView.frame.width - pedding
-        let imageHeight = imageWidth * imageAspectRatio
+        let imageWidth = (textView.frame.width - pedding)
+        let imageHeight = (imageWidth * imageAspectRatio)
         let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))//修改尺寸，防止从存储中读取富文本时图片方向错位
-//        let compressedImage = UIImage(data: image.jpegData(compressionQuality: 0.6)!)!
-//        compressedImage.createRoundedRectImage(size: compressedImage.size,radius: image.size.width / 25) { (RRimg) in
-//            //RRimg即在后台线程渲染完成后返回的UIImage对象
-//            attachment.image = RRimg
-//        }
         attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
-        attachment.bounds = CGRect(x: 0, y: 0,width: imageWidth,height: imageHeight)
+        attachment.bounds = CGRect(x: 0, y: 0,
+                                   width: imageWidth / userDefaultManager.imageScalingFactor,
+                                   height: imageHeight / userDefaultManager.imageScalingFactor)
         
         //将附件转成NSAttributedString类型的属性化文本
-        let attStr = NSAttributedString(attachment: attachment)
+        let imageAttr = NSAttributedString(attachment: attachment)
+        let imageAlignmentStyle = NSMutableParagraphStyle()
+        imageAlignmentStyle.alignment = .center
+        imageAlignmentStyle.lineSpacing = userDefaultManager.lineSpacing
+        let attributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle:imageAlignmentStyle,
+        ]
         //获取textView的所有文本，转成可变的文本
         let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
         //获得目前光标的位置
         let selectedRange = textView.selectedRange
-        
-        //插入附件
+        //居中插入图片
         let insertLoaction = selectedRange.location
-        mutableStr.insert(attStr, at: insertLoaction)
+        mutableStr.insert(imageAttr, at: insertLoaction)
+        mutableStr.addAttributes(attributes, range: NSRange(location: insertLoaction, length: 1))
+        //另起一行
         mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)
-        //格式化mutableStr
+        
         mutableStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!, range: NSMakeRange(0,mutableStr.length))
         textView.attributedText = mutableStr
         //从插入图片的下一行继续编辑
@@ -159,48 +167,7 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         textView.scrollRangeToVisible(textView.selectedRange)
     }
     
-    //处理从本地读取的富文本
-    //功能1：设置图片附件的显示大小，添加用户偏好的文本属性
-    //功能2：将富文本清洗成collection view cell显示的纯文本
-    private func processAttrString(aString:NSAttributedString,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
-        let cleanText = NSMutableAttributedString(attributedString: aString)
-        let mutableText = NSMutableAttributedString(attributedString: aString)
-        let bounds = self.textView.bounds
-        //1、调整图片，让图片显示正确的大小
-        mutableText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: mutableText.length), options: [], using: { [] (object, range, pointer) in
-            let textViewAsAny: Any = self.textView!
-            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
-                
-                cleanText.replaceCharacters(in: range, with: "P")//为了正则表达式匹配，将图片替换成"P"。
-                
-                let aspect = img.size.width / img.size.height
-                let pedding:CGFloat = 10
-                let textViewWidth = textView.frame.width - pedding
-                let textViewHeight = textViewWidth / aspect
-                
-                if fillWithEmptyImage{
-                    attachment.image = UIImage.emptyImage(with: CGSize(width: textViewWidth, height:textViewHeight))
-                    attachment.bounds = CGRect(x: 0, y: 0, width: textViewWidth, height: textViewHeight)
-                    return
-                }
-                
-                if img.size.width > textView.frame.width {
-                    attachment.bounds = CGRect(x: 0, y: 0, width: textViewWidth, height: textViewHeight)
-                    return
-                }
-            }
-            })
-        //2、施加用户自定义格式
-        let attrText = mutableText.addUserDefaultAttributes()
-        
-        //3、返回处理后的结果
-        if returnCleanText{
-            return cleanText
-        }else{
-            return attrText
-        }
-        
-    }
+    
     
     
 }
@@ -226,7 +193,7 @@ extension todayVC:UITextViewDelegate{
         customPageVC.pageScrollView.isScrollEnabled = true
         
         //存储纯文本
-        let string = processAttrString(aString: textView.attributedText, returnCleanText: true).string
+        let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
         todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
         //存储富文本
         saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
@@ -244,6 +211,11 @@ extension todayVC:UITextViewDelegate{
             let textFormatter = TextFormatter(textView: textView)
             textFormatter.addNewLine()
             return false
+        }else{
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .left
+            paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+            textView.typingAttributes[.paragraphStyle] = paragraphStyle
         }
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
@@ -342,20 +314,20 @@ extension todayVC{
         //load textView
         if todayDiary.content.count == 0{
             //palce holder
-            textView.text = "今天发生了什么..."
-            textView.textColor = UIColor.lightGray
+            textView.attributedText = NSAttributedString.textViewPlaceholder()
         }else{
             textView.textColor = UIColor.black
             if let aString = loadAttributedString(date_string: todayDiary.date!){
                 //暂时用空白图片填充
-                let preparedText = processAttrString(aString: aString,fillWithEmptyImage: true)
+//                let preparedText = processAttrString(aString: aString,fillWithEmptyImage: true)
+                let preparedText = aString.processAttrString(textView: self.textView,fillWithEmptyImage: true)
                 textView.attributedText = preparedText
             }
         }
         
         //load ohter info
         topbar.dataLable1.text = todayDiary.date
-        topbar.dataLable2.text = getWeekDayFromDateString(string: todayDiary.date!)
+        topbar.dataLable2.text = Date().getWeekday(dateString: todayDiary.date!)
         if todayDiary.date == getTodayDate(){
             topbar.dataLable2.text! += "*"
         }
@@ -393,7 +365,7 @@ extension todayVC{
             }
             print("将新日记的图片填入空白")
             if let aString = loadAttributedString(date_string: todayDiary.date!){
-                let preparedText = processAttrString(aString: aString,fillWithEmptyImage: false)
+                let preparedText = aString.processAttrString(textView: self.textView,fillWithEmptyImage: false)
                 textView.attributedText = preparedText
             }
         }

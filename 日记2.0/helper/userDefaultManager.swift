@@ -16,6 +16,7 @@ class userDefaultManager{
     static let defaultEditorLineSpacing:CGFloat = 3
     
     private struct constants {
+        static let imageSizeStyle = "imageSizeStyle"
         static let fontNameKey = "fontName"
         static let fontSizeKey = "fontSize"
         static let useBiometricsKey = "biometrics"
@@ -100,6 +101,25 @@ class userDefaultManager{
         }
         set {
             shared?.set(newValue, forKey: constants.lineSpacingKey)
+        }
+    }
+    
+    static var imageSizeStyle:Int{
+        get {
+            if let style = shared?.object(forKey: constants.imageSizeStyle) as? Int {
+                return style
+            }
+            //0:大，1:中，2:小
+            return 0
+        }
+        set {
+            shared?.set(newValue, forKey: constants.imageSizeStyle)
+        }
+    }
+    
+    static var imageScalingFactor:CGFloat{
+        get{
+            return CGFloat(imageSizeStyle + 1)
         }
     }
     
