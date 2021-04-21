@@ -24,13 +24,12 @@ public class TextFormatter{
     //创建数字列表
     func orderedList(){
         //获取当前range所在段落的range
-        guard let pRange = getParagraphRange() else { return }
+        guard let pRange = getCurParagraphRange() else { return }
 
         //获取当前段落的所有字符
         let paragraphString = textView.attributedText.attributedSubstring(from: pRange).string
-        print("paragraphString:\(paragraphString),count:\(paragraphString.count)")
         
-        guard paragraphString.isContainsLetters else {
+        guard !paragraphString.isEmpty else {
             //如果当前段落只有数字或是空段落，那么插入首个序号
             insertText("1. ")
             return
@@ -59,33 +58,85 @@ public class TextFormatter{
     
     //自动补齐递增数字列表
     func addNewLine(){
-        guard let currentParagraphRange = self.getParagraphRange() else { return }
+        guard let currentParagraphRange = self.getCurParagraphRange() else { return }
         let currentParagraph = storage.attributedSubstring(from: currentParagraphRange)
         let selectedRange = self.textView.selectedRange
-        
+       
         //自动递增数字列表
-        if selectedRange.location != currentParagraphRange.location && currentParagraphRange.upperBound - 2 < selectedRange.location {
+//        if selectedRange.location != currentParagraphRange.location && selectedRange.location > currentParagraphRange.upperBound - 2{
+        if selectedRange.location != currentParagraphRange.location{
             //获取例如4. 这样的前缀
             if let digitsMatch = TextFormatter.getAutocompleteDigitsMatch(string: currentParagraph.string) {
                 self.matchDigits(string: currentParagraph, match: digitsMatch)
                 return
             }
         }
-        
+        print("不自动递增数字列表")
         //不符合上面的条件，简单地换行即可
         self.textView.insertText("\n")
     }
     
+    //当清空某一行后，对其后所有的数字序号更新
+    func correctNum(){
+        if let curParaRange = getCurParagraphRange(),let nextParaRange = getNextParaRange(curParaRange: curParaRange){
+            let nextPara = storage.attributedSubstring(from: nextParaRange)
+            //如果下一段匹配到序号，则从下一段开始更新序号，直到遇到一个空行
+            //序号从1重新排序
+            if let _ = TextFormatter.getAutocompleteDigitsMatch(string: nextPara.string){
+                self.updateNumList(curParaRange: curParaRange, curDigit: 0)
+            }
+        }
+    }
+    
+    //当删除某一行时，对其后的所有数字序号更新
+    func correctNum(deleteRange:NSRange){
+        guard let curParaRange = getCurParagraphRange() else{return}
+        let deleteParaRange = storage.mutableString.paragraphRange(for: deleteRange)
+        //curPara删除前光标所在行
+        //deletePara删除后光标所在行
+        if curParaRange != deleteParaRange{
+            let deleteParaRange = storage.attributedSubstring(from: deleteParaRange)
+            if let match = TextFormatter.getAutocompleteDigitsMatch(string: deleteParaRange.string){
+                let resultString = deleteParaRange.attributedSubstring(from: match.range).string
+                if let digit = Int(resultString.replacingOccurrences(of:"[^0-9]", with: "", options: .regularExpression)){
+                    updateNumList(curParaRange: curParaRange, curDigit: digit)
+                }
+            }
+        }
+        
+    }
     
 
 //MARK:-helper
     //获取当前选取文字所在的段落
-    func getParagraphRange() -> NSRange? {
+    func getCurParagraphRange() -> NSRange? {
         if range.upperBound <= storage.length {
-            let paragraph = storage.mutableString.paragraphRange(for: range)
-            return paragraph
+            let paragraphRange = storage.mutableString.paragraphRange(for: range)
+            return paragraphRange
         }
         
+        return nil
+    }
+    
+    func getCurParaString()->String?{
+        if range.upperBound <= storage.length {
+            let paragraphRange = storage.mutableString.paragraphRange(for: range)
+            let paraString = storage.attributedSubstring(from: paragraphRange).string
+            return paraString
+        }
+        
+        return nil
+    }
+    
+    //使用当前段落的pRange，获取下一段落的pRange
+    func getNextParaRange(curParaRange:NSRange)->NSRange?{
+        if curParaRange.upperBound < storage.length{
+            let nextParaBegan = NSRange(location: curParaRange.upperBound, length: 0)
+            //着一段的upperBound就是下一段的开头
+            let nextParaRange = storage.mutableString.paragraphRange(for: nextParaBegan)
+//            print("curParaRange:\(curRange),nextParaBegan:\(nextParaBegan)nextParaRange:\(nextParaRange)")
+            return nextParaRange
+        }
         return nil
     }
     
@@ -96,6 +147,7 @@ public class TextFormatter{
     }
     
     private func matchDigits(string: NSAttributedString, match: NSTextCheckingResult) {
+        //string是本段文字
         guard string.length >= match.range.upperBound else { return }
 
         //found是匹配到序号的的纯文本，例如"4. "
@@ -106,8 +158,16 @@ public class TextFormatter{
             newLine = 0
         }
 
+        
         //如果当前序号后面没有有效内容，则换行时将把本段清空，并把光标置回本段开头
         if found.count + newLine == string.length {
+            
+            //1.更新后续段落的序号从1开始
+            if let curRange = self.getCurParagraphRange(){
+                updateNumList(curParaRange: curRange, curDigit: 0)
+            }
+            //2.清空该行
+//            print("清空一行")
             let range = storage.mutableString.paragraphRange(for: textView.selectedRange)
             let selectRange = NSRange(location: range.location, length: 0)
             insertText("\n", replacementRange: range, selectRange: selectRange)
@@ -116,9 +176,43 @@ public class TextFormatter{
 
         //将数字提取，使用递增数字作为下一行的序号
         if let position = Int(found.replacingOccurrences(of:"[^0-9]", with: "", options: .regularExpression)) {
+            //1.获取新序号所在段落以及序号p，然后更新其后所有的段落从p+2开始
+            if let curRange = self.getCurParagraphRange(){
+//                let curPara = storage.attributedSubstring(from: curRange).string
+//                print("curRange:\(curPara)")
+                updateNumList(curParaRange: curRange, curDigit: position + 1)
+            }
+            
+            //2.在当前段落的下一段插入p+1. exaple
+//            print("插入新序号")
             let newDigit = found.replacingOccurrences(of: String(position), with: String(position + 1))
             insertText("\n" + newDigit)
         }
+        
+        
+            
+    }
+    
+    func updateNumList(curParaRange:NSRange,curDigit:Int){
+        guard let nextRange = getNextParaRange(curParaRange: curParaRange) else{return}
+        let nextParagraphAttrString = storage.attributedSubstring(from: nextRange)
+        let nextParagraphString = nextParagraphAttrString.string
+        if nextParagraphString == "\n"{
+            return
+        }
+//        print("\(curDigit)updateNumList,nextPara:\(nextParagraphString),count:\(nextParagraphString.count)")
+        
+        //搜索下一行开头的序号
+        guard let matchDigit = Int(nextParagraphString.replacingOccurrences(of:"[^0-9]", with: "", options: .regularExpression))else{return}
+        //替换序号
+        let newNextParaString = nextParagraphString.replacingOccurrences(of: String(matchDigit), with: String(curDigit + 1))
+        storage.replaceCharacters(in: nextRange, with: newNextParaString)
+        
+        //例如9. example被替换成10. example后，nextRange有变化，不能直接传入updateNumList()
+        let newRange = NSRange(location: nextRange.location, length: newNextParaString.count)
+        //递归对下一行进行检查替换
+        updateNumList(curParaRange: newRange, curDigit: curDigit + 1)
+        
     }
     
     //往textView中插入指定内容，然后调整光标位置。

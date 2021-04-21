@@ -36,7 +36,7 @@
       "size" : "60x60"
     },
     {
-      "filename" : "图标180.png",
+      "filename" : "图标180-方形.jpeg",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
@@ -87,6 +87,7 @@
       "size" : "83.5x83.5"
     },
     {
+      "filename" : "图标-方形.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

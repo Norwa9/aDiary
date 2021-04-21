@@ -24,14 +24,17 @@ class todayVC: UIViewController {
     @IBOutlet weak var textView:UITextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
-    
+
     var lastDiary:String = ""
+    
     
     func configureTodayView(){
         //textView
+        
         textView.delegate = self
         textView.font = UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)
 
+        
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
         keyBoardToolsBarFrame = keyBoardToolsBar.frame
@@ -177,6 +180,17 @@ extension todayVC:UITextViewDelegate{
         
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+//        print("textViewDidChange")
+        //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
+        let textFormatter = TextFormatter(textView: textView)
+        if let curParaString = textFormatter.getCurParaString(){
+            if curParaString == "\n"{
+                textFormatter.correctNum()
+            }
+        }
+    }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
@@ -196,21 +210,25 @@ extension todayVC:UITextViewDelegate{
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        //当换行时，调用addNewLine()来处理递增数字列表的任务
+        //1.当换行时，调用addNewLine()来处理递增数字列表的任务
+        let textFormatter = TextFormatter(textView: textView)
         if text == "\n"{
-            let textFormatter = TextFormatter(textView: textView)
             textFormatter.addNewLine()
             return false
-        }else{
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .left
-            paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
-            let typingAttributes:[NSAttributedString.Key:Any] = [
-                .paragraphStyle: paragraphStyle,
-                .font:UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!
-            ]
-            textView.typingAttributes = typingAttributes
         }
+        
+        //2.当删除一行，光标移到上一行时，更新其后所有行的序号
+        textFormatter.correctNum(deleteRange: range)
+        
+        //3.其余情况
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+        let typingAttributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle: paragraphStyle,
+            .font:UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!
+        ]
+        textView.typingAttributes = typingAttributes
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
     }
