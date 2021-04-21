@@ -39,7 +39,7 @@ class exportManager{
             titlePara.lineSpacing = userDefaultManager.lineSpacing
             let titleAttributes : [NSAttributedString.Key:Any] = [
                 .paragraphStyle : titlePara,
-                .font : UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!,
+                .font : userDefaultManager.font,
                 .foregroundColor : APP_GREEN_COLOR()
             ]
             for date in orderedDates{

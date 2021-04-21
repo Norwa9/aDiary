@@ -12,7 +12,7 @@ class userDefaultManager{
     public static var shared:UserDefaults? = UserDefaults(suiteName: "user.default")
     
     static let DefaultFontSize:CGFloat = 20.0
-    static let DefaultFontName:String = "TimesNewRomanPSMT"
+//    static let DefaultFontName:String = "TimesNewRomanPSMT"
     static let defaultEditorLineSpacing:CGFloat = 3
     
     private struct constants {
@@ -27,16 +27,26 @@ class userDefaultManager{
     }
     
     
-    static var fontName:String{
+    static var fontName:String?{
         get{
             if let returnFontName = shared?.object(forKey: constants.fontNameKey) as? String{
                 return returnFontName
             }else{
-                return DefaultFontName
+                return nil
             }
         }
         set{
             shared?.setValue(newValue, forKey: constants.fontNameKey)
+        }
+    }
+    
+    static var font:UIFont{
+        get{
+            if let userFontName = self.fontName{
+                return UIFont(name: userFontName, size: self.fontSize)!
+            }else{
+                return UIFont.systemFont(ofSize: self.fontSize, weight: .regular)
+            }
         }
     }
     

@@ -17,10 +17,10 @@ class settingViewController: UIViewController {
     @IBOutlet weak var fontSizeStepper:UIStepper!
     @IBOutlet weak var lineSpacingStepper:UIStepper!
     @IBOutlet weak var fontStylePicker:UIPickerView!
-    var familyFonts = [String]()
+    var familyFonts = [String?]()
     var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
-    var tempFontName:String = userDefaultManager.fontName
+    var tempFontName:String? = userDefaultManager.fontName
     var tempLineSpacing:CGFloat = userDefaultManager.lineSpacing
     
     //security setting
@@ -142,12 +142,12 @@ class settingViewController: UIViewController {
 
 //MARK:-UITextView
 extension settingViewController{
-    func updateExampleTextView(withFontSize fontSize:CGFloat,withFontStyle fontName:String,withLineSpacing lineSpacing:CGFloat){
+    func updateExampleTextView(withFontSize fontSize:CGFloat,withFontStyle fontName:String?,withLineSpacing lineSpacing:CGFloat){
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.alignment = .center
         paraStyle.lineSpacing = lineSpacing
         let attributes: [NSAttributedString.Key:Any] = [
-            .font:UIFont(name: fontName, size: CGFloat(fontSize))!,
+            .font: (fontName != nil) ? UIFont(name: fontName!, size: fontSize)! : UIFont.systemFont(ofSize: fontSize, weight: .regular),
             .paragraphStyle : paraStyle
         ]
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
@@ -191,11 +191,11 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         pickerlabel.backgroundColor = .clear
         if row == 0{
             //默认字体
-            pickerlabel.font = UIFont(name: familyFonts[row], size: 12)
+            pickerlabel.font = .systemFont(ofSize: 12, weight: .regular)
             pickerlabel.text = "默认字体"
         }else{
             //其他字体
-            pickerlabel.font = UIFont(name: familyFonts[row], size: 12)
+            pickerlabel.font = UIFont(name: familyFonts[row]!, size: 12)
             pickerlabel.text = familyFonts[row]
         }
         
@@ -213,7 +213,7 @@ extension settingViewController{
         textView.backgroundColor = .clear
         
         //添加字体
-        familyFonts.append("TimesNewRomanPSMT")//默认字体
+        familyFonts.append(nil)//默认字体
         for fontFamily in UIFont.familyNames{
 //            print("fontFamily:\(fontFamily)")
             for fontName in UIFont.fontNames(forFamilyName: fontFamily){
@@ -242,11 +242,14 @@ extension settingViewController{
         //font style picker
         fontStylePicker.dataSource = self
         fontStylePicker.delegate = self
-        if let selectedRow = familyFonts.firstIndex(of: userDefaultManager.fontName){
-            fontStylePicker.selectRow(selectedRow, inComponent: 0, animated: true)
+        if let fontName = userDefaultManager.fontName{
+            if let selectedRow = familyFonts.firstIndex(of: fontName){
+                fontStylePicker.selectRow(selectedRow, inComponent: 0, animated: true)
+            }
         }else{
             fontStylePicker.selectRow(0, inComponent: 0, animated: true)
         }
+        
         
         
         //security

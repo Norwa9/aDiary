@@ -120,12 +120,12 @@ extension NSAttributedString{
     
     //将用户的编辑器属性施加于attrString上
     //返回NSMutableAttributedString
-    func addUserDefaultAttributes(fontName:String = userDefaultManager.fontName,fontSize:CGFloat = userDefaultManager.fontSize,lineSpacing:CGFloat = userDefaultManager.lineSpacing) -> NSMutableAttributedString{
+    func addUserDefaultAttributes(lineSpacing:CGFloat = userDefaultManager.lineSpacing) -> NSMutableAttributedString{
         let paraStyle = NSMutableParagraphStyle()
 //        paraStyle.alignment = .left
         paraStyle.lineSpacing = lineSpacing
         let attributes: [NSAttributedString.Key:Any] = [
-            .font:UIFont(name: fontName, size: CGFloat(fontSize))!,
+            .font:userDefaultManager.font,
             .paragraphStyle : paraStyle
         ]
         let mutableAttr = NSMutableAttributedString(attributedString: self)
@@ -138,7 +138,7 @@ extension NSAttributedString{
 //        paraStyle.alignment = .left
         paraStyle.lineSpacing = userDefaultManager.lineSpacing
         let attributes:[NSAttributedString.Key:Any] = [
-            .font:UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!,
+            .font:userDefaultManager.font,
             .paragraphStyle : paraStyle,
             .foregroundColor : UIColor.lightGray,
         ]

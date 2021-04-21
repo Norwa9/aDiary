@@ -32,8 +32,7 @@ class todayVC: UIViewController {
         //textView
         
         textView.delegate = self
-        textView.font = UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)
-
+        textView.font =  userDefaultManager.font
         
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
@@ -153,7 +152,7 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         //另起一行
         mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)
         
-        mutableStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!, range: NSMakeRange(0,mutableStr.length))
+        mutableStr.addAttribute(NSAttributedString.Key.font, value: userDefaultManager.font, range: NSMakeRange(0,mutableStr.length))
         textView.attributedText = mutableStr
         //从插入图片的下一行继续编辑
         textView.selectedRange = NSRange(location: insertLoaction + 2, length: 0)
@@ -226,7 +225,7 @@ extension todayVC:UITextViewDelegate{
         paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
         let typingAttributes:[NSAttributedString.Key:Any] = [
             .paragraphStyle: paragraphStyle,
-            .font:UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!
+            .font:userDefaultManager.font
         ]
         textView.typingAttributes = typingAttributes
         //除了换行符，其他的字符无需处理，正常输出即可
