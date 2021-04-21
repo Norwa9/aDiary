@@ -25,7 +25,7 @@ class tagsVC: UIPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
         CGRect(origin: CGPoint(
                 x: (self.containerView!.frame.width - viewWidth) / 2,
-                y: self.containerView!.frame.height - viewHeight - 10),
+                y: self.containerView!.frame.height - viewHeight - 20),
                size: CGSize(
                 width: self.viewWidth,
                 height: self.viewHeight))
@@ -62,3 +62,4 @@ class tagsVC: UIPresentationController {
         self.presentedViewController.dismiss(animated: true, completion: nil)
     }
 }
+

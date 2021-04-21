@@ -32,7 +32,7 @@ class monthVC: UIViewController {
                 topbar.tempLabel2.sizeToFit()
                 monthButtons[selectedMonth - 1].animateBackgroundColor()
                 configureDataSource(year: selectedYear, month: selectedMonth)
-                configureBackButton()
+                adjustBackToCurrentMonthButton()
                 
             }
         }
@@ -58,6 +58,8 @@ class monthVC: UIViewController {
     //views
     weak var topbar:topbarView!
     @IBOutlet weak var monthButtonContainer:UIView!
+    @IBOutlet weak var containerHeightAnchor: NSLayoutConstraint!
+    var originContainerHeihgt:CGFloat!
     var searchBar:UISearchBar!
     var searchBarFrame:CGRect!
     var isFilterMode:Bool = false
@@ -79,10 +81,11 @@ class monthVC: UIViewController {
     var calendarHeight:CGFloat!
     var calendarHeightOriginFrame:CGRect!
     var formatter = DateFormatter()
-    @IBOutlet weak var collectionViewTopInset: NSLayoutConstraint!
     var calendarIsShowing:Bool = false
     //collection view
     @IBOutlet weak var collectionView:UICollectionView!
+    @IBOutlet weak var collectionViewTopInsetAnchor: NSLayoutConstraint!
+    var originTopInset:CGFloat!
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -92,7 +95,6 @@ class monthVC: UIViewController {
         return layout
     }()
     //data source
-    var tableViewDiaryDataSource = [diaryInfo]()
     var filteredDiaries = [diaryInfo]()
     
     //读取某年某月的日记，或读取全部日记
@@ -104,23 +106,8 @@ class monthVC: UIViewController {
                     filteredDiaries.append(diary!)
                 }
             }
-            filteredDiaries.reverse()
-            tableViewDiaryDataSource = filteredDiaries
+            filteredDiaries.reverse()//日期从大到小排列
             reloadCollectionViewData()
-    }
-    
-    //读取来自dataSource的日记
-    //configFilteredDiariesOnly
-    func configureDataSource(dataSource:[diaryInfo?]){
-        filteredDiaries.removeAll()
-        for diary in dataSource{
-            if diary != nil{
-                filteredDiaries.append(diary!)
-            }
-        }
-        filteredDiaries.reverse()
-//        tableViewDiaryDataSource = filteredDiaries
-        reloadCollectionViewData()
     }
     
     func configureUI(){
@@ -132,9 +119,11 @@ class monthVC: UIViewController {
         collectionView.contentInset.top = 5//为了第一个cell的顶部阴影，但这导致contentOffset
         collectionView.contentInset.bottom = 50//解决最后一个cell显示不全的问题
         collectionView.showsVerticalScrollIndicator = false
+        originTopInset = collectionViewTopInsetAnchor.constant
         
         //configure month buttons
         view.layoutIfNeeded()//更新约束，获取准确的frame
+        
         monthButtonContainer.layer.cornerRadius = 10
         monthButtonContainer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
         monthButtonContainer.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
@@ -148,10 +137,11 @@ class monthVC: UIViewController {
             button.monthVC = self
             button.monthLabel.text = "\(i+1)"
             button.tag = i+1
-            button.addTarget(self, action: #selector(monthDidSelected(sender:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(monthDidTap(sender:)), for: .touchUpInside)
             monthButtonContainer.addSubview(button)
             monthButtons.append(button)
         }
+        originContainerHeihgt = containerHeightAnchor.constant
         
         //configure search Bar
         let searchBarWidth = monthButtonContainer.frame.size.width - 50
@@ -191,15 +181,16 @@ class monthVC: UIViewController {
         let calendarPedding:CGFloat = 10
         let calendarWidth = monthButtonContainer.frame.width - 2 * calendarPedding
         let calendar = FSCalendar(frame: CGRect(
-                                    x: monthButtonContainer.frame.midX -  calendarWidth * 0.5,
+                                    x: (monthButtonContainer.frame.width - calendarWidth) / 2,
                                     y: monthButtonContainer.frame.maxY,
                                     width: calendarWidth,
                                     height: calendarHeight))
+//        calendar.layer.borderWidth = 1
         calendarHeightOriginFrame = calendar.frame
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(DIYCalendarCell.self, forCellReuseIdentifier: "cell")
-        calendar.scrollEnabled = false
+        calendar.scrollEnabled = true
         calendar.firstWeekday = 2
         calendar.layer.cornerRadius = 10
         calendar.backgroundColor = .clear
@@ -226,9 +217,6 @@ class monthVC: UIViewController {
         selectedMonth = curMonth
         selectedYear = curYear
         selectedDay = curDay
-//        view.addSubview(calendar)
-//        view.sendSubviewToBack(calendar)
-//        view.sendSubviewToBack(collectionView)
         self.calendar = calendar
         calendar.alpha = 0
         monthButtonContainer.addSubview(calendar)
@@ -237,7 +225,7 @@ class monthVC: UIViewController {
         view.addSubview(backToCurMonthButton)
     }
 
-    @objc func monthDidSelected(sender:monthButton){
+    @objc func monthDidTap(sender:monthButton){
         formatter.dateFormat = "yyyy-MM"
         let tappedMonth = sender.tag
         
@@ -249,11 +237,8 @@ class monthVC: UIViewController {
                 //同时调用calendarCurrentPageDidChange()
             }
         }else{
-            animateCalendar(isShowing: calendarIsShowing)//展开日历
             if tappedMonth == selectedMonth{
-                if(!monthButtons[selectedMonth - 1].hasSelected){
-                    selectedMonth = tappedMonth
-                }
+                    animateCalendar(isShowing: calendarIsShowing)
             }else{
                 calendar.setCurrentPage(formatter.date(from: "\(selectedYear)-\(tappedMonth)")!, animated: true)
                 //同时调用calendarCurrentPageDidChange()
@@ -266,7 +251,7 @@ class monthVC: UIViewController {
         calendar.select(curDate, scrollToDate: true)
     }
     
-    func configureBackButton(){
+    func adjustBackToCurrentMonthButton(){
         if selectedMonth != curMonth || selectedYear != curYear{
             if !isShowingBackButton{
                 showBackButton(toShow: true)
@@ -277,6 +262,7 @@ class monthVC: UIViewController {
             showBackButton(toShow: false)
         }
     }
+    
     func showBackButton(toShow:Bool){
         if toShow{
             //显示
@@ -301,16 +287,12 @@ class monthVC: UIViewController {
     @objc func filterButtonDidTapped(sender:topbarButton){
         sender.bounceAnimation(usingSpringWithDamping: 0.5)
         
-        let arrowPoint = CGPoint(x: sender.frame.minX, y:sender.frame.maxY + topbar.frame.height)
-        
         //popover view
         let viewSize = CGSize(width: 315, height:440 )
         filterView = filterMenu(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: viewSize))
         filterView.monthVC = self
-        filterView.keywords = searchBar.text
         searchBar.resignFirstResponder()
-        
-        popover.show(filterView, point: arrowPoint)
+        popover.show(filterView, fromView: filterButton)
     }
     
     //展示，收回日历
@@ -319,7 +301,8 @@ class monthVC: UIViewController {
             //展开日历
             //1
             calendarIsShowing = true
-            collectionViewTopInset.constant += calendarHeight
+            containerHeightAnchor.constant = originContainerHeihgt + calendarHeight
+            collectionViewTopInsetAnchor.constant = originTopInset + calendarHeight
             UIView.animate(withDuration: 0.5 + plusDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseOut,.allowUserInteraction]) {
                 self.view.layoutIfNeeded()
             } completion: { (_) in}
@@ -332,12 +315,13 @@ class monthVC: UIViewController {
             //收回
             //1
             calendarIsShowing = false
-            collectionViewTopInset.constant -= calendarHeight
+            containerHeightAnchor.constant = originContainerHeihgt
+            collectionViewTopInsetAnchor.constant = originTopInset
             UIView.animate(withDuration: 0.5 + plusDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseIn,.allowUserInteraction]) {
                 self.view.layoutIfNeeded()
             } completion: { (_) in}
             //2
-            UIView.animate(withDuration: 0.8 + plusDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.curveEaseIn,.allowUserInteraction]) {
+            UIView.animate(withDuration: 0.3 + plusDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.curveEaseIn,.allowUserInteraction]) {
                 self.calendar.alpha = 0
                 self.monthButtonContainer.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
             } completion: { (_) in
@@ -346,11 +330,10 @@ class monthVC: UIViewController {
         }
     }
     
-    @objc func monthButtonsTapped(sender: NSNotification){
-        guard let button = sender.userInfo!["buttonTag"] as? topbarButton else{return}
-        let tag = button.tag
-        switch tag {
+    func monthButtonsTapped(button: topbarButton){
+        switch button.tag {
         case 2:
+            //进入设置界面
             let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
             present(settingVC, animated: true, completion: nil)
         case 3:
@@ -361,57 +344,12 @@ class monthVC: UIViewController {
         }
     }
     
-    func switchToFilterView(button:topbarButton){
-        isFilterMode.toggle()
-        
-        //关闭日历
-        if calendarIsShowing{
-            animateCalendar(isShowing: calendarIsShowing)
-        }
-        //隐藏或显示backButton
-        configureBackButton()
-        
-        //searh图标是临时添加到button3上面的
-        let searchButtonImageView  = button.viewWithTag(99) as! UIImageView
-        if isFilterMode{
-            //更新数据:将tableViewDataSource设置为所有日记，同时清空FilterDiaries
-            configureDataSource(year: 0, month: 0)
-            searchButtonImageView.image = UIImage(named: "back")
-            topbar.tempLabel1.text = "搜索"
-            topbar.tempLabel2.text = "共\(filteredDiaries.count)篇，\(DataContainerSingleton.sharedDataContainer.getTotalWordcount())字"
-            topbar.tempLabel1.sizeToFit()//更新tempLabel1的宽度，使得rectbar1能够正确匹配它的长度
-            topbar.tempLabel2.sizeToFit()
-        }else{
-            searchButtonImageView.image = UIImage(named: "search")?.withHorizontallyFlippedOrientation()
-            topbar.tempLabel1.text = "\(selectedYear)年"
-            topbar.tempLabel2.text = "\(selectedMonth)月"
-            topbar.tempLabel1.sizeToFit()
-            
-            //更新数据
-            configureDataSource(year: selectedYear, month: selectedMonth)
-        }
-        
-        //切换searchbar / 12月份栏
-        UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseInOut) {
-            self.monthButtonContainer.alpha = self.isFilterMode ? 0:1
-            self.searchBar.alpha = self.isFilterMode ? 1:0
-            self.filterButton.alpha = self.isFilterMode ? 1:0
-        } completion: { (_) in
-            
-        }
-    }
-    
     
 }
 
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
     func reloadCollectionViewData(){
-//        self.collectionView.performBatchUpdates({
-//            let indexSet = IndexSet(integersIn: 0...0)
-//            self.collectionView.reloadSections(indexSet)
-//        }, completion: nil)
-        
         self.collectionView.reloadData()
         self.collectionView.layoutIfNeeded()//没有这句，首次进入monthVC所有cell大小有误（？）
     }
@@ -435,6 +373,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("didSelectItemAt")
         let row = indexPath.row
         DataContainerSingleton.sharedDataContainer.selectedDiary = filteredDiaries[row]
         pageVC.slideToTodayVC(completion: nil)
@@ -442,17 +381,25 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
     
     //滑动时cell的动画
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard collectionView.isDragging else {return}
-//        cell.transform = cell.transform.translatedBy(x: 0, y: 40)//平移效果
-        cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)//缩放效果
-        cell.alpha = 0.5
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction,.curveEaseInOut]) {
-//            cell.transform = cell.transform.translatedBy(x: 0, y: -40)
-            cell.transform = CGAffineTransform(scaleX: 1, y: 1)
-            cell.alpha = 1
-        } completion: { (_) in
-            
+        if collectionView.isDragging{
+            return
+//            cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)//缩放效果
+//            cell.alpha = 0.5
+//            UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction,.curveEaseInOut]) {
+//                cell.transform = CGAffineTransform(scaleX: 1, y: 1)
+//                cell.alpha = 1
+//            } completion: { (_) in}
+        }else{
+            cell.transform = cell.transform.translatedBy(x: 0, y: 30)//平移效果
+            cell.alpha = 0
+            UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
+                cell.transform = cell.transform.translatedBy(x: 0, y: -30)
+                cell.alpha = 1
+            } completion: { (_) in
+                
+            }
         }
+
     }
     
     
@@ -464,24 +411,34 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
 extension monthVC:UIScrollViewDelegate{
     //下拉显示日历
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = scrollView.contentOffset.y
-        print("y:\(y)")
-        guard !isFilterMode else{
+        if originContainerHeihgt == nil {return}
+        let y = -scrollView.contentOffset.y
+        guard !isFilterMode,y > 0 else{
             return
         }
+        print("y:\(y)")
         
-        
-        //展开日历
-        if !calendarIsShowing && -y > 100 && !collectionView.isDragging{
-            self.animateCalendar(isShowing: calendarIsShowing)
+        if !calendarIsShowing{
+            containerHeightAnchor.constant = originContainerHeihgt + y - 5//5是一开始设置的topinset
+            view.layoutIfNeeded()
+            //展开日历
+            if y > 50 && !collectionView.isDragging{
+                self.animateCalendar(isShowing: calendarIsShowing)
+            }
         }
+        
+        if calendarIsShowing{
+            if y > 50 && !collectionView.isDecelerating{
+               self.collectionView.isScrollEnabled = false
+               self.animateCalendar(isShowing: calendarIsShowing)
+               self.collectionView.isScrollEnabled = true
+           }
+        }
+        
+        
+        
         //回收日历
-        if calendarIsShowing && -y > 100 && !collectionView.isDecelerating{
-            self.collectionView.isScrollEnabled = false
-            self.animateCalendar(isShowing: calendarIsShowing)
-            self.collectionView.isScrollEnabled = true
-        }
-//        if -y > 130 && collectionView.is
+//
             
     }
 
@@ -623,34 +580,97 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     
 }
 
+//MARK:-搜索界面
 extension monthVC:UISearchBarDelegate{
+    func switchToFilterView(button:topbarButton){
+        isFilterMode.toggle()
+        
+        //关闭日历
+        if calendarIsShowing{
+            animateCalendar(isShowing: calendarIsShowing)
+        }
+        //隐藏或显示backButton
+        adjustBackToCurrentMonthButton()
+        
+        //searh图标是临时添加到button3上面的
+        let searchButtonImageView  = button.viewWithTag(99) as! UIImageView
+        if isFilterMode{//进入搜索模式
+            configureDataSource(year: 0, month: 0)//显示全部日记
+            searchButtonImageView.image = UIImage(named: "back")
+            topbar.tempLabel1.text = "搜索"
+            topbar.tempLabel2.text = "共\(DataContainerSingleton.sharedDataContainer.diaryDict.count)篇，\(DataContainerSingleton.sharedDataContainer.getTotalWordcount())字"
+            topbar.tempLabel1.sizeToFit()//更新tempLabel1的宽度，使得rectbar1能够正确匹配它的长度
+            topbar.tempLabel2.sizeToFit()
+        }else{//退出搜索模式
+            searchBar.resignFirstResponder()
+            searchBar.searchTextField.text = ""
+            filterModel.shared.clear()//移除所有的搜索参数
+            searchButtonImageView.image = UIImage(named: "search")?.withHorizontallyFlippedOrientation()
+            topbar.tempLabel1.text = "\(selectedYear)年"
+            topbar.tempLabel2.text = "\(selectedMonth)月"
+            topbar.tempLabel1.sizeToFit()
+            //退出后重新显示当月日记
+            configureDataSource(year: selectedYear, month: selectedMonth)
+        }
+        
+        //切换动画
+        UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseInOut) {
+            self.monthButtonContainer.alpha = self.isFilterMode ? 0:1
+            self.searchBar.alpha = self.isFilterMode ? 1:0
+            self.filterButton.alpha = self.isFilterMode ? 1:0
+        } completion: { (_) in
+            
+        }
+    }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.text = ""
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
-        filteredDiaries = tableViewDiaryDataSource
-        reloadCollectionViewData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        //“取消”按钮
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
     }
     
     //根据搜索框信息更新filteredData
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //当搜索框为空，filteredData不展示内容。
-        //当搜索框输入内容，将根据输入内容从data过滤内容到filteredData去展示
-        filteredDiaries = searchText.isEmpty ? tableViewDiaryDataSource : tableViewDiaryDataSource.filter { (item: diaryInfo) -> Bool in
-            // If dataItem matches the searchText, return true to include it
-            return item.content.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-        }
-        //reload data
-        reloadCollectionViewData()
+        filterModel.shared.searchText = searchText
+        self.filter()
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+    func filter(){
+        let dataSource = filterDiary()//全局函数
+        filteredDiaries.removeAll()
+        filteredDiaries = dataSource
+        
+        //更新collectionView
+        reloadCollectionViewData()
+        
+        //更新topbar label
+        var totalNum = 0
+        for diary in filteredDiaries{
+            totalNum += diary.content.count
+        }
+        topbar.tempLabel2.text = "共\(filteredDiaries.count)篇，\(totalNum)字"
+    }
+    
+    func updateResultLabel(){
+        var totalNum = 0
+        for diary in filteredDiaries{
+            totalNum += diary.content.count
+        }
+        topbar.tempLabel2.text = "共\(filteredDiaries.count)篇，\(totalNum)字"
+    }
+    
+    func animateFilterButton(hasPara:Bool){
+//        UIView.animate(withDuration: 0.2) {
+//            self.filterButton.backgroundColor = hasPara ? APP_GREEN_COLOR() : .white
+//        }
     }
 
 }
@@ -665,14 +685,10 @@ extension monthVC{
         
         configureDataSource(year: selectedYear, month: selectedMonth)
         
-        //notificationCenter
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(monthButtonsTapped(sender:)), name: NSNotification.Name("monthButtonsTapped"), object: nil)
     }
 
     
     override func viewDidAppear(_ animated: Bool) {
-        print("MonthVC viewDidAppear")
         
     }
 }

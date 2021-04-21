@@ -52,13 +52,13 @@ class topbarView: UIView {
         curDay = Int(timeFormatter.string(from: timeNow))!
         
         //datalabe1
-        dataLable1 = UILabel(frame: CGRect(x: 16, y: 49, width: 195, height: 33))
+        dataLable1 = UILabel(frame: CGRect(x: 16, y: 0, width: 195, height: 33))
         dataLable1.font = appDefaultFonts.dateLable1Font
         dataLable1.text = "\(curYear)年\(curMonth)月\(curDay)日"
         dataLable1.sizeToFit()
         self.addSubview(dataLable1)
         //dataLable2
-        dataLable2 = UILabel(frame: CGRect(x: 16, y: 76, width: 159, height: 25))
+        dataLable2 = UILabel(frame: CGRect(x: 16, y: 25, width: 159, height: 25))
         dataLable2.text = Date().getWeekday()
         dataLable2.font = appDefaultFonts.dateLable2Font
 //        dataLable2.text = curWeekDay
@@ -67,21 +67,21 @@ class topbarView: UIView {
         let screenRightedgeX = UIScreen.main.bounds.width
         buttonSize = CGSize(width: 40, height: 40)
         //button3
-        button3 = topbarButton(frame: CGRect(origin: CGPoint(x: screenRightedgeX - buttonSize.width - 14, y: 52), size: buttonSize))
+        button3 = topbarButton(frame: CGRect(origin: CGPoint(x: screenRightedgeX - buttonSize.width - 14, y: 3), size: buttonSize))
         button3.image = UIImage(named: "tag")
         button3.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button3.tag = 3
         self.addSubview(button3)
         
         //button2
-        button2 = topbarButton(frame: CGRect(origin: CGPoint(x: button3.frame.minX - 50, y: 52), size: buttonSize))
+        button2 = topbarButton(frame: CGRect(origin: CGPoint(x: button3.frame.minX - 50, y: 3), size: buttonSize))
         button2.image = UIImage(named: "calm")
         button2.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button2.tag = 2
         self.addSubview(button2)
         
         //button1
-        button1 = topbarButton(frame: CGRect(origin: CGPoint(x: button2.frame.minX - 50, y: 52), size: buttonSize))
+        button1 = topbarButton(frame: CGRect(origin: CGPoint(x: button2.frame.minX - 50, y: 3), size: buttonSize))
         button1.image = UIImage(named: "star1")
         button1.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button1.tag = 1
@@ -132,14 +132,16 @@ class topbarView: UIView {
     @objc func tapped(sender:topbarButton){
         //animation
         sender.bounceAnimation(usingSpringWithDamping: 0.5)
-        print("topbar view currentVCindex:\(currentVCindex)")
-        let notificationCenter = NotificationCenter.default
+        
+        //
         if currentVCindex == 0{
             //todayVC才能收到通知
-            notificationCenter.post(name: Notification.Name("todayButtonsTapped"), object: nil, userInfo: ["buttonTag":sender])
+            let todayVC = UIApplication.getTodayVC()
+            todayVC.todayButtonsTapped(button: sender)
         }else if currentVCindex == 1{
             //monthVC才能收到通知
-            notificationCenter.post(name: Notification.Name("monthButtonsTapped"), object: nil, userInfo: ["buttonTag":sender])
+            let monthVC = UIApplication.getMonthVC()
+            monthVC.monthButtonsTapped(button: sender)
         }
         
         

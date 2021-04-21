@@ -38,12 +38,8 @@ struct DefaultsKeys
 class DataContainerSingleton {
     static let sharedDataContainer = DataContainerSingleton()
     
-    //是否导入外部日记
-    var hasInitialized = false
     //日记的纯文本
     var diaryDict = [String:diaryInfo]()
-    //日记的富文本
-    var attributedDiaryDict = [String:NSAttributedString]()
     //todayVC展示的日记
     var selectedDiary:diaryInfo!
     //用户保存的标签
@@ -53,8 +49,7 @@ class DataContainerSingleton {
     init(){
         let defaults = UserDefaults.standard
         //1、读取：从UserDefaults读取
-        hasInitialized = defaults.value(forKey: DefaultsKeys.hasInitialized) as? Bool ?? false
-        tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? [String]()
+        tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? ["学习","工作","生活"]
         if let savedNotes = defaults.object(forKey: DefaultsKeys.diaryDict) as? Data {
             let jsonDecoder = JSONDecoder()
             do {
@@ -66,8 +61,9 @@ class DataContainerSingleton {
         //2、保存：当app退出到后台，保存数据到UserDefaults
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
             let defaults = UserDefaults.standard
-            defaults.setValue(self.hasInitialized, forKey: DefaultsKeys.hasInitialized)
+            
             defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
+            
             let jsonEncoder = JSONEncoder()
             if let storedData = try? jsonEncoder.encode(self.diaryDict) {
                 defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
@@ -99,16 +95,29 @@ class DataContainerSingleton {
     }
 }
 
+//MARK:-导入用户引导
+func importIntroduction(){
+    if !userDefaultManager.hasInitialized{
+        userDefaultManager.hasInitialized = true
+        let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
+        let dateTodayString = getTodayDate()
+        if let diary = diaryDict[dateTodayString]{
+            if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
+                if let textContents = try? String(contentsOf: levelFileURL) {
+                    diary.content = textContents
+                }
+            }
+        }
+    }
+}
 
 //MARK:-导入demo日记
 func initialDiaryDict(){
-    print("initialDiaryDict() called")
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
-    //如果之前没有导入过
 //    if true{
-    if !DataContainerSingleton.sharedDataContainer.hasInitialized{//注意，第一次使用sharedDataContainer将调用单例的init()，此语句是第一次使用
-        DataContainerSingleton.sharedDataContainer.hasInitialized = true
+    if !userDefaultManager.hasInitialized{//注意，第一次使用sharedDataContainer将调用单例的init()，此语句是第一次使用
+        userDefaultManager.hasInitialized = true
         DataContainerSingleton.sharedDataContainer.diaryDict.removeAll()//清空
         let dict = txt2String(fileName: "demoDiaries")
         for key in dict.keys{
@@ -193,39 +202,50 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
 }
 
 //MARK:-获取符合筛选条件的所有日记
-func diariesForConditions(
-    keywords:String?,selectedMood:moodTypes?,selectedTags:[String],sortStyle:sortStyle)->[diaryInfo?]{
-    let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
-
-    var resultDiaries = [diaryInfo?]()
+func filterDiary()->[diaryInfo]{
+    let keywords = filterModel.shared.searchText
+    let selectedMood = filterModel.shared.selectedMood
+    let selectedTags = filterModel.shared.selectedTags
+    let sortStyle = filterModel.shared.selectedSortstyle
     
-    //筛选：心情和标签
-    for (_,diary) in diaryDict{
-        if selectedMood != nil && diary.mood != selectedMood{
-            continue
-        }
-        if !containSubArr(selectedTags: selectedTags, diaryTags: diary.tags){
-            continue
-        }
-        resultDiaries.append(diary)
-    }
+    let allDiary = DataContainerSingleton.sharedDataContainer.diaryDict.values
+    var resultDiaries = [diaryInfo]()
     
-    //2、筛选：关键字
+    
+    //1筛选：关键字
     if keywords != ""{
-        resultDiaries = resultDiaries.filter { (item: diaryInfo?) -> Bool in
+        resultDiaries = allDiary.filter { (item: diaryInfo) -> Bool in
             // If dataItem matches the searchText, return true to include it
-            return item!.content.range(of: keywords!, options: .caseInsensitive, range: nil, locale: nil) != nil
+            return item.content.range(of: keywords, options: .caseInsensitive, range: nil, locale: nil) != nil
+        }
+    }else{
+        //如果没有关键词，返回所有日记
+        print("无关键词")
+        for diary in allDiary{
+            resultDiaries.append(diary)
         }
     }
     
-    //3、筛选：排序方式
+    //2筛选：心情和标签
+    if let mood = selectedMood{
+        resultDiaries = resultDiaries.filter{ (item: diaryInfo) -> Bool in
+            return item.mood == mood
+        }
+    }
+    
+    //3筛选标签
+    resultDiaries = resultDiaries.filter{ (item: diaryInfo) -> Bool in
+        return containSubArr(selectedTags: selectedTags, diaryTags: item.tags)
+    }
+
+    //4、筛选：排序方式
     let dateFomatter = DateFormatter()
     dateFomatter.dateFormat = "yyyy年M月d日"
     switch sortStyle {
         case .dateDescending:
             return resultDiaries.sorted { (d1, d2) -> Bool in
-                if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
-                    if date1.compare(date2) ==  .orderedAscending{
+                if let date1 = dateFomatter.date(from: d1.date!) ,let date2 = dateFomatter.date(from: d2.date!){
+                    if date1.compare(date2) ==  .orderedDescending{
                         return true
                     }
                 }
@@ -233,17 +253,26 @@ func diariesForConditions(
             }
         case .dateAscending:
             return resultDiaries.sorted { (d1, d2) -> Bool in
-                if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
-                    if date1.compare(date2) ==  .orderedDescending{
+                if let date1 = dateFomatter.date(from: d1.date!) ,let date2 = dateFomatter.date(from: d2.date!){
+                    if date1.compare(date2) ==  .orderedAscending{
                         return true
                     }
                 }
                 return false
             }
         case .wordDescending:
-            return resultDiaries.sorted(by:{$0!.content.count > $1!.content.count})
+            return resultDiaries.sorted(by:{$0.content.count > $1.content.count})
         case .wordAscending:
-            return resultDiaries.sorted(by:{$0!.content.count < $1!.content.count})
+            return resultDiaries.sorted(by:{$0.content.count < $1.content.count})
+        case .like:
+            return resultDiaries.filter { $0.islike }.sorted { (d1, d2) -> Bool in
+                if let date1 = dateFomatter.date(from: d1.date!) ,let date2 = dateFomatter.date(from: d2.date!){
+                    if date1.compare(date2) ==  .orderedDescending{
+                        return true
+                    }
+                }
+                return false
+            }
         
     }
 }

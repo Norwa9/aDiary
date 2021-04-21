@@ -109,10 +109,10 @@ extension UIView{
 //MARK:-动画
 extension UIView{
     func bounceAnimation(usingSpringWithDamping:CGFloat){
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         } completion: { (_) in
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: .curveEaseInOut) {
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
                 self.transform = .identity
             } completion: { (_) in
                 

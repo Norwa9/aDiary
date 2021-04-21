@@ -10,7 +10,9 @@ import UIKit
 class topbarButton: UIButton {
     var image:UIImage!{
         didSet{
-            buttonImageView.image = image
+            //缩放image，防止锯齿问题。
+            let smallsize = buttonImageView.bounds.size
+            buttonImageView.image = image?.compressPic(toSize: smallsize)
         }
     }
     var islike:Bool = false{
@@ -37,13 +39,9 @@ class topbarButton: UIButton {
         addSubview(holderView)
         
         //button image view
-        let size = self.frame.size
-        let pedding:CGFloat = 1
-        buttonImageView = UIImageView(frame: CGRect(x: pedding, y: pedding, width: size.width - 2 * pedding, height: size.height - 2 * pedding))
+        buttonImageView = UIImageView(frame: self.bounds.insetBy(dx: 5, dy: 5))
         buttonImageView.contentMode = .scaleAspectFill
         holderView.addSubview(buttonImageView)
-        
-        
         
     }
     

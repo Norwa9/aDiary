@@ -25,47 +25,36 @@ class todayVC: UIViewController {
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
     
-    var photoImages = [UIImage]()
-    
     var lastDiary:String = ""
     
     func configureTodayView(){
         //textView
         textView.delegate = self
         textView.font = UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)
-//        textView.layoutManager.allowsNonContiguousLayout = false
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnImage(_:)))
-        textView.addGestureRecognizer(tap)
-//        let mail = UIMenuItem(title:"邮件", action: #selector(mailAction))
-//
-//        let menu=UIMenuController()
-//
-//        menu.menuItems = [mail]
-        
+
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
         keyBoardToolsBarFrame = keyBoardToolsBar.frame
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.todayVC = self
         self.view.addSubview(keyBoardToolsBar)
+        view.layoutIfNeeded()
         keyBoardToolsBar.alpha = 0
-        
-        
     }
     
     func configureTopbar(){
         //通知中心：响应button，响应键盘
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(todayButtonsTapped(sender:)), name: NSNotification.Name("todayButtonsTapped"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    @objc func todayButtonsTapped(sender: NSNotification){
-        print("todayButtonsTapped")
-        guard let button = sender.userInfo!["buttonTag"] as? topbarButton else{return}
+    func todayButtonsTapped(button:topbarButton){
         switch button.tag {
         case 1:
+            //收藏按钮的动画效果
+            
+            
             button.islike.toggle()
             todayDiary.islike = button.islike
             let monthVC = UIApplication.getMonthVC()
@@ -86,7 +75,7 @@ class todayVC: UIViewController {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
-        
+//        print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
         if notification.name == UIResponder.keyboardWillHideNotification {
             //1.键盘隐藏
             let x = keyBoardToolsBarFrame.origin.x
@@ -97,12 +86,13 @@ class todayVC: UIViewController {
         } else{
             //2.键盘出现
             let x = keyBoardToolsBarFrame.origin.x
-            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - topbar.frame.height - 4//4是screen坐标系转换到view坐标系产生的误差
+            let containerVC = UIApplication.getPageViewContainer()
+            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - containerVC.topbarHeight - containerVC.view.safeAreaInsets.top
             keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
             keyBoardToolsBar.alpha = 1
             textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
         }
-        
+        textView.scrollRangeToVisible(textView.selectedRange)
     }
     
 }
@@ -215,84 +205,41 @@ extension todayVC:UITextViewDelegate{
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .left
             paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
-            textView.typingAttributes[.paragraphStyle] = paragraphStyle
+            let typingAttributes:[NSAttributedString.Key:Any] = [
+                .paragraphStyle: paragraphStyle,
+                .font:UIFont(name: userDefaultManager.fontName, size: userDefaultManager.fontSize)!
+            ]
+            textView.typingAttributes = typingAttributes
         }
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
     }
-
     
-    //富文本图片点击
-    @objc func tapOnImage(_ sender: UITapGestureRecognizer){
-        print("tap on textView")
-        //参考自：https://stackoverflow.com/questions/48498366/detect-tap-on-images-attached-in-nsattributedstring-while-uitextview-editing-is
-        guard let textView = sender.view as? UITextView else{
-            return
-        }
-        if textView.text == ""{
-            textView.becomeFirstResponder()
-            return
-        }
-        
-        let layoutManager = textView.layoutManager
-        var location = sender.location(in: textView)
-        location.x -= textView.textContainerInset.left
-        location.y -= textView.textContainerInset.top
-        
-        //推算触摸点处的字符下标
-        let characterIndex = layoutManager.characterIndex(
-            for: location,
-            in: textView.textContainer,
-            fractionOfDistanceBetweenInsertionPoints: nil)
-        
-        print("characterIndex:\(characterIndex)")
-        if characterIndex < textView.textStorage.length{
-            //识别字符下标characterIndex处的富文本信息
-            let attachment = textView.attributedText.attribute(NSAttributedString.Key.attachment,
-                                                               at: characterIndex,
-                                                               effectiveRange: nil) as? NSTextAttachment
-            //1.字符下标characterIndex处为图片附件，则展示它
-            if let attachment = attachment{
-                //当日记的最后一个字符是图片时，进入编辑模式时自动将光标另起一行
-                if characterIndex == textView.textStorage.length - 1{
-                    textView.insertText("\n")
-                    textView.selectedRange = NSMakeRange(characterIndex + 2, 0)
-                    textView.becomeFirstResponder()
-                    return
-                }
+    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        let aString = textView.attributedText!
+        let bounds = self.textView.bounds
+        let range = characterRange
+        print("range:\(range)")
+        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: range, options: [], using: { [] (object, range, pointer) in
+            let textViewAsAny: Any = textView
+            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
                 textView.resignFirstResponder()
-                //获取image
-                guard let attachImage = attachment.image(forBounds: textView.bounds, textContainer: textView.textContainer, characterIndex: characterIndex)else{
-                    print("无法获取image")
-                    return
-                }
-                
                 //展示image
                 let browser = JXPhotoBrowser()
-                browser.numberOfItems = {
-                    1
-                }
+                browser.numberOfItems = { 1 }
                 browser.reloadCellAtIndex = { context in
                     let browserCell = context.cell as? JXPhotoBrowserImageCell
-                    browserCell?.imageView.image = attachImage
+                    browserCell?.imageView.image = img
                 }
                 browser.show()
-            //2.字符下标characterIndex处不是图片附件而是字符，则将光标移到触摸的字符下标
-            }else{
-                //bug：点击新的下标时，先调用唤醒了keyboardWillChangeFrameNotification，再调用了tapOnImage()
-                //在下标还没有被赋予新值之前（点击textView瞬间），调用了observer，将视角滑向了旧下标。
-                if !textView.isFirstResponder{
-                    textView.becomeFirstResponder()
-                }
-                if characterIndex == textView.textStorage.length - 1{
-                    textView.selectedRange = NSMakeRange(characterIndex + 1, 0)
-                }else{
-                    textView.selectedRange = NSMakeRange(characterIndex, 0)
-                }
-                textView.scrollRangeToVisible(textView.selectedRange)
+                return
             }
-        }
+            })
+        
+        //
+        return true
     }
+ 
 }
 
 //MARK:-生命周期
@@ -304,12 +251,6 @@ extension todayVC{
         if lastDiary == todayDiary.date!{
             return
         }
-        //load pictures
-        photoImages.removeAll()
-        for uuid in todayDiary.uuidofPictures {
-            let path = getDocumentsDirectory().appendingPathComponent(uuid)
-            photoImages.append(UIImage(contentsOfFile: path.path)!)
-        }
         
         //load textView
         if todayDiary.content.count == 0{
@@ -319,13 +260,16 @@ extension todayVC{
             textView.textColor = UIColor.black
             if let aString = loadAttributedString(date_string: todayDiary.date!){
                 //暂时用空白图片填充
-//                let preparedText = processAttrString(aString: aString,fillWithEmptyImage: true)
                 let preparedText = aString.processAttrString(textView: self.textView,fillWithEmptyImage: true)
                 textView.attributedText = preparedText
+            }else{
+                //第一次使用app，没有aString可读取。
+                //此时将text设置为introduc.txt
+                textView.text = todayDiary.content
             }
         }
         
-        //load ohter info
+        //load topbar info
         topbar.dataLable1.text = todayDiary.date
         topbar.dataLable2.text = Date().getWeekday(dateString: todayDiary.date!)
         if todayDiary.date == getTodayDate(){
@@ -367,6 +311,8 @@ extension todayVC{
             if let aString = loadAttributedString(date_string: todayDiary.date!){
                 let preparedText = aString.processAttrString(textView: self.textView,fillWithEmptyImage: false)
                 textView.attributedText = preparedText
+            }else{
+                textView.text = todayDiary.content
             }
         }
         

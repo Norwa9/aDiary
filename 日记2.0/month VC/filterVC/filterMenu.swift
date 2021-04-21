@@ -17,18 +17,12 @@ class filterMenu: UIView {
     lazy var buttons = [moodButton]()
     @IBOutlet weak var sortStyleSegmentControl:UISegmentedControl!
     
-    var selectedSortstyle:sortStyle = .dateDescending
-    
-    
-    var keywords:String?
-    var selectedMood:moodTypes?
-    var selectedTags = [String]()
-    var selectedNum:Int = 0
-    
     //初始化默认属性配置
     func configureUI(){
         //sort style
         sortStyleSegmentControl.addTarget(self, action: #selector(sortStyleChange(_:)), for: .valueChanged)
+        //恢复选取值
+        sortStyleSegmentControl.selectedSegmentIndex = filterModel.shared.selectedSortstyle.rawValue
         
         
         //mood buttons
@@ -41,6 +35,13 @@ class filterMenu: UIView {
         }
         doneButton.layer.cornerRadius = 5
         doneButton.setupShadow()
+        
+        //恢复选取值
+        if let selectedMood = filterModel.shared.selectedMood,let index = moodTypes.allCases.firstIndex(of: selectedMood){
+            let selectedButton = buttons[index]
+            moodButtonTapped(sender: selectedButton)
+        }
+        
         
         //table view
         tableView.delegate = self
@@ -58,27 +59,37 @@ class filterMenu: UIView {
     //button target
     @objc func moodButtonTapped(sender:moodButton){
         for button in buttons{
-            if button != sender{
+            if button == sender{
+                sender.animateSelectedView()
+            }else{
+                //关闭其他按钮
                 if button.hasSelected{
                     button.animateSelectedView()
                 }
             }
         }
-        selectedMood = sender.moodType
-        sender.animateSelectedView()
+        
+        //查看选择了哪个mood
+        for button in buttons{
+            if button.hasSelected{
+                filterModel.shared.selectedMood = button.moodType
+                return
+            }
+        }
+        //没有选择mood
+        filterModel.shared.selectedMood = nil
+        
     }
     
     @IBAction func done(){
         monthVC.popover.dismiss()
-        //获取符合筛选条件的日记
-        let filteredDiaries = diariesForConditions(keywords: keywords,selectedMood: selectedMood, selectedTags: selectedTags, sortStyle: selectedSortstyle)
-        
-        monthVC.configureDataSource(dataSource: filteredDiaries)
+        monthVC.filter()
+        monthVC.animateFilterButton(hasPara: true)
     }
     
     @objc func sortStyleChange(_ sender:UISegmentedControl){
         let index = sender.selectedSegmentIndex
-        selectedSortstyle = sortStyle.init(rawValue: index)!
+        filterModel.shared.selectedSortstyle = sortStyle.init(rawValue: index)!
     }
     
    
@@ -127,7 +138,13 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tagsCell.reusableId) as! tagsCell
         let row = indexPath.row
-        cell.tagsLabel.text = DataContainerSingleton.sharedDataContainer.tags[row]
+        let text = DataContainerSingleton.sharedDataContainer.tags[row]
+        cell.tagsLabel.text = text
+        if filterModel.shared.selectedTags.contains(text){
+            cell.hasSelected = true
+        }else{
+            cell.hasSelected = false
+        }
         return cell
     }
     
@@ -136,10 +153,11 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
         let row = indexPath.row
         cell.hasSelected.toggle()
         let tag = DataContainerSingleton.sharedDataContainer.tags[row]
-        if let firstIndex = selectedTags.firstIndex(of: tag){
-            selectedTags.remove(at: firstIndex)
+        //选取，反选
+        if let firstIndex = filterModel.shared.selectedTags.firstIndex(of: tag){
+            filterModel.shared.selectedTags.remove(at: firstIndex)
         }else{
-            selectedTags.append(tag)
+            filterModel.shared.selectedTags.append(tag)
         }
     }
     

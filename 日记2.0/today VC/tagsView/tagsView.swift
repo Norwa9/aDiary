@@ -137,7 +137,7 @@ class tagsView: UIViewController {
             }
             print(indexPaths)
             //提示是否要删除
-            let ac = UIAlertController(title: "是否删除当前选中的\(indexPaths.count)个标签？", message: "这些标签会从所有日记中移除", preferredStyle: .alert)
+            let ac = UIAlertController(title: "是否删除当前选中的\(indexPaths.count)个标签？", message: "这些标签会从所有日记中移除，不可撤回！", preferredStyle: .alert)
             let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
             let ok = UIAlertAction(title: "删除", style: .destructive, handler: {[weak self] _ in
                 //确认删除选中标签
@@ -214,15 +214,15 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         }
     }
     
-//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-//        return UITableViewCell.EditingStyle.delete
-//    }
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return UITableViewCell.EditingStyle.delete
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 }
 
 //MARK:-life cycle

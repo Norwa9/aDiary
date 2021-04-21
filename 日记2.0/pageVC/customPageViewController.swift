@@ -36,7 +36,8 @@ class customPageViewController: UIPageViewController {
         self.dataSource = self
         
         //初始化日记数据库
-        initialDiaryDict()
+//        initialDiaryDict()
+        importIntroduction()
         
         //链接
         for vc in viewControllerList {
@@ -96,30 +97,34 @@ extension customPageViewController:UIPageViewControllerDataSource,UIPageViewCont
         return viewControllerList[nextIndex]
     }
     
-    //更新index
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if percentComplete == 1.0{
-            curVCIndex = pageViewController.viewControllers!.first!.view.tag
-        }
-    }
-    
     func slideToTodayVC(completion: (() -> Void)?) {
         guard let todayVC = viewControllerList[0] as? todayVC else{
             return
         }
-        
+        view.isUserInteractionEnabled = false//阻止cell被用户连按两下
         self.setViewControllers([todayVC], direction: .reverse, animated: true, completion: {[weak self] (complete: Bool) -> Void in
         if (complete) {
             self?.curVCIndex = 0
+            self?.view.isUserInteractionEnabled = true
           completion?()
         }
         })
     }
+    
+    //更新index
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if percentComplete > 0.9{
+            //阈值=0.9，可以防止topbar label显示错乱的问题
+            curVCIndex = pageViewController.viewControllers!.first!.view.tag
+        }
+    }
+    
 }
 
 extension customPageViewController:UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let point = scrollView.contentOffset
+//        print(curVCIndex,point.x)
         let screenWidth = UIScreen.main.bounds.width
         if (curVCIndex == 0 && point.x < screenWidth) || (curVCIndex == 1 && point.x > screenWidth){
             return

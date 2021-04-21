@@ -54,7 +54,7 @@ class DIYCalendarCell: FSCalendarCell {
         if date.compare(Date()) == .orderedDescending{
             self.clearBGColor()
         }else{
-            bgView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.12)
+            bgView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
         }
         
         //2,绘制点选圆环view

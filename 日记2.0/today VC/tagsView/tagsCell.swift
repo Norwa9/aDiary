@@ -97,16 +97,6 @@ class tagsCell: UITableViewCell {
         self.selectionStyle = .none
     }
     
-    override func prepareForReuse() {
-        hasSelected = false
-    }
-    
-}
-
-extension tagsCell:UITextFieldDelegate{
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-    }
 }
 
 

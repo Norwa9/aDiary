@@ -12,6 +12,7 @@ class pageViewContainer: UIViewController {
     @IBOutlet var pageControl: UIPageControl!
     
     var topBar:topbarView!
+    let topbarHeight:CGFloat = 60
     lazy var pageViewController:customPageViewController = {
         let customPageVC = storyboard?.instantiateViewController(identifier: "customPageVC") as! customPageViewController
         return customPageVC
@@ -19,31 +20,51 @@ class pageViewContainer: UIViewController {
     
     var currenVCindex:Int = 0
     
-
+    override func loadView() {
+        super.loadView()
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureTopBar()
+        
         configurePageVC()
         
+        pageControl.isUserInteractionEnabled = false
+        
+        //设置布局
+        topBar.translatesAutoresizingMaskIntoConstraints = false//重要！
+        containView.translatesAutoresizingMaskIntoConstraints = false//重要！
+        NSLayoutConstraint.activate([
+            topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            topBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            topBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            topBar.bottomAnchor.constraint(equalTo: containView.topAnchor),
+            topBar.heightAnchor.constraint(equalToConstant: topbarHeight),
+            
+            containView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            containView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            containView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        view.layoutIfNeeded()
     }
     
+    
     func configureTopBar(){
-        topBar = topbarView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 106))
-        topBar.layer.borderWidth = 1
+        topBar = topbarView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: topbarHeight))
         self.view.addSubview(topBar)
     }
     
     func configurePageVC(){
-        
-        print("configurePageVC")
         
         pageViewController.pageViewContainer = self
         
         addChild(pageViewController)
         pageViewController.didMove(toParent: self)//设置pageViewController为容器控制器的子
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        pageViewController.view.layer.borderWidth = 1
+//        pageViewController.view.layer.borderWidth = 1
         containView.addSubview(pageViewController.view)
         pageViewController.view.backgroundColor = .white
         NSLayoutConstraint.activate([
@@ -52,8 +73,8 @@ class pageViewContainer: UIViewController {
             containView.leadingAnchor.constraint(equalTo: pageViewController.view.leadingAnchor),
             containView.trailingAnchor.constraint(equalTo: pageViewController.view.trailingAnchor),
         ])
-        
     }
+    
     
 }
 

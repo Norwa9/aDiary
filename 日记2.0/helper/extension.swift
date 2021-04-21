@@ -21,6 +21,7 @@ enum sortStyle:Int {
     case dateAscending
     case wordDescending
     case wordAscending
+    case like
 }
 
 
@@ -108,7 +109,7 @@ extension Date{
         formatter.dateFormat = "EEE"
         let string =  formatter.string(from: date!)
         #if targetEnvironment(simulator)
-        return weekDaysCN[string]!
+            return weekDaysCN[string]!
         #endif
         return string
     }

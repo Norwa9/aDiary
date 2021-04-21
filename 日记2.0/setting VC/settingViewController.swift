@@ -17,7 +17,7 @@ class settingViewController: UIViewController {
     @IBOutlet weak var fontSizeStepper:UIStepper!
     @IBOutlet weak var lineSpacingStepper:UIStepper!
     @IBOutlet weak var fontStylePicker:UIPickerView!
-    var familyFonts:[String]!
+    var familyFonts = [String]()
     var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
     var tempFontName:String = userDefaultManager.fontName
@@ -53,6 +53,10 @@ class settingViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func dismissVC(){
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func fontSizeDidChange(_ sender: UIStepper) {
         let fontSize = sender.value
         tempFontSize = CGFloat(fontSize)
@@ -66,10 +70,6 @@ class settingViewController: UIViewController {
     }
     
     @IBAction func useBiometricsSwitchDidChange(_ sender: UISwitch) {
-        //if 如果设备不支持生物识别，则return
-        //...
-        //
-        
         userDefaultManager.useBiometrics = sender.isOn
         
         if sender.isOn && !passwordSwitch.isOn{
@@ -83,7 +83,7 @@ class settingViewController: UIViewController {
         
         //开启密码
         if sender.isOn{
-            let ac = UIAlertController(title: "设置密码", message: "请输入App密码", preferredStyle: .alert)
+            let ac = UIAlertController(title: "设置独立密码", message: "请妥善保管该密码", preferredStyle: .alert)
             ac.view.setupShadow()
             ac.addTextField()
             ac.addTextField()
@@ -100,11 +100,12 @@ class settingViewController: UIViewController {
                 //进行密码设置
                 guard let textField1 = ac.textFields?[0], let textField2 = ac.textFields?[1] else {return}
                 guard let password1 = textField1.text,let password2 = textField2.text else {return}
-                if password1 == password2{
+                if password1 == password2 && (password1 != ""){
                     userDefaultManager.password = password1
                 }else{
                     //前后密码不一致，设置密码失败
                     sender.setOn(false, animated: true)
+                    userDefaultManager.usePassword = false
                     self!.BiometricsSwitch.setOn(false, animated: true)
                     self!.useBiometricsSwitchDidChange(self!.BiometricsSwitch)//调用didchange，目的是同步userDefaultManager
                     //提示再次进行设置密码
@@ -158,7 +159,6 @@ extension settingViewController{
 //MARK:-UISegmentControl
 extension settingViewController{
     @objc func segmentedControlChanged(_ sender:UISegmentedControl){
-        print("ImageSizeStyle:\(tempImageSizeStyle)")
         tempImageSizeStyle = sender.selectedSegmentIndex
         setupExampleTextView(imageScalingFactor: CGFloat(tempImageSizeStyle+1))
     }
@@ -189,8 +189,16 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         pickerlabel.adjustsFontSizeToFitWidth = true
         pickerlabel.textAlignment = .center
         pickerlabel.backgroundColor = .clear
-        pickerlabel.font = UIFont(name: familyFonts[row], size: 10)
-        pickerlabel.text = familyFonts[row]
+        if row == 0{
+            //默认字体
+            pickerlabel.font = UIFont(name: familyFonts[row], size: 12)
+            pickerlabel.text = "默认字体"
+        }else{
+            //其他字体
+            pickerlabel.font = UIFont(name: familyFonts[row], size: 12)
+            pickerlabel.text = familyFonts[row]
+        }
+        
         return pickerlabel
     }
 }
@@ -199,14 +207,20 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
 extension settingViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
-        familyFonts = UIFont.familyNames
-//        查看所有能用的字体
-//        for fontFamily in UIFont.familyNames{
+        fontSettingContainer.backgroundColor = .white
+        backupSettingContainer.backgroundColor = .white
+        securitySettingContainer.backgroundColor = .white
+        textView.backgroundColor = .clear
+        
+        //添加字体
+        familyFonts.append("TimesNewRomanPSMT")//默认字体
+        for fontFamily in UIFont.familyNames{
 //            print("fontFamily:\(fontFamily)")
-//            for fontName in UIFont.fontNames(forFamilyName: fontFamily){
+            for fontName in UIFont.fontNames(forFamilyName: fontFamily){
 //                print("fontName:\(fontName),")
-//            }
-//        }
+                familyFonts.append(fontName)
+            }
+        }
         
         //image size segment control
         imageSizeSegment.selectedSegmentIndex = userDefaultManager.imageSizeStyle
@@ -228,8 +242,12 @@ extension settingViewController{
         //font style picker
         fontStylePicker.dataSource = self
         fontStylePicker.delegate = self
-        let selectedRow = familyFonts.firstIndex(of: userDefaultManager.fontName)!
-        fontStylePicker.selectRow(selectedRow, inComponent: 0, animated: true)
+        if let selectedRow = familyFonts.firstIndex(of: userDefaultManager.fontName){
+            fontStylePicker.selectRow(selectedRow, inComponent: 0, animated: true)
+        }else{
+            fontStylePicker.selectRow(0, inComponent: 0, animated: true)
+        }
+        
         
         //security
         passwordSwitch.isOn = userDefaultManager.usePassword
@@ -249,9 +267,20 @@ extension settingViewController{
     
     func setupExampleTextView(imageScalingFactor:CGFloat){
         textView.attributedText = nil
+        
+        //插入文字
+        let text =
+        """
+        版本1.0
+        Version1.0
+
+        """
+        textView.insertText(text)
+        
+        
         //插入图片
         let attachment = NSTextAttachment()
-        let image = UIImage(named: "jayChou")!
+        let image = UIImage(named: "appicon.jpg")!
         let imageAspectRatio = image.size.height / image.size.width
         let imageWidth = textView.frame.width
         let imageHeight = imageWidth * imageAspectRatio
@@ -263,16 +292,6 @@ extension settingViewController{
         let attStr = NSAttributedString(attachment: attachment)
         let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableStr.insert(attStr, at: textView.attributedText.length)
-        
-        //插入文字
-        let text =
-        """
-
-        一路向北
-        Jay Chou
-        2005 
-        """
-        mutableStr.insert(NSAttributedString(string: text), at: 1)
         textView.attributedText = mutableStr
         
         //更新textView的字体等信息

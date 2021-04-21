@@ -12,10 +12,11 @@ class userDefaultManager{
     public static var shared:UserDefaults? = UserDefaults(suiteName: "user.default")
     
     static let DefaultFontSize:CGFloat = 20.0
-    static let DefaultFontName:String = "DIN Alternate"
+    static let DefaultFontName:String = "TimesNewRomanPSMT"
     static let defaultEditorLineSpacing:CGFloat = 3
     
     private struct constants {
+        static let hasInitialized = "hasInitialized"
         static let imageSizeStyle = "imageSizeStyle"
         static let fontNameKey = "fontName"
         static let fontSizeKey = "fontSize"
@@ -110,7 +111,7 @@ class userDefaultManager{
                 return style
             }
             //0:大，1:中，2:小
-            return 0
+            return 1
         }
         set {
             shared?.set(newValue, forKey: constants.imageSizeStyle)
@@ -123,5 +124,21 @@ class userDefaultManager{
         }
     }
     
+    static var hasInitialized:Bool{
+        get{
+            if let initlized = shared?.object(forKey: constants.hasInitialized) as? Bool {
+                return initlized
+            }else{
+                return false
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.hasInitialized)
+        }
+    }
+    
     
 }
+
+
+

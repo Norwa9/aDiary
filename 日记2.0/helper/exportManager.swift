@@ -59,7 +59,7 @@ class exportManager{
             let filename = "导出日记"
             //主线程打印pdf。
             //通过排查下面的一些代码必须在主线程运行，但是不明白其中的道理。。
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 // 1. Create Print Formatter with input text.
                 //必须置于主线程
                 //--
