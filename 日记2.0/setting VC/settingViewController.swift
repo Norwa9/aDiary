@@ -274,8 +274,8 @@ extension settingViewController{
         //插入文字
         let text =
         """
-        版本1.0
-        Version1.0
+        版本1.2
+        Version1.2
 
         """
         textView.insertText(text)
@@ -283,7 +283,7 @@ extension settingViewController{
         
         //插入图片
         let attachment = NSTextAttachment()
-        let image = UIImage(named: "appicon.jpg")!
+        let image = UIImage(named: "appicon.png")!
         let imageAspectRatio = image.size.height / image.size.width
         let imageWidth = textView.frame.width
         let imageHeight = imageWidth * imageAspectRatio

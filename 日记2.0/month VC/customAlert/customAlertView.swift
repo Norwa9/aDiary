@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 class customAlertView: UIView {
     let title = UILabel()
     let cancelButton = UIButton()

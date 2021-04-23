@@ -101,6 +101,10 @@ func importIntroduction(){
         userDefaultManager.hasInitialized = true
         let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
         let dateTodayString = getTodayDate()
+        guard diaryDict[dateTodayString] == nil else{
+            print("\(dateTodayString)已有日记，禁止复制欢迎文案")
+            return
+        }
         if let diary = diaryDict[dateTodayString]{
             if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
                 if let textContents = try? String(contentsOf: levelFileURL) {

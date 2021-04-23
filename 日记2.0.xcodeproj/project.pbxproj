@@ -15,7 +15,10 @@
 		EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D19C25D04D750007BDFA /* filterMenu.swift */; };
 		EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA51D19F25D04D7E0007BDFA /* filterMenu.xib */; };
 		EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1F625D7FCE10007BDFA /* dataContainer.swift */; };
-		EA537B6C2630604F00C2E9EE /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = EA537B6B2630604F00C2E9EE /* appIcon.png */; };
+		EA537B70263060E100C2E9EE /* appicon.png in Resources */ = {isa = PBXBuildFile; fileRef = EA537B6F263060E100C2E9EE /* appicon.png */; };
+		EA537B7A263072C200C2E9EE /* String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537B79263072C200C2E9EE /* String_Extension.swift */; };
+		EA537B7D26317C3C00C2E9EE /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = EA537B7C26317C3C00C2E9EE /* icon-120.png */; };
+		EA537B8026317C5900C2E9EE /* icon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = EA537B7F26317C5900C2E9EE /* icon-1024.png */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8726299146004B0FA1 /* indictorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8626299146004B0FA1 /* indictorController.swift */; };
@@ -67,7 +70,10 @@
 		EA51D19C25D04D750007BDFA /* filterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterMenu.swift; sourceTree = "<group>"; };
 		EA51D19F25D04D7E0007BDFA /* filterMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = filterMenu.xib; sourceTree = "<group>"; };
 		EA51D1F625D7FCE10007BDFA /* dataContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataContainer.swift; sourceTree = "<group>"; };
-		EA537B6B2630604F00C2E9EE /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
+		EA537B6F263060E100C2E9EE /* appicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appicon.png; sourceTree = "<group>"; };
+		EA537B79263072C200C2E9EE /* String_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_Extension.swift; sourceTree = "<group>"; };
+		EA537B7C26317C3C00C2E9EE /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
+		EA537B7F26317C5900C2E9EE /* icon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-1024.png"; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE8626299146004B0FA1 /* indictorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indictorController.swift; sourceTree = "<group>"; };
@@ -150,7 +156,9 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				EA537B6B2630604F00C2E9EE /* appIcon.png */,
+				EA537B7F26317C5900C2E9EE /* icon-1024.png */,
+				EA537B7C26317C3C00C2E9EE /* icon-120.png */,
+				EA537B6F263060E100C2E9EE /* appicon.png */,
 				EA384941262ED17A001B693F /* introduction.txt */,
 				EA3ABAD625DFE05400911902 /* demoDiaries.txt */,
 			);
@@ -245,6 +253,7 @@
 				EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */,
 				EADA85DA26248759007D1134 /* UIFont_Extension.swift */,
 				EADA85DE26248B14007D1134 /* NSAttrString_Extension.swift */,
+				EA537B79263072C200C2E9EE /* String_Extension.swift */,
 				EA9AE73E26063DC100D44221 /* todayVC_Extension.swift */,
 				EA6EFE92262AD8B0004B0FA1 /* Collection_extension.swift */,
 				EAA29E9D25C832F900AA6971 /* extension.swift */,
@@ -357,14 +366,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA537B8026317C5900C2E9EE /* icon-1024.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
+				EA537B70263060E100C2E9EE /* appicon.png in Resources */,
 				EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */,
 				EA384942262ED17A001B693F /* introduction.txt in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
-				EA537B6C2630604F00C2E9EE /* appIcon.png in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
 				EAA29E3625C5768600AA6971 /* Assets.xcassets in Resources */,
+				EA537B7D26317C3C00C2E9EE /* icon-120.png in Resources */,
 				EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */,
 				EA3ABADD25E01A5100911902 /* toolsBar.xib in Resources */,
 				EAA29E9A25C8277A00AA6971 /* tagsView.xib in Resources */,
@@ -448,6 +459,7 @@
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */,
+				EA537B7A263072C200C2E9EE /* String_Extension.swift in Sources */,
 				EAA29E4325C577DC00AA6971 /* customPageViewController.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
@@ -606,10 +618,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -626,10 +640,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

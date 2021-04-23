@@ -193,7 +193,7 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="30" id="dhT-H3-K2v"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="18"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
