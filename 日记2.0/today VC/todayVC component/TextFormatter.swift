@@ -25,19 +25,25 @@ public class TextFormatter{
     func orderedList(){
         //获取当前range所在段落的range
         guard let pRange = getCurParagraphRange() else { return }
-
+        print("pRange:\(pRange)")
         //获取当前段落的所有字符
-        let paragraphString = textView.attributedText.attributedSubstring(from: pRange).string
+        let paraMutableString = NSMutableAttributedString(attributedString: textView.attributedText.attributedSubstring(from: pRange))
+        let paragraphString = paraMutableString.string
+        print("paragraphString:\(paragraphString)")
         
-        guard !paragraphString.isEmpty else {
+        guard paragraphString != "\n"  else {
             //如果当前段落只有数字或是空段落，那么插入首个序号
             print("insertText(1.)")
             insertText("1. ")
+            updateNumList(curParaRange: pRange, curDigit: 0)
             return
         }
         
         //检查paragraphString是否有数字前缀，如果没有，则需要添加前缀
         let shouldAddPrefix = !self.hasPrefix(line: paragraphString)
+        
+        //更新后续段落的序号：如果是将序号删除，则将之后的每段从1开始编号。如果是添加序号，则将下一段从0开始编号
+        updateNumList(curParaRange: pRange, curDigit: shouldAddPrefix ? 1 : 0)
         
         var result = String()
         if shouldAddPrefix{
@@ -49,11 +55,13 @@ public class TextFormatter{
             // 如果该段落已经有序号了，则把序号删除
             result = getCleanLine(line: paragraphString)
         }
-        
-        let selectRange = NSRange(location: pRange.location + result.count - 1, length: 0)
+        let l = paragraphString.contains("\n") ? pRange.location + result.count - 1 : pRange.location + result.count
+        let selectRange = NSRange(location: l, length: 0)
         
         //将pRange替换成result，然后定位光标到selectRange
         insertText(result, replacementRange: pRange, selectRange: selectRange)
+        
+        
         
     }
     
@@ -201,7 +209,7 @@ public class TextFormatter{
         if nextParagraphString == "\n"{
             return
         }
-//        print("\(curDigit)updateNumList,nextPara:\(nextParagraphString),count:\(nextParagraphString.count)")
+        print("\(curDigit)updateNumList,nextPara:\(nextParagraphString),count:\(nextParagraphString.count)")
         
         //搜索下一行开头的序号
         guard let matchDigit = Int(nextParagraphString.replacingOccurrences(of:"[^0-9]", with: "", options: .regularExpression))else{return}

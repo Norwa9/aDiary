@@ -223,7 +223,7 @@ class monthCell: UICollectionViewCell {
             if firstPara.count == 0{
                 firstPara = " "
             }
-            print("第一段:\(firstPara),字数:\(firstPara.count)")
+//            print("第一段:\(firstPara),字数:\(firstPara.count)")
             //标题的字体大小16行间距6。
             //内容的字体大小14行间距3.
             //1、标题格式

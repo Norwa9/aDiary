@@ -51,6 +51,7 @@ class monthVC: UIViewController {
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         button.setAttributedTitle(attributedString, for: .normal)
         button.addTarget(self, action: #selector(backToCurMonthButtonTapped), for: .touchUpInside)
+        button.frame.size = CGSize(width: 100, height: 40)
         button.setupShadow()
        return button
     }()
@@ -264,19 +265,22 @@ class monthVC: UIViewController {
     }
     
     func showBackButton(toShow:Bool){
+        let screenHeight = UIScreen.main.bounds.height
         if toShow{
             //显示
             self.isShowingBackButton = true
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.6, options: .curveEaseInOut) {
-                self.backToCurMonthButton.frame = CGRect(x: 162, y: 650, width: 100, height: 40)
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseInOut) {
+                self.backToCurMonthButton.frame.origin.y = screenHeight * 0.7
+                self.backToCurMonthButton.center.x = self.view.center.x
             } completion: { (_) in
                 
             }
         }else{
             //隐藏
             self.isShowingBackButton = false
-            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.4, options: .curveEaseIn) {
-                self.backToCurMonthButton.frame = CGRect(x: 162, y: 900, width: 100, height: 40)
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseIn) {
+                self.backToCurMonthButton.frame.origin.y = screenHeight * 1.1
+                self.backToCurMonthButton.center.x = self.view.center.x
             } completion: { (_) in
                 
             }
@@ -416,7 +420,7 @@ extension monthVC:UIScrollViewDelegate{
         guard !isFilterMode,y > 0 else{
             return
         }
-        print("y:\(y)")
+//        print("y:\(y)")
         
         if !calendarIsShowing{
             containerHeightAnchor.constant = originContainerHeihgt + y - 5//5是一开始设置的topinset
