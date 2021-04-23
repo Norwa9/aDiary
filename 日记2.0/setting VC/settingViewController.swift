@@ -70,18 +70,27 @@ class settingViewController: UIViewController {
     }
     
     @IBAction func useBiometricsSwitchDidChange(_ sender: UISwitch) {
-        userDefaultManager.useBiometrics = sender.isOn
+        //如果已经设定了密码，此时可以自由开启关闭生物识别
+        if userDefaultManager.usePassword{
+            if sender.isOn{
+                userDefaultManager.useBiometrics = true
+            }else{
+                userDefaultManager.useBiometrics = false
+            }
+        }
         
-        if sender.isOn && !passwordSwitch.isOn{
+        //如果密码尚未设定，此时提示设定密码
+        if !userDefaultManager.usePassword && sender.isOn {
             passwordSwitch.setOn(true, animated: true)
             usePasswordSwitchDidChange(passwordSwitch)
         }
+        
+        
     }
     
     @IBAction func usePasswordSwitchDidChange(_ sender: UISwitch){
-        userDefaultManager.usePassword = sender.isOn
         
-        //开启密码
+        //如果用户打开开关：开启密码
         if sender.isOn{
             let ac = UIAlertController(title: "设置独立密码", message: "请妥善保管该密码", preferredStyle: .alert)
             ac.view.setupShadow()
@@ -90,24 +99,30 @@ class settingViewController: UIViewController {
             ac.textFields?[0].placeholder = "输入密码"
             ac.textFields?[1].placeholder = "重复密码"
             ac.addAction(UIAlertAction(title: "取消", style: .cancel){ [weak self]_ in
-                //取消密码设置
+                //取消密码设置:
                 sender.setOn(false, animated: true)
                 self!.BiometricsSwitch.setOn(false, animated: true)
-                self!.useBiometricsSwitchDidChange(self!.BiometricsSwitch)//调用didchange，目的是同步userDefaultManager
-                userDefaultManager.usePassword = sender.isOn//保存选项
+                userDefaultManager.useBiometrics = false
+                userDefaultManager.usePassword = false
             })
             ac.addAction(UIAlertAction(title: "提交", style: .default){[weak self] _ in
                 //进行密码设置
                 guard let textField1 = ac.textFields?[0], let textField2 = ac.textFields?[1] else {return}
                 guard let password1 = textField1.text,let password2 = textField2.text else {return}
                 if password1 == password2 && (password1 != ""){
+                    //成功设置密码
                     userDefaultManager.password = password1
+                    
+                    userDefaultManager.usePassword = true
+                    if  self!.BiometricsSwitch.isOn{
+                        userDefaultManager.useBiometrics = true
+                    }
                 }else{
                     //前后密码不一致，设置密码失败
                     sender.setOn(false, animated: true)
-                    userDefaultManager.usePassword = false
                     self!.BiometricsSwitch.setOn(false, animated: true)
-                    self!.useBiometricsSwitchDidChange(self!.BiometricsSwitch)//调用didchange，目的是同步userDefaultManager
+                    userDefaultManager.usePassword = false
+                    userDefaultManager.usePassword = false
                     //提示再次进行设置密码
                     //...
                     return
@@ -117,11 +132,12 @@ class settingViewController: UIViewController {
             self.present(ac, animated: true)
         }
         
-        //关闭密码
+        //用户关闭开关：关闭密码
         if !sender.isOn{
             //关闭密码则生物识别也不能使用
             BiometricsSwitch.setOn(false, animated: true)
-            useBiometricsSwitchDidChange(BiometricsSwitch)//调用didchange，目的是同步userDefaultManager
+            userDefaultManager.usePassword = false
+            userDefaultManager.useBiometrics = false
         }
         
         

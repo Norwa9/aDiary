@@ -31,6 +31,7 @@ public class TextFormatter{
         
         guard !paragraphString.isEmpty else {
             //如果当前段落只有数字或是空段落，那么插入首个序号
+            print("insertText(1.)")
             insertText("1. ")
             return
         }
