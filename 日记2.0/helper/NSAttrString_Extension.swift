@@ -149,6 +149,7 @@ extension NSAttributedString{
 
 //MARK:-根据日期信息将富文本存储到文件目录
 func saveAttributedString(date_string:String,aString:NSAttributedString?) {
+    //1、保存attributedString
     do {
         let file = try aString?.fileWrapper (
             from: NSMakeRange(0, aString!.length),
@@ -166,6 +167,22 @@ func saveAttributedString(date_string:String,aString:NSAttributedString?) {
     } catch {
         //Error handling
     }
+    
+    //2、标记保存的日记中是否含有照片
+    guard let aString = aString else{return}
+//    DispatchQueue.global(qos: .default).async {
+        DataContainerSingleton.sharedDataContainer.diaryDict[date_string]?.containsImage = false
+        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
+            if let attachment = object as? NSTextAttachment{
+                //如果存在照片
+                if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+                    DataContainerSingleton.sharedDataContainer.diaryDict[date_string]?.containsImage = true
+                    return
+                }
+            }
+        }
+        )
+//    }
     
 }
 

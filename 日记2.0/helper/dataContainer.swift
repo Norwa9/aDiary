@@ -19,6 +19,7 @@ class diaryInfo:Codable{
     var tags = [String]()
     var mood:moodTypes = .calm
     var uuidofPictures = [String]()
+    var containsImage:Bool?
     init(dateString:String?) {
         date = dateString
     }
@@ -60,6 +61,7 @@ class DataContainerSingleton {
         }
         //2、保存：当app退出到后台，保存数据到UserDefaults
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
+            print("进入后台，数据保存。")
             let defaults = UserDefaults.standard
             
             defaults.setValue(self.tags, forKey: DefaultsKeys.tags)

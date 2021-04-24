@@ -352,7 +352,7 @@ class monthVC: UIViewController {
 }
 
 //MARK:-collection view
-extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
+extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func reloadCollectionViewData(){
         self.collectionView.reloadData()
         self.collectionView.layoutIfNeeded()//没有这句，首次进入monthVC所有cell大小有误（？）
@@ -377,36 +377,35 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didSelectItemAt")
         let row = indexPath.row
         DataContainerSingleton.sharedDataContainer.selectedDiary = filteredDiaries[row]
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! monthCell
+        cell.showSelectionPrompt()
+        
         pageVC.slideToTodayVC(completion: nil)
     }
+    
     
     //滑动时cell的动画
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView.isDragging{
             return
-//            cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)//缩放效果
-//            cell.alpha = 0.5
-//            UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction,.curveEaseInOut]) {
-//                cell.transform = CGAffineTransform(scaleX: 1, y: 1)
-//                cell.alpha = 1
-//            } completion: { (_) in}
         }else{
+            guard let cell = cell as? monthCell else{return}
             cell.transform = cell.transform.translatedBy(x: 0, y: 30)//平移效果
             cell.alpha = 0
+            cell.imagePreview.transform  = CGAffineTransform.init(translationX: 10, y: 0)
             UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
                 cell.transform = cell.transform.translatedBy(x: 0, y: -30)
                 cell.alpha = 1
+                cell.imagePreview.transform  = CGAffineTransform.identity
             } completion: { (_) in
                 
             }
         }
 
     }
-    
-    
     
     
 }
