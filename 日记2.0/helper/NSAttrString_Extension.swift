@@ -115,7 +115,37 @@ extension NSAttributedString{
         }else{
             return attrText
         }
+    }
+    
+    func processAttrString(bounds:CGRect)->NSMutableAttributedString{
+        let mutableText = NSMutableAttributedString(attributedString: self)
         
+        //1、施加用户自定义格式
+        let attrText = mutableText.addUserDefaultAttributes()
+        
+        //2、、调整图片，让图片显示正确的大小
+        attrText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
+            if let attachment = object as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+                //设置富文本中的图片：设置大小&设置居中
+                let aspect = img.size.width / img.size.height
+                let pedding:CGFloat = 10
+                let newWidth = (bounds.width - pedding) / userDefaultManager.imageScalingFactor
+                let newHeight = (newWidth / aspect)
+                
+                //重新设置居中展示
+                let para = NSMutableParagraphStyle()
+                para.alignment = .center
+                attrText.addAttribute(.paragraphStyle, value: para, range: range)
+                
+                //设置展示大小
+                attachment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+                
+                return
+                
+            }
+            })
+        //3、返回处理后的结果
+        return attrText
     }
     
     //将用户的编辑器属性施加于attrString上

@@ -275,15 +275,18 @@ extension todayVC{
             textView.attributedText = NSAttributedString.textViewPlaceholder()
         }else{
             textView.textColor = UIColor.black
-            if let aString = loadAttributedString(date_string: todayDiary.date!){
-                //暂时用空白图片填充
-                let preparedText = aString.processAttrString(textView: self.textView,fillWithEmptyImage: true)
-                textView.attributedText = preparedText
-            }else{
-                //第一次使用app，没有aString可读取。
-                //此时将text设置为introduc.txt
-                textView.text = todayDiary.content
+            textView.text = todayDiary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
+            let textViewBounds = textView.bounds
+            DispatchQueue.global(qos: .default).async {
+                if let aString = loadAttributedString(date_string: self.todayDiary.date!){
+                    //异步读取attributedString、异步处理图片bounds
+                    let preparedText = aString.processAttrString(bounds: textViewBounds)
+                    DispatchQueue.main.async {
+                        self.textView.attributedText = preparedText
+                    }
+                }
             }
+            
         }
         
         //load topbar info
@@ -305,7 +308,7 @@ extension todayVC{
         
         configureTopbar()
         configureTodayView()
-        loadTodayData()
+//        loadTodayData()
     }
     
     
