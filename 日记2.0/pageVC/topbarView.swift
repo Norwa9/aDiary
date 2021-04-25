@@ -68,7 +68,7 @@ class topbarView: UIView {
         buttonSize = CGSize(width: 40, height: 40)
         //button3
         button3 = topbarButton(frame: CGRect(origin: CGPoint(x: screenRightedgeX - buttonSize.width - 14, y: 3), size: buttonSize))
-        button3.image = UIImage(named: "tag")
+        button3.image = UIImage(named: "share")
         button3.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button3.tag = 3
         self.addSubview(button3)

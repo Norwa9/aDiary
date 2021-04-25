@@ -13,6 +13,7 @@ class monthCell: UICollectionViewCell {
     
     static let reusableID = "monthCell"
     private lazy var containerView = UIView()
+    var titleLabel:UILabel = UILabel()
     var contentLabel:UILabel = UILabel()
     var dateLabel:UILabel = UILabel()
     var tagsLabel:UILabel = UILabel()
@@ -101,6 +102,11 @@ class monthCell: UICollectionViewCell {
     }
     
     private func setupContentLabelsConstraints() {
+        //titleLabel
+        titleLabel.numberOfLines = 0
+        containerView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         //contentLabel
         contentLabel.numberOfLines = 0
         containerView.addSubview(contentLabel)
@@ -149,9 +155,14 @@ class monthCell: UICollectionViewCell {
         //MARK:-Auto layout
         print("NSLayoutConstraint.activate([")
         NSLayoutConstraint.activate([
+            //titleLabel
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+            
             //contentLabel
-            contentLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
-            contentLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8.0),
+            contentLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 2),
             contentLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 200),
 //            contentLabel.bottomAnchor.constraint(equalTo: tagsLabel.topAnchor, constant: -5.0),
             
@@ -215,17 +226,12 @@ class monthCell: UICollectionViewCell {
         return layoutAttributes
     }
     
-//    override func layoutSubviews() {
-//        print("layoutSubviews")
-//        super.layoutSubviews()
-//    }
-    
-    
     func fillCell(diary:diaryInfo){
         //如果没有这句，cell的自适应高度不准确。
         print("fillCell")
         self.layoutIfNeeded()//(？)这里需要 layoutIfNeeded 一下，否则我们不能同步拿到contentSize，参考自：https://blog.csdn.net/ssy0082/article/details/81711240
-        self.contentLabel.attributedText = setContentLabel(content: diary.content)
+        self.titleLabel.attributedText = getAttrTitle(content: diary.content)
+        self.contentLabel.attributedText = getAttrContent(content: diary.content)
         self.tags = diary.tags
         self.dateLabel.text = diary.date! + "，" + Date().getWeekday(dateString: diary.date!)
         self.wordNum = diary.content.count
@@ -261,8 +267,10 @@ class monthCell: UICollectionViewCell {
         //2、再异步读取imagePreview.image
         DispatchQueue.global(qos: .default).async {
             if let image = iM.fetchImage(){
-                let smallSize = CGSize(width: image.size.width / 2, height: image.size.height / 2)
-                let smallsizeImage = image.compressPic(toSize: smallSize)
+                let scaleRatio = 800.0 / max(contentHeight,80)//缩放倍数大约是屏幕高度除以预览视图高度
+//                print("缩放倍数：\(scaleRatio)")
+                let smallerSize = CGSize(width: image.size.width / scaleRatio, height: image.size.height / scaleRatio)
+                let smallsizeImage = image.compressPic(toSize: smallerSize)
                 DispatchQueue.main.async {
                     self.image = smallsizeImage
                     self.layoutSubviews()//如果没有这句，cell的自适应高度不准确。
@@ -272,29 +280,14 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    //设置contentLabel：标题的字号比内容大一些
-    func setContentLabel(content:String) -> NSAttributedString{
-        let mString = NSMutableAttributedString(string: content)
-        if mString.length > 0{
-            let contentPara = NSMutableParagraphStyle()
-            contentPara.lineSpacing = 3
-            let contentAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
-                .paragraphStyle:contentPara,
-            ]
-            let contentRange = NSRange(location: 0, length: mString.length)
-            mString.addAttributes(contentAttributes, range: contentRange)
-            
-            let paragraphArray = content.components(separatedBy: "\n")
+    func getAttrTitle(content:String)->NSAttributedString{
+        let mContent = NSMutableAttributedString(string: content)
+        if mContent.length > 0{
             //获取第一段
-            var firstPara = paragraphArray.first!
-            if firstPara.count == 0{
-                firstPara = " "
-            }
-//            print("第一段:\(firstPara),字数:\(firstPara.count)")
+            let paragraphArray = content.components(separatedBy: "\n")
+            let firstPara = paragraphArray.first!
             //标题的字体大小16行间距6。
-            //内容的字体大小14行间距3.
-            //1、标题格式
+            //标题格式
             let titlePara = NSMutableParagraphStyle()
             titlePara.lineSpacing = 5
             let titleAttributes:[NSAttributedString.Key : Any] = [
@@ -303,11 +296,34 @@ class monthCell: UICollectionViewCell {
             ]
             
             let titleRange = NSMakeRange(0, firstPara.utf16.count)
-            mString.addAttributes(titleAttributes, range: titleRange)
-            return mString
+            mContent.addAttributes(titleAttributes, range: titleRange)
+            return mContent.attributedSubstring(from: titleRange)
         }else{
+            return mContent
+        }
+    }
+    
+    func getAttrContent(content:String) -> NSAttributedString{
+        let mString = NSMutableAttributedString(string: content)
+        if mString.length > 0{
+            //内容段样式
+            let contentPara = NSMutableParagraphStyle()
+            contentPara.lineSpacing = 3
+            let contentAttributes:[NSAttributedString.Key : Any] = [
+                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
+                .paragraphStyle:contentPara,
+            ]
+            mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
+            //获取第一段Range
+            let paragraphArray = content.components(separatedBy: "\n")
+            let firstPara = paragraphArray.first!
+            //如果日记只有一行，那么这一行的末尾是不带有"\n"的！！
+            let titleLength = paragraphArray.count > 1 ? firstPara.utf16.count + 1 : firstPara.utf16.count
+            let titleRange = NSMakeRange(0, titleLength)
+            mString.replaceCharacters(in: titleRange, with: "")
             return mString
         }
+        return mString
     }
     
     func showSelectionPrompt(){

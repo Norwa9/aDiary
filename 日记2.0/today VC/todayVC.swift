@@ -16,7 +16,7 @@ class todayVC: UIViewController {
     lazy var tagsViewController:tagsView = {
         //配置tagsView
         let tagsViewController = tagsView()
-        tagsViewController.transitioningDelegate = self
+        tagsViewController.transitioningDelegate = tagsViewController
         tagsViewController.modalPresentationStyle = .custom//模态
         return tagsViewController
     }()
@@ -54,19 +54,26 @@ class todayVC: UIViewController {
     func todayButtonsTapped(button:topbarButton){
         switch button.tag {
         case 1:
-            //收藏按钮的动画效果
-            
-            
             button.islike.toggle()
             todayDiary.islike = button.islike
             let monthVC = UIApplication.getMonthVC()
             monthVC.calendar.reloadData()
             break
-        case 2,3:
+        case 2:
             //传递当前的diary
             tagsViewController.diary = todayDiary
             //call viewDidLoad()
             self.present(tagsViewController, animated: true, completion: nil)
+            break
+        case 3:
+            let temptextView = UITextView(frame: textView.bounds)
+            temptextView.attributedText = textView.attributedText
+            //不能在原textView上进行截图，没办法把所有内容都截下来
+            //除非在截图之前将textView.removeFromSuperview()
+            let snapshot = temptextView.textViewImage()
+            
+            let vc = shareVC(diary: todayDiary, snapshot: snapshot)
+            present(vc, animated: true, completion: nil)
             break
         default:
             return
@@ -99,12 +106,6 @@ class todayVC: UIViewController {
     
 }
 
-//MARK:-tagsVC
-extension todayVC:UIViewControllerTransitioningDelegate{
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return tagsVC(presentedViewController: presented, presenting: presenting)
-    }
-}
 
 //MARK:-插入图片
 extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
@@ -261,6 +262,19 @@ extension todayVC:UITextViewDelegate{
 
 //MARK:-生命周期
 extension todayVC{
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureTopbar()
+        configureTodayView()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //展示点击的日记
+        loadTodayData()
+    }
+    
     //读入选中的日记
     func loadTodayData(){
         todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
@@ -268,6 +282,7 @@ extension todayVC{
         if lastDiary == todayDiary.date!{
             return
         }
+        lastDiary = todayDiary.date!
         
         //load textView
         if todayDiary.content.count == 0{
@@ -298,58 +313,9 @@ extension todayVC{
         topbar.dataLable1.sizeToFit()
         topbar.button1.islike = todayDiary.islike
         topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood.rawValue)
-        
-        
     }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        configureTopbar()
-        configureTodayView()
-//        loadTodayData()
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //获取欲展示的日记
-        loadTodayData()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if lastDiary == todayDiary.date!{
-            return
-        }else{
-            if textView.textColor == UIColor.lightGray{
-                //空日记，不读取，否则placeholder被读取的空文本覆盖
-                lastDiary = todayDiary.date!
-                return
-            }
-            print("将新日记的图片填入空白")
-            if let aString = loadAttributedString(date_string: todayDiary.date!){
-                let preparedText = aString.processAttrString(textView: self.textView,fillWithEmptyImage: false)
-                textView.attributedText = preparedText
-            }else{
-                textView.text = todayDiary.content
-            }
-        }
-        
-        lastDiary = todayDiary.date!
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-    }
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print("todayVC viewDidDisappear")
-        if textView.textColor == UIColor.lightGray{
-            return
-        }
-    }
+   
     
 }

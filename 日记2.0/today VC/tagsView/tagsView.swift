@@ -225,6 +225,12 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
     }
 }
 
+extension tagsView:UIViewControllerTransitioningDelegate{
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return tagsVC(presentedViewController: presented, presenting: presenting)
+    }
+}
+
 //MARK:-life cycle
 extension tagsView{
 
