@@ -83,6 +83,7 @@ class monthVC: UIViewController {
     var calendarHeightOriginFrame:CGRect!
     var formatter = DateFormatter()
     var calendarIsShowing:Bool = false
+    var calendarScrollView:UIScrollView!
     //collection view
     @IBOutlet weak var collectionView:UICollectionView!
     @IBOutlet weak var collectionViewTopInsetAnchor: NSLayoutConstraint!
@@ -90,7 +91,7 @@ class monthVC: UIViewController {
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 24
+        layout.minimumLineSpacing = 10
         layout.estimatedItemSize = CGSize(width: collectionView.bounds.width, height: 44)
         layout.itemSize = UICollectionViewFlowLayout.automaticSize
         return layout
@@ -100,19 +101,24 @@ class monthVC: UIViewController {
     
     //读取某年某月的日记，或读取全部日记
     func configureDataSource(year:Int,month:Int){
-        let dataSource = diariesForMonth(forYear: year, forMonth: month)
-            filteredDiaries.removeAll()
-            for diary in dataSource{
-                if diary != nil{
-                    filteredDiaries.append(diary!)
+        DispatchQueue.main.async { [self] in
+            let dataSource = diariesForMonth(forYear: year, forMonth: month)
+                filteredDiaries.removeAll()
+                for diary in dataSource{
+                    if diary != nil{
+                        filteredDiaries.append(diary!)
+                    }
                 }
+                filteredDiaries.reverse()//日期从大到小排列
+            DispatchQueue.main.async {
+                reloadCollectionViewData()
             }
-            filteredDiaries.reverse()//日期从大到小排列
-            reloadCollectionViewData()
+        }
     }
     
     func configureUI(){
         //configure collection view
+//        collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -205,6 +211,7 @@ class monthVC: UIViewController {
         calendar.appearance.selectionColor = #colorLiteral(red: 0.2, green: 0.231372549, blue: 0.2509803922, alpha: 1)
         calendar.appearance.titleSelectionColor = APP_GREEN_COLOR()
         calendar.appearance.eventOffset = CGPoint(x: 0, y: -5)
+        calendar.appearance.eventDefaultColor = .black
         calendar.appearance.headerDateFormat = "yyyy年M月"
         calendar.locale = Locale(identifier: "zh_CN")//设置周次为中文
         calendar.appearance.caseOptions = .weekdayUsesSingleUpperCase//设置为一、二···
@@ -222,6 +229,7 @@ class monthVC: UIViewController {
         calendar.alpha = 0
         monthButtonContainer.addSubview(calendar)
         
+        
         //back to cur month button
         view.addSubview(backToCurMonthButton)
     }
@@ -234,22 +242,31 @@ class monthVC: UIViewController {
             if tappedMonth == selectedMonth{
                 animateCalendar(isShowing: calendarIsShowing)//收回日历
             }else{
-                calendar.setCurrentPage(formatter.date(from: "\(selectedYear)-\(tappedMonth)")!, animated: true)
-                //同时调用calendarCurrentPageDidChange()
+                calendar.setCurrentPage(formatter.date(from: "\(selectedYear)-\(tappedMonth)")!, animated: false)
+                selectedMonth = tappedMonth//更新dateSouce
             }
         }else{
             if tappedMonth == selectedMonth{
                     animateCalendar(isShowing: calendarIsShowing)
             }else{
-                calendar.setCurrentPage(formatter.date(from: "\(selectedYear)-\(tappedMonth)")!, animated: true)
-                //同时调用calendarCurrentPageDidChange()
+                calendar.setCurrentPage(formatter.date(from: "\(selectedYear)-\(tappedMonth)")!, animated: false)
+                selectedMonth = tappedMonth//更新dateSouce
             }
         }
     }
     
 //MARK:-返回本月按钮
     @objc func backToCurMonthButtonTapped(){
-        calendar.select(curDate, scrollToDate: true)
+        //刷新DataSource
+        formatter.dateFormat = "yyyy"
+        let year = Int(formatter.string(from: curDate))!
+        formatter.dateFormat = "MM"
+        let month = Int(formatter.string(from: curDate))!
+        selectedYear = year
+        selectedMonth = month
+        
+        //跳转日历
+        calendar.setCurrentPage(curDate, animated: false)
     }
     
     func adjustBackToCurrentMonthButton(){
@@ -437,27 +454,20 @@ extension monthVC:UIScrollViewDelegate{
                self.collectionView.isScrollEnabled = true
            }
         }
-        
-        
-        
-        //回收日历
-//
-            
     }
 
 }
 
 //MARK:-FSCalendar DataScouce
-extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance{
+extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance,ExtendedFSCalendarDelegate{
     //使用DIY cell
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! DIYCalendarCell
-        cell.date = date
         return cell
     }
     
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-        
+        print("FSCalendar willDisplay cell")
         self.configure(cell: cell, for: date, at: monthPosition)
     }
     
@@ -511,6 +521,17 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     
     private func configure(cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
         let diyCell = (cell as! DIYCalendarCell)
+        /*
+            在这里给FSCalendar Cell传递数据
+        */
+        
+        //设置cell的日期信息
+        diyCell.date = date
+        
+        //设置cell的keyword
+        formatter.dateFormat = "yyyy年M月d日"
+        let dateString = formatter.string(from: date)
+        diyCell.keyword = diaryForDate(atTime: dateString)?.keyword
         
         //设置cell的选取视图：圆环
         var selectionType = SelectionType.none
@@ -525,62 +546,73 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
             return
         }else{
             diyCell.selectionLayer.isHidden = false
-            diyCell.selectionType = selectionType
         }
+        diyCell.selectionType = selectionType//赋值的同时，其didSet方法调用layoutSubviews
         
     }
     
+//    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+//    }
     
-    //页面变化事件
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+    func didEndDecelerating(calendar: FSCalendar) {
+        /*
+         calendarCurrentPageDidChange存在问题：页面是willchange时调用而不是didchange时调用
+         为此使用网友提供的ExtendedFSCalendarDelegate。
+         通过didEndDecelerating来真正实现page didchange时调用
+        */
         //获取当前页面月份
+        print("didEndDecelerating(calendar: FSCalendar)")
         formatter.dateFormat = "yyyy"
         let year = Int(formatter.string(from: calendar.currentPage))!
         formatter.dateFormat = "MM"
         let month = Int(formatter.string(from: calendar.currentPage))!
-        
+
         selectedYear = year
         selectedMonth = month
     }
     
+    
+    
     //event dot数量
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         formatter.dateFormat = "yyyy年M月d日"
-        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
-        for diary in dict.values{
-            if diary.date == formatter.string(from: date) && diary.content.count != 0{
+//        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+//
+//        for diary in dict.values{
+//            //如果有内容
+//            if diary.date == formatter.string(from: date) && diary.content.count != 0{
+//                return 1
+//            }
+//        }
+//        return 0
+        formatter.dateFormat = "yyyy年M月d日"
+        let dateString = formatter.string(from: date)
+        if let diary = diaryForDate(atTime: dateString){
+            //如果有设置了关键字，那么把dot隐藏
+            if diary.keyword != nil{
+                return 0
+            }
+            if diary.content.count != 0{
                 return 1
             }
         }
         return 0
     }
-    
-    //event dot着色
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        formatter.dateFormat = "yyyy年M月d日"
-        for diarydate in DataContainerSingleton.sharedDataContainer.diaryDict.keys{
-            if diarydate == formatter.string(from: date){
-                let diary = DataContainerSingleton.sharedDataContainer.diaryDict[diarydate]
-                if let islike = diary?.islike,islike == true{
-                    return [.yellow]
-                }
-            }
-        }
-        return [.black]
-    }
-    
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
-        formatter.dateFormat = "yyyy年M月d日"
-        let diaryDate = formatter.string(from: date)
-        let diary = DataContainerSingleton.sharedDataContainer.diaryDict[diaryDate]
-        if diary?.islike == true{
-            return [.yellow]
-        }else{
-            return [.black]
-        }
-    }
-    
-    
+}
+
+//来源：
+extension FSCalendar: UIScrollViewDelegate {
+public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+(delegate as? ExtendedFSCalendarDelegate)?.didEndDecelerating(calendar: self)
+}
+}
+
+protocol ExtendedFSCalendarDelegate: FSCalendarDelegate {
+func didEndDecelerating(calendar: FSCalendar)
+}
+
+extension ExtendedFSCalendarDelegate {
+func didEndDecelerating(calendar: FSCalendar) { }
 }
 
 //MARK:-搜索界面

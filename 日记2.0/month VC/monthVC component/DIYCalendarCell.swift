@@ -16,11 +16,14 @@ enum  SelectionType: Int {
 class DIYCalendarCell: FSCalendarCell {
     var date:Date!
     var bgView:UIView!
-    weak var selectionLayer: CAShapeLayer!
+    var keywordLabel:UILabel! //关键字label
+    var keyword:String?
+    
+    weak var selectionLayer: CAShapeLayer!//选中视图：圆环
     
     var selectionType:SelectionType = .none {
         didSet{
-            setNeedsLayout()
+            setNeedsLayout()//将调用layoutSubviews()
         }
     }
     
@@ -44,10 +47,21 @@ class DIYCalendarCell: FSCalendarCell {
         selectionLayer.lineWidth = 3.0
         self.contentView.layer.insertSublayer(selectionLayer, below: self.titleLabel!.layer)
         self.selectionLayer = selectionLayer
+        
+        //设置keywordLabel
+        keywordLabel = UILabel()
+        keywordLabel.textAlignment = .center
+        keywordLabel.layer.borderWidth = 1
+        keywordLabel.layer.cornerRadius = 4
+        keywordLabel.font = .systemFont(ofSize: 8)
+        keywordLabel.adjustsFontSizeToFitWidth = true
+        self.contentView.addSubview(keywordLabel)
+         
     }
     
     
     override func layoutSubviews() {
+        print("FSCalendar Cell layoutSubviews,keyword")
         super.layoutSubviews()
         
         //1,设置cell的背景颜色，如果是未来的cell，不设置背景颜色
@@ -57,27 +71,39 @@ class DIYCalendarCell: FSCalendarCell {
             bgView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
         }
         
-        //2,绘制点选圆环view
+        //2.绘制点选圆环view
         self.backgroundView?.frame = self.bounds.insetBy(dx: 2, dy: 1)
-        self.selectionLayer.frame = self.backgroundView!.bounds
-        
-        
+        self.selectionLayer.frame = self.titleLabel.bounds
         switch selectionType {
         case .single:
-            let diameter: CGFloat = min(self.contentView.frame.width, self.contentView.frame.height)
+            let diameter: CGFloat = min(self.titleLabel.frame.width, self.titleLabel.frame.height)
             let square = CGRect(
-                x: self.contentView.frame.width / 2 - diameter / 2,
-                y: self.contentView.frame.height / 2 - diameter / 2,
+                x: self.titleLabel.frame.width / 2 - diameter / 2,
+                y: self.titleLabel.frame.height / 2 - diameter / 2,
                 width: diameter,
                 height: diameter)
             let cyclePath = UIBezierPath(ovalIn: square.insetBy(dx: 5, dy: 5))
             self.selectionLayer.path = cyclePath.cgPath
         default:
             //.none
-            return
+            break
         }
         
+        //3.布局keywordLabel
+        if let keyword = self.keyword{
+            keywordLabel.isHidden = false
+            keywordLabel.text = keyword
+            
+            let rect = CGRect(x: 0, y: self.titleLabel.frame.maxY,
+                              width: self.bounds.width,
+                              height: 0)
+            keywordLabel.frame = rect.insetBy(dx: 5, dy: -5)
+            print("keywordLabel.frame:\(keywordLabel.frame)")
+        }else{
+            keywordLabel.isHidden = true
+        }
     }
+    
     
     //MARK:-
     func clearBGColor(){

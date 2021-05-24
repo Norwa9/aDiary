@@ -456,7 +456,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VTK-db-VqB" userLabel="备份设置view">
-                                                <rect key="frame" x="0.0" y="706" width="414" height="100"/>
+                                                <rect key="frame" x="0.0" y="706" width="414" height="142"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备份" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRv-uC-0zr" userLabel="备份label">
                                                         <rect key="frame" x="18" y="0.0" width="47" height="24"/>
@@ -468,12 +468,13 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c3B-ml-jeK">
-                                                        <rect key="frame" x="18" y="24" width="378" height="66"/>
+                                                        <rect key="frame" x="18" y="24" width="378" height="113"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyA-Ia-ZOn">
-                                                                <rect key="frame" x="8" y="18" width="200" height="30"/>
+                                                                <rect key="frame" x="8" y="15" width="200" height="40"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="200" id="x9M-tz-xUP"/>
+                                                                    <constraint firstAttribute="height" constant="40" id="1by-ml-RvJ"/>
+                                                                    <constraint firstAttribute="width" constant="200" id="CGW-qh-lcS"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                                 <state key="normal" title="导出所有日记为PDF">
@@ -483,25 +484,39 @@
                                                                     <action selector="exportAll" destination="EGw-IB-yRo" eventType="touchUpInside" id="RNl-o8-J8d"/>
                                                                 </connections>
                                                             </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47e-79-sU8">
+                                                                <rect key="frame" x="8" y="58" width="200" height="40"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="40" id="HDv-BP-H2e"/>
+                                                                    <constraint firstAttribute="width" constant="200" id="kIu-Ka-DlR"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                                <state key="normal" title="从DayGram导入">
+                                                                    <color key="titleColor" systemColor="linkColor"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="importFromDayGram" destination="EGw-IB-yRo" eventType="touchUpInside" id="6fp-4L-TmK"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemTealColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="hyA-Ia-ZOn" firstAttribute="top" secondItem="c3B-ml-jeK" secondAttribute="top" constant="18" id="BNM-fn-3TK"/>
-                                                            <constraint firstAttribute="bottom" secondItem="hyA-Ia-ZOn" secondAttribute="bottom" constant="18" id="N2O-69-Yq7"/>
-                                                            <constraint firstItem="hyA-Ia-ZOn" firstAttribute="leading" secondItem="c3B-ml-jeK" secondAttribute="leading" constant="8" id="jrF-ee-619"/>
-                                                            <constraint firstAttribute="height" constant="66" id="oUu-ff-da9"/>
+                                                            <constraint firstItem="hyA-Ia-ZOn" firstAttribute="top" secondItem="c3B-ml-jeK" secondAttribute="top" constant="15" id="3AS-ID-Ctz"/>
+                                                            <constraint firstItem="47e-79-sU8" firstAttribute="leading" secondItem="c3B-ml-jeK" secondAttribute="leading" constant="8" id="Olo-Fc-n7I"/>
+                                                            <constraint firstAttribute="bottom" secondItem="47e-79-sU8" secondAttribute="bottom" constant="15" id="VYE-0X-Xr0"/>
+                                                            <constraint firstItem="hyA-Ia-ZOn" firstAttribute="leading" secondItem="c3B-ml-jeK" secondAttribute="leading" constant="8" id="skL-Zw-Jyt"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="c3B-ml-jeK" firstAttribute="top" secondItem="GRv-uC-0zr" secondAttribute="bottom" id="BVd-08-bY1"/>
-                                                    <constraint firstAttribute="height" constant="100" id="PQP-5q-CBd"/>
                                                     <constraint firstItem="c3B-ml-jeK" firstAttribute="leading" secondItem="VTK-db-VqB" secondAttribute="leading" constant="18" id="X2X-ob-HzT"/>
                                                     <constraint firstAttribute="trailing" secondItem="c3B-ml-jeK" secondAttribute="trailing" constant="18" id="Yzz-jL-ZjZ"/>
+                                                    <constraint firstAttribute="height" constant="142" id="gCY-Fb-f9k"/>
                                                     <constraint firstItem="GRv-uC-0zr" firstAttribute="leading" secondItem="VTK-db-VqB" secondAttribute="leading" constant="18" id="oHO-4S-KO0"/>
-                                                    <constraint firstItem="c3B-ml-jeK" firstAttribute="centerX" secondItem="VTK-db-VqB" secondAttribute="centerX" id="oN4-51-LgO"/>
                                                     <constraint firstItem="GRv-uC-0zr" firstAttribute="top" secondItem="VTK-db-VqB" secondAttribute="top" id="w7J-hS-Kgd"/>
+                                                    <constraint firstAttribute="bottom" secondItem="c3B-ml-jeK" secondAttribute="bottom" constant="5" id="xKH-2x-SAx"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pGl-IY-d5M">
@@ -544,7 +559,7 @@
                                             <constraint firstAttribute="bottom" secondItem="74I-PP-T9t" secondAttribute="bottom" constant="24" id="kcQ-fS-brr"/>
                                             <constraint firstAttribute="trailing" secondItem="VTK-db-VqB" secondAttribute="trailing" id="oI3-My-BXj"/>
                                             <constraint firstAttribute="trailing" secondItem="Fba-uI-Wm8" secondAttribute="trailing" constant="9" id="ogq-vA-JA1"/>
-                                            <constraint firstItem="Bct-Mt-CNa" firstAttribute="top" secondItem="VTK-db-VqB" secondAttribute="bottom" constant="50" id="p84-ku-NVd"/>
+                                            <constraint firstItem="Bct-Mt-CNa" firstAttribute="top" secondItem="VTK-db-VqB" secondAttribute="bottom" constant="8" id="qpt-8p-UP4"/>
                                             <constraint firstItem="ybf-eP-LwF" firstAttribute="leading" secondItem="DJF-bk-JrG" secondAttribute="leading" id="rTb-Xv-DEO"/>
                                             <constraint firstItem="Fba-uI-Wm8" firstAttribute="top" secondItem="DJF-bk-JrG" secondAttribute="top" constant="12" id="rZq-7p-sPe"/>
                                             <constraint firstItem="LWz-BW-Z9l" firstAttribute="top" secondItem="DJF-bk-JrG" secondAttribute="top" constant="11" id="sKD-ce-g3n"/>

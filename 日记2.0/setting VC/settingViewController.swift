@@ -154,6 +154,13 @@ class settingViewController: UIViewController {
         
     }
     
+    @IBAction func importFromDayGram(){
+        let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .import)
+        documentPicker.delegate = self
+       documentPicker.allowsMultipleSelection = false
+       present(documentPicker, animated: true, completion: nil)
+    }
+    
 }
 
 //MARK:-UITextView
@@ -216,6 +223,23 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         }
         
         return pickerlabel
+    }
+}
+
+extension settingViewController:UIDocumentPickerDelegate{
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard controller.documentPickerMode == .import, let url = urls.first, let importText = try? String(contentsOfFile: url.path) else { return }
+        
+        
+        
+        parseDayGramText(text: importText)
+        
+        
+        controller.dismiss(animated: true)
+    }
+    
+    public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        controller.dismiss(animated: true)
     }
 }
 

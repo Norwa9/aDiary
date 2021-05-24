@@ -8,14 +8,12 @@
 import Foundation
 import UIKit
 
-import Foundation
-import UIKit
-
 
 class diaryInfo:Codable{
     var date:String?
     var content:String = ""
     var islike:Bool = false
+    var keyword:String?
     var tags = [String]()
     var mood:moodTypes = .calm
     var uuidofPictures = [String]()
@@ -113,57 +111,59 @@ func importIntroduction(){
     }
 }
 
-//MARK:-导入demo日记
-func initialDiaryDict(){
+//MARK:-导入DayGram日记
+func parseDayGramText(text:String){
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
-//    if true{
-    if !userDefaultManager.hasInitialized{//注意，第一次使用sharedDataContainer将调用单例的init()，此语句是第一次使用
-        userDefaultManager.hasInitialized = true
-        DataContainerSingleton.sharedDataContainer.diaryDict.removeAll()//清空
-        let dict = txt2String(fileName: "demoDiaries")
-        for key in dict.keys{
-            let dateString = formatter.string(from: key)
-            let tempDiary = diaryInfo(dateString: dateString)
-            //读取key（日期）对应的String（日记内容）
-            tempDiary.content = dict[key] ?? ""
-            //读取内容后，初始化日记的textViewAttributedText属性
-            
-            DataContainerSingleton.sharedDataContainer.diaryDict[dateString] = tempDiary
+    //得到解析后的日记
+    let diaryDict = txt2String(string: text)
+    var count = 0
+    for (key,content) in diaryDict{
+        let dateString = formatter.string(from: key)
+        
+        guard DataContainerSingleton.sharedDataContainer.diaryDict[dateString] == nil else{
+            continue
         }
+        
+        DataContainerSingleton.sharedDataContainer.diaryDict[dateString] = diaryInfo(dateString: dateString)
+        DataContainerSingleton.sharedDataContainer.diaryDict[dateString]?.content = content
+        count += 1
+        print("\(dateString)已创建，第\(count)篇")
+        
     }
 }
 
-//从txt文件解析出日记的日期和文本
-func txt2String(fileName:String) -> [Date:String]{
+//从String解析出每一篇日记的时间以及内容
+func txt2String(string:String) -> [Date:String]{
     let formatter = DateFormatter()
+    #if targetEnvironment(simulator)
     formatter.dateFormat = "MMMM d EEEE yyyy"
+    #else
+    formatter.locale = Locale(identifier: "en_US")
+    formatter.dateFormat = "MMMM d EEEE yyyy"
+    #endif
     var count = 0
     var date = Date()
     var content = ""
     var dateDict = [Date:String]()
-    if let levelFileURL = Bundle.main.url(forResource: fileName, withExtension: "txt") {
-        if let levelContents = try? String(contentsOf: levelFileURL) {
-            let lines = levelContents.components(separatedBy: "\n")
-            for line in lines{
-                //开始遍历新日记
-                if line.contains("**"){
-                    if count != 0{//排除第一篇日记的情况
-                        dateDict[date] = content//表示已经扫描完一篇日记，存储它
-                        content.removeAll()
-                    }
-                    count += 1
-                    let beg = line.index(line.startIndex, offsetBy: 3)
-                    let end = line.index(line.endIndex, offsetBy: -3)
-                    date = formatter.date(from: String(line[beg..<end]))!
-                    continue
-                }
-                if line == ""{
-                    continue
-                }
-                content.append(line+"\n")
+    let lines = string.components(separatedBy: "\n")
+    for line in lines{
+        //开始遍历新日记
+        if line.contains("**"){
+            if count != 0{//排除第一篇日记的情况
+                dateDict[date] = content//表示已经扫描完一篇日记，存储它
+                content.removeAll()
             }
+            count += 1
+            let beg = line.index(line.startIndex, offsetBy: 3)
+            let end = line.index(line.endIndex, offsetBy: -3)
+            date = formatter.date(from: String(line[beg..<end]))!
+            continue
         }
+        if line == ""{
+            continue
+        }
+        content.append(line+"\n")
     }
     return dateDict
 }
@@ -171,18 +171,18 @@ func txt2String(fileName:String) -> [Date:String]{
 //MARK:-获取指定日期的日记
 func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
     let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
-//    print("diariesForMonth() called,diaryDict.count:\(diaryDict.count)")
     var tempDiaries = [diaryInfo?]()
     
+    //1，返回所有日记
     if forYear == 0 && forMonth == 0{
         //0,0是特例：表示返回所有日记
         for (_,diary) in diaryDict{
             tempDiaries.append(diary)
         }
         
-        //返回日期降序的所有日记
         let dateFomatter = DateFormatter()
         dateFomatter.dateFormat = "yyyy年M月d日"
+        //返回日期降序的所有日记
         return tempDiaries.sorted { (d1, d2) -> Bool in
             if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
                 if date1.compare(date2) ==  .orderedAscending{
@@ -193,6 +193,7 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
         }
     }
     
+    //2，返回指定年/月日记
     for i in 1...howManyDaysInThisMonth(year: forYear, month: forMonth){
         let timeString = "\(forYear)年\(forMonth)月\(i)日"
 //        print(timeString)

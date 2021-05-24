@@ -30,7 +30,7 @@ class shareScrollView:UIScrollView{
     
     func setupUI(){
         self.alwaysBounceVertical = true
-        self.showsVerticalScrollIndicator = false
+        self.showsVerticalScrollIndicator = true
         
         let scrollViewWidth = blurPresentationController.frameOfPresentedView.size.width
         dateLabel.frame = CGRect(x: 0, y: 0, width: 195, height: 33)

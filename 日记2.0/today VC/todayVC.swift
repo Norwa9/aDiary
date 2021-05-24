@@ -27,6 +27,7 @@ class todayVC: UIViewController {
 
     var lastDiary:String = ""
     
+    let picker = UIImagePickerController()
     
     func configureTodayView(){
         //textView
@@ -54,10 +55,29 @@ class todayVC: UIViewController {
     func todayButtonsTapped(button:topbarButton){
         switch button.tag {
         case 1:
+            //设置“喜欢”
             button.islike.toggle()
             todayDiary.islike = button.islike
+            //添加关键字
+            let ac = UIAlertController(title: "输入关键词", message: "输入6个字概括今日", preferredStyle: .alert)
+            ac.addTextField { (textField) in
+                textField.text = self.todayDiary.keyword
+            }
+            ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+            ac.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
+                guard let text = ac.textFields?[0].text,text != "" else{
+                    return
+                }
+                if text.count > 6{
+                    ac.view.shake()
+                }
+                self.todayDiary.keyword = text
+            }))
+            self.present(ac, animated: true, completion: nil)
+            //刷新monthVC
             let monthVC = UIApplication.getMonthVC()
             monthVC.calendar.reloadData()
+            
             break
         case 2:
             //传递当前的diary
@@ -110,7 +130,6 @@ class todayVC: UIViewController {
 //MARK:-插入图片
 extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     func importPicture() {
-        let picker = UIImagePickerController()
         picker.delegate = self
         present(picker, animated: true)
     }
@@ -207,6 +226,7 @@ extension todayVC:UITextViewDelegate{
         let monthVC = UIApplication.getMonthVC()
         monthVC.reloadCollectionViewData()
         monthVC.calendar.reloadData()
+        
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -221,14 +241,7 @@ extension todayVC:UITextViewDelegate{
         textFormatter.correctNum(deleteRange: range)
         
         //3.其余情况
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
-        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
-        let typingAttributes:[NSAttributedString.Key:Any] = [
-            .paragraphStyle: paragraphStyle,
-            .font:userDefaultManager.font
-        ]
-        textView.typingAttributes = typingAttributes
+        textView.typingAttributes = leftTypingAttributes()
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
     }
@@ -267,15 +280,19 @@ extension todayVC{
         
         configureTopbar()
         configureTodayView()
+        loadTodayData()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         //展示点击的日记
-        loadTodayData()
+//        loadTodayData()
     }
     
-    //读入选中的日记
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
     func loadTodayData(){
         todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
         //如果没有选择新的日期，不要刷新避免读取一样的内容
@@ -291,6 +308,7 @@ extension todayVC{
         }else{
             textView.textColor = UIColor.black
             textView.text = todayDiary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
+            textView.typingAttributes = leftTypingAttributes()//内容居左
             let textViewBounds = textView.bounds
             DispatchQueue.global(qos: .default).async {
                 if let aString = loadAttributedString(date_string: self.todayDiary.date!){

@@ -81,7 +81,7 @@ class shareVC: UIViewController {
         }
         
         
-        
+        view.clipsToBounds = true//裁剪过长的scrollview
         
         view.addSubview(scrollView)
         view.addSubview(closeBtn)

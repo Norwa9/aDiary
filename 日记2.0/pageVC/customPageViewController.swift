@@ -102,6 +102,9 @@ extension customPageViewController:UIPageViewControllerDataSource,UIPageViewCont
             return
         }
         view.isUserInteractionEnabled = false//阻止cell被用户连按两下
+        //读取选取日记
+        todayVC.loadTodayData()
+        //让pageController滑动到今日页面
         self.setViewControllers([todayVC], direction: .reverse, animated: true, completion: {[weak self] (complete: Bool) -> Void in
         if (complete) {
             self?.curVCIndex = 0

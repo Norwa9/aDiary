@@ -214,7 +214,7 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    //self-sizeing所必须实现的：提供计算后的cell size
+    //提供计算后的cell size
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         self.setNeedsLayout()
         self.layoutIfNeeded()
@@ -227,11 +227,21 @@ class monthCell: UICollectionViewCell {
     }
     
     func fillCell(diary:diaryInfo){
-        //如果没有这句，cell的自适应高度不准确。
-        print("fillCell")
-        self.layoutIfNeeded()//(？)这里需要 layoutIfNeeded 一下，否则我们不能同步拿到contentSize，参考自：https://blog.csdn.net/ssy0082/article/details/81711240
+        //这里需要 layoutIfNeeded 一下，拿到contentSize
+        //参考自：https://blog.csdn.net/ssy0082/article/details/81711240
+        self.layoutIfNeeded()
+        
+//        DispatchQueue.global(qos: .default).async {
+//            let title = self.getAttrTitle(content: diary.content)
+//            let conent = self.getAttrContent(content: diary.content)
+//            DispatchQueue.main.async {
+//                self.titleLabel.attributedText = title
+//                self.contentLabel.attributedText = conent
+//            }
+//        }
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
+//        self.contentLabel.text = diary.content
         self.tags = diary.tags
         self.dateLabel.text = diary.date! + "，" + Date().getWeekday(dateString: diary.date!)
         self.wordNum = diary.content.count

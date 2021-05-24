@@ -233,3 +233,15 @@ func loadAttributedString(date_string:String) -> NSAttributedString?{
     }
     return nil
 }
+
+
+func leftTypingAttributes() -> [NSAttributedString.Key:Any]{
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .left
+    paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+    let typingAttributes:[NSAttributedString.Key:Any] = [
+        .paragraphStyle: paragraphStyle,
+        .font:userDefaultManager.font
+    ]
+    return typingAttributes
+}
