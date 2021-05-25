@@ -20,7 +20,6 @@ extension SceneDelegate{
             ac.dismiss(animated: true, completion: nil)
         }
         self.visualEffectView.alpha = 1
-//        UIApplication.shared.keyWindow?
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.addSubview(self.visualEffectView)
     }
     
@@ -29,6 +28,10 @@ extension SceneDelegate{
         guard userDefaultManager.useBiometrics || userDefaultManager.usePassword  else{
             return
         }
+        
+        //开始认真之前先加上模糊
+        self.visualEffectView.alpha = 1
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.addSubview(self.visualEffectView)
         
         //如果设置了生物识别
         if userDefaultManager.useBiometrics{
