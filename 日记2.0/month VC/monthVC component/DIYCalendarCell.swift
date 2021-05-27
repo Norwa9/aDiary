@@ -61,7 +61,7 @@ class DIYCalendarCell: FSCalendarCell {
     
     
     override func layoutSubviews() {
-        print("FSCalendar Cell layoutSubviews,keyword")
+//        print("FSCalendar Cell layoutSubviews,keyword")
         super.layoutSubviews()
         
         //1,设置cell的背景颜色，如果是未来的cell，不设置背景颜色

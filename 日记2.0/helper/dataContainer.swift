@@ -18,6 +18,48 @@ class diaryInfo:Codable{
     var mood:moodTypes = .calm
     var uuidofPictures = [String]()
     var containsImage:Bool?
+    var year:Int{
+        get{
+            if let dateString = self.date{
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy年M月d日"
+                let rawDate = formatter.date(from: dateString)!
+                formatter.dateFormat = "yyyy"
+                return Int(formatter.string(from: rawDate))!
+            }else{
+                return -1
+            }
+        }
+    }
+    var month:Int{
+        get{
+            if let dateString = self.date{
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy年M月d日"
+                let rawDate = formatter.date(from: dateString)!
+                formatter.dateFormat = "M"
+                return Int(formatter.string(from: rawDate))!
+            }else{
+                return -1
+            }
+        }
+    }
+    var row:Int{
+        get{
+            let diries = diariesForMonth(forYear: year, forMonth: month)
+            var count = 0
+            for diary in diries.reversed(){
+                if let d = diary{
+                    if d.date == self.date{
+                        return count
+                    }
+                    count += 1
+                }
+            }
+            return -1
+        }
+    }
+    
     init(dateString:String?) {
         date = dateString
     }
