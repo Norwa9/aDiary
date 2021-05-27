@@ -370,8 +370,12 @@ class monthVC: UIViewController {
 
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func reloadCollectionViewData(){
-        self.collectionView.reloadData()
+    func reloadCollectionViewData(forRow:Int = -1){
+        if forRow != -1{
+            self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
+        }else{
+            self.collectionView.reloadData()
+        }
         self.collectionView.layoutIfNeeded()//没有这句，首次进入monthVC所有cell大小有误（？）
     }
     
@@ -467,7 +471,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     }
     
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("FSCalendar willDisplay cell")
+//        print("FSCalendar willDisplay cell")
         self.configure(cell: cell, for: date, at: monthPosition)
     }
     
