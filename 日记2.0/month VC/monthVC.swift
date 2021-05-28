@@ -491,14 +491,12 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         let dateContainer = DataContainerSingleton.sharedDataContainer
         formatter.dateFormat = "yyyy年M月d日"
         let dateString = formatter.string(from: date)
-//        print("选取日期:\(dateString)")
         if let selectedDiary = dateContainer.diaryDict[dateString]{
             dateContainer.selectedDiary = selectedDiary
             pageVC.slideToTodayVC(completion: nil)
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
-            popoverAlert.delegate = self
             popoverAlert.dateString = dateString
             
             popover.show(popoverAlert, fromView: cell!)
