@@ -16,8 +16,6 @@ enum  SelectionType: Int {
 class DIYCalendarCell: FSCalendarCell {
     var date:Date!
     var bgView:UIView!
-    var keywordLabel:UILabel! //关键字label
-    var keyword:String?
     
     weak var selectionLayer: CAShapeLayer!//选中视图：圆环
     
@@ -47,15 +45,6 @@ class DIYCalendarCell: FSCalendarCell {
         selectionLayer.lineWidth = 3.0
         self.contentView.layer.insertSublayer(selectionLayer, below: self.titleLabel!.layer)
         self.selectionLayer = selectionLayer
-        
-        //设置keywordLabel
-        keywordLabel = UILabel()
-        keywordLabel.textAlignment = .center
-        keywordLabel.layer.borderWidth = 1
-        keywordLabel.layer.cornerRadius = 4
-        keywordLabel.font = .systemFont(ofSize: 8)
-        keywordLabel.adjustsFontSizeToFitWidth = true
-        self.contentView.addSubview(keywordLabel)
          
     }
     
@@ -89,19 +78,6 @@ class DIYCalendarCell: FSCalendarCell {
             break
         }
         
-        //3.布局keywordLabel
-        if let keyword = self.keyword{
-            keywordLabel.isHidden = false
-            keywordLabel.text = keyword
-            
-            let rect = CGRect(x: 0, y: self.titleLabel.frame.maxY,
-                              width: self.bounds.width,
-                              height: 0)
-            keywordLabel.frame = rect.insetBy(dx: 5, dy: -5)
-//            print("keywordLabel.frame:\(keywordLabel.frame)")
-        }else{
-            keywordLabel.isHidden = true
-        }
     }
     
     

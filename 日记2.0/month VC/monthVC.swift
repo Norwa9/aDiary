@@ -530,11 +530,6 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         //设置cell的日期信息
         diyCell.date = date
         
-        //设置cell的keyword
-        formatter.dateFormat = "yyyy年M月d日"
-        let dateString = formatter.string(from: date)
-        diyCell.keyword = diaryForDate(atTime: dateString)?.keyword
-        
         //设置cell的选取视图：圆环
         var selectionType = SelectionType.none
         if calendar.selectedDates.contains(date){
@@ -573,33 +568,45 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         selectedMonth = month
     }
     
-    
-    
     //event dot数量
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         formatter.dateFormat = "yyyy年M月d日"
-//        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
-//
-//        for diary in dict.values{
-//            //如果有内容
-//            if diary.date == formatter.string(from: date) && diary.content.count != 0{
-//                return 1
-//            }
-//        }
-//        return 0
-        formatter.dateFormat = "yyyy年M月d日"
-        let dateString = formatter.string(from: date)
-        if let diary = diaryForDate(atTime: dateString){
-            //如果有设置了关键字，那么把dot隐藏
-            if diary.keyword != nil{
-                return 0
-            }
-            if diary.content.count != 0{
+        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+
+        for diary in dict.values{
+            //如果有内容
+            if diary.date == formatter.string(from: date) && diary.content.count != 0{
                 return 1
             }
         }
         return 0
     }
+    //事件点默认颜色
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
+        formatter.dateFormat = "yyyy年M月d日"
+        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+        for diary in dict.values{
+            //如果有内容
+            if diary.date == formatter.string(from: date) && diary.islike{
+                return [.yellow]
+            }
+        }
+        return [.black]
+    }
+    //事件点选取状态的颜色
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
+        formatter.dateFormat = "yyyy年M月d日"
+        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+        for diary in dict.values{
+            //如果有内容
+            if diary.date == formatter.string(from: date) && diary.islike{
+                return [.yellow]
+            }
+        }
+        return [.black]
+    }
+    
+    
 }
 
 //来源：
