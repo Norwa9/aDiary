@@ -66,7 +66,7 @@ extension SceneDelegate{
                 }
             }else{
                 //不能使用生物识别
-                self.failAlert(title: "设备不支持生物识别", message: "使用App密码登录", okActionTitle: "输入App密码")
+                self.failAlert(title: "设备不支持生物识别或暂不可用", message: "使用App密码登录", okActionTitle: "输入App密码")
             }
         //如果仅设置密码
         }else if userDefaultManager.usePassword{

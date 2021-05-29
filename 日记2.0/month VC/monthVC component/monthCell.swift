@@ -27,7 +27,7 @@ class monthCell: UICollectionViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection  = .horizontal
         layout.minimumLineSpacing = 5
-        layout.itemSize = CGSize(width: monthCell.KphotoHeight - 5, height: monthCell.KphotoHeight - 5)
+        layout.itemSize = CGSize(width: monthCell.KphotoHeight, height: monthCell.KphotoHeight)
         return layout
     }()
     var photos:[UIImage] = [UIImage]()
@@ -123,7 +123,9 @@ class monthCell: UICollectionViewCell {
         albumView.showsHorizontalScrollIndicator = false
         albumView.register(photoCell.self, forCellWithReuseIdentifier: photoCell.photoCellID)
         albumView.translatesAutoresizingMaskIntoConstraints = false
+        
         albumView.backgroundColor = .clear
+        albumView.layer.cornerRadius = 10
         
         //contentLabel
         contentLabel.numberOfLines = 0
