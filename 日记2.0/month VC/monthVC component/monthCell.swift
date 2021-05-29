@@ -10,18 +10,28 @@ import SnapKit
 
 class monthCell: UICollectionViewCell {
     let cellPedding:CGFloat = 15//cell距离tableView两边的留白
+    static let KphotoHeight:CGFloat = 150
     var hasSelected:Bool = false
     
     static let reusableID = "monthCell"
     private lazy var containerView = UIView()
-    var titleLabel:UILabel = UILabel()
-    var contentLabel:UILabel = UILabel()
-    var dateLabel:UILabel = UILabel()
-    var tagsLabel:UILabel = UILabel()
-    var moodImageView:UIImageView = UIImageView()
-    var islikeImageView:UIImageView = UIImageView()
-    var imagePreview:UIImageView = UIImageView()
-    var wordNumLabel:UILabel = UILabel()
+    lazy var titleLabel:UILabel = UILabel()
+    lazy var contentLabel:UILabel = UILabel()
+    lazy var dateLabel:UILabel = UILabel()
+    lazy var tagsLabel:UILabel = UILabel()
+    lazy var moodImageView:UIImageView = UIImageView()
+    lazy var islikeImageView:UIImageView = UIImageView()
+    lazy var wordNumLabel:UILabel = UILabel()
+    var albumView:UICollectionView!
+    private lazy var layout:UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection  = .horizontal
+        layout.minimumLineSpacing = 5
+        layout.itemSize = CGSize(width: monthCell.KphotoHeight - 5, height: monthCell.KphotoHeight - 5)
+        return layout
+    }()
+    var photos:[UIImage] = [UIImage]()
+    
     var tags:[String]!{
         didSet{
             var tagsLabelText = ""
@@ -55,12 +65,6 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    var image:UIImage!{
-        didSet{
-            imagePreview.image = image
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         globalSetup()
@@ -73,8 +77,7 @@ class monthCell: UICollectionViewCell {
     private func globalSetup() {
         //对可重用的cell进行一些通用的初始化：例如阴影，圆角，约束等等。
         setupContainerView()
-        setupContentLabelsConstraints()
-        
+        setupSubviews()
     }
     
     
@@ -103,25 +106,29 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    private func setupContentLabelsConstraints() {
+    
+    private func setupSubviews() {
         //titleLabel
         titleLabel.numberOfLines = 0
         containerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        //collectionView
+        albumView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        containerView.addSubview(albumView)
+        albumView.collectionViewLayout = layout
+        albumView.delegate = self
+        albumView.dataSource = self
+        albumView.isScrollEnabled = true
+        albumView.showsHorizontalScrollIndicator = false
+        albumView.register(photoCell.self, forCellWithReuseIdentifier: photoCell.photoCellID)
+        albumView.translatesAutoresizingMaskIntoConstraints = false
+        albumView.backgroundColor = .clear
+        
         //contentLabel
         contentLabel.numberOfLines = 0
         containerView.addSubview(contentLabel)
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        //imagePreview
-        imagePreview.contentMode = .scaleAspectFill
-        imagePreview.clipsToBounds = true
-        imagePreview.layer.cornerRadius = 10
-        imagePreview.layer.borderWidth = 1
-        imagePreview.layer.borderColor = UIColor.lightGray.cgColor
-        containerView.addSubview(imagePreview)
-        imagePreview.translatesAutoresizingMaskIntoConstraints = false
         
         //tags Label
         containerView.addSubview(tagsLabel)
@@ -159,23 +166,24 @@ class monthCell: UICollectionViewCell {
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
             make.top.equalTo(containerView).offset(8)
+            make.height.equalTo(25)
+        }
+        
+        albumView.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.left.equalTo(titleLabel)
+            make.right.equalTo(titleLabel)
+            make.height.equalTo(monthCell.KphotoHeight)
         }
         
         contentLabel.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.right.equalTo(titleLabel)
+            make.top.equalTo(albumView.snp.bottom).offset(2)
             make.height.lessThanOrEqualTo(200)
         }
-        //            contentLabel.bottomAnchor.constraint(equalTo: tagsLabel.topAnchor, constant: -5.0),
-        imagePreview.snp.makeConstraints { (make) in
-            make.top.equalTo(contentLabel)
-            make.left.equalTo(contentLabel.snp.right).offset(10)
-            make.right.equalTo(containerView).offset(-15)
-            make.height.equalTo(80)
-            make.width.equalTo(80)
-        }
+        
         tagsLabel.snp.makeConstraints { (make) in
-            make.top.greaterThanOrEqualTo(imagePreview.snp.bottom).offset(5)
             make.top.greaterThanOrEqualTo(contentLabel.snp.bottom).offset(5)
             make.left.equalTo(contentLabel)
             make.right.equalTo(containerView).offset(-15)
@@ -225,14 +233,6 @@ class monthCell: UICollectionViewCell {
         //参考自：https://blog.csdn.net/ssy0082/article/details/81711240
         self.layoutIfNeeded()
         
-//        DispatchQueue.global(qos: .default).async {
-//            let title = self.getAttrTitle(content: diary.content)
-//            let conent = self.getAttrContent(content: diary.content)
-//            DispatchQueue.main.async {
-//                self.titleLabel.attributedText = title
-//                self.contentLabel.attributedText = conent
-//            }
-//        }
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
 //        self.contentLabel.text = diary.content
@@ -241,46 +241,33 @@ class monthCell: UICollectionViewCell {
         self.wordNum = diary.content.count
         self.isLike = diary.islike
         self.moodType = diary.mood
-        self.loadPreviewImage(diary: diary)
+        self.fillImages(diary: diary)
     }
     
-    //异步读取imagePreview
-    func loadPreviewImage(diary:diaryInfo){
-        //1、先设置imagePreview的布局
+    //读取日记的所有图片
+    func fillImages(diary:diaryInfo){
         let iM = imageManager(diary: diary)
-        var containsImage = false
-        if let result = diary.containsImage{
-            containsImage = result
+        var contains = false
+        if let flag = diary.containsImage{
+            contains = flag
         }else{
-            //当diary.containsImage == nil时才调用checkImageManualy()
-            print("checkImageManualy")
-            containsImage = iM.checkImageManualy()
+            contains = iM.checkifcontainsImage()
         }
-        containerView.layoutIfNeeded()//确保获取正确的contentHeight
-        let contentHeight = contentLabel.frame.height
-        for constraint in self.imagePreview.constraints{
-            if constraint.firstItem as? UIImageView == self.imagePreview{
-                if constraint.firstAttribute ==  .height && constraint.relation == .equal{
-                    constraint.constant = containsImage ? max(contentHeight, 80) : 0
-                }
-                if constraint.firstAttribute == .width && constraint.relation == .equal{
-                    constraint.constant = containsImage ? 80 : 0
-                }
-            }
+        
+        self.albumView.snp.updateConstraints { (make) in
+            make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
         }
-        //2、再异步读取imagePreview.image
+        if !contains{
+            return
+        }
+        self.layoutSubviews()
+        
         DispatchQueue.global(qos: .default).async {
-            if let image = iM.fetchImage(){
-                let scaleRatio = 800.0 / max(contentHeight,80)//缩放倍数大约是屏幕高度除以预览视图高度
-//                print("缩放倍数：\(scaleRatio)")
-                let smallerSize = CGSize(width: image.size.width / scaleRatio, height: image.size.height / scaleRatio)
-                let smallsizeImage = image.compressPic(toSize: smallerSize)
-                DispatchQueue.main.async {
-                    self.image = smallsizeImage
-                    self.layoutSubviews()//如果没有这句，cell的自适应高度不准确。
-                }
+            let images = iM.extractImages()
+            DispatchQueue.main.async {
+                self.photos = images
+                self.albumView.reloadData()
             }
-            
         }
     }
     
@@ -339,6 +326,25 @@ class monthCell: UICollectionViewCell {
 
 
     }
+    
+}
+
+extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource{
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = albumView.dequeueReusableCell(withReuseIdentifier: photoCell.photoCellID, for: indexPath) as! photoCell
+        let row = indexPath.item
+        cell.photo = photos[row]
+        return cell
+    }
+    
     
 }
 
