@@ -18,24 +18,26 @@ class imageManager{
     
     
     //读取日记的所有插图，返回第一张插图
-    func fetchImage()-> UIImage? {
+    func extractImages()-> [UIImage] {
         //获取富文本attributedString
-        guard let date_string = diary.date else{return nil}
-        guard let aString = self.loadAttributedString(date_string: date_string) else{return nil}
+        guard let date_string = diary.date else{return []}
+        guard let aString = self.loadAttributedString(date_string: date_string) else{return []}
         
-        var image:UIImage?
+        var images:[UIImage] = []
         aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
             if let attachment = object as? NSTextAttachment{
                 if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
-                    image = img
-                    return
+                    let ratio = img.size.height / monthCell.KphotoHeight
+                    let size = CGSize(width: img.size.width / ratio, height: monthCell.KphotoHeight)
+                    let compressedImage = img.compressPic(toSize: size)
+                    images.append(compressedImage)
                 }
             }
         }
         )
         //标记这篇日记有图片
         
-        return image
+        return images
     }
     
     
@@ -58,7 +60,7 @@ class imageManager{
     
     //如果diary的containsImage属性为nil（即未初始化），
     //则调用该函数手动更新，检查、更新该日记是否有图片
-    func checkImageManualy()->Bool{
+    func checkifcontainsImage()->Bool{
         guard let date_string = diary.date else {
             return false
         }
@@ -82,7 +84,7 @@ class imageManager{
         aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
             if let attachment = object as? NSTextAttachment{
                 //如果存在照片
-                if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+                if let _ = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
                     containsImage = true
                     return
                 }

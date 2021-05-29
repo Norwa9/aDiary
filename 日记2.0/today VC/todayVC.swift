@@ -58,22 +58,6 @@ class todayVC: UIViewController {
             //设置“喜欢”
             button.islike.toggle()
             todayDiary.islike = button.islike
-            //添加关键字
-            let ac = UIAlertController(title: "输入关键词", message: "输入6个字概括今日", preferredStyle: .alert)
-            ac.addTextField { (textField) in
-                textField.text = self.todayDiary.keyword
-            }
-            ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-            ac.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
-                guard let text = ac.textFields?[0].text,text != "" else{
-                    return
-                }
-                if text.count > 6{
-                    ac.view.shake()
-                }
-                self.todayDiary.keyword = text
-            }))
-            self.present(ac, animated: true, completion: nil)
             //刷新monthVC
             let monthVC = UIApplication.getMonthVC()
             monthVC.calendar.reloadData()

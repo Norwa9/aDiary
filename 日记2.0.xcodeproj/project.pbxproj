@@ -26,6 +26,7 @@
 		EA537BC3263582B000C2E9EE /* UITextView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC2263582B000C2E9EE /* UITextView_Extension.swift */; };
 		EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC626359C4300C2E9EE /* shareScrollView.swift */; };
 		EA537BCE2656A7D000C2E9EE /* alertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BCD2656A7D000C2E9EE /* alertManager.swift */; };
+		EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537CDD266273D800C2E9EE /* photoCell.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8726299146004B0FA1 /* indictorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8626299146004B0FA1 /* indictorController.swift */; };
@@ -86,6 +87,7 @@
 		EA537BC2263582B000C2E9EE /* UITextView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView_Extension.swift; sourceTree = "<group>"; };
 		EA537BC626359C4300C2E9EE /* shareScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareScrollView.swift; sourceTree = "<group>"; };
 		EA537BCD2656A7D000C2E9EE /* alertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertManager.swift; sourceTree = "<group>"; };
+		EA537CDD266273D800C2E9EE /* photoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoCell.swift; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE8626299146004B0FA1 /* indictorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indictorController.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				EAA29EC725C9925B00AA6971 /* monthButton.swift */,
 				EAA29EC425C9840F00AA6971 /* monthCell.swift */,
+				EA537CDD266273D800C2E9EE /* photoCell.swift */,
 				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
 			);
 			path = "monthVC component";
@@ -490,6 +493,7 @@
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
 				EAA29E4325C577DC00AA6971 /* customPageViewController.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
+				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
 				EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */,
 				EADA85DB26248759007D1134 /* UIFont_Extension.swift in Sources */,

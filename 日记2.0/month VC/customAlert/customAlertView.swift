@@ -10,8 +10,9 @@ class customAlertView: UIView {
     let title = UILabel()
     let cancelButton = UIButton()
     let createDiaryButton = UIButton()
-    var delegate:monthVC!
+    let monthVC = UIApplication.getMonthVC()
     var dateString:String?
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,25 +61,29 @@ class customAlertView: UIView {
     @objc func createDiary() {
         
         if let createDate = dateString{
-            //1,补日记
+            //补日记
             DataContainerSingleton.sharedDataContainer.diaryDict[createDate] = diaryInfo(dateString: createDate)
             DataContainerSingleton.sharedDataContainer.selectedDiary = DataContainerSingleton.sharedDataContainer.diaryDict[createDate]
-            delegate.configureDataSource(year: delegate.selectedYear, month: delegate.selectedMonth)
+            monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
             
-            //2,关闭popover
-            delegate.popover.dismiss()
-            
-            //跳转回todayVC
-            let pageVC = UIApplication.getcustomPageViewController()
-            pageVC.slideToTodayVC(completion: nil)
-            
+            /*
+             先关闭popover，然后跳转到todayVC
+             */
+            let dismissQueue = DispatchQueue(label: "串行")
+            dismissQueue.sync {
+                self.monthVC.popover.dismiss()
+            }
+            dismissQueue.sync {
+                let pageVC = UIApplication.getcustomPageViewController()
+                pageVC.slideToTodayVC(completion: {})
+            }
         }
         
         
     }
     
     @objc func cancel() {
-        delegate.popover.dismiss()
+        monthVC.popover.dismiss()
     }
     
     

@@ -13,7 +13,6 @@ class diaryInfo:Codable{
     var date:String?
     var content:String = ""
     var islike:Bool = false
-    var keyword:String?
     var tags = [String]()
     var mood:moodTypes = .calm
     var uuidofPictures = [String]()

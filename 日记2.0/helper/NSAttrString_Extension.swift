@@ -65,6 +65,9 @@ extension NSAttributedString{
         
     }
     
+    /*
+     exportManager.swift
+     */
     //重载版本，内部不使用textView
     func processAttrString(textViewbouds:CGRect,textContainer:NSTextContainer,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
         let cleanText = NSMutableAttributedString(attributedString: self)

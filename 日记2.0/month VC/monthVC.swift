@@ -415,12 +415,12 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         }else{
             guard let cell = cell as? monthCell else{return}
             cell.transform = cell.transform.translatedBy(x: 0, y: 30)//平移效果
-            cell.alpha = 0
-            cell.imagePreview.transform  = CGAffineTransform.init(translationX: 10, y: 0)
+            cell.alpha = 0.5
+            cell.albumView.transform  = CGAffineTransform.init(translationX: 10, y: 0)
             UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
                 cell.transform = cell.transform.translatedBy(x: 0, y: -30)
                 cell.alpha = 1
-                cell.imagePreview.transform  = CGAffineTransform.identity
+                cell.albumView.transform  = CGAffineTransform.identity
             } completion: { (_) in
                 
             }
@@ -467,6 +467,9 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     //使用DIY cell
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! DIYCalendarCell
+        
+        cell.initUI(forDate: date)
+        
         return cell
     }
     
@@ -491,14 +494,12 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         let dateContainer = DataContainerSingleton.sharedDataContainer
         formatter.dateFormat = "yyyy年M月d日"
         let dateString = formatter.string(from: date)
-//        print("选取日期:\(dateString)")
         if let selectedDiary = dateContainer.diaryDict[dateString]{
             dateContainer.selectedDiary = selectedDiary
             pageVC.slideToTodayVC(completion: nil)
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
-            popoverAlert.delegate = self
             popoverAlert.dateString = dateString
             
             popover.show(popoverAlert, fromView: cell!)
@@ -509,8 +510,8 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     //取消点击cell
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         //自定义选取动画
-        print("didDeselect")
-        self.configureVisibleCells()
+//        print("didDeselect")
+//        self.configureVisibleCells()
     }
     
     // MARK: - 自定义点击日历cell效果
@@ -524,34 +525,14 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     }
     
     private func configure(cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
-        let diyCell = (cell as! DIYCalendarCell)
-        /*
-            在这里给FSCalendar Cell传递数据
-        */
-        
-        //设置cell的日期信息
-        diyCell.date = date
-        
-        //设置cell的keyword
-        formatter.dateFormat = "yyyy年M月d日"
-        let dateString = formatter.string(from: date)
-        diyCell.keyword = diaryForDate(atTime: dateString)?.keyword
+        let cell = (cell as! DIYCalendarCell)
         
         //设置cell的选取视图：圆环
-        var selectionType = SelectionType.none
         if calendar.selectedDates.contains(date){
-            selectionType = .single
+            cell.selectionType = .single
         }else{
-            selectionType = .none
+            cell.selectionType = .none
         }
-        
-        if selectionType == .none{
-            diyCell.selectionLayer.isHidden = true
-            return
-        }else{
-            diyCell.selectionLayer.isHidden = false
-        }
-        diyCell.selectionType = selectionType//赋值的同时，其didSet方法调用layoutSubviews
         
     }
     
@@ -575,33 +556,37 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         selectedMonth = month
     }
     
-    
-    
     //event dot数量
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         formatter.dateFormat = "yyyy年M月d日"
-//        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
-//
-//        for diary in dict.values{
-//            //如果有内容
-//            if diary.date == formatter.string(from: date) && diary.content.count != 0{
-//                return 1
-//            }
-//        }
-//        return 0
-        formatter.dateFormat = "yyyy年M月d日"
-        let dateString = formatter.string(from: date)
-        if let diary = diaryForDate(atTime: dateString){
-            //如果有设置了关键字，那么把dot隐藏
-            if diary.keyword != nil{
-                return 0
-            }
-            if diary.content.count != 0{
+        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+
+        for diary in dict.values{
+            //如果有内容
+            if diary.date == formatter.string(from: date) && diary.content.count != 0{
                 return 1
             }
         }
         return 0
     }
+    //事件点默认颜色
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
+        formatter.dateFormat = "yyyy年M月d日"
+        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+        for diary in dict.values{
+            //如果有内容
+            if diary.date == formatter.string(from: date) && diary.islike{
+                return [.yellow]
+            }
+        }
+        return [.black]
+    }
+    //事件点选取状态的颜色
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
+        return [APP_GREEN_COLOR()]
+    }
+    
+    
 }
 
 //来源：
