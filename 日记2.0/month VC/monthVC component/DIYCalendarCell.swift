@@ -98,7 +98,7 @@ class DIYCalendarCell: FSCalendarCell {
                               width: self.bounds.width,
                               height: 0)
             keywordLabel.frame = rect.insetBy(dx: 5, dy: -5)
-            print("keywordLabel.frame:\(keywordLabel.frame)")
+//            print("keywordLabel.frame:\(keywordLabel.frame)")
         }else{
             keywordLabel.isHidden = true
         }
