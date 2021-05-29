@@ -2,12 +2,14 @@ PODS:
   - FSCalendar (2.8.2)
   - JXPhotoBrowser (3.1.3)
   - Popover (1.3.0)
+  - SnapKit (5.0.1)
   - XLYTextKitExtension (1.3.1)
 
 DEPENDENCIES:
   - FSCalendar
   - JXPhotoBrowser (~> 3.0)
   - Popover
+  - SnapKit
   - XLYTextKitExtension (from `https://github.com/kaizeiyimi/XLYTextKitExtension.git`)
 
 SPEC REPOS:
@@ -15,6 +17,7 @@ SPEC REPOS:
     - FSCalendar
     - JXPhotoBrowser
     - Popover
+    - SnapKit
 
 EXTERNAL SOURCES:
   XLYTextKitExtension:
@@ -29,8 +32,9 @@ SPEC CHECKSUMS:
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   JXPhotoBrowser: d32e94e1226d43bf5ed83164e3f5b651fed625e0
   Popover: 10e1d9528f81d9504df984b7b3f491292bc1822d
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   XLYTextKitExtension: 4b1ec717a445f7ca512e840480e412efe9441dce
 
-PODFILE CHECKSUM: 7848de4772dca88c56d13bd1b4b6aade1b7ca638
+PODFILE CHECKSUM: 70964dd3cc5636b2d3aa192a6fa318dcc715cb13
 
 COCOAPODS: 1.10.1

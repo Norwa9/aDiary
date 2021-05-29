@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class monthCell: UICollectionViewCell {
     let cellPedding:CGFloat = 15//cell距离tableView两边的留白
@@ -70,6 +71,7 @@ class monthCell: UICollectionViewCell {
     }
     
     private func globalSetup() {
+        //对可重用的cell进行一些通用的初始化：例如阴影，圆角，约束等等。
         setupContainerView()
         setupContentLabelsConstraints()
         
@@ -80,24 +82,24 @@ class monthCell: UICollectionViewCell {
     private func setupContainerView() {
         contentView.addSubview(containerView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 5).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -5).isActive = true
-        containerView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
 //        containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 95.0).isActive = true
-        //限制住contentView的宽度，使之能够在高度根据contentLabel自适应
-//        print("UIScreen.main.bounds.width:\(UIScreen.main.bounds.width)")
-//        print("widthAnchor:\(UIScreen.main.bounds.width - 2 * cellPedding)")
-        containerView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 2 * cellPedding).isActive = true
-        self.layoutSubviews()
-        //custom containerView
+        let KcontainerViewW = UIScreen.main.bounds.width - 2 * cellPedding
+        containerView.snp.makeConstraints { (make) in
+            make.left.equalTo(contentView).offset(5)
+            make.right.equalTo(contentView).offset(-5)
+            make.top.equalTo(contentView)
+            make.bottom.equalTo(contentView)
+            make.width.equalTo(KcontainerViewW)//限制住contentView的宽度，使之能够在高度根据contentLabel自适应s
+        }
+        
         containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
         containerView.backgroundColor = .white
         containerView.layer.masksToBounds = false
         containerView.layer.cornerRadius = 10
         containerView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        self.layoutSubviews()
         
     }
     
@@ -153,65 +155,57 @@ class monthCell: UICollectionViewCell {
         islikeImageView.translatesAutoresizingMaskIntoConstraints = false
         
         //MARK:-Auto layout
-        print("NSLayoutConstraint.activate([")
-        NSLayoutConstraint.activate([
-            //titleLabel
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
-            
-            //contentLabel
-            contentLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 2),
-            contentLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 200),
-//            contentLabel.bottomAnchor.constraint(equalTo: tagsLabel.topAnchor, constant: -5.0),
-            
-            //imagePreview
-            imagePreview.topAnchor.constraint(equalTo: contentLabel.topAnchor),
-            imagePreview.leadingAnchor.constraint(equalTo: contentLabel.trailingAnchor,constant: 10),
-            imagePreview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            imagePreview.heightAnchor.constraint(equalToConstant: 80),
-            imagePreview.widthAnchor.constraint(equalToConstant: 80),
-            
-            
-            //tags Label
-            tagsLabel.topAnchor.constraint(greaterThanOrEqualTo: imagePreview.bottomAnchor, constant: 5),
-            tagsLabel.topAnchor.constraint(greaterThanOrEqualTo: contentLabel.bottomAnchor, constant: 5),
-            tagsLabel.leadingAnchor.constraint(equalTo: contentLabel.leadingAnchor),
-            tagsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            tagsLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 40),
-            tagsLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -5),
-            
-            //date Label
-            dateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
-            dateLabel.heightAnchor.constraint(equalToConstant: 20),
-            dateLabel.widthAnchor.constraint(equalToConstant: 130),
-            dateLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
-            
-            //moodImageView
-            moodImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-//            moodImageView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
-            moodImageView.centerYAnchor.constraint(equalTo: dateLabel.centerYAnchor),
-            moodImageView.heightAnchor.constraint(equalToConstant: 20),
-            moodImageView.widthAnchor.constraint(equalToConstant: 20),
-            
-            //islikeImageView
-            islikeImageView.trailingAnchor.constraint(equalTo: moodImageView.leadingAnchor, constant: -5),
-//            islikeImageView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor),
-            islikeImageView.centerYAnchor.constraint(equalTo: moodImageView.centerYAnchor),
-            islikeImageView.heightAnchor.constraint(equalToConstant: 20),
-            islikeImageView.widthAnchor.constraint(equalToConstant: 20),
-            
-            //word Number Label
-            wordNumLabel.trailingAnchor.constraint(equalTo: islikeImageView.leadingAnchor, constant: -5),
-            wordNumLabel.heightAnchor.constraint(equalToConstant: 20),
-            wordNumLabel.widthAnchor.constraint(equalToConstant: 50),
-//            wordNumLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5),
-            wordNumLabel.centerYAnchor.constraint(equalTo: moodImageView.centerYAnchor),
-            
-        ])
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(containerView).offset(15)
+            make.right.equalTo(containerView).offset(-15)
+            make.top.equalTo(containerView).offset(8)
+        }
         
-        
+        contentLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(titleLabel)
+            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.height.lessThanOrEqualTo(200)
+        }
+        //            contentLabel.bottomAnchor.constraint(equalTo: tagsLabel.topAnchor, constant: -5.0),
+        imagePreview.snp.makeConstraints { (make) in
+            make.top.equalTo(contentLabel)
+            make.left.equalTo(contentLabel.snp.right).offset(10)
+            make.right.equalTo(containerView).offset(-15)
+            make.height.equalTo(80)
+            make.width.equalTo(80)
+        }
+        tagsLabel.snp.makeConstraints { (make) in
+            make.top.greaterThanOrEqualTo(imagePreview.snp.bottom).offset(5)
+            make.top.greaterThanOrEqualTo(contentLabel.snp.bottom).offset(5)
+            make.left.equalTo(contentLabel)
+            make.right.equalTo(containerView).offset(-15)
+            make.height.lessThanOrEqualTo(40)
+            make.bottom.equalTo(dateLabel.snp.top).offset(-5)
+        }
+        dateLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(containerView).offset(15)
+            make.height.equalTo(20)
+            make.width.equalTo(130)
+            make.bottom.equalTo(containerView).offset(-5)
+        }
+        moodImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(containerView).offset(-15)
+            make.centerY.equalTo(dateLabel)
+            make.height.equalTo(20)
+            make.width.equalTo(20)
+        }
+        islikeImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(moodImageView.snp.left).offset(-5)
+            make.centerY.equalTo(moodImageView)
+            make.height.equalTo(20)
+            make.width.equalTo(20)
+        }
+        wordNumLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(islikeImageView.snp.left).offset(-5)
+            make.height.equalTo(20)
+            make.width.equalTo(50)
+            make.centerY.equalTo(moodImageView)
+        }
     }
     
     //提供计算后的cell size
