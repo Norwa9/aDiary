@@ -467,6 +467,9 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     //使用DIY cell
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! DIYCalendarCell
+        
+        cell.initUI(forDate: date)
+        
         return cell
     }
     
@@ -507,8 +510,8 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     //取消点击cell
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         //自定义选取动画
-        print("didDeselect")
-        self.configureVisibleCells()
+//        print("didDeselect")
+//        self.configureVisibleCells()
     }
     
     // MARK: - 自定义点击日历cell效果
@@ -522,29 +525,14 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     }
     
     private func configure(cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
-        let diyCell = (cell as! DIYCalendarCell)
-        /*
-            在这里给FSCalendar Cell传递数据
-        */
-        
-        //设置cell的日期信息
-        diyCell.date = date
+        let cell = (cell as! DIYCalendarCell)
         
         //设置cell的选取视图：圆环
-        var selectionType = SelectionType.none
         if calendar.selectedDates.contains(date){
-            selectionType = .single
+            cell.selectionType = .single
         }else{
-            selectionType = .none
+            cell.selectionType = .none
         }
-        
-        if selectionType == .none{
-            diyCell.selectionLayer.isHidden = true
-            return
-        }else{
-            diyCell.selectionLayer.isHidden = false
-        }
-        diyCell.selectionType = selectionType//赋值的同时，其didSet方法调用layoutSubviews
         
     }
     
@@ -595,15 +583,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     }
     //事件点选取状态的颜色
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
-        formatter.dateFormat = "yyyy年M月d日"
-        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
-        for diary in dict.values{
-            //如果有内容
-            if diary.date == formatter.string(from: date) && diary.islike{
-                return [.yellow]
-            }
-        }
-        return [.black]
+        return [APP_GREEN_COLOR()]
     }
     
     
