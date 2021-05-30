@@ -70,14 +70,14 @@ class monthCell: UICollectionViewCell {
         globalSetup()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func globalSetup() {
         //对可重用的cell进行一些通用的初始化：例如阴影，圆角，约束等等。
         setupContainerView()
         setupSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     
@@ -223,7 +223,8 @@ class monthCell: UICollectionViewCell {
         /*
             此方法调用在fillCell()之后
          */
-        print("preferredLayoutAttributesFitting")
+//        print("preferredLayoutAttributesFitting")
+        self.layoutIfNeeded()
         let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
         var newFrame = layoutAttributes.frame
         newFrame.size.height = size.height
@@ -258,9 +259,17 @@ class monthCell: UICollectionViewCell {
             make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
         }
         if !contains{
-            self.layoutIfNeeded()
             return
         }
+        
+        /*
+         NOTE:
+         由于albumView重用的缘故，异步读取所有图片的过程中，
+         会显示复用的图片，数据显示混乱，
+         为此，在异步读取图片之前，干脆将albumView的图片清空，这样就图片就不会显示错乱了。
+         */
+        self.photos.removeAll()
+        self.albumView.reloadData()
         
         DispatchQueue.global(qos: .default).async {
             let images = iM.extractImages()
@@ -269,8 +278,6 @@ class monthCell: UICollectionViewCell {
                 self.albumView.reloadData()
             }
         }
-        self.layoutIfNeeded()//让cell的约束根据填充的内容进行布局
-        print("self.layoutIfNeeded()")
     }
     
     func getAttrTitle(content:String)->NSAttributedString{
