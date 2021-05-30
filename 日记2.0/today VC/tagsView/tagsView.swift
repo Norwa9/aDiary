@@ -275,6 +275,6 @@ extension tagsView{
         }
         diary.tags = selectedTags
         let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData()
+        monthVC.reloadCollectionViewData(forRow: diary.row)
     }
 }

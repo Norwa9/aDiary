@@ -220,8 +220,10 @@ class monthCell: UICollectionViewCell {
     
     //提供计算后的cell size
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
+        /*
+            此方法调用在fillCell()之后
+         */
+        print("preferredLayoutAttributesFitting")
         let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
         var newFrame = layoutAttributes.frame
         newFrame.size.height = size.height
@@ -231,13 +233,8 @@ class monthCell: UICollectionViewCell {
     }
     
     func fillCell(diary:diaryInfo){
-        //这里需要 layoutIfNeeded 一下，拿到contentSize
-        //参考自：https://blog.csdn.net/ssy0082/article/details/81711240
-        self.layoutIfNeeded()
-        
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
-//        self.contentLabel.text = diary.content
         self.tags = diary.tags
         self.dateLabel.text = diary.date! + "，" + Date().getWeekday(dateString: diary.date!)
         self.wordNum = diary.content.count
@@ -248,6 +245,7 @@ class monthCell: UICollectionViewCell {
     
     //读取日记的所有图片
     func fillImages(diary:diaryInfo){
+        print("fill fillImages,date:\(diary.date)")
         let iM = imageManager(diary: diary)
         var contains = false
         if let flag = diary.containsImage{
@@ -260,17 +258,19 @@ class monthCell: UICollectionViewCell {
             make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
         }
         if !contains{
+            self.layoutIfNeeded()
             return
         }
-        self.layoutSubviews()
         
         DispatchQueue.global(qos: .default).async {
             let images = iM.extractImages()
+            self.photos = images
             DispatchQueue.main.async {
-                self.photos = images
                 self.albumView.reloadData()
             }
         }
+        self.layoutIfNeeded()//让cell的约束根据填充的内容进行布局
+        print("self.layoutIfNeeded()")
     }
     
     func getAttrTitle(content:String)->NSAttributedString{
@@ -341,6 +341,7 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("dequeue photo cell")
         let cell = albumView.dequeueReusableCell(withReuseIdentifier: photoCell.photoCellID, for: indexPath) as! photoCell
         let row = indexPath.item
         cell.photo = photos[row]

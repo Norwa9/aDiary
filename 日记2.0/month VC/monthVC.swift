@@ -376,7 +376,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         }else{
             self.collectionView.reloadData()
         }
-        self.collectionView.layoutIfNeeded()//没有这句，首次进入monthVC所有cell大小有误（？）
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
