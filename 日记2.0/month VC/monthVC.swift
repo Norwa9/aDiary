@@ -377,7 +377,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         }else{
             self.collectionView.reloadItems(at: [IndexPath(item: forRow, section: 0)])
         }
-        self.view.layoutSubviews()
+        self.view.layoutIfNeeded()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

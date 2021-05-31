@@ -49,7 +49,7 @@ class customPageViewController: UIPageViewController {
             }
         }
         
-        //预载，防止pageVC滑动时卡顿
+//        预载，防止pageVC滑动时卡顿
         for vc in viewControllerList{
             vc.view.layoutIfNeeded()
         }

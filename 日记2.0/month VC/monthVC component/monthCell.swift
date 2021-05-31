@@ -284,6 +284,7 @@ class monthCell: UICollectionViewCell {
             if diary.row == self.row{
                 self.photos = images
                 self.albumView.reloadData()
+                self.albumView.layoutIfNeeded()
             }
         }
     }
@@ -346,7 +347,7 @@ class monthCell: UICollectionViewCell {
     
 }
 
-extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource{
+extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
