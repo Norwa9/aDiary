@@ -17,7 +17,7 @@ class imageManager{
     
     
     
-    //读取日记的所有插图，返回第一张插图
+    //读取日记的所有插图
     func extractImages()-> [UIImage] {
         //获取富文本attributedString
         guard let date_string = diary.date else{return []}

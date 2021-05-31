@@ -51,7 +51,7 @@ class customPageViewController: UIPageViewController {
         
         //预载，防止pageVC滑动时卡顿
         for vc in viewControllerList{
-            vc.view.layoutIfNeeded()
+            vc.view.layoutSubviews()
         }
         
         //设置pageVC的scrollview代理，目的是求左右滑动切换VC时的偏移量

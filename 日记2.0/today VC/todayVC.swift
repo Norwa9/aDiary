@@ -211,6 +211,7 @@ extension todayVC:UITextViewDelegate{
         if todayDiary.month == monthVC.selectedMonth{
 //            print("月份:\(todayDiary.month),刷新行:\(todayDiary.row + 1)th")
             //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
+            print("done：row\(todayDiary.row)")
             monthVC.reloadCollectionViewData(forRow: todayDiary.row)
             monthVC.calendar.reloadData()
         }
@@ -233,11 +234,11 @@ extension todayVC:UITextViewDelegate{
         return true//若为false，键入的新字符不会递给storage
     }
     
+    //点按图片
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let aString = textView.attributedText!
         let bounds = self.textView.bounds
         let range = characterRange
-        print("range:\(range)")
         aString.enumerateAttribute(NSAttributedString.Key.attachment, in: range, options: [], using: { [] (object, range, pointer) in
             let textViewAsAny: Any = textView
             if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){

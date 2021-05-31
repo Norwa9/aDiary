@@ -246,12 +246,13 @@ class monthCell: UICollectionViewCell {
     
     //读取日记的所有图片
     func fillImages(diary:diaryInfo){
-        print("fill fillImages,date:\(diary.date)")
+        print("fill fillImages,date:\(diary.date!)")
         let iM = imageManager(diary: diary)
         var contains = false
         if let flag = diary.containsImage{
             contains = flag
         }else{
+//            print("检查日记是否含有照片，并设置")
             contains = iM.checkifcontainsImage()
         }
         
@@ -273,8 +274,8 @@ class monthCell: UICollectionViewCell {
         
         DispatchQueue.global(qos: .default).async {
             let images = iM.extractImages()
-            self.photos = images
             DispatchQueue.main.async {
+                self.photos = images
                 self.albumView.reloadData()
             }
         }

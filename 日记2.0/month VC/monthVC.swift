@@ -33,7 +33,7 @@ class monthVC: UIViewController {
                 monthButtons[selectedMonth - 1].animateBackgroundColor()
                 configureDataSource(year: selectedYear, month: selectedMonth)
                 adjustBackToCurrentMonthButton()
-                
+                print("selectedMonth didset ,reload collectionView")
             }
         }
     }
@@ -371,12 +371,12 @@ class monthVC: UIViewController {
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func reloadCollectionViewData(forRow:Int = -1){
+        self.view.layoutIfNeeded()
         if forRow != -1{
-            self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
+            self.collectionView.reloadItems(at: [IndexPath(item: forRow, section: 0)])
         }else{
             self.collectionView.reloadData()
         }
-        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -388,6 +388,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("cell for monthCell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: monthCell.reusableID, for: indexPath) as! monthCell
         let row = indexPath.row
         let diary = filteredDiaries[row]
