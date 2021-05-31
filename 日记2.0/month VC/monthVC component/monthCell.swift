@@ -14,16 +14,16 @@ class monthCell: UICollectionViewCell {
     var hasSelected:Bool = false
     
     static let reusableID = "monthCell"
-    private lazy var containerView = UIView()
-    lazy var titleLabel:UILabel = UILabel()
-    lazy var contentLabel:UILabel = UILabel()
-    lazy var dateLabel:UILabel = UILabel()
-    lazy var tagsLabel:UILabel = UILabel()
-    lazy var moodImageView:UIImageView = UIImageView()
-    lazy var islikeImageView:UIImageView = UIImageView()
-    lazy var wordNumLabel:UILabel = UILabel()
+    private var containerView = UIView()
+    var titleLabel:UILabel = UILabel()
+    var contentLabel:UILabel = UILabel()
+    var dateLabel:UILabel = UILabel()
+    var tagsLabel:UILabel = UILabel()
+    var moodImageView:UIImageView = UIImageView()
+    var islikeImageView:UIImageView = UIImageView()
+    var wordNumLabel:UILabel = UILabel()
     var albumView:UICollectionView!
-    private lazy var layout:UICollectionViewFlowLayout = {
+    private var layout:UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection  = .horizontal
         layout.minimumLineSpacing = 5

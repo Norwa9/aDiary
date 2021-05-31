@@ -270,6 +270,7 @@ extension tagsView{
     
     override func viewWillDisappear(_ animated: Bool) {
         //保存tags和mood的选项
+        print("tagsView viewWillDisappear")
         if let selectedMood = selectedMood{
             diary.mood = selectedMood
         }

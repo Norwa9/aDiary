@@ -48,7 +48,7 @@ class settingViewController: UIViewController {
             todayVC.textView.attributedText = attrString.processAttrString(textView: todayVC.textView)
         }
         let monthVC = UIApplication.getMonthVC()
-        monthVC.collectionView.reloadData()
+        monthVC.reloadCollectionViewData()
         
         dismiss(animated: true, completion: nil)
     }
