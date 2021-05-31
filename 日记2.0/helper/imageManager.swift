@@ -18,7 +18,7 @@ class imageManager{
     
     
     //读取日记的所有插图
-    func extractImages(callback: @escaping (_ images:[UIImage])->()) {
+    func extractImages(callback: @escaping (_ images:[UIImage],_ row:Int)->()) {
         //获取富文本attributedString
         guard let date_string = diary.date else{return}
         guard let aString = self.loadAttributedString(date_string: date_string) else{return}
@@ -37,7 +37,7 @@ class imageManager{
             }
             )
             DispatchQueue.main.async {
-                callback(images)
+                callback(images,self.diary.row)
             }
         }
         

@@ -275,16 +275,19 @@ class monthCell: UICollectionViewCell {
         self.albumView.reloadData()
         
          //异步读取图片，然后刷新albumView
-        iM.extractImages { (images) in
+        iM.extractImages { (images,atRow) in
             /*
              NOTE:
-             由于异步的原因：在reloaddata要检查欲更新的cell是否对应正在读取的日记，
-             否则回导致albumView读取到的图片错乱。
+             回调方法的参数images对应的是第atRow个cell的日记的图片，
+             由于异步的原因，当前主线程的cell已经发生变化，因此要进行比对，如果不一致则不能装填
             */
-            if diary.row == self.row{
+            if atRow == self.row{
                 self.photos = images
                 self.albumView.reloadData()
                 self.albumView.layoutIfNeeded()
+            }else{
+                //self.row表示是当前点击的cell
+                print("diary.row:\(atRow),self.row:\(self.row)")
             }
         }
     }
