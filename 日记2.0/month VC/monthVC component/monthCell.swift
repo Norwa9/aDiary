@@ -31,6 +31,7 @@ class monthCell: UICollectionViewCell {
         return layout
     }()
     var photos:[UIImage] = [UIImage]()
+    var row:Int!
     
     var tags:[String]!{
         didSet{
@@ -260,6 +261,7 @@ class monthCell: UICollectionViewCell {
             make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
         }
         if !contains{
+            print("\(diary.date!)没有照片")
             return
         }
         
@@ -272,9 +274,14 @@ class monthCell: UICollectionViewCell {
         self.photos.removeAll()
         self.albumView.reloadData()
         
-        DispatchQueue.global(qos: .default).async {
-            let images = iM.extractImages()
-            DispatchQueue.main.async {
+         //异步读取图片，然后刷新albumView
+        iM.extractImages { (images) in
+            /*
+             NOTE:
+             由于异步的原因：在reloaddata要检查欲更新的cell是否对应正在读取的日记，
+             否则回导致albumView读取到的图片错乱。
+            */
+            if diary.row == self.row{
                 self.photos = images
                 self.albumView.reloadData()
             }

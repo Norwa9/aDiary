@@ -371,11 +371,10 @@ class monthVC: UIViewController {
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func reloadCollectionViewData(forRow:Int = -1){
-        self.view.layoutIfNeeded()
-        if forRow != -1{
-            self.collectionView.reloadItems(at: [IndexPath(item: forRow, section: 0)])
-        }else{
+        if forRow == -1{
             self.collectionView.reloadData()
+        }else{
+            self.collectionView.reloadItems(at: [IndexPath(item: forRow, section: 0)])
         }
     }
     
@@ -393,6 +392,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let row = indexPath.row
         let diary = filteredDiaries[row]
         
+        cell.row = row
         cell.fillCell(diary: diary)
         
         return cell

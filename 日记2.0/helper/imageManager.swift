@@ -18,26 +18,31 @@ class imageManager{
     
     
     //读取日记的所有插图
-    func extractImages()-> [UIImage] {
+    func extractImages(callback: @escaping (_ images:[UIImage])->()) {
         //获取富文本attributedString
-        guard let date_string = diary.date else{return []}
-        guard let aString = self.loadAttributedString(date_string: date_string) else{return []}
+        guard let date_string = diary.date else{return}
+        guard let aString = self.loadAttributedString(date_string: date_string) else{return}
         
-        var images:[UIImage] = []
-        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-            if let attachment = object as? NSTextAttachment{
-                if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
-                    let ratio = img.size.height / monthCell.KphotoHeight
-                    let size = CGSize(width: img.size.width / ratio, height: monthCell.KphotoHeight)
-                    let compressedImage = img.compressPic(toSize: size)
-                    images.append(compressedImage)
+        DispatchQueue.global(qos: .default).async {
+            var images:[UIImage] = []
+            aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
+                if let attachment = object as? NSTextAttachment{
+                    if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+                        let ratio = img.size.height / monthCell.KphotoHeight
+                        let size = CGSize(width: img.size.width / ratio, height: monthCell.KphotoHeight)
+                        let compressedImage = img.compressPic(toSize: size)
+                        images.append(compressedImage)
+                    }
                 }
             }
+            )
+            DispatchQueue.main.async {
+                callback(images)
+            }
         }
-        )
+        
         //标记这篇日记有图片
         
-        return images
     }
     
     
