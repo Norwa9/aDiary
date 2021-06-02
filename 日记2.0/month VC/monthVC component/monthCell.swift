@@ -22,16 +22,9 @@ class monthCell: UICollectionViewCell {
     var moodImageView:UIImageView = UIImageView()
     var islikeImageView:UIImageView = UIImageView()
     var wordNumLabel:UILabel = UILabel()
-    var albumView:UICollectionView!
-    private var layout:UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection  = .horizontal
-        layout.minimumLineSpacing = 5
-        layout.itemSize = CGSize(width: monthCell.KphotoHeight, height: monthCell.KphotoHeight)
-        return layout
-    }()
+    var imagePreview:UIImageView = UIImageView()
     var photos:[UIImage] = [UIImage]()
-    var row:Int!
+    var diary:diaryInfo!//Model
     
     var tags:[String]!{
         didSet{
@@ -114,19 +107,12 @@ class monthCell: UICollectionViewCell {
         containerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        //collectionView
-        albumView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        containerView.addSubview(albumView)
-        albumView.collectionViewLayout = layout
-        albumView.delegate = self
-        albumView.dataSource = self
-        albumView.isScrollEnabled = true
-        albumView.showsHorizontalScrollIndicator = false
-        albumView.register(photoCell.self, forCellWithReuseIdentifier: photoCell.photoCellID)
-        albumView.translatesAutoresizingMaskIntoConstraints = false
-        
-        albumView.backgroundColor = .clear
-        albumView.layer.cornerRadius = 10
+        //imagePreview
+        imagePreview.contentMode = .scaleAspectFill
+        imagePreview.clipsToBounds = true
+        imagePreview.layer.cornerRadius = 8
+        containerView.addSubview(imagePreview)
+        imagePreview.translatesAutoresizingMaskIntoConstraints = false
         
         //contentLabel
         contentLabel.numberOfLines = 0
@@ -149,7 +135,6 @@ class monthCell: UICollectionViewCell {
         containerView.addSubview(wordNumLabel)
         wordNumLabel.textAlignment = .right
         wordNumLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-//        wordNumLabel.textColor = .lightGray
         wordNumLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //islikeImageView
@@ -169,20 +154,19 @@ class monthCell: UICollectionViewCell {
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
             make.top.equalTo(containerView).offset(8)
-            make.height.equalTo(25)
         }
         
-        albumView.snp.makeConstraints { (make) in
+        imagePreview.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(2)
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
-            make.height.equalTo(monthCell.KphotoHeight)
+            make.height.equalTo(0)
         }
         
         contentLabel.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
-            make.top.equalTo(albumView.snp.bottom).offset(2)
+            make.top.equalTo(imagePreview.snp.bottom).offset(2)
             make.height.lessThanOrEqualTo(200)
         }
         
@@ -235,10 +219,11 @@ class monthCell: UICollectionViewCell {
     }
     
     func fillCell(diary:diaryInfo){
+        self.diary = diary
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
         self.tags = diary.tags
-        self.dateLabel.text = diary.date! + "，" + Date().getWeekday(dateString: diary.date!)
+        self.dateLabel.text = diary.date! + " " + Date().getWeekday(dateString: diary.date!)
         self.wordNum = diary.content.count
         self.isLike = diary.islike
         self.moodType = diary.mood
@@ -247,17 +232,15 @@ class monthCell: UICollectionViewCell {
     
     //读取日记的所有图片
     func fillImages(diary:diaryInfo){
-        print("fill fillImages,date:\(diary.date!)")
         let iM = imageManager(diary: diary)
         var contains = false
         if let flag = diary.containsImage{
             contains = flag
         }else{
-//            print("检查日记是否含有照片，并设置")
-            contains = iM.checkifcontainsImage()
+            contains = iM.checkifcontainsImage()//手动检查
         }
         
-        self.albumView.snp.updateConstraints { (make) in
+        self.imagePreview.snp.updateConstraints { (make) in
             make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
         }
         if !contains{
@@ -265,30 +248,10 @@ class monthCell: UICollectionViewCell {
             return
         }
         
-        /*
-         NOTE:
-         由于albumView重用的缘故，异步读取所有图片的过程中，
-         会显示复用的图片，数据显示混乱，
-         为此，在异步读取图片之前，干脆将albumView的图片清空，这样就图片就不会显示错乱了。
-         */
-        self.photos.removeAll()
-        self.albumView.reloadData()
-        
-         //异步读取图片，然后刷新albumView
-        iM.extractImages { (images,atRow) in
-            /*
-             NOTE:
-             回调方法的参数images对应的是第atRow个cell的日记的图片，
-             由于异步的原因，当前主线程的cell已经发生变化，因此要进行比对，如果不一致则不能装填
-            */
-            if atRow == self.row{
-                self.photos = images
-                self.albumView.reloadData()
-                self.albumView.layoutIfNeeded()
-            }else{
-                //self.row表示是当前点击的cell
-                print("diary.row:\(atRow),self.row:\(self.row)")
-            }
+        self.imagePreview.image = nil
+         //异步读取图片
+        iM.extractImages { (images) in
+            self.imagePreview.image = images.last
         }
     }
     
@@ -350,23 +313,4 @@ class monthCell: UICollectionViewCell {
     
 }
 
-extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("dequeue photo cell")
-        let cell = albumView.dequeueReusableCell(withReuseIdentifier: photoCell.photoCellID, for: indexPath) as! photoCell
-        let row = indexPath.item
-        cell.photo = photos[row]
-        return cell
-    }
-    
-    
-}
 

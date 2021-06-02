@@ -374,10 +374,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
             self.collectionView.reloadData()
+            self.view.layoutIfNeeded()
         }else{
             self.collectionView.reloadItems(at: [IndexPath(item: forRow, section: 0)])
         }
-        self.view.layoutIfNeeded()
+
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -389,12 +390,12 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("dequeue monthCell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: monthCell.reusableID, for: indexPath) as! monthCell
         let row = indexPath.row
         let diary = filteredDiaries[row]
         
-        cell.row = row
+        print("dequeue monthCell:\(diary.date!)")
+        
         cell.fillCell(diary: diary)
         
         return cell
@@ -419,11 +420,9 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             guard let cell = cell as? monthCell else{return}
             cell.transform = cell.transform.translatedBy(x: 0, y: 30)//平移效果
             cell.alpha = 0.5
-            cell.albumView.transform  = CGAffineTransform.init(translationX: 10, y: 0)
             UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
                 cell.transform = cell.transform.translatedBy(x: 0, y: -30)
                 cell.alpha = 1
-                cell.albumView.transform  = CGAffineTransform.identity
             } completion: { (_) in
                 
             }
