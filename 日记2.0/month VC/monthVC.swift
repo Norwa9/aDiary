@@ -374,10 +374,10 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
             self.collectionView.reloadData()
+            self.view.layoutIfNeeded()
         }else{
-            self.collectionView.reloadItems(at: [IndexPath(item: forRow, section: 0)])
+            self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
         }
-        self.view.layoutIfNeeded()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

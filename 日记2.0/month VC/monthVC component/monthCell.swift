@@ -169,7 +169,6 @@ class monthCell: UICollectionViewCell {
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
             make.top.equalTo(containerView).offset(8)
-            make.height.equalTo(25)
         }
         
         albumView.snp.makeConstraints { (make) in

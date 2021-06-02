@@ -16,7 +16,7 @@ class photoCell: UICollectionViewCell {
             photoPreviewView.image = photo
         }
     }
-    var photoPreviewView:UIImageView = UIImageView()
+    var photoPreviewView:UIImageView!
     
     
     override init(frame: CGRect) {
@@ -30,6 +30,7 @@ class photoCell: UICollectionViewCell {
     
     func initUI(){
         //UI设置
+        photoPreviewView = UIImageView()
         photoPreviewView.contentMode = .scaleAspectFit
         photoPreviewView.layer.cornerRadius = 6
         photoPreviewView.clipsToBounds = true
