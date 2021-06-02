@@ -18,12 +18,11 @@ class imageManager{
     
     
     //读取日记的所有插图
-    func extractImages(callback: @escaping (_ images:[UIImage],_ row:Int)->()) {
-        //获取富文本attributedString
-        guard let date_string = diary.date else{return}
-        guard let aString = self.loadAttributedString(date_string: date_string) else{return}
-        
-        DispatchQueue.global(qos: .default).async {
+    func extractImages(callback: @escaping (_ images:[UIImage],_ diary:diaryInfo)->()) {
+        DispatchQueue.global(qos: .default).async {[self] in
+            //获取富文本attributedString
+            guard let date_string = diary.date else{return}
+            guard let aString = self.loadAttributedString(date_string: date_string) else{return}
             var images:[UIImage] = []
             aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
                 if let attachment = object as? NSTextAttachment{
@@ -37,7 +36,7 @@ class imageManager{
             }
             )
             DispatchQueue.main.async {
-                callback(images,self.diary.row)
+                callback(images,self.diary)
             }
         }
         

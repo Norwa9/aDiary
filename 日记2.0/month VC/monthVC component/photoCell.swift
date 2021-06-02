@@ -30,9 +30,8 @@ class photoCell: UICollectionViewCell {
     
     func initUI(){
         //UI设置
-        photoPreviewView.contentMode = .scaleAspectFill
-        photoPreviewView.layer.cornerRadius = 10
-        photoPreviewView.layer.borderWidth = 1
+        photoPreviewView.contentMode = .scaleAspectFit
+        photoPreviewView.layer.cornerRadius = 6
         photoPreviewView.clipsToBounds = true
         photoPreviewView.layer.borderColor = APP_GRAY_COLOR().cgColor
         self.addSubview(photoPreviewView)

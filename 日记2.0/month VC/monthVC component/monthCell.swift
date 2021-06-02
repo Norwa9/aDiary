@@ -31,7 +31,7 @@ class monthCell: UICollectionViewCell {
         return layout
     }()
     var photos:[UIImage] = [UIImage]()
-    var row:Int!
+    var diary:diaryInfo!
     
     var tags:[String]!{
         didSet{
@@ -235,6 +235,7 @@ class monthCell: UICollectionViewCell {
     }
     
     func fillCell(diary:diaryInfo){
+        self.diary = diary
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
         self.tags = diary.tags
@@ -275,19 +276,19 @@ class monthCell: UICollectionViewCell {
         self.albumView.reloadData()
         
          //异步读取图片，然后刷新albumView
-        iM.extractImages { (images,atRow) in
+        iM.extractImages { (images,diary) in
             /*
              NOTE:
              回调方法的参数images对应的是第atRow个cell的日记的图片，
              由于异步的原因，当前主线程的cell已经发生变化，因此要进行比对，如果不一致则不能装填
             */
-            if atRow == self.row{
+            if diary.date == self.diary.date{
                 self.photos = images
                 self.albumView.reloadData()
                 self.albumView.layoutIfNeeded()
             }else{
                 //self.row表示是当前点击的cell
-                print("diary.row:\(atRow),self.row:\(self.row)")
+                print("diary.date:\(diary.date!) != self.diary.date:\(self.diary.date!)")
             }
         }
     }
