@@ -76,14 +76,14 @@ class DIYCalendarCell: FSCalendarCell {
         
         //1.更新cell的selected状态
         self.backgroundView?.frame = self.bounds.insetBy(dx: 2, dy: 1)
-        self.selectionLayer.frame = self.titleLabel.bounds
+        self.selectionLayer.frame = self.contentView.bounds
         switch selectionType {
         case .single:
             self.selectionLayer.isHidden = false
-            let diameter: CGFloat = min(self.titleLabel.frame.width, self.titleLabel.frame.height)
+            let diameter: CGFloat = min(self.contentView.frame.width, self.contentView.frame.height)
             let square = CGRect(
-                x: self.titleLabel.frame.width / 2 - diameter / 2,
-                y: self.titleLabel.frame.height / 2 - diameter / 2,
+                x: self.contentView.frame.width / 2 - diameter / 2,
+                y: self.contentView.frame.height / 2 - diameter / 2,
                 width: diameter,
                 height: diameter)
             let cyclePath = UIBezierPath(ovalIn: square.insetBy(dx: 5, dy: 5))
