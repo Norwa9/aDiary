@@ -8,8 +8,9 @@
 import UIKit
 import SnapKit
 
+//let kMonthCellWidth:CGFloat = UIScreen.main.bounds.width / 2
+
 class monthCell: UICollectionViewCell {
-    let cellPedding:CGFloat = 15//cell距离tableView两边的留白
     static let KphotoHeight:CGFloat = 150
     var hasSelected:Bool = false
     
@@ -82,20 +83,20 @@ class monthCell: UICollectionViewCell {
     }
     
     
+//    let kMonthCellWidth = (UIScreen.main.bounds.width) / 2 - 15//它决定了cell的宽度
+    let kMonthCellWidth = KitemWidth
     
     private func setupContainerView() {
         contentView.addSubview(containerView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
-//        containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 95.0).isActive = true
-        let KcontainerViewW = UIScreen.main.bounds.width - 2 * cellPedding
         containerView.snp.makeConstraints { (make) in
-            make.left.equalTo(contentView).offset(5)
-            make.right.equalTo(contentView).offset(-5)
+            make.left.equalTo(contentView)
+            make.right.equalTo(contentView)
             make.top.equalTo(contentView)
             make.bottom.equalTo(contentView)
-            make.width.equalTo(KcontainerViewW)//限制住contentView的宽度，使之能够在高度根据contentLabel自适应s
+            make.width.equalTo(kMonthCellWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
         
         containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
@@ -218,20 +219,19 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    //提供计算后的cell size
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        /*
-            此方法调用在fillCell()之后
-         */
-//        print("preferredLayoutAttributesFitting")
-        self.layoutIfNeeded()
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.height = size.height
-        newFrame.size.width = size.width
-        layoutAttributes.frame = newFrame
-        return layoutAttributes
-    }
+//    //提供计算后的cell size
+//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        /*
+//            此方法调用在fillCell()之后
+//         */
+////        print("preferredLayoutAttributesFitting")
+//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+//        var newFrame = layoutAttributes.frame
+//        newFrame.size.height = size.height
+//        newFrame.size.width = size.width
+//        layoutAttributes.frame = newFrame
+//        return layoutAttributes
+//    }
     
     func fillCell(diary:diaryInfo){
         self.diary = diary
@@ -370,3 +370,9 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     
 }
 
+extension monthCell{
+    ///给cell填充数据，以调用autolayout计算高度
+    func feedDate(diary:diaryInfo){
+        
+    }
+}

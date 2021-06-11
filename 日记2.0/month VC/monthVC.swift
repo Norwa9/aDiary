@@ -87,6 +87,7 @@ class monthVC: UIViewController {
     @IBOutlet weak var collectionView:UICollectionView!
     @IBOutlet weak var collectionViewTopInsetAnchor: NSLayoutConstraint!
     var originTopInset:CGFloat!
+    var flowLayout:waterFallLayout!///瀑布流布局
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -109,6 +110,7 @@ class monthVC: UIViewController {
                     }
                 }
                 filteredDiaries.reverse()//日期从大到小排列
+                flowLayout.dateSource = filteredDiaries
             DispatchQueue.main.async {
                 print("configure dataSource,reload data")
                 reloadCollectionViewData()
@@ -123,10 +125,17 @@ class monthVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(monthCell.self, forCellWithReuseIdentifier: monthCell.reusableID)
-        collectionView.contentInset.top = 5//为了第一个cell的顶部阴影，但这导致contentOffset
-        collectionView.contentInset.bottom = 50//解决最后一个cell显示不全的问题
+        //top = 5为了第一个cell的顶部阴影，但这导致contentOffset，bottom = 50:解决最后一个cell显示不全的问题
+        collectionView.contentInset = KcollectionEdgesInset
         collectionView.showsVerticalScrollIndicator = false
         originTopInset = collectionViewTopInsetAnchor.constant
+        
+        flowLayout = waterFallLayout()
+        flowLayout.columnNumber = KcollectioncolumnNumber
+        flowLayout.interitemSpacing = KcollectionInteritemSpacing
+        flowLayout.lineSpacing = KcollectionLineSpacing
+        flowLayout.dateSource = filteredDiaries
+        collectionView.collectionViewLayout = flowLayout
         
         //configure month buttons
         view.layoutIfNeeded()//更新约束，获取准确的frame
