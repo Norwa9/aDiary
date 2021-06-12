@@ -44,7 +44,10 @@ class waterFallLayout: UICollectionViewFlowLayout {
     
     private var itemSizeArray:[CGSize] = []
     ///每列的总高度
-    private var columnHeightArray:[CGFloat] = [0,0]
+    private var columnHeightArray:[CGFloat] = {
+        let arr = Array.init(repeating: CGFloat(0), count: KcollectioncolumnNumber)
+        return arr
+    }()
     
     private var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
     
@@ -52,9 +55,6 @@ class waterFallLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         super.prepare()
-        let column = self.columnNumber
-        let itemSpace = self.interitemSpacing
-        let contentWidth = self.collectionView!.bounds.size.width - self.collectionView!.contentInset.left - self.collectionView!.contentInset.right
         /**
          根据CollectionView宽度、列数、列间距计算Cell的宽度
          但是经过试验我发现，这里的self.itemWidth不影响实际的cell大小，
@@ -63,7 +63,6 @@ class waterFallLayout: UICollectionViewFlowLayout {
          实际上：self.itemWidth仅仅影响itemX的计算
          最好是让self.itemWidth与containerView的宽度约束值同步
          */
-//        self.itemWidth = (contentWidth -  CGFloat((column - 1)) * itemSpace! ) / CGFloat(column)
         self.itemWidth = KitemWidth
         ///缩进
         self.viewInset = self.collectionView!.contentInset
@@ -74,7 +73,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     func calculateAttributesWithItemWidth(_ itemWidth:CGFloat){
         //每次CollectionView reloadDate都会调用这个方法，因此要把以前的布局数据清空
         self.layoutAttributesArray = []
-        self.columnHeightArray = [0,0]
+        self.columnHeightArray = Array.init(repeating: CGFloat(0), count: KcollectioncolumnNumber)
         self.itemSizeArray = []
         
         for index in 0..<self.dateSource.count{
