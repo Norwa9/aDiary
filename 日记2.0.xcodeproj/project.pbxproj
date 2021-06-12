@@ -28,6 +28,7 @@
 		EA537BCE2656A7D000C2E9EE /* alertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BCD2656A7D000C2E9EE /* alertManager.swift */; };
 		EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537CDD266273D800C2E9EE /* photoCell.swift */; };
 		EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */; };
+		EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFFA926749057008E06FA /* layoutParasManager.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8726299146004B0FA1 /* indictorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8626299146004B0FA1 /* indictorController.swift */; };
@@ -90,6 +91,7 @@
 		EA537BCD2656A7D000C2E9EE /* alertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertManager.swift; sourceTree = "<group>"; };
 		EA537CDD266273D800C2E9EE /* photoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoCell.swift; sourceTree = "<group>"; };
 		EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterFallLayout.swift; sourceTree = "<group>"; };
+		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE8626299146004B0FA1 /* indictorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indictorController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				EA537CDD266273D800C2E9EE /* photoCell.swift */,
 				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
 				EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */,
+				EA5CFFA926749057008E06FA /* layoutParasManager.swift */,
 			);
 			path = "monthVC component";
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
 				EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */,
+				EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */,
 				EADA85DB26248759007D1134 /* UIFont_Extension.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,

@@ -9,11 +9,11 @@ import UIKit
 
 ///与布局有关的全局变量
 let KcollectionEdgesInset = UIEdgeInsets(top: 0, left: 10, bottom: 50, right: 10)
-let KcollectioncolumnNumber:Int = 2
+var KcollectioncolumnNumber:Int = 2
 let KcollectionInteritemSpacing:CGFloat = 10
 let KcollectionLineSpacing:CGFloat = 10
 let KcontentWidth = UIScreen.main.bounds.width - KcollectionEdgesInset.left - KcollectionEdgesInset.right
-let KitemWidth = (KcontentWidth -  CGFloat((KcollectioncolumnNumber - 1)) * KcollectionInteritemSpacing ) / CGFloat(KcollectioncolumnNumber)
+var KitemWidth = (KcontentWidth -  CGFloat((KcollectioncolumnNumber - 1)) * KcollectionInteritemSpacing ) / CGFloat(KcollectioncolumnNumber)
 
 struct ColumnInfo
 {
@@ -36,7 +36,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     ///用来计算高度的数据源
     var dateSource:[diaryInfo] = []
     ///行数
-    var columnNumber:Int = 2
+    var columnNumber:Int!
     
     private var itemWidth:CGFloat!
     
@@ -55,6 +55,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         super.prepare()
+        self.columnNumber = KcollectioncolumnNumber
         /**
          根据CollectionView宽度、列数、列间距计算Cell的宽度
          但是经过试验我发现，这里的self.itemWidth不影响实际的cell大小，

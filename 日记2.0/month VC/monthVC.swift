@@ -362,6 +362,14 @@ class monthVC: UIViewController {
     
     func monthButtonsTapped(button: topbarButton){
         switch button.tag {
+        case 1:
+            //切换单双列展示
+            if KcollectioncolumnNumber == 1{
+                KcollectioncolumnNumber = 2
+            }else{
+                KcollectioncolumnNumber = 1
+            }
+            reloadCollectionViewData()
         case 2:
             //进入设置界面
             let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
@@ -398,7 +406,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("dequeue monthCell")
+//        print("dequeue monthCell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: monthCell.reusableID, for: indexPath) as! monthCell
         let row = indexPath.row
         let diary = filteredDiaries[row]

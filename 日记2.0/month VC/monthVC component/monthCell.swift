@@ -84,7 +84,6 @@ class monthCell: UICollectionViewCell {
     
     
 //    let kMonthCellWidth = (UIScreen.main.bounds.width) / 2 - 15//它决定了cell的宽度
-    let kMonthCellWidth = KitemWidth
     
     private func setupContainerView() {
         contentView.addSubview(containerView)
@@ -96,7 +95,7 @@ class monthCell: UICollectionViewCell {
             make.right.equalTo(contentView)
             make.top.equalTo(contentView)
             make.bottom.equalTo(contentView)
-            make.width.equalTo(kMonthCellWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
+            make.width.equalTo(KitemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
         
         containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
@@ -234,6 +233,8 @@ class monthCell: UICollectionViewCell {
 //    }
     
     func fillCell(diary:diaryInfo){
+        self.updateWCons()
+        
         self.diary = diary
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
@@ -370,9 +371,12 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     
 }
 
+
 extension monthCell{
-    ///给cell填充数据，以调用autolayout计算高度
-    func feedDate(diary:diaryInfo){
-        
+    ///切换单双列展示时，更新宽度约束
+    func updateWCons(){
+        self.containerView.snp.updateConstraints { (update) in
+            update.width.equalTo(KitemWidth)
+        }
     }
 }

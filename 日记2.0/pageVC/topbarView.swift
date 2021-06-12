@@ -22,6 +22,7 @@ class topbarView: UIView {
     var tempLabel2:UILabel!
     
     var button1:topbarButton!
+    var tempButtonImageView1:UIImageView!
     var button2:topbarButton!
     var tempButtonImageView2:UIImageView!
     var button3:topbarButton!
@@ -114,6 +115,12 @@ class topbarView: UIView {
         tempLabel2.alpha = 0
         self.addSubview(tempLabel2)
         
+        tempButtonImageView1 = UIImageView(frame: button1.buttonImageView.frame)
+        tempButtonImageView1.contentMode = .scaleAspectFill
+        tempButtonImageView1.image = UIImage(named: "waterfall")
+        tempButtonImageView1.alpha = 0
+        button1.addSubview(tempButtonImageView1)
+        
         tempButtonImageView2 = UIImageView(frame: button2.buttonImageView.frame)
         tempButtonImageView2.contentMode = .scaleAspectFill
         tempButtonImageView2.image = UIImage(named: "setting")
@@ -161,9 +168,10 @@ extension topbarView{
     
     func animateButtons(currenVCindex:Int,percentComplete:CGFloat){
         //animate buttons
-        //button1消失
-        self.button1.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
-        //button2和button3切换图标
+        //切换图标
+        self.button1.buttonImageView.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
+        self.tempButtonImageView1.alpha = (currenVCindex != 0) ? 1 - percentComplete : percentComplete
+        
         self.button2.buttonImageView.alpha = (currenVCindex != 0) ? percentComplete : 1 - percentComplete
         self.tempButtonImageView2.alpha = (currenVCindex != 0) ? 1 - percentComplete : percentComplete
         
