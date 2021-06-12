@@ -29,8 +29,8 @@ extension NSAttributedString{
                 
                 //设置富文本中的图片：设置大小&设置居中
                 let aspect = img.size.width / img.size.height
-                let pedding:CGFloat = 10
-                let newWidth = (textView.frame.width - pedding) / userDefaultManager.imageScalingFactor
+                let pedding:CGFloat = 15
+                let newWidth = (textView.frame.width - 2 * pedding) / userDefaultManager.imageScalingFactor
                 let newHeight = (newWidth / aspect)
                 
                 
@@ -85,8 +85,8 @@ extension NSAttributedString{
                 
                 //设置富文本中的图片：设置大小&设置居中
                 let aspect = img.size.width / img.size.height
-                let pedding:CGFloat = 10
-                let newWidth = (bounds.width - pedding) / userDefaultManager.imageScalingFactor
+                let pedding:CGFloat = 15
+                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
                 let newHeight = (newWidth / aspect)
                 
                 
@@ -131,8 +131,8 @@ extension NSAttributedString{
             if let attachment = object as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
                 //设置富文本中的图片：设置大小&设置居中
                 let aspect = img.size.width / img.size.height
-                let pedding:CGFloat = 10
-                let newWidth = (bounds.width - pedding) / userDefaultManager.imageScalingFactor
+                let pedding:CGFloat = 15
+                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
                 let newHeight = (newWidth / aspect)
                 
                 //重新设置居中展示

@@ -366,7 +366,7 @@ class monthVC: UIViewController {
             //切换单双列展示
             layoutParasManager.shared.switchLayoutMode()
             button.switchLayoutModeIcon()
-            reloadCollectionViewData(forRow: -1)//刷新数据源，同时伴有动画效果
+            reloadCollectionViewData(forRow: -1,animated: true)//刷新数据源，同时伴有动画效果
         case 2:
             //进入设置界面
             let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
@@ -384,15 +384,20 @@ class monthVC: UIViewController {
 
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func reloadCollectionViewData(forRow:Int = -1){
+    func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false){
         print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
+            if !animated{
+                self.collectionView.reloadData()
+                self.view.layoutIfNeeded()
+                return
+            }
             //暂时关闭按钮，防止切换月份导致多次performBatchUpdates
             for button in self.monthButtons{
                 button.isEnabled = false
             }
             ///更新瀑布流布局
-            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
                 self.collectionView.performBatchUpdates({
                     //让cell以平滑动画移动到新位置上去
                     self.collectionView.reloadData()
