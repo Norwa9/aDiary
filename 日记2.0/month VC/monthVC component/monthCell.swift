@@ -205,13 +205,13 @@ class monthCell: UICollectionViewCell {
             make.width.equalTo(20)
         }
         islikeImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(moodImageView.snp.left).offset(-5)
+            make.right.equalTo(moodImageView.snp.left).offset(-2)
             make.centerY.equalTo(moodImageView)
             make.height.equalTo(20)
             make.width.equalTo(20)
         }
         wordNumLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(islikeImageView.snp.left).offset(-5)
+            make.right.equalTo(islikeImageView.snp.left).offset(-2)
             make.height.equalTo(20)
             make.width.equalTo(50)
             make.centerY.equalTo(moodImageView)
@@ -366,6 +366,25 @@ extension monthCell{
         self.containerView.snp.updateConstraints { (update) in
             update.width.equalTo(layoutParasManager.shared.itemWidth)
         }
+        switch layoutParasManager.shared.collectioncolumnNumber {
+        case 1:
+            self.wordNumLabel.snp.updateConstraints { (update) in
+                update.width.equalTo(50)
+            }
+            self.moodImageView.snp.updateConstraints { (update) in
+                update.right.equalTo(containerView).offset(-15)
+            }
+        case 2:
+            self.wordNumLabel.snp.updateConstraints { (update) in
+                update.width.equalTo(0)
+            }
+            self.moodImageView.snp.updateConstraints { (update) in
+                update.right.equalTo(containerView).offset(-5)
+            }
+        default:
+            return
+        }
+        
         /**
          经过非常多调试试错出来的解决方案：
          必须要setNeedsLayout和layoutIfNeeded搭配才能起到丝滑的动画过渡效果。

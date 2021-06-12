@@ -125,7 +125,6 @@ class monthVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(monthCell.self, forCellWithReuseIdentifier: monthCell.reusableID)
-        //top = 5为了第一个cell的顶部阴影，但这导致contentOffset，bottom = 50:解决最后一个cell显示不全的问题
         collectionView.contentInset = layoutParasManager.shared.collectionEdgesInset
         collectionView.showsVerticalScrollIndicator = false
         originTopInset = collectionViewTopInsetAnchor.constant
@@ -313,7 +312,7 @@ class monthVC: UIViewController {
         }
     }
     
-    //popover
+    //MARK:-popover
     @objc func filterButtonDidTapped(sender:topbarButton){
         sender.bounceAnimation(usingSpringWithDamping: 0.5)
         
@@ -325,7 +324,7 @@ class monthVC: UIViewController {
         popover.show(filterView, fromView: filterButton)
     }
     
-    //展示，收回日历
+    //MARK:-展示，收回日历
     func animateCalendar(isShowing:Bool,plusDuration:TimeInterval = 0){
         if !isShowing{
             //展开日历
@@ -360,6 +359,7 @@ class monthVC: UIViewController {
         }
     }
     
+    //MARK:-topbar按钮触发事件
     func monthButtonsTapped(button: topbarButton){
         switch button.tag {
         case 1:
@@ -392,7 +392,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
                 button.isEnabled = false
             }
             ///更新瀑布流布局
-            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
                 self.collectionView.performBatchUpdates({
                     //让cell以平滑动画移动到新位置上去
                     self.collectionView.reloadData()
@@ -410,10 +410,6 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             }
             
             self.view.layoutIfNeeded()//预加载cell，避免第一次进入collectionview加载带来的卡顿
-            //刷新后回滚到顶部
-            if !filteredDiaries.isEmpty{
-                self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
-            }
         }else{
             self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
         }
@@ -455,12 +451,10 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         }else{
             guard let cell = cell as? monthCell else{return}
             cell.transform = cell.transform.translatedBy(x: 0, y: 20)//平移效果
-//            cell.alpha = 0.5
             cell.albumView.alpha = 0
             cell.albumView.transform  = CGAffineTransform.init(translationX: 0, y: -20)
             UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
                 cell.transform = cell.transform.translatedBy(x: 0, y: -20)
-//                cell.alpha = 1
                 cell.albumView.alpha = 1
                 cell.albumView.transform  = cell.albumView.transform.translatedBy(x: 0, y: 20)
             } completion: { (_) in
@@ -485,7 +479,7 @@ extension monthVC:UIScrollViewDelegate{
 //        print("y:\(y)")
         
         if !calendarIsShowing{
-            containerHeightAnchor.constant = originContainerHeihgt + y - 5//5是一开始设置的topinset
+            containerHeightAnchor.constant = originContainerHeihgt + y
             view.layoutIfNeeded()
             //展开日历
             if y > 50 && !collectionView.isDragging{
@@ -504,7 +498,7 @@ extension monthVC:UIScrollViewDelegate{
 
 }
 
-//MARK:-FSCalendar DataScouce
+//MARK:-FSCalendar数据源
 extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance,ExtendedFSCalendarDelegate{
     //使用DIY cell
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
@@ -556,7 +550,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
 //        self.configureVisibleCells()
     }
     
-    // MARK: - 自定义点击日历cell效果
+// MARK: - 自定义FSCalendar外观
     private func configureVisibleCells() {
         //参考自FSCalendar作者的demo
         calendar.visibleCells().forEach { (cell) in
