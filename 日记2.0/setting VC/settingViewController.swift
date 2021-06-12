@@ -314,8 +314,8 @@ extension settingViewController{
         //插入文字
         let text =
         """
-        版本1.2
-        Version1.2
+        版本1.4
+        Version1.4
 
         """
         textView.insertText(text)
