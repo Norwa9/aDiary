@@ -117,8 +117,9 @@ class topbarView: UIView {
         
         tempButtonImageView1 = UIImageView(frame: button1.buttonImageView.frame)
         tempButtonImageView1.contentMode = .scaleAspectFill
-        tempButtonImageView1.image = UIImage(named: "waterfall")
+        tempButtonImageView1.image = UIImage(named: "waterfallmode")
         tempButtonImageView1.alpha = 0
+        tempButtonImageView1.tag = 98
         button1.addSubview(tempButtonImageView1)
         
         tempButtonImageView2 = UIImageView(frame: button2.buttonImageView.frame)

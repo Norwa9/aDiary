@@ -95,7 +95,7 @@ class monthCell: UICollectionViewCell {
             make.right.equalTo(contentView)
             make.top.equalTo(contentView)
             make.bottom.equalTo(contentView)
-            make.width.equalTo(KitemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
+            make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
         
         containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
@@ -376,7 +376,7 @@ extension monthCell{
     ///切换单双列展示时，更新宽度约束
     func updateWCons(){
         self.containerView.snp.updateConstraints { (update) in
-            update.width.equalTo(KitemWidth)
+            update.width.equalTo(layoutParasManager.shared.itemWidth)
         }
     }
 }

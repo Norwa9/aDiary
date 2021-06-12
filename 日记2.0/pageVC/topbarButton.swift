@@ -53,7 +53,18 @@ class topbarButton: UIButton {
         }
     }
 
-
+    func switchLayoutModeIcon(){
+        let columnNumber = layoutParasManager.shared.collectioncolumnNumber
+        guard let tempImageView = self.viewWithTag(98) as? UIImageView else{return}
+        switch columnNumber {
+        case 1:
+            tempImageView.image = UIImage(named: "waterfallmode")
+        case 2:
+            tempImageView.image = UIImage(named: "listmode")
+        default:
+            return
+        }
+    }
 
 
     required init?(coder: NSCoder) {

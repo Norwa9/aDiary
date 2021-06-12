@@ -126,14 +126,14 @@ class monthVC: UIViewController {
         collectionView.dataSource = self
         collectionView.register(monthCell.self, forCellWithReuseIdentifier: monthCell.reusableID)
         //top = 5为了第一个cell的顶部阴影，但这导致contentOffset，bottom = 50:解决最后一个cell显示不全的问题
-        collectionView.contentInset = KcollectionEdgesInset
+        collectionView.contentInset = layoutParasManager.shared.collectionEdgesInset
         collectionView.showsVerticalScrollIndicator = false
         originTopInset = collectionViewTopInsetAnchor.constant
         
         flowLayout = waterFallLayout()
-        flowLayout.columnNumber = KcollectioncolumnNumber
-        flowLayout.interitemSpacing = KcollectionInteritemSpacing
-        flowLayout.lineSpacing = KcollectionLineSpacing
+        flowLayout.columnNumber = layoutParasManager.shared.collectioncolumnNumber
+        flowLayout.interitemSpacing = layoutParasManager.shared.collectionLineSpacing
+        flowLayout.lineSpacing = layoutParasManager.shared.collectionLineSpacing
         flowLayout.dateSource = filteredDiaries
         collectionView.collectionViewLayout = flowLayout
         
@@ -364,11 +364,8 @@ class monthVC: UIViewController {
         switch button.tag {
         case 1:
             //切换单双列展示
-            if KcollectioncolumnNumber == 1{
-                KcollectioncolumnNumber = 2
-            }else{
-                KcollectioncolumnNumber = 1
-            }
+            layoutParasManager.shared.switchLayoutMode()
+            button.switchLayoutModeIcon()
             reloadCollectionViewData()
         case 2:
             //进入设置界面

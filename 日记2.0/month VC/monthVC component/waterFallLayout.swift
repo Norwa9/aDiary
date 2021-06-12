@@ -7,14 +7,6 @@
 
 import UIKit
 
-///与布局有关的全局变量
-let KcollectionEdgesInset = UIEdgeInsets(top: 0, left: 10, bottom: 50, right: 10)
-var KcollectioncolumnNumber:Int = 2
-let KcollectionInteritemSpacing:CGFloat = 10
-let KcollectionLineSpacing:CGFloat = 10
-let KcontentWidth = UIScreen.main.bounds.width - KcollectionEdgesInset.left - KcollectionEdgesInset.right
-var KitemWidth = (KcontentWidth -  CGFloat((KcollectioncolumnNumber - 1)) * KcollectionInteritemSpacing ) / CGFloat(KcollectioncolumnNumber)
-
 struct ColumnInfo
 {
     ///列
@@ -45,7 +37,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     private var itemSizeArray:[CGSize] = []
     ///每列的总高度
     private var columnHeightArray:[CGFloat] = {
-        let arr = Array.init(repeating: CGFloat(0), count: KcollectioncolumnNumber)
+        let arr = Array.init(repeating: CGFloat(0), count: layoutParasManager.shared.collectioncolumnNumber)
         return arr
     }()
     
@@ -55,7 +47,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         super.prepare()
-        self.columnNumber = KcollectioncolumnNumber
+        self.columnNumber = layoutParasManager.shared.collectioncolumnNumber
         /**
          根据CollectionView宽度、列数、列间距计算Cell的宽度
          但是经过试验我发现，这里的self.itemWidth不影响实际的cell大小，
@@ -64,7 +56,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
          实际上：self.itemWidth仅仅影响itemX的计算
          最好是让self.itemWidth与containerView的宽度约束值同步
          */
-        self.itemWidth = KitemWidth
+        self.itemWidth = layoutParasManager.shared.itemWidth
         ///缩进
         self.viewInset = self.collectionView!.contentInset
         self.calculateAttributesWithItemWidth(itemWidth)
@@ -74,7 +66,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     func calculateAttributesWithItemWidth(_ itemWidth:CGFloat){
         //每次CollectionView reloadDate都会调用这个方法，因此要把以前的布局数据清空
         self.layoutAttributesArray = []
-        self.columnHeightArray = Array.init(repeating: CGFloat(0), count: KcollectioncolumnNumber)
+        self.columnHeightArray = Array.init(repeating: CGFloat(0), count: layoutParasManager.shared.collectioncolumnNumber)
         self.itemSizeArray = []
         
         for index in 0..<self.dateSource.count{
