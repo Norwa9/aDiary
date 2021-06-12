@@ -366,7 +366,7 @@ class monthVC: UIViewController {
             //切换单双列展示
             layoutParasManager.shared.switchLayoutMode()
             button.switchLayoutModeIcon()
-            reloadCollectionViewData()
+            reloadCollectionViewData(forRow: -1)//刷新数据源，同时伴有动画效果
         case 2:
             //进入设置界面
             let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
@@ -387,8 +387,33 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     func reloadCollectionViewData(forRow:Int = -1){
         print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
-            self.collectionView.reloadData()
-            self.view.layoutIfNeeded()
+            //暂时关闭按钮，防止切换月份导致多次performBatchUpdates
+            for button in self.monthButtons{
+                button.isEnabled = false
+            }
+            ///更新瀑布流布局
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+                self.collectionView.performBatchUpdates({
+                    //让cell以平滑动画移动到新位置上去
+                    self.collectionView.reloadData()
+                    
+                    //让cell以平滑动画更新size
+                    for cell in self.collectionView.visibleCells{
+                        let cell = cell as! monthCell
+                        cell.updateWCons()
+                    }
+                }, completion: nil)
+            } completion: { (_) in
+                for button in self.monthButtons{
+                    button.isEnabled = true
+                }
+            }
+            
+            self.view.layoutIfNeeded()//预加载cell，避免第一次进入collectionview加载带来的卡顿
+            //刷新后回滚到顶部
+            if !filteredDiaries.isEmpty{
+                self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
+            }
         }else{
             self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
         }
@@ -403,11 +428,10 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        print("dequeue monthCell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: monthCell.reusableID, for: indexPath) as! monthCell
         let row = indexPath.row
         let diary = filteredDiaries[row]
-
+        print("dequeue monthCell,\(diary.date!)")
         cell.fillCell(diary: diary)
         
         return cell
@@ -430,13 +454,15 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             return
         }else{
             guard let cell = cell as? monthCell else{return}
-            cell.transform = cell.transform.translatedBy(x: 0, y: 30)//平移效果
-            cell.alpha = 0.5
-            cell.albumView.transform  = CGAffineTransform.init(translationX: 10, y: 0)
+            cell.transform = cell.transform.translatedBy(x: 0, y: 20)//平移效果
+//            cell.alpha = 0.5
+            cell.albumView.alpha = 0
+            cell.albumView.transform  = CGAffineTransform.init(translationX: 0, y: -20)
             UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
-                cell.transform = cell.transform.translatedBy(x: 0, y: -30)
-                cell.alpha = 1
-                cell.albumView.transform  = CGAffineTransform.identity
+                cell.transform = cell.transform.translatedBy(x: 0, y: -20)
+//                cell.alpha = 1
+                cell.albumView.alpha = 1
+                cell.albumView.transform  = cell.albumView.transform.translatedBy(x: 0, y: 20)
             } completion: { (_) in
                 
             }

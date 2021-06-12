@@ -148,7 +148,7 @@ extension waterFallLayout{
     }
     
     override var collectionViewContentSize: CGSize{
-        print("collectionViewContentSize")
+//        print("collectionViewContentSize")
         let maxInfo:ColumnInfo = self.highestColumn(columnHeight: self.columnHeightArray)
         let height = maxInfo.columnHeight + self.viewInset.bottom + self.lineSpacing
         let width = self.collectionView!.bounds.size.width - self.viewInset.left - self.viewInset.right

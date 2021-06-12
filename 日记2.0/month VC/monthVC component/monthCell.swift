@@ -218,20 +218,6 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-//    //提供计算后的cell size
-//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-//        /*
-//            此方法调用在fillCell()之后
-//         */
-////        print("preferredLayoutAttributesFitting")
-//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-//        var newFrame = layoutAttributes.frame
-//        newFrame.size.height = size.height
-//        newFrame.size.width = size.width
-//        layoutAttributes.frame = newFrame
-//        return layoutAttributes
-//    }
-    
     func fillCell(diary:diaryInfo){
         self.updateWCons()
         
@@ -262,7 +248,9 @@ class monthCell: UICollectionViewCell {
             make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
         }
         if !contains{
-            print("\(diary.date!)没有照片")
+            //如果没有照片，则将albumView清空，防止复用的出现在其他cell里
+            self.photos.removeAll()
+            self.albumView.reloadData()
             return
         }
         
@@ -361,7 +349,7 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("dequeue photo cell")
+//        print("dequeue photo cell")
         let cell = albumView.dequeueReusableCell(withReuseIdentifier: photoCell.photoCellID, for: indexPath) as! photoCell
         let row = indexPath.item
         cell.photo = photos[row]
@@ -378,5 +366,16 @@ extension monthCell{
         self.containerView.snp.updateConstraints { (update) in
             update.width.equalTo(layoutParasManager.shared.itemWidth)
         }
+        /**
+         经过非常多调试试错出来的解决方案：
+         必须要setNeedsLayout和layoutIfNeeded搭配才能起到丝滑的动画过渡效果。
+         setNeedsLayout相当于layoutIfNeeded的信号，没有信号layoutIfNeeded将不起作用。
+         或者手动设置约束属性heightConstraint.constant = flag ? 100 : 0也可以作为layoutIfNeeded的信号
+         但是这里snp.updateConstraints却好像没有给layoutIfNeeded发送信号？所以我们要事先声明setNeedsLayout
+         参考：https://medium.com/@linhairui19/difference-between-setneedslayout-layoutifneeded-180a2310e2e6
+         */
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
+    
 }
