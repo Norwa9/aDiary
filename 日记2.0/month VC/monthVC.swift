@@ -456,11 +456,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         }else{
             guard let cell = cell as? monthCell else{return}
             cell.transform = cell.transform.translatedBy(x: 0, y: 20)//平移效果
-            cell.albumView.alpha = 0
+//            cell.albumView.alpha = 0
             cell.albumView.transform  = CGAffineTransform.init(translationX: 0, y: -20)
             UIView.animate(withDuration: 0.7, delay: 0.1 * Double(indexPath.row), usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [.allowUserInteraction,.curveEaseInOut]) {
                 cell.transform = cell.transform.translatedBy(x: 0, y: -20)
-                cell.albumView.alpha = 1
+//                cell.albumView.alpha = 1
                 cell.albumView.transform  = cell.albumView.transform.translatedBy(x: 0, y: 20)
             } completion: { (_) in
                 

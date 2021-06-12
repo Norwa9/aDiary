@@ -274,6 +274,7 @@ class monthCell: UICollectionViewCell {
                 self.photos = images
                 self.albumView.reloadData()
                 self.albumView.layoutIfNeeded()
+                self.albumView.fadeIn()//渐显动画
             }else{
                 //self.row表示是当前点击的cell
                 print("diary.date:\(diary.date!) != self.diary.date:\(self.diary.date!)")

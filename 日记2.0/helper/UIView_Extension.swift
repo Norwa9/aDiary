@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-
+//MARK:-阴影和圆角
 extension UIView{
     func setupShadow(opacity: Float = 1, radius: CGFloat = 4, offset: CGSize = CGSize(width: 1, height: 1), color: UIColor =  UIColor.black.withAlphaComponent(0.35)) {
         layer.shadowOpacity = opacity
@@ -32,6 +32,7 @@ struct AnchoredConstraints {
     var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
 }
 
+//MARK:-约束
 extension UIView{
     func edges(to view: UIView, top: CGFloat=0, left: CGFloat=0, bottom: CGFloat=0, right: CGFloat=0) {
         NSLayoutConstraint.activate([
@@ -180,5 +181,13 @@ extension UIView{
                            delta: delta * -1, completion:completion)
             }
         }
+    }
+    
+    ///渐显效果(alpha:0->1)
+    func fadeIn(duration:TimeInterval = 0.5){
+        self.alpha = 0
+        UIView.animate(withDuration: duration, animations: {
+            self.alpha = 1
+        }, completion: nil)
     }
 }
