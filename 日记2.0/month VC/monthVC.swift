@@ -392,10 +392,10 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
                 self.view.layoutIfNeeded()
                 return
             }
+            
             //暂时关闭按钮，防止切换月份导致多次performBatchUpdates
-            for button in self.monthButtons{
-                button.isEnabled = false
-            }
+            self.view.isUserInteractionEnabled = false
+            
             ///更新瀑布流布局
             UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
                 self.collectionView.performBatchUpdates({
@@ -409,9 +409,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
                     }
                 }, completion: nil)
             } completion: { (_) in
-                for button in self.monthButtons{
-                    button.isEnabled = true
-                }
+                self.view.isUserInteractionEnabled = true
             }
             
             self.view.layoutIfNeeded()//预加载cell，避免第一次进入collectionview加载带来的卡顿
@@ -712,7 +710,7 @@ extension monthVC:UISearchBarDelegate{
         let dataSource = filterDiary()//全局函数
         filteredDiaries.removeAll()
         filteredDiaries = dataSource
-        
+        flowLayout.dateSource = dataSource//提供布局的计算依据
         //更新collectionView
         reloadCollectionViewData()
         
