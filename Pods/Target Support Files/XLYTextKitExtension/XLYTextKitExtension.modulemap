@@ -1,6 +1,0 @@
-framework module XLYTextKitExtension {
-  umbrella header "XLYTextKitExtension-umbrella.h"
-
-  export *
-  module * { export * }
-}
