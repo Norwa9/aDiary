@@ -8,6 +8,7 @@
 import UIKit
 import FSCalendar
 import Popover
+import MJRefresh
 
 class monthVC: UIViewController {
     weak var pageVC:customPageViewController!
@@ -98,6 +99,8 @@ class monthVC: UIViewController {
     }()
     //data source
     var filteredDiaries = [diaryInfo]()
+    var resultDiaries = [diaryInfo]()
+    var footer:MJRefreshAutoNormalFooter!
     
     //读取某年某月的日记，或读取全部日记
     func configureDataSource(year:Int,month:Int){
@@ -449,7 +452,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     
     //滑动时cell的动画
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.isDragging{
+        if collectionView.isDragging || isFilterMode{
             return
         }else{
             guard let cell = cell as? monthCell else{return}
@@ -468,6 +471,41 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     
+}
+
+//MARK:-MJRefresh
+extension monthVC{
+    func setupMJRefresh(isFitlerMode:Bool){
+        if isFitlerMode{
+            footer = MJRefreshAutoNormalFooter()
+            footer.setRefreshingTarget(self, refreshingAction: #selector(loadMoreDiray))
+            self.collectionView.mj_footer = footer
+        }else{
+            footer.removeFromSuperview()
+        }
+    }
+    
+    @objc func loadMoreDiray(){
+        print("loadMoreDiray")
+        var currentNum = self.filteredDiaries.count
+        if currentNum < self.resultDiaries.count{
+            currentNum += 10
+            let dataNum = min(currentNum, self.resultDiaries.count)
+            self.filteredDiaries = Array(self.resultDiaries.prefix(dataNum))
+            self.flowLayout.dateSource = self.filteredDiaries
+            footer.setTitle("点击或上拉加载更多(\(self.filteredDiaries.count)/\(self.resultDiaries.count))", for: .refreshing)
+        }else{
+            //读取完毕
+            footer.setTitle("读取完毕", for: .idle)
+            self.collectionView.mj_footer?.endRefreshing {}
+            return
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.reloadCollectionViewData()
+            self.collectionView.mj_footer?.endRefreshing {}
+        }
+        
+    }
 }
 
 //MARK:-ScrollView CollectionView
@@ -648,6 +686,8 @@ extension monthVC:UISearchBarDelegate{
     func switchToFilterView(button:topbarButton){
         isFilterMode.toggle()
         
+        self.setupMJRefresh(isFitlerMode: isFilterMode)
+        
         //关闭日历
         if calendarIsShowing{
             animateCalendar(isShowing: calendarIsShowing)
@@ -658,7 +698,8 @@ extension monthVC:UISearchBarDelegate{
         //searh图标是临时添加到button3上面的
         let searchButtonImageView  = button.viewWithTag(99) as! UIImageView
         if isFilterMode{//进入搜索模式
-            configureDataSource(year: 0, month: 0)//显示全部日记
+            self.filteredDiaries.removeAll()
+            self.reloadCollectionViewData()
             searchButtonImageView.image = UIImage(named: "back")
             topbar.tempLabel1.text = "搜索"
             topbar.tempLabel2.text = "共\(DataContainerSingleton.sharedDataContainer.diaryDict.count)篇，\(DataContainerSingleton.sharedDataContainer.getTotalWordcount())字"
@@ -707,27 +748,23 @@ extension monthVC:UISearchBarDelegate{
     }
     
     func filter(){
-        let dataSource = filterDiary()//全局函数
-        filteredDiaries.removeAll()
-        filteredDiaries = dataSource
-        flowLayout.dateSource = dataSource//提供布局的计算依据
-        //更新collectionView
-        reloadCollectionViewData()
-        
-        //更新topbar label
-        var totalNum = 0
-        for diary in filteredDiaries{
-            totalNum += diary.content.count
+        DispatchQueue.global(qos: .default).async {[self] in
+            resultDiaries = filterDiary()//全局函数:实际上速度大概在0.5s左右
+            filteredDiaries = Array(resultDiaries.prefix(20))
+            flowLayout.dateSource = filteredDiaries//提供布局的计算依据
+            
+            DispatchQueue.main.async {
+                //更新collectionView
+                reloadCollectionViewData()//如果数据源很多，将会很耗时！
+                
+                //更新topbar label
+                var totalNum = 0
+                for diary in resultDiaries{
+                    totalNum += diary.content.count
+                }
+                topbar.tempLabel2.text = "共\(resultDiaries.count)篇，\(totalNum)字"
+            }
         }
-        topbar.tempLabel2.text = "共\(filteredDiaries.count)篇，\(totalNum)字"
-    }
-    
-    func updateResultLabel(){
-        var totalNum = 0
-        for diary in filteredDiaries{
-            totalNum += diary.content.count
-        }
-        topbar.tempLabel2.text = "共\(filteredDiaries.count)篇，\(totalNum)字"
     }
     
     func animateFilterButton(hasPara:Bool){
