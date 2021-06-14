@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import TagListView
 
 //let kMonthCellWidth:CGFloat = UIScreen.main.bounds.width / 2
 
@@ -19,7 +20,7 @@ class monthCell: UICollectionViewCell {
     var titleLabel:UILabel = UILabel()
     var contentLabel:UILabel = UILabel()
     var dateLabel:UILabel = UILabel()
-    var tagsLabel:UILabel = UILabel()
+    var tagsLabel:TagListView = TagListView()
     var moodImageView:UIImageView = UIImageView()
     var islikeImageView:UIImageView = UIImageView()
     var wordNumLabel:UILabel = UILabel()
@@ -36,13 +37,11 @@ class monthCell: UICollectionViewCell {
     
     var tags:[String]!{
         didSet{
-            var tagsLabelText = ""
-            for tag in tags{
-                tagsLabelText.append("#" + tag + " ")
-            }
-            tagsLabel.text = tagsLabelText
+            self.tagsLabel.removeAllTags()
+            self.tagsLabel.addTags(tags)
         }
     }
+
     var wordNum:Int = 0{
         didSet{
             wordNumLabel.text = "\(wordNum)字"
@@ -135,14 +134,16 @@ class monthCell: UICollectionViewCell {
         
         //tags Label
         containerView.addSubview(tagsLabel)
-        tagsLabel.numberOfLines = 0
-        tagsLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        tagsLabel.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 10)!
+        tagsLabel.alignment = .left
+        tagsLabel.tagBackgroundColor = #colorLiteral(red: 0.3529411765, green: 0.5568627451, blue: 0.8784313725, alpha: 1)
+        tagsLabel.cornerRadius = 5
+        tagsLabel.textColor = .white
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
         containerView.addSubview(dateLabel)
-        dateLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        dateLabel.font = UIFont(name: "DIN Alternate", size: 11)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //word Number Label
@@ -293,7 +294,8 @@ class monthCell: UICollectionViewCell {
             let titlePara = NSMutableParagraphStyle()
             titlePara.lineSpacing = 5
             let titleAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont.systemFont(ofSize: 17, weight: .medium),
+//                .font : UIFont.systemFont(ofSize: 17, weight: .medium),
+                .font : UIFont(name: "DIN Alternate", size: 17)!,
                 .paragraphStyle:titlePara,
             ]
             
@@ -312,7 +314,8 @@ class monthCell: UICollectionViewCell {
             let contentPara = NSMutableParagraphStyle()
             contentPara.lineSpacing = 3
             let contentAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
+//                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
+                .font : UIFont(name: "DIN Alternate", size: 14)!,
                 .paragraphStyle:contentPara,
             ]
             mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
