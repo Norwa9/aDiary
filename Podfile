@@ -10,4 +10,5 @@ pod 'JXPhotoBrowser', '~> 3.0'
   # Pods for 日记2.0
 pod 'SnapKit'
 pod 'MJRefresh'
+pod 'TagListView'
 end
