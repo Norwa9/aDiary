@@ -140,7 +140,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Jy-0L-fpk">
-                                <rect key="frame" x="7" y="7" width="400" height="40"/>
+                                <rect key="frame" x="4" y="7" width="406" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -154,8 +154,8 @@
                             <constraint firstItem="dO6-Df-TLR" firstAttribute="leading" secondItem="1eu-dx-NXN" secondAttribute="leading" id="HmD-0q-p97"/>
                             <constraint firstItem="dO6-Df-TLR" firstAttribute="top" secondItem="zM1-If-miI" secondAttribute="top" constant="10" id="PtU-R3-rzh"/>
                             <constraint firstAttribute="bottom" secondItem="dO6-Df-TLR" secondAttribute="bottom" id="ShH-sL-x8B"/>
-                            <constraint firstAttribute="trailing" secondItem="2Jy-0L-fpk" secondAttribute="trailing" constant="7" id="UPE-Sc-N6u"/>
-                            <constraint firstItem="2Jy-0L-fpk" firstAttribute="leading" secondItem="zM1-If-miI" secondAttribute="leading" constant="7" id="ZZE-Sg-2D6"/>
+                            <constraint firstAttribute="trailing" secondItem="2Jy-0L-fpk" secondAttribute="trailing" constant="4" id="UPE-Sc-N6u"/>
+                            <constraint firstItem="2Jy-0L-fpk" firstAttribute="leading" secondItem="zM1-If-miI" secondAttribute="leading" constant="4" id="ZZE-Sg-2D6"/>
                             <constraint firstItem="2Jy-0L-fpk" firstAttribute="top" secondItem="zM1-If-miI" secondAttribute="top" constant="7" id="c5S-7u-g2C"/>
                             <constraint firstItem="1eu-dx-NXN" firstAttribute="trailing" secondItem="dO6-Df-TLR" secondAttribute="trailing" id="gxG-wo-7sy"/>
                         </constraints>

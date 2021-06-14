@@ -336,7 +336,9 @@ class monthVC: UIViewController {
             UIView.animate(withDuration: 0.8 + plusDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseOut,.allowUserInteraction]) {
                 self.calendar.alpha = 1
                 self.monthButtonContainer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            } completion: { (_) in}
+            } completion: { (_) in
+                
+            }
         }else{
             //收回
             //1
@@ -504,11 +506,11 @@ extension monthVC{
 
 //MARK:-ScrollView CollectionView
 extension monthVC:UIScrollViewDelegate{
-    //下拉显示日历
+    ///下拉显示日历
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if originContainerHeihgt == nil {return}
         let y = -scrollView.contentOffset.y
-        print("offset:\(y)")
+        //print("offset:\(y)")
         guard !isFilterMode,y > 0 else{
             return
         }
@@ -518,7 +520,9 @@ extension monthVC:UIScrollViewDelegate{
             if y < collectionView.contentInset.top{
                 return//往上滑时不改变月份面板的高度
             }
-            
+            /*
+             content实际的滑动距离：(y - collectionView.contentInset.top)
+             */
             containerHeightAnchor.constant = originContainerHeihgt + (y - collectionView.contentInset.top)
             view.layoutIfNeeded()
             //展开日历
@@ -551,7 +555,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     }
     
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-//        print("FSCalendar willDisplay cell")
+        print("FSCalendar willDisplay cell")
         self.configure(cell: cell, for: date, at: monthPosition)
     }
     
@@ -591,7 +595,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
 //        self.configureVisibleCells()
     }
     
-// MARK: - 自定义FSCalendar外观
+// MARK: - FSCalendar自定义外观
     private func configureVisibleCells() {
         //参考自FSCalendar作者的demo
         calendar.visibleCells().forEach { (cell) in
