@@ -43,7 +43,7 @@ class moodButton: UIButton {
         buttonImageView = UIImageView()
         buttonImageView.frame = CGRect(origin: .zero, size: frame.size)
         buttonImageView.contentMode = .scaleAspectFill
-        holderView.addSubview(buttonImageView)
+        self.insertSubview(buttonImageView, aboveSubview: holderView)
     }
     
     func animateSelectedView(duration:TimeInterval = 0.2){
@@ -52,6 +52,8 @@ class moodButton: UIButton {
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.holderView.transform = .identity
                 self.holderView.backgroundColor = .white
+                
+                self.buttonImageView.transform = .identity
             } completion: { (_) in
                 
             }
@@ -59,9 +61,16 @@ class moodButton: UIButton {
             hasSelected = true
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
                 self.holderView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-                self.holderView.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
-            } completion: { (_) in
+                self.holderView.backgroundColor = #colorLiteral(red: 0.9679583627, green: 0.9594541112, blue: 0.9490196078, alpha: 1)
                 
+                self.buttonImageView.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+                self.buttonImageView.transform = CGAffineTransform(translationX: 0, y: -5)
+            } completion: { (_) in
+                UIView.animate(withDuration: duration * 3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseInOut) {
+                    self.buttonImageView.transform = CGAffineTransform(translationX: 0, y: 0)
+                } completion: { (_) in
+                    
+                }
             }
         }
     }
