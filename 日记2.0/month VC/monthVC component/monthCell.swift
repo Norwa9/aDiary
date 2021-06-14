@@ -182,12 +182,12 @@ class monthCell: UICollectionViewCell {
         splitLine.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel).offset(-3)
             make.right.equalTo(titleLabel).offset(3)
-            make.top.equalTo(titleLabel.snp.bottom).offset(1)
+            make.top.equalTo(titleLabel.snp.bottom).offset(2)
             make.height.equalTo(1)
         }
         
         albumView.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.top.equalTo(splitLine.snp.bottom).offset(2)
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
             make.height.equalTo(monthCell.KphotoHeight)
