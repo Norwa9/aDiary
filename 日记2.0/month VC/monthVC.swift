@@ -79,7 +79,7 @@ class monthVC: UIViewController {
     }()
     //calendar
     weak var calendar: FSCalendar!
-    var calendarHeight:CGFloat!
+    let calendarHeight:CGFloat = 300
     var calendarHeightOriginFrame:CGRect!
     var formatter = DateFormatter()
     var calendarIsShowing:Bool = false
@@ -190,7 +190,6 @@ class monthVC: UIViewController {
         
         //MARK:-日历
         //configure FSCalendar
-        calendarHeight = 300
         let calendarPedding:CGFloat = 10
         let calendarWidth = monthButtonContainer.frame.width - 2 * calendarPedding
         let calendar = FSCalendar(frame: CGRect(
@@ -509,22 +508,28 @@ extension monthVC:UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if originContainerHeihgt == nil {return}
         let y = -scrollView.contentOffset.y
+        print("offset:\(y)")
         guard !isFilterMode,y > 0 else{
             return
         }
-//        print("y:\(y)")
         
+        ///展开日历
         if !calendarIsShowing{
-            containerHeightAnchor.constant = originContainerHeihgt + y
+            if y < collectionView.contentInset.top{
+                return//往上滑时不改变月份面板的高度
+            }
+            
+            containerHeightAnchor.constant = originContainerHeihgt + (y - collectionView.contentInset.top)
             view.layoutIfNeeded()
             //展开日历
-            if y > 50 && !collectionView.isDragging{
+            if y > 100 && !collectionView.isDragging{
                 self.animateCalendar(isShowing: calendarIsShowing)
             }
         }
         
+        ///收回日历
         if calendarIsShowing{
-            if y > 50 && !collectionView.isDecelerating{
+            if y > 100 && !collectionView.isDecelerating{
                self.collectionView.isScrollEnabled = false
                self.animateCalendar(isShowing: calendarIsShowing)
                self.collectionView.isScrollEnabled = true

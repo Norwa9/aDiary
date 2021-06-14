@@ -12,7 +12,7 @@ class layoutParasManager: NSObject {
     static let shared = layoutParasManager()
     
     ///与布局有关的全局变量
-    let collectionEdgesInset = UIEdgeInsets(top: 0, left: 10, bottom: 50, right: 10)
+    let collectionEdgesInset = UIEdgeInsets(top: 45, left: 10, bottom: 50, right: 10)
     
     var collectioncolumnNumber:Int = 2
     
