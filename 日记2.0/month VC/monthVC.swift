@@ -89,14 +89,6 @@ class monthVC: UIViewController {
     @IBOutlet weak var collectionViewTopInsetAnchor: NSLayoutConstraint!
     var originTopInset:CGFloat!
     var flowLayout:waterFallLayout!///瀑布流布局
-    private lazy var layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 10
-        layout.estimatedItemSize = CGSize(width: collectionView.bounds.width, height: 44)
-        layout.itemSize = UICollectionViewFlowLayout.automaticSize
-        return layout
-    }()
     //data source
     var filteredDiaries = [diaryInfo]()
     var resultDiaries = [diaryInfo]()
@@ -122,8 +114,8 @@ class monthVC: UIViewController {
     }
     
     func configureUI(){
+        //MARK:-collectionView
         //configure collection view
-//        collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -142,6 +134,7 @@ class monthVC: UIViewController {
         //configure month buttons
         view.layoutIfNeeded()//更新约束，获取准确的frame
         
+        //MARK:-month Buttons
         monthButtonContainer.layer.cornerRadius = 10
         monthButtonContainer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
         monthButtonContainer.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
@@ -161,6 +154,7 @@ class monthVC: UIViewController {
         }
         originContainerHeihgt = containerHeightAnchor.constant
         
+        //MARK:-搜索框
         //configure search Bar
         let searchBarWidth = monthButtonContainer.frame.size.width - 50
         let seachBarHeight = monthButtonContainer.frame.size.height
@@ -194,6 +188,7 @@ class monthVC: UIViewController {
 //        filterButton.transform = CGAffineTransform(scaleX: 0, y: 0)
         view.addSubview(filterButton)
         
+        //MARK:-日历
         //configure FSCalendar
         calendarHeight = 300
         let calendarPedding:CGFloat = 10
