@@ -18,6 +18,7 @@ class monthCell: UICollectionViewCell {
     static let reusableID = "monthCell"
     private var containerView = UIView()
     var titleLabel:UILabel = UILabel()
+    var splitLine:UIView = UIView()//标题下的分割线
     var contentLabel:UILabel = UILabel()
     var dateLabel:UILabel = UILabel()
     var tagsLabel:TagListView = TagListView()
@@ -113,6 +114,12 @@ class monthCell: UICollectionViewCell {
         containerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        //分隔线
+        containerView.addSubview(splitLine)
+        splitLine.backgroundColor = UIColor.colorWithHex(hexColor: 0xF1F1F1)
+        splitLine.layer.cornerRadius = 2
+        splitLine.translatesAutoresizingMaskIntoConstraints = false
+        
         //collectionView
         albumView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         containerView.addSubview(albumView)
@@ -172,8 +179,15 @@ class monthCell: UICollectionViewCell {
             make.top.equalTo(containerView).offset(8)
         }
         
+        splitLine.snp.makeConstraints { (make) in
+            make.left.equalTo(titleLabel).offset(-3)
+            make.right.equalTo(titleLabel).offset(3)
+            make.top.equalTo(titleLabel.snp.bottom).offset(1)
+            make.height.equalTo(1)
+        }
+        
         albumView.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
             make.height.equalTo(monthCell.KphotoHeight)
@@ -292,7 +306,7 @@ class monthCell: UICollectionViewCell {
             //标题的字体大小16行间距6。
             //标题格式
             let titlePara = NSMutableParagraphStyle()
-            titlePara.lineSpacing = 5
+            titlePara.lineSpacing = 3
             let titleAttributes:[NSAttributedString.Key : Any] = [
 //                .font : UIFont.systemFont(ofSize: 17, weight: .medium),
                 .font : UIFont(name: "DIN Alternate", size: 17)!,
@@ -314,8 +328,8 @@ class monthCell: UICollectionViewCell {
             let contentPara = NSMutableParagraphStyle()
             contentPara.lineSpacing = 3
             let contentAttributes:[NSAttributedString.Key : Any] = [
-//                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
-                .font : UIFont(name: "DIN Alternate", size: 14)!,
+                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
+//                .font : UIFont(name: "DIN Alternate", size: 14)!,
                 .paragraphStyle:contentPara,
             ]
             mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
