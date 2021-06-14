@@ -28,7 +28,7 @@ class tagsView: UIViewController {
         //configure drag bar
         dragBar.layer.cornerRadius = 4
         
-        //configure mood buttons
+        //MARK:-设置心情按钮
         iconsContainer.backgroundColor = .systemBackground
         let frame = iconsContainer.frame
         let pedding = (frame.width - frame.height * 3) / 4
@@ -41,7 +41,7 @@ class tagsView: UIViewController {
         }
         
         
-        //configure table view
+        //MARK:-设置tableView
         let nib = UINib(nibName: tagsCell.reusableId, bundle: Bundle.main)
         tagsTableView.register(nib, forCellReuseIdentifier: tagsCell.reusableId)
         tagsTableView.delegate = self
@@ -74,7 +74,7 @@ class tagsView: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    //实现拖动关闭tagsView
+    //MARK:-拖动关闭tagsView
     //1
     override func viewDidLayoutSubviews() {
         //这个方法用来返回OverLayView的初始frame.origin，它返回的始终是一个定值
@@ -109,6 +109,7 @@ class tagsView: UIViewController {
         }
     }
     
+    //MARK:-标签的增删查改
     @IBAction func addNewTag(){
         let ac = UIAlertController(title: "新标签", message: nil, preferredStyle: .alert)
         ac.addTextField(configurationHandler: nil)
