@@ -165,7 +165,7 @@
                         <outlet property="collectionView" destination="dO6-Df-TLR" id="TnG-Td-SSX"/>
                         <outlet property="collectionViewTopInsetAnchor" destination="PtU-R3-rzh" id="dqm-bs-U9m"/>
                         <outlet property="containerHeightAnchor" destination="Kyq-vQ-O38" id="OaV-Ck-Xoc"/>
-                        <outlet property="monthButtonContainer" destination="2Jy-0L-fpk" id="Qyi-Br-1q4"/>
+                        <outlet property="topView" destination="2Jy-0L-fpk" id="lZ1-nh-rR9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QHJ-42-Jpa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

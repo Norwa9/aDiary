@@ -58,13 +58,14 @@ class monthVC: UIViewController {
     
     //views
     weak var topbar:topbarView!
-    @IBOutlet weak var monthButtonContainer:UIView!
+    @IBOutlet weak var topView:UIView!///顶部栏：用来放置月份按钮和搜索栏
     @IBOutlet weak var containerHeightAnchor: NSLayoutConstraint!
+    var filterButton:topbarButton!
+    var monthButtonsContainer:UIView!
     var originContainerHeihgt:CGFloat!
     var searchBar:UISearchBar!
     var searchBarFrame:CGRect!
     var isFilterMode:Bool = false
-    var filterButton:topbarButton!
     //popover
     var filterView:filterMenu!
     var popover:Popover = {
@@ -131,16 +132,21 @@ class monthVC: UIViewController {
         flowLayout.dateSource = filteredDiaries
         collectionView.collectionViewLayout = flowLayout
         
-        //configure month buttons
-        view.layoutIfNeeded()//更新约束，获取准确的frame
         
-        //MARK:-month Buttons
-        monthButtonContainer.layer.cornerRadius = 10
-        monthButtonContainer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
-        monthButtonContainer.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        //MARK:-month Buttons月份按钮
+        view.layoutIfNeeded()//更新约束，获取准确的self.topView.frame
+        monthButtonsContainer = UIView(frame: self.topView.bounds)
+        self.topView.addSubview(monthButtonsContainer)
+        monthButtonsContainer.snp.makeConstraints { (make) in
+            make.edges.equalTo(self.topView)
+        }
+        topView.layer.cornerRadius = 10
+        monthButtonsContainer.layer.cornerRadius = 10
+        monthButtonsContainer.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
+        monthButtonsContainer.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
         let buttonDiameter:CGFloat = 25
         let insetY:CGFloat = 7
-        let pedding:CGFloat = ( monthButtonContainer.frame.width - 12.0 * buttonDiameter) / 13.0
+        let pedding:CGFloat = ( monthButtonsContainer.frame.width - 12.0 * buttonDiameter) / 13.0
         for i in 0..<12{
             let x = buttonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
             let y = insetY
@@ -149,18 +155,18 @@ class monthVC: UIViewController {
             button.monthLabel.text = "\(i+1)"
             button.tag = i+1
             button.addTarget(self, action: #selector(monthDidTap(sender:)), for: .touchUpInside)
-            monthButtonContainer.addSubview(button)
+            self.monthButtonsContainer.addSubview(button)
             monthButtons.append(button)
         }
         originContainerHeihgt = containerHeightAnchor.constant
         
         //MARK:-搜索框
         //configure search Bar
-        let searchBarWidth = monthButtonContainer.frame.size.width - 50
-        let seachBarHeight = monthButtonContainer.frame.size.height
+        let searchBarWidth =  monthButtonsContainer.frame.size.width - 50
+        let seachBarHeight = monthButtonsContainer.frame.size.height
         searchBar = UISearchBar()
         searchBar.frame = CGRect(
-            origin: monthButtonContainer.frame.origin,
+            origin: .zero,
             size: CGSize(width: searchBarWidth, height: seachBarHeight
             )
         )
@@ -175,7 +181,7 @@ class monthVC: UIViewController {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.lightGray], for: .normal)
         searchBar.delegate = self
         searchBar.alpha = 0
-        view.addSubview(searchBar)
+        self.topView.addSubview(searchBar)
         filterButton = topbarButton(frame: CGRect(
                                         x: 0,y: 0,
                                         width: searchBar.frame.height - 5,
@@ -186,15 +192,15 @@ class monthVC: UIViewController {
         filterButton.alpha = 0
         filterButton.addTarget(self, action: #selector(filterButtonDidTapped(sender:)), for: .touchUpInside)
 //        filterButton.transform = CGAffineTransform(scaleX: 0, y: 0)
-        view.addSubview(filterButton)
+        self.topView.addSubview(filterButton)
         
         //MARK:-日历
         //configure FSCalendar
         let calendarPedding:CGFloat = 10
-        let calendarWidth = monthButtonContainer.frame.width - 2 * calendarPedding
+        let calendarWidth = monthButtonsContainer.frame.width - 2 * calendarPedding
         let calendar = FSCalendar(frame: CGRect(
-                                    x: (monthButtonContainer.frame.width - calendarWidth) / 2,
-                                    y: monthButtonContainer.frame.maxY,
+                                    x: (monthButtonsContainer.frame.width - calendarWidth) / 2,
+                                    y: monthButtonsContainer.frame.maxY,
                                     width: calendarWidth,
                                     height: calendarHeight))
 //        calendar.layer.borderWidth = 1
@@ -232,7 +238,7 @@ class monthVC: UIViewController {
         selectedDay = curDay
         self.calendar = calendar
         calendar.alpha = 0
-        monthButtonContainer.addSubview(calendar)
+        self.monthButtonsContainer.addSubview(calendar)
         
         
         //back to cur month button
@@ -335,7 +341,7 @@ class monthVC: UIViewController {
             //2
             UIView.animate(withDuration: 0.8 + plusDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseOut,.allowUserInteraction]) {
                 self.calendar.alpha = 1
-                self.monthButtonContainer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.monthButtonsContainer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             } completion: { (_) in
                 
             }
@@ -351,7 +357,7 @@ class monthVC: UIViewController {
             //2
             UIView.animate(withDuration: 0.3 + plusDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.curveEaseIn,.allowUserInteraction]) {
                 self.calendar.alpha = 0
-                self.monthButtonContainer.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
+                self.monthButtonsContainer.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
             } completion: { (_) in
                 
             }
@@ -685,7 +691,7 @@ extension ExtendedFSCalendarDelegate {
 func didEndDecelerating(calendar: FSCalendar) { }
 }
 
-//MARK:-搜索界面
+//MARK:-切换搜索界面
 extension monthVC:UISearchBarDelegate{
     func switchToFilterView(button:topbarButton){
         isFilterMode.toggle()
@@ -723,7 +729,7 @@ extension monthVC:UISearchBarDelegate{
         
         //切换动画
         UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseInOut) {
-            self.monthButtonContainer.alpha = self.isFilterMode ? 0:1
+            self.monthButtonsContainer.alpha = self.isFilterMode ? 0:1
             self.searchBar.alpha = self.isFilterMode ? 1:0
             self.filterButton.alpha = self.isFilterMode ? 1:0
         } completion: { (_) in
