@@ -56,6 +56,10 @@ class shareScrollView:UIScrollView{
         textImageView.layer.borderColor = UIColor.lightGray.cgColor
         
         signature.backgroundColor = .white
+        signature.text = "分享自"
+        signature.textColor = UIColor.gray
+        signature.font = UIFont.init(name: "DIN Alternate", size: 18)!
+        signature.textAlignment = .center
         
         icon.iconImageView.image = UIImage(named: "icon-1024")
         
@@ -94,17 +98,16 @@ class shareScrollView:UIScrollView{
             make.centerX.equalTo(weekLabel)
             make.width.equalTo(textViewWidth)
             make.height.equalTo(textViewHeight)
-            make.bottom.equalTo(self.signature.snp.top)
         }
         
         self.signature.snp.makeConstraints { (make) in
 //            make.centerX.equalTo(self.snp.centerX) ❌
+            make.top.equalTo(self.textImageView.snp.bottom).offset(10)
             make.width.equalTo(kContentW)
-            make.height.equalTo(10)
-            make.bottom.equalTo(self.icon.snp.top)
         }
         
         self.icon.snp.makeConstraints { (make) in
+            make.top.equalTo(self.signature.snp.bottom).offset(2)
             make.size.equalTo(CGSize(width: 80, height: 80))
             make.centerX.equalTo(signature.snp.centerX)
             make.bottom.equalTo(self.snp.bottom).offset(-20)
