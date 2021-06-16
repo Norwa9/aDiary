@@ -70,13 +70,8 @@ class todayVC: UIViewController {
             self.present(tagsViewController, animated: true, completion: nil)
             break
         case 3:
-            let temptextView = UITextView(frame: textView.bounds)
-            temptextView.attributedText = textView.attributedText
-            //不能在原textView上进行截图，没办法把所有内容都截下来
-            //除非在截图之前将textView.removeFromSuperview()
-            let snapshot = temptextView.textViewImage()
-            
-            let vc = shareVC(diary: todayDiary, snapshot: snapshot)
+            let vc = shareVC(diary: todayDiary)
+            vc.snapshot = textView.textViewImage()//传入textView的截图
             present(vc, animated: true, completion: nil)
             break
         default:

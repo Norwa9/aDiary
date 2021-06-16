@@ -13,7 +13,7 @@ enum AnimationType{
 }
 
 class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
-    var duration = 1.1
+    var duration = 0.8
     var animationType:AnimationType!
     override init() {
     }
@@ -51,7 +51,7 @@ class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
         
         let topbarLabelFrame = rootVC.topBar.convert(rootVC.topBar.dataLable1.frame, to: rootVC.view)
         let fromtextViewFrame = fromVC.view.convert(fromVC.textView.frame, to: rootVC.view)
-        let imageViewFrame = toVC.scrollView.imageView.frame
+        let imageViewFrame = toVC.scrollView.textImageView.frame
         let scaleRation = blurPresentationController.frameOfPresentedView.width / fromtextViewFrame.width//<1
         toVC.view.frame = blurPresentationController.frameOfPresentedView
         toVC.view.frame.origin.y = -1000

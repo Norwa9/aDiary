@@ -25,6 +25,13 @@ extension UIView{
         layer.mask = mask
     }
     
+    ///供调试使用
+    func addColorfulBorder(){
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.red.cgColor
+        self.layer.cornerRadius = 5
+    }
+    
 }
 
 

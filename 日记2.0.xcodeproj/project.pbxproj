@@ -23,7 +23,7 @@
 		EA537BB926357FBF00C2E9EE /* shareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BB826357FBF00C2E9EE /* shareVC.swift */; };
 		EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BBC26357FD300C2E9EE /* sharePresentVC.swift */; };
 		EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BBF26357FEA00C2E9EE /* popAnimator.swift */; };
-		EA537BC3263582B000C2E9EE /* UITextView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC2263582B000C2E9EE /* UITextView_Extension.swift */; };
+		EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC2263582B000C2E9EE /* UITextView+.swift */; };
 		EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC626359C4300C2E9EE /* shareScrollView.swift */; };
 		EA537BCE2656A7D000C2E9EE /* alertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BCD2656A7D000C2E9EE /* alertManager.swift */; };
 		EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537CDD266273D800C2E9EE /* photoCell.swift */; };
@@ -33,8 +33,8 @@
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8726299146004B0FA1 /* indictorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8626299146004B0FA1 /* indictorController.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
-		EA9AE73C260625CC00D44221 /* UIApplication_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */; };
-		EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */; };
+		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
+		EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor+.swift */; };
 		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
 		EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7C52610790900D44221 /* settingViewController.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
@@ -46,7 +46,7 @@
 		EAA29E4925C5782300AA6971 /* pageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E4825C5782300AA6971 /* pageViewContainer.swift */; };
 		EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E4F25C5784300AA6971 /* monthVC.swift */; };
 		EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7125C595C700AA6971 /* topbarView.swift */; };
-		EAA29E7925C59AD000AA6971 /* UIView_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7825C59AD000AA6971 /* UIView_Extension.swift */; };
+		EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7825C59AD000AA6971 /* UIView+.swift */; };
 		EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7D25C59E4700AA6971 /* topbarButton.swift */; };
 		EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8125C5A75F00AA6971 /* todayVC.swift */; };
 		EAA29E8D25C8248C00AA6971 /* tagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8C25C8248C00AA6971 /* tagsVC.swift */; };
@@ -56,13 +56,14 @@
 		EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA025C833FF00AA6971 /* moodButton.swift */; };
 		EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA925C8370600AA6971 /* tagsCell.swift */; };
 		EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29EAA25C8370600AA6971 /* tagsCell.xib */; };
-		EAA29EB225C864ED00AA6971 /* UIImage_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */; };
+		EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EB125C864ED00AA6971 /* UIImage+.swift */; };
 		EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC425C9840F00AA6971 /* monthCell.swift */; };
 		EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC725C9925B00AA6971 /* monthButton.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
+		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */; };
 		EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85CB26232332007D1134 /* TextFormatter.swift */; };
-		EADA85DB26248759007D1134 /* UIFont_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DA26248759007D1134 /* UIFont_Extension.swift */; };
+		EADA85DB26248759007D1134 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DA26248759007D1134 /* UIFont+.swift */; };
 		EADA85DF26248B14007D1134 /* NSAttrString_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DE26248B14007D1134 /* NSAttrString_Extension.swift */; };
 		EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85FD2625DA98007D1134 /* customAlertView.swift */; };
 		EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EADA86012625DAA1007D1134 /* customAlertView.xib */; };
@@ -87,7 +88,7 @@
 		EA537BB826357FBF00C2E9EE /* shareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareVC.swift; sourceTree = "<group>"; };
 		EA537BBC26357FD300C2E9EE /* sharePresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sharePresentVC.swift; sourceTree = "<group>"; };
 		EA537BBF26357FEA00C2E9EE /* popAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = popAnimator.swift; sourceTree = "<group>"; };
-		EA537BC2263582B000C2E9EE /* UITextView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView_Extension.swift; sourceTree = "<group>"; };
+		EA537BC2263582B000C2E9EE /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		EA537BC626359C4300C2E9EE /* shareScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareScrollView.swift; sourceTree = "<group>"; };
 		EA537BCD2656A7D000C2E9EE /* alertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = alertManager.swift; sourceTree = "<group>"; };
 		EA537CDD266273D800C2E9EE /* photoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoCell.swift; sourceTree = "<group>"; };
@@ -97,8 +98,8 @@
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE8626299146004B0FA1 /* indictorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indictorController.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
-		EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication_Extension.swift; sourceTree = "<group>"; };
-		EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
+		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		EA9AE75D26076B6900D44221 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
 		EA9AE7C52610790900D44221 /* settingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingViewController.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,7 +113,7 @@
 		EAA29E4825C5782300AA6971 /* pageViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pageViewContainer.swift; sourceTree = "<group>"; };
 		EAA29E4F25C5784300AA6971 /* monthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthVC.swift; sourceTree = "<group>"; };
 		EAA29E7125C595C700AA6971 /* topbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topbarView.swift; sourceTree = "<group>"; };
-		EAA29E7825C59AD000AA6971 /* UIView_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Extension.swift; sourceTree = "<group>"; };
+		EAA29E7825C59AD000AA6971 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		EAA29E7D25C59E4700AA6971 /* topbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topbarButton.swift; sourceTree = "<group>"; };
 		EAA29E8125C5A75F00AA6971 /* todayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todayVC.swift; sourceTree = "<group>"; };
 		EAA29E8C25C8248C00AA6971 /* tagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsVC.swift; sourceTree = "<group>"; };
@@ -122,13 +123,14 @@
 		EAA29EA025C833FF00AA6971 /* moodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodButton.swift; sourceTree = "<group>"; };
 		EAA29EA925C8370600AA6971 /* tagsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsCell.swift; sourceTree = "<group>"; };
 		EAA29EAA25C8370600AA6971 /* tagsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsCell.xib; sourceTree = "<group>"; };
-		EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage_Extension.swift; sourceTree = "<group>"; };
+		EAA29EB125C864ED00AA6971 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		EAA29EC425C9840F00AA6971 /* monthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthCell.swift; sourceTree = "<group>"; };
 		EAA29EC725C9925B00AA6971 /* monthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthButton.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
 		EADA85CB26232332007D1134 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
-		EADA85DA26248759007D1134 /* UIFont_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont_Extension.swift; sourceTree = "<group>"; };
+		EADA85DA26248759007D1134 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		EADA85DE26248B14007D1134 /* NSAttrString_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttrString_Extension.swift; sourceTree = "<group>"; };
 		EADA85FD2625DA98007D1134 /* customAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customAlertView.swift; sourceTree = "<group>"; };
 		EADA86012625DAA1007D1134 /* customAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = customAlertView.xib; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				EAA29E3725C5768600AA6971 /* LaunchScreen.storyboard */,
 				EAA29E3A25C5768600AA6971 /* Info.plist */,
 				EAA29E7725C59ABB00AA6971 /* helper */,
+				EACB1719267A1B63007BF160 /* extension */,
 				EA51D1FC25D809550007BDFA /* resource */,
 			);
 			path = "日记2.0";
@@ -280,12 +283,6 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
-				EA9AE73B260625CC00D44221 /* UIApplication_Extension.swift */,
-				EAA29E7825C59AD000AA6971 /* UIView_Extension.swift */,
-				EAA29EB125C864ED00AA6971 /* UIImage_Extension.swift */,
-				EA9AE75D26076B6900D44221 /* UIColor_Extension.swift */,
-				EA537BC2263582B000C2E9EE /* UITextView_Extension.swift */,
-				EADA85DA26248759007D1134 /* UIFont_Extension.swift */,
 				EADA85DE26248B14007D1134 /* NSAttrString_Extension.swift */,
 				EAA29E9D25C832F900AA6971 /* extension.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataContainer.swift */,
@@ -331,6 +328,20 @@
 				EAA29EAA25C8370600AA6971 /* tagsCell.xib */,
 			);
 			path = tagsView;
+			sourceTree = "<group>";
+		};
+		EACB1719267A1B63007BF160 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				EA9AE73B260625CC00D44221 /* UIApplication+.swift */,
+				EAA29E7825C59AD000AA6971 /* UIView+.swift */,
+				EAA29EB125C864ED00AA6971 /* UIImage+.swift */,
+				EA9AE75D26076B6900D44221 /* UIColor+.swift */,
+				EA537BC2263582B000C2E9EE /* UITextView+.swift */,
+				EADA85DA26248759007D1134 /* UIFont+.swift */,
+				EACB1721267A1BC1007BF160 /* UIScrollView+.swift */,
+			);
+			path = extension;
 			sourceTree = "<group>";
 		};
 		EADA85FC2625DA60007D1134 /* customAlert */ = {
@@ -468,7 +479,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
-				EA9AE73C260625CC00D44221 /* UIApplication_Extension.swift in Sources */,
+				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EA6EFE8726299146004B0FA1 /* indictorController.swift in Sources */,
@@ -478,7 +489,7 @@
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
 				EADA85DF26248B14007D1134 /* NSAttrString_Extension.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
-				EAA29EB225C864ED00AA6971 /* UIImage_Extension.swift in Sources */,
+				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EA537BCE2656A7D000C2E9EE /* alertManager.swift in Sources */,
@@ -493,11 +504,12 @@
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
-				EA537BC3263582B000C2E9EE /* UITextView_Extension.swift in Sources */,
+				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				EAA29E4925C5782300AA6971 /* pageViewContainer.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
+				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataContainer.swift in Sources */,
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
@@ -508,10 +520,10 @@
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
 				EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */,
 				EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */,
-				EADA85DB26248759007D1134 /* UIFont_Extension.swift in Sources */,
-				EA9AE75E26076B6900D44221 /* UIColor_Extension.swift in Sources */,
+				EADA85DB26248759007D1134 /* UIFont+.swift in Sources */,
+				EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
-				EAA29E7925C59AD000AA6971 /* UIView_Extension.swift in Sources */,
+				EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
