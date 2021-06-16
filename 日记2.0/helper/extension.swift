@@ -25,7 +25,7 @@ enum sortStyle:Int {
 }
 
 
-let weekDaysCN:Dictionary<String,String> = ["Mon":"周一","Tue":"周二","Wed":"周三","Thu":"周四","Fri":"周五","Sat":"周六","Sun":"周天"]
+let weekDaysCN:Dictionary<String,String> = ["Mon":"周一","Tue":"周二","Wed":"周三","Thu":"周四","Fri":"周五","Sat":"周六","Sun":"周日"]
 
 enum dateInfo {
     case day

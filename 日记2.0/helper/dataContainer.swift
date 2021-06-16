@@ -20,11 +20,7 @@ class diaryInfo:Codable{
     var year:Int{
         get{
             if let dateString = self.date{
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy年M月d日"
-                let rawDate = formatter.date(from: dateString)!
-                formatter.dateFormat = "yyyy"
-                return Int(formatter.string(from: rawDate))!
+                return Int(dateString.dateComponent(for: .year))!
             }else{
                 return -1
             }
@@ -33,16 +29,35 @@ class diaryInfo:Codable{
     var month:Int{
         get{
             if let dateString = self.date{
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy年M月d日"
-                let rawDate = formatter.date(from: dateString)!
-                formatter.dateFormat = "M"
-                return Int(formatter.string(from: rawDate))!
+                return Int(dateString.dateComponent(for: .month))!
             }else{
                 return -1
             }
         }
     }
+    var day:Int{
+        get{
+            if let dateString = self.date{
+                return Int(dateString.dateComponent(for: .day))!
+            }else{
+                return -1
+            }
+        }
+    }
+    
+    var weekDay:String{
+        get{
+            if let dateString = self.date{
+                //系统语言是中文环境下，返回的weekDay即是"周一"
+                //系统语言是英文环境下，返回的weekDay是"Mon"
+                let weekDay =  dateString.dateComponent(for: .weekday)
+                return weekDaysCN[weekDay] ?? weekDay
+            }else{
+                return ""
+            }
+        }
+    }
+    
     var row:Int{
         get{
             let diries = diariesForMonth(forYear: year, forMonth: month)

@@ -240,7 +240,7 @@ class monthCell: UICollectionViewCell {
         self.titleLabel.attributedText = getAttrTitle(content: diary.content)
         self.contentLabel.attributedText = getAttrContent(content: diary.content)
         self.tags = diary.tags
-        self.dateLabel.text = diary.date! + "，" + Date().getWeekday(dateString: diary.date!)
+        self.dateLabel.text = "\(diary.day)号，\(diary.weekDay)"
         self.wordNum = diary.content.count
         self.isLike = diary.islike
         self.moodType = diary.mood

@@ -18,4 +18,20 @@ extension String{
         UIGraphicsEndImageContext()
         return image
     }
+    
+    
+    enum dayComponents:String {
+        case year = "yyyy"
+        case month = "M"
+        case day = "d"
+        case weekday = "EEE"
+    }
+    ///返回年、月、日(String)
+    func dateComponent(for dayComponent:dayComponents)->String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy年M月d日"
+        let rawDate = formatter.date(from: self)!
+        formatter.dateFormat = dayComponent.rawValue
+        return formatter.string(from: rawDate)
+    }
 }
