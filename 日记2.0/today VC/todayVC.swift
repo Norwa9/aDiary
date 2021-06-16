@@ -290,7 +290,6 @@ extension todayVC{
             textView.attributedText = NSAttributedString.textViewPlaceholder()
         }else{
             textView.textColor = UIColor.black
-            textView.text = todayDiary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
             textView.typingAttributes = leftTypingAttributes()//内容居左
             let textViewBounds = textView.bounds
             DispatchQueue.global(qos: .default).async {
@@ -299,6 +298,10 @@ extension todayVC{
                     let preparedText = aString.processAttrString(bounds: textViewBounds)
                     DispatchQueue.main.async {
                         self.textView.attributedText = preparedText
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        self.textView.text = self.todayDiary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
                     }
                 }
             }

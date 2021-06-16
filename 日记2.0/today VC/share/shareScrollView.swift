@@ -71,11 +71,13 @@ class shareScrollView:UIScrollView{
         /*
          1.宽度必须设置为kContentW，不能为self.bounds.width，否者有偏差。为啥？
          2.make.centerX.equalTo(self)，子视图不能设置这条约束，否者截图的偏移中心的
-         综上：最简单的办法还是使用frame来布局scrollview
+         综上：
+            最简单的办法还是使用frame来布局scrollview
+            如果要用autolayout，在新建一个containerView，在上面布局子视图：https://www.programmersought.com/article/49414569566/
          */
         self.dateLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.snp.top)
-//            make.centerX.equalTo(self.snp.centerX)
+            //make.centerX.equalTo(self.snp.centerX)
             make.width.equalTo(kContentW)
         }
         
@@ -85,16 +87,18 @@ class shareScrollView:UIScrollView{
             make.width.equalTo(kContentW)
         }
         
-        let scrollimageHeight = textViewScreenshot.size.height / textViewScreenshot.size.width * kContentW
+        let textViewWidth = kContentW - 10
+        let textViewHeight = textViewScreenshot.size.height / textViewScreenshot.size.width * textViewWidth
         self.textImageView.snp.makeConstraints { (make) in
-//            make.centerX.equalTo(self.snp.centerX)
-            make.width.equalTo(kContentW)
-            make.height.equalTo(scrollimageHeight)
+//            make.centerX.equalTo(self.snp.centerX) ❌
+            make.centerX.equalTo(weekLabel)
+            make.width.equalTo(textViewWidth)
+            make.height.equalTo(textViewHeight)
             make.bottom.equalTo(self.signature.snp.top)
         }
         
         self.signature.snp.makeConstraints { (make) in
-//            make.centerX.equalTo(self.snp.centerX)
+//            make.centerX.equalTo(self.snp.centerX) ❌
             make.width.equalTo(kContentW)
             make.height.equalTo(10)
             make.bottom.equalTo(self.icon.snp.top)

@@ -193,8 +193,11 @@ extension UIView{
     ///渐显效果(alpha:0->1)
     func fadeIn(duration:TimeInterval = 0.5){
         self.alpha = 0
-        UIView.animate(withDuration: duration, animations: {
+        UIView.animate(withDuration: duration, delay: 0, options: [.allowUserInteraction]) {
             self.alpha = 1
-        }, completion: nil)
+        } completion: { (_) in
+            
+        }
+
     }
 }
