@@ -12,4 +12,5 @@ pod 'SnapKit'
 pod 'MJRefresh'
 pod 'TagListView'
 pod 'ALCameraViewController'
+pod 'NVActivityIndicatorView'
 end

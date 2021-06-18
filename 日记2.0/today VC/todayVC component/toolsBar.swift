@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class toolsBar: UIView {
     weak var todayVC:todayVC!
@@ -18,6 +19,7 @@ class toolsBar: UIView {
     var insertTimeButtonImageView:UIImageView!
     var insertImageButtonImageView:UIImageView!
     var numberListButtonImageView:UIImageView!
+    var indicator:NVActivityIndicatorView!
     
     func configureUI(){
         //save button
@@ -31,6 +33,10 @@ class toolsBar: UIView {
         var width = saveButton.frame.width
         var height = saveButton.frame.height
         saveButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
+        
+        self.layoutIfNeeded()
+        indicator = NVActivityIndicatorView(frame: saveButtonImageView.frame, type: .lineScalePulseOut, color: .white, padding: .zero)
+        saveButton.addSubview(indicator)
         
         //add time button
         insertTimeButton.backgroundColor = .systemBackground
@@ -136,4 +142,17 @@ class toolsBar: UIView {
         ])
     }
 
+}
+
+//MARK:-indicator
+extension toolsBar{
+    func statAnimateIndicator(){
+        self.saveButtonImageView.alpha = 0
+        self.indicator.startAnimating()
+    }
+    
+    func stopAnimatreIndicator(){
+        self.saveButtonImageView.alpha = 1
+        self.indicator.stopAnimating()
+    }
 }
