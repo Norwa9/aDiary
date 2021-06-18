@@ -1,4 +1,5 @@
 PODS:
+  - ALCameraViewController (3.1)
   - FSCalendar (2.8.2)
   - JXPhotoBrowser (3.1.3)
   - MJRefresh (3.6.1)
@@ -7,6 +8,7 @@ PODS:
   - TagListView (1.4.1)
 
 DEPENDENCIES:
+  - ALCameraViewController
   - FSCalendar
   - JXPhotoBrowser (~> 3.0)
   - MJRefresh
@@ -16,6 +18,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - ALCameraViewController
     - FSCalendar
     - JXPhotoBrowser
     - MJRefresh
@@ -24,6 +27,7 @@ SPEC REPOS:
     - TagListView
 
 SPEC CHECKSUMS:
+  ALCameraViewController: 144dea45fd749a623aafd8cb7b10cea88499fcc3
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   JXPhotoBrowser: d32e94e1226d43bf5ed83164e3f5b651fed625e0
   MJRefresh: d2c1970d1cf6e77fcfcdfe76c943dfab8dbfa5c1
@@ -31,6 +35,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
 
-PODFILE CHECKSUM: 4a366ab8d15d7309ff0cc22e57e06c452afa8856
+PODFILE CHECKSUM: 75816bb1d9f70684b94b6e8ce28cfa4992b6c837
 
 COCOAPODS: 1.10.1

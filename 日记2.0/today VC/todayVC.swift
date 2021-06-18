@@ -7,6 +7,7 @@
 
 import UIKit
 import JXPhotoBrowser
+import ALCameraViewController
 
 class todayVC: UIViewController {
     var todayDiary:diaryInfo!
@@ -27,7 +28,7 @@ class todayVC: UIViewController {
 
     var lastDiary:String = ""
     
-    let picker = UIImagePickerController()
+    var picker:CameraViewController!
     
     func configureTodayView(){
         //textView
@@ -107,16 +108,16 @@ class todayVC: UIViewController {
 
 
 //MARK:-插入图片
-extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+extension todayVC{
     func importPicture() {
-        picker.delegate = self
+        let croppingParas = CroppingParameters(isEnabled: true, allowResizing: true, allowMoving: true, minimumSize: .zero)
+        picker = CameraViewController(croppingParameters: croppingParas, allowsLibraryAccess: true, allowsSwapCameraOrientation: true, allowVolumeButtonCapture: false){ [weak self] image, asset in
+            if let image = image{
+                self!.insertPictureToTextView(image: image)
+            }
+            self?.dismiss(animated: true, completion: nil)
+        }
         present(picker, animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.originalImage] as? UIImage else { return }
-        insertPictureToTextView(image: image)
-        dismiss(animated: true)
     }
     
     func insertPictureToTextView(image:UIImage){
