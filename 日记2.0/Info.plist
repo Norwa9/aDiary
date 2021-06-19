@@ -33,12 +33,12 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>获取Face ID以进入app</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>访问相册以添加照片</string>
-	<key>NSCameraUsageDescription</key>
-	<string></string>
 	<key>UIAppFonts</key>
 	<array/>
 	<key>UIApplicationSceneManifest</key>
