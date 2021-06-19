@@ -78,7 +78,6 @@ class toolsBar: UIView {
     
     @objc func saveButtonTapped(){
         self.statAnimateIndicator()
-        todayVC.saveText()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.stopAnimatreIndicator()
             self.textView.resignFirstResponder()

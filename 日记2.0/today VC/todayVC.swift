@@ -215,6 +215,7 @@ extension todayVC:UITextViewDelegate{
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
+        self.saveText()
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
         customPageVC.pageScrollView.isScrollEnabled = true
