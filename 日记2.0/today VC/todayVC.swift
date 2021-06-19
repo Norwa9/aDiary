@@ -7,7 +7,7 @@
 
 import UIKit
 import JXPhotoBrowser
-import ALCameraViewController
+import FMPhotoPicker
 
 class todayVC: UIViewController {
     var todayDiary:diaryInfo!
@@ -28,7 +28,22 @@ class todayVC: UIViewController {
 
     var lastDiary:String = ""
     
-    var picker:CameraViewController!
+    var pickerConfig:FMPhotoPickerConfig = {
+        var config = FMPhotoPickerConfig()
+        config.availableFilters = nil
+        config.mediaTypes = [.image]
+        config.selectMode = .single
+        config.useCropFirst = true
+        config.strings = KFMPhotoPickerCustomLanguageDict
+        return config
+    }()
+    var picker = UIImagePickerController()
+//    lazy var picker:FMPhotoPickerViewController = {
+//
+//        let picker = FMPhotoPickerViewController(config: config)
+//        picker.delegate = self
+//        return picker
+//    }()
     
     func configureTodayView(){
         //textView
@@ -52,7 +67,7 @@ class todayVC: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
-    
+    //MARK:-topbar 按钮
     func todayButtonsTapped(button:topbarButton){
         switch button.tag {
         case 1:
@@ -80,6 +95,7 @@ class todayVC: UIViewController {
         }
     }
     
+    //MARK:-键盘delegate
     @objc func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
@@ -108,16 +124,24 @@ class todayVC: UIViewController {
 
 
 //MARK:-插入图片
-extension todayVC{
-    func importPicture() {
-        let croppingParas = CroppingParameters(isEnabled: true, allowResizing: true, allowMoving: true, minimumSize: .zero)
-        picker = CameraViewController(croppingParameters: croppingParas, allowsLibraryAccess: true, allowsSwapCameraOrientation: true, allowVolumeButtonCapture: false){ [weak self] image, asset in
-            if let image = image{
-                self!.insertPictureToTextView(image: image)
-            }
-            self?.dismiss(animated: true, completion: nil)
+extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate,FMImageEditorViewControllerDelegate{
+    func importPicture(){
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage{
+            let editor = FMImageEditorViewController(config: pickerConfig, sourceImage: image)
+            editor.delegate = self
+            picker.present(editor, animated: true, completion: nil)
         }
-        present(picker, animated: true)
+    }
+    
+    func fmImageEditorViewController(_ editor: FMImageEditorViewController, didFinishEdittingPhotoWith photo: UIImage) {
+        self.insertPictureToTextView(image: photo)
+        editor.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
     
     func insertPictureToTextView(image:UIImage){

@@ -61,6 +61,7 @@
 		EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC725C9925B00AA6971 /* monthButton.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
+		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
 		EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */; };
 		EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85CB26232332007D1134 /* TextFormatter.swift */; };
 		EADA85DB26248759007D1134 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DA26248759007D1134 /* UIFont+.swift */; };
@@ -128,6 +129,7 @@
 		EAA29EC725C9925B00AA6971 /* monthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthButton.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
+		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
 		EADA85CB26232332007D1134 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
 		EADA85DA26248759007D1134 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				EA537BC2263582B000C2E9EE /* UITextView+.swift */,
 				EADA85DA26248759007D1134 /* UIFont+.swift */,
 				EACB1721267A1BC1007BF160 /* UIScrollView+.swift */,
+				EACB1776267DC2FE007BF160 /* constants.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
+				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				EAA29E4925C5782300AA6971 /* pageViewContainer.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
