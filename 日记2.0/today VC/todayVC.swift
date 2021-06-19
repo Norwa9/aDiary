@@ -218,14 +218,6 @@ extension todayVC:UITextViewDelegate{
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
         customPageVC.pageScrollView.isScrollEnabled = true
-        
-        //存储纯文本
-        let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
-        todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
-        //存储富文本
-        saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
-        DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
-        
         //更新monthVC的UI
         let monthVC = UIApplication.getMonthVC()
         if todayDiary.month == monthVC.selectedMonth{
@@ -235,6 +227,16 @@ extension todayVC:UITextViewDelegate{
             monthVC.reloadCollectionViewData(forRow: todayDiary.row)
             monthVC.calendar.reloadData()
         }
+    }
+    
+    ///保存文本
+    func saveText(){
+        //存储纯文本
+        let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
+        todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        //存储富文本
+        saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
+        DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

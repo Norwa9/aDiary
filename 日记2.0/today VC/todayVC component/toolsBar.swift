@@ -35,7 +35,8 @@ class toolsBar: UIView {
         saveButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         self.layoutIfNeeded()
-        indicator = NVActivityIndicatorView(frame: saveButtonImageView.frame, type: .lineScalePulseOut, color: .white, padding: .zero)
+        indicator = NVActivityIndicatorView(frame: saveButtonImageView.frame, type: .lineSpinFadeLoader, color: .lightGray, padding: .zero)
+        indicator.alpha = 0
         saveButton.addSubview(indicator)
         
         //add time button
@@ -76,7 +77,13 @@ class toolsBar: UIView {
     }
     
     @objc func saveButtonTapped(){
-        textView.resignFirstResponder()
+        self.statAnimateIndicator()
+        todayVC.saveText()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.stopAnimatreIndicator()
+            self.textView.resignFirstResponder()
+        }
+        
     }
     
     @objc func insertTimeToTextView(){
@@ -147,12 +154,18 @@ class toolsBar: UIView {
 //MARK:-indicator
 extension toolsBar{
     func statAnimateIndicator(){
-        self.saveButtonImageView.alpha = 0
+        UIView.animate(withDuration: 0.1) {
+            self.saveButtonImageView.alpha = 0
+            self.indicator.alpha = 1
+        }
         self.indicator.startAnimating()
     }
     
     func stopAnimatreIndicator(){
-        self.saveButtonImageView.alpha = 1
+        UIView.animate(withDuration: 0.1) {
+            self.saveButtonImageView.alpha = 1
+            self.indicator.alpha = 0
+        }
         self.indicator.stopAnimating()
     }
 }
