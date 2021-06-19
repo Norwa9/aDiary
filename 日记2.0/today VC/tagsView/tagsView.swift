@@ -186,17 +186,19 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         return DataContainerSingleton.sharedDataContainer.tags.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tagsCell.reusableId) as! tagsCell
         let row = indexPath.row
         cell.tagsLabel.text = DataContainerSingleton.sharedDataContainer.tags[row]
-        //令cell调用layoutSubviews()以获取真实的cell frame，为接下来恢复tags选取状态做准备。
-        cell.layoutSubviews()
         //恢复tags的选取状态
         if selectedTags.contains(DataContainerSingleton.sharedDataContainer.tags[row]) {
-            cell.hasSelected = true
+            cell.setSelectedView(hasSelected: true)
         }else{
-            cell.hasSelected = false
+            cell.setSelectedView(hasSelected: false)
         }
         return cell
     }
@@ -206,7 +208,8 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         let row = indexPath.row
 
         //选取、反选动画
-        cell.hasSelected.toggle()
+        cell.animateSelectedView()
+        
         //统计到selectedTags
         let tag = DataContainerSingleton.sharedDataContainer.tags[row]
         if let firstIndex = selectedTags.firstIndex(of: tag){
