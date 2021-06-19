@@ -38,12 +38,6 @@ class todayVC: UIViewController {
         return config
     }()
     var picker = UIImagePickerController()
-//    lazy var picker:FMPhotoPickerViewController = {
-//
-//        let picker = FMPhotoPickerViewController(config: config)
-//        picker.delegate = self
-//        return picker
-//    }()
     
     func configureTodayView(){
         //textView

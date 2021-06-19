@@ -215,7 +215,7 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         if row == 0{
             //默认字体
             pickerlabel.font = .systemFont(ofSize: 12, weight: .regular)
-            pickerlabel.text = "默认字体"
+            pickerlabel.text = "系统字体"
         }else{
             //其他字体
             pickerlabel.font = UIFont(name: familyFonts[row]!, size: 12)
