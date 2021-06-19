@@ -143,9 +143,10 @@ class monthCell: UICollectionViewCell {
         containerView.addSubview(tagsLabel)
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 10)!
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = #colorLiteral(red: 0.3529411765, green: 0.5568627451, blue: 0.8784313725, alpha: 1)
+        tagsLabel.tagBackgroundColor = .lightGray
         tagsLabel.cornerRadius = 5
         tagsLabel.textColor = .white
+        tagsLabel.clipsToBounds = true
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
@@ -204,7 +205,6 @@ class monthCell: UICollectionViewCell {
             make.top.greaterThanOrEqualTo(contentLabel.snp.bottom).offset(5)
             make.left.equalTo(contentLabel)
             make.right.equalTo(containerView).offset(-15)
-            make.height.lessThanOrEqualTo(40)
             make.bottom.equalTo(dateLabel.snp.top).offset(-5)
         }
         dateLabel.snp.makeConstraints { (make) in

@@ -12,7 +12,7 @@ func APP_GREEN_COLOR() -> UIColor{
 }
 
 func APP_GRAY_COLOR() -> UIColor{
-    return #colorLiteral(red: 0.8665904403, green: 0.8667154908, blue: 0.8665630817, alpha: 1)
+    return UIColor.colorWithHex(hexColor: 0xF7F5F2)
 }
 
 

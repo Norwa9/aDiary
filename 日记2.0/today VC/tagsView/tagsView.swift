@@ -48,7 +48,7 @@ class tagsView: UIViewController {
         tagsTableView.delegate = self
         tagsTableView.dataSource = self
         tagsTableView.separatorStyle = .none
-        tagsTableView.bounces = false
+        tagsTableView.showsVerticalScrollIndicator = false
         
     }
     
@@ -297,7 +297,8 @@ extension tagsView{
         configureDate()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         //保存tags和mood的选项
         if let selectedMood = selectedMood{
             diary.mood = selectedMood
