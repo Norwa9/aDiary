@@ -115,17 +115,7 @@ class DataContainerSingleton {
         }
         //2、保存：当app退出到后台，保存数据到UserDefaults
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
-            print("进入后台，数据保存。")
-            let defaults = UserDefaults.standard
-            
-            defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
-            
-            let jsonEncoder = JSONEncoder()
-            if let storedData = try? jsonEncoder.encode(self.diaryDict) {
-                defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
-            } else {
-              print("Failed to save diary dict.")
-            }
+            self.saveDiaryDict()
         }
 
         /*
@@ -148,6 +138,21 @@ class DataContainerSingleton {
             count += diary.content.count
         }
         return count
+    }
+    
+    ///持久化存储所有日记数据类的字典diaryDict
+    func saveDiaryDict(){
+        print("保存diaryDict数据")
+        let defaults = UserDefaults.standard
+        
+        defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
+        
+        let jsonEncoder = JSONEncoder()
+        if let storedData = try? jsonEncoder.encode(self.diaryDict) {
+            defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
+        } else {
+          print("Failed to save diary dict.")
+        }
     }
     
     //如果用户修改了某个tag名称，将要更新所有使用该tag的日记中的tag名称

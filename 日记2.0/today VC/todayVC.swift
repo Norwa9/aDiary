@@ -235,6 +235,7 @@ extension todayVC:UITextViewDelegate{
         //存储纯文本
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
         todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        DataContainerSingleton.sharedDataContainer.saveDiaryDict()
         //存储富文本
         saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
         DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary

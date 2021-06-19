@@ -323,7 +323,7 @@ extension settingViewController{
         
         //插入图片
         let attachment = NSTextAttachment()
-        let image = UIImage(named: "appicon.png")!
+        let image = UIImage(named: "icon-1024.png")!
         let imageAspectRatio = image.size.height / image.size.width
         let imageWidth = textView.frame.width
         let imageHeight = imageWidth * imageAspectRatio
