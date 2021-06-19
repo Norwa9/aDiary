@@ -107,7 +107,7 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    
+    //MARK:-UI
     private func setupSubviews() {
         //titleLabel
         titleLabel.numberOfLines = 0
@@ -147,6 +147,7 @@ class monthCell: UICollectionViewCell {
         tagsLabel.cornerRadius = 5
         tagsLabel.textColor = .white
         tagsLabel.clipsToBounds = true
+        tagsLabel.isUserInteractionEnabled = false
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
