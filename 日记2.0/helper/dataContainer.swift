@@ -149,6 +149,30 @@ class DataContainerSingleton {
         }
         return count
     }
+    
+    //如果用户修改了某个tag名称，将要更新所有使用该tag的日记中的tag名称
+    func updateTags(oldTag:String,newTag:String?){
+        if let newTag = newTag{//操作：更新
+            for diary in DataContainerSingleton.sharedDataContainer.diaryDict.values{
+                var newTags = diary.tags
+                if let index = newTags.firstIndex(of: oldTag){
+                    newTags[index] = newTag
+                }
+                
+                diary.tags = newTags
+            }
+        }else{//操作：删除
+            for diary in DataContainerSingleton.sharedDataContainer.diaryDict.values{
+                var newTags = diary.tags
+                if let deleteIndex = newTags.firstIndex(of: oldTag){
+                    newTags.remove(at: deleteIndex)
+                }
+                diary.tags = newTags
+            }
+
+        }
+        
+    }
 }
 
 //MARK:-导入用户引导

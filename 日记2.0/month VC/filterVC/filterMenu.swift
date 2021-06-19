@@ -145,11 +145,8 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
         let row = indexPath.row
         let text = DataContainerSingleton.sharedDataContainer.tags[row]
         cell.tagsLabel.text = text
-        if filterModel.shared.selectedTags.contains(text){
-            cell.setSelectedView(hasSelected: true)
-        }else{
-            cell.setSelectedView(hasSelected: false)
-        }
+        let selectedState = filterModel.shared.selectedTags.contains(text)
+        cell.setView(hasSelected: selectedState)
         return cell
     }
     

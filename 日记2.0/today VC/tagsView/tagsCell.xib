@@ -19,21 +19,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FjI-iD-KhA" userLabel="container">
-                        <rect key="frame" x="42.5" y="8" width="296.5" height="36"/>
+                        <rect key="frame" x="32.5" y="6" width="316.5" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77I-oc-XGQ">
-                                <rect key="frame" x="2.5" y="7.5" width="45" height="21.5"/>
+                                <rect key="frame" x="2.5" y="9.5" width="45" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="020-a8-ge6">
-                                <rect key="frame" x="261.5" y="3" width="30" height="30"/>
+                                <rect key="frame" x="271.5" y="10" width="40" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="igk-tS-xWw"/>
-                                    <constraint firstAttribute="height" constant="30" id="rvX-rH-Nxu"/>
+                                    <constraint firstAttribute="width" constant="40" id="igk-tS-xWw"/>
+                                    <constraint firstAttribute="height" constant="20" id="rvX-rH-Nxu"/>
                                 </constraints>
-                                <state key="normal" image="delete.left.fill" catalog="system"/>
+                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="18"/>
+                                <state key="normal" title="编辑">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -46,7 +49,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kMJ-K9-gqs" userLabel="doneHolder">
-                        <rect key="frame" x="10" y="11" width="30" height="30"/>
+                        <rect key="frame" x="0.0" y="11" width="30" height="30"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="done" translatesAutoresizingMaskIntoConstraints="NO" id="6pD-qg-soi">
                                 <rect key="frame" x="5" y="5" width="20" height="20"/>
@@ -61,20 +64,20 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="FjI-iD-KhA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="4uG-C8-pYi"/>
+                    <constraint firstItem="FjI-iD-KhA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="4uG-C8-pYi"/>
                     <constraint firstItem="kMJ-K9-gqs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9N6-0l-doN"/>
                     <constraint firstItem="FjI-iD-KhA" firstAttribute="leading" secondItem="kMJ-K9-gqs" secondAttribute="trailing" constant="2.5" id="FNu-ac-57o"/>
-                    <constraint firstAttribute="trailing" secondItem="FjI-iD-KhA" secondAttribute="trailing" constant="10" id="RIb-hL-Cz3"/>
+                    <constraint firstAttribute="trailing" secondItem="FjI-iD-KhA" secondAttribute="trailing" id="RIb-hL-Cz3"/>
                     <constraint firstItem="FjI-iD-KhA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RNt-Y9-OEw"/>
-                    <constraint firstAttribute="bottom" secondItem="FjI-iD-KhA" secondAttribute="bottom" constant="8" id="V2l-bC-vVE"/>
-                    <constraint firstItem="kMJ-K9-gqs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Wwv-3m-sD8"/>
+                    <constraint firstAttribute="bottom" secondItem="FjI-iD-KhA" secondAttribute="bottom" constant="6" id="V2l-bC-vVE"/>
+                    <constraint firstItem="kMJ-K9-gqs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Wwv-3m-sD8"/>
                     <constraint firstItem="FjI-iD-KhA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="j8l-lX-Uj6"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="containerView" destination="FjI-iD-KhA" id="f0O-IH-PDn"/>
-                <outlet property="deleteButton" destination="020-a8-ge6" id="ueJ-VS-h5k"/>
+                <outlet property="editButton" destination="020-a8-ge6" id="9j5-KN-c32"/>
                 <outlet property="selectionPropt" destination="6pD-qg-soi" id="Rlb-rk-MKt"/>
                 <outlet property="selectionProptContainer" destination="kMJ-K9-gqs" id="as4-hk-Rhf"/>
                 <outlet property="tagsLabel" destination="77I-oc-XGQ" id="u3K-xO-CeD"/>
@@ -83,7 +86,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="delete.left.fill" catalog="system" width="128" height="104"/>
         <image name="done" width="200" height="140"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -7,20 +7,23 @@
 
 import UIKit
 
+protocol tagsCellEditProtocol {
+    func editButtonDidTapped(tag:String)
+}
+
+
 class tagsCell: UITableViewCell {
-    weak var tagsView:tagsView!
+    var delegate:tagsCellEditProtocol!
     static let reusableId = "tagsCell"
-    var tagString:String!
+    
     @IBOutlet weak var containerView:UIView!
     @IBOutlet weak var tagsLabel:UILabel!
     @IBOutlet weak var selectionPropt:UIImageView!
     @IBOutlet weak var selectionProptContainer:UIView!
-    @IBOutlet weak var deleteButton:UIButton!
+    @IBOutlet weak var editButton:UIButton!
     
     ///是否被选中
     var hasSelected:Bool = false
-    
-    var showDeleteButton:Bool = false
      
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,13 +41,22 @@ class tagsCell: UITableViewCell {
         selectionProptContainer.layer.borderWidth = 1
         selectionProptContainer.layer.cornerRadius = 5
         
-        deleteButton.alpha = showDeleteButton ? 1:0
+        editButton.layer.cornerRadius = 4
+        editButton.backgroundColor = .lightGray
+        editButton.addTarget(self, action: #selector(editBtnDidTapped), for: .touchUpInside)
+        
     }
     
-    func setSelectedView(hasSelected:Bool){
+    @objc func editBtnDidTapped(){
+        delegate.editButtonDidTapped(tag: tagsLabel.text!)
+    }
+    
+    func setView(hasSelected:Bool,isEditMode:Bool = false){
         self.hasSelected = hasSelected
         selectionPropt.alpha = hasSelected ? 1:0
         containerView.backgroundColor = hasSelected ? UIColor.colorWithHex(hexColor: 0xF7F5F2) : .white
+        
+        editButton.alpha = isEditMode ? 1:0
     }
     
     func animateSelectedView(duration:TimeInterval = 0.35){

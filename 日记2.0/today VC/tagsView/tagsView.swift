@@ -12,13 +12,15 @@ class tagsView: UIViewController {
     //data
     var diary:diaryInfo!
     var selectedMood:moodTypes?
-    var selectedTags = [String]()
+    var selectedTags = [String]()///局部变量，用来存储当前日记实时选择的tags
     
     @IBOutlet weak var doneButton:UIButton!
     @IBOutlet weak var dragBar:UIView!
     @IBOutlet weak var iconsContainer:UIView!
     var moodButtons = [moodButton]()
     @IBOutlet weak var tagsTableView:UITableView!
+    
+    var editMode:Bool = false
     
     //panGesture
     var hasSetPointOrigin = false
@@ -46,7 +48,7 @@ class tagsView: UIViewController {
         tagsTableView.delegate = self
         tagsTableView.dataSource = self
         tagsTableView.separatorStyle = .none
-        tagsTableView.alwaysBounceVertical = false
+        tagsTableView.bounces = false
         
     }
     
@@ -101,73 +103,7 @@ class tagsView: UIViewController {
         }
     }
     
-    //MARK:-新增标签
-    @IBAction func addNewTag(){
-        let ac = UIAlertController(title: "新标签", message: nil, preferredStyle: .alert)
-        ac.addTextField(configurationHandler: nil)
-        ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-        ac.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
-            guard let tag = ac.textFields?[0].text else{
-                return
-            }
-            if !DataContainerSingleton.sharedDataContainer.tags.contains(tag){
-                DataContainerSingleton.sharedDataContainer.tags.append(tag)
-                self.tagsTableView.reloadData()
-            }
-        }))
-        ac.view.setupShadow()
-        self.present(ac, animated: true, completion: nil)
-    }
-    //MARK:-删除标签
-    @IBAction func deleteSelectedTags(){
-        if selectedTags.count != 0{
-            //从selectedTags数组中获取当前选取的cell的indexPath
-            var indexPaths = [IndexPath]()
-            let allTags = DataContainerSingleton.sharedDataContainer.tags
-            for tag in selectedTags{
-                if let index = allTags.firstIndex(of: tag){
-                    indexPaths.append(IndexPath(row: index, section: 0))
-                }
-            }
-            print(indexPaths)
-            //提示是否要删除
-            let ac = UIAlertController(title: "是否删除当前选中的\(indexPaths.count)个标签？", message: "这些标签会从所有日记中移除，不可撤回！", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            let ok = UIAlertAction(title: "删除", style: .destructive, handler: {[weak self] _ in
-                //确认删除选中标签
-                //1、更新tableView数据源
-                for tag in self!.selectedTags {
-                    if let tagIndex = DataContainerSingleton.sharedDataContainer.tags.firstIndex(of: tag){
-                        DataContainerSingleton.sharedDataContainer.tags.remove(at: tagIndex)
-                    }
-                }
-                //2、更新tableView
-                //注意顺序问题，在deleteRows之前，必须更新dataSource
-                self!.tagsTableView.deleteRows(at: indexPaths, with: .fade)
-                //3、更新monthVC cell中的tags
-                for diary in DataContainerSingleton.sharedDataContainer.diaryDict.values{
-                    let newDiaryTags = diary.tags.filter { (item) -> Bool in
-                        if self!.selectedTags.contains(item){
-                            return false
-                        }else{
-                            return true
-                        }
-                    }
-                    diary.tags = newDiaryTags
-                }
-                let monthVC = UIApplication.getMonthVC()
-                monthVC.reloadCollectionViewData()
-                //3、更新selectedTags，当前没有cell被选中
-                self!.selectedTags.removeAll()
-            })
-            ac.addAction(cancel)
-            ac.addAction(ok)
-            ac.view.setupShadow()
-            self.present(ac, animated: true, completion: nil)
-        }else{
-            return
-        }
-    }
+    
 
 }
 
@@ -185,13 +121,11 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tagsCell.reusableId) as! tagsCell
         let row = indexPath.row
+        cell.delegate = self
         cell.tagsLabel.text = DataContainerSingleton.sharedDataContainer.tags[row]
         //恢复tags的选取状态
-        if selectedTags.contains(DataContainerSingleton.sharedDataContainer.tags[row]) {
-            cell.setSelectedView(hasSelected: true)
-        }else{
-            cell.setSelectedView(hasSelected: false)
-        }
+        let selectedState = selectedTags.contains(DataContainerSingleton.sharedDataContainer.tags[row])
+        cell.setView(hasSelected: selectedState,isEditMode: self.editMode)
         return cell
     }
     
@@ -209,6 +143,114 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         }else{
             selectedTags.append(tag)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 30
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let customFooterView = UIView()
+        customFooterView.backgroundColor = .white
+        
+        let addBtn = UIButton()
+        addBtn.setImage(UIImage(named: "add"), for: .normal)
+        customFooterView.addSubview(addBtn)
+        addBtn.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: 25, height: 25))
+            make.right.equalTo(customFooterView)
+            make.centerY.equalTo(customFooterView)
+        }
+        addBtn.addTarget(self, action: #selector(addNewTag), for: .touchUpInside)
+        
+        let editBtn = UIButton()
+        editBtn.setImage(UIImage(named: "edit"), for: .normal)
+        customFooterView.addSubview(editBtn)
+        editBtn.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: 25, height: 25))
+            make.right.equalTo(addBtn.snp.left).offset(-5)
+            make.centerY.equalTo(customFooterView)
+        }
+        editBtn.addTarget(self, action: (#selector(switchEditMode)), for: .touchUpInside)
+        
+        let splitLine = UIView()
+        splitLine.backgroundColor = .lightGray
+        customFooterView.addSubview(splitLine)
+        splitLine.snp.makeConstraints { (make) in
+            make.top.equalTo(customFooterView.snp.top)
+            make.left.equalTo(editBtn.snp.left)
+            make.right.equalTo(addBtn.snp.right)
+            make.height.equalTo(1)
+        }
+        
+        return customFooterView
+    }
+}
+
+//MARK:-标签管理
+extension tagsView:tagsCellEditProtocol{
+    
+    @objc func switchEditMode(){
+        self.editMode.toggle()
+        self.tagsTableView.reloadData()
+    }
+    //MARK:-1、添加标签
+    @objc func addNewTag(){
+        let ac = UIAlertController(title: "新标签", message: nil, preferredStyle: .alert)
+        ac.addTextField(configurationHandler: nil)
+        ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
+            guard let tag = ac.textFields?[0].text else{
+                return
+            }
+            if !DataContainerSingleton.sharedDataContainer.tags.contains(tag){
+                DataContainerSingleton.sharedDataContainer.tags.append(tag)
+                self.tagsTableView.reloadData()
+            }
+        }))
+        ac.view.setupShadow()
+        self.present(ac, animated: true, completion: nil)
+    }
+    
+    //MARK:-2、编辑、删除标签
+    func editButtonDidTapped(tag: String) {
+        let tags = DataContainerSingleton.sharedDataContainer.tags
+        print("当前的系统tags:\(tags)")
+        guard let index = tags.firstIndex(of: tag) else{return}
+        let indexPath = IndexPath(row: index, section: 0)
+        
+        let ac = UIAlertController(title: "编辑标签", message: "修改或者删除", preferredStyle: .alert)
+        ac.addTextField { (textField) in
+            textField.text = tag
+        }
+        //删除
+        let deleteAction = UIAlertAction(title: "删除", style: .destructive){_ in
+            DataContainerSingleton.sharedDataContainer.tags.remove(at: index)
+            self.tagsTableView.deleteRows(at: [indexPath], with: .fade)
+            //更新当前日记的选中tags
+            if let deleteIndex = self.selectedTags.firstIndex(of: tag){
+                self.selectedTags.remove(at: deleteIndex)
+            }
+            //更新全部日记的选中tags
+            DataContainerSingleton.sharedDataContainer.updateTags(oldTag: tag, newTag: nil)
+        }
+        //修改
+        let editAction = UIAlertAction(title: "修改", style: .default){_ in
+            guard let newTag = ac.textFields?[0].text else{return}
+            DataContainerSingleton.sharedDataContainer.tags[index] = newTag
+            //更新当前日记的选中tags
+            if let editIndex = self.selectedTags.firstIndex(of: tag){
+                self.selectedTags[editIndex] = newTag
+            }
+            self.tagsTableView.reloadRows(at: [indexPath], with: .fade)
+            //更新全部日记的选中tags
+            DataContainerSingleton.sharedDataContainer.updateTags(oldTag: tag, newTag: newTag)
+        }
+        //刷新
+        ac.addAction(deleteAction)
+        ac.addAction(editAction)
+        ac.view.setupShadow()
+        self.present(ac, animated: true, completion: nil)
+        
     }
 }
 
@@ -260,8 +302,9 @@ extension tagsView{
         if let selectedMood = selectedMood{
             diary.mood = selectedMood
         }
+        print("tagsView关闭，保存已选中的tags:\(selectedTags)")
         diary.tags = selectedTags
         let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData(forRow: diary.row)
+        monthVC.reloadCollectionViewData()
     }
 }
