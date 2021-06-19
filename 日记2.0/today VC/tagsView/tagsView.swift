@@ -20,7 +20,11 @@ class tagsView: UIViewController {
     var moodButtons = [moodButton]()
     @IBOutlet weak var tagsTableView:UITableView!
     
-    var editMode:Bool = false
+    var editMode:Bool = false{
+        didSet{
+//            tagsTableView.setEditing(editMode, animated: true)
+        }
+    }
     
     //panGesture
     var hasSetPointOrigin = false
@@ -144,7 +148,16 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
             selectedTags.append(tag)
         }
     }
+    //MARK:-移动cell
+//    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        if self.editMode{
+//            return true
+//        }else{
+//            return false
+//        }
+//    }
     
+    //MARK:-footerView
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 30
     }

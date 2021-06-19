@@ -161,15 +161,18 @@ class iconView: UIView {
         
         self.addSubview(iconImageView)
         iconImageView.contentMode = .scaleAspectFit
+        iconImageView.clipsToBounds = true
+        iconImageView.layer.cornerRadius = 15
         
         
         self.addSubview(appNameLabel)
         appNameLabel.font = UIFont.systemFont(ofSize: 11)
         appNameLabel.textAlignment = .center
         appNameLabel.text = "aDiary"
+        appNameLabel.textColor = .white
         
         self.iconImageView.snp.makeConstraints { (make) in
-            make.edges.equalTo(self).inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+            make.edges.equalTo(self)
         }
         
         self.appNameLabel.snp.makeConstraints { (make) in
