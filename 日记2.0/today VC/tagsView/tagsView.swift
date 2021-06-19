@@ -23,12 +23,13 @@ class tagsView: UIViewController {
     //panGesture
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
-
-    func configTagsView(){
+    
+    //MARK:-初始化UI
+    func setupUI(){
         //configure drag bar
         dragBar.layer.cornerRadius = 4
         
-        //MARK:-设置心情按钮
+        
         iconsContainer.backgroundColor = .systemBackground
         let frame = iconsContainer.frame
         let pedding = (frame.width - frame.height * 3) / 4
@@ -40,17 +41,16 @@ class tagsView: UIViewController {
             moodButtons.append(button)
         }
         
-        
-        //MARK:-设置tableView
         let nib = UINib(nibName: tagsCell.reusableId, bundle: Bundle.main)
         tagsTableView.register(nib, forCellReuseIdentifier: tagsCell.reusableId)
         tagsTableView.delegate = self
         tagsTableView.dataSource = self
         tagsTableView.separatorStyle = .none
+        tagsTableView.alwaysBounceVertical = false
         
     }
     
-    //button target
+    //MARK:-button target
     @objc func moodButtonTapped(sender:moodButton){
         for button in moodButtons{
             if button != sender{
@@ -74,7 +74,7 @@ class tagsView: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    //MARK:-拖动关闭tagsView
+//MARK:-拖动关闭tagsView
     //1
     override func viewDidLayoutSubviews() {
         //这个方法用来返回OverLayView的初始frame.origin，它返回的始终是一个定值
@@ -87,21 +87,13 @@ class tagsView: UIViewController {
     @objc func panGestureRecognizerAction(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
         print("translation:\(translation.x),\(translation.y)")
-//        if translation.x != 0 {
-//            return
-//        }
-        
-        // Not allowing the user to drag the view upward
         guard translation.y >= 0 else { return }
-        
-        // setting x as 0 because we don't want users to move the frame side ways!! Only want straight up or down
         view.frame.origin.y = self.pointOrigin!.y + translation.y
         if sender.state == .ended {
             let dragVelocity = sender.velocity(in: view)
             if dragVelocity.y >= 1300 || translation.y > 200{
                 dismiss(animated: true, completion: nil)
             } else {
-                // Set back to original position of the view controller
                 UIView.animate(withDuration: 0.3) {
                     self.view.frame.origin.y = self.pointOrigin?.y ?? 400
                 }
@@ -109,7 +101,7 @@ class tagsView: UIViewController {
         }
     }
     
-    //MARK:-标签的增删查改
+    //MARK:-新增标签
     @IBAction func addNewTag(){
         let ac = UIAlertController(title: "新标签", message: nil, preferredStyle: .alert)
         ac.addTextField(configurationHandler: nil)
@@ -126,7 +118,7 @@ class tagsView: UIViewController {
         ac.view.setupShadow()
         self.present(ac, animated: true, completion: nil)
     }
-    
+    //MARK:-删除标签
     @IBAction func deleteSelectedTags(){
         if selectedTags.count != 0{
             //从selectedTags数组中获取当前选取的cell的indexPath
@@ -218,16 +210,6 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
             selectedTags.append(tag)
         }
     }
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return UITableViewCell.EditingStyle.delete
-    }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
 }
 
 extension tagsView:UIViewControllerTransitioningDelegate{
@@ -240,11 +222,11 @@ extension tagsView:UIViewControllerTransitioningDelegate{
 extension tagsView{
 
     func configureDate(){
-        //恢复数据
+        //绑定数据
         selectedMood = diary.mood
         selectedTags = diary.tags
         
-        //恢复选择状态
+        //恢复标签、心情选择状态
         for button in moodButtons{
             if button.hasSelected{
                 button.animateSelectedView()
@@ -264,7 +246,7 @@ extension tagsView{
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
         
-        configTagsView()
+        setupUI()
         
     }
     
@@ -275,7 +257,6 @@ extension tagsView{
     
     override func viewWillDisappear(_ animated: Bool) {
         //保存tags和mood的选项
-        print("tagsView viewWillDisappear")
         if let selectedMood = selectedMood{
             diary.mood = selectedMood
         }
