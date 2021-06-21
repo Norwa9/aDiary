@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import JXPhotoBrowser
+
 public class TextFormatter{
     private var textView: UITextView
     private var storage: NSTextStorage
@@ -408,3 +410,46 @@ extension TextFormatter{
 }
 
 
+//MARK:-点按图片
+extension TextFormatter{
+    func tappedAttchment(in characterRange:NSRange)->Bool{
+        let aString = textView.attributedText!
+        let bounds = self.textView.bounds
+        let range = characterRange
+        let layoutManager = textView.layoutManager
+        let container = textView.textContainer
+        
+        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: range, options: [], using: { [] (object, range, pointer) in
+            let textViewAsAny: Any = textView
+            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
+                
+                let attachmentFrame = layoutManager.boundingRect(forGlyphRange: range, in: container)
+                textView.resignFirstResponder()
+                
+                //图片浏览器数据源
+                let browser = JXPhotoBrowser()
+                browser.numberOfItems = { 1 }
+                browser.reloadCellAtIndex = { context in
+                    let browserCell = context.cell as? JXPhotoBrowserImageCell
+                    browserCell?.imageView.image = img
+                }
+                
+                //显示图片与收回图片的转场动画
+                browser.transitionAnimator = JXPhotoBrowserSmoothZoomAnimator(transitionViewAndFrame: { (index, toView) -> JXPhotoBrowserSmoothZoomAnimator.TransitionViewAndFrame? in
+                    //toView:大图的imageView
+                    //fromView:textView里的图片附件view
+                    let fromView = UIImageView(image: img)
+                    fromView.contentMode = .scaleAspectFit
+                    fromView.clipsToBounds = true
+                    let thumbnailFrame = self.textView.convert(attachmentFrame, to: toView)
+                    return (fromView,thumbnailFrame)
+                })
+                browser.show()
+                return
+            }
+            })
+        
+        //
+        return true
+    }
+}

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import JXPhotoBrowser
 import FMPhotoPicker
 
 class todayVC: UIViewController {
@@ -138,13 +137,9 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
         editor.dismiss(animated: true, completion: nil)
         picker.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
-    
 }
 
-//MARK:-UITextView
+//MARK:-UITextView Delegate
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         //关闭左右滑动
@@ -216,27 +211,9 @@ extension todayVC:UITextViewDelegate{
     
     //点按图片
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        let aString = textView.attributedText!
-        let bounds = self.textView.bounds
-        let range = characterRange
-        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: range, options: [], using: { [] (object, range, pointer) in
-            let textViewAsAny: Any = textView
-            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
-                textView.resignFirstResponder()
-                //展示image
-                let browser = JXPhotoBrowser()
-                browser.numberOfItems = { 1 }
-                browser.reloadCellAtIndex = { context in
-                    let browserCell = context.cell as? JXPhotoBrowserImageCell
-                    browserCell?.imageView.image = img
-                }
-                browser.show()
-                return
-            }
-            })
-        
-        //
-        return true
+        let formatter = TextFormatter(textView: self.textView)
+        let res = formatter.tappedAttchment(in: characterRange)
+        return res
     }
  
 }
