@@ -365,10 +365,46 @@ public class TextFormatter{
     
 }
 
-
-extension String{
-    var isContainsLetters: Bool {
-        let letters = CharacterSet.letters
-        return self.rangeOfCharacter(from: letters) != nil
+//MARK:-插入图片
+extension TextFormatter{
+    func insertPictureToTextView(image:UIImage){
+        //创建附件
+        let attachment = NSTextAttachment()
+        let imageAspectRatio = image.size.height / image.size.width
+        let pedding:CGFloat = 15
+        let imageWidth = (textView.frame.width - 2 * pedding)
+        let imageHeight = (imageWidth * imageAspectRatio)
+        let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))//修改尺寸，防止从存储中读取富文本时图片方向错位
+        attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
+        attachment.bounds = CGRect(x: 0, y: 0,
+                                   width: imageWidth / userDefaultManager.imageScalingFactor,
+                                   height: imageHeight / userDefaultManager.imageScalingFactor)
+        
+        //将附件转成NSAttributedString类型的属性化文本
+        let imageAttr = NSAttributedString(attachment: attachment)
+        let imageAlignmentStyle = NSMutableParagraphStyle()
+        imageAlignmentStyle.alignment = .center
+        imageAlignmentStyle.lineSpacing = userDefaultManager.lineSpacing
+        let attributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle:imageAlignmentStyle,
+        ]
+        //获取textView的所有文本，转成可变的文本
+        let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
+        //获得目前光标的位置
+        let selectedRange = textView.selectedRange
+        //居中插入图片
+        let insertLoaction = selectedRange.location
+        mutableStr.insert(imageAttr, at: insertLoaction)
+        mutableStr.addAttributes(attributes, range: NSRange(location: insertLoaction, length: 1))
+        //另起一行
+        mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)
+        
+        mutableStr.addAttribute(NSAttributedString.Key.font, value: userDefaultManager.font, range: NSMakeRange(0,mutableStr.length))
+        textView.attributedText = mutableStr
+        //从插入图片的下一行继续编辑
+        textView.selectedRange = NSRange(location: insertLoaction + 2, length: 0)
+        textView.scrollRangeToVisible(textView.selectedRange)
     }
 }
+
+

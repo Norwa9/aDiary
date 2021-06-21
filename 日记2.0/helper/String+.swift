@@ -35,3 +35,10 @@ extension String{
         return formatter.string(from: rawDate)
     }
 }
+
+extension String{
+    var isContainsLetters: Bool {
+        let letters = CharacterSet.letters
+        return self.rangeOfCharacter(from: letters) != nil
+    }
+}
