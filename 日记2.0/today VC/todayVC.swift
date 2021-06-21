@@ -54,6 +54,7 @@ class todayVC: UIViewController {
         keyBoardToolsBar.alpha = 0
     }
     
+    //MARK:-notification Center
     func configureTopbar(){
         //通知中心：响应button，响应键盘
         let notificationCenter = NotificationCenter.default
@@ -181,30 +182,32 @@ extension todayVC:UITextViewDelegate{
         }
     }
     
-    ///保存文本
+    ///保存
     func saveText(){
         //存储纯文本
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
         todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        //纯文本持久化
         DataContainerSingleton.sharedDataContainer.saveDiaryDict()
-        //存储富文本
+        //富文本持久化
         saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
         DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        //1.当换行时，调用addNewLine()来处理递增数字列表的任务
+        //当换行时，调用addNewLine()来处理递增数字列表的任务
         let textFormatter = TextFormatter(textView: textView)
         if text == "\n"{
             textFormatter.addNewLine()
             return false
         }
         
-        //2.当删除一行，光标移到上一行时，更新其后所有行的序号
+        //当删除一行，光标移到上一行时，更新其后所有行的序号
         textFormatter.correctNum(deleteRange: range)
         
-        //3.其余情况
+        //其余情况
         textView.typingAttributes = leftTypingAttributes()
+        
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
     }
@@ -230,8 +233,7 @@ extension todayVC{
     
     
     override func viewWillAppear(_ animated: Bool) {
-        //展示点击的日记
-//        loadTodayData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
