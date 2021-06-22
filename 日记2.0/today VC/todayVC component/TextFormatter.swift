@@ -381,8 +381,6 @@ extension TextFormatter{
         attachment.bounds = CGRect(x: 0, y: 0,
                                    width: imageWidth / userDefaultManager.imageScalingFactor,
                                    height: imageHeight / userDefaultManager.imageScalingFactor)
-        
-        //将附件转成NSAttributedString类型的属性化文本
         let imageAttr = NSAttributedString(attachment: attachment)
         let imageAlignmentStyle = NSMutableParagraphStyle()
         imageAlignmentStyle.alignment = .center
@@ -390,12 +388,12 @@ extension TextFormatter{
         let attributes:[NSAttributedString.Key:Any] = [
             .paragraphStyle:imageAlignmentStyle,
         ]
-        //获取textView的所有文本，转成可变的文本
         let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
-        //获得目前光标的位置
         let selectedRange = textView.selectedRange
-        //居中插入图片
-        let insertLoaction = selectedRange.location
+        
+        //换行，然后居中插入图片
+        mutableStr.insert(NSAttributedString(string: "\n"), at: selectedRange.location)
+        let insertLoaction = selectedRange.location + 1
         mutableStr.insert(imageAttr, at: insertLoaction)
         mutableStr.addAttributes(attributes, range: NSRange(location: insertLoaction, length: 1))
         //另起一行
