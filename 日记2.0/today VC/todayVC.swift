@@ -167,7 +167,10 @@ extension todayVC:UITextViewDelegate{
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.saveText()
+        //保存数据
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.save(with: todayDiary)
+        
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
         customPageVC.pageScrollView.isScrollEnabled = true
@@ -182,18 +185,6 @@ extension todayVC:UITextViewDelegate{
         }
     }
     
-    ///保存
-    func saveText(){
-        //存储纯文本
-        let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
-        todayDiary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
-        //纯文本持久化
-        DataContainerSingleton.sharedDataContainer.saveDiaryDict()
-        //富文本持久化
-        saveAttributedString(date_string: todayDiary.date!, aString: textView.attributedText)
-        DataContainerSingleton.sharedDataContainer.diaryDict[todayDiary.date!] = todayDiary
-    }
-    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
         let textFormatter = TextFormatter(textView: textView)
@@ -205,8 +196,8 @@ extension todayVC:UITextViewDelegate{
         //当删除一行，光标移到上一行时，更新其后所有行的序号
         textFormatter.correctNum(deleteRange: range)
         
-        //其余情况
-        textView.typingAttributes = leftTypingAttributes()
+        //其余情况:设置居左输入模式
+        textFormatter.setLeftTypingAttributes()
         
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
@@ -248,28 +239,13 @@ extension todayVC{
         }
         lastDiary = todayDiary.date!
         
-        //load textView
+        //读取textView
+        let textFormatter = TextFormatter(textView: self.textView)
         if todayDiary.content.count == 0{
-            //palce holder
-            textView.attributedText = NSAttributedString.textViewPlaceholder()
+            //设置文字引导
+            textFormatter.setPlaceholder()
         }else{
-            textView.textColor = UIColor.black
-            textView.typingAttributes = leftTypingAttributes()//内容居左
-            let textViewBounds = textView.bounds
-            DispatchQueue.global(qos: .default).async {
-                if let aString = loadAttributedString(date_string: self.todayDiary.date!){
-                    //异步读取attributedString、异步处理图片bounds
-                    let preparedText = aString.processAttrString(bounds: textViewBounds)
-                    DispatchQueue.main.async {
-                        self.textView.attributedText = preparedText
-                    }
-                }else{
-                    DispatchQueue.main.async {
-                        self.textView.text = self.todayDiary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
-                    }
-                }
-            }
-            
+            textFormatter.loadTextViewContent(with: todayDiary)
         }
         
         //load topbar info

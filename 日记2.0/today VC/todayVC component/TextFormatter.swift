@@ -453,3 +453,133 @@ extension TextFormatter{
         return true
     }
 }
+
+//MARK:-保存
+extension TextFormatter{
+    ///根据日期信息将富文本存储到文件目录
+    func save(with diary:diaryInfo){
+        savePlainText(with: diary)
+        saveRichText(with: diary)
+    }
+    
+    func savePlainText(with diary:diaryInfo){
+        guard let date = diary.date else {
+            print("savePlainText 失败")
+            return
+        }
+        
+        let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
+        diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        
+        DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
+        DataContainerSingleton.sharedDataContainer.saveDiaryDict()
+    }
+    
+    
+    func saveRichText(with diary:diaryInfo){
+        guard let aString = self.textView.attributedText,let date_string = diary.date else{
+            print("TextFormatter saveText - 保存失败")
+            return
+        }
+        //1、保存attributedString
+        do {
+            let file = try aString.fileWrapper (
+                from: NSMakeRange(0, aString.length),
+                documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd
+                                     ,.characterEncoding:String.Encoding.utf8])
+            
+            if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
+                let path_file_name = dir.appendingPathComponent (date_string)
+                do {
+                    try file.write (to: path_file_name, options: .atomic, originalContentsURL: nil)
+                } catch {
+                    // Error handling
+                }
+            }
+        } catch {
+            //Error handling
+        }
+        
+        //2、标记保存的日记中是否含有照片
+        DataContainerSingleton.sharedDataContainer.diaryDict[date_string]?.containsImage = false
+        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
+            if let attachment = object as? NSTextAttachment{
+                //如果存在照片
+                if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+                    DataContainerSingleton.sharedDataContainer.diaryDict[date_string]?.containsImage = true
+                    return
+                }
+            }
+        }
+        )
+    }
+}
+
+//MARK:-读取
+extension TextFormatter{
+    func loadTextViewContent(with diary:diaryInfo){
+        textView.textColor = UIColor.black
+        self.setLeftTypingAttributes()//内容居左
+        let textViewBounds = textView.bounds
+        DispatchQueue.global(qos: .default).async {
+            if let aString = self.loadAttributedString(date_string: diary.date!){
+                //异步读取attributedString、异步处理图片bounds
+                let preparedText = aString.processAttrString(bounds: textViewBounds)
+                DispatchQueue.main.async {
+                    self.textView.attributedText = preparedText
+                }
+            }else{
+                DispatchQueue.main.async {
+                    self.textView.text = diary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
+                }
+            }
+        }
+    }
+    
+    ///根据日期string读取从文件目录富文本
+    func loadAttributedString(date_string:String) -> NSAttributedString?{
+        if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
+            let path_file_name = dir.appendingPathComponent (date_string)
+            do{
+                let aString = try NSAttributedString(
+                    url: path_file_name,
+                    options: [.documentType:NSAttributedString.DocumentType.rtfd,
+                              .characterEncoding:String.Encoding.utf8],
+                    documentAttributes: nil)
+                return aString
+            }catch{
+                //
+            }
+        }
+        return nil
+    }
+    
+    ///设置居左的输入模式
+    func setLeftTypingAttributes(){
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+        let typingAttributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle: paragraphStyle,
+            .font:userDefaultManager.font
+        ]
+        self.textView.typingAttributes = typingAttributes
+    }
+}
+
+//MARK:-placeHolder
+extension TextFormatter{
+    ///设置textView的Placeholder
+    func setPlaceholder(){
+        let paraStyle = NSMutableParagraphStyle()
+//        paraStyle.alignment = .left
+        paraStyle.lineSpacing = userDefaultManager.lineSpacing
+        let attributes:[NSAttributedString.Key:Any] = [
+            .font:userDefaultManager.font,
+            .paragraphStyle : paraStyle,
+            .foregroundColor : UIColor.lightGray,
+        ]
+        let placeHolder = "标题.."
+        self.textView.attributedText = NSAttributedString(string: placeHolder, attributes: attributes)
+    }
+}
