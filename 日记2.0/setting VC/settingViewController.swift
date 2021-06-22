@@ -57,6 +57,7 @@ class settingViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    ///字体大小
     @IBAction func fontSizeDidChange(_ sender: UIStepper) {
         let fontSize = sender.value
         tempFontSize = CGFloat(fontSize)
@@ -64,11 +65,13 @@ class settingViewController: UIViewController {
         fontSizeLabel.text = String(Int(tempFontSize))
     }
     
+    ///行间距
     @IBAction func lineSapacingChange(_ sender: UIStepper){
         tempLineSpacing = CGFloat(sender.value)
         updateExampleTextView(withFontSize:tempFontSize,withFontStyle: tempFontName,withLineSpacing: tempLineSpacing)
     }
     
+    ///生物识别
     @IBAction func useBiometricsSwitchDidChange(_ sender: UISwitch) {
         //如果已经设定了密码，此时可以自由开启关闭生物识别
         if userDefaultManager.usePassword{
@@ -88,6 +91,7 @@ class settingViewController: UIViewController {
         
     }
     
+    ///密码
     @IBAction func usePasswordSwitchDidChange(_ sender: UISwitch){
         
         //如果用户打开开关：开启密码
@@ -143,6 +147,7 @@ class settingViewController: UIViewController {
         
     }
     
+    ///导出
     @IBAction func exportAll(){
         showSpinner(onView: self.view)
     
@@ -154,6 +159,7 @@ class settingViewController: UIViewController {
         
     }
     
+    ///daygram导入
     @IBAction func importFromDayGram(){
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .import)
         documentPicker.delegate = self
@@ -308,7 +314,9 @@ extension settingViewController{
         
     }
     
+    ///设置字体示意
     func setupExampleTextView(imageScalingFactor:CGFloat){
+        self.view.layoutIfNeeded()
         textView.attributedText = nil
         
         //插入文字
@@ -325,13 +333,15 @@ extension settingViewController{
         let attachment = NSTextAttachment()
         let image = UIImage(named: "icon-1024.png")!
         let imageAspectRatio = image.size.height / image.size.width
-        let imageWidth = textView.frame.width
+        let imageWidth = self.fontSettingContainer.frame.width
+        print(imageWidth)
         let imageHeight = imageWidth * imageAspectRatio
         let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))
         attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
+        let pedding:CGFloat = 15.0
         attachment.bounds = CGRect(x: 0, y: 0,
-                                   width: imageWidth / imageScalingFactor,
-                                   height: imageHeight / imageScalingFactor)
+                                   width: (imageWidth - 2 * pedding) / imageScalingFactor,
+                                   height: (imageHeight - 2 * pedding) / imageScalingFactor)
         let attStr = NSAttributedString(attachment: attachment)
         let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableStr.insert(attStr, at: textView.attributedText.length)

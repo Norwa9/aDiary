@@ -369,7 +369,6 @@
                                                     <constraint firstItem="Wwo-eL-b1O" firstAttribute="leading" secondItem="ybf-eP-LwF" secondAttribute="leading" constant="18" id="Los-fM-ZRz"/>
                                                     <constraint firstItem="Wwo-eL-b1O" firstAttribute="centerX" secondItem="ybf-eP-LwF" secondAttribute="centerX" id="S3y-UX-dvT"/>
                                                     <constraint firstAttribute="bottom" secondItem="Wwo-eL-b1O" secondAttribute="bottom" constant="8" id="ilT-uG-gWC"/>
-                                                    <constraint firstAttribute="width" constant="414" id="wLY-l4-CMx"/>
                                                     <constraint firstItem="ILg-By-o5k" firstAttribute="leading" secondItem="ybf-eP-LwF" secondAttribute="leading" constant="20" id="zvF-YG-bjF"/>
                                                 </constraints>
                                             </view>

@@ -408,7 +408,7 @@ extension TextFormatter{
 }
 
 
-//MARK:-点按图片
+//MARK:-查看图片
 extension TextFormatter{
     func tappedAttchment(in characterRange:NSRange)->Bool{
         let aString = textView.attributedText!
@@ -528,6 +528,7 @@ extension TextFormatter{
                 }
             }else{
                 DispatchQueue.main.async {
+                    print("diary.content")
                     self.textView.text = diary.content//第一次使用app，没有aString可读取，此时将text设置为introduc.txt
                 }
             }
