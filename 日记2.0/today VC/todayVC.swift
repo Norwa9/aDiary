@@ -228,7 +228,13 @@ extension todayVC{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+//        iCloudHelper.shared.fetchRecordsFromCloud{
+//            results in
+//            print("results.count:\(results.count)")
+//            for diary in results{
+//                DataContainerSingleton.sharedDataContainer.diaryDict[diary.date!] = diary
+//            }
+//        }
     }
     
     func loadTodayData(){
