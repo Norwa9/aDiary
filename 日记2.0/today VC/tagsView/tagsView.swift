@@ -247,7 +247,7 @@ extension tagsView:tagsCellEditProtocol{
             DataContainerSingleton.sharedDataContainer.updateTags(oldTag: tag, newTag: nil)
         }
         //修改
-        let editAction = UIAlertAction(title: "修改", style: .default){_ in
+        let editAction = UIAlertAction(title: "确定", style: .default){_ in
             guard let newTag = ac.textFields?[0].text else{return}
             DataContainerSingleton.sharedDataContainer.tags[index] = newTag
             //更新当前日记的选中tags

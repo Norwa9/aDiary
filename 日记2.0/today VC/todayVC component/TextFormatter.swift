@@ -439,7 +439,9 @@ extension TextFormatter{
                     let fromView = UIImageView(image: img)
                     fromView.contentMode = .scaleAspectFit
                     fromView.clipsToBounds = true
-                    let thumbnailFrame = self.textView.convert(attachmentFrame, to: toView)
+                    //y + 8 是为了解决奇怪的偏移量bug
+                    let fromFrame = CGRect(x: attachmentFrame.origin.x, y: attachmentFrame.origin.y + 8, width: attachmentFrame.size.width, height: attachmentFrame.size.height)
+                    let thumbnailFrame = self.textView.convert(fromFrame, to: toView)
                     return (fromView,thumbnailFrame)
                 })
                 browser.show()
