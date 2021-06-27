@@ -98,11 +98,21 @@ class monthCell: UICollectionViewCell {
             make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
         
-        containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
+        self.backgroundColor = UIColor.clear
+        self.clipsToBounds = false
+        self.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = false
+        
+        contentView.backgroundColor = UIColor.white
+        contentView.layer.masksToBounds = false
+        contentView.layer.cornerRadius = 10
+        
+        
         containerView.backgroundColor = .white
-        containerView.layer.masksToBounds = false
+        containerView.layer.masksToBounds = true
         containerView.layer.cornerRadius = 10
-        containerView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        
         self.layoutSubviews()
         
     }

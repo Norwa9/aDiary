@@ -117,7 +117,7 @@ class monthVC: UIViewController {
     func configureUI(){
         //MARK:-collectionView
         //configure collection view
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(monthCell.self, forCellWithReuseIdentifier: monthCell.reusableID)
@@ -789,6 +789,45 @@ extension monthVC:UISearchBarDelegate{
 //        }
     }
 
+}
+
+//MARK:-context Menu
+extension monthVC {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+            //
+            let inspectAction = UIAction(title: NSLocalizedString("InspectTitle", comment: ""),
+                                         image: UIImage(systemName: "arrow.up.square")) { action in
+                                    self.performInspect(indexPath)
+                                }
+            //
+            let duplicateAction = UIAction(title: NSLocalizedString("DuplicateTitle", comment: ""),
+                                 image: UIImage(systemName: "plus.square.on.square")) { action in
+                                self.performDuplicate(indexPath)
+                                }
+            let deleteAction = UIAction(title: NSLocalizedString("DeleteTitle", comment: ""),
+                         image: UIImage(systemName: "trash"),
+                         attributes: .destructive) { action in
+                        self.performDelete(indexPath)
+                        }
+            return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
+        }
+        
+        
+        return config
+    }
+    
+    func performInspect(_ indexPath:IndexPath){
+        
+    }
+    
+    func performDuplicate(_ indexPath:IndexPath){
+        
+    }
+    
+    func performDelete(_ indexPath:IndexPath){
+        
+    }
 }
 
 //MARK:-monthVC生命周期
