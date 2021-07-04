@@ -84,7 +84,7 @@ class monthCell: UICollectionViewCell {
     
     
 //    let kMonthCellWidth = (UIScreen.main.bounds.width) / 2 - 15//它决定了cell的宽度
-    
+    //MARK:-UI界面搭建
     private func setupContainerView() {
         contentView.addSubview(containerView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -117,7 +117,6 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    //MARK:-UI
     private func setupSubviews() {
         //titleLabel
         titleLabel.numberOfLines = 0
@@ -244,6 +243,7 @@ class monthCell: UICollectionViewCell {
         }
     }
     
+    //MARK:-设置Model
     func fillCell(diary:diaryInfo){
         self.updateWCons()
         
@@ -308,7 +308,7 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    func getAttrTitle(content:String)->NSAttributedString{
+    private func getAttrTitle(content:String)->NSAttributedString{
         let mContent = NSMutableAttributedString(string: content)
         if mContent.length > 0{
             //获取第一段
@@ -332,7 +332,7 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    func getAttrContent(content:String) -> NSAttributedString{
+    private func getAttrContent(content:String) -> NSAttributedString{
         let mString = NSMutableAttributedString(string: content)
         if mString.length > 0{
             //内容段样式
@@ -356,18 +356,8 @@ class monthCell: UICollectionViewCell {
         return mString
     }
     
-    func showSelectionPrompt(){
-        UIView.animate(withDuration: 0.2) {
-            self.containerView.backgroundColor = APP_GRAY_COLOR()
-        } completion: { (_) in
-            self.containerView.backgroundColor = .white
-        }
-
-
-    }
-    
 }
-
+//MARK:-内嵌的Collection View
 extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -388,7 +378,7 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     
 }
 
-
+//MARK:-瀑布流切换
 extension monthCell{
     ///切换单双列展示时，更新宽度约束
     func updateWCons(){
@@ -426,4 +416,17 @@ extension monthCell{
         self.layoutIfNeeded()
     }
     
+}
+
+//MARK:-选中状态
+extension monthCell{
+    func showSelectionPrompt(){
+        UIView.animate(withDuration: 0.2) {
+            self.containerView.backgroundColor = APP_GRAY_COLOR()
+        } completion: { (_) in
+            self.containerView.backgroundColor = .white
+        }
+
+
+    }
 }

@@ -24,6 +24,7 @@ class userDefaultManager{
         static let usePasswordKey = "usePassword"
         static let appPasswordKey = "password"
         static let lineSpacingKey = "lineSpacing"
+        static let layoutType = "layoutType"
     }
     
     
@@ -144,6 +145,23 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.hasInitialized)
+        }
+    }
+    
+    /*
+     list = 1 // 列表
+     waterFall = 2 //瀑布流
+     */
+    static var layoutType:Int{
+        get{
+            if let type = shared?.object(forKey: constants.layoutType) as? Int {
+                return type
+            }else{
+                return 1//默认展示1列，即列表视图
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.layoutType)
         }
     }
     

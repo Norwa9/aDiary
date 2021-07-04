@@ -9,12 +9,20 @@ import Foundation
 import UIKit
 
 class layoutParasManager: NSObject {
+    private let layoutUserDefault:UserDefaults = UserDefaults(suiteName: "layout.default")!
     static let shared = layoutParasManager()
     
     ///与布局有关的全局变量
     let collectionEdgesInset = UIEdgeInsets(top: 45, left: 10, bottom: 50, right: 10)
     
-    var collectioncolumnNumber:Int = 2
+    var collectioncolumnNumber:Int{
+        get{
+            return userDefaultManager.layoutType
+        }
+        set{
+            userDefaultManager.layoutType = newValue
+        }
+    }
     
     let collectionInteritemSpacing:CGFloat = 10
     let collectionLineSpacing:CGFloat = 10

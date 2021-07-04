@@ -435,7 +435,6 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: monthCell.reusableID, for: indexPath) as! monthCell
         let row = indexPath.row
         let diary = filteredDiaries[row]
-        print("dequeue monthCell,\(diary.date!)")
         cell.fillCell(diary: diary)
         
         return cell
