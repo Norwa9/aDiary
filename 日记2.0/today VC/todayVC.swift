@@ -256,11 +256,10 @@ extension todayVC{
         
         //load topbar info
         topbar.dataLable1.text = todayDiary.date
-        topbar.dataLable2.text = Date().getWeekday(dateString: todayDiary.date!)
-        if todayDiary.date == getTodayDate(){
-            topbar.dataLable2.text! += "*"
-        }
         topbar.dataLable1.sizeToFit()
+        
+        topbar.dataLable2.text = Date().getWeekday(dateString: todayDiary.date!)
+        
         topbar.button1.islike = todayDiary.islike
         topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood.rawValue)
     }
