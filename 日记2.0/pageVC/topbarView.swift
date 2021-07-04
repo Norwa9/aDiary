@@ -118,7 +118,7 @@ class topbarView: UIView {
         tempButtonImageView1 = UIImageView(frame: button1.buttonImageView.frame)
         tempButtonImageView1.contentMode = .scaleAspectFill
         var layoutTypeImg:UIImage
-        switch userDefaultManager.layoutType {
+        switch layoutParasManager.shared.collectioncolumnNumber {
         case 1:
             layoutTypeImg = UIImage(named: "waterfallmode")!
         default:

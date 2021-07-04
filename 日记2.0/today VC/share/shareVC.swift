@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class shareVC: UIViewController {
     let Kradius:CGFloat = 10
@@ -41,6 +42,13 @@ class shareVC: UIViewController {
     
     var diary:diaryInfo!
     var snapshot:UIImage!
+    
+    //自定义相册
+    var assetCollection: PHAssetCollection!
+    var albumFound : Bool = false
+    var photosAsset: PHFetchResult<AnyObject>!
+    var collection: PHAssetCollection!
+    var assetCollectionPlaceholder: PHObjectPlaceholder!
     
     init(diary:diaryInfo) {
         self.diary = diary
@@ -80,7 +88,7 @@ class shareVC: UIViewController {
         
         setupUI()
         setupConstraints()
-
+        createAlbum()//如果没有相册，则创建自定义相册
     }
     
     func setupUI(){
@@ -183,12 +191,53 @@ class shareVC: UIViewController {
     
     @objc func saveAction(){
         let shareImg = self.scrollView.scrollViewScreenshot!
-        print("shareImg.size:\(shareImg.size)")
-        UIImageWriteToSavedPhotosAlbum(shareImg, nil, nil, nil)
+//        print("shareImg.size:\(shareImg.size)")
+        self.saveImg(shareImg)
         let ac = UIAlertController(title: "保存成功", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "确定", style: .cancel, handler: nil))
         ac.view.setupShadow()
         self.present(ac, animated: true, completion: nil)
+    }
+    
+    //保存输出截图到自定义相册
+    private func saveImg(_ image:UIImage){
+        //保存图片到相册
+        if self.assetCollection != nil{
+            PHPhotoLibrary.shared().performChanges({
+                let assetChangeRequest = PHAssetChangeRequest.creationRequestForAsset(from: image)
+                let assetPlaceholder = assetChangeRequest.placeholderForCreatedAsset
+                let albumChangeRequest = PHAssetCollectionChangeRequest(for: self.assetCollection)
+                albumChangeRequest?.addAssets([assetPlaceholder!] as NSFastEnumeration)
+                }, completionHandler: nil)
+        }
+    }
+    
+    private func createAlbum(){
+        let albumName = "aDiary"
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.predicate = NSPredicate(format: "title = %@",albumName);
+        let collection : PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: fetchOptions)
+        
+        if let _: AnyObject = collection.firstObject {
+            self.albumFound = true
+            assetCollection = collection.firstObject!
+        } else {
+            PHPhotoLibrary.shared().performChanges({
+                let createAlbumRequest : PHAssetCollectionChangeRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollection(withTitle: albumName);
+                self.assetCollectionPlaceholder = createAlbumRequest.placeholderForCreatedAssetCollection
+                }, completionHandler: { success, error in
+                    self.albumFound = (success ? true: false)
+                    
+                    if (success) {
+                        //print("success")
+                        let collectionFetchResult = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [self.assetCollectionPlaceholder.localIdentifier], options: nil)
+                        //print(collectionFetchResult)
+                        self.assetCollection = collectionFetchResult.firstObject!
+                    }
+            })
+        }
+        
+        
     }
     
     
