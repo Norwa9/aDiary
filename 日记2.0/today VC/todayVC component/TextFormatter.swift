@@ -526,6 +526,7 @@ extension TextFormatter{
                 //异步读取attributedString、异步处理图片bounds
                 let preparedText = aString.processAttrString(bounds: textViewBounds)
                 DispatchQueue.main.async {
+                    print("getffffffffff")
                     self.textView.attributedText = preparedText
                 }
             }else{
@@ -584,3 +585,36 @@ extension TextFormatter{
         self.textView.attributedText = NSAttributedString(string: placeHolder, attributes: attributes)
     }
 }
+
+//MARK:-分享
+extension TextFormatter{
+    func textViewScreenshot(diary:diaryInfo) -> UIImage{
+        let aString = self.loadAttributedString(date_string: diary.date!) ?? self.rawtextToRichtext(diary: diary)
+        //异步读取attributedString、异步处理图片bounds
+        let preparedText = aString.processAttrString(bounds: self.textView.bounds)
+        self.textView.attributedText = preparedText
+        textView.layer.cornerRadius = 10
+        textView.showsVerticalScrollIndicator = false
+        //不能在原textView上进行截图，没办法把所有内容都截下来
+        //除非在截图之前将textView.removeFromSuperview()
+        let snapshot = textView.image()
+        return snapshot
+    }
+    
+    /*
+     调和型函数
+     旧版本存储的日记没有在磁盘中存储对应的富文本格式文件
+     所以要先将其纯文本转换为富文本。
+     */
+    func rawtextToRichtext(diary:diaryInfo)->NSAttributedString{
+        self.textView.text = diary.content
+        let attrText = self.textView.attributedText.addUserDefaultAttributes()
+        self.textView.attributedText = attrText
+        
+        saveRichText(with: diary)
+        
+        return attrText
+    }
+    
+}
+

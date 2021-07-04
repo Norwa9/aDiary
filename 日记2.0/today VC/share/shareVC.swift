@@ -48,6 +48,16 @@ class shareVC: UIViewController {
         self.setupTranstion()
     }
     
+    init(monthCell:monthCell) {
+        let diary = monthCell.diary!
+        let textformatter = TextFormatter(textView: UITextView(frame: CGRect(x: 0, y: 0, width: 380, height: 703)))
+        let snapshot = textformatter.textViewScreenshot(diary: diary)
+        self.diary = diary
+        self.snapshot = snapshot
+        super.init(nibName: nil, bundle: nil)
+        self.setupTranstion()
+    }
+    
     private func setupTranstion() {
         modalPresentationStyle = .custom
         transitioningDelegate = self

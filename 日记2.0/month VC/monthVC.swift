@@ -796,8 +796,8 @@ extension monthVC {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
             //
-            let inspectAction = UIAction(title: NSLocalizedString("InspectTitle", comment: ""),
-                                         image: UIImage(systemName: "arrow.up.square")) { action in
+            let inspectAction = UIAction(title: NSLocalizedString("分享", comment: ""),
+                                         image: UIImage(named: "share")) { action in
                                     self.performInspect(indexPath)
                                 }
             //
@@ -818,7 +818,9 @@ extension monthVC {
     }
     
     func performInspect(_ indexPath:IndexPath){
-        
+        let cell = collectionView.cellForItem(at: indexPath) as! monthCell
+        let share = shareVC(monthCell: cell)
+        self.present(share, animated: true, completion: nil)
     }
     
     func performDuplicate(_ indexPath:IndexPath){

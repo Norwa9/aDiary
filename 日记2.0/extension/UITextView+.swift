@@ -12,6 +12,7 @@ extension UITextView{
     //将view转换成image
     func textViewImage() -> UIImage {
         let tempTextView = UITextView(frame: self.bounds)
+        print("textViewImage,bounds:\(self.bounds)")
         tempTextView.attributedText = self.attributedText
         tempTextView.layer.cornerRadius = 10
         tempTextView.showsVerticalScrollIndicator = false
