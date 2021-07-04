@@ -56,11 +56,7 @@ func getTodayDate()->String{
     return formatter.string(from: date)
 }
 
-func getExactCurrentTime()->String{
-    let formatter = DateFormatter()
-    formatter.dateFormat = "-H:mm-"
-    return formatter.string(from: Date())
-}
+
 
 
 func howManyDaysInThisMonth(year:Int,month:Int)->Int{

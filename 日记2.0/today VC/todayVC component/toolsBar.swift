@@ -86,7 +86,8 @@ class toolsBar: UIView {
     }
     
     @objc func insertTimeToTextView(){
-        textView.insertText(getExactCurrentTime())
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.insertTimeTag()
     }
     
     @objc func insertImageToTextView(){

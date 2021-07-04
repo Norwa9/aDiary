@@ -367,7 +367,7 @@ public class TextFormatter{
     
 }
 
-//MARK:-插入图片
+//MARK:-插入图片、时间戳
 extension TextFormatter{
     func insertPictureToTextView(image:UIImage){
         //创建附件
@@ -401,9 +401,20 @@ extension TextFormatter{
         
         mutableStr.addAttribute(NSAttributedString.Key.font, value: userDefaultManager.font, range: NSMakeRange(0,mutableStr.length))
         textView.attributedText = mutableStr
-        //从插入图片的下一行继续编辑
+        //从插入图片的下一行继续编辑：居左
         textView.selectedRange = NSRange(location: insertLoaction + 2, length: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
+        setLeftTypingAttributes()
+    }
+    
+    func insertTimeTag(){
+        setLeftTypingAttributes()
+        //获取当前时间，格式：-H:mm-
+        let formatter = DateFormatter()
+        formatter.dateFormat = "-H:mm-"
+        let time = formatter.string(from: Date())
+        
+        textView.insertText(time)
     }
 }
 
