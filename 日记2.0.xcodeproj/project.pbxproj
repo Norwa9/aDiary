@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA3189AB2691EBC2001B9042 /* Error+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+.swift */; };
+		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* LWDiary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* LWDiary.swift */; };
 		EA38493F262EBAA3001B693F /* filterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38493E262EBAA3001B693F /* filterModel.swift */; };
@@ -31,6 +31,9 @@
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
+		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
+		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
+		EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
 		EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor+.swift */; };
 		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
@@ -76,7 +79,7 @@
 /* Begin PBXFileReference section */
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
-		EA3189AA2691EBC2001B9042 /* Error+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+.swift"; sourceTree = "<group>"; };
+		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* LWDiary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiary.swift; sourceTree = "<group>"; };
 		EA38493E262EBAA3001B693F /* filterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterModel.swift; sourceTree = "<group>"; };
@@ -100,6 +103,9 @@
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
+		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
+		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
+		EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCloudKitConstants.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		EA9AE75D26076B6900D44221 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
@@ -230,6 +236,17 @@
 			path = share;
 			sourceTree = "<group>";
 		};
+		EA8E71092694972C007189B1 /* CloudKitHelper */ = {
+			isa = PBXGroup;
+			children = (
+				EA8E710A26949749007189B1 /* LWSyncEngine.swift */,
+				EA8E710E26949758007189B1 /* LWDiaryStore.swift */,
+				EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */,
+				EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */,
+			);
+			path = CloudKitHelper;
+			sourceTree = "<group>";
+		};
 		EA9AE7C4261078ED00D44221 /* setting VC */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +321,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EA8E71092694972C007189B1 /* CloudKitHelper */,
 				EA3189AE26934ED5001B9042 /* globalFuncs.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataManager.swift */,
 				EA9AE7B3260F634200D44221 /* userDefaultManager.swift */,
@@ -362,7 +380,6 @@
 				EADA85DA26248759007D1134 /* UIFont+.swift */,
 				EACB1721267A1BC1007BF160 /* UIScrollView+.swift */,
 				EACB1776267DC2FE007BF160 /* constants.swift */,
-				EA3189AA2691EBC2001B9042 /* Error+.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -506,10 +523,12 @@
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
+				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterModel.swift in Sources */,
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
 				EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */,
+				EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
@@ -528,6 +547,7 @@
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
+				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
 				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				EAA29E4925C5782300AA6971 /* pageViewContainer.swift in Sources */,
@@ -537,7 +557,7 @@
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataManager.swift in Sources */,
-				EA3189AB2691EBC2001B9042 /* Error+.swift in Sources */,
+				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
 				EAA29E4325C577DC00AA6971 /* customPageViewController.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
