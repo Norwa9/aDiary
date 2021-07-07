@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
-		EA3189B526934F6F001B9042 /* LWDiary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* LWDiary.swift */; };
+		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
 		EA38493F262EBAA3001B693F /* filterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38493E262EBAA3001B693F /* filterModel.swift */; };
 		EA384942262ED17A001B693F /* introduction.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* introduction.txt */; };
 		EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA3ABAD625DFE05400911902 /* demoDiaries.txt */; };
@@ -81,7 +81,7 @@
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
-		EA3189B426934F6F001B9042 /* LWDiary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiary.swift; sourceTree = "<group>"; };
+		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
 		EA38493E262EBAA3001B693F /* filterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterModel.swift; sourceTree = "<group>"; };
 		EA384941262ED17A001B693F /* introduction.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = introduction.txt; sourceTree = "<group>"; };
 		EA3ABAD625DFE05400911902 /* demoDiaries.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demoDiaries.txt; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 		EA3189B326934F44001B9042 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EA3189B426934F6F001B9042 /* LWDiary.swift */,
+				EA3189B426934F6F001B9042 /* diaryInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -533,7 +533,7 @@
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
-				EA3189B526934F6F001B9042 /* LWDiary.swift in Sources */,
+				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,

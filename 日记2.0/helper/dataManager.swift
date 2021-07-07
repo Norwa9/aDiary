@@ -14,6 +14,7 @@ struct DefaultsKeys
     static let diaryDict  = "diaryDict2.0"
     static let hasInitialized  = "hasInitialized"
     static let tags = "tags"
+    static let uploadedDiaries = "uploadedDiaries"
 }
 //单例
 //它是一个用以保存app数据的类。能够在几个类之间共享。
@@ -22,17 +23,19 @@ struct DefaultsKeys
 class DataContainerSingleton {
     static let sharedDataContainer = DataContainerSingleton()
     
-    //日记的纯文本
+    ///日记的纯文本
     var diaryDict = [String:diaryInfo]()
-    //todayVC展示的日记
+    ///todayVC展示的日记
     var selectedDiary:diaryInfo!
-    //用户保存的标签
+    ///用户保存的标签
     var tags = [String]()
+    ///已经上传到云端的日记
+    var uploadedDiaries:[String] = []
     
     var goToBackgroundObserver: AnyObject?
     init(){
         let defaults = UserDefaults.standard
-        //1、读取：从UserDefaults读取
+        //1、读取
         tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? ["学习","工作","生活"]
         if let savedNotes = defaults.object(forKey: DefaultsKeys.diaryDict) as? Data {
             let jsonDecoder = JSONDecoder()
@@ -42,7 +45,11 @@ class DataContainerSingleton {
                 print("Failed to load diary dict")
             }
         }
-        //2、保存：当app退出到后台，保存数据到UserDefaults
+        uploadedDiaries = defaults.value(forKey: DefaultsKeys.uploadedDiaries) as? [String] ?? [String]()
+        
+        //2、保存
+        defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
+        defaults.setValue(self.uploadedDiaries, forKey: DefaultsKeys.uploadedDiaries)
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
             self.saveDiaryDict()
         }
@@ -73,9 +80,6 @@ class DataContainerSingleton {
     func saveDiaryDict(){
         print("保存diaryDict数据")
         let defaults = UserDefaults.standard
-        
-        defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
-        
         let jsonEncoder = JSONEncoder()
         if let storedData = try? jsonEncoder.encode(self.diaryDict) {
             defaults.set(storedData, forKey:DefaultsKeys.diaryDict)

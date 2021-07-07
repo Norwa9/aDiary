@@ -262,6 +262,7 @@ final class LWSyncEngine{
     
     //MARK:-上传
     private func uploadLocalDataNotUploadedYet(){
+        os_log("%{public}@",log:log,type:.debug,#function)
         
     }
 }
