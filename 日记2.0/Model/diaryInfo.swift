@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 import CloudKit
 
-extension CKRecord.RecordType {
-    static let diary = "diary"
-}
+
 class diaryInfo:Codable{
     var date:String?
     var content:String = ""

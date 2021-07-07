@@ -264,5 +264,12 @@ final class LWSyncEngine{
     private func uploadLocalDataNotUploadedYet(){
         os_log("%{public}@",log:log,type:.debug,#function)
         
+        let diaries = buffer
+        
+        guard !diaries.isEmpty else {return}
+        
+        os_log("发现 %d 篇本地日记未上传", log: self.log, type: .debug, diaries.count)
+        
+        let records = diaries.map({ $0})
     }
 }
