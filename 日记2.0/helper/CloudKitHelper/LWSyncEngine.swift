@@ -92,7 +92,7 @@ final class LWSyncEngine{
             //2.同步未上传的本地数据
             self.uploadLocalDataNotUploadedYet()
             //3.获取其他设备向云端提交的变动
-            self.fetchRemoteChanges()
+//            self.fetchRemoteChanges()
             
         }
     }
