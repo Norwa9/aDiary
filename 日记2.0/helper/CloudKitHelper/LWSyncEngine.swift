@@ -8,6 +8,7 @@
 import Foundation
 import CloudKit
 import os.log
+import UIKit
 
 final class LWSyncEngine{
     let log = OSLog(subsystem: SyncConstants.subsystemName, category: String(describing: LWSyncEngine.self))
@@ -203,7 +204,7 @@ final class LWSyncEngine{
         notificationInfo.shouldSendContentAvailable = true
         
         subscription.notificationInfo = notificationInfo
-//        subscription.recordType = .diary
+        subscription.recordType = .diaryInfo
         
         let operaion = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
         
@@ -217,7 +218,7 @@ final class LWSyncEngine{
                        String(describing: error))
                 error.retryCloudKitOperationIfPossible(self.log) { self.createPrivateSubscriptionsIfNeeded() }
             }else{
-                os_log("Private subscription created successfully", log: self.log, type: .info)
+                os_log("私有数据库的订阅创建成功！", log: self.log, type: .info)
                 self.createdPrivateSubscription = true
             }
         }

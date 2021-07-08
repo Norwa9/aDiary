@@ -108,7 +108,7 @@ class monthVC: UIViewController {
                 filteredDiaries.reverse()//日期从大到小排列
                 flowLayout.dateSource = filteredDiaries
             DispatchQueue.main.async {
-                print("configure dataSource,reload data")
+//                print("configure dataSource,reload data")
                 reloadCollectionViewData()
             }
         }
@@ -390,7 +390,7 @@ class monthVC: UIViewController {
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false){
-        print("reloadCollectionViewData,row:\(forRow)")
+//        print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
             if !animated{
                 self.collectionView.reloadData()

@@ -19,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.registerForRemoteNotifications()
         return true
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("接收到远程通知！")
+        DiaryStore.shared.processSubscriptionNotification(with: userInfo)
+    }
 
     // MARK: UISceneSession Lifecycle
 
