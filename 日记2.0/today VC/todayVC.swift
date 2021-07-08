@@ -38,6 +38,8 @@ class todayVC: UIViewController {
     }()
     var picker = UIImagePickerController()
     
+    var diaryStore:DiaryStore!
+    
     func configureTodayView(){
         //textView
         

@@ -25,7 +25,7 @@ public final class DiaryStore: ObservableObject {
     private let defaults: UserDefaults
     private var syncEngine: LWSyncEngine?
     
-    init(diaries:[diaryInfo]){
+    init(diaries:[diaryInfo] = []){
         self.container = CKContainer(identifier: SyncConstants.containerIdentifier)
         
         self.defaults = UserDefaults.standard
@@ -34,10 +34,12 @@ public final class DiaryStore: ObservableObject {
             self.diaries = diaries
             save()
         }else{
+            //如果没有传值，则默认读取本地数据
             load()
         }
         
-        self.syncEngine = LWSyncEngine(defaults: self.defaults, initialDiaries: self.diaries)
+        //创建的同时
+        self.syncEngine = LWSyncEngine.init(defaults: self.defaults, initialDiaries: self.diaries)
         
         self.syncEngine?.didUpdateModels = { [weak self] diaries in
             self?.updateAfterSync(diaries)
