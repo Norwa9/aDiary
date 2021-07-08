@@ -30,6 +30,23 @@ enum RecordKey: String {
     case containsImage
     case images
 }
+//MARK:diaryInfo+
+extension diaryInfo {
+    ///解决冲突的方案
+    static func resolveConflict(clientRecord: CKRecord, serverRecord: CKRecord) -> CKRecord? {
+        // Most recent record wins. This might not be the best solution but YOLO.
+
+        guard let clientDate = clientRecord.modificationDate, let serverDate = serverRecord.modificationDate else {
+            return clientRecord
+        }
+
+        if clientDate > serverDate {
+            return clientRecord
+        } else {
+            return serverRecord
+        }
+    }
+}
 
 //MARK:-CKAsset+
 extension CKAsset {

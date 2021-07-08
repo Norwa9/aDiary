@@ -14,7 +14,7 @@ struct DefaultsKeys
     static let diaryDict  = "diaryDict3.0"
     static let hasInitialized  = "hasInitialized"
     static let tags = "tags"
-    static let uploadedDiaries = "uploadedDiaries"
+    static let DiaryDictPlistKey = "ADiaryPlist.plist"
 }
 //单例
 //它是一个用以保存app数据的类。能够在几个类之间共享。
@@ -29,8 +29,6 @@ class DataContainerSingleton {
     var selectedDiary:diaryInfo!
     ///用户保存的标签
     var tags = [String]()
-    ///已经上传到云端的日记
-    var uploadedDiaries:[String] = []
     
     var goToBackgroundObserver: AnyObject?
     init(){
@@ -45,11 +43,8 @@ class DataContainerSingleton {
                 print("Failed to load diary dict")
             }
         }
-        uploadedDiaries = defaults.value(forKey: DefaultsKeys.uploadedDiaries) as? [String] ?? [String]()
-        
         //2、保存
         defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
-        defaults.setValue(self.uploadedDiaries, forKey: DefaultsKeys.uploadedDiaries)
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
             self.saveDiaryDict()
         }

@@ -11,6 +11,13 @@ import os.log
 import CloudKit
 
 extension Error{
+    /// Whether this error is a CloudKit server record changed error, representing a record conflict
+    var isCloudKitConflict: Bool {
+        let effectiveError = self as? CKError
+
+        return effectiveError?.code == CKError.Code.serverRecordChanged
+    }
+    
     /// resolver是一个闭包，用于解决冲突，其返回的是无冲突的record。
     ///
     /// - Parameter : resolver: 一个闭包，接受两个参数分别为客户端上的record和服务器上的record。
