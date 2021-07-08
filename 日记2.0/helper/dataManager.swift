@@ -11,7 +11,7 @@ import UIKit
 //结构体用于定义保存到UserDefaults的数据的key
 struct DefaultsKeys
 {
-    static let diaryDict  = "diaryDict2.0"
+    static let diaryDict  = "diaryDict3.0"
     static let hasInitialized  = "hasInitialized"
     static let tags = "tags"
     static let uploadedDiaries = "uploadedDiaries"
