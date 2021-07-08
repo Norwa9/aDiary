@@ -566,7 +566,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     }
     
     func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("FSCalendar willDisplay cell")
+//        print("FSCalendar willDisplay cell")
         self.configure(cell: cell, for: date, at: monthPosition)
     }
     

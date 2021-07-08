@@ -190,7 +190,7 @@ final class LWSyncEngine{
     //MARK:-检查&创建数据库的订阅
     private func createPrivateSubscriptionsIfNeeded(){
         guard !createdPrivateSubscription else {
-            os_log("Already subscribed to private database changes, skipping subscription but checking if it really exists", log: log, type: .debug)
+            os_log("已经订阅私有数据库，跳过创建订阅，去检查该订阅是否真实存在。", log: log, type: .debug)
 
             checkSubscription()
 
@@ -262,9 +262,11 @@ final class LWSyncEngine{
     
     //MARK:-上传
     private func uploadLocalDataNotUploadedYet(){
-        os_log("%{public}@",log:log,type:.debug,#function)
+        //离线期间产生的数据在此上传
+        os_log("开始上传本地未同步的数据...",log:log,type:.debug)
         
-        let diaries = buffer
+        //如果ckData未被赋值，表示该日记从未被上传到云端
+        let diaries = buffer.filter({ $0.ckData == nil })
         
         guard !diaries.isEmpty else {return}
         
@@ -276,7 +278,7 @@ final class LWSyncEngine{
     }
     
     func upload(_ diray: diaryInfo) {
-        os_log("%{public}@", log: log, type: .debug, #function)
+        os_log("开始上传...", log: log, type: .debug)
 
         buffer.append(diray)
 
@@ -286,7 +288,7 @@ final class LWSyncEngine{
     private func uploadRecords(_ records: [CKRecord]) {
         guard !records.isEmpty else { return }
 
-        os_log("上传%d个记录", log: log, type: .debug, #function, records.count)
+        os_log("开始上传 %d 个修改(或新增)的记录", log: log, type: .debug,records.count)
 
         let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)
 
@@ -317,13 +319,13 @@ final class LWSyncEngine{
             guard let self = self else { return }
 
             if let error = error {
-                os_log("Failed to upload records: %{public}@", log: self.log, type: .error, String(describing: error))
+                os_log("上传记录失败: %{public}@", log: self.log, type: .error, String(describing: error))
 
                 DispatchQueue.main.async {
                     self.handleUploadError(error, records: records)
                 }
             } else {
-                os_log("Successfully uploaded %{public}d record(s)", log: self.log, type: .info, records.count)
+                os_log("成功上传%d个记录！", log: self.log, type: .info, records.count)
 
                 DispatchQueue.main.async {
                     guard let serverRecords = serverRecords else { return }
@@ -362,6 +364,7 @@ final class LWSyncEngine{
         let models: [diaryInfo] = records.compactMap { r in
             guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { return nil }
 
+            //赋值ckData，表示该日记已经在云端有副本
             model.ckData = r.encodedSystemFields
 
             return model
@@ -375,10 +378,11 @@ final class LWSyncEngine{
     
     //MARK:-删除
     func delete(_ diray: diaryInfo) {
-        fatalError("Deletion not implemented")
+        print("警告：还没实现删除逻辑！")
+//        fatalError("Deletion not implemented")
     }
     
-    //MARK:-监听云端数据库的变化
+    //MARK:-获取云端数据库的变化
     private lazy var privateChangeTokenKey: String = {
         return "TOKEN-\(SyncConstants.customZoneID.zoneName)"
     }()
@@ -416,8 +420,9 @@ final class LWSyncEngine{
         }
     }
     
+    ///获取云端的变动
     func fetchRemoteChanges() {
-        os_log("%{public}@", log: log, type: .debug, #function)
+        os_log("开始获取远程的改动...", log: log, type: .debug)
 
         var changedRecords: [CKRecord] = []
         var deletedRecordIDs: [CKRecord.ID] = []
@@ -438,18 +443,18 @@ final class LWSyncEngine{
         operation.fetchAllChanges = true
 
         operation.recordZoneChangeTokensUpdatedBlock = { [weak self] _, changeToken, _ in
-            //存储changeToken以便在后续的提取中使用
             guard let self = self else { return }
-
+            os_log("更改令牌发生变动",log: self.log,type: .debug)
             guard let changeToken = changeToken else { return }
-
+            
+            //存储changeToken以便在后续的提取中使用
             self.privateChangeToken = changeToken
         }
         
-        //如果有错误，处理错误
+        //完成zone的取回
         operation.recordZoneFetchCompletionBlock = { [weak self] _, token, _, _, error in
             guard let self = self else { return }
-
+            //如果有错误，处理错误
             if let error = error as? CKError {
                 os_log("Failed to fetch record zone changes: %{public}@",
                        log: self.log,
@@ -466,7 +471,8 @@ final class LWSyncEngine{
                     error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
                 }
             } else {
-                os_log("Commiting new change token", log: self.log, type: .debug)
+//                os_log("Commiting new change token", log: self.log, type: .debug)
+                os_log("获取到新的更改令牌(change token)", log: self.log, type: .debug)
 
                 self.privateChangeToken = token
             }
@@ -491,7 +497,7 @@ final class LWSyncEngine{
 
                 error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
             } else {
-                os_log("Finished fetching record zone changes", log: self.log, type: .info)
+                os_log("自定义zone空间内的所有记录变动情况(新增/修改/删除))获取完毕！", log: self.log, type: .info)
 
                 DispatchQueue.main.async { self.commitServerChangesToDatabase(with: changedRecords, deletedRecordIDs: deletedRecordIDs) }
             }
@@ -506,13 +512,13 @@ final class LWSyncEngine{
     ///获取云端的变化，更新本地数据库
     private func commitServerChangesToDatabase(with changedRecords: [CKRecord], deletedRecordIDs: [CKRecord.ID]) {
         guard !changedRecords.isEmpty || !deletedRecordIDs.isEmpty else {
-            os_log("Finished record zone changes fetch with no changes", log: log, type: .info)
+            os_log("获取zone内的所有记录变动情况完毕：云端没有发生任何变动(新增/修改/删除)", log: log, type: .info)
             return
         }
 
-        os_log("Will commit %d changed record(s) and %d deleted record(s) to the database", log: log, type: .info, changedRecords.count, deletedRecordIDs.count)
+        os_log("云端有%d个记录发生了新增/修改，%d个记录被删除。将这些变动同步到本地数据库...", log: log, type: .info, changedRecords.count, deletedRecordIDs.count)
 
-        //Record转Model
+        //Record解码Model
         let models: [diaryInfo] = changedRecords.compactMap { record in
             do {
                 return try diaryInfo(record: record)

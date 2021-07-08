@@ -261,11 +261,7 @@ class monthCell: UICollectionViewCell {
     //读取日记的所有图片
     func fillImages(diary:diaryInfo){
         let iM = imageManager(diary: diary)
-        var contains = diary.containsImage
-        if(!contains){
-            print("手动检查照片")
-            contains = iM.checkifcontainsImage()
-        }
+        let contains = diary.containsImage
         
         self.albumView.snp.updateConstraints { (make) in
             make.height.equalTo(contains ? monthCell.KphotoHeight : 0)

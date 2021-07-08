@@ -20,13 +20,13 @@ class diaryInfo:Codable{
     var tags:[String]
     var mood:moodTypes
     var containsImage:Bool
-    var images:[Data]
+    var images:[Data?]
     
     struct  RecordError:LocalizedError {
         var localizedDescription:String
         
         static func missingKey(_ key: RecordKey) -> RecordError {
-            RecordError(localizedDescription: "Missing required key \(key.rawValue)")
+            RecordError(localizedDescription: "Missing required key: \(key.rawValue)")
         }
     }
     
@@ -48,7 +48,7 @@ class diaryInfo:Codable{
         return r
     }
     
-    ///使用record来初始化diaryInfo类
+    ///解码record来初始化diaryInfo类
     init(record: CKRecord) throws {
         guard let date = record[.date] as? String else {
             throw RecordError.missingKey(.date)
@@ -69,10 +69,10 @@ class diaryInfo:Codable{
             throw RecordError.missingKey(.containsImage)
         }
         
-        var imagesData:[Data] = []
+        var imagesData:[Data?] = []
         if let imagesAsset = record[.images] as? [CKAsset] {
             for asset in imagesAsset {
-                imagesData.append(asset.data!)
+                imagesData.append(asset.data)
             }
         }
 

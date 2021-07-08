@@ -481,6 +481,9 @@ extension TextFormatter{
         
         DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
         DataContainerSingleton.sharedDataContainer.saveDiaryDict()
+        
+        //同时上传到云端
+        DiaryStore.shared.addOrUpdate(diary)
     }
     
     

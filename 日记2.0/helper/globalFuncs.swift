@@ -109,9 +109,7 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
     //2，返回指定年/月日记
     for i in 1...howManyDaysInThisMonth(year: forYear, month: forMonth){
         let timeString = "\(forYear)年\(forMonth)月\(i)日"
-//        print(timeString)
-        let diary = diaryForDate(atTime: timeString)
-//        print(diary)
+        let diary = DataContainerSingleton.sharedDataContainer.diaryDict[timeString]//字典元素不存在将返回nil
         tempDiaries.append(diary)
     }
     return tempDiaries
@@ -201,13 +199,4 @@ func containSubArr(selectedTags: [String], diaryTags: [String]) -> Bool{
         }
     }
     return true
-}
-
-//MARK:-返回指定日期的diaryInfo
-func diaryForDate(atTime:String) -> diaryInfo?{
-    if let selectedDiary = DataContainerSingleton.sharedDataContainer.diaryDict[atTime]{
-        return selectedDiary
-    }else{
-        return nil
-    }
 }

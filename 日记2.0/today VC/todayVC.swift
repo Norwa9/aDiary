@@ -240,6 +240,10 @@ extension todayVC{
     }
     
     func loadTodayData(){
+        //配置日记存储器
+        //同时获取远端数据，上传本地未上传的数据
+        diaryStore =  DiaryStore.shared
+        
         todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
         //如果没有选择新的日期，不要刷新避免读取一样的内容
         if lastDiary == todayDiary.date{
