@@ -13,10 +13,32 @@ import CloudKit
  */
 
 extension CKRecord.RecordType {
-    static let diary = "diary"
+    static let diaryInfo = "diaryInfo"
 }
 
 extension diaryInfo{
+    struct  RecordError:LocalizedError {
+        var localizedDescription:String
+        
+        static func missingKey(_ key: RecordKey) -> RecordError {
+            RecordError(localizedDescription: "Missing required key \(key.rawValue)")
+        }
+    }
+    
+    enum RecordKey: String {
+        case date
+        case content
+        case islike
+        case tags
+        case mood
+        case uuidofPictures
+        case containsImage
+    }
+    
+    var recordID:CKRecord.ID{
+        return CKRecord.ID(recordName: ,zoneID: <#T##CKRecordZone.ID#>)
+    }
+    
     var record: CKRecord {
         let r = CKRecord(recordType: .diary, recordID: recordID)
 
