@@ -137,7 +137,7 @@ public final class DiaryStore: ObservableObject {
     }
     
     private func save() {
-        os_log("save()", log: log, type: .debug, #function)
+        os_log("正在数据库保存到本地磁盘...", log: log, type: .debug, #function)
         
         do {
             let data = try PropertyListEncoder().encode(diaries)
@@ -145,6 +145,7 @@ public final class DiaryStore: ObservableObject {
         } catch {
             os_log("Failed to save diaries: %{public}@", log: self.log, type: .error, String(describing: error))
         }
+        os_log("保存数据库成功！", log: log, type: .debug, #function)
     }
     
     private func load() {

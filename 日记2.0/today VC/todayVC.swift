@@ -181,7 +181,7 @@ extension todayVC:UITextViewDelegate{
         if todayDiary.month == monthVC.selectedMonth{
 //            print("月份:\(todayDiary.month),刷新行:\(todayDiary.row + 1)th")
             //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
-            print("done：row\(todayDiary.row)")
+//            print("done：row\(todayDiary.row)")
             monthVC.reloadCollectionViewData(forRow: todayDiary.row)
             monthVC.calendar.reloadData()
         }

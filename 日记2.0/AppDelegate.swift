@@ -16,13 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //注册静默通知，以监听iCloud数据库的变化
-        UIApplication.shared.registerForRemoteNotifications()
+//        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("接收到远程通知！")
-        DiaryStore.shared.processSubscriptionNotification(with: userInfo)
+//        DiaryStore.shared.processSubscriptionNotification(with: userInfo)
     }
 
     // MARK: UISceneSession Lifecycle
