@@ -452,7 +452,16 @@ final class LWSyncEngine{
             self.privateChangeToken = changeToken
         }
         
-        //完成zone的取回
+        //当发现有改动数据需要同步
+        operation.recordChangedBlock = { changedRecords.append($0) }
+        //当发现有删除数据需要同步
+        operation.recordWithIDWasDeletedBlock = { recordID, _ in
+            // In the future we may need to use the second arg to this closure and map
+            // between record types and deleted record IDs (when we need to sync more types)
+            deletedRecordIDs.append(recordID)
+        }
+        
+        //完成所有的变动获取后执行
         operation.recordZoneFetchCompletionBlock = { [weak self] _, token, _, _, error in
             guard let self = self else { return }
             //如果有错误，处理错误
@@ -479,13 +488,7 @@ final class LWSyncEngine{
             }
         }
 
-        operation.recordChangedBlock = { changedRecords.append($0) }
-
-        operation.recordWithIDWasDeletedBlock = { recordID, _ in
-            // In the future we may need to use the second arg to this closure and map
-            // between record types and deleted record IDs (when we need to sync more types)
-            deletedRecordIDs.append(recordID)
-        }
+        
 
         operation.fetchRecordZoneChangesCompletionBlock = { [weak self] error in
             guard let self = self else { return }
