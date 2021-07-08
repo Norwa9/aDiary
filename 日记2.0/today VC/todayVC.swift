@@ -229,12 +229,6 @@ extension todayVC:UITextViewDelegate{
             todayDiary = selectedDiary
         }
         
-        //如果没有选择新的日期，不要刷新避免读取一样的内容
-        if lastDiary == todayDiary.date{
-            return
-        }
-        lastDiary = todayDiary.date
-        
         //读取textView
         let textFormatter = TextFormatter(textView: self.textView)
         if todayDiary.content.count == 0{
