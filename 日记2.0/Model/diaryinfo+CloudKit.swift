@@ -35,19 +35,19 @@ extension diaryInfo{
         case containsImage
     }
     
-    var recordID:CKRecord.ID{
-        return CKRecord.ID(recordName: ,zoneID: <#T##CKRecordZone.ID#>)
-    }
-    
-    var record: CKRecord {
-        let r = CKRecord(recordType: .diary, recordID: recordID)
-
-        r[.title] = title
-        r[.subtitle] = subtitle
-        r[.ingredients] = ingredients
-        r[.instructions] = instructions
-        r[.image] = imageAsset
-
-        return r
-    }
+//    var recordID:CKRecord.ID{
+//        return CKRecord.ID(recordName: ,zoneID: <#T##CKRecordZone.ID#>)
+//    }
+//    
+//    var record: CKRecord {
+//        let r = CKRecord(recordType: .diary, recordID: recordID)
+//
+//        r[.title] = title
+//        r[.subtitle] = subtitle
+//        r[.ingredients] = ingredients
+//        r[.instructions] = instructions
+//        r[.image] = imageAsset
+//
+//        return r
+//    }
 }

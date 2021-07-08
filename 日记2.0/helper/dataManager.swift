@@ -111,6 +111,34 @@ class DataContainerSingleton {
         }
         
     }
+    
+    //MARK:-导出diaryDict为plist文件
+    ///存储diaryDict的plist文件。
+    ///返回本地文件地址的URL
+    func savePlistFile()->URL{
+        let baseURL: URL
+        let fileManager = FileManager.default
+        baseURL = fileManager.temporaryDirectory
+
+        let url = baseURL.appendingPathComponent("ADiary.plist")
+
+        if !fileManager.fileExists(atPath: url.path) {
+            print("Creating store file at \(url.path)")
+
+            if !fileManager.createFile(atPath: url.path, contents: nil, attributes: nil) {
+                print("Failed to create store file at \(url.path)")
+            }
+        }
+        
+        do {
+            let data = try PropertyListEncoder().encode(self.diaryDict)
+            try data.write(to: url)
+        } catch {
+            print("fail to save diaryDict")
+        }
+        
+        return url
+    }
 }
 
 

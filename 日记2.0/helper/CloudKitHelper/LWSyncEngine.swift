@@ -203,7 +203,7 @@ final class LWSyncEngine{
         notificationInfo.shouldSendContentAvailable = true
         
         subscription.notificationInfo = notificationInfo
-        subscription.recordType = .diary
+//        subscription.recordType = .diary
         
         let operaion = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
         

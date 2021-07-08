@@ -150,12 +150,18 @@ class settingViewController: UIViewController {
     ///导出
     @IBAction func exportAll(){
         showSpinner(onView: self.view)
-    
-        
         exportManager.shared.exportAll(){ [self] in
             print("stopAnimating")
             removeSpinner()
         }
+//        let fileURL = DataContainerSingleton.sharedDataContainer.savePlistFile()
+//        do {
+//            let plistData = try Data(contentsOf: fileURL)
+//            let ac = UIActivityViewController(activityItems: [plistData,fileURL], applicationActivities: nil)
+//            self.present(ac, animated: true, completion: nil)
+//        } catch {
+//            print("fail to load plistFile")
+//        }
         
     }
     
