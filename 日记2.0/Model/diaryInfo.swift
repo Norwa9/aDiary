@@ -43,6 +43,7 @@ class diaryInfo:Codable{
         r[.tags] = tags
         r[.mood] = mood.rawValue
         r[.containsImage] = containsImage
+        r[.images] = images
 
         return r
     }
