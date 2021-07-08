@@ -9,16 +9,15 @@ import Foundation
 import UIKit
 
 //MARK:-导入用户引导
-func importIntroduction(){
+func LoadIntroText(){
     if !userDefaultManager.hasInitialized{
         userDefaultManager.hasInitialized = true
-        let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
-        let dateTodayString = getTodayDate()
-        if let diary = diaryDict[dateTodayString]{
-            if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
-                if let textContents = try? String(contentsOf: levelFileURL) {
-                    diary.content = textContents
-                }
+        let date = getTodayDate()
+        let introDiary = diaryInfo(dateString: date)
+        if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
+            if let textContents = try? String(contentsOf: levelFileURL) {
+                introDiary.content = textContents
+                DataContainerSingleton.sharedDataContainer.diaryDict[date] = introDiary
             }
         }
     }

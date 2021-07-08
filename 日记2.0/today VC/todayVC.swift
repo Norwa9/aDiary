@@ -211,38 +211,11 @@ extension todayVC:UITextViewDelegate{
         let res = formatter.tappedAttchment(in: characterRange)
         return res
     }
- 
-}
-
-//MARK:-生命周期
-extension todayVC{
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        configureTopbar()
-        configureTodayView()
-        loadTodayData()
-    }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        iCloudHelper.shared.fetchRecordsFromCloud{
-//            results in
-//            print("results.count:\(results.count)")
-//            for diary in results{
-//                DataContainerSingleton.sharedDataContainer.diaryDict[diary.date!] = diary
-//            }
-//        }
-    }
-    
+//MARK:-读取日记内容
     func loadTodayData(){
         //配置日记存储器
-        //同时获取远端数据，上传本地未上传的数据
-        diaryStore =  DiaryStore.shared
+        diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
         
         todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
         //如果没有选择新的日期，不要刷新避免读取一样的内容
@@ -269,6 +242,31 @@ extension todayVC{
         topbar.button1.islike = todayDiary.islike
         topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood.rawValue)
     }
+
+}
+
+//MARK:-生命周期
+extension todayVC{
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.configureTopbar()
+        self.configureTodayView()
+        self.loadTodayData()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+    }
+    
+    
     
     
    

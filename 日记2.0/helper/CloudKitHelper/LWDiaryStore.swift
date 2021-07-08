@@ -33,7 +33,7 @@ public final class DiaryStore: ObservableObject {
         
         self.defaults = UserDefaults.standard
         
-        
+        //第一次下载App，进入App后就会有一篇引导日记。
         let locolDiaries = Array(DataContainerSingleton.sharedDataContainer.diaryDict.values)
         
         /*
@@ -93,7 +93,8 @@ public final class DiaryStore: ObservableObject {
             DataContainerSingleton.sharedDataContainer.diaryDict[updatedDiary.date] = updatedDiary
             
             //修改的记录同步到本地数据库
-            if let idx = self.diaries.firstIndex(where: { $0.id == updatedDiary.id }){
+            if let idx = self.diaries.firstIndex(where: { $0.date == updatedDiary.date
+            }){
                 self.diaries[idx] = updatedDiary
             }
             //新增的记录同步到本地数据库

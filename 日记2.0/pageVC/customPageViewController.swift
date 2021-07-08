@@ -35,10 +35,6 @@ class customPageViewController: UIPageViewController {
         self.delegate = self
         self.dataSource = self
         
-        //初始化日记数据库
-//        initialDiaryDict()
-        importIntroduction()
-        
         //链接
         for vc in viewControllerList {
             if let vc = vc as? monthVC{

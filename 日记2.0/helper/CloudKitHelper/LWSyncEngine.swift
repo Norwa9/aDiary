@@ -472,7 +472,7 @@ final class LWSyncEngine{
                     error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
                 }
             } else {
-//                os_log("Commiting new change token", log: self.log, type: .debug)
+                //os_log("Commiting new change token", log: self.log, type: .debug)
                 os_log("获取到新的更改令牌(change token)", log: self.log, type: .debug)
 
                 self.privateChangeToken = token

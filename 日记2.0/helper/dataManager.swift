@@ -58,7 +58,8 @@ class DataContainerSingleton {
         if let diary = diaryDict[dateTodayString]{
             selectedDiary =  diary
         }else{
-            diaryDict[dateTodayString] = diaryInfo(dateString: dateTodayString)
+            let newEmptyDiary = diaryInfo(dateString: dateTodayString)
+            diaryDict[dateTodayString] = newEmptyDiary
             selectedDiary = diaryDict[dateTodayString]
         }
     }

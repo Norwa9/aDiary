@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        //读取引导文案到今日
+        LoadIntroText()
+        
         //注册静默通知，以监听iCloud数据库的变化
 //        UIApplication.shared.registerForRemoteNotifications()
         return true
