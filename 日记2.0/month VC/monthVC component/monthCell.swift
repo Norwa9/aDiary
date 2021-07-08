@@ -260,13 +260,10 @@ class monthCell: UICollectionViewCell {
     
     //读取日记的所有图片
     func fillImages(diary:diaryInfo){
-        print("fill fillImages,date:\(diary.date!)")
         let iM = imageManager(diary: diary)
-        var contains = false
-        if let flag = diary.containsImage{
-            contains = flag
-        }else{
-//            print("检查日记是否含有照片，并设置")
+        var contains = diary.containsImage
+        if(!contains){
+            print("手动检查照片")
             contains = iM.checkifcontainsImage()
         }
         
@@ -303,7 +300,7 @@ class monthCell: UICollectionViewCell {
                 self.albumView.fadeIn()//渐显动画
             }else{
                 //self.row表示是当前点击的cell
-                print("diary.date:\(diary.date!) != self.diary.date:\(self.diary.date!)")
+                print("diary.date:\(diary.date) != self.diary.date:\(self.diary.date)")
             }
         }
     }

@@ -14,7 +14,6 @@ class exportManager{
     func exportAll(completion: @escaping() -> Void){
         let todayVC = UIApplication.getTodayVC()
         guard let textView = todayVC.textView else{return}
-        let textFormatter = TextFormatter(textView: textView)
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
         
@@ -44,7 +43,7 @@ class exportManager{
                 .foregroundColor : APP_GREEN_COLOR()
             ]
             for date in orderedDates{
-                if let aString = textFormatter.loadAttributedString(date_string: date),aString.length != 0{
+                if let aString = TextFormatter.loadAttributedString(date_string: date),aString.length != 0{
                     let dateTitle = NSAttributedString(string: date, attributes: titleAttributes)
                     alldiaryString.append(dateTitle)
                     alldiaryString.insert(NSAttributedString(string: "\n"), at: alldiaryString.length)

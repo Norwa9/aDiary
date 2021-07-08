@@ -17,37 +17,38 @@ extension CKRecord.RecordType {
 }
 
 extension diaryInfo{
-    struct  RecordError:LocalizedError {
-        var localizedDescription:String
-        
-        static func missingKey(_ key: RecordKey) -> RecordError {
-            RecordError(localizedDescription: "Missing required key \(key.rawValue)")
+    
+}
+
+enum RecordKey: String {
+    case date
+    case content
+    case islike
+    case tags
+    case mood
+    case uuidofPictures
+    case containsImage
+}
+
+//MARK:-CKRecord+
+extension CKRecord {
+
+    var encodedSystemFields: Data {
+        let coder = NSKeyedArchiver(requiringSecureCoding: true)
+        encodeSystemFields(with: coder)//给record的元数据编码
+        coder.finishEncoding()
+
+        return coder.encodedData
+    }
+
+}
+extension CKRecord {
+    subscript(key: RecordKey) -> Any? {
+        get {
+            return self[key.rawValue]
+        }
+        set {
+            self[key.rawValue] = newValue as? CKRecordValue
         }
     }
-    
-    enum RecordKey: String {
-        case date
-        case content
-        case islike
-        case tags
-        case mood
-        case uuidofPictures
-        case containsImage
-    }
-    
-//    var recordID:CKRecord.ID{
-//        return CKRecord.ID(recordName: ,zoneID: <#T##CKRecordZone.ID#>)
-//    }
-//    
-//    var record: CKRecord {
-//        let r = CKRecord(recordType: .diary, recordID: recordID)
-//
-//        r[.title] = title
-//        r[.subtitle] = subtitle
-//        r[.ingredients] = ingredients
-//        r[.instructions] = instructions
-//        r[.image] = imageAsset
-//
-//        return r
-//    }
 }

@@ -21,8 +21,8 @@ class imageManager{
     func extractImages(callback: @escaping (_ images:[UIImage],_ diary:diaryInfo)->()) {
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
-            guard let date_string = diary.date else{return}
-            guard let aString = self.loadAttributedString(date_string: date_string) else{return}
+            let date_string = diary.date
+            guard let aString = TextFormatter.loadAttributedString(date_string: date_string) else{return}
             var images:[UIImage] = []
             aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
                 if let attachment = object as? NSTextAttachment{
@@ -44,45 +44,13 @@ class imageManager{
         
     }
     
-    
-    func loadAttributedString(date_string:String) -> NSAttributedString?{
-        if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-            let path_file_name = dir.appendingPathComponent (date_string)
-            do{
-                let aString = try NSAttributedString(
-                    url: path_file_name,
-                    options: [.documentType:NSAttributedString.DocumentType.rtfd,
-                              .characterEncoding:String.Encoding.utf8],
-                    documentAttributes: nil)
-                return aString
-            }catch{
-                //
-            }
-        }
-        return nil
-    }
-    
     //如果diary的containsImage属性为nil（即未初始化），
     //则调用该函数手动更新，检查、更新该日记是否有图片
     func checkifcontainsImage()->Bool{
-        guard let date_string = diary.date else {
-            return false
-        }
-        var attrString:NSAttributedString?
+        let date_string = diary.date
+        
         var containsImage:Bool!
-        if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-            let path_file_name = dir.appendingPathComponent (date_string)
-            do{
-                attrString = try NSAttributedString(
-                    url: path_file_name,
-                    options: [.documentType:NSAttributedString.DocumentType.rtfd,
-                              .characterEncoding:String.Encoding.utf8],
-                    documentAttributes: nil)
-                
-            }catch{
-                //
-            }
-        }
+        let attrString = TextFormatter.loadAttributedString(date_string: date_string)
         guard let aString = attrString else{return false}
         containsImage = false
         aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in

@@ -97,7 +97,7 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
         dateFomatter.dateFormat = "yyyy年M月d日"
         //返回日期降序的所有日记
         return tempDiaries.sorted { (d1, d2) -> Bool in
-            if let date1 = dateFomatter.date(from: d1!.date!) ,let date2 = dateFomatter.date(from: d2!.date!){
+            if let date1 = dateFomatter.date(from: d1!.date) ,let date2 = dateFomatter.date(from: d2!.date){
                 if date1.compare(date2) ==  .orderedAscending{
                     return true
                 }
@@ -160,7 +160,7 @@ func filterDiary()->[diaryInfo]{
     switch sortStyle {
         case .dateDescending:
             return resultDiaries.sorted { (d1, d2) -> Bool in
-                if let date1 = dateFomatter.date(from: d1.date!) ,let date2 = dateFomatter.date(from: d2.date!){
+                if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
                     if date1.compare(date2) ==  .orderedDescending{
                         return true
                     }
@@ -169,7 +169,7 @@ func filterDiary()->[diaryInfo]{
             }
         case .dateAscending:
             return resultDiaries.sorted { (d1, d2) -> Bool in
-                if let date1 = dateFomatter.date(from: d1.date!) ,let date2 = dateFomatter.date(from: d2.date!){
+                if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
                     if date1.compare(date2) ==  .orderedAscending{
                         return true
                     }
@@ -182,7 +182,7 @@ func filterDiary()->[diaryInfo]{
             return resultDiaries.sorted(by:{$0.content.count < $1.content.count})
         case .like:
             return resultDiaries.filter { $0.islike }.sorted { (d1, d2) -> Bool in
-                if let date1 = dateFomatter.date(from: d1.date!) ,let date2 = dateFomatter.date(from: d2.date!){
+                if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
                     if date1.compare(date2) ==  .orderedDescending{
                         return true
                     }

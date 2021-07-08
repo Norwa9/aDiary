@@ -474,10 +474,7 @@ extension TextFormatter{
     }
     
     func savePlainText(with diary:diaryInfo){
-        guard let date = diary.date else {
-            print("savePlainText 失败")
-            return
-        }
+        let date = diary.date
         
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
         diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
@@ -488,30 +485,13 @@ extension TextFormatter{
     
     
     func saveRichText(with diary:diaryInfo){
-        guard let aString = self.textView.attributedText,let date_string = diary.date else{
+        guard let aString = self.textView.attributedText else{
             print("TextFormatter saveText - 保存失败")
             return
         }
-        //1、保存attributedString
-        do {
-            let file = try aString.fileWrapper (
-                from: NSMakeRange(0, aString.length),
-                documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd
-                                     ,.characterEncoding:String.Encoding.utf8])
-            
-            if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-                let baseURL = dir.appendingPathComponent(DefaultsKeys.diaryDict)
-                let path_file_name = baseURL.appendingPathComponent (date_string)
-                do {
-                    try file.write (to: path_file_name, options: .atomic, originalContentsURL: nil)
-                } catch {
-                    // Error handling
-                }
-            }
-        } catch {
-            //Error handling
-        }
-        
+        let date_string = diary.date
+        //1、吸入attributedString
+        TextFormatter.writeRTFD(aString: aString, date_string: date_string)
         //2、标记保存的日记中是否含有照片
         DataContainerSingleton.sharedDataContainer.diaryDict[date_string]?.containsImage = false
         aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
@@ -525,6 +505,28 @@ extension TextFormatter{
         }
         )
     }
+    
+    ///富文本文件写入手机内存
+    static func writeRTFD(aString:NSAttributedString,date_string:String){
+        do {
+            let file = try aString.fileWrapper (
+                from: NSMakeRange(0, aString.length),
+                documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd
+                                     ,.characterEncoding:String.Encoding.utf8])
+            
+            if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
+                let path_file_name = dir.appendingPathComponent (DefaultsKeys.diaryDict + date_string)
+                do {
+                    try file.write (to: path_file_name, options: .atomic, originalContentsURL: nil)
+                } catch {
+                    print("写入富文本失败")
+                }
+            }
+        } catch {
+            //Error handling
+        }
+    }
+    
 }
 
 //MARK:-读取
@@ -534,7 +536,7 @@ extension TextFormatter{
         self.setLeftTypingAttributes()//内容居左
         let textViewBounds = textView.bounds
         DispatchQueue.global(qos: .default).async {
-            if let aString = self.loadAttributedString(date_string: diary.date!){
+            if let aString = TextFormatter.loadAttributedString(date_string: diary.date){
                 //异步读取attributedString、异步处理图片bounds
                 let preparedText = aString.processAttrString(bounds: textViewBounds)
                 DispatchQueue.main.async {
@@ -551,10 +553,9 @@ extension TextFormatter{
     }
     
     ///根据日期string读取从文件目录富文本
-    func loadAttributedString(date_string:String) -> NSAttributedString?{
+    static func loadAttributedString(date_string:String) -> NSAttributedString?{
         if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-            let baseURL = dir.appendingPathComponent(DefaultsKeys.diaryDict)
-            let path_file_name = baseURL.appendingPathComponent (date_string)
+            let path_file_name = dir.appendingPathComponent (DefaultsKeys.diaryDict + date_string)
             do{
                 let aString = try NSAttributedString(
                     url: path_file_name,
@@ -602,7 +603,7 @@ extension TextFormatter{
 //MARK:-分享
 extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
-        let aString = self.loadAttributedString(date_string: diary.date!) ?? self.rawtextToRichtext(diary: diary)
+        let aString = TextFormatter.loadAttributedString(date_string: diary.date) ?? self.rawtextToRichtext(diary: diary)
         //异步读取attributedString、异步处理图片bounds
         let preparedText = aString.processAttrString(bounds: self.textView.bounds)
         self.textView.attributedText = preparedText
