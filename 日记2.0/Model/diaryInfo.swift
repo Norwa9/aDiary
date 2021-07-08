@@ -12,7 +12,7 @@ import CloudKit
 
 class diaryInfo:Codable{
     var ckData:Data? = nil
-        
+    
     var id:String
     var date:String
     var content:String
@@ -20,7 +20,7 @@ class diaryInfo:Codable{
     var tags:[String]
     var mood:moodTypes
     var containsImage:Bool
-    
+    var images:[Data]
     
     struct  RecordError:LocalizedError {
         var localizedDescription:String
@@ -67,6 +67,13 @@ class diaryInfo:Codable{
         guard let containsImage = record[.containsImage] as? Int else {
             throw RecordError.missingKey(.containsImage)
         }
+        
+        var imagesData:[Data] = []
+        if let imagesAsset = record[.images] as? [CKAsset] {
+            for asset in imagesAsset {
+                imagesData.append(asset.data!)
+            }
+        }
 
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName
@@ -76,6 +83,7 @@ class diaryInfo:Codable{
         self.tags = tags
         self.mood = moodTypes(rawValue: mood)!
         self.containsImage = (containsImage != 0)
+        self.images = imagesData
     }
     
     
@@ -87,6 +95,7 @@ class diaryInfo:Codable{
         self.tags = []
         self.mood = .calm
         self.containsImage = false
+        self.images = []
     }
     
     

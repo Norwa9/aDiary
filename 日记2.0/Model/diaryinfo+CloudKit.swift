@@ -28,6 +28,15 @@ enum RecordKey: String {
     case mood
     case uuidofPictures
     case containsImage
+    case images
+}
+
+//MARK:-CKAsset+
+extension CKAsset {
+    var data: Data? {
+        guard let url = fileURL else { return nil }
+        return try? Data(contentsOf: url)
+    }
 }
 
 //MARK:-CKRecord+
