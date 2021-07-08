@@ -138,29 +138,33 @@ public final class DiaryStore: ObservableObject {
     }
     
     private func save() {
+        print("尚未实现本地数据库")
+        return
         os_log("正在数据库保存到本地磁盘...", log: log, type: .debug, #function)
-        
-        do {
-            let data = try PropertyListEncoder().encode(diaries)
-            try data.write(to: storeURL)
-        } catch {
-            os_log("Failed to save diaries: %{public}@", log: self.log, type: .error, String(describing: error))
-        }
+//
+//        do {
+//            let data = try PropertyListEncoder().encode(diaries)
+//            try data.write(to: storeURL)
+//        } catch {
+//            os_log("Failed to save diaries: %{public}@", log: self.log, type: .error, String(describing: error))
+//        }
         os_log("保存数据库成功！", log: log, type: .debug, #function)
     }
     
     private func load() {
+        print("尚未实现本地数据库")
+        return
         os_log("读取", log: log, type: .debug, #function)
         
-        do {
-            let data = try Data(contentsOf: storeURL)
-
-            guard !data.isEmpty else { return }
-
-            self.diaries = try PropertyListDecoder().decode([diaryInfo].self, from: data)
-        } catch {
-            os_log("Failed to load diaries: %{public}@", log: self.log, type: .error, String(describing: error))
-        }
+//        do {
+//            let data = try Data(contentsOf: storeURL)
+//
+//            guard !data.isEmpty else { return }
+//
+//            self.diaries = try PropertyListDecoder().decode([diaryInfo].self, from: data)
+//        } catch {
+//            os_log("Failed to load diaries: %{public}@", log: self.log, type: .error, String(describing: error))
+//        }
     }
     
     public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {

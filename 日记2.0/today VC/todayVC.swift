@@ -9,7 +9,15 @@ import UIKit
 import FMPhotoPicker
 
 class todayVC: UIViewController {
-    var todayDiary:diaryInfo!
+    var todayDiary:diaryInfo = {
+        let date = getTodayDate()
+        if let todayDiary = DataContainerSingleton.sharedDataContainer.diaryDict[date]{
+            return todayDiary
+        }else{
+            let newDiary = diaryInfo(dateString: date)
+            return newDiary
+        }
+    }()
     
     weak var topbar:topbarView!
     
@@ -213,11 +221,14 @@ extension todayVC:UITextViewDelegate{
     }
     
 //MARK:-读取日记内容
-    func loadTodayData(){
+    func loadTodayData(selectedDiary:diaryInfo? = nil){
         //配置日记存储器
         diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
         
-        todayDiary = DataContainerSingleton.sharedDataContainer.selectedDiary
+        if let selectedDiary = selectedDiary{
+            todayDiary = selectedDiary
+        }
+        
         //如果没有选择新的日期，不要刷新避免读取一样的内容
         if lastDiary == todayDiary.date{
             return

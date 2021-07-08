@@ -62,8 +62,9 @@ class customAlertView: UIView {
         
         if let createDate = dateString{
             //补日记
-            DataContainerSingleton.sharedDataContainer.diaryDict[createDate] = diaryInfo(dateString: createDate)
-            DataContainerSingleton.sharedDataContainer.selectedDiary = DataContainerSingleton.sharedDataContainer.diaryDict[createDate]
+            let createdDiary = diaryInfo(dateString: createDate)
+            DataContainerSingleton.sharedDataContainer.diaryDict[createDate] = createdDiary
+            let selectedDiary = createdDiary
             monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
             
             /*
@@ -75,7 +76,7 @@ class customAlertView: UIView {
             }
             dismissQueue.sync {
                 let pageVC = UIApplication.getcustomPageViewController()
-                pageVC.slideToTodayVC(completion: {})
+                pageVC.slideToTodayVC(selectedDiary:selectedDiary,completion: {})
             }
         }
         

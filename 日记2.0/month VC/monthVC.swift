@@ -442,12 +442,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let row = indexPath.row
-        DataContainerSingleton.sharedDataContainer.selectedDiary = filteredDiaries[row]
-        
+        let selectedDiary = filteredDiaries[row]
         let cell = collectionView.cellForItem(at: indexPath) as! monthCell
         cell.showSelectionPrompt()
         
-        pageVC.slideToTodayVC(completion: nil)
+        pageVC.slideToTodayVC(selectedDiary: selectedDiary, completion: nil)
     }
     
     
@@ -587,8 +586,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         formatter.dateFormat = "yyyy年M月d日"
         let dateString = formatter.string(from: date)
         if let selectedDiary = dateContainer.diaryDict[dateString]{
-            dateContainer.selectedDiary = selectedDiary
-            pageVC.slideToTodayVC(completion: nil)
+            pageVC.slideToTodayVC(selectedDiary: selectedDiary, completion: nil)
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))

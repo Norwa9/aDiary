@@ -93,13 +93,13 @@ extension customPageViewController:UIPageViewControllerDataSource,UIPageViewCont
         return viewControllerList[nextIndex]
     }
     
-    func slideToTodayVC(completion: (() -> Void)?) {
+    func slideToTodayVC(selectedDiary:diaryInfo,completion: (() -> Void)?) {
         guard let todayVC = viewControllerList[0] as? todayVC else{
             return
         }
         view.isUserInteractionEnabled = false//阻止cell被用户连按两下
         //读取选取日记
-        todayVC.loadTodayData()
+        todayVC.loadTodayData(selectedDiary: selectedDiary)
         //让pageController滑动到今日页面
         self.setViewControllers([todayVC], direction: .reverse, animated: true, completion: {[weak self] (complete: Bool) -> Void in
         if (complete) {

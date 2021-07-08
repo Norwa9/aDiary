@@ -24,43 +24,22 @@ class DataContainerSingleton {
     static let sharedDataContainer = DataContainerSingleton()
     
     ///日记的纯文本
-    var diaryDict = [String:diaryInfo]()
-    ///todayVC展示的日记
-    var selectedDiary:diaryInfo!
+    var diaryDict:[String:diaryInfo] = [:]
     ///用户保存的标签
     var tags = [String]()
+    
     
     var goToBackgroundObserver: AnyObject?
     init(){
         let defaults = UserDefaults.standard
         //1、读取
         tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? ["学习","工作","生活"]
-        if let savedNotes = defaults.object(forKey: DefaultsKeys.diaryDict) as? Data {
-            let jsonDecoder = JSONDecoder()
-            do {
-                diaryDict = try jsonDecoder.decode([String:diaryInfo].self, from: savedNotes)
-            } catch {
-                print("Failed to load diary dict")
-            }
-        }
+        //TODO:-读取本地数据库，读取所有的diaryinfo到diaryDict充当数据源
+        
         //2、保存
         defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
-            self.saveDiaryDict()
-        }
-
-        /*
-        3、读取app首页数据
-        初始化今日界面的数据：初始化selected Diary为今日的日记
-        如果今天已经有日记，返回今天日记；没有的话就创建一个空的模板
-        */
-        let dateTodayString = getTodayDate()
-        if let diary = diaryDict[dateTodayString]{
-            selectedDiary =  diary
-        }else{
-            let newEmptyDiary = diaryInfo(dateString: dateTodayString)
-            diaryDict[dateTodayString] = newEmptyDiary
-            selectedDiary = diaryDict[dateTodayString]
+//            self.saveDiaryDict()
         }
     }
     
@@ -72,17 +51,17 @@ class DataContainerSingleton {
         return count
     }
     
-    ///持久化存储所有日记数据类的字典diaryDict
-    func saveDiaryDict(){
-        print("保存diaryDict数据")
-        let defaults = UserDefaults.standard
-        let jsonEncoder = JSONEncoder()
-        if let storedData = try? jsonEncoder.encode(self.diaryDict) {
-            defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
-        } else {
-          print("Failed to save diary dict.")
-        }
-    }
+//    ///持久化存储所有日记数据类的字典diaryDict
+//    func saveDiaryDict(){
+//        print("保存diaryDict数据")
+//        let defaults = UserDefaults.standard
+//        let jsonEncoder = JSONEncoder()
+//        if let storedData = try? jsonEncoder.encode(self.diaryDict) {
+//            defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
+//        } else {
+//          print("Failed to save diary dict.")
+//        }
+//    }
     
     //如果用户修改了某个tag名称，将要更新所有使用该tag的日记中的tag名称
     func updateTags(oldTag:String,newTag:String?){

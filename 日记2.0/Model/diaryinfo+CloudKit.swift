@@ -29,6 +29,7 @@ enum RecordKey: String {
     case uuidofPictures
     case containsImage
     case images
+    case rtfd
 }
 //MARK:diaryInfo+
 extension diaryInfo {

@@ -21,8 +21,7 @@ class imageManager{
     func extractImages(callback: @escaping (_ images:[UIImage],_ diary:diaryInfo)->()) {
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
-            let date_string = diary.date
-            guard let aString = TextFormatter.loadAttributedString(date_string: date_string) else{return}
+            guard let aString = diary.attributedString else{return}
             var images:[UIImage] = []
             aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
                 if let attachment = object as? NSTextAttachment{
@@ -50,8 +49,7 @@ class imageManager{
         let date_string = diary.date
         
         var containsImage:Bool!
-        let attrString = TextFormatter.loadAttributedString(date_string: date_string)
-        guard let aString = attrString else{return false}
+        guard let aString = diary.attributedString else{return false}
         containsImage = false
         aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
             if let attachment = object as? NSTextAttachment{

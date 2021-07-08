@@ -244,8 +244,8 @@
 		EA8E71092694972C007189B1 /* CloudKitHelper */ = {
 			isa = PBXGroup;
 			children = (
-				EA8E710A26949749007189B1 /* LWSyncEngine.swift */,
 				EA8E710E26949758007189B1 /* LWDiaryStore.swift */,
+				EA8E710A26949749007189B1 /* LWSyncEngine.swift */,
 				EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */,
 				EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */,
 				1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */,

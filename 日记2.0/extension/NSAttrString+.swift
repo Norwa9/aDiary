@@ -169,6 +169,10 @@ extension NSAttributedString{
         mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
         return mutableAttr
     }
+    
+    func data()->Data?{
+        return try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
+    }
 }
 
 

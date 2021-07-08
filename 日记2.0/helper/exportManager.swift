@@ -43,7 +43,7 @@ class exportManager{
                 .foregroundColor : APP_GREEN_COLOR()
             ]
             for date in orderedDates{
-                if let aString = TextFormatter.loadAttributedString(date_string: date),aString.length != 0{
+                if let diary = diaryDict[date],let aString = diary.attributedString,aString.length != 0{
                     let dateTitle = NSAttributedString(string: date, attributes: titleAttributes)
                     alldiaryString.append(dateTitle)
                     alldiaryString.insert(NSAttributedString(string: "\n"), at: alldiaryString.length)
