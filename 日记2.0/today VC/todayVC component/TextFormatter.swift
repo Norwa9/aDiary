@@ -500,7 +500,8 @@ extension TextFormatter{
                                      ,.characterEncoding:String.Encoding.utf8])
             
             if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-                let path_file_name = dir.appendingPathComponent (date_string)
+                let baseURL = dir.appendingPathComponent(DefaultsKeys.diaryDict)
+                let path_file_name = baseURL.appendingPathComponent (date_string)
                 do {
                     try file.write (to: path_file_name, options: .atomic, originalContentsURL: nil)
                 } catch {
@@ -552,7 +553,8 @@ extension TextFormatter{
     ///根据日期string读取从文件目录富文本
     func loadAttributedString(date_string:String) -> NSAttributedString?{
         if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-            let path_file_name = dir.appendingPathComponent (date_string)
+            let baseURL = dir.appendingPathComponent(DefaultsKeys.diaryDict)
+            let path_file_name = baseURL.appendingPathComponent (date_string)
             do{
                 let aString = try NSAttributedString(
                     url: path_file_name,
