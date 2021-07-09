@@ -8,81 +8,23 @@
 import Foundation
 import UIKit
 import CloudKit
+import RealmSwift
 
-
-class diaryInfo:Codable{
-    var ckData:Data? = nil
+class diaryInfo:Object,Codable{
     
-    var id:String
-    var date:String
-    var content:String
-    var islike:Bool
-    var tags:[String]
-    var mood:moodTypes
-    var containsImage:Bool
-    var images:[Data?]
-    var rtfd:Data?
+    //@objc dynamic **必须写
+    @objc dynamic var ckData:Data? = nil
+    @objc dynamic var id:String
+    @objc dynamic var date:String
+    @objc dynamic var content:String
+    @objc dynamic var islike:Bool
+    @objc dynamic var tags:[String]
+    @objc dynamic var mood:String
+    @objc dynamic var containsImage:Bool
+    @objc dynamic var rtfd:Data?
+    // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
     
-    struct  RecordError:LocalizedError {
-        var localizedDescription:String
-        
-        static func missingKey(_ key: RecordKey) -> RecordError {
-            RecordError(localizedDescription: "Missing required key: \(key.rawValue)")
-        }
-    }
-    
-    var recordID:CKRecord.ID{
-        return CKRecord.ID(recordName: id,zoneID: SyncConstants.customZoneID)
-    }
-    
-    var imageAsset: [CKAsset] {
-        var count = 0
-        var imageAsset:[CKAsset] = []
-        for data in images{
-            guard let data = data else {
-                continue
-            }
-            let url = FileManager.default.temporaryDirectory.appendingPathComponent(id+"image\(count)")
-            do {
-                try data.write(to: url)
-            } catch {
-                continue
-            }
-            //注意：CloudKit的提交的文件的fileURL必须指向本地文件
-            imageAsset.append(CKAsset(fileURL: url))
-            count += 1
-        }
-        return imageAsset
-    }
-    
-    var rtfdAsset:CKAsset?{
-        guard let data = rtfd else {
-            return nil
-        }
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent(id+"rtfd")
-        do {
-            try data.write(to: url)
-        } catch {
-            return nil
-        }
-        return CKAsset(fileURL: url)
-    }
-    
-    var record: CKRecord {
-        let r = CKRecord(recordType: .diaryInfo, recordID: recordID)
-
-        r[.date] = date
-        r[.content] = content
-        r[.islike] = islike
-        r[.tags] = tags
-        r[.mood] = mood.rawValue
-        r[.containsImage] = containsImage
-        r[.images] = imageAsset
-        r[.rtfd] = rtfdAsset
-
-        return r
-    }
-    
+//MARK:-init
     ///解码record来初始化diaryInfo类
     init(record: CKRecord) throws {
         guard let date = record[.date] as? String else {
@@ -123,9 +65,8 @@ class diaryInfo:Codable{
         self.content = content
         self.islike = (islike != 0)
         self.tags = tags
-        self.mood = moodTypes(rawValue: mood)!
+        self.mood = mood
         self.containsImage = (containsImage != 0)
-        self.images = imagesData
         self.rtfd = rtfdData
     }
     
@@ -136,13 +77,23 @@ class diaryInfo:Codable{
         self.content = ""
         self.islike = false
         self.tags = []
-        self.mood = .calm
+        self.mood = "calm"
         self.containsImage = false
-        self.images = []
         self.rtfd = nil
     }
     
     
+}
+//MARK:-diaryInfo+Realm
+extension diaryInfo{
+    ///索引属性
+    override class func indexedProperties() -> [String] {
+        return ["date"]
+    }
+    ///主键
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 //MARK:-Getter属性
@@ -186,6 +137,35 @@ extension diaryInfo{
         }
     }
     
+    var record: CKRecord {
+        let r = CKRecord(recordType: .diaryInfo, recordID: recordID)
+
+        r[.date] = date
+        r[.content] = content
+        r[.islike] = islike
+        r[.tags] = tags
+        r[.mood] = mood
+        r[.containsImage] = containsImage
+        r[.rtfd] = rtfdAsset
+
+        return r
+    }
+    
+    ///富文本CKAsset
+    var rtfdAsset:CKAsset?{
+        guard let data = rtfd else {
+            return nil
+        }
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(id+"rtfd")
+        do {
+            try data.write(to: url)
+        } catch {
+            return nil
+        }
+        return CKAsset(fileURL: url)
+    }
+    
+    ///富文本NSAttributedString
     var attributedString:NSAttributedString?{
         get{
             if let rtfd = self.rtfd{

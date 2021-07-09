@@ -278,7 +278,7 @@ extension tagsView{
 
     func configureDate(){
         //绑定数据
-        selectedMood = diary.mood
+        selectedMood = moodTypes.init(rawValue: diary.mood)!
         selectedTags = diary.tags
         
         //恢复标签、心情选择状态
@@ -314,7 +314,7 @@ extension tagsView{
         super.viewDidDisappear(animated)
         //保存tags和mood的选项
         if let selectedMood = selectedMood{
-            diary.mood = selectedMood
+            diary.mood = selectedMood.rawValue
         }
         print("tagsView关闭，保存已选中的tags:\(selectedTags)")
         diary.tags = selectedTags

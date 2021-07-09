@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //注册静默通知，以监听iCloud数据库的变化
 //        UIApplication.shared.registerForRemoteNotifications()
+        
+        //配置realm
+        self.configureRealm()
+        
         return true
     }
     
@@ -45,3 +50,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+//MARK:-配置realm数据库
+extension AppDelegate{
+    ///配置数据库，用于数据库的迭代更新
+    func configureRealm(){
+        let schemaVersion: UInt64 = 0
+        LWRealManager.schemaVersion = schemaVersion
+        let config = Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: { migration, oldSchemaVersion in
+            //oldSchemaVersion从0开始
+            if (oldSchemaVersion < schemaVersion) {
+                //在这里更新数据库的schema
+                //如果只是增加、删除model的属性，则realm会自动完成schema的更新。
+            }
+        })
+        Realm.Configuration.defaultConfiguration = config
+        Realm.asyncOpen { result in
+            do{
+                _ = try result.get()
+                /* Realm 成功打开，迁移已在后台线程中完成 */
+                print("Realm 数据库配置成功")
+            }catch let error{
+                /* 处理打开 Realm 时所发生的错误 */
+                print("Realm 数据库配置失败：\(error.localizedDescription)")
+            }
+        }
+    }
+}

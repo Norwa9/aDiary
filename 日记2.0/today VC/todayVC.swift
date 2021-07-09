@@ -245,7 +245,7 @@ extension todayVC:UITextViewDelegate{
         topbar.dataLable2.text = Date().getWeekday(dateString: todayDiary.date)
         
         topbar.button1.islike = todayDiary.islike
-        topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood.rawValue)
+        topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood)
     }
 
 }

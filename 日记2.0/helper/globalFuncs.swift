@@ -142,7 +142,7 @@ func filterDiary()->[diaryInfo]{
     //2筛选：心情和标签
     if let mood = selectedMood{
         resultDiaries = resultDiaries.filter{ (item: diaryInfo) -> Bool in
-            return item.mood == mood
+            return item.mood == mood.rawValue
         }
     }
     

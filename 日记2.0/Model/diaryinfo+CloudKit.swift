@@ -31,8 +31,20 @@ enum RecordKey: String {
     case images
     case rtfd
 }
-//MARK:diaryInfo+
+//MARK:diaryInfo+CloudKit
 extension diaryInfo {
+    var recordID:CKRecord.ID{
+        return CKRecord.ID(recordName: id,zoneID: SyncConstants.customZoneID)
+    }
+    
+    struct  RecordError:LocalizedError {
+        var localizedDescription:String
+        
+        static func missingKey(_ key: RecordKey) -> RecordError {
+            RecordError(localizedDescription: "Missing required key: \(key.rawValue)")
+        }
+    }
+    
     ///解决冲突的方案
     static func resolveConflict(clientRecord: CKRecord, serverRecord: CKRecord) -> CKRecord? {
         // Most recent record wins. This might not be the best solution but YOLO.

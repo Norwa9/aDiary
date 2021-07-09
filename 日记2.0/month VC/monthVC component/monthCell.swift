@@ -254,7 +254,7 @@ class monthCell: UICollectionViewCell {
         self.dateLabel.text = "\(diary.day)号，\(diary.weekDay)"
         self.wordNum = diary.content.count
         self.isLike = diary.islike
-        self.moodType = diary.mood
+        self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
     }
     
