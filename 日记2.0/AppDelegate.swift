@@ -55,7 +55,7 @@ extension AppDelegate{
     ///配置数据库，用于数据库的迭代更新
     func configureRealm(){
         let schemaVersion: UInt64 = 0
-        LWRealManager.schemaVersion = schemaVersion
+        LWRealmManager.schemaVersion = schemaVersion
         let config = Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: { migration, oldSchemaVersion in
             //oldSchemaVersion从0开始
             if (oldSchemaVersion < schemaVersion) {
