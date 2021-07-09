@@ -19,9 +19,13 @@ class imageManager{
     
     //读取日记的所有插图
     func extractImages(callback: @escaping (_ images:[UIImage],_ diary:diaryInfo)->()) {
+        //在后台线程访问了diary将会导致崩溃，必须在创建该变量的线程之外使用该变量
+        //解决办法，创建临时变量
+        let tempDiary = diary.copy() as! diaryInfo
+        
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
-            guard let aString = diary.attributedString else{return}
+            guard let aString = tempDiary.attributedString else{return}
             var images:[UIImage] = []
             aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
                 if let attachment = object as? NSTextAttachment{
@@ -42,28 +46,4 @@ class imageManager{
         //标记这篇日记有图片
         
     }
-    
-    //如果diary的containsImage属性为nil（即未初始化），
-    //则调用该函数手动更新，检查、更新该日记是否有图片
-    func checkifcontainsImage()->Bool{
-        let date_string = diary.date
-        
-        var containsImage:Bool!
-        guard let aString = diary.attributedString else{return false}
-        containsImage = false
-        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-            if let attachment = object as? NSTextAttachment{
-                //如果存在照片
-                if let _ = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
-                    containsImage = true
-                    return
-                }
-            }
-        }
-        )
-        DataContainerSingleton.sharedDataContainer.diaryDict[date_string]?.containsImage = containsImage
-        return containsImage
-    }
-    
-    
 }

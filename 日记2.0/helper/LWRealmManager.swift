@@ -34,11 +34,12 @@ class LWRealmManager{
     }()
     
     //MARK:-增删查改
-    typealias withBlock = ()->(Void)
-    func addOrUpdate(_ diary:diaryInfo){
+    typealias updateBlock = ()->(Void)
+    func addOrUpdate(_ diary:diaryInfo,_ update:updateBlock? = nil){
         do{
             try realm.write(){
                 //如果diary已经添加到realm被realm所管理，这个diary不能在write事务block之外修改！
+                update?()
                 realm.add(diary,update: .modified)
             }
         }catch let error{

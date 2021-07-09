@@ -472,52 +472,38 @@ extension TextFormatter{
         //1.保存到本地
         let date = diary.date
         
+        
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
         let aString = self.textView.attributedText!
-        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-            if let attachment = object as? NSTextAttachment{
-                //如果存在照片
-                if let _ = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
-                    DataContainerSingleton.sharedDataContainer.diaryDict[date]?.containsImage = true
-                    return
-                }
-                }
-            }
-        )
-        diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
-        diary.rtfd = aString.data()
-        DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
-        //TODO:保存此diary对象到本地数据库
+        let containsImage:Bool = self.checkIfContainsImage(aString)
         
+        //TODO:保存此diary对象到本地数据库
+        DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
+        LWRealmManager.shared.addOrUpdate(diary){
+            diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+            diary.rtfd = aString.data()
+            diary.containsImage = containsImage
+        }
         
         //2.上传到云端
         DiaryStore.shared.addOrUpdate(diary)
     }
     
-//    ///富文本文件写入手机内存
-//    static func writeRTFD(aString:NSAttributedString,date_string:String)->Data?{
-//        var rtfd:Data?
-//        do {
-//            let file = try aString.fileWrapper (
-//                from: NSMakeRange(0, aString.length),
-//                documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd
-//                                     ,.characterEncoding:String.Encoding.utf8])
-//
-//            rtfd = file.regularFileContents
-//
-//            if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-//                let path_file_name = dir.appendingPathComponent (DefaultsKeys.diaryDict + date_string)
-//                do {
-//                    try file.write (to: path_file_name, options: .atomic, originalContentsURL: nil)
-//                } catch {
-//                    print("写入富文本失败")
-//                }
-//            }
-//        } catch {
-//            //Error handling
-//        }
-//        return rtfd
-//    }
+    ///检查是否存在图片
+    private func checkIfContainsImage(_ aString:NSAttributedString)->Bool{
+        var containsImage = false
+        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
+            if let attachment = object as? NSTextAttachment{
+                //如果存在照片
+                if let _ = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+                    containsImage = true
+                    return
+                }
+                }
+            }
+        )
+        return containsImage
+    }
     
 }
 
