@@ -366,8 +366,11 @@ final class LWSyncEngine{
             guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { return nil }
 
             //赋值ckData，表示该日记已经在云端有副本
-            model.ckData = r.encodedSystemFields
-
+            //对于已经存入realm的model，如果要修改，必须在写入事物(write Transactions)里修改
+            LWRealmManager.shared.update {
+                model.ckData = r.encodedSystemFields
+            }
+        
             return model
         }
 

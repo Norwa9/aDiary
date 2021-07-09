@@ -15,10 +15,10 @@ class LWRealmManager{
     static var schemaVersion:UInt64 = 0
     
     ///唯一的操作对象
-    private let realm = realm()
+    private let realm = getRealm()
     
     /// 获取数据库操作的 Realm
-    private static func realm() -> Realm {
+    private static func getRealm() -> Realm {
         
         // 获取数据库文件路径
         let fileURL = URL(string: NSHomeDirectory() + "/Documents/aDiary.realm")
@@ -35,15 +35,25 @@ class LWRealmManager{
     
     //MARK:-增删查改
     typealias updateBlock = ()->(Void)
-    func addOrUpdate(_ diary:diaryInfo,_ update:updateBlock? = nil){
+    func add(_ diary:diaryInfo){
         do{
             try realm.write(){
                 //如果diary已经添加到realm被realm所管理，这个diary不能在write事务block之外修改！
-                update?()
                 realm.add(diary,update: .modified)
             }
         }catch let error{
-            print("[添加或更新]Realm数据库操作错误：\(error.localizedDescription)")
+            print("[新增]Realm数据库操作错误：\(error.localizedDescription)")
+        }
+    }
+    
+    func update(updateBlock:updateBlock){
+        do{
+            try realm.write(){
+                //如果diary已经添加到realm被realm所管理，这个diary不能在write事务block之外修改！
+                updateBlock()
+            }
+        }catch let error{
+            print("[更新]Realm数据库操作错误：\(error.localizedDescription)")
         }
     }
     

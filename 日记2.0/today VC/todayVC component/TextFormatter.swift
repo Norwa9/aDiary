@@ -479,11 +479,11 @@ extension TextFormatter{
         
         //TODO:保存此diary对象到本地数据库
         DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
-        LWRealmManager.shared.addOrUpdate(diary){
+        LWRealmManager.shared.update(updateBlock: {
             diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
             diary.rtfd = aString.data()
             diary.containsImage = containsImage
-        }
+        })
         
         //2.上传到云端
         DiaryStore.shared.addOrUpdate(diary)

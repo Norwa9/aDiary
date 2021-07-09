@@ -16,6 +16,7 @@ class todayVC: UIViewController {
         }else{
             let newDiary = diaryInfo(dateString: date)
             DataContainerSingleton.sharedDataContainer.diaryDict[date] = newDiary
+            LWRealmManager.shared.add(newDiary)
             return newDiary
         }
     }()
