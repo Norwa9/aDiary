@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class LWRealmManager{
-    static let realmManager = LWRealmManager()
+    static let shared = LWRealmManager()
     
     ///数据库版本号
     static var schemaVersion:UInt64 = 0
@@ -22,19 +22,23 @@ class LWRealmManager{
         
         // 获取数据库文件路径
         let fileURL = URL(string: NSHomeDirectory() + "/Documents/aDiary.realm")
-        print(fileURL)
+        print("realm url:\(fileURL?.absoluteString)")
         // 在 APPdelegate 中需要配置版本号时，这里也需要配置版本号
         let config = Realm.Configuration(fileURL: fileURL, schemaVersion: schemaVersion)
         
         return try! Realm(configuration: config)
     }
     
+    lazy var localDatabase:Results<diaryInfo> = {
+       return realm.objects(diaryInfo.self)
+    }()
+    
     //MARK:-增删查改
+    typealias withBlock = ()->(Void)
     func addOrUpdate(_ diary:diaryInfo){
         do{
             try realm.write(){
-                //如果存在更新发生变动的属性，如果不存在则新建一个记录。
-                //前提是要设置主键
+                //如果diary已经添加到realm被realm所管理，这个diary不能在write事务block之外修改！
                 realm.add(diary,update: .modified)
             }
         }catch let error{
