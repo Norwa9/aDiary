@@ -21,11 +21,9 @@ class imageManager{
     func extractImages(callback: @escaping (_ images:[UIImage],_ diary:diaryInfo)->()) {
         //在后台线程访问了diary将会导致崩溃，必须在创建该变量的线程之外使用该变量
         //解决办法，创建临时变量
-        let tempDiary = diary.copy() as! diaryInfo
-        
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
-            guard let aString = tempDiary.attributedString else{return}
+            guard let aString = diary.attributedString else{return}
             var images:[UIImage] = []
             aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
                 if let attachment = object as? NSTextAttachment{

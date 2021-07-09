@@ -469,7 +469,6 @@ extension TextFormatter{
 extension TextFormatter{
     ///根据日期信息将富文本存储到文件目录
     func save(with diary:diaryInfo){
-        //1.保存到本地
         let date = diary.date
         
         
@@ -477,7 +476,7 @@ extension TextFormatter{
         let aString = self.textView.attributedText!
         let containsImage:Bool = self.checkIfContainsImage(aString)
         
-        //TODO:保存此diary对象到本地数据库
+        //1.保存到本地
         DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
         LWRealmManager.shared.update(updateBlock: {
             diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
@@ -513,7 +512,6 @@ extension TextFormatter{
         textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
         let bounds = self.textView.bounds
-        print("loadTextViewContent:\(diary.attributedString?.string)")
         DispatchQueue.global(qos: .default).async {
             let correctedAString = diary.attributedString?.processAttrString(bounds: bounds)
             DispatchQueue.main.async {
