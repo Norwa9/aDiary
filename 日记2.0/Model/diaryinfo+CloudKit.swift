@@ -22,6 +22,9 @@ extension diaryInfo{
 
 enum RecordKey: String {
     case date
+    case year
+    case month
+    case day
     case content
     case islike
     case tags

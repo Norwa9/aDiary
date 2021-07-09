@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import CloudKit
 import os.log
+import RealmSwift
 
 /*
  日记存储器
@@ -16,7 +17,7 @@ import os.log
  */
 public final class DiaryStore: ObservableObject {
     static let shared:DiaryStore = DiaryStore()
-    private(set) var diaries: [diaryInfo] = []
+    private var diaries: [diaryInfo] = []
 
     private let log = OSLog(subsystem: SyncConstants.subsystemName, category: String(describing: DiaryStore.self))
 
@@ -33,17 +34,7 @@ public final class DiaryStore: ObservableObject {
         
         self.defaults = UserDefaults.standard
         
-        //第一次下载App，进入App后就会有一篇引导日记。
-        let locolDiaries = Array(DataContainerSingleton.sharedDataContainer.diaryDict.values)
-        
-        /*
-         diaryDict才是UI的数据源(DataContainerSingleton.sharedDataContainer.diaryDict)
-         diaries是数据库，只充当数据源和云端数据的中介
-         
-         也就是说，每次diaries变动，要及时更新给diaryDict以更新UI
-         为什么这么蛋疼：因为Cloudkit的代码逻辑是抄自别人的：别人用数组做数据源和数据库，而我用字典做数据源数组做数据库，需要一个中介来转换。。。
-         */
-        self.diaries = locolDiaries
+        self.diaries = LWRealmManager.shared.localDatabase.toArray()
         
         //创建的同时
         self.syncEngine = LWSyncEngine.init(defaults: self.defaults, initialDiaries: self.diaries)
@@ -89,17 +80,16 @@ public final class DiaryStore: ObservableObject {
          2.更新UI,reloadData：DiaryStore新增一个闭包属性，用来定义更新行为
         */
         diaries.forEach { updatedDiary in
-            //修改、新增同步到数据源
-            DataContainerSingleton.sharedDataContainer.diaryDict[updatedDiary.date] = updatedDiary
-            
             //修改的记录同步到本地数据库
-            if let idx = self.diaries.firstIndex(where: { $0.date == updatedDiary.date
-            }){
-                self.diaries[idx] = updatedDiary
-            }
-            //新增的记录同步到本地数据库
-            else{
-                self.diaries.append(updatedDiary)
+            LWRealmManager.shared.update {
+                if let idx = self.diaries.firstIndex(where: { $0.date == updatedDiary.date
+                }){
+                    self.diaries[idx] = updatedDiary
+                }
+                //新增的记录同步到本地数据库
+                else{
+                    self.diaries.append(updatedDiary)
+                }
             }
         }
 
@@ -109,12 +99,14 @@ public final class DiaryStore: ObservableObject {
     ///提交添加或修改到云端
     ///同时更新本地数据库
     func addOrUpdate(_ diary:diaryInfo) {
-        if let idx = diaries.lastIndex(where: { $0.id == diary.id }) {
-            //修改
-            diaries[idx] = diary
-        } else {
-            //添加
-            diaries.append(diary)
+        LWRealmManager.shared.update {
+            if let idx = diaries.lastIndex(where: { $0.id == diary.id }) {
+                //修改
+                diaries[idx] = diary
+            } else {
+                //添加
+                diaries.append(diary)
+            }
         }
 
         syncEngine?.upload(diary)

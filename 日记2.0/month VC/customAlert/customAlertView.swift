@@ -63,7 +63,7 @@ class customAlertView: UIView {
         if let createDate = dateString{
             //补日记
             let createdDiary = diaryInfo(dateString: createDate)
-            DataContainerSingleton.sharedDataContainer.diaryDict[createDate] = createdDiary
+            LWRealmManager.shared.add(createdDiary)
             let selectedDiary = createdDiary
             monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
             

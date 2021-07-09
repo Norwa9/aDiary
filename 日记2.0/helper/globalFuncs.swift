@@ -7,17 +7,18 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 //MARK:-导入用户引导
 func LoadIntroText(){
     if !userDefaultManager.hasInitialized{
         userDefaultManager.hasInitialized = true
         let date = getTodayDate()
-        let introDiary = diaryInfo(dateString: date)
         if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
             if let textContents = try? String(contentsOf: levelFileURL) {
+                let introDiary = diaryInfo(dateString: date)
                 introDiary.content = textContents
-                DataContainerSingleton.sharedDataContainer.diaryDict[date] = introDiary
+                LWRealmManager.shared.add(introDiary)
             }
         }
     }
@@ -30,15 +31,13 @@ func parseDayGramText(text:String){
     //得到解析后的日记
     let diaryDict = txt2String(string: text)
     var count = 0
-    for (key,content) in diaryDict{
-        let dateString = formatter.string(from: key)
+    for (date,content) in diaryDict{
+        let dateString = formatter.string(from: date)
         
-        guard DataContainerSingleton.sharedDataContainer.diaryDict[dateString] == nil else{
-            continue
-        }
+        let newDiary = diaryInfo(dateString: dateString)
+        newDiary.content = content
+        LWRealmManager.shared.add(newDiary)
         
-        DataContainerSingleton.sharedDataContainer.diaryDict[dateString] = diaryInfo(dateString: dateString)
-        DataContainerSingleton.sharedDataContainer.diaryDict[dateString]?.content = content
         count += 1
         print("\(dateString)已创建，第\(count)篇")
         
@@ -81,37 +80,32 @@ func txt2String(string:String) -> [Date:String]{
 }
 
 //MARK:-获取指定日期的日记
-func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo?]{
-    let diaryDict = DataContainerSingleton.sharedDataContainer.diaryDict
-    var tempDiaries = [diaryInfo?]()
-    
-    //1，返回所有日记
+func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
+    var unsortedResult:Results<diaryInfo>
+    //1.特例：表示返回所有日记
     if forYear == 0 && forMonth == 0{
-        //0,0是特例：表示返回所有日记
-        for (_,diary) in diaryDict{
-            tempDiaries.append(diary)
-        }
-        
-        let dateFomatter = DateFormatter()
-        dateFomatter.dateFormat = "yyyy年M月d日"
-        //返回日期降序的所有日记
-        return tempDiaries.sorted { (d1, d2) -> Bool in
-            if let date1 = dateFomatter.date(from: d1!.date) ,let date2 = dateFomatter.date(from: d2!.date){
-                if date1.compare(date2) ==  .orderedAscending{
-                    return true
-                }
-            }
-            return false
-        }
+        let tempResults = LWRealmManager.shared.localDatabase
+        unsortedResult = tempResults
+    }else{
+        //2，返回指定年/月日记
+        let predicate = NSPredicate(format: "year == %d AND month == %d", forYear,forMonth)
+        let filteredResults = LWRealmManager.shared.query(predicate: predicate)
+        unsortedResult = filteredResults
     }
     
-    //2，返回指定年/月日记
-    for i in 1...howManyDaysInThisMonth(year: forYear, month: forMonth){
-        let timeString = "\(forYear)年\(forMonth)月\(i)日"
-        let diary = DataContainerSingleton.sharedDataContainer.diaryDict[timeString]//字典元素不存在将返回nil
-        tempDiaries.append(diary)
+    //按日期排序
+    let dateFomatter = DateFormatter()
+    dateFomatter.dateFormat = "yyyy年M月d日"
+    let sortedDiaries = unsortedResult.sorted { (d1, d2) -> Bool in
+        if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
+            if date1.compare(date2) ==  .orderedDescending{
+                return true
+            }
+        }
+        return false
     }
-    return tempDiaries
+    return sortedDiaries
+    
 }
 
 //MARK:-获取符合筛选条件的所有日记
@@ -121,7 +115,7 @@ func filterDiary()->[diaryInfo]{
     let selectedTags = filterModel.shared.selectedTags
     let sortStyle = filterModel.shared.selectedSortstyle
     
-    let allDiary = DataContainerSingleton.sharedDataContainer.diaryDict.values
+    let allDiary = LWRealmManager.shared.localDatabase
     var resultDiaries = [diaryInfo]()
     
     

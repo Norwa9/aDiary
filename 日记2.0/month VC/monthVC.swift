@@ -100,12 +100,7 @@ class monthVC: UIViewController {
         DispatchQueue.main.async { [self] in
             let dataSource = diariesForMonth(forYear: year, forMonth: month)
                 filteredDiaries.removeAll()
-                for diary in dataSource{
-                    if diary != nil{
-                        filteredDiaries.append(diary!)
-                    }
-                }
-                filteredDiaries.reverse()//日期从大到小排列
+                filteredDiaries = dataSource
                 flowLayout.dateSource = filteredDiaries
             DispatchQueue.main.async {
 //                print("configure dataSource,reload data")
@@ -582,16 +577,15 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         }
         
         //2、进入日记
-        let dateContainer = DataContainerSingleton.sharedDataContainer
         formatter.dateFormat = "yyyy年M月d日"
         let dateString = formatter.string(from: date)
-        if let selectedDiary = dateContainer.diaryDict[dateString]{
+        let predicate = NSPredicate(format: "date = %@", dateString)
+        if let selectedDiary = LWRealmManager.shared.query(predicate: predicate).first{
             pageVC.slideToTodayVC(selectedDiary: selectedDiary, completion: nil)
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
             popoverAlert.dateString = dateString
-            
             popover.show(popoverAlert, fromView: cell!)
         }
         
@@ -649,9 +643,9 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     //event dot数量
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         formatter.dateFormat = "yyyy年M月d日"
-        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
+        let localDB = LWRealmManager.shared.localDatabase
 
-        for diary in dict.values{
+        for diary in localDB{
             //如果有内容
             if diary.date == formatter.string(from: date) && diary.content.count != 0{
                 return 1
@@ -662,8 +656,8 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
     //事件点默认颜色
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
         formatter.dateFormat = "yyyy年M月d日"
-        let dict = DataContainerSingleton.sharedDataContainer.diaryDict
-        for diary in dict.values{
+        let localDB = LWRealmManager.shared.localDatabase
+        for diary in localDB{
             //如果有内容
             if diary.date == formatter.string(from: date) && diary.islike{
                 return [.yellow]
@@ -715,7 +709,7 @@ extension monthVC:UISearchBarDelegate{
             self.reloadCollectionViewData()
             searchButtonImageView.image = UIImage(named: "back")
             topbar.tempLabel1.text = "搜索"
-            topbar.tempLabel2.text = "共\(DataContainerSingleton.sharedDataContainer.diaryDict.count)篇，\(DataContainerSingleton.sharedDataContainer.getTotalWordcount())字"
+            topbar.tempLabel2.text = "共\(LWRealmManager.shared.localDatabase.count)篇，\(DataContainerSingleton.sharedDataContainer.getTotalWordcount())字"
             topbar.tempLabel1.sizeToFit()//更新tempLabel1的宽度，使得rectbar1能够正确匹配它的长度
             topbar.tempLabel2.sizeToFit()
         }else{//退出搜索模式

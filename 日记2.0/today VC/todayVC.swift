@@ -11,11 +11,11 @@ import FMPhotoPicker
 class todayVC: UIViewController {
     var todayDiary:diaryInfo = {
         let date = getTodayDate()
-        if let todayDiary = DataContainerSingleton.sharedDataContainer.diaryDict[date]{
+        let predicate = NSPredicate(format: "date == %@", date)
+        if let todayDiary = LWRealmManager.shared.query(predicate: predicate).first{
             return todayDiary
         }else{
             let newDiary = diaryInfo(dateString: date)
-            DataContainerSingleton.sharedDataContainer.diaryDict[date] = newDiary
             LWRealmManager.shared.add(newDiary)
             return newDiary
         }

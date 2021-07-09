@@ -23,8 +23,6 @@ struct DefaultsKeys
 class DataContainerSingleton {
     static let sharedDataContainer = DataContainerSingleton()
     
-    ///日记的纯文本
-    var diaryDict:[String:diaryInfo] = [:]
     ///用户保存的标签
     var tags = [String]()
     
@@ -45,7 +43,7 @@ class DataContainerSingleton {
     
     func getTotalWordcount()->Int{
         var count = 0
-        for diary in diaryDict.values{
+        for diary in LWRealmManager.shared.localDatabase{
             count += diary.content.count
         }
         return count
@@ -54,21 +52,24 @@ class DataContainerSingleton {
     //如果用户修改了某个tag名称，将要更新所有使用该tag的日记中的tag名称
     func updateTags(oldTag:String,newTag:String?){
         if let newTag = newTag{//操作：更新
-            for diary in DataContainerSingleton.sharedDataContainer.diaryDict.values{
+            for diary in LWRealmManager.shared.localDatabase{
                 var newTags = diary.tags
                 if let index = newTags.firstIndex(of: oldTag){
                     newTags[index] = newTag
                 }
-                
-                diary.tags = newTags
+                LWRealmManager.shared.update {
+                    diary.tags = newTags
+                }
             }
         }else{//操作：删除
-            for diary in DataContainerSingleton.sharedDataContainer.diaryDict.values{
+            for diary in LWRealmManager.shared.localDatabase{
                 var newTags = diary.tags
                 if let deleteIndex = newTags.firstIndex(of: oldTag){
                     newTags.remove(at: deleteIndex)
                 }
-                diary.tags = newTags
+                LWRealmManager.shared.update {
+                    diary.tags = newTags
+                }
             }
 
         }
@@ -78,30 +79,30 @@ class DataContainerSingleton {
     //MARK:-导出diaryDict2.0为plist文件(临时函数，用来备份)
     ///存储diaryDict的plist文件。
     ///返回本地文件地址的URL
-    func savePlistFile()->URL{
-        let baseURL: URL
-        let fileManager = FileManager.default
-        baseURL = fileManager.temporaryDirectory
-
-        let url = baseURL.appendingPathComponent("ADiary.plist")
-
-        if !fileManager.fileExists(atPath: url.path) {
-            print("Creating store file at \(url.path)")
-
-            if !fileManager.createFile(atPath: url.path, contents: nil, attributes: nil) {
-                print("Failed to create store file at \(url.path)")
-            }
-        }
-        
-        do {
-            let data = try PropertyListEncoder().encode(self.diaryDict)
-            try data.write(to: url)
-        } catch {
-            print("fail to save diaryDict")
-        }
-        
-        return url
-    }
+//    func savePlistFile()->URL{
+//        let baseURL: URL
+//        let fileManager = FileManager.default
+//        baseURL = fileManager.temporaryDirectory
+//
+//        let url = baseURL.appendingPathComponent("ADiary.plist")
+//
+//        if !fileManager.fileExists(atPath: url.path) {
+//            print("Creating store file at \(url.path)")
+//
+//            if !fileManager.createFile(atPath: url.path, contents: nil, attributes: nil) {
+//                print("Failed to create store file at \(url.path)")
+//            }
+//        }
+//        
+//        do {
+//            let data = try PropertyListEncoder().encode(self.diaryDict)
+//            try data.write(to: url)
+//        } catch {
+//            print("fail to save diaryDict")
+//        }
+//        
+//        return url
+//    }
 }
 
 

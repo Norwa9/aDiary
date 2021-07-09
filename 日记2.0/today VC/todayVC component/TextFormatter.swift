@@ -477,7 +477,6 @@ extension TextFormatter{
         let containsImage:Bool = self.checkIfContainsImage(aString)
         
         //1.保存到本地
-        DataContainerSingleton.sharedDataContainer.diaryDict[date] = diary
         LWRealmManager.shared.update(updateBlock: {
             diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
             diary.rtfd = aString.data()

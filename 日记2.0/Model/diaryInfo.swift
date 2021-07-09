@@ -16,6 +16,9 @@ class diaryInfo:Object,Codable{
     @objc dynamic var ckData:Data? = nil
     @objc dynamic var id:String = ""
     @objc dynamic var date:String = ""
+    @objc dynamic var year:Int = 0
+    @objc dynamic var month:Int = 0
+    @objc dynamic var day:Int = 0
     @objc dynamic var content:String = ""
     @objc dynamic var islike:Bool = false
     @objc dynamic var mood:String = ""
@@ -64,6 +67,9 @@ class diaryInfo:Object,Codable{
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName
         self.date = date
+        self.year = Int(date.dateComponent(for: .year))!
+        self.month = Int(date.dateComponent(for: .month))!
+        self.day = Int(date.dateComponent(for: .day))!
         self.content = content
         self.islike = (islike != 0)
         self.realmTags.append(objectsIn: tags.map({ RealmString(value: [$0]) }))
@@ -78,6 +84,9 @@ class diaryInfo:Object,Codable{
         
         self.id = UUID().uuidString
         self.date = dateString
+        self.year = 0
+        self.month = 0
+        self.day = 0
         self.content = ""
         self.islike = false
         self.tags = []
@@ -103,22 +112,6 @@ extension diaryInfo{
 
 //MARK:-Getter属性
 extension diaryInfo{
-    var year:Int{
-        get{
-            return Int(date.dateComponent(for: .year))!
-        }
-    }
-    var month:Int{
-        get{
-            return Int(date.dateComponent(for: .month))!
-        }
-    }
-    var day:Int{
-        get{
-            return Int(date.dateComponent(for: .day))!
-        }
-    }
-    
     var weekDay:String{
         get{
             let weekDay =  date.dateComponent(for: .weekday)
@@ -131,12 +124,10 @@ extension diaryInfo{
             let diries = diariesForMonth(forYear: year, forMonth: month)
             var count = 0
             for diary in diries.reversed(){
-                if let d = diary{
-                    if d.date == self.date{
-                        return count
-                    }
-                    count += 1
+                if diary.date == self.date{
+                    return count
                 }
+                count += 1
             }
             return -1
         }
@@ -146,6 +137,9 @@ extension diaryInfo{
         let r = CKRecord(recordType: .diaryInfo, recordID: recordID)
 
         r[.date] = date
+        r[.year] = year
+        r[.month] = month
+        r[.day] = day
         r[.content] = content
         r[.islike] = islike
         r[.tags] = self.tags

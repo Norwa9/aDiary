@@ -10,6 +10,7 @@
 		1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */; };
 		1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */; };
 		1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A5647269824CB0090D411 /* LWRealmManager.swift */; };
+		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
@@ -85,6 +86,7 @@
 		1B2A5647269824CB0090D411 /* LWRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRealmManager.swift; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
+		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				EADA85DA26248759007D1134 /* UIFont+.swift */,
 				EACB1721267A1BC1007BF160 /* UIScrollView+.swift */,
 				EACB1776267DC2FE007BF160 /* constants.swift */,
+				EA015EC2269898B400C3375D /* Results+.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				EAA29E4325C577DC00AA6971 /* customPageViewController.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
+				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
 				1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */,

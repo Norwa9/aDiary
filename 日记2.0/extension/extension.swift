@@ -7,9 +7,6 @@
 
 import Foundation
 import UIKit
-
-var diaryDict = [String:[String]]()
-
 enum moodTypes:String,CaseIterable,Codable{
     case happy = "happy"
     case calm = "calm"
