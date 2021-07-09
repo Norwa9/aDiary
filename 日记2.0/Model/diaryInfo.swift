@@ -89,7 +89,6 @@ class diaryInfo:Object,Codable{
         self.day = Int(date.dateComponent(for: .day))!
         self.content = ""
         self.islike = false
-        self.tags = []
         self.mood = "calm"
         self.containsImage = false
         self.rtfd = nil
@@ -106,7 +105,7 @@ extension diaryInfo{
     }
     ///主键
     override class func primaryKey() -> String? {
-        return "id"
+        return "date"
     }
 }
 
@@ -131,23 +130,6 @@ extension diaryInfo{
             }
             return -1
         }
-    }
-    
-    var record: CKRecord {
-        let r = CKRecord(recordType: .diaryInfo, recordID: recordID)
-
-        r[.date] = date
-        r[.year] = year
-        r[.month] = month
-        r[.day] = day
-        r[.content] = content
-        r[.islike] = islike
-        r[.tags] = self.tags
-        r[.mood] = mood
-        r[.containsImage] = containsImage
-        r[.rtfd] = rtfdAsset
-
-        return r
     }
     
     ///富文本CKAsset

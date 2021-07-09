@@ -17,7 +17,7 @@ import RealmSwift
  */
 public final class DiaryStore: ObservableObject {
     static let shared:DiaryStore = DiaryStore()
-    private var diaries: [diaryInfo] = []
+    private let localDB = LWRealmManager.shared.localDatabase
 
     private let log = OSLog(subsystem: SyncConstants.subsystemName, category: String(describing: DiaryStore.self))
 
@@ -34,18 +34,18 @@ public final class DiaryStore: ObservableObject {
         
         self.defaults = UserDefaults.standard
         
-        self.diaries = LWRealmManager.shared.localDatabase.toArray()
-        
-        //创建的同时
-        self.syncEngine = LWSyncEngine.init(defaults: self.defaults, initialDiaries: self.diaries)
+        let initialDB = LWRealmManager.shared.localDatabase
+        self.syncEngine = LWSyncEngine.init(defaults: self.defaults, initialDiaries: initialDB.toArray())
         
         self.syncEngine?.didUpdateModels = { [weak self] diaries in
             self?.updateAfterSync(diaries)
         }
 
         self.syncEngine?.didDeleteModels = { [weak self] identifiers in
-            self?.diaries.removeAll(where: { identifiers.contains($0.id) })
-            self?.save()
+            for id in identifiers{
+                let predicate = NSPredicate(format: "id == %@", id)
+                LWRealmManager.shared.delete(predicate: predicate)
+            }
         }
     }
     
@@ -73,44 +73,23 @@ public final class DiaryStore: ObservableObject {
     }
     
     private func updateAfterSync(_ diaries:[diaryInfo]){
-        os_log("开始更新本地数据库...", log: log, type: .debug)
-        /*
-         TODO:
-         1.更新diaryDict，因为它才是UI的数据源！
-         2.更新UI,reloadData：DiaryStore新增一个闭包属性，用来定义更新行为
-        */
+        os_log("将云端获取的数据应用到本地数据库...", log: log, type: .debug)
+  
         diaries.forEach { updatedDiary in
             //修改的记录同步到本地数据库
-            LWRealmManager.shared.update {
-                if let idx = self.diaries.firstIndex(where: { $0.date == updatedDiary.date
-                }){
-                    self.diaries[idx] = updatedDiary
-                }
-                //新增的记录同步到本地数据库
-                else{
-                    self.diaries.append(updatedDiary)
-                }
-            }
+            //如果是修改，自动更新，如果是增加，则本地数据库自动新增一个记录
+            LWRealmManager.shared.add(updatedDiary)
         }
-
-        save()
     }
     
     ///提交添加或修改到云端
-    ///同时更新本地数据库
     func addOrUpdate(_ diary:diaryInfo) {
-        LWRealmManager.shared.update {
-            if let idx = diaries.lastIndex(where: { $0.id == diary.id }) {
-                //修改
-                diaries[idx] = diary
-            } else {
-                //添加
-                diaries.append(diary)
-            }
-        }
-
+        //在textFormatter中已经实现了更新本地数据库的逻辑
+        
+        //提交更新到云端
         syncEngine?.upload(diary)
-        save()
+        
+        
     }
     
     ///提交删除到云端
@@ -122,41 +101,12 @@ public final class DiaryStore: ObservableObject {
         }
 
         syncEngine?.delete(diary)
-        save()
+        
+        //TODO:-保存到本地数据库
     }
     
     func diary(with id: String) -> diaryInfo? {
-        diaries.first(where: { $0.id == id })
-    }
-    
-    private func save() {
-        print("尚未实现本地数据库")
-        return
-        os_log("正在数据库保存到本地磁盘...", log: log, type: .debug, #function)
-//
-//        do {
-//            let data = try PropertyListEncoder().encode(diaries)
-//            try data.write(to: storeURL)
-//        } catch {
-//            os_log("Failed to save diaries: %{public}@", log: self.log, type: .error, String(describing: error))
-//        }
-        os_log("保存数据库成功！", log: log, type: .debug, #function)
-    }
-    
-    private func load() {
-        print("尚未实现本地数据库")
-        return
-        os_log("读取", log: log, type: .debug, #function)
-        
-//        do {
-//            let data = try Data(contentsOf: storeURL)
-//
-//            guard !data.isEmpty else { return }
-//
-//            self.diaries = try PropertyListDecoder().decode([diaryInfo].self, from: data)
-//        } catch {
-//            os_log("Failed to load diaries: %{public}@", log: self.log, type: .error, String(describing: error))
-//        }
+        return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
     }
     
     public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {

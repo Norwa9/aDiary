@@ -36,6 +36,23 @@ enum RecordKey: String {
 }
 //MARK:diaryInfo+CloudKit
 extension diaryInfo {
+    var record: CKRecord {
+        let r = CKRecord(recordType: .diaryInfo, recordID: recordID)
+
+        r[.date] = date
+        r[.year] = year
+        r[.month] = month
+        r[.day] = day
+        r[.content] = content
+        r[.islike] = islike
+        r[.tags] = self.tags
+        r[.mood] = mood
+        r[.containsImage] = containsImage
+        r[.rtfd] = rtfdAsset
+
+        return r
+    }
+    
     var recordID:CKRecord.ID{
         return CKRecord.ID(recordName: id,zoneID: SyncConstants.customZoneID)
     }

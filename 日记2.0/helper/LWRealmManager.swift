@@ -64,13 +64,23 @@ class LWRealmManager{
         }
     }
     
-    func delete(_ diary:diaryInfo){
+    func delete(_ diaries:[diaryInfo]){
         do{
             try realm.write(){
-                realm.delete(diary)
+                realm.delete(diaries)
             }
         }catch let error{
-            print("[删除]Realm数据库操作错误：\(error.localizedDescription)")
+            print("[逐个删除]Realm数据库操作错误：\(error.localizedDescription)")
+        }
+    }
+    func delete(predicate:NSPredicate){
+        let res = self.query(predicate: predicate)
+        do{
+            try realm.write(){
+                realm.delete(res)
+            }
+        }catch let error{
+            print("[述语批量删除]Realm数据库操作错误：\(error.localizedDescription)")
         }
     }
     
