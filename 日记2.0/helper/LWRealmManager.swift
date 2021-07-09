@@ -57,3 +57,11 @@ class LWRealmManager{
         return res
     }
 }
+
+//MARK:-LWRealmManager+DiaryInfo
+extension LWRealmManager{
+    ///更新所有日记的tag
+    func updateTagForAll(){
+        
+    }
+}

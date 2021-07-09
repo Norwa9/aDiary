@@ -30,6 +30,8 @@ class tagsView: UIViewController {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
+    var completionHandler:(()->Void)!
+    
     //MARK:-初始化UI
     func setupUI(){
         //configure drag bar
@@ -276,7 +278,7 @@ extension tagsView:UIViewControllerTransitioningDelegate{
 //MARK:-life cycle
 extension tagsView{
 
-    func configureDate(){
+    func bindData(){
         //绑定数据
         selectedMood = moodTypes.init(rawValue: diary.mood)!
         selectedTags = diary.tags
@@ -306,8 +308,7 @@ extension tagsView{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("tagsView viewWillAppear")
-        configureDate()
+        bindData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -316,9 +317,10 @@ extension tagsView{
         if let selectedMood = selectedMood{
             diary.mood = selectedMood.rawValue
         }
-        print("tagsView关闭，保存已选中的tags:\(selectedTags)")
+        //print("tagsView关闭，保存已选中的tags:\(selectedTags)")
         diary.tags = selectedTags
-        let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData()
+        
+        //调用.save()
+        self.completionHandler()
     }
 }

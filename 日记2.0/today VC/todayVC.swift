@@ -26,6 +26,7 @@ class todayVC: UIViewController {
         let tagsViewController = tagsView()
         tagsViewController.transitioningDelegate = tagsViewController
         tagsViewController.modalPresentationStyle = .custom//模态
+        tagsViewController.completionHandler = save
         return tagsViewController
     }()
     
@@ -177,19 +178,23 @@ extension todayVC:UITextViewDelegate{
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
+        //开启左右滑动
+        let customPageVC = UIApplication.getcustomPageViewController()
+        customPageVC.pageScrollView.isScrollEnabled = true
+        
+        save()
+    }
+    
+    //MARK:-保存更改
+    func save(){
         //保存数据
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.save(with: todayDiary)
         
-        //开启左右滑动
-        let customPageVC = UIApplication.getcustomPageViewController()
-        customPageVC.pageScrollView.isScrollEnabled = true
         //更新monthVC的UI
         let monthVC = UIApplication.getMonthVC()
         if todayDiary.month == monthVC.selectedMonth{
-//            print("月份:\(todayDiary.month),刷新行:\(todayDiary.row + 1)th")
             //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
-//            print("done：row\(todayDiary.row)")
             monthVC.reloadCollectionViewData(forRow: todayDiary.row)
             monthVC.calendar.reloadData()
         }

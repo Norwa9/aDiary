@@ -51,18 +51,6 @@ class DataContainerSingleton {
         return count
     }
     
-//    ///持久化存储所有日记数据类的字典diaryDict
-//    func saveDiaryDict(){
-//        print("保存diaryDict数据")
-//        let defaults = UserDefaults.standard
-//        let jsonEncoder = JSONEncoder()
-//        if let storedData = try? jsonEncoder.encode(self.diaryDict) {
-//            defaults.set(storedData, forKey:DefaultsKeys.diaryDict)
-//        } else {
-//          print("Failed to save diary dict.")
-//        }
-//    }
-    
     //如果用户修改了某个tag名称，将要更新所有使用该tag的日记中的tag名称
     func updateTags(oldTag:String,newTag:String?){
         if let newTag = newTag{//操作：更新
@@ -87,7 +75,7 @@ class DataContainerSingleton {
         
     }
     
-    //MARK:-导出diaryDict为plist文件
+    //MARK:-导出diaryDict2.0为plist文件(临时函数，用来备份)
     ///存储diaryDict的plist文件。
     ///返回本地文件地址的URL
     func savePlistFile()->URL{
