@@ -15,6 +15,7 @@ class todayVC: UIViewController {
             return todayDiary
         }else{
             let newDiary = diaryInfo(dateString: date)
+            DataContainerSingleton.sharedDataContainer.diaryDict[date] = newDiary
             return newDiary
         }
     }()

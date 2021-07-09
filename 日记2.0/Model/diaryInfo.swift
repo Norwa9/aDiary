@@ -14,19 +14,21 @@ class diaryInfo:Object,Codable{
     
     //@objc dynamic **必须写
     @objc dynamic var ckData:Data? = nil
-    @objc dynamic var id:String
-    @objc dynamic var date:String
-    @objc dynamic var content:String
-    @objc dynamic var islike:Bool
-    @objc dynamic var tags:[String]
-    @objc dynamic var mood:String
-    @objc dynamic var containsImage:Bool
-    @objc dynamic var rtfd:Data?
+    @objc dynamic var id:String = ""
+    @objc dynamic var date:String = ""
+    @objc dynamic var content:String = ""
+    @objc dynamic var islike:Bool = false
+    @objc dynamic var mood:String = ""
+    @objc dynamic var containsImage:Bool = false
+    @objc dynamic var rtfd:Data? = nil
+    var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
     
 //MARK:-init
     ///解码record来初始化diaryInfo类
-    init(record: CKRecord) throws {
+    convenience init(record: CKRecord) throws {
+        self.init()//RealmSwift:Please note this says 'self' and not 'super'
+        
         guard let date = record[.date] as? String else {
             throw RecordError.missingKey(.date)
         }
@@ -64,14 +66,16 @@ class diaryInfo:Object,Codable{
         self.date = date
         self.content = content
         self.islike = (islike != 0)
-        self.tags = tags
+        self.realmTags.append(objectsIn: tags.map({ RealmString(value: [$0]) }))
         self.mood = mood
         self.containsImage = (containsImage != 0)
         self.rtfd = rtfdData
     }
     
     
-    init(dateString:String) {
+    convenience init(dateString:String) {
+        self.init()//RealmSwift:Please note this says 'self' and not 'super'
+        
         self.id = UUID().uuidString
         self.date = dateString
         self.content = ""
@@ -80,6 +84,7 @@ class diaryInfo:Object,Codable{
         self.mood = "calm"
         self.containsImage = false
         self.rtfd = nil
+        self.realmTags = List<RealmString>()
     }
     
     
@@ -143,7 +148,7 @@ extension diaryInfo{
         r[.date] = date
         r[.content] = content
         r[.islike] = islike
-        r[.tags] = tags
+        r[.tags] = self.tags
         r[.mood] = mood
         r[.containsImage] = containsImage
         r[.rtfd] = rtfdAsset
@@ -174,5 +179,22 @@ extension diaryInfo{
                 return nil
             }
         }
+    }
+}
+
+
+//MARK:-[String]包装
+class RealmString: Object,Codable {
+    @objc dynamic var stringValue:String = ""
+}
+extension diaryInfo{
+    var tags: [String] {
+      get {
+        return realmTags.map { $0.stringValue }
+      }
+      set {
+        realmTags.removeAll()
+        realmTags.append(objectsIn: newValue.map({ RealmString(value: [$0]) }))
+      }
     }
 }
