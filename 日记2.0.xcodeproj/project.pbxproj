@@ -226,6 +226,7 @@
 		EA51D22225D986360007BDFA /* todayVC component */ = {
 			isa = PBXGroup;
 			children = (
+				EAA29EA825C836E200AA6971 /* tagsView */,
 				EAA29EA025C833FF00AA6971 /* moodButton.swift */,
 				EA3ABAD925E019FD00911902 /* toolsBar.swift */,
 				EA3ABADC25E01A5100911902 /* toolsBar.xib */,
@@ -332,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
+				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
 				EA3189AE26934ED5001B9042 /* globalFuncs.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataManager.swift */,
 				EA9AE7B3260F634200D44221 /* userDefaultManager.swift */,
@@ -339,7 +341,6 @@
 				EA6EFE892629C050004B0FA1 /* fileManager.swift */,
 				EA537B9C2632FD9500C2E9EE /* imageManager.swift */,
 				EA9AF5202682260B00D77908 /* cloudKitManager.swift */,
-				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -350,7 +351,6 @@
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
 				EA537BB726357FA900C2E9EE /* share */,
 				EA51D22225D986360007BDFA /* todayVC component */,
-				EAA29EA825C836E200AA6971 /* tagsView */,
 			);
 			path = "today VC";
 			sourceTree = "<group>";

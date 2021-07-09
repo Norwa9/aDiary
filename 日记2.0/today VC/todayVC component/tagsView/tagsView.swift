@@ -294,7 +294,6 @@ extension tagsView{
             moodButtons[index].animateSelectedView()
         }
         tagsTableView.reloadData()
-
     }
     
     override func viewDidLoad() {
