@@ -313,12 +313,14 @@ extension tagsView{
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        //保存tags和mood的选项
-        if let selectedMood = selectedMood{
-            diary.mood = selectedMood.rawValue
+        LWRealmManager.shared.update {
+            //保存tags和mood的选项
+            if let selectedMood = selectedMood{
+                diary.mood = selectedMood.rawValue
+            }
+            //print("tagsView关闭，保存已选中的tags:\(selectedTags)")
+            diary.tags = selectedTags
         }
-        //print("tagsView关闭，保存已选中的tags:\(selectedTags)")
-        diary.tags = selectedTags
         
         //调用.save()
         self.completionHandler()

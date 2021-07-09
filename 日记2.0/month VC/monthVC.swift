@@ -9,6 +9,7 @@ import UIKit
 import FSCalendar
 import Popover
 import MJRefresh
+import RealmSwift
 
 class monthVC: UIViewController {
     weak var pageVC:customPageViewController!
@@ -99,11 +100,11 @@ class monthVC: UIViewController {
     func configureDataSource(year:Int,month:Int){
         DispatchQueue.main.async { [self] in
             let dataSource = diariesForMonth(forYear: year, forMonth: month)
-                filteredDiaries.removeAll()
-                filteredDiaries = dataSource
-                flowLayout.dateSource = filteredDiaries
+            filteredDiaries.removeAll()
+            filteredDiaries = dataSource
+            flowLayout.dateSource = filteredDiaries
+            print("filteredDiaries\(filteredDiaries.count)")
             DispatchQueue.main.async {
-//                print("configure dataSource,reload data")
                 reloadCollectionViewData()
             }
         }
@@ -385,7 +386,7 @@ class monthVC: UIViewController {
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false){
-//        print("reloadCollectionViewData,row:\(forRow)")
+        print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
             if !animated{
                 self.collectionView.reloadData()
@@ -755,12 +756,15 @@ extension monthVC:UISearchBarDelegate{
     }
     
     func filter(){
-        DispatchQueue.global(qos: .default).async {[self] in
-            resultDiaries = filterDiary()//全局函数:实际上速度大概在0.5s左右
-            filteredDiaries = Array(resultDiaries.prefix(20))
-            flowLayout.dateSource = filteredDiaries//提供布局的计算依据
+        DispatchQueue.main.async {[self] in
+            
+            let arr = filterDiary()//全局函数:实际上速度大概在0.5s左右
             
             DispatchQueue.main.async {
+                resultDiaries = arr
+                filteredDiaries = Array(resultDiaries.prefix(20))
+                print("search results:\(filteredDiaries.count)")
+                flowLayout.dateSource = filteredDiaries//提供布局的计算依据
                 //更新collectionView
                 reloadCollectionViewData()//如果数据源很多，将会很耗时！
                 

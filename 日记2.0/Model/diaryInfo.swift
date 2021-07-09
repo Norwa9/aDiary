@@ -84,9 +84,9 @@ class diaryInfo:Object,Codable{
         
         self.id = UUID().uuidString
         self.date = dateString
-        self.year = 0
-        self.month = 0
-        self.day = 0
+        self.year = Int(date.dateComponent(for: .year))!
+        self.month = Int(date.dateComponent(for: .month))!
+        self.day = Int(date.dateComponent(for: .day))!
         self.content = ""
         self.islike = false
         self.tags = []
@@ -123,7 +123,7 @@ extension diaryInfo{
         get{
             let diries = diariesForMonth(forYear: year, forMonth: month)
             var count = 0
-            for diary in diries.reversed(){
+            for diary in diries{
                 if diary.date == self.date{
                     return count
                 }

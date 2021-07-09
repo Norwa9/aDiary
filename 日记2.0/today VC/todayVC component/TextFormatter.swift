@@ -511,8 +511,9 @@ extension TextFormatter{
         textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
         let bounds = self.textView.bounds
+        let aString = diary.attributedString
         DispatchQueue.global(qos: .default).async {
-            let correctedAString = diary.attributedString?.processAttrString(bounds: bounds)
+            let correctedAString = aString?.processAttrString(bounds: bounds)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
             }

@@ -110,14 +110,18 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
 
 //MARK:-获取符合筛选条件的所有日记
 func filterDiary()->[diaryInfo]{
+    //------Background Thread-------
+    
     let keywords = filterModel.shared.searchText
     let selectedMood = filterModel.shared.selectedMood
     let selectedTags = filterModel.shared.selectedTags
     let sortStyle = filterModel.shared.selectedSortstyle
     
-    let allDiary = LWRealmManager.shared.localDatabase
+    //不能在后台线程访问主线程创建的realm对象
+    //❌let localDB = LWRealmManager.shared.localDatabase
+    let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
+    print("allDiary.count:\(allDiary.count)")
     var resultDiaries = [diaryInfo]()
-    
     
     //1筛选：关键字
     if keywords != ""{

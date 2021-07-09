@@ -15,23 +15,30 @@ class LWRealmManager{
     static var schemaVersion:UInt64 = 0
     
     ///唯一的操作对象
-    private let realm = getRealm()
+    let realm = getRealm()
     
-    /// 获取数据库操作的 Realm
+    /// 获取数据库操作的 Realm 对象(由主线程创建)
     private static func getRealm() -> Realm {
-        
         // 获取数据库文件路径
         let fileURL = URL(string: NSHomeDirectory() + "/Documents/aDiary.realm")
-        print("realm url:\(fileURL?.absoluteString)")
         // 在 APPdelegate 中需要配置版本号时，这里也需要配置版本号
         let config = Realm.Configuration(fileURL: fileURL, schemaVersion: schemaVersion)
         
         return try! Realm(configuration: config)
     }
     
+    ///[主线程创建的Realm实例对象]中查询的所有日记的结果
     lazy var localDatabase:Results<diaryInfo> = {
        return realm.objects(diaryInfo.self)
     }()
+    
+    ///在调用该函数的线程中重新创建Realm实例，然后用这个实例查询
+    ///Realm实例属于当前线程，其他线程不能访问。
+    ///例如：Main Thread创建的实例不能再Background Thread中访问！
+    static func queryAllDieryOnCurrentThread()->Results<diaryInfo>{
+        let realm = getRealm()
+        return realm.objects(diaryInfo.self)
+    }
     
     //MARK:-增删查改
     typealias updateBlock = ()->(Void)
