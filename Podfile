@@ -13,4 +13,5 @@ pod 'MJRefresh'
 pod 'TagListView'
 pod 'FMPhotoPicker', '~> 1.3.0'
 pod 'NVActivityIndicatorView'
+pod 'RealmSwift'
 end

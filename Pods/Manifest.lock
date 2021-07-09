@@ -7,6 +7,11 @@ PODS:
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - Popover (1.3.0)
+  - Realm (10.10.0):
+    - Realm/Headers (= 10.10.0)
+  - Realm/Headers (10.10.0)
+  - RealmSwift (10.10.0):
+    - Realm (= 10.10.0)
   - SnapKit (5.0.1)
   - TagListView (1.4.1)
 
@@ -17,6 +22,7 @@ DEPENDENCIES:
   - MJRefresh
   - NVActivityIndicatorView
   - Popover
+  - RealmSwift
   - SnapKit
   - TagListView
 
@@ -28,6 +34,8 @@ SPEC REPOS:
     - MJRefresh
     - NVActivityIndicatorView
     - Popover
+    - Realm
+    - RealmSwift
     - SnapKit
     - TagListView
 
@@ -38,9 +46,11 @@ SPEC CHECKSUMS:
   MJRefresh: d2c1970d1cf6e77fcfcdfe76c943dfab8dbfa5c1
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   Popover: 10e1d9528f81d9504df984b7b3f491292bc1822d
+  Realm: f501df41a4222c67850c77cf135d472192ecf294
+  RealmSwift: c69aadfc7db0d60075178d037c2f34ada73d5201
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
 
-PODFILE CHECKSUM: b8c50f84976892f43d75898bb5f1f2e0ed2c52a1
+PODFILE CHECKSUM: 74c55dc75c263e7e2cf492f8a7b0930f9c811a6f
 
 COCOAPODS: 1.10.1
