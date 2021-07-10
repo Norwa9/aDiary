@@ -80,6 +80,7 @@ public final class DiaryStore: ObservableObject {
             //如果是修改，自动更新，如果是增加，则本地数据库自动新增一个记录
             LWRealmManager.shared.add(updatedDiary)
         }
+        os_log("本地数据已更新!", log: log, type: .debug)
     }
     
     ///提交添加或修改到云端

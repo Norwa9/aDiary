@@ -264,12 +264,15 @@ final class LWSyncEngine{
     //MARK:-上传
     private func uploadLocalDataNotUploadedYet(){
         //离线期间产生的数据在此上传
-        os_log("开始上传本地未同步的数据...",log:log,type:.debug)
+        os_log("检查本地未上传的日记...",log:log,type:.debug)
         
         //如果ckData未被赋值，表示该日记从未被上传到云端
         let diaries = buffer.filter({ $0.ckData == nil })
         
-        guard !diaries.isEmpty else {return}
+        guard !diaries.isEmpty else {
+            os_log("本地没有未上传的日记...",log:log,type:.debug)
+            return
+        }
         
         os_log("发现 %d 篇本地日记未上传", log: self.log, type: .debug, diaries.count)
         
@@ -330,6 +333,8 @@ final class LWSyncEngine{
 
                 DispatchQueue.main.async {
                     guard let serverRecords = serverRecords else { return }
+                    //运行到这里，已经确定的是serverRecords都已经上传成功
+                    //因此updateLocalModelsAfterUpload的主要的作用是标记这些记录为”已上传“
                     self.updateLocalModelsAfterUpload(with: serverRecords)
                 }
             }
@@ -364,13 +369,10 @@ final class LWSyncEngine{
     private func updateLocalModelsAfterUpload(with records: [CKRecord]) {
         let models: [diaryInfo] = records.compactMap { r in
             guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { return nil }
-
-            //赋值ckData，表示该日记已经在云端有副本
-            //对于已经存入realm的model，如果要修改，必须在写入事物(write Transactions)里修改
+            //*赋值ckData，表示该日记已经在云端有副本
             LWRealmManager.shared.update {
                 model.ckData = r.encodedSystemFields
             }
-        
             return model
         }
 
@@ -490,8 +492,6 @@ final class LWSyncEngine{
                 self.privateChangeToken = token
             }
         }
-
-        
 
         operation.fetchRecordZoneChangesCompletionBlock = { [weak self] error in
             guard let self = self else { return }
