@@ -367,17 +367,16 @@ final class LWSyncEngine{
     }
     
     private func updateLocalModelsAfterUpload(with records: [CKRecord]) {
-        let models: [diaryInfo] = records.compactMap { r in
-            guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { return nil }
+        os_log("将buffer内的本地记录标记为[已上传]，并清空buffer", log: self.log, type: .error)
+        for r in records{
+            guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { continue }
             //*赋值ckData，表示该日记已经在云端有副本
             LWRealmManager.shared.update {
                 model.ckData = r.encodedSystemFields
             }
-            return model
         }
 
         DispatchQueue.main.async {
-            self.didUpdateModels(models)
             self.buffer = []
         }
     }
@@ -449,6 +448,7 @@ final class LWSyncEngine{
         operation.fetchAllChanges = true
 
         operation.recordZoneChangeTokensUpdatedBlock = { [weak self] _, changeToken, _ in
+            print("recordZoneChangeTokensUpdatedBlock")
             guard let self = self else { return }
             os_log("更改令牌发生变动",log: self.log,type: .debug)
             guard let changeToken = changeToken else { return }
@@ -486,8 +486,7 @@ final class LWSyncEngine{
                     error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
                 }
             } else {
-                //os_log("Commiting new change token", log: self.log, type: .debug)
-                os_log("获取到新的更改令牌(change token)", log: self.log, type: .debug)
+                os_log("成功获取zone空间的变动，并将zone空间的最新更改令牌存储到本地", log: self.log, type: .debug)
 
                 self.privateChangeToken = token
             }

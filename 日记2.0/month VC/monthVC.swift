@@ -386,7 +386,7 @@ class monthVC: UIViewController {
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false){
-        print("reloadCollectionViewData,row:\(forRow)")
+        //print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
             if !animated{
                 self.collectionView.reloadData()
