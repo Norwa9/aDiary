@@ -469,15 +469,13 @@ extension TextFormatter{
 extension TextFormatter{
     ///根据日期信息将富文本存储到文件目录
     func save(with diary:diaryInfo){
-        let date = diary.date
-        
-        
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
         let aString = self.textView.attributedText!
         let containsImage:Bool = self.checkIfContainsImage(aString)
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
+            diary.modTime = Date()
             diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
             diary.rtfd = aString.data()
             diary.containsImage = containsImage

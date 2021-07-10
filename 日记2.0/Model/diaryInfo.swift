@@ -24,6 +24,7 @@ class diaryInfo:Object,Codable{
     @objc dynamic var mood:String = ""
     @objc dynamic var containsImage:Bool = false
     @objc dynamic var rtfd:Data? = nil
+    @objc dynamic var modTime:Date? = nil
     var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
     
@@ -76,6 +77,7 @@ class diaryInfo:Object,Codable{
         self.mood = mood
         self.containsImage = (containsImage != 0)
         self.rtfd = rtfdData
+        self.modTime = record.modificationDate
     }
     
     
@@ -93,6 +95,7 @@ class diaryInfo:Object,Codable{
         self.containsImage = false
         self.rtfd = nil
         self.realmTags = List<RealmString>()
+        self.modTime = Date()
     }
     
     

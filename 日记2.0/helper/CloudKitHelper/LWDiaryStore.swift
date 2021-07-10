@@ -78,6 +78,7 @@ public final class DiaryStore: ObservableObject {
         diaries.forEach { updatedDiary in
             //修改的记录同步到本地数据库
             //如果是修改，自动更新，如果是增加，则本地数据库自动新增一个记录
+            print("updatedDiary.modTime:\(updatedDiary.modTime)")
             LWRealmManager.shared.add(updatedDiary)
         }
         os_log("本地数据已更新!", log: log, type: .debug)
