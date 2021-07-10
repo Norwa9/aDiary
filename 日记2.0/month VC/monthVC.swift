@@ -103,7 +103,6 @@ class monthVC: UIViewController {
             filteredDiaries.removeAll()
             filteredDiaries = dataSource
             flowLayout.dateSource = filteredDiaries
-            print("filteredDiaries\(filteredDiaries.count)")
             DispatchQueue.main.async {
                 reloadCollectionViewData()
             }

@@ -427,8 +427,6 @@ final class LWSyncEngine{
     
     ///获取云端的变动
     func fetchRemoteChanges() {
-        os_log("开始获取远程的改动...", log: log, type: .debug)
-
         var changedRecords: [CKRecord] = []
         var deletedRecordIDs: [CKRecord.ID] = []
 
@@ -447,10 +445,11 @@ final class LWSyncEngine{
         operation.recordZoneIDs = [SyncConstants.customZoneID]
         operation.fetchAllChanges = true
 
+        ///？这个方法并没有回调
         operation.recordZoneChangeTokensUpdatedBlock = { [weak self] _, changeToken, _ in
             print("recordZoneChangeTokensUpdatedBlock")
             guard let self = self else { return }
-            os_log("更改令牌发生变动",log: self.log,type: .debug)
+            os_log("云端的更改令牌发生变动，获取并更新本地的更改令牌到最新！",log: self.log,type: .debug)
             guard let changeToken = changeToken else { return }
             
             //存储changeToken以便在后续的提取中使用
@@ -486,7 +485,7 @@ final class LWSyncEngine{
                     error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
                 }
             } else {
-                os_log("成功获取zone空间的变动，并将zone空间的最新更改令牌存储到本地", log: self.log, type: .debug)
+                os_log("成功获取云端的最新更改令牌，存储到本地", log: self.log, type: .debug)
 
                 self.privateChangeToken = token
             }
@@ -503,7 +502,7 @@ final class LWSyncEngine{
 
                 error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
             } else {
-                os_log("自定义zone空间内的所有记录变动情况(新增/修改/删除))获取完毕！", log: self.log, type: .info)
+                os_log("zone内所有变动情况(新增/修改/删除))获取完毕！", log: self.log, type: .info)
 
                 DispatchQueue.main.async { self.commitServerChangesToDatabase(with: changedRecords, deletedRecordIDs: deletedRecordIDs) }
             }
@@ -518,7 +517,7 @@ final class LWSyncEngine{
     ///获取云端的变化，更新本地数据库
     private func commitServerChangesToDatabase(with changedRecords: [CKRecord], deletedRecordIDs: [CKRecord.ID]) {
         guard !changedRecords.isEmpty || !deletedRecordIDs.isEmpty else {
-            os_log("获取zone内的所有记录变动情况完毕：云端没有发生任何变动(新增/修改/删除)", log: log, type: .info)
+            os_log("云端没有发生任何变动(新增/修改/删除)", log: log, type: .info)
             return
         }
 
@@ -529,7 +528,7 @@ final class LWSyncEngine{
             do {
                 return try diaryInfo(record: record)
             } catch {
-                os_log("Error decoding recipe from record: %{public}@", log: self.log, type: .error, String(describing: error))
+                os_log("Error decoding diary from record: %{public}@", log: self.log, type: .error, String(describing: error))
                 return nil
             }
         }
