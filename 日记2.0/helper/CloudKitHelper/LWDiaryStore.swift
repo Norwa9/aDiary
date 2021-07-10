@@ -73,13 +73,14 @@ public final class DiaryStore: ObservableObject {
     }
     
     private func updateAfterSync(_ diaries:[diaryInfo]){
-        os_log("将云端获取的数据应用到本地数据库...", log: log, type: .debug)
+        os_log("将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
   
         diaries.forEach { updatedDiary in
-            //修改的记录同步到本地数据库
-            //如果是修改，自动更新，如果是增加，则本地数据库自动新增一个记录
-            print("updatedDiary.modTime:\(updatedDiary.modTime)")
-            LWRealmManager.shared.add(updatedDiary)
+            //修改的记录同步到本地数据库:
+            //如果是修改，比对本地Model，取较新的那一个
+            //如果是增加，则本地数据库自动新增一个记录
+            let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
+            LWRealmManager.shared.add(newerModel)
         }
         os_log("本地数据已更新!", log: log, type: .debug)
     }

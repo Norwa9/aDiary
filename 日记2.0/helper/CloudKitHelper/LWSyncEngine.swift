@@ -282,8 +282,6 @@ final class LWSyncEngine{
     }
     
     func upload(_ diray: diaryInfo) {
-        os_log("开始上传...", log: log, type: .debug)
-
         buffer.append(diray)
 
         uploadRecords([diray.record])
@@ -292,7 +290,7 @@ final class LWSyncEngine{
     private func uploadRecords(_ records: [CKRecord]) {
         guard !records.isEmpty else { return }
 
-        os_log("开始上传 %d 个修改(或新增)的记录", log: log, type: .debug,records.count)
+        os_log("开始上传 %d 个修改(或新增)的记录...", log: log, type: .debug,records.count)
 
         let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)
 
@@ -524,7 +522,7 @@ final class LWSyncEngine{
         os_log("云端有%d个记录发生了新增/修改，%d个记录被删除。将这些变动同步到本地数据库...", log: log, type: .info, changedRecords.count, deletedRecordIDs.count)
 
         //Record解码Model
-        let models: [diaryInfo] = changedRecords.compactMap { record in
+        let changedModels: [diaryInfo] = changedRecords.compactMap { record in
             do {
                 return try diaryInfo(record: record)
             } catch {
@@ -535,7 +533,7 @@ final class LWSyncEngine{
 
         let deletedIdentifiers = deletedRecordIDs.map { $0.recordName }
 
-        didUpdateModels(models)
+        didUpdateModels(changedModels)
         didDeleteModels(deletedIdentifiers)
     }
     

@@ -65,7 +65,7 @@ extension diaryInfo {
         }
     }
     
-    ///解决冲突的方案
+    ///解决冲突的方案：保留最新的record
     static func resolveConflict(clientRecord: CKRecord, serverRecord: CKRecord) -> CKRecord? {
         // Most recent record wins. This might not be the best solution but YOLO.
 
@@ -78,6 +78,32 @@ extension diaryInfo {
         } else {
             return serverRecord
         }
+    }
+    
+    ///解决冲突：离线修改的数据是新的，云端的数据是旧的。不能直接让云端覆盖本地
+    ///而是保留二者中最新者。
+    static func resolveOfflineConflict(serverModel: diaryInfo) -> diaryInfo{
+        var newerModel:diaryInfo
+        let date = serverModel.date
+        let predicate = NSPredicate(format: "date == %@",date)
+        let result = LWRealmManager.shared.query(predicate: predicate).first
+        if let clientModel = result{
+            //serverModel在本地存在，对比修改时间。
+            if clientModel.modTime! > serverModel.modTime!{
+                //说明本地model在离线期间进行了修改
+                newerModel =  clientModel
+                //还需要将这个离线修改更新到云端
+                print("将该离线的最新修改上传到云端，日期:\(clientModel.date)")
+                DiaryStore.shared.addOrUpdate(newerModel)
+            }else{
+                newerModel =  serverModel
+            }
+        }else{
+            //serverModel在本地不存在
+            newerModel =  serverModel
+        }
+        return newerModel
+        
     }
 }
 
