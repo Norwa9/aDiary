@@ -267,7 +267,10 @@ final class LWSyncEngine{
         os_log("检查本地未上传的日记...",log:log,type:.debug)
         
         //如果ckData未被赋值，表示该日记从未被上传到云端
-        let diaries = buffer.filter({ $0.ckData == nil })
+        //如果editedButNotUploaded == true 表示日记修改了还未上传
+        let diaries = buffer.filter({
+            return ($0.ckData == nil || $0.editedButNotUploaded)
+        })
         
         guard !diaries.isEmpty else {
             os_log("本地没有未上传的日记...",log:log,type:.debug)
@@ -370,6 +373,7 @@ final class LWSyncEngine{
             guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { continue }
             //*赋值ckData，表示该日记已经在云端有副本
             LWRealmManager.shared.update {
+                model.editedButNotUploaded = false
                 model.ckData = r.encodedSystemFields
             }
         }

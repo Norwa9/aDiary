@@ -33,6 +33,7 @@ enum RecordKey: String {
     case containsImage
     case images
     case rtfd
+    case editedButNotUploaded
 }
 //MARK:diaryInfo+CloudKit
 extension diaryInfo {
@@ -49,6 +50,7 @@ extension diaryInfo {
         r[.mood] = mood
         r[.containsImage] = containsImage
         r[.rtfd] = rtfdAsset
+        r[.editedButNotUploaded] = editedButNotUploaded
 
         return r
     }

@@ -475,6 +475,7 @@ extension TextFormatter{
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
+            diary.editedButNotUploaded = true
             diary.modTime = Date()
             diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
             diary.rtfd = aString.data()

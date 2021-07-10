@@ -11,9 +11,11 @@ import CloudKit
 import RealmSwift
 
 class diaryInfo:Object,Codable{
-    
     //@objc dynamic **必须写
+    
+    ///引入的目的是解决离线添加的问题
     @objc dynamic var ckData:Data? = nil
+    
     @objc dynamic var id:String = ""
     @objc dynamic var date:String = ""
     @objc dynamic var year:Int = 0
@@ -25,6 +27,10 @@ class diaryInfo:Object,Codable{
     @objc dynamic var containsImage:Bool = false
     @objc dynamic var rtfd:Data? = nil
     @objc dynamic var modTime:Date? = nil
+    
+    ///引入的目的是解决离线修改的同步问题
+    @objc dynamic var editedButNotUploaded:Bool = false
+    
     var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
     
@@ -50,6 +56,9 @@ class diaryInfo:Object,Codable{
         }
         guard let containsImage = record[.containsImage] as? Int else {
             throw RecordError.missingKey(.containsImage)
+        }
+        guard let editedButNotUploaded = record[.editedButNotUploaded] as? Bool else {
+            throw RecordError.missingKey(.editedButNotUploaded)
         }
         
         var imagesData:[Data?] = []
@@ -78,6 +87,7 @@ class diaryInfo:Object,Codable{
         self.containsImage = (containsImage != 0)
         self.rtfd = rtfdData
         self.modTime = record.modificationDate
+        self.editedButNotUploaded = editedButNotUploaded
     }
     
     
@@ -96,6 +106,7 @@ class diaryInfo:Object,Codable{
         self.rtfd = nil
         self.realmTags = List<RealmString>()
         self.modTime = Date()
+        self.editedButNotUploaded = editedButNotUploaded
     }
     
     
