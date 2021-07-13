@@ -19,12 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //读取引导文案到今日
 //        LoadIntroText()
         
-        //注册静默通知，以监听iCloud数据库的变化
-        UIApplication.shared.registerForRemoteNotifications()
-        
         //配置realm
         self.configureRealm()
         
+        //获取云端的数据（如果有的话）
+        
+        
+        //注册静默通知，以监听iCloud数据库的变化
+        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
     

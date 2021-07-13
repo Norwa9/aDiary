@@ -28,8 +28,8 @@ class diaryInfo:Object,Codable{
     @objc dynamic var rtfd:Data? = nil
     @objc dynamic var modTime:Date? = nil
     
-    ///引入的目的是解决离线修改的同步问题
-    @objc dynamic var editedButNotUploaded:Bool = false
+    ///引入的目的是解决离线修改的同步问题(不必上传到云端)
+    var editedButNotUploaded:Bool = false
     
     var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
@@ -71,8 +71,6 @@ class diaryInfo:Object,Codable{
         if let rtfdAsset = record[.rtfd] as? CKAsset{
             rtfdData = rtfdAsset.data
         }
-        
-        let editedButNotUploaded = record[.editedButNotUploaded] as? Bool ?? false
 
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName
@@ -87,7 +85,6 @@ class diaryInfo:Object,Codable{
         self.containsImage = (containsImage != 0)
         self.rtfd = rtfdData
         self.modTime = record.modificationDate
-        self.editedButNotUploaded = editedButNotUploaded
     }
     
     
@@ -106,7 +103,6 @@ class diaryInfo:Object,Codable{
         self.rtfd = nil
         self.realmTags = List<RealmString>()
         self.modTime = Date()
-        self.editedButNotUploaded = editedButNotUploaded
     }
     
     

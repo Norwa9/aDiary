@@ -265,7 +265,17 @@ final class LWSyncEngine{
     }
     
     //MARK:-上传
-    private func uploadLocalDataNotUploadedYet(){
+    ///扫描当前本地数据库需要上传的数据（主要是为了上传离线修改，而未push的数据）
+    func scanLoaclDataEditedOffline(){
+        let results = LWRealmManager.shared.localDatabase.filter { (model) -> Bool in
+            return model.editedButNotUploaded
+        }
+        for model in results{
+            self.buffer.append(model)
+        }
+    }
+    
+    func uploadLocalDataNotUploadedYet(){
         //离线期间产生的数据在此上传
         os_log("检查本地未上传的日记...",log:log,type:.debug)
         
@@ -293,6 +303,7 @@ final class LWSyncEngine{
         uploadRecords([diray.record])
     }
     
+    ///上传指定的记录
     private func uploadRecords(_ records: [CKRecord]) {
         guard !records.isEmpty else { return }
 

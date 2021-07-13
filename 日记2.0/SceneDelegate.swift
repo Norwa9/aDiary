@@ -53,10 +53,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         print("将要进入前台")
         /*
-         app进入前台之前，打开认证。
-         认证完成后，才开始获取远程记录
+         1.认证
+         2.上传离线时修改的数据（如果有
+         3.获取服务器的变化
          */
         self.authApp(then: {
+            DiaryStore.shared.uploadLocalDataEditedOffline()
             DiaryStore.shared.fetchRemoteChange()
         })
         
