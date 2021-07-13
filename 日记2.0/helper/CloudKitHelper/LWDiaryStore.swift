@@ -103,7 +103,7 @@ public final class DiaryStore: ObservableObject {
     ///主动拉取云端变动
     public func fetchRemoteChange(){
         //展示菊花转
-        iVmanager.shared.start()
+        indicatorViewManager.shared.start()
         //开始拉取
         syncEngine?.fetchRemoteChanges()
     }
@@ -112,7 +112,7 @@ public final class DiaryStore: ObservableObject {
     private func updateAfterSync(_ diaries:[diaryInfo]){
         if diaries.isEmpty{
             //云端没有更新
-            iVmanager.shared.stop()
+            indicatorViewManager.shared.stop()
             return
         }
         os_log("将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
@@ -127,7 +127,7 @@ public final class DiaryStore: ObservableObject {
         os_log("本地数据库已更新!", log: log, type: .debug)
         
         //2.更新UI
-        iVmanager.shared.stop()
+        indicatorViewManager.shared.stop()
         DispatchQueue.main.async {
             UIApplication.getMonthVC().reloadCollectionViewData()
             UIApplication.getTodayVC().reloadData()

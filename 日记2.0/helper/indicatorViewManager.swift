@@ -10,8 +10,8 @@ import UIKit
 import NVActivityIndicatorView
 
 ///菊花指示器助手
-class iVmanager{
-    static let shared = iVmanager()
+class indicatorViewManager{
+    static let shared = indicatorViewManager()
     
     ///菊花指示器图层
     let indicatorView:NVActivityIndicatorView!
