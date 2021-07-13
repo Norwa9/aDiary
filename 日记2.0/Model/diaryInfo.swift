@@ -35,10 +35,12 @@ class diaryInfo:Object,Codable{
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
     
 //MARK:-init
-    ///解码record来初始化diaryInfo类
+    ///解码云端取回的record
     convenience init(record: CKRecord) throws {
         self.init()//RealmSwift:Please note this says 'self' and not 'super'
         
+        
+        ///required keys
         guard let date = record[.date] as? String else {
             throw RecordError.missingKey(.date)
         }
@@ -57,22 +59,20 @@ class diaryInfo:Object,Codable{
         guard let containsImage = record[.containsImage] as? Int else {
             throw RecordError.missingKey(.containsImage)
         }
-        guard let editedButNotUploaded = record[.editedButNotUploaded] as? Bool else {
-            throw RecordError.missingKey(.editedButNotUploaded)
-        }
         
-        var imagesData:[Data?] = []
-        if let imagesAsset = record[.images] as? [CKAsset] {
-            for asset in imagesAsset {
-                imagesData.append(asset.data)
-            }
-        }
-        
+        /*
+         随着App的更新，新版本中可能会加入新的字段。
+         假设一台设备使用旧版本上传record到云端，由于旧版本缺少新字段，因此上传的record对应的字段被cloudkit自动填充为nil。
+         而当新版本App从云端取回这些record时，又需要这些值为nil的新字段，因此要妥善处理nil。
+         这里的做法就是，如果record中没有某个key的值，则将key赋予一个初始值。
+         */
+        ///optional keys
         var rtfdData:Data?
         if let rtfdAsset = record[.rtfd] as? CKAsset{
             rtfdData = rtfdAsset.data
         }
         
+        let editedButNotUploaded = record[.editedButNotUploaded] as? Bool ?? false
 
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName

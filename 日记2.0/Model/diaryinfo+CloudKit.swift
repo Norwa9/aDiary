@@ -31,7 +31,6 @@ enum RecordKey: String {
     case mood
     case uuidofPictures
     case containsImage
-    case images
     case rtfd
     case editedButNotUploaded
 }
