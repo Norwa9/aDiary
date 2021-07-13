@@ -121,7 +121,8 @@ public final class DiaryStore: ObservableObject {
             //修改的记录同步到本地数据库:
             //如果是修改，比对本地Model，取较新的那一个
             //如果是增加，则本地数据库自动新增一个记录
-            LWRealmManager.shared.add(updatedDiary)
+            let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
+            LWRealmManager.shared.add(newerModel)
         }
         os_log("本地数据库已更新!", log: log, type: .debug)
         

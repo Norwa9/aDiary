@@ -82,7 +82,9 @@ extension diaryInfo {
     }
     
     ///解决冲突：离线修改的数据是新的，云端的数据是旧的。不能直接让云端覆盖本地
-    ///而是保留二者中最新者。
+    //////而是保留二者中最新者。
+    ///参数：云端的model
+    ///返回：
     static func resolveOfflineConflict(serverModel: diaryInfo) -> diaryInfo{
         var newerModel:diaryInfo
         let date = serverModel.date
@@ -93,7 +95,7 @@ extension diaryInfo {
             if clientModel.modTime! > serverModel.modTime!{
                 //说明本地model在离线期间进行了修改
                 newerModel =  clientModel
-                //还需要将这个离线修改更新到云端
+                //还需要将这个新的model同步到云端，不然下次又被覆盖
                 print("将该离线的最新修改上传到云端，日期:\(clientModel.date)")
                 DiaryStore.shared.addOrUpdate(newerModel)
             }else{
