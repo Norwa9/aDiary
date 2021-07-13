@@ -126,11 +126,8 @@ public final class DiaryStore: ObservableObject {
         os_log("将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
         //1.将云端变动保存到本地数据库
         diaries.forEach { updatedDiary in
-            //修改的记录同步到本地数据库:
-            //如果是修改，比对本地Model，取较新的那一个
-            //如果是增加，则本地数据库自动新增一个记录
-            let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
-            LWRealmManager.shared.add(newerModel)
+//            let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
+            LWRealmManager.shared.add(updatedDiary)
         }
         os_log("本地数据库已更新!", log: log, type: .debug)
         
