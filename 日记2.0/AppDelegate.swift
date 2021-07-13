@@ -22,8 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //配置realm
         self.configureRealm()
         
-        //获取云端的数据（如果有的话）
         
+        /*
+         这一行代码做了3个初始化：
+         1.初始化DiaryStore
+         2.初始化realm:读取本地数据库，填充数据源
+         3.初始化syncEngine:上传未上传的record、然后获取云端数据变动
+         */
+        _ = DiaryStore.shared
         
         //注册静默通知，以监听iCloud数据库的变化
         UIApplication.shared.registerForRemoteNotifications()
