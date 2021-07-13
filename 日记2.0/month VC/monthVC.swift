@@ -421,8 +421,14 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     ///从数据库重新检索数据，展示所有的最新数据
+    ///用于接收到CloudKit通知刷新数据源
     func reloadCollectionViewDataSource(){
-        self.configureDataSource(year: selectedYear, month: selectedMonth)
+        if isFilterMode{
+            self.filter()
+        }else{
+            self.configureDataSource(year: selectedYear, month: selectedMonth)
+        }
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
