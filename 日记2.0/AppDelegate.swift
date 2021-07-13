@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        LoadIntroText()
         
         //注册静默通知，以监听iCloud数据库的变化
-//        UIApplication.shared.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
         
         //配置realm
         self.configureRealm()
@@ -28,10 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        print("接收到远程通知！")
-////        DiaryStore.shared.processSubscriptionNotification(with: userInfo)
-//    }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        DiaryStore.shared.processSubscriptionNotification(with: userInfo)
+        completionHandler(.newData)//must
+    }
 
     // MARK: UISceneSession Lifecycle
 

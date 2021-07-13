@@ -208,6 +208,9 @@ final class LWSyncEngine{
         
         let operaion = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: nil)
         
+        operaion.database = privateDatabase
+        operaion.qualityOfService = .userInitiated
+        
         operaion.modifySubscriptionsCompletionBlock = {[weak self] _,_,error in
             guard let self = self else {return}
             
@@ -223,14 +226,14 @@ final class LWSyncEngine{
             }
         }
         
-        operaion.database = privateDatabase
-        operaion.qualityOfService = .userInitiated
+        
         cloudOperationQueue.addOperation(operaion)
     }
     
     private func checkSubscription() {
         let operation = CKFetchSubscriptionsOperation(subscriptionIDs: [privateSubscriptionId])
 
+        //ids:[CKSubscription.ID : CKSubscription]?
         operation.fetchSubscriptionCompletionBlock = { [weak self] ids, error in
             guard let self = self else { return }
 
@@ -429,10 +432,19 @@ final class LWSyncEngine{
     
     ///获取云端的变动
     func fetchRemoteChanges() {
+        if let currentOperation = cloudOperationQueue.operations.first{
+            //队列中当前正在执行的是fetch任务，阻止再次fetch
+            if let name = currentOperation.name, name == "fetchRemoteChanges"{
+                print("当前正在执行fetch任务")
+                return
+            }
+        }
+        
         var changedRecords: [CKRecord] = []
         var deletedRecordIDs: [CKRecord.ID] = []
 
         let operation = CKFetchRecordZoneChangesOperation()
+        operation.name = "fetchRemoteChanges"
 
         let token: CKServerChangeToken? = privateChangeToken
 
@@ -448,6 +460,7 @@ final class LWSyncEngine{
         operation.fetchAllChanges = true
 
         ///？这个方法并没有回调
+        ///In my tests, it is only called every 200 or so records that changed.
         operation.recordZoneChangeTokensUpdatedBlock = { [weak self] _, changeToken, _ in
             print("recordZoneChangeTokensUpdatedBlock")
             guard let self = self else { return }
@@ -506,7 +519,9 @@ final class LWSyncEngine{
             } else {
                 os_log("zone内所有变动情况(新增/修改/删除))获取完毕！", log: self.log, type: .info)
 
-                DispatchQueue.main.async { self.commitServerChangesToDatabase(with: changedRecords, deletedRecordIDs: deletedRecordIDs) }
+                DispatchQueue.main.async {
+                    self.commitServerChangesToDatabase(with: changedRecords, deletedRecordIDs: deletedRecordIDs)
+                }
             }
         }
 
@@ -520,6 +535,7 @@ final class LWSyncEngine{
     private func commitServerChangesToDatabase(with changedRecords: [CKRecord], deletedRecordIDs: [CKRecord.ID]) {
         guard !changedRecords.isEmpty || !deletedRecordIDs.isEmpty else {
             os_log("云端没有发生任何变动(新增/修改/删除)", log: log, type: .info)
+            didUpdateModels([])
             return
         }
 

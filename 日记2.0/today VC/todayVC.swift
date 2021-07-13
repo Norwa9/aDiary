@@ -80,7 +80,9 @@ class todayVC: UIViewController {
         case 1:
             //设置“喜欢”
             button.islike.toggle()
-            todayDiary.islike = button.islike
+            LWRealmManager.shared.update {
+                todayDiary.islike = button.islike
+            }
             //刷新monthVC
             let monthVC = UIApplication.getMonthVC()
             monthVC.calendar.reloadData()
@@ -187,21 +189,6 @@ extension todayVC:UITextViewDelegate{
         save()
     }
     
-    //MARK:-保存更改
-    func save(){
-        //保存数据
-        let textFormatter = TextFormatter(textView: textView)
-        textFormatter.save(with: todayDiary)
-        
-        //更新monthVC的UI
-        let monthVC = UIApplication.getMonthVC()
-        if todayDiary.month == monthVC.selectedMonth{
-            //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
-            monthVC.reloadCollectionViewData(forRow: todayDiary.row)
-            monthVC.calendar.reloadData()
-        }
-    }
-    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
         let textFormatter = TextFormatter(textView: textView)
@@ -226,11 +213,40 @@ extension todayVC:UITextViewDelegate{
         let res = formatter.tappedAttchment(in: characterRange)
         return res
     }
+
+
+
+}
+
+//MARK:-生命周期
+extension todayVC{
     
-//MARK:-读取日记内容
-    func loadTodayData(selectedDiary:diaryInfo? = nil){
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         //配置日记存储器
         diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
+        
+        self.configureTopbar()
+        self.configureTodayView()
+        self.loadTodayData()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+    }
+     
+}
+
+//MARK:-helper
+extension todayVC{
+    //MARK:-读取日记内容
+    func loadTodayData(selectedDiary:diaryInfo? = nil){
         
         if let selectedDiary = selectedDiary{
             todayDiary = selectedDiary
@@ -254,33 +270,31 @@ extension todayVC:UITextViewDelegate{
         topbar.button1.islike = todayDiary.islike
         topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood)
     }
-
-}
-
-//MARK:-生命周期
-extension todayVC{
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    //MARK:-保存更改
+    func save(){
+        //保存数据
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.save(with: todayDiary)
         
-        self.configureTopbar()
-        self.configureTodayView()
-        self.loadTodayData()
+        //更新monthVC的UI
+        let monthVC = UIApplication.getMonthVC()
+        if todayDiary.month == monthVC.selectedMonth{
+            //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
+            monthVC.reloadCollectionViewData(forRow: todayDiary.row)
+            monthVC.calendar.reloadData()
+        }
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
+    //MARK:-刷新UI
+    func reloadData(){
+        //读取attributedString
+        let textFormatter = TextFormatter(textView: self.textView)
+        textFormatter.loadTextViewContent(with: todayDiary)
         
+        //刷新图标
+        topbar.button1.islike = todayDiary.islike
+        topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-
-    }
-    
-    
-    
-    
-   
     
 }

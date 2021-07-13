@@ -24,7 +24,7 @@ extension LWSyncEngine {
             return false
         }
 
-        os_log("Received remote CloudKit notification for user data", log: log, type: .debug)
+        os_log("接收到远程CloudKit更新通知", log: log, type: .debug)
 
         fetchRemoteChanges()
 

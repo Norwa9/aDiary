@@ -10,6 +10,7 @@
 		1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */; };
 		1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */; };
 		1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A5647269824CB0090D411 /* LWRealmManager.swift */; };
+		1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A566D269D81280090D411 /* indicatorViewManager.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -46,7 +47,6 @@
 		EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4DF267E10E200D77908 /* icon-120.png */; };
 		EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */; };
 		EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9AF51626821E5F00D77908 /* CloudKit.framework */; };
-		EA9AF5212682260B00D77908 /* cloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AF5202682260B00D77908 /* cloudKitManager.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
 		EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E3225C5768200AA6971 /* Main.storyboard */; };
@@ -84,6 +84,7 @@
 		1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+CloudKit.swift"; sourceTree = "<group>"; };
 		1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LWSyncEngine+Notifications.swift"; sourceTree = "<group>"; };
 		1B2A5647269824CB0090D411 /* LWRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRealmManager.swift; sourceTree = "<group>"; };
+		1B2A566D269D81280090D411 /* indicatorViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicatorViewManager.swift; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -123,7 +124,6 @@
 		EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_roundCornor.png; sourceTree = "<group>"; };
 		EA9AF51426821E5700D77908 /* 日记2.0.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "日记2.0.entitlements"; sourceTree = "<group>"; };
 		EA9AF51626821E5F00D77908 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		EA9AF5202682260B00D77908 /* cloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cloudKitManager.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -290,7 +290,6 @@
 				EA9AF51426821E5700D77908 /* 日记2.0.entitlements */,
 				EAA29E2C25C5768200AA6971 /* AppDelegate.swift */,
 				EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */,
-				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
 				EAA29E3225C5768200AA6971 /* Main.storyboard */,
 				EAA29E5525C5785100AA6971 /* pageVC */,
 				EAA29E8425C5A79100AA6971 /* today VC */,
@@ -340,7 +339,8 @@
 				EA6EFE8226297E84004B0FA1 /* exportManager.swift */,
 				EA6EFE892629C050004B0FA1 /* fileManager.swift */,
 				EA537B9C2632FD9500C2E9EE /* imageManager.swift */,
-				EA9AF5202682260B00D77908 /* cloudKitManager.swift */,
+				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
+				1B2A566D269D81280090D411 /* indicatorViewManager.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -546,12 +546,12 @@
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
+				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
-				EA9AF5212682260B00D77908 /* cloudKitManager.swift in Sources */,
 				EAA29E8D25C8248C00AA6971 /* tagsVC.swift in Sources */,
 				EA537BB926357FBF00C2E9EE /* shareVC.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,

@@ -23,9 +23,12 @@ extension SceneDelegate{
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.addSubview(self.visualEffectView)
     }
     
-    func authApp(){
+    
+    typealias didAuthBlock = () ->Void
+    func authApp(then startFetchBlock:@escaping didAuthBlock){
         //是否启用加密
         guard userDefaultManager.useBiometrics || userDefaultManager.usePassword  else{
+            startFetchBlock()
             return
         }
         
@@ -46,6 +49,8 @@ extension SceneDelegate{
                         if success {
                             //成功
                             self?.unlock()
+                            //开始拉取云端数据
+                            startFetchBlock()
                         }else{
                             //失败
                             if let error = authenticationError{
@@ -59,19 +64,19 @@ extension SceneDelegate{
                             }
                             //其他情况的验证失败，例如用户点了取消，例如人脸不匹配等，
                             //此时跳出提示框，请求输入密码。
-                            self?.passwordPrompt()
+                            self?.passwordPrompt(then: startFetchBlock)
                         }
                         
                     }
                 }
             }else{
                 //不能使用生物识别
-                self.failAlert(title: "设备不支持生物识别或暂不可用", message: "使用App密码登录", okActionTitle: "输入App密码")
+                self.failAlert(title: "设备不支持生物识别或暂不可用", message: "使用App密码登录", okActionTitle: "输入App密码",then: startFetchBlock)
             }
         //如果仅设置密码
         }else if userDefaultManager.usePassword{
             //提示用户输入密码
-            self.passwordPrompt()
+            self.passwordPrompt(then: startFetchBlock)
         }
         
     }
@@ -88,7 +93,7 @@ extension SceneDelegate{
     }
     
     //提示输入密码
-    func passwordPrompt(message:String = "请输入App密码"){
+    func passwordPrompt(message:String = "请输入App密码",then startFetchBlock:@escaping didAuthBlock){
         ac = UIAlertController(title: "使用密码解锁App", message: message, preferredStyle: .alert)
         ac.view.setupShadow()
         ac.addTextField()
@@ -98,9 +103,10 @@ extension SceneDelegate{
             if inputPassword == userDefaultManager.password{
                 //密码配对成功
                 self?.unlock()
+                startFetchBlock()
             }else{
                 self?.ac.view.shake()
-                self?.passwordPrompt(message: "密码输入不正确")
+                self?.passwordPrompt(message: "密码输入不正确",then: startFetchBlock)
             }
         })
         //获取最顶层的ViewController，由它来负责展示ac
@@ -110,11 +116,11 @@ extension SceneDelegate{
     }
     
     //不支持生物识别时，调用这个提醒用户。
-    func failAlert(title: String, message: String, okActionTitle: String){
+    func failAlert(title: String, message: String, okActionTitle: String,then startFetchBlock:@escaping didAuthBlock){
         ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: okActionTitle, style: .default){[weak self] _ in
             //提示输入密码
-            self?.passwordPrompt()
+            self?.passwordPrompt(then: startFetchBlock)
         }
         ac.addAction(okAction)
         //获取最顶层的ViewController，由它来负责展示ac

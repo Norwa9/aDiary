@@ -39,23 +39,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        print("sceneDidBecomeActive")
+        print("已进入前台")
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
-        print("sceneWillResignActive")
+        print("将要进入后台")
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-        print("sceneWillEnterForeground authApp")
+        print("将要进入前台")
         /*
-         app进入前台之前，进行认证
+         app进入前台之前，打开认证。
+         认证完成后，才开始获取远程记录
          */
-        self.authApp()
+        self.authApp(then: {
+            DiaryStore.shared.fetchRemoteChange()
+        })
+        
+        
     }
     
 
@@ -63,7 +68,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        print("sceneDidEnterBackground")
+        print("已经进入后台")
         /*
          app进入后台后，模糊内容以达到锁定app的目的
          */

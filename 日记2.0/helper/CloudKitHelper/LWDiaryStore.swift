@@ -72,17 +72,7 @@ public final class DiaryStore: ObservableObject {
         return url
     }
     
-    private func updateAfterSync(_ diaries:[diaryInfo]){
-        os_log("将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
-  
-        diaries.forEach { updatedDiary in
-            //修改的记录同步到本地数据库:
-            //如果是修改，比对本地Model，取较新的那一个
-            //如果是增加，则本地数据库自动新增一个记录
-            LWRealmManager.shared.add(updatedDiary)
-        }
-        os_log("本地数据已更新!", log: log, type: .debug)
-    }
+
     
     ///提交添加或修改到云端
     func addOrUpdate(_ diary:diaryInfo) {
@@ -90,8 +80,6 @@ public final class DiaryStore: ObservableObject {
         
         //提交更新到云端
         syncEngine?.upload(diary)
-        
-        
     }
     
     ///提交删除到云端
@@ -106,12 +94,50 @@ public final class DiaryStore: ObservableObject {
         
         //TODO:-保存到本地数据库
     }
-    
-    func diary(with id: String) -> diaryInfo? {
-        return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
-    }
-    
+
+    ///处理CloudKit发来的更新通知
     public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {
         syncEngine?.processSubscriptionNotification(with: userInfo)
+    }
+    
+    ///主动拉取云端变动
+    public func fetchRemoteChange(){
+        //展示菊花转
+        iVmanager.shared.start()
+        //开始拉取
+        syncEngine?.fetchRemoteChanges()
+    }
+    
+    ///将获取的云端变动保存到本地，以及更新UI
+    private func updateAfterSync(_ diaries:[diaryInfo]){
+        if diaries.isEmpty{
+            //云端没有更新
+            iVmanager.shared.stop()
+            return
+        }
+        os_log("将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
+        //1.将云端变动保存到本地数据库
+        diaries.forEach { updatedDiary in
+            //修改的记录同步到本地数据库:
+            //如果是修改，比对本地Model，取较新的那一个
+            //如果是增加，则本地数据库自动新增一个记录
+            LWRealmManager.shared.add(updatedDiary)
+        }
+        os_log("本地数据库已更新!", log: log, type: .debug)
+        
+        //2.更新UI
+        iVmanager.shared.stop()
+        DispatchQueue.main.async {
+            UIApplication.getMonthVC().reloadCollectionViewData()
+            UIApplication.getTodayVC().reloadData()
+        }
+        
+    }
+}
+
+//MARK:-helper
+extension DiaryStore{
+    func diary(with id: String) -> diaryInfo? {
+        return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
     }
 }
