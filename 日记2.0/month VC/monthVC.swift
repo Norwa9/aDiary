@@ -384,6 +384,8 @@ class monthVC: UIViewController {
 
 //MARK:-collection view
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    ///更新UI
+    ///如果新Model对象没有加入数据源，调用该方法不会展示新的Model对象
     func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false){
         //print("reloadCollectionViewData,row:\(forRow)")
         if forRow == -1{
@@ -416,6 +418,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         }else{
             self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
         }
+    }
+    
+    ///从数据库重新检索数据，展示所有的最新数据
+    func reloadCollectionViewDataSource(){
+        self.configureDataSource(year: selectedYear, month: selectedMonth)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
