@@ -145,7 +145,6 @@ final class LWSyncEngine{
     private func prepareCloudEnvironment(then thenBlock:@escaping ()->Void){
         workQueue.async {[weak self] in
             guard let self = self else{return}
-            print("prepareCloudEnvironment")
             //1.创建自定义zone
             self.createCustomZoneIfNeed()
             self.cloudOperationQueue.waitUntilAllOperationsAreFinished()
