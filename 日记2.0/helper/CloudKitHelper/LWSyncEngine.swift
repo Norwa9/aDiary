@@ -434,6 +434,7 @@ final class LWSyncEngine{
         }
 
         DispatchQueue.main.async {
+            indicatorViewManager.shared.stop()
             self.buffer = []
         }
     }

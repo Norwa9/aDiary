@@ -77,7 +77,8 @@ public final class DiaryStore: ObservableObject {
     ///提交添加或修改到云端
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑
-        
+        //展示菊花转
+        indicatorViewManager.shared.start()
         //提交更新到云端
         syncEngine?.upload(diary)
     }
@@ -102,6 +103,8 @@ public final class DiaryStore: ObservableObject {
     
     ///手动扫描离线修改的数据，然后上传
     public func uploadLocalDataNotUploadedYet(){
+        //展示菊花转
+        indicatorViewManager.shared.start()
         syncEngine?.uploadLocalDataNotUploadedYet()
     }
     
@@ -109,7 +112,6 @@ public final class DiaryStore: ObservableObject {
     public func fetchRemoteChange(){
         //展示菊花转
         indicatorViewManager.shared.start()
-        //开始拉取
         syncEngine?.fetchRemoteChanges()
     }
     
