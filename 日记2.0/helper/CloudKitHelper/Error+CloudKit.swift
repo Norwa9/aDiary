@@ -75,6 +75,9 @@ extension Error{
         
         guard let retryDelay:Double = effectiveError.retryAfterSeconds else {
             os_log("此错误不是可恢复错误", log:effectiveLog,type:.error)
+            DispatchQueue.main.async {
+                indicatorViewManager.shared.stop()
+            }
             return false
         }
         

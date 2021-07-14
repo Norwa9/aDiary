@@ -12,6 +12,8 @@ import UIKit
 import RealmSwift
 
 final class LWSyncEngine{
+    private var accountStatus:CKAccountStatus = .couldNotDetermine
+    
     let log = OSLog(subsystem: SyncConstants.subsystemName, category: String(describing: LWSyncEngine.self))
     
     private let defaults:UserDefaults
@@ -85,30 +87,65 @@ final class LWSyncEngine{
     
     //MARK:-初始化
     func start(){
-        //1.配置iCloud环境
-        prepareCloudEnvironment {[weak self] in
+        //0.最开始检查用户状态
+        checkAccountStatus( {[weak self] accoutStatus in
             guard let self = self else{return}
-            
-            os_log("iCloud环境配置成功！", log: self.log, type: .debug)
-            
-            //环境配置成功后，才执行事务
-            //2.同步未上传的本地数据
-            self.uploadLocalDataNotUploadedYet()
-            //3.获取其他设备向云端提交的变动
-            self.fetchRemoteChanges()
+            switch accoutStatus{
+            case .available:
+                //1.配置iCloud环境
+                self.prepareCloudEnvironment {
+                    os_log("iCloud环境配置成功！", log: self.log, type: .debug)
+                    //环境配置成功后，才执行事务
+                    //2.同步未上传的本地数据
+                    self.uploadLocalDataNotUploadedYet()
+                    //3.获取其他设备向云端提交的变动
+                    self.fetchRemoteChanges()
+                }
+            default:
+                break
+            }
+        })
+    }
+    
+    //MARK:-检查iCloud账户可用性
+    typealias didReceiveStatusBlock = (_ status:CKAccountStatus) ->Void
+    ///检查账户的可用性
+    func checkAccountStatus(_ completion:@escaping didReceiveStatusBlock){
+        self.container.accountStatus { status, error in
+            if let error = error {
+                os_log("验证iCloud账户状态失败: %{public}@", log: self.log, type: .error, String(describing: error))
+                DispatchQueue.main.async {
+                    self.handleStatusCheckError(error: error)
+                }
+            } else {
+                self.accountStatus = status
+                completion(status)
+            }
             
         }
     }
+    
+    func handleStatusCheckError(error:Error){
+        guard let _ = error as? CKError else {
+            os_log("服务器返回的不是CKError对象，放弃处理: %{public}@", log: self.log, type: .fault, String(describing: error))
+            return
+        }
+        let result = error.retryCloudKitOperationIfPossible(self.log) {
+            //重新配置环境
+            self.start()
+            
+        }
+        if !result {
+            os_log("此错误不是可恢复错误: %{public}@", log: self.log, type: .error, String(describing: error))
+        }
+    }
+    
     
     ///配置CloudKit环境
     private func prepareCloudEnvironment(then thenBlock:@escaping ()->Void){
         workQueue.async {[weak self] in
             guard let self = self else{return}
-            
-            //0.检查iCloud账号状态
-            
-            
-            
+            print("prepareCloudEnvironment")
             //1.创建自定义zone
             self.createCustomZoneIfNeed()
             self.cloudOperationQueue.waitUntilAllOperationsAreFinished()
@@ -127,6 +164,7 @@ final class LWSyncEngine{
             
         }
     }
+    
     
     
     //MARK:-检查&创建自定义zone
@@ -526,10 +564,7 @@ final class LWSyncEngine{
             guard let self = self else { return }
 
             if let error = error {
-                os_log("Failed to fetch record zone changes: %{public}@",
-                       log: self.log,
-                       type: .error,
-                       String(describing: error))
+                os_log("拉取云端变动失败: %{public}@",log: self.log,type:.error,String(describing: error))
 
                 error.retryCloudKitOperationIfPossible(self.log) { self.fetchRemoteChanges() }
             } else {

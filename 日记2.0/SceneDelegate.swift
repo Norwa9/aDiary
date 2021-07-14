@@ -56,6 +56,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          解锁->iCloud账户可用性检查->扫描，上传离线时修改的数据->获取服务器的变化
          */
         self.authApp(then: {
+            //TODO:检查账户的可用性，如果账户由不可用->可用，需要为其配置环境
+            
             
             DiaryStore.shared.uploadLocalDataNotUploadedYet()
             DiaryStore.shared.fetchRemoteChange()
