@@ -78,7 +78,7 @@ public final class DiaryStore: ObservableObject {
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑
         //展示菊花转
-        indicatorViewManager.shared.start()
+        indicatorViewManager.shared.start(style: .banner)
         //提交更新到云端
         syncEngine?.upload(diary)
     }
