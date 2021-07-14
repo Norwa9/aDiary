@@ -101,10 +101,7 @@ public final class DiaryStore: ObservableObject {
     }
     
     ///手动扫描离线修改的数据，然后上传
-    public func uploadLocalDataEditedOffline(){
-        //先扫描本地需要上传的数据（一般是离线修改未上传的数据）
-        syncEngine?.scanLoaclDataEditedOffline()
-        //然后上传
+    public func uploadLocalDataNotUploadedYet(){
         syncEngine?.uploadLocalDataNotUploadedYet()
     }
     

@@ -9,6 +9,7 @@ import Foundation
 import CloudKit
 import os.log
 import UIKit
+import RealmSwift
 
 final class LWSyncEngine{
     let log = OSLog(subsystem: SyncConstants.subsystemName, category: String(describing: LWSyncEngine.self))
@@ -103,6 +104,10 @@ final class LWSyncEngine{
     private func prepareCloudEnvironment(then thenBlock:@escaping ()->Void){
         workQueue.async {[weak self] in
             guard let self = self else{return}
+            
+            //0.检查iCloud账号状态
+            
+            
             
             //1.创建自定义zone
             self.createCustomZoneIfNeed()
@@ -270,23 +275,12 @@ final class LWSyncEngine{
     }
     
     //MARK:-上传
-    ///扫描当前本地数据库需要上传的数据（主要是为了上传离线修改，而未push的数据）
-    func scanLoaclDataEditedOffline(){
-        let results = LWRealmManager.shared.localDatabase.filter { (model) -> Bool in
-            return model.editedButNotUploaded
-        }
-        for model in results{
-            self.buffer.append(model)
-        }
-    }
-    
-    ///上传未上传的Model(ckData == nil)
+    ///上传未上传的Model
     func uploadLocalDataNotUploadedYet(){
-        //离线期间产生的数据在此上传
         os_log("检查本地未上传的日记...",log:log,type:.debug)
         
-        //如果ckData未被赋值，表示该日记从未被上传到云端
-        //如果editedButNotUploaded == true 表示日记修改了还未上传
+        //检查本地数据库中：新建的但未上传、离线修改的但未上传 的数据
+        self.buffer = LWRealmManager.shared.localDatabase.toArray()
         let diaries = buffer.filter({
             return ($0.ckData == nil || $0.editedButNotUploaded)
         })

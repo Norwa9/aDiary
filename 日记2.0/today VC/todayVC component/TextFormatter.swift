@@ -481,6 +481,9 @@ extension TextFormatter{
             diary.rtfd = aString.data()
             diary.containsImage = containsImage
         })
+        for d in LWRealmManager.shared.localDatabase{
+            print(d.date,d.editedButNotUploaded)
+        }
         
         //2.上传到云端
         DiaryStore.shared.addOrUpdate(diary)

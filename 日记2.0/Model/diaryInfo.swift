@@ -11,7 +11,7 @@ import CloudKit
 import RealmSwift
 
 class diaryInfo:Object,Codable{
-    //@objc dynamic **必须写
+    //对于普通的swift类型，@objc dynamic必须写
     
     ///引入的目的是解决离线添加的问题
     @objc dynamic var ckData:Data? = nil
@@ -29,7 +29,7 @@ class diaryInfo:Object,Codable{
     @objc dynamic var modTime:Date? = nil
     
     ///引入的目的是解决离线修改的同步问题(不必上传到云端)
-    var editedButNotUploaded:Bool = false
+    @objc dynamic var editedButNotUploaded:Bool = false
     
     var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级

@@ -57,7 +57,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          */
         self.authApp(then: {
             
-            DiaryStore.shared.uploadLocalDataEditedOffline()
+            DiaryStore.shared.uploadLocalDataNotUploadedYet()
             DiaryStore.shared.fetchRemoteChange()
         })
         
