@@ -90,6 +90,7 @@ final class LWSyncEngine{
             
             os_log("iCloud环境配置成功！", log: self.log, type: .debug)
             
+            //环境配置成功后，才执行事务
             //2.同步未上传的本地数据
             self.uploadLocalDataNotUploadedYet()
             //3.获取其他设备向云端提交的变动
@@ -98,7 +99,7 @@ final class LWSyncEngine{
         }
     }
     
-    
+    ///配置CloudKit环境
     private func prepareCloudEnvironment(then thenBlock:@escaping ()->Void){
         workQueue.async {[weak self] in
             guard let self = self else{return}
@@ -124,6 +125,7 @@ final class LWSyncEngine{
     
     
     //MARK:-检查&创建自定义zone
+    ///创建自定义Zone
     private func createCustomZoneIfNeed(){
         guard !createdCustomZone else{
             os_log("已经创建了自定义zone。跳过创建，检查zone是否确实存在", log: log, type: .debug)
@@ -157,6 +159,7 @@ final class LWSyncEngine{
         cloudOperationQueue.addOperation(operation)
     }
     
+    ///检查自定义Zone的存在性
     private func checkCustomZone(){
         let operation = CKFetchRecordZonesOperation(recordZoneIDs: [SyncConstants.customZoneID])
         
@@ -189,6 +192,7 @@ final class LWSyncEngine{
     }
     
     //MARK:-检查&创建数据库的订阅
+    ///创建私有数据库的订阅
     private func createPrivateSubscriptionsIfNeeded(){
         guard !createdPrivateSubscription else {
             os_log("已经订阅私有数据库，跳过创建订阅，去检查该订阅是否真实存在。", log: log, type: .debug)
@@ -230,6 +234,7 @@ final class LWSyncEngine{
         cloudOperationQueue.addOperation(operaion)
     }
     
+    ///检查订阅状态
     private func checkSubscription() {
         let operation = CKFetchSubscriptionsOperation(subscriptionIDs: [privateSubscriptionId])
 
@@ -275,6 +280,7 @@ final class LWSyncEngine{
         }
     }
     
+    ///上传未上传的Model(ckData == nil)
     func uploadLocalDataNotUploadedYet(){
         //离线期间产生的数据在此上传
         os_log("检查本地未上传的日记...",log:log,type:.debug)
@@ -297,6 +303,7 @@ final class LWSyncEngine{
         uploadRecords(records)
     }
     
+    ///上传指定Model
     func upload(_ diray: diaryInfo) {
         buffer.append(diray)
 
@@ -362,6 +369,7 @@ final class LWSyncEngine{
         cloudOperationQueue.addOperation(operation)
     }
     
+    ///处理上传错误
     private func handleUploadError(_ error: Error, records: [CKRecord]) {
         guard let ckError = error as? CKError else {
             os_log("Error was not a CKError, giving up: %{public}@", log: self.log, type: .fault, String(describing: error))
@@ -381,6 +389,8 @@ final class LWSyncEngine{
         }
     }
     
+    ///更新本地数据库
+    ///主要功能：将上传成功的Model打上标记
     private func updateLocalModelsAfterUpload(with records: [CKRecord]) {
         os_log("将buffer内的本地记录标记为[已上传]，并清空buffer", log: self.log, type: .error)
         for r in records{
@@ -398,6 +408,7 @@ final class LWSyncEngine{
     }
     
     //MARK:-删除
+    ///删除指定Model
     func delete(_ diray: diaryInfo) {
         print("警告：还没实现删除逻辑！")
 //        fatalError("Deletion not implemented")
@@ -408,7 +419,7 @@ final class LWSyncEngine{
         return "TOKEN-\(SyncConstants.customZoneID.zoneName)"
     }()
     
-    ///标记record的某个特定版本的对象
+    ///私有数据库的change Token
     private var privateChangeToken: CKServerChangeToken? {
         //从UserDefaults取值
         get {

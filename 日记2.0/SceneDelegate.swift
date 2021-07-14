@@ -53,11 +53,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         print("将要进入前台")
         /*
-         1.认证
-         2.上传离线时修改的数据（如果有
-         3.获取服务器的变化
+         解锁->iCloud账户可用性检查->扫描，上传离线时修改的数据->获取服务器的变化
          */
         self.authApp(then: {
+            
             DiaryStore.shared.uploadLocalDataEditedOffline()
             DiaryStore.shared.fetchRemoteChange()
         })
