@@ -671,8 +671,8 @@ extension TextFormatter{
     ///根据日期信息将富文本存储到文件目录
     func save(with diary:diaryInfo){
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
-        //print(textView.attributedText.string)
         let aString = self.textView.attributedText!
+        print("保存时的textView.attributedText:\(textView.attributedText)")
         let containsImage:Bool = self.checkIfContainsImage(aString)
         
         //1.保存到本地

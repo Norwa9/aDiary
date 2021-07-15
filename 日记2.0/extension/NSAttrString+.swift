@@ -27,9 +27,15 @@ extension NSAttributedString{
         let attrText = mutableText.addUserDefaultAttributes()
         
         //2、遍历所有的图片。调整图片，让图片显示正确的大小
-        attrText.enumerateAttribute(.image, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
+        
+        attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
             let location = range.location
-            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
+            print("存储图片:.attachment range:\(range)")
+            guard let value = attrText.attribute(.image, at: location, effectiveRange: nil) as? Int,value == 1 else{return}
+            
+            print("存储图片,.image range :\(range)")
+            
+            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 //获取cleanText
                 cleanText.replaceCharacters(in: range, with: "P")//为了正则表达式匹配，将图片替换成"P"。
                 
@@ -78,10 +84,15 @@ extension NSAttributedString{
         let attrText = mutableText.addUserDefaultAttributes()
         
         //2、、调整图片，让图片显示正确的大小
-        attrText.enumerateAttribute(.image, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
-            print("读取图片:\(range)")
+        print("读取的attrText:\(attrText)")
+        attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
+            print("读取图片:.attachment range:\(range)")
             let location = range.location
-            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
+            guard let value = attrText.attribute(.image, at: location, effectiveRange: nil) as? Int,value == 1 else{return}
+            
+            print("读取图片:.image range:\(range)")
+            
+            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 //设置富文本中的图片：设置大小&设置居中
                 let aspect = img.size.width / img.size.height
                 let pedding:CGFloat = 15
@@ -138,7 +149,7 @@ extension NSAttributedString{
     }
     
     func data()->Data?{
-        return try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
+        return try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf16])
     }
 }
 
