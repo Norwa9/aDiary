@@ -133,8 +133,8 @@ public final class DiaryStore: ObservableObject {
         //2.更新UI
         indicatorViewManager.shared.stop()
         DispatchQueue.main.async {
-            UIApplication.getMonthVC().reloadCollectionViewDataSource()
-            UIApplication.getTodayVC().reloadData()
+            UIApplication.getMonthVC().reloadMonthVC()
+            UIApplication.getTodayVC().reloadTodayVC()
         }
         
     }

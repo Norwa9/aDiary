@@ -287,7 +287,7 @@ extension todayVC{
     }
     
     //MARK:-刷新UI
-    func reloadData(){
+    func reloadTodayVC(){
         //读取attributedString
         let textFormatter = TextFormatter(textView: self.textView)
         textFormatter.loadTextViewContent(with: todayDiary)
