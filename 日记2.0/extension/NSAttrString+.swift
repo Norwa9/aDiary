@@ -27,6 +27,7 @@ extension NSAttributedString{
         //2、、调整图片，让图片显示正确的大小
         attrText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
 //            let textViewAsAny: Any = textView
+            
             if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textView.textContainer, characterIndex: range.location){
                 //获取cleanText
                 cleanText.replaceCharacters(in: range, with: "P")//为了正则表达式匹配，将图片替换成"P"。
@@ -176,6 +177,17 @@ extension NSAttributedString{
 }
 
 
+extension NSAttributedString {
+    ///段落内是否有.todo这类型的属性
+    public func hasTodoAttribute() -> Bool {
+        var found = false
+        enumerateAttribute(.todo, in: NSRange(0..<length), options: .init()) { _, _, stop in
+            found = true
+            stop.pointee = true
+        }
+        return found
+    }
+}
 
 
 

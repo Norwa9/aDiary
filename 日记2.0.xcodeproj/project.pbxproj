@@ -72,6 +72,9 @@
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
+		EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD20D9C26A071840014B8B5 /* NSMutableAttributedString+.swift */; };
+		EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */; };
+		EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD20DA426A072DC0014B8B5 /* AttributedBox.swift */; };
 		EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */; };
 		EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85CB26232332007D1134 /* TextFormatter.swift */; };
 		EADA85DB26248759007D1134 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DA26248759007D1134 /* UIFont+.swift */; };
@@ -151,6 +154,9 @@
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+		EAD20D9C26A071840014B8B5 /* NSMutableAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+.swift"; sourceTree = "<group>"; };
+		EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedStringKey+.swift"; sourceTree = "<group>"; };
+		EAD20DA426A072DC0014B8B5 /* AttributedBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedBox.swift; sourceTree = "<group>"; };
 		EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
 		EADA85CB26232332007D1134 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
 		EADA85DA26248759007D1134 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -301,6 +307,7 @@
 				EA3189B326934F44001B9042 /* Model */,
 				EAA29E7725C59ABB00AA6971 /* helper */,
 				EACB1719267A1B63007BF160 /* extension */,
+				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA51D1FC25D809550007BDFA /* resource */,
 			);
 			path = "日记2.0";
@@ -392,8 +399,18 @@
 				EACB1721267A1BC1007BF160 /* UIScrollView+.swift */,
 				EACB1776267DC2FE007BF160 /* constants.swift */,
 				EA015EC2269898B400C3375D /* Results+.swift */,
+				EAD20D9C26A071840014B8B5 /* NSMutableAttributedString+.swift */,
+				EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */,
 			);
 			path = extension;
+			sourceTree = "<group>";
+		};
+		EAD20DA326A072C70014B8B5 /* TextFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				EAD20DA426A072DC0014B8B5 /* AttributedBox.swift */,
+			);
+			path = TextFormatter;
 			sourceTree = "<group>";
 		};
 		EADA85FC2625DA60007D1134 /* customAlert */ = {
@@ -535,6 +552,7 @@
 				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
+				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,
@@ -569,6 +587,8 @@
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
+				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
+				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataManager.swift in Sources */,
 				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,

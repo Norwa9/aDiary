@@ -96,7 +96,7 @@ class toolsBar: UIView {
     
     @objc func setNumberList(){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.orderedList()
+        textFormatter.todoList()
     }
     
 //MARK:-以下内容不需要修改

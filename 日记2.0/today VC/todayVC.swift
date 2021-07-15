@@ -207,7 +207,7 @@ extension todayVC:UITextViewDelegate{
         return true//若为false，键入的新字符不会递给storage
     }
     
-    //点按图片
+    //点按attachment( image or to-do)
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let formatter = TextFormatter(textView: self.textView)
         let res = formatter.tappedAttchment(in: characterRange)

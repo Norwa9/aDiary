@@ -13,11 +13,13 @@ public class TextFormatter{
     private var textView: UITextView
     private var storage: NSTextStorage
     private var range: NSRange//TextFormatter实例创建时，用户所选取的range
+    private var selectedRange:NSRange
     
     init(textView: UITextView){
         self.textView = textView
         self.range = textView.selectedRange
         self.storage = textView.textStorage
+        self.selectedRange = textView.selectedRange
     }
     
     
@@ -27,15 +29,15 @@ public class TextFormatter{
     func orderedList(){
         //获取当前range所在段落的range
         guard let pRange = getCurParagraphRange() else { return }
-        print("pRange:\(pRange)")
+        //print("pRange:\(pRange)")
         //获取当前段落的所有字符
         let paraMutableString = NSMutableAttributedString(attributedString: textView.attributedText.attributedSubstring(from: pRange))
         let paragraphString = paraMutableString.string
-        print("paragraphString:\(paragraphString)")
+        //print("paragraphString:\(paragraphString)")
         
         guard paragraphString != "\n"  else {
             //如果当前段落只有数字或是空段落，那么插入首个序号
-            print("insertText(1.)")
+            //print("insertText(1.)")
             insertText("1. ")
             updateNumList(curParaRange: pRange, curDigit: 0)
             return
@@ -67,14 +69,55 @@ public class TextFormatter{
         
     }
     
-    //自动补齐递增数字列表
+    ///自动补齐递增数字列表
     func addNewLine(){
         guard let currentParagraphRange = self.getCurParagraphRange() else { return }
         let currentParagraph = storage.attributedSubstring(from: currentParagraphRange)
         let selectedRange = self.textView.selectedRange
        
-        //自动递增数字列表
-//        if selectedRange.location != currentParagraphRange.location && selectedRange.location > currentParagraphRange.upperBound - 2{
+        // 1.自动补齐todo列表
+        if selectedRange.location != currentParagraphRange.location && currentParagraphRange.upperBound - 2 < selectedRange.location, currentParagraph.length >= 2 {
+
+            if textView.selectedRange.upperBound > 2 {
+                let char = storage.attributedSubstring(from: NSRange(location: textView.selectedRange.upperBound - 2, length: 1))
+
+                if let _ = char.attribute(.todo, at: 0, effectiveRange: nil) {
+                    let selectRange = NSRange(location: currentParagraphRange.location, length: 0)
+                    insertText("\n", replacementRange: currentParagraphRange, selectRange: selectRange)
+                    return
+                }
+            }
+
+            var todoLocation = -1
+            currentParagraph.enumerateAttribute(.todo, in: NSRange(0..<currentParagraph.length), options: []) { (value, range, stop) -> Void in
+                guard value != nil else { return }
+
+                todoLocation = range.location
+                stop.pointee = true
+            }
+
+            if todoLocation > -1 {
+                let unchecked = AttributedBox.getUnChecked()?.attributedSubstring(from: NSRange(0..<2))
+                var prefix = String()
+
+                if todoLocation > 0 {
+                    prefix = currentParagraph.attributedSubstring(from: NSRange(0..<todoLocation)).string
+                }
+
+                let selectedRange = textView.selectedRange
+                let selectedTextRange = textView.selectedTextRange!
+                let checkbox = NSMutableAttributedString(string: "\n" + prefix)
+                checkbox.append(unchecked!)
+
+                textView.undoManager?.beginUndoGrouping()
+                textView.replace(selectedTextRange, withText: checkbox.string)
+                textView.textStorage.replaceCharacters(in: NSRange(location: selectedRange.location, length: checkbox.length), with: checkbox)
+                textView.undoManager?.endUndoGrouping()
+                return
+            }
+        }
+        
+        //2.自动递增数字列表
         if selectedRange.location != currentParagraphRange.location{
             //获取例如4. 这样的前缀
             if let digitsMatch = TextFormatter.getAutocompleteDigitsMatch(string: currentParagraph.string) {
@@ -82,7 +125,7 @@ public class TextFormatter{
                 return
             }
         }
-        print("不自动递增数字列表")
+        
         //不符合上面的条件，简单地换行即可
         self.textView.insertText("\n")
     }
@@ -116,9 +159,148 @@ public class TextFormatter{
         }
         
     }
+}
+//MARK:-todo复选框
+extension TextFormatter{
+    public func todoList(){
+        //selectedRange可能覆盖到【多个段落】
+        guard let pRange = getCurParagraphRange() else{return}
+        
+        //为啥叫做为了方便后续的处理，先将名为.todo文本附件替换为占位符"- []"
+        let attributedString = textView.attributedText.attributedSubstring(from: pRange)
+        let mutable = NSMutableAttributedString(attributedString: attributedString).unLoadCheckboxes()
+        
+        //段落为空
+        if !attributedString.hasTodoAttribute() && selectedRange.length == 0{
+            insertText(AttributedBox.getUnChecked()!)
+            return
+        }
+        
+        //分析每一段，
+        //1.若所有段落都没有未完成[]或完成[x]的占位符，则需要将每一段都加未完成占位符[]
+        //2.若存在段落有未完成[]，则把每一段都加完成占位符[x]
+        //3.parseTodo返回的是去除占位符的纯文本
+        var lines = [String]()
+        var addPrefixes = false
+        var addCompleted = false
+        let string = mutable.string
+        
+        string.enumerateLines { (line, _) in
+            let result = self.parseTodo(line: line)
+            addPrefixes = !result.0
+            addCompleted = result.1
+            lines.append(result.2)
+        }
+
+        var result = String()
+        for line in lines {
+            if addPrefixes {
+                let task = addCompleted ? "- [x] " : "- [ ] "
+                var empty = String()
+                var scanFinished = false
+
+                if line.count > 0 {
+                    for char in line {
+                        if char.isWhitespace && !scanFinished {
+                            empty.append(char)
+                        } else {
+                            if !scanFinished {
+                                empty.append(task + "\(char)")
+                                scanFinished = true
+                            } else {
+                                empty.append(char)
+                            }
+                        }
+                    }
+
+                    result += empty + "\n"
+                } else {
+                    result += task + "\n"
+                }
+            } else {
+                result += line + "\n"
+            }
+        }
+
+        let mutableResult = NSMutableAttributedString(string: result)
+        
+        //将占位符"- []"替换为名为.todo文本附件
+        mutableResult.loadCheckboxes()
+        mutableResult.addAttribute(.font, value: userDefaultManager.font, range: NSRange(location: 0, length: mutableResult.length))
+        
+        //将新文本插入
+        let diff = mutableResult.length - attributedString.length
+        let selectRange = selectedRange.length == 0 || lines.count == 1
+            ? NSRange(location: pRange.location + pRange.length + diff - 1, length: 0)
+            : NSRange(location: pRange.location, length: mutableResult.length)
+        insertText(mutableResult, replacementRange: pRange, selectRange: selectRange)
+    }
     
+    ///解析每一段文字，检查其是否有todo占位符 "- []" 或"- [x]"
+    private func parseTodo(line: String) -> (Bool, Bool, String) {
+        var count = 0
+        var hasTodoPrefix = false
+        var hasIncompletedTask = false
+        var charFound = false
+        var whitespacePrefix = String()
+        var letterPrefix = String()
+
+        //1.获取空白前缀whitespacePrefix
+        //2.获取剔除空白后的字母letterPrefix
+        for char in line {
+            if char.isWhitespace && !charFound {
+                count += 1
+                whitespacePrefix.append(char)
+                continue
+            } else {
+                charFound = true
+                letterPrefix.append(char)
+            }
+        }
+
+        if letterPrefix.starts(with: "- [ ] ") {
+            hasTodoPrefix = false
+            hasIncompletedTask = true
+        }
+
+        if letterPrefix.starts(with: "- [x] ") {
+            hasTodoPrefix = true
+        }
+
+        //取出所有占位符
+        letterPrefix =
+            letterPrefix
+                .replacingOccurrences(of: "- [ ] ", with: "")
+                .replacingOccurrences(of: "- [x] ", with: "")
+
+        return (hasTodoPrefix, hasIncompletedTask, whitespacePrefix + letterPrefix)
+    }
+    
+    public func toggleTodo(location:Int,todoAttr:Int) {
+        let attributedText = (todoAttr == 0) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
+
+        self.textView.undoManager?.beginUndoGrouping()
+        self.storage.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
+        self.textView.undoManager?.endUndoGrouping()
+
+        guard let paragraph = getParagraphRange(for: location) else { return }
+        
+        if todoAttr == 0 {
+            self.storage.addAttribute(.strikethroughStyle, value: 1, range: paragraph)
+        } else {
+            self.storage.removeAttribute(.strikethroughStyle, range: paragraph)
+        }
+        
+        if paragraph.contains(location) {
+            let strike = (todoAttr == 0) ? 1 : 0
+            textView.typingAttributes[.strikethroughStyle] = strike
+        }
+    }
+    
+}
 
 //MARK:-helper
+extension TextFormatter{
     //获取当前选取文字所在的段落
     func getCurParagraphRange() -> NSRange? {
         if range.upperBound <= storage.length {
@@ -127,6 +309,15 @@ public class TextFormatter{
         }
         
         return nil
+    }
+    
+    private func getParagraphRange(for location: Int) -> NSRange? {
+        guard location <= storage.length else { return nil}
+
+        let range = NSRange(location: location, length: 0)
+        let paragraphRange = storage.mutableString.paragraphRange(for: range)
+        
+        return paragraphRange
     }
     
     func getCurParaString()->String?{
@@ -422,15 +613,22 @@ extension TextFormatter{
 //MARK:-查看图片
 extension TextFormatter{
     func tappedAttchment(in characterRange:NSRange)->Bool{
-        let aString = textView.attributedText!
         let bounds = self.textView.bounds
         let range = characterRange
         let layoutManager = textView.layoutManager
         let container = textView.textContainer
+        let location = characterRange.location
         
-        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: range, options: [], using: { [] (object, range, pointer) in
-            let textViewAsAny: Any = textView
-            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textViewAsAny as? NSTextContainer, characterIndex: range.location){
+        //1.如果点击的是.todo文本属性
+        if let todoAttrValue = storage.attribute(.todo, at: location, effectiveRange: nil) as? Int{
+            self.toggleTodo(location: location, todoAttr: todoAttrValue)
+            return true
+        }
+        
+        
+        //2.如果点击的是.attachment文本属性
+        if let imageAttachment = storage.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
+            if let img = imageAttachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
                 let attachmentFrame = layoutManager.boundingRect(forGlyphRange: range, in: container)
                 textView.resignFirstResponder()
@@ -456,11 +654,12 @@ extension TextFormatter{
                     return (fromView,thumbnailFrame)
                 })
                 browser.show()
-                return
             }
-            })
+        }
         
-        //
+        
+        
+        
         return true
     }
 }
