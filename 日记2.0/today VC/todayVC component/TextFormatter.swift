@@ -586,6 +586,8 @@ extension TextFormatter{
         mutableStr.insert(NSAttributedString(string: "\n"), at: selectedRange.location)
         let insertLoaction = selectedRange.location + 1
         mutableStr.insert(imageAttr, at: insertLoaction)
+        mutableStr.addAttribute(.image, value: 1, range: NSRange(location: insertLoaction, length: 1))
+        print("insertLoaction:\(insertLoaction)")
         mutableStr.addAttributes(attributes, range: NSRange(location: insertLoaction, length: 1))
         //另起一行
         mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)
@@ -626,9 +628,9 @@ extension TextFormatter{
         }
         
         
-        //2.如果点击的是.attachment文本属性
-        if let imageAttachment = storage.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
-            if let img = imageAttachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
+        //2.如果点击的是.image文本属性，提取其attachment
+        if let isImage = storage.attribute(.image, at: location, effectiveRange: nil) as? Int,isImage == 1{
+            if let imageAttachment = storage.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let img = imageAttachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
                 let attachmentFrame = layoutManager.boundingRect(forGlyphRange: range, in: container)
                 textView.resignFirstResponder()
@@ -669,6 +671,7 @@ extension TextFormatter{
     ///根据日期信息将富文本存储到文件目录
     func save(with diary:diaryInfo){
         let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
+        //print(textView.attributedText.string)
         let aString = self.textView.attributedText!
         let containsImage:Bool = self.checkIfContainsImage(aString)
         
@@ -687,17 +690,18 @@ extension TextFormatter{
     
     ///检查是否存在图片
     private func checkIfContainsImage(_ aString:NSAttributedString)->Bool{
+        let bounds = textView.bounds
+        let container = textView.textContainer
+        let storage = self.storage
+            
         var containsImage = false
-        aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-            if let attachment = object as? NSTextAttachment{
-                //如果存在照片
-                if let _ = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
-                    containsImage = true
-                    return
-                }
-                }
+        aString.enumerateAttribute(.image, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
+            let location = range.location
+            if let imageAttachment = storage.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let _ = imageAttachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
+                containsImage = true
+                pointer.pointee = true
             }
-        )
+        })
         return containsImage
     }
     
@@ -708,10 +712,12 @@ extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
         textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
-        let bounds = self.textView.bounds
         let aString = diary.attributedString
+        let bounds = textView.bounds
+        let container = textView.textContainer
+        
         DispatchQueue.global(qos: .default).async {
-            let correctedAString = aString?.processAttrString(bounds: bounds)
+            let correctedAString = aString?.processAttrString(bounds: bounds, container: container)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
             }
@@ -772,7 +778,7 @@ extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
         let aString = diary.attributedString ?? self.rawtextToRichtext(diary: diary)
         //异步读取attributedString、异步处理图片bounds
-        let preparedText = aString.processAttrString(bounds: self.textView.bounds)
+        let preparedText = aString.processAttrString(bounds: textView.bounds, container: textView.textContainer)
         self.textView.attributedText = preparedText
         textView.layer.cornerRadius = 10
         textView.showsVerticalScrollIndicator = false

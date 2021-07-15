@@ -181,6 +181,13 @@ extension todayVC:UITextViewDelegate{
         }
     }
     
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let aString = textView.attributedText!
+        aString.enumerateAttribute(.todo, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
+            print(range)
+        })
+    }
+    
     func textViewDidEndEditing(_ textView: UITextView) {
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
@@ -191,6 +198,7 @@ extension todayVC:UITextViewDelegate{
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
+        print("shouldChangeTextIn\(range)")
         let textFormatter = TextFormatter(textView: textView)
         if text == "\n"{
             textFormatter.addNewLine()

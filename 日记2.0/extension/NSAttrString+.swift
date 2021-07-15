@@ -17,18 +17,19 @@ extension NSAttributedString{
     //功能1：设置图片附件的显示大小，添加用户偏好的文本属性
     //功能2：将富文本清洗成collection view cell显示的纯文本
     func processAttrString(textView:UITextView,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
+        let bounds = textView.bounds
+        let container = textView.textContainer
+        
         let cleanText = NSMutableAttributedString(attributedString: self)
         let mutableText = NSMutableAttributedString(attributedString: self)
         
         //1、施加用户自定义格式
         let attrText = mutableText.addUserDefaultAttributes()
         
-        let bounds = textView.bounds
-        //2、、调整图片，让图片显示正确的大小
-        attrText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
-//            let textViewAsAny: Any = textView
-            
-            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textView.textContainer, characterIndex: range.location){
+        //2、遍历所有的图片。调整图片，让图片显示正确的大小
+        attrText.enumerateAttribute(.image, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
+            let location = range.location
+            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 //获取cleanText
                 cleanText.replaceCharacters(in: range, with: "P")//为了正则表达式匹配，将图片替换成"P"。
                 
@@ -55,11 +56,8 @@ extension NSAttributedString{
                 attachment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
                 
                 return
-                
             }
-            })
-        
-        
+        })
         
         //3、返回处理后的结果
         if returnCleanText{
@@ -68,73 +66,22 @@ extension NSAttributedString{
             return attrText
         }
         
-    }
-    
-    /*
-     exportManager.swift
-     */
-    //重载版本，内部不使用textView
-    func processAttrString(textViewbouds:CGRect,textContainer:NSTextContainer,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
-        let cleanText = NSMutableAttributedString(attributedString: self)
-        let mutableText = NSMutableAttributedString(attributedString: self)
-        
-        //1、施加用户自定义格式
-        let attrText = mutableText.addUserDefaultAttributes()
-        
-        let bounds = textViewbouds
-        //2、、调整图片，让图片显示正确的大小
-        attrText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
-            if let attachment = object as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: textContainer, characterIndex: range.location){
-                //获取cleanText
-                cleanText.replaceCharacters(in: range, with: "P")//为了正则表达式匹配，将图片替换成"P"。
-                
-                //设置富文本中的图片：设置大小&设置居中
-                let aspect = img.size.width / img.size.height
-                let pedding:CGFloat = 15
-                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
-                let newHeight = (newWidth / aspect)
-                
-                
-                //重新设置居中展示
-                let para = NSMutableParagraphStyle()
-                para.alignment = .center
-                attrText.addAttribute(.paragraphStyle, value: para, range: range)
-                
-                //当填充空白图
-                if fillWithEmptyImage{
-                    attachment.image = UIImage.emptyImage(with: CGSize(width: newWidth, height:newHeight))
-                    attachment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-                    return
-                }
-                
-                //设置展示大小
-                attachment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-                
-                return
-                
-            }
-            })
-        
-        
-        
-        //3、返回处理后的结果
-        if returnCleanText{
-            return cleanText
-        }else{
-            return attrText
-        }
     }
     
     ///读取富文本，并为图片附件设置正确的大小、方向
-    func processAttrString(bounds:CGRect)->NSMutableAttributedString{
+    ///textViewScreenshot
+    ///loadTextViewContent(with:)
+    func processAttrString(bounds:CGRect,container:NSTextContainer)->NSMutableAttributedString{
         let mutableText = NSMutableAttributedString(attributedString: self)
         
         //1、施加用户自定义格式
         let attrText = mutableText.addUserDefaultAttributes()
         
         //2、、调整图片，让图片显示正确的大小
-        attrText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
-            if let attachment = object as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+        attrText.enumerateAttribute(.image, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
+            print("读取图片:\(range)")
+            let location = range.location
+            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let img = attachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 //设置富文本中的图片：设置大小&设置居中
                 let aspect = img.size.width / img.size.height
                 let pedding:CGFloat = 15
@@ -150,9 +97,28 @@ extension NSAttributedString{
                 attachment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
                 
                 return
-                
             }
-            })
+        })
+//        attrText.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
+//            if let attachment = object as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
+//                //设置富文本中的图片：设置大小&设置居中
+//                let aspect = img.size.width / img.size.height
+//                let pedding:CGFloat = 15
+//                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
+//                let newHeight = (newWidth / aspect)
+//                
+//                //重新设置居中展示
+//                let para = NSMutableParagraphStyle()
+//                para.alignment = .center
+//                attrText.addAttribute(.paragraphStyle, value: para, range: range)
+//                
+//                //设置展示大小
+//                attachment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+//                
+//                return
+//                
+//            }
+//            })
         //3、返回处理后的结果
         return attrText
     }
