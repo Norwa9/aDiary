@@ -7,12 +7,14 @@
 
 import Foundation
 
+let todoAttributeKey = "co.LuoWei.aDiary.image.todo"
+let imageAttributeKey = "co.LuoWei.aDiary.image.image"
 public extension NSAttributedString.Key {
     static var todo: NSAttributedString.Key {
-        return NSAttributedString.Key(rawValue: "co.LuoWei.aDiary.image.todo")
+        return NSAttributedString.Key(rawValue: todoAttributeKey)
     }
     
     static var image: NSAttributedString.Key {
-        return NSAttributedString.Key(rawValue: "co.LuoWei.aDiary.image.image")
+        return NSAttributedString.Key(rawValue: imageAttributeKey)
     }
 }
