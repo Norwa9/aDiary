@@ -248,14 +248,16 @@ class monthCell: UICollectionViewCell {
         self.updateWCons()
         
         self.diary = diary
-        self.titleLabel.attributedText = getAttrTitle(content: diary.content)
-        self.contentLabel.attributedText = getAttrContent(content: diary.content)
+        self.titleLabel.attributedText = diary.content.getAttrTitle()
+        self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
         self.dateLabel.text = "\(diary.day)号，\(diary.weekDay)"
         self.wordNum = diary.content.count
         self.isLike = diary.islike
         self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
+        
+        print("解析到的未完成todo:\(self.diary.todos())")
     }
     
     //读取日记的所有图片
@@ -301,53 +303,7 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    private func getAttrTitle(content:String)->NSAttributedString{
-        let mContent = NSMutableAttributedString(string: content)
-        if mContent.length > 0{
-            //获取第一段
-            let paragraphArray = content.components(separatedBy: "\n")
-            let firstPara = paragraphArray.first!
-            //标题的字体大小16行间距6。
-            //标题格式
-            let titlePara = NSMutableParagraphStyle()
-            titlePara.lineSpacing = 3
-            let titleAttributes:[NSAttributedString.Key : Any] = [
-//                .font : UIFont.systemFont(ofSize: 17, weight: .medium),
-                .font : UIFont(name: "DIN Alternate", size: 17)!,
-                .paragraphStyle:titlePara,
-            ]
-            
-            let titleRange = NSMakeRange(0, firstPara.utf16.count)
-            mContent.addAttributes(titleAttributes, range: titleRange)
-            return mContent.attributedSubstring(from: titleRange)
-        }else{
-            return mContent
-        }
-    }
     
-    private func getAttrContent(content:String) -> NSAttributedString{
-        let mString = NSMutableAttributedString(string: content)
-        if mString.length > 0{
-            //内容段样式
-            let contentPara = NSMutableParagraphStyle()
-            contentPara.lineSpacing = 3
-            let contentAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
-//                .font : UIFont(name: "DIN Alternate", size: 14)!,
-                .paragraphStyle:contentPara,
-            ]
-            mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
-            //获取第一段Range
-            let paragraphArray = content.components(separatedBy: "\n")
-            let firstPara = paragraphArray.first!
-            //如果日记只有一行，那么这一行的末尾是不带有"\n"的！！
-            let titleLength = paragraphArray.count > 1 ? firstPara.utf16.count + 1 : firstPara.utf16.count
-            let titleRange = NSMakeRange(0, titleLength)
-            mString.replaceCharacters(in: titleRange, with: "")
-            return mString
-        }
-        return mString
-    }
     
 }
 //MARK:-内嵌的Collection View

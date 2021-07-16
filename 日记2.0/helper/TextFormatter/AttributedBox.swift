@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class AttributedBox {
+    ///返回[√]复选框
     public static func getChecked() -> NSMutableAttributedString? {
         let checkboxText = getCleanChecked()
         checkboxText.append(NSAttributedString(string: " "))
@@ -16,6 +17,7 @@ class AttributedBox {
         return checkboxText
     }
 
+    ///返回[x]复选框
     public static func getUnChecked() -> NSMutableAttributedString? {
         let checkboxText = getCleanUnchecked()
         checkboxText.append(NSAttributedString(string: " "))
@@ -23,7 +25,7 @@ class AttributedBox {
         return checkboxText
     }
 
-    public static func getCleanUnchecked() -> NSMutableAttributedString {
+    private static func getCleanUnchecked() -> NSMutableAttributedString {
         let font = userDefaultManager.font
         let size = font.pointSize + font.pointSize / 2
         let attachment = NSTextAttachment()
@@ -51,7 +53,7 @@ class AttributedBox {
         return checkboxText
     }
 
-    public static func getCleanChecked() -> NSMutableAttributedString {
+    private static func getCleanChecked() -> NSMutableAttributedString {
         let font = userDefaultManager.font
         let size = font.pointSize + font.pointSize / 2
         let attachment = NSTextAttachment()

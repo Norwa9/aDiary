@@ -176,6 +176,7 @@ extension diaryInfo{
     }
     
     ///富文本NSAttributedString
+    ///注意：里面没有自定义的attribute
     var attributedString:NSAttributedString?{
         get{
             if let rtfd = self.rtfd{
@@ -184,6 +185,34 @@ extension diaryInfo{
                 return nil
             }
         }
+    }
+    
+    ///解析出每一条todo文本
+    func todos()->[String]{
+        guard let attributedString = self.attributedString else {return []}
+        
+        var todos = [String]()
+        
+        let mutableAttString = NSMutableAttributedString(attributedString: attributedString)
+        
+        //1.恢复attribute
+        for tuple in todoAttributesTuples{
+            mutableAttString.addAttribute(.todo, value: tuple.1, range: NSRange(location: tuple.0, length: 1))
+        }
+        
+        //2.将复选框attribute转换为占位符方便后续操作
+        let unloadAttrString = mutableAttString.unLoadCheckboxes()
+        unloadAttrString.string.enumerateLines { line, _ in
+            //print("unloaded:\(line)")
+            let res = TextFormatter.parseTodo(line: line)
+            let hasIncompletedTask = res.1
+            let cleanTodo = res.2
+            if hasIncompletedTask{
+                todos.append(cleanTodo)
+                print("未完成的todo:\(cleanTodo)")
+            }
+        }
+        return todos
     }
 }
 

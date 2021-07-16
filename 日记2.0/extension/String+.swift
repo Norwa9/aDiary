@@ -42,3 +42,57 @@ extension String{
         return self.rangeOfCharacter(from: letters) != nil
     }
 }
+
+
+//MARK:-解析标题和内容添加属性
+extension String{
+     func getAttrTitle()->NSAttributedString{
+        let content = self
+        let mContent = NSMutableAttributedString(string: content)
+        if mContent.length > 0{
+            //获取第一段
+            let paragraphArray = content.components(separatedBy: "\n")
+            let firstPara = paragraphArray.first!
+            //标题的字体大小16行间距6。
+            //标题格式
+            let titlePara = NSMutableParagraphStyle()
+            titlePara.lineSpacing = 3
+            let titleAttributes:[NSAttributedString.Key : Any] = [
+//                .font : UIFont.systemFont(ofSize: 17, weight: .medium),
+                .font : UIFont(name: "DIN Alternate", size: 17)!,
+                .paragraphStyle:titlePara,
+            ]
+            
+            let titleRange = NSMakeRange(0, firstPara.utf16.count)
+            mContent.addAttributes(titleAttributes, range: titleRange)
+            return mContent.attributedSubstring(from: titleRange)
+        }else{
+            return mContent
+        }
+    }
+    
+     func getAttrContent() -> NSAttributedString{
+        let content = self
+        let mString = NSMutableAttributedString(string: content)
+        if mString.length > 0{
+            //内容段样式
+            let contentPara = NSMutableParagraphStyle()
+            contentPara.lineSpacing = 3
+            let contentAttributes:[NSAttributedString.Key : Any] = [
+                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
+//                .font : UIFont(name: "DIN Alternate", size: 14)!,
+                .paragraphStyle:contentPara,
+            ]
+            mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
+            //获取第一段Range
+            let paragraphArray = content.components(separatedBy: "\n")
+            let firstPara = paragraphArray.first!
+            //如果日记只有一行，那么这一行的末尾是不带有"\n"的！！
+            let titleLength = paragraphArray.count > 1 ? firstPara.utf16.count + 1 : firstPara.utf16.count
+            let titleRange = NSMakeRange(0, titleLength)
+            mString.replaceCharacters(in: titleRange, with: "")
+            return mString
+        }
+        return mString
+    }
+}

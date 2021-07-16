@@ -24,7 +24,7 @@ extension NSMutableAttributedString{
                 else { return }
     
                 ///注：checkboxText.addAttribute(.todo, value: 0, range: NSRange(0..<1))
-                
+                print("发现todo attchment,range:\(range)")
                 var gfm = "- [ ]"
                 if value == 1 {
                     gfm = "- [x]"
@@ -33,7 +33,6 @@ extension NSMutableAttributedString{
                 offset += 4
             }
         }
-
         return content!
     }
 

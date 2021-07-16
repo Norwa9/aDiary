@@ -186,7 +186,7 @@ extension TextFormatter{
         let string = mutable.string
         
         string.enumerateLines { (line, _) in
-            let result = self.parseTodo(line: line)
+            let result = TextFormatter.parseTodo(line: line)
             addPrefixes = !result.0
             addCompleted = result.1
             lines.append(result.2)
@@ -236,8 +236,9 @@ extension TextFormatter{
         insertText(mutableResult, replacementRange: pRange, selectRange: selectRange)
     }
     
-    ///解析每一段文字，检查其是否有todo占位符 "- []" 或"- [x]"
-    private func parseTodo(line: String) -> (Bool, Bool, String) {
+    ///解析每一段文字，检查其去除空白开头后是否还有todo占位符 "- []" 或"- [x]"
+    ///此外，还返回去除占位符的纯文本
+    static func parseTodo(line: String) -> (Bool, Bool, String) {
         var count = 0
         var hasTodoPrefix = false
         var hasIncompletedTask = false
@@ -258,6 +259,7 @@ extension TextFormatter{
             }
         }
 
+        //去除空白的字符前缀是否有占位符开头
         if letterPrefix.starts(with: "- [ ] ") {
             hasTodoPrefix = false
             hasIncompletedTask = true

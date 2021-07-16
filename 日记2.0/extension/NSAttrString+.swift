@@ -129,6 +129,8 @@ extension NSAttributedString {
     }
 }
 
+
+//MARK:-NSAttributedString + todo
 extension NSAttributedString {
     ///段落内是否有.todo这类型的属性
     public func hasTodoAttribute() -> Bool {
@@ -139,6 +141,7 @@ extension NSAttributedString {
         }
         return found
     }
+    
 }
 
 
