@@ -9,10 +9,18 @@ import Foundation
 import UIKit
 import RealmSwift
 
-//MARK:-[String]包装
+//MARK:-wrapper class
 class RealmString: Object,Codable {
     @objc dynamic var stringValue:String = ""
 }
+
+class RealmTuple:Object,Codable{
+    @objc dynamic var location:Int = 0 //attribute的下标
+    @objc dynamic var value:Int = 0 //attribute的值
+}
+
+
+//MARK:-diaryInfo + Object
 extension diaryInfo{
     var tags: [String] {
       get {
@@ -25,11 +33,6 @@ extension diaryInfo{
     }
 }
 
-//MARK:attribute元组包装
-class RealmTuple:Object,Codable{
-    @objc dynamic var location:Int = 0 //attribute的下标
-    @objc dynamic var value:Int = 0 //attribute的值
-}
 
 extension diaryInfo{
     ///元组数组：存储所有.image属性的下标以及对应的值

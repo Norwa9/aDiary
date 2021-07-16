@@ -21,14 +21,13 @@ public final class DiaryStore: ObservableObject {
 
     private let log = OSLog(subsystem: SyncConstants.subsystemName, category: String(describing: DiaryStore.self))
 
-    private let fileManager = FileManager()
-
     private let queue = DispatchQueue(label: "DiaryStore")
 
     private let container: CKContainer
     private let defaults: UserDefaults
     private var syncEngine: LWSyncEngine?
     
+    //MARK:-init
     private init(){
         self.container = CKContainer(identifier: SyncConstants.containerIdentifier)
         
@@ -49,31 +48,7 @@ public final class DiaryStore: ObservableObject {
         }
     }
     
-    ///本地数据库plist的url
-    private var storeURL:URL{
-        let baseURL: URL
-        if let dir = FileManager.default.urls (for: .documentDirectory, in: .userDomainMask) .first {
-            baseURL = dir
-        }else{
-            os_log("无法获取用户文件目录URL", log: self.log, type: .fault)
-            baseURL = fileManager.temporaryDirectory
-        }
-
-        let url = baseURL.appendingPathComponent (DefaultsKeys.DiaryDictPlistKey)
-
-        if !fileManager.fileExists(atPath: url.path) {
-            os_log("创建本地数据库(plist文件):%@", log: self.log, type: .debug, url.path)
-
-            if !fileManager.createFile(atPath: url.path, contents: nil, attributes: nil) {
-                os_log("创建本地数据库失败:%@", log: self.log, type: .fault, url.path)
-            }
-        }
-
-        return url
-    }
-    
-
-    
+    //MARK:-helper
     ///提交添加或修改到云端
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑

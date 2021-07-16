@@ -29,7 +29,7 @@ class diaryInfo:Object,Codable{
     @objc dynamic var modTime:Date? = nil
     @objc dynamic var editedButNotUploaded:Bool = false ///引入的目的是解决离线修改的同步问题(不必上传到云端)
     
-    var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
+    var realmTags:List<RealmString> = List<RealmString>()
     var realmImageAttrTuples = List<RealmTuple>()
     var realmTodoAttrTuples = List<RealmTuple>()
     
