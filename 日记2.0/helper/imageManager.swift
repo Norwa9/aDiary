@@ -22,27 +22,25 @@ class imageManager{
         //在后台线程访问了diary将会导致崩溃，必须在创建该变量的线程之外使用该变量
         //解决办法，创建临时变量
         let aString = diary.attributedString
+        let imageAttrTuples = diary.imageAttributesTuples
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
             guard let aString = aString else{return}
             var images:[UIImage] = []
-            aString.enumerateAttribute(NSAttributedString.Key.attachment, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-                if let attachment = object as? NSTextAttachment{
-                    if let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location){
-                        let ratio = img.size.height / monthCell.KphotoHeight
-                        let size = CGSize(width: img.size.width / ratio, height: monthCell.KphotoHeight)
-                        let compressedImage = img.compressPic(toSize: size)
-                        images.append(compressedImage)
-                    }
+            for imageTuple in imageAttrTuples{
+                let location = imageTuple.0
+                if let attachment = aString.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: location){
+                    let ratio = img.size.height / monthCell.KphotoHeight
+                    let size = CGSize(width: img.size.width / ratio, height: monthCell.KphotoHeight)
+                    let compressedImage = img.compressPic(toSize: size)
+                    images.append(compressedImage)
                 }
             }
-            )
             DispatchQueue.main.async {
                 callback(images,self.diary)
             }
         }
-        
-        //标记这篇日记有图片
-        
     }
+    
+    
 }
