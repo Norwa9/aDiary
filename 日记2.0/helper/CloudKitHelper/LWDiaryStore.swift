@@ -103,13 +103,17 @@ public final class DiaryStore: ObservableObject {
 //            let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
             LWRealmManager.shared.add(updatedDiary)
         }
-        os_log("本地数据库已更新!", log: log, type: .debug)
+        //2.
+        dataManager.shared.updateAllTagsAfterSync()
         
-        //2.更新UI
-        indicatorViewManager.shared.stop()
+        
+        os_log("本地数据库已更新!", log: log, type: .debug)
         DispatchQueue.main.async {
+            //2.更新UI
+            indicatorViewManager.shared.stop()
             UIApplication.getMonthVC().reloadMonthVC()
             UIApplication.getTodayVC().reloadTodayVC()
+            
         }
         
     }

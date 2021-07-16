@@ -31,7 +31,7 @@ class dataManager {
     init(){
         let defaults = UserDefaults.standard
         //1、读取
-        tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? ["学习","工作","生活"]
+        tags = defaults.value(forKey: DefaultsKeys.tags) as? [String] ?? []
         //TODO:-读取本地数据库，读取所有的diaryinfo到diaryDict充当数据源
         
         //2、保存
@@ -57,6 +57,7 @@ class dataManager {
             for diary in LWRealmManager.shared.localDatabase{
                 var newTags = diary.tags
                 if let index = newTags.firstIndex(of: oldTag){
+                    //这片日志有该tag
                     newTags[index] = newTag
                     LWRealmManager.shared.update {
                         diary.tags = newTags
@@ -68,6 +69,7 @@ class dataManager {
             for diary in LWRealmManager.shared.localDatabase{
                 var newTags = diary.tags
                 if let deleteIndex = newTags.firstIndex(of: oldTag){
+                    //这片日志有该tag
                     newTags.remove(at: deleteIndex)
                     LWRealmManager.shared.update {
                         diary.tags = newTags
@@ -77,10 +79,28 @@ class dataManager {
             }
 
         }
-        
     }
     
-    //MARK:-导出diaryDict2.0为plist文件(临时函数，用来备份)
+    func updateAllTagsAfterSync(){
+        let d1 = Date()
+        var tagsSet = Set<String>()
+        for diary in LWRealmManager.shared.localDatabase{
+            for tag in diary.tags{
+                tagsSet.insert(tag)
+            }
+        }
+        let d2 = Date()
+        
+        self.tags = Array(tagsSet)
+        
+        print("所有tag的并集为\(tagsSet),遍历所有的tag的处理时间:\(d2.timeIntervalSince(d1))")
+    }
+    
+    
+}
+
+//MARK:-导出diaryDict2.0为plist文件(临时函数，用来备份)
+extension dataManager{
     ///存储diaryDict的plist文件。
     ///返回本地文件地址的URL
 //    func savePlistFile()->URL{
@@ -97,16 +117,15 @@ class dataManager {
 //                print("Failed to create store file at \(url.path)")
 //            }
 //        }
-//        
+//
 //        do {
 //            let data = try PropertyListEncoder().encode(self.diaryDict)
 //            try data.write(to: url)
 //        } catch {
 //            print("fail to save diaryDict")
 //        }
-//        
+//
 //        return url
 //    }
 }
-
 
