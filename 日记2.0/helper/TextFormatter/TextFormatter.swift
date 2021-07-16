@@ -69,7 +69,7 @@ public class TextFormatter{
         
     }
     
-    ///自动补齐递增数字列表
+    //MARK:自动补齐todo列表和数字列表
     func addNewLine(){
         guard let currentParagraphRange = self.getCurParagraphRange() else { return }
         let currentParagraph = storage.attributedSubstring(from: currentParagraphRange)
@@ -82,6 +82,7 @@ public class TextFormatter{
                 let char = storage.attributedSubstring(from: NSRange(location: textView.selectedRange.upperBound - 2, length: 1))
 
                 if let _ = char.attribute(.todo, at: 0, effectiveRange: nil) {
+                    //按回车取消unchecked box
                     let selectRange = NSRange(location: currentParagraphRange.location, length: 0)
                     insertText("\n", replacementRange: currentParagraphRange, selectRange: selectRange)
                     return
@@ -453,6 +454,7 @@ extension TextFormatter{
         parStyle.alignment = .left
         parStyle.lineSpacing = CGFloat(userDefaultManager.lineSpacing)
         self.textView.textStorage.addAttribute(.paragraphStyle, value: parStyle, range: parRange)
+        self.textView.textStorage.addAttribute(.font, value: userDefaultManager.font, range: parRange)
         
         //设定光标位置
         if let select = selectRange {
