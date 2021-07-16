@@ -671,18 +671,22 @@ extension TextFormatter{
 extension TextFormatter{
     ///根据日期信息将富文本存储到文件目录
     func save(with diary:diaryInfo){
-        let string = textView.attributedText.processAttrString(textView: self.textView,returnCleanText: true).string
-        let aString = self.textView.attributedText!
-        print("保存时的textView.attributedText:\(textView.attributedText)")
-        let containsImage:Bool = self.checkIfContainsImage(aString)
+        let attributedText = textView.attributedText!
+        let result = attributedText.parseAttribuedText()
+        let imageAttrTuples = result.0
+        let todoAttrTuples = result.1
+        let cleanText = result.2
+        let containsImage = result.3
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
             diary.editedButNotUploaded = true
             diary.modTime = Date()
-            diary.content = string.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
-            diary.rtfd = aString.data()
+            diary.content = cleanText.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+            diary.rtfd = attributedText.data()
             diary.containsImage = containsImage
+            diary.imageAttributesTuples = imageAttrTuples
+            diary.todoAttributesTuples = todoAttrTuples
         })
         
         //2.上传到云端
@@ -713,12 +717,16 @@ extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
         textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
-        let aString = diary.attributedString
+        let attributedText = diary.attributedString!
         let bounds = textView.bounds
         let container = textView.textContainer
+        let imageAttrTuples = diary.imageAttributesTuples
+        let todoAttrTuples = diary.todoAttributesTuples
+        print("读取到的images:\(imageAttrTuples)")
+        print("读取到的todos:\(todoAttrTuples)")
         
         DispatchQueue.global(qos: .default).async {
-            let correctedAString = aString?.processAttrString(bounds: bounds, container: container)
+            let correctedAString = attributedText.processAttrString(bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
             }
@@ -779,7 +787,13 @@ extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
         let aString = diary.attributedString ?? self.rawtextToRichtext(diary: diary)
         //异步读取attributedString、异步处理图片bounds
-        let preparedText = aString.processAttrString(bounds: textView.bounds, container: textView.textContainer)
+        let bounds = textView.bounds
+        let container = textView.textContainer
+        let imageAttrTuples = diary.imageAttributesTuples
+        let todoAttrTuples = diary.todoAttributesTuples
+        
+        let preparedText = aString.processAttrString(bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+        
         self.textView.attributedText = preparedText
         textView.layer.cornerRadius = 10
         textView.showsVerticalScrollIndicator = false

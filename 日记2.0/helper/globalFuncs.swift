@@ -197,3 +197,30 @@ func containSubArr(selectedTags: [String], diaryTags: [String]) -> Bool{
     }
     return true
 }
+
+
+
+
+// MARK: String转元组[(Int,Int)]数组
+func dictString2Tuples(_ str: String) -> [(Int,Int)]{
+    let data = str.data(using: String.Encoding.utf8)
+    if let dict = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : String] {
+        let tuples = dict.map { (key, value) in
+            return (Int(key)!,Int(value)!)
+        }
+        return tuples
+    }
+    return []
+}
+
+// MARK: 元组[(Int,Int)]转String
+func tuples2dictString(_ tuples:[(Int,Int)]) -> String?{
+    var dic = [String:String]()
+    for tuple in tuples{
+        dic["\(tuple.0)"] = "\(tuple.1)"
+    }
+    
+    let data = try? JSONSerialization.data(withJSONObject: dic, options: [])
+    let str = String(data: data!, encoding: String.Encoding.utf8)
+    return str
+}

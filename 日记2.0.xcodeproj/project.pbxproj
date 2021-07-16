@@ -11,6 +11,7 @@
 		1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */; };
 		1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A5647269824CB0090D411 /* LWRealmManager.swift */; };
 		1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A566D269D81280090D411 /* indicatorViewManager.swift */; };
+		1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -88,6 +89,7 @@
 		1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LWSyncEngine+Notifications.swift"; sourceTree = "<group>"; };
 		1B2A5647269824CB0090D411 /* LWRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRealmManager.swift; sourceTree = "<group>"; };
 		1B2A566D269D81280090D411 /* indicatorViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicatorViewManager.swift; sourceTree = "<group>"; };
+		1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Object.swift"; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				EA3189B426934F6F001B9042 /* diaryInfo.swift */,
 				1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */,
+				1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
+				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
 				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,

@@ -27,12 +27,15 @@ class diaryInfo:Object,Codable{
     @objc dynamic var containsImage:Bool = false
     @objc dynamic var rtfd:Data? = nil
     @objc dynamic var modTime:Date? = nil
-    
-    ///引入的目的是解决离线修改的同步问题(不必上传到云端)
-    @objc dynamic var editedButNotUploaded:Bool = false
+    @objc dynamic var editedButNotUploaded:Bool = false ///引入的目的是解决离线修改的同步问题(不必上传到云端)
     
     var realmTags:List<RealmString> = List<RealmString>()//标签不能用[String]表示了
+    var realmImageAttrTuples = List<RealmTuple>()
+    var realmTodoAttrTuples = List<RealmTuple>()
+    
+    
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
+    
     
 //MARK:-init
     ///解码云端取回的record
@@ -71,6 +74,20 @@ class diaryInfo:Object,Codable{
         if let rtfdAsset = record[.rtfd] as? CKAsset{
             rtfdData = rtfdAsset.data
         }
+        
+        var imageAttributesTuples:[(Int,Int)]
+        if let dictString = record[.imageAttributesTuples] as? String{
+            imageAttributesTuples = dictString2Tuples(dictString)
+        }else{
+            imageAttributesTuples = []
+        }
+        
+        var todoAttributesTuples:[(Int,Int)]
+        if let dictString = record[.todoAttributesTuples] as? String{
+            todoAttributesTuples = dictString2Tuples(dictString)
+        }else{
+            todoAttributesTuples = []
+        }
 
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName
@@ -85,6 +102,8 @@ class diaryInfo:Object,Codable{
         self.containsImage = (containsImage != 0)
         self.rtfd = rtfdData
         self.modTime = record.modificationDate
+        self.imageAttributesTuples = imageAttributesTuples
+        self.todoAttributesTuples = todoAttributesTuples
     }
     
     
@@ -169,18 +188,4 @@ extension diaryInfo{
 }
 
 
-//MARK:-[String]包装
-class RealmString: Object,Codable {
-    @objc dynamic var stringValue:String = ""
-}
-extension diaryInfo{
-    var tags: [String] {
-      get {
-        return realmTags.map { $0.stringValue }
-      }
-      set {
-        realmTags.removeAll()
-        realmTags.append(objectsIn: newValue.map({ RealmString(value: [$0]) }))
-      }
-    }
-}
+

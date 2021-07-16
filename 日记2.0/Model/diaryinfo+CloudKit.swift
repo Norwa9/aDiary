@@ -32,6 +32,9 @@ enum RecordKey: String {
     case uuidofPictures
     case containsImage
     case rtfd
+    case imageAttributesTuples
+    case todoAttributesTuples
+    
 }
 //MARK:diaryInfo+CloudKit
 extension diaryInfo {
@@ -48,6 +51,8 @@ extension diaryInfo {
         r[.mood] = mood
         r[.containsImage] = containsImage
         r[.rtfd] = rtfdAsset
+        r[.imageAttributesTuples] = tuples2dictString(imageAttributesTuples)
+        r[.todoAttributesTuples] = tuples2dictString(todoAttributesTuples)
         return r
     }
     
