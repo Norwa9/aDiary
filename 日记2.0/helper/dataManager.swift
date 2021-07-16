@@ -20,8 +20,8 @@ struct DefaultsKeys
 //它是一个用以保存app数据的类。能够在几个类之间共享。
 //它设置一个观察者，当app到后台时，自动将app数据保存到UserDefaults。
 //使用方法：通过语句`DataContainerSingleton.sharedDataContainer`来访问这个单例。
-class DataContainerSingleton {
-    static let sharedDataContainer = DataContainerSingleton()
+class dataManager {
+    static let shared = dataManager()
     
     ///用户保存的标签
     var tags = [String]()
@@ -37,10 +37,11 @@ class DataContainerSingleton {
         //2、保存
         defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
         goToBackgroundObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,object: nil,queue: nil){(note: Notification!) -> Void in
-//            self.saveDiaryDict()
+            defaults.setValue(self.tags, forKey: DefaultsKeys.tags)
         }
     }
     
+    ///计算所有日记的字数
     func getTotalWordcount()->Int{
         var count = 0
         for diary in LWRealmManager.shared.localDatabase{
@@ -51,24 +52,27 @@ class DataContainerSingleton {
     
     //如果用户修改了某个tag名称，将要更新所有使用该tag的日记中的tag名称
     func updateTags(oldTag:String,newTag:String?){
-        if let newTag = newTag{//操作：更新
+        //如果newTags == nil，该函数的功能为删除oldTag
+        if let newTag = newTag{//操作：修改tag的名称
             for diary in LWRealmManager.shared.localDatabase{
                 var newTags = diary.tags
                 if let index = newTags.firstIndex(of: oldTag){
                     newTags[index] = newTag
-                }
-                LWRealmManager.shared.update {
-                    diary.tags = newTags
+                    LWRealmManager.shared.update {
+                        diary.tags = newTags
+                    }
+                    DiaryStore.shared.addOrUpdate(diary)
                 }
             }
-        }else{//操作：删除
+        }else{//操作：删除一个tag
             for diary in LWRealmManager.shared.localDatabase{
                 var newTags = diary.tags
                 if let deleteIndex = newTags.firstIndex(of: oldTag){
                     newTags.remove(at: deleteIndex)
-                }
-                LWRealmManager.shared.update {
-                    diary.tags = newTags
+                    LWRealmManager.shared.update {
+                        diary.tags = newTags
+                    }
+                    DiaryStore.shared.addOrUpdate(diary)
                 }
             }
 

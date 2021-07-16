@@ -133,7 +133,7 @@ class filterMenu: UIView {
 //MARK:-tableView delegate
 extension filterMenu:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataContainerSingleton.sharedDataContainer.tags.count
+        return dataManager.shared.tags.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -143,7 +143,7 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tagsCell.reusableId) as! tagsCell
         let row = indexPath.row
-        let text = DataContainerSingleton.sharedDataContainer.tags[row]
+        let text = dataManager.shared.tags[row]
         cell.tagsLabel.text = text
         let selectedState = filterModel.shared.selectedTags.contains(text)
         cell.setView(hasSelected: selectedState)
@@ -156,7 +156,7 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
         
         cell.animateSelectedView()
         
-        let tag = DataContainerSingleton.sharedDataContainer.tags[row]
+        let tag = dataManager.shared.tags[row]
         //选取，反选
         if let firstIndex = filterModel.shared.selectedTags.firstIndex(of: tag){
             filterModel.shared.selectedTags.remove(at: firstIndex)

@@ -100,6 +100,7 @@ final class LWSyncEngine{
                     self.uploadLocalDataNotUploadedYet()
                     //3.获取其他设备向云端提交的变动
                     self.fetchRemoteChanges()
+                    //4.获取tags的更新状态
                 }
             default:
                 break

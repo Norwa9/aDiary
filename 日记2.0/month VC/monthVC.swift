@@ -723,7 +723,7 @@ extension monthVC:UISearchBarDelegate{
             self.reloadCollectionViewData()
             searchButtonImageView.image = UIImage(named: "back")
             topbar.tempLabel1.text = "搜索"
-            topbar.tempLabel2.text = "共\(LWRealmManager.shared.localDatabase.count)篇，\(DataContainerSingleton.sharedDataContainer.getTotalWordcount())字"
+            topbar.tempLabel2.text = "共\(LWRealmManager.shared.localDatabase.count)篇，\(dataManager.shared.getTotalWordcount())字"
             topbar.tempLabel1.sizeToFit()//更新tempLabel1的宽度，使得rectbar1能够正确匹配它的长度
             topbar.tempLabel2.sizeToFit()
         }else{//退出搜索模式

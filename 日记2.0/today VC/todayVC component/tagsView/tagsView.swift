@@ -117,7 +117,7 @@ class tagsView: UIViewController {
 extension tagsView:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataContainerSingleton.sharedDataContainer.tags.count
+        return dataManager.shared.tags.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -128,9 +128,9 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: tagsCell.reusableId) as! tagsCell
         let row = indexPath.row
         cell.delegate = self
-        cell.tagsLabel.text = DataContainerSingleton.sharedDataContainer.tags[row]
+        cell.tagsLabel.text = dataManager.shared.tags[row]
         //恢复tags的选取状态
-        let selectedState = selectedTags.contains(DataContainerSingleton.sharedDataContainer.tags[row])
+        let selectedState = selectedTags.contains(dataManager.shared.tags[row])
         cell.setView(hasSelected: selectedState,isEditMode: self.editMode)
         return cell
     }
@@ -143,7 +143,7 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         cell.animateSelectedView()
         
         //统计到selectedTags
-        let tag = DataContainerSingleton.sharedDataContainer.tags[row]
+        let tag = dataManager.shared.tags[row]
         if let firstIndex = selectedTags.firstIndex(of: tag){
             selectedTags.remove(at: firstIndex)
         }else{
@@ -217,8 +217,8 @@ extension tagsView:tagsCellEditProtocol{
             guard let tag = ac.textFields?[0].text else{
                 return
             }
-            if !DataContainerSingleton.sharedDataContainer.tags.contains(tag){
-                DataContainerSingleton.sharedDataContainer.tags.append(tag)
+            if !dataManager.shared.tags.contains(tag){
+                dataManager.shared.tags.append(tag)
                 self.tagsTableView.reloadData()
             }
         }))
@@ -228,7 +228,7 @@ extension tagsView:tagsCellEditProtocol{
     
     //MARK:-2、编辑、删除标签
     func editButtonDidTapped(tag: String) {
-        let tags = DataContainerSingleton.sharedDataContainer.tags
+        let tags = dataManager.shared.tags
         print("当前的系统tags:\(tags)")
         guard let index = tags.firstIndex(of: tag) else{return}
         let indexPath = IndexPath(row: index, section: 0)
@@ -239,26 +239,26 @@ extension tagsView:tagsCellEditProtocol{
         }
         //删除
         let deleteAction = UIAlertAction(title: "删除", style: .destructive){_ in
-            DataContainerSingleton.sharedDataContainer.tags.remove(at: index)
+            dataManager.shared.tags.remove(at: index)
             self.tagsTableView.deleteRows(at: [indexPath], with: .fade)
             //更新当前日记的选中tags
             if let deleteIndex = self.selectedTags.firstIndex(of: tag){
                 self.selectedTags.remove(at: deleteIndex)
             }
             //更新全部日记的选中tags
-            DataContainerSingleton.sharedDataContainer.updateTags(oldTag: tag, newTag: nil)
+            dataManager.shared.updateTags(oldTag: tag, newTag: nil)
         }
         //修改
         let editAction = UIAlertAction(title: "确定", style: .default){_ in
             guard let newTag = ac.textFields?[0].text else{return}
-            DataContainerSingleton.sharedDataContainer.tags[index] = newTag
+            dataManager.shared.tags[index] = newTag
             //更新当前日记的选中tags
             if let editIndex = self.selectedTags.firstIndex(of: tag){
                 self.selectedTags[editIndex] = newTag
             }
             self.tagsTableView.reloadRows(at: [indexPath], with: .fade)
             //更新全部日记的选中tags
-            DataContainerSingleton.sharedDataContainer.updateTags(oldTag: tag, newTag: newTag)
+            dataManager.shared.updateTags(oldTag: tag, newTag: newTag)
         }
         //刷新
         ac.addAction(deleteAction)
