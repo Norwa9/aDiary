@@ -586,8 +586,9 @@ extension TextFormatter{
         mutableStr.insert(NSAttributedString(string: "\n"), at: selectedRange.location)
         let insertLoaction = selectedRange.location + 1
         mutableStr.insert(imageAttr, at: insertLoaction)
+        
         mutableStr.addAttribute(.image, value: 1, range: NSRange(location: insertLoaction, length: 1))
-        print("insertLoaction:\(insertLoaction)")
+        
         mutableStr.addAttributes(attributes, range: NSRange(location: insertLoaction, length: 1))
         //另起一行
         mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)

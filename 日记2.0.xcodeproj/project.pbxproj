@@ -236,7 +236,6 @@
 				EAA29EA025C833FF00AA6971 /* moodButton.swift */,
 				EA3ABAD925E019FD00911902 /* toolsBar.swift */,
 				EA3ABADC25E01A5100911902 /* toolsBar.xib */,
-				EADA85CB26232332007D1134 /* TextFormatter.swift */,
 			);
 			path = "todayVC component";
 			sourceTree = "<group>";
@@ -307,7 +306,6 @@
 				EA3189B326934F44001B9042 /* Model */,
 				EAA29E7725C59ABB00AA6971 /* helper */,
 				EACB1719267A1B63007BF160 /* extension */,
-				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA51D1FC25D809550007BDFA /* resource */,
 			);
 			path = "日记2.0";
@@ -338,6 +336,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
 				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
 				EA3189AE26934ED5001B9042 /* globalFuncs.swift */,
@@ -408,6 +407,7 @@
 		EAD20DA326A072C70014B8B5 /* TextFormatter */ = {
 			isa = PBXGroup;
 			children = (
+				EADA85CB26232332007D1134 /* TextFormatter.swift */,
 				EAD20DA426A072DC0014B8B5 /* AttributedBox.swift */,
 			);
 			path = TextFormatter;

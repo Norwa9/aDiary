@@ -9,13 +9,8 @@ import Foundation
 import UIKit
 
 extension NSAttributedString{
-    /*
-     todayVC.swift
-     settingViewController.swift
-     */
-    //处理从本地读取的富文本
-    //功能1：设置图片附件的显示大小，添加用户偏好的文本属性
-    //功能2：将富文本清洗成collection view cell显示的纯文本
+    
+    ///save()
     func processAttrString(textView:UITextView,returnCleanText:Bool = false,fillWithEmptyImage:Bool = false) -> NSMutableAttributedString {
         let bounds = textView.bounds
         let container = textView.textContainer
@@ -26,8 +21,9 @@ extension NSAttributedString{
         //1、施加用户自定义格式
         let attrText = mutableText.addUserDefaultAttributes()
         
-        //2、遍历所有的图片。调整图片，让图片显示正确的大小
         
+        
+        //2、遍历所有的图片。调整图片，让图片显示正确的大小
         attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
             let location = range.location
             print("存储图片:.attachment range:\(range)")
@@ -148,11 +144,14 @@ extension NSAttributedString{
         return mutableAttr
     }
     
-    func data()->Data?{
-        return try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf16])
-    }
+    
 }
 
+extension NSAttributedString {
+    func data()->Data?{
+        return try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
+    }
+}
 
 extension NSAttributedString {
     ///段落内是否有.todo这类型的属性
