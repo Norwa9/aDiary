@@ -41,12 +41,8 @@ class settingViewController: UIViewController {
         userDefaultManager.lineSpacing = tempLineSpacing
         userDefaultManager.imageSizeStyle = tempImageSizeStyle
         
-        //更新textView和monthCell的字体
         let todayVC = UIApplication.getTodayVC()
-        if let attrString = todayVC.textView.attributedText{
-            todayVC.textView.attributedText = nil//这样才能刷新图片大小，否则textView会使用缓存
-            todayVC.textView.attributedText = attrString.processAttrString(textView: todayVC.textView)
-        }
+        todayVC.reloadTodayVC()
         let monthVC = UIApplication.getMonthVC()
         monthVC.reloadCollectionViewData()
         
