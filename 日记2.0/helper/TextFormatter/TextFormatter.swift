@@ -721,7 +721,7 @@ extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
         textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
-        let attributedText = diary.attributedString!
+        let attributedText = diary.attributedString
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
@@ -730,7 +730,7 @@ extension TextFormatter{
         print("读取到的todos:\(todoAttrTuples)")
         
         DispatchQueue.global(qos: .default).async {
-            let correctedAString = attributedText.processAttrString(bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+            let correctedAString = attributedText?.processAttrString(bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
             }
