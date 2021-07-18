@@ -31,6 +31,7 @@ final class LWSyncEngine{
     }()
     
     private var buffer:[diaryInfo]
+    private var deleteBuffer:[diaryInfo] = []
     
     private let workQueue = DispatchQueue(label: "SyncEngine.Work",qos: .userInitiated)
     
@@ -443,10 +444,117 @@ final class LWSyncEngine{
     
     //MARK:-删除
     ///删除指定Model
-    func delete(_ diray: diaryInfo) {
-        print("警告：还没实现删除逻辑！")
-//        fatalError("Deletion not implemented")
+    func delete(_ diary: diaryInfo) {
+        deleteBuffer.append(diary)
+        
+        deleteRecords([diary.record])
+        
     }
+    
+    private func deleteRecords(_ records:[CKRecord]){
+        guard !records.isEmpty else{return}
+        
+        os_log("正在删除%d个记录...", log: log, type: .debug,records.count)
+        
+        let ids = records.map { (r) -> CKRecord.ID in
+            return r.recordID
+        }
+        
+        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: ids)
+        
+        operation.perRecordCompletionBlock = { [weak self] record, error in
+            guard let self = self else { return }
+
+            // We're only interested in conflict errors here
+            guard let error = error, error.isCloudKitConflict else { return }
+
+            os_log("CloudKit conflict with record of type %{public}@", log: self.log, type: .error, record.recordType)
+
+            guard let resolvedRecord = error.resolveConflict(with: diaryInfo.resolveConflict) else {
+                os_log(
+                    "Resolving conflict with record of type %{public}@ returned a nil record. Giving up.",
+                    log: self.log,
+                    type: .error,
+                    record.recordType
+                )
+                return
+            }
+
+            os_log("Conflict resolved, will retry delete", log: self.log, type: .info)
+
+            self.deleteRecords([resolvedRecord])
+        }
+
+        operation.modifyRecordsCompletionBlock = { [weak self] serverRecords, _, error in
+            guard let self = self else { return }
+
+            if let error = error {
+                os_log("删除记录失败: %{public}@", log: self.log, type: .error, String(describing: error))
+
+                DispatchQueue.main.async {
+                    self.handleDeleteError(error, records: records)
+                }
+            } else {
+                os_log("成功删除%d个记录！", log: self.log, type: .info, records.count)
+
+                DispatchQueue.main.async {
+                    guard let serverRecords = serverRecords else { return }
+                    self.updateLocalModelsAfterDelete(with: serverRecords)
+                }
+            }
+        }
+
+        operation.savePolicy = .changedKeys
+        operation.qualityOfService = .userInitiated
+        operation.database = privateDatabase
+
+        cloudOperationQueue.addOperation(operation)
+    }
+    
+    ///处理删除错误
+    private func handleDeleteError(_ error: Error, records: [CKRecord]) {
+        guard let ckError = error as? CKError else {
+            os_log("Error was not a CKError, giving up: %{public}@", log: self.log, type: .fault, String(describing: error))
+            return
+        }
+
+        if ckError.code == CKError.Code.limitExceeded {
+            os_log("CloudKit batch limit exceeded, sending records in chunks", log: self.log, type: .error)
+
+            fatalError("Not implemented: batch deletes. Here we should divide the records in chunks and delete in batches instead of trying everything at once.")
+        } else {
+            let result = error.retryCloudKitOperationIfPossible(self.log) { self.deleteRecords(records) }
+
+            if !result {
+                os_log("Error is not recoverable: %{public}@", log: self.log, type: .error, String(describing: error))
+            }
+        }
+    }
+    
+    ///更新本地数据库
+    ///删除本地数据库对应的Model
+    private func updateLocalModelsAfterDelete(with records: [CKRecord]) {
+        os_log("将deleteBuffer内的本地记录删除，并清空buffer", log: self.log, type: .error)
+        var models = [diaryInfo]()
+        for r in records{
+            do {
+                try models.append(diaryInfo(record: r))
+            } catch  {
+                os_log("删除时解码错误", log: self.log, type: .error)
+                continue
+            }
+        }
+
+        DispatchQueue.main.async {
+            indicatorViewManager.shared.stop()
+            
+            let ids = models.map({$0.id})
+            print("ids:\(ids)")
+            self.didDeleteModels(ids)
+            self.deleteBuffer = []
+        }
+    }
+    
     
     //MARK:-获取云端数据库的变化
     private lazy var privateChangeTokenKey: String = {

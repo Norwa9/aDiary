@@ -182,7 +182,7 @@ extension diaryInfo{
             if let rtfd = self.rtfd{
                 return try? NSAttributedString(data: rtfd, options: [.documentType:NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8], documentAttributes: nil)
             }else{
-                return nil
+                return NSAttributedString(string: "")
             }
         }
     }

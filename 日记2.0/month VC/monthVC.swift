@@ -547,38 +547,36 @@ extension monthVC {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
             //
-            let inspectAction = UIAction(title: NSLocalizedString("分享", comment: ""),
+            let shareAction = UIAction(title: NSLocalizedString("分享", comment: ""),
                                          image: UIImage(named: "share")) { action in
-                                    self.performInspect(indexPath)
+                                    self.performShare(indexPath)
                                 }
+            
             //
-            let duplicateAction = UIAction(title: NSLocalizedString("DuplicateTitle", comment: ""),
-                                 image: UIImage(systemName: "plus.square.on.square")) { action in
-                                self.performDuplicate(indexPath)
-                                }
-            let deleteAction = UIAction(title: NSLocalizedString("DeleteTitle", comment: ""),
+            let deleteAction = UIAction(title: NSLocalizedString("删除", comment: ""),
                          image: UIImage(systemName: "trash"),
                          attributes: .destructive) { action in
                         self.performDelete(indexPath)
                         }
-            return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
+            return UIMenu(title: "", children: [shareAction, deleteAction])
         }
         
         
         return config
     }
     
-    func performInspect(_ indexPath:IndexPath){
+    func performShare(_ indexPath:IndexPath){
         let cell = collectionView.cellForItem(at: indexPath) as! monthCell
         let share = shareVC(monthCell: cell)
         self.present(share, animated: true, completion: nil)
     }
     
-    func performDuplicate(_ indexPath:IndexPath){
-        
-    }
     
     func performDelete(_ indexPath:IndexPath){
+        let row = indexPath.item
+        print("row:\(row)")
+        let delteDiary = filteredDiaries[row]
+        DiaryStore.shared.delete(with: delteDiary.id)
         
     }
 }

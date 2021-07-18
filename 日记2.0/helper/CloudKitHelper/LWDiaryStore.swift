@@ -36,15 +36,12 @@ public final class DiaryStore: ObservableObject {
         let initialDB = LWRealmManager.shared.localDatabase
         self.syncEngine = LWSyncEngine.init(defaults: self.defaults, initialDiaries: initialDB.toArray())
         
-        self.syncEngine?.didUpdateModels = { [weak self] diaries in
-            self?.updateAfterSync(diaries)
+        self.syncEngine?.didUpdateModels = { [weak self] models in
+            self?.updateAfterSync(models)
         }
 
         self.syncEngine?.didDeleteModels = { [weak self] identifiers in
-            for id in identifiers{
-                let predicate = NSPredicate(format: "id == %@", id)
-                LWRealmManager.shared.delete(predicate: predicate)
-            }
+            self?.updateAfterDelete(identifiers)
         }
     }
     
@@ -61,14 +58,13 @@ public final class DiaryStore: ObservableObject {
     ///提交删除到云端
     ///同时更新本地数据库
     public func delete(with id: String) {
-        guard let diary = self.diary(with: id) else {
+        guard let diary = self.diaryWithID(id) else {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
         }
-
+        indicatorViewManager.shared.start(style: .banner)
+        //云端删除+本地删除
         syncEngine?.delete(diary)
-        
-        //TODO:-保存到本地数据库
     }
 
     ///处理CloudKit发来的更新通知
@@ -107,7 +103,7 @@ public final class DiaryStore: ObservableObject {
         dataManager.shared.updateAllTagsAfterSync()
         
         
-        os_log("本地数据库已更新!", log: log, type: .debug)
+        os_log("云端更新已应用到本地数据库!", log: log, type: .debug)
         DispatchQueue.main.async {
             //2.更新UI
             indicatorViewManager.shared.stop()
@@ -117,11 +113,35 @@ public final class DiaryStore: ObservableObject {
         }
         
     }
+    
+    private func updateAfterDelete(_ ids:[String]){
+        if ids.isEmpty{
+            //云端没有删除
+            print("云端没有删除")
+            indicatorViewManager.shared.stop()
+            return
+        }
+        
+        //1.删除
+        for id in ids{
+            let predicate = NSPredicate(format: "id == %@", id)
+            LWRealmManager.shared.delete(predicate: predicate)
+        }
+        
+        os_log("云端的删除已应用到本地数据库!", log: log, type: .debug)
+        //2.更新UI
+        DispatchQueue.main.async {
+            indicatorViewManager.shared.stop()
+            UIApplication.getMonthVC().reloadMonthVC()
+            UIApplication.getTodayVC().reloadTodayVC()
+            
+        }
+    }
 }
 
 //MARK:-helper
 extension DiaryStore{
-    func diary(with id: String) -> diaryInfo? {
+    func diaryWithID(_ id:String) -> diaryInfo? {
         return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
     }
 }
