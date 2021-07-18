@@ -117,7 +117,6 @@ public final class DiaryStore: ObservableObject {
     private func updateAfterDelete(_ ids:[String]){
         if ids.isEmpty{
             //云端没有删除
-            print("云端没有删除")
             indicatorViewManager.shared.stop()
             return
         }

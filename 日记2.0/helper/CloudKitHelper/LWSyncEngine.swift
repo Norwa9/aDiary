@@ -485,7 +485,7 @@ final class LWSyncEngine{
             self.deleteRecords([resolvedRecord])
         }
 
-        operation.modifyRecordsCompletionBlock = { [weak self] serverRecords, _, error in
+        operation.modifyRecordsCompletionBlock = { [weak self] _, recordIDs, error in
             guard let self = self else { return }
 
             if let error = error {
@@ -498,8 +498,8 @@ final class LWSyncEngine{
                 os_log("成功删除%d个记录！", log: self.log, type: .info, records.count)
 
                 DispatchQueue.main.async {
-                    guard let serverRecords = serverRecords else { return }
-                    self.updateLocalModelsAfterDelete(with: serverRecords)
+                    guard let recordIDs = recordIDs else { return }
+                    self.updateLocalModelsAfterDelete(with: recordIDs)
                 }
             }
         }
@@ -533,23 +533,13 @@ final class LWSyncEngine{
     
     ///更新本地数据库
     ///删除本地数据库对应的Model
-    private func updateLocalModelsAfterDelete(with records: [CKRecord]) {
+    private func updateLocalModelsAfterDelete(with recordIDs: [CKRecord.ID]) {
         os_log("将deleteBuffer内的本地记录删除，并清空buffer", log: self.log, type: .error)
-        var models = [diaryInfo]()
-        for r in records{
-            do {
-                try models.append(diaryInfo(record: r))
-            } catch  {
-                os_log("删除时解码错误", log: self.log, type: .error)
-                continue
-            }
-        }
-
+        
+        let ids = recordIDs.map{$0.recordName}
+        
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
-            
-            let ids = models.map({$0.id})
-            print("ids:\(ids)")
             self.didDeleteModels(ids)
             self.deleteBuffer = []
         }
