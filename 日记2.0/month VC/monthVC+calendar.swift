@@ -36,7 +36,7 @@ extension monthVC{
         calendar.headerHeight = 0//移除年月份栏
         calendar.appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
         calendar.appearance.titleFont = UIFont.appCalendarCellTitleFont()
-        calendar.appearance.weekdayTextColor = .black
+        calendar.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         calendar.appearance.eventSelectionColor = .black
         calendar.appearance.selectionColor = #colorLiteral(red: 0.2, green: 0.231372549, blue: 0.2509803922, alpha: 1)
         calendar.appearance.titleSelectionColor = APP_GREEN_COLOR()

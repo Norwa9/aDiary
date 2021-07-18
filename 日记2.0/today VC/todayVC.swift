@@ -169,7 +169,7 @@ extension todayVC:UITextViewDelegate{
         }
         
     }
-    
+    //MARK:-textViewDidChange
     func textViewDidChange(_ textView: UITextView) {
 //        print("textViewDidChange")
         //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
@@ -187,7 +187,7 @@ extension todayVC:UITextViewDelegate{
 //            print(range)
 //        })
 //    }
-    
+    //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
         //开启左右滑动
         let customPageVC = UIApplication.getcustomPageViewController()
@@ -195,7 +195,7 @@ extension todayVC:UITextViewDelegate{
         
         save()
     }
-    
+    //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
         //print("shouldChangeTextIn\(range)")
@@ -215,10 +215,10 @@ extension todayVC:UITextViewDelegate{
         return true//若为false，键入的新字符不会递给storage
     }
     
-    //点按attachment( image or to-do)
+    //MARK:-shouldInteractWith
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let formatter = TextFormatter(textView: self.textView)
-        let res = formatter.tappedAttchment(in: characterRange)
+        let res = formatter.interactAttchment(with: characterRange,diary:todayDiary)
         return res
     }
 

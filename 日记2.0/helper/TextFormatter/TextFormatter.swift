@@ -619,7 +619,8 @@ extension TextFormatter{
 
 //MARK:-查看图片
 extension TextFormatter{
-    func tappedAttchment(in characterRange:NSRange)->Bool{
+    func interactAttchment(with characterRange: NSRange,diary:diaryInfo)
+->Bool{
         let bounds = self.textView.bounds
         let range = characterRange
         let layoutManager = textView.layoutManager
@@ -629,6 +630,7 @@ extension TextFormatter{
         //1.如果点击的是.todo文本属性
         if let todoAttrValue = storage.attribute(.todo, at: location, effectiveRange: nil) as? Int{
             self.toggleTodo(location: location, todoAttr: todoAttrValue)
+            self.save(with: diary)//todo状态改变后，触发上传
             return true
         }
         
