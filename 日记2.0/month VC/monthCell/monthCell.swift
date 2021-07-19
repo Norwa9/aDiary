@@ -26,10 +26,11 @@ class monthCell: UICollectionViewCell {
     var islikeImageView:UIImageView = UIImageView()
     var wordNumLabel:UILabel = UILabel()
     var albumView:UICollectionView!
+    var todoListView:TodoList!
     var photos:[UIImage] = [UIImage]()
     var diary:diaryInfo!
     
-    private var layout:UICollectionViewFlowLayout = {
+    private var albumViewLayout:UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection  = .horizontal
         layout.minimumLineSpacing = 5
@@ -131,9 +132,8 @@ class monthCell: UICollectionViewCell {
         splitLine.translatesAutoresizingMaskIntoConstraints = false
         
         //collectionView
-        albumView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        albumView = UICollectionView(frame: .zero, collectionViewLayout: albumViewLayout)
         containerView.addSubview(albumView)
-        albumView.collectionViewLayout = layout
         albumView.delegate = self
         albumView.dataSource = self
         albumView.isScrollEnabled = true
@@ -175,14 +175,16 @@ class monthCell: UICollectionViewCell {
         //islikeImageView
         containerView.addSubview(islikeImageView)
         islikeImageView.contentMode = .scaleAspectFill
+        islikeImageView.translatesAutoresizingMaskIntoConstraints = false
         
         //moodImageView
         containerView.addSubview(moodImageView)
         moodImageView.contentMode = .scaleAspectFill
         moodImageView.translatesAutoresizingMaskIntoConstraints = false
-       
         
-        islikeImageView.translatesAutoresizingMaskIntoConstraints = false
+        //todo-list
+        todoListView = TodoList(frame: .zero)
+        containerView.addSubview(todoListView)
         
         //MARK:-Auto layout
         titleLabel.snp.makeConstraints { (make) in
@@ -222,7 +224,7 @@ class monthCell: UICollectionViewCell {
             make.left.equalTo(containerView).offset(15)
             make.height.equalTo(20)
             make.width.equalTo(130)
-            make.bottom.equalTo(containerView).offset(-5)
+            make.bottom.equalTo(todoListView.snp.top).offset(-5)
         }
         moodImageView.snp.makeConstraints { (make) in
             make.right.equalTo(containerView).offset(-15)
@@ -242,6 +244,13 @@ class monthCell: UICollectionViewCell {
             make.width.equalTo(50)
             make.centerY.equalTo(moodImageView)
         }
+        
+        todoListView.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(10)
+            make.right.equalTo(containerView).offset(-10)
+            make.bottom.equalTo(containerView).offset(-5)
+            make.height.equalTo(100)
+        }
     }
     
     //MARK:-设置Model
@@ -258,7 +267,8 @@ class monthCell: UICollectionViewCell {
         self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
         
-        print("解析到的未完成todo:\(self.diary.todos())")
+        self.todoListView.initData(diary)
+        
     }
     
     //读取日记的所有图片

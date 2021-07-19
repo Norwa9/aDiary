@@ -187,8 +187,17 @@ extension diaryInfo{
         }
     }
     
-    ///解析出每一条todo文本
-    func todos()->[String]{
+    
+}
+
+//MARK:-dairyInfo + todo
+extension diaryInfo{
+    enum todoType:Int{
+        case checked = 0//已完成
+        case unchecked = 1//未完成
+    }
+    ///解析文本，返回所有的完成todo或者返回所有的未完成todo
+    func getTodos(for type:todoType)->[String]{
         guard let attributedString = self.attributedString else {return []}
         
         var todos = [String]()
@@ -205,16 +214,26 @@ extension diaryInfo{
         unloadAttrString.string.enumerateLines { line, _ in
             //print("unloaded:\(line)")
             let res = TextFormatter.parseTodo(line: line)
+            let hasCompletedTask = res.0
             let hasIncompletedTask = res.1
-            let cleanTodo = res.2
-            if hasIncompletedTask{
-                todos.append(cleanTodo)
-                print("未完成的todo:\(cleanTodo)")
+            let cleanTodo = res.2//不含占位符
+            let todo = res.3//含有占位符
+            
+            switch type{
+            case .checked:
+                if hasCompletedTask{
+                    todos.append(todo)
+                }
+            case .unchecked:
+                if hasIncompletedTask{
+                    todos.append(todo)
+                }
             }
+            
+            
         }
         return todos
     }
 }
-
 
 

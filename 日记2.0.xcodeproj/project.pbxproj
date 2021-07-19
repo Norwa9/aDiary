@@ -12,6 +12,8 @@
 		1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A5647269824CB0090D411 /* LWRealmManager.swift */; };
 		1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A566D269D81280090D411 /* indicatorViewManager.swift */; };
 		1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */; };
+		1B2A56CB26A569D70090D411 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56CA26A569D70090D411 /* TodoList.swift */; };
+		1B2A56D126A56C3F0090D411 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D026A56C3F0090D411 /* TodoListCell.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -91,6 +93,8 @@
 		1B2A5647269824CB0090D411 /* LWRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRealmManager.swift; sourceTree = "<group>"; };
 		1B2A566D269D81280090D411 /* indicatorViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicatorViewManager.swift; sourceTree = "<group>"; };
 		1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Object.swift"; sourceTree = "<group>"; };
+		1B2A56CA26A569D70090D411 /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
+		1B2A56D026A56C3F0090D411 /* TodoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListCell.swift; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 			children = (
 				EAA29EC425C9840F00AA6971 /* monthCell.swift */,
 				EA537CDD266273D800C2E9EE /* photoCell.swift */,
+				1B2A56CA26A569D70090D411 /* TodoList.swift */,
+				1B2A56D026A56C3F0090D411 /* TodoListCell.swift */,
 			);
 			path = monthCell;
 			sourceTree = "<group>";
@@ -592,6 +598,7 @@
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EAA29E4925C5782300AA6971 /* pageViewContainer.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
+				1B2A56CB26A569D70090D411 /* TodoList.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
@@ -607,6 +614,7 @@
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
+				1B2A56D126A56C3F0090D411 /* TodoListCell.swift in Sources */,
 				1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */,
 				EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */,
 				EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */,

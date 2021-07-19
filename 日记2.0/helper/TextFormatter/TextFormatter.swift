@@ -238,8 +238,8 @@ extension TextFormatter{
     }
     
     ///解析每一段文字，检查其去除空白开头后是否还有todo占位符 "- []" 或"- [x]"
-    ///此外，还返回去除占位符的纯文本
-    static func parseTodo(line: String) -> (Bool, Bool, String) {
+    ///此外，还返回去除占位符的纯文本或含有占位符的纯文本
+    static func parseTodo(line: String) -> (Bool, Bool, String, String) {
         var count = 0
         var hasTodoPrefix = false
         var hasIncompletedTask = false
@@ -270,13 +270,15 @@ extension TextFormatter{
             hasTodoPrefix = true
         }
 
+        let checkPrefix = letterPrefix
+        
         //取出所有占位符
         letterPrefix =
             letterPrefix
                 .replacingOccurrences(of: "- [ ] ", with: "")
                 .replacingOccurrences(of: "- [x] ", with: "")
 
-        return (hasTodoPrefix, hasIncompletedTask, whitespacePrefix + letterPrefix)
+        return (hasTodoPrefix, hasIncompletedTask, whitespacePrefix + letterPrefix,checkPrefix)
     }
     
     public func toggleTodo(location:Int,todoAttr:Int) {

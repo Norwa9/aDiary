@@ -26,7 +26,7 @@ extension UIView{
     }
     
     ///供调试使用
-    func addColorfulBorder(){
+    func setDebugBorder(){
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.red.cgColor
         self.layer.cornerRadius = 5
