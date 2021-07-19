@@ -112,10 +112,15 @@ extension TodoListCell{
         
         guard let aString = self.contentLabel.attributedText else{return}
         
+        
         if sender.isSelected{
+            //完成
             self.contentLabel.attributedText = aString.addStrikethroughStyle()
+            
         }else{
+            //未完成
             self.contentLabel.attributedText = aString.removeStrikethroughStyle()
+            
         }
         
     }

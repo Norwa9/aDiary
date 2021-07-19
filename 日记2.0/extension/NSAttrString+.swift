@@ -150,6 +150,7 @@ extension NSAttributedString{
         let mutableAttrString = NSMutableAttributedString(attributedString: self)
         let range = NSRange(location: 0, length: self.length)
         mutableAttrString.addAttribute(.strikethroughStyle, value: 1, range: range)
+        mutableAttrString.addAttribute(.foregroundColor, value: UIColor.lightGray, range: range)
         return mutableAttrString
     }
     
@@ -157,6 +158,7 @@ extension NSAttributedString{
         let mutableAttrString = NSMutableAttributedString(attributedString: self)
         let range = NSRange(location: 0, length: self.length)
         mutableAttrString.removeAttribute(.strikethroughStyle, range: range)
+        mutableAttrString.addAttribute(.foregroundColor, value: UIColor.black, range: range)
         return mutableAttrString
     }
 }
