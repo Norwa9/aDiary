@@ -267,7 +267,11 @@ class monthCell: UICollectionViewCell {
         self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
         
-        self.todoListView.initData(diary)
+        let height = self.todoListView.fillModel(diary)
+        self.todoListView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        print("\(diary.date)的todo高度:\(height)")
         
     }
     

@@ -14,6 +14,7 @@
 		1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */; };
 		1B2A56CB26A569D70090D411 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56CA26A569D70090D411 /* TodoList.swift */; };
 		1B2A56D126A56C3F0090D411 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D026A56C3F0090D411 /* TodoListCell.swift */; };
+		1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D226A5836A0090D411 /* TodoListLayout.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -95,6 +96,7 @@
 		1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Object.swift"; sourceTree = "<group>"; };
 		1B2A56CA26A569D70090D411 /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		1B2A56D026A56C3F0090D411 /* TodoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListCell.swift; sourceTree = "<group>"; };
+		1B2A56D226A5836A0090D411 /* TodoListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListLayout.swift; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				EA537CDD266273D800C2E9EE /* photoCell.swift */,
 				1B2A56CA26A569D70090D411 /* TodoList.swift */,
 				1B2A56D026A56C3F0090D411 /* TodoListCell.swift */,
+				1B2A56D226A5836A0090D411 /* TodoListLayout.swift */,
 			);
 			path = monthCell;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
+				1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 class TodoList: UIView {
     var collectionView:UICollectionView!
     
-    var layout:UICollectionViewFlowLayout!
+    var layout:TodoListLayout!
     
     var model:diaryInfo!
     
@@ -27,19 +27,24 @@ class TodoList: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initData(_ model:diaryInfo){
+    func fillModel(_ model:diaryInfo) -> CGFloat{
         self.model = model
         self.todos = model.getTodos(for: .unchecked)
-        print("getTodos:\(todos)")
+        
+        
+        //更新布局的DataSource
+        layout.dataSource = self.todos
         self.collectionView.reloadData()
+        
+        return layout.totalHeight
     }
     
     func initUI(){
+        self.layout = TodoListLayout()
+        layout.lineSpacing = 5
+        layout.dataSource = self.todos
+        layout.inset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         
-        self.layout = UICollectionViewFlowLayout()
-        layout.scrollDirection  = .vertical
-        layout.minimumLineSpacing = 5
-        layout.estimatedItemSize = CGSize(width: self.frame.width, height: 20)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TodoListCell.self, forCellWithReuseIdentifier: TodoListCell.cellId)
