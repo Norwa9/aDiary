@@ -27,7 +27,7 @@ class TodoListCell: UICollectionViewCell {
     }
     
     private func initUI(){
-        self.setDebugBorder()
+        contentView.setDebugBorder()
         
         contentView.addSubview(containerView)
         
@@ -40,6 +40,7 @@ class TodoListCell: UICollectionViewCell {
     private func setupConstraint(){
         containerView.snp.makeConstraints { make in
             make.edges.equalTo(contentView)
+            make.width.equalTo(layoutParasManager.shared.todoListItemWidth)
         }
         
         checkButton.snp.makeConstraints { make in
@@ -59,6 +60,8 @@ class TodoListCell: UICollectionViewCell {
     
     
     func fillData(todo:String){
+        self.updateCons()
+        
         self.todo = todo
         if todo.hasPrefix("- [ ] "){
             isDone = false
@@ -74,7 +77,15 @@ class TodoListCell: UICollectionViewCell {
         self.checkButton.backgroundColor = isDone ? .red : .blue
     }
     
-    
+    func updateCons(){
+        let curWidth = layoutParasManager.shared.todoListItemWidth
+        self.containerView.snp.updateConstraints { (make) in
+            make.width.equalTo(curWidth)
+        }
+        print("[TodoListCell]:\(curWidth)")
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
     
     
 }

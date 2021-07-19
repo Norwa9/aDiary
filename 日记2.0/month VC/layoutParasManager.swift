@@ -27,7 +27,8 @@ class layoutParasManager: NSObject {
     let collectionInteritemSpacing:CGFloat = 10
     let collectionLineSpacing:CGFloat = 10
     
-    var contentWidth:CGFloat{
+    ///collectionview的宽度
+    private var contentWidth:CGFloat{
         get{
             return UIScreen.main.bounds.width - collectionEdgesInset.left - collectionEdgesInset.right
         }
@@ -37,6 +38,12 @@ class layoutParasManager: NSObject {
         //设置getter方法，每次访问KitemWidth总能获得最新的值
         get{
             return (contentWidth -  CGFloat((collectioncolumnNumber - 1)) * collectionInteritemSpacing ) / CGFloat(collectioncolumnNumber)
+        }
+    }
+    
+    var todoListItemWidth:CGFloat{
+        get{
+            return self.itemWidth - 2*self.collectionEdgesInset.left
         }
     }
     

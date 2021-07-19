@@ -77,7 +77,6 @@ extension TodoList:UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TodoListCell.cellId, for: indexPath) as! TodoListCell
         
         let row = indexPath.item
-        print("dequeueReusableCell TodoListCell")
         cell.fillData(todo: todos[row])
         
         

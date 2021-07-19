@@ -13,9 +13,13 @@ let kTodoListItemHeight:CGFloat = 30
 class TodoListLayout: UICollectionViewLayout {
     var dataSource:[String]!
     
-    var inset:UIEdgeInsets!
+    var inset:UIEdgeInsets = layoutParasManager.shared.collectionEdgesInset
     var totalHeight:CGFloat!
-    private var itemWidth:CGFloat!
+    var itemWidth:CGFloat{
+        get{
+            return layoutParasManager.shared.todoListItemWidth
+        }
+    }
     private var lineSpacing:CGFloat = kTodoListLineSpacing
     private var itemHeight:CGFloat = kTodoListItemHeight
     private var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
@@ -23,7 +27,6 @@ class TodoListLayout: UICollectionViewLayout {
     override func prepare() {
         super.prepare()
         let itemNum = dataSource.count
-        itemWidth = layoutParasManager.shared.itemWidth - 2 * self.inset.left
         totalHeight = (itemHeight + lineSpacing) * CGFloat(itemNum)
         self.layoutAttributesArray = calculateLayoutAttributesArray(itemNum: itemNum)
         
