@@ -81,7 +81,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     func createLayoutAttributesWithItemSize(itemSize:CGSize,index:Int) -> UICollectionViewLayoutAttributes{
         let layoutAttributes = UICollectionViewLayoutAttributes(forCellWith: IndexPath(row: index, section: 0))
         
-        ///得到最短的那一列
+        ///得到最短的那一列的信息（列号，列高度）
         let shortestinfo = self.shortestColumn(columnHeight: self.columnHeightArray)
         
         let itemX:CGFloat = (self.itemWidth + self.interitemSpacing) * CGFloat(shortestinfo.columnNumber)
