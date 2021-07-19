@@ -27,13 +27,19 @@ class TodoListCell: UICollectionViewCell {
     }
     
     private func initUI(){
-        contentView.setDebugBorder()
+        //contentView.setDebugBorder()
         
+        //containerView
         contentView.addSubview(containerView)
         
+        
+        //checkButton
         containerView.addSubview(checkButton)
+        checkButton.setImage(UIImage(named: "checkbox_empty"), for: .normal)
+        checkButton.setImage(UIImage(named: "checkbox"), for: .selected)
+        checkButton.addTarget(self, action: #selector(checkButtonTapped(_:)), for: .touchUpInside)
         
-        
+        //contentLabel
         containerView.addSubview(contentLabel)
     }
     
@@ -44,10 +50,10 @@ class TodoListCell: UICollectionViewCell {
         }
         
         checkButton.snp.makeConstraints { make in
+            make.centerY.equalTo(containerView)
             make.left.equalTo(containerView).offset(5)
-            make.top.equalTo(containerView).offset(5)
-            make.bottom.equalTo(containerView).offset(-5)
-            make.width.equalTo(10)
+            make.height.equalTo(30)
+            make.width.equalTo(30)
         }
         
         contentLabel.snp.makeConstraints { make in
@@ -73,8 +79,9 @@ class TodoListCell: UICollectionViewCell {
         {
             isDone = false
         }
-        self.contentLabel.text = self.todo
-        self.checkButton.backgroundColor = isDone ? .red : .blue
+        
+        self.contentLabel.text = self.todo.replacingOccurrences(of: "- [ ] ", with: "").replacingOccurrences(of: "- [x] ", with: "")
+        
     }
     
     func updateCons(){
@@ -82,10 +89,24 @@ class TodoListCell: UICollectionViewCell {
         self.containerView.snp.updateConstraints { (make) in
             make.width.equalTo(curWidth)
         }
-        print("[TodoListCell]:\(curWidth)")
+        switch layoutParasManager.shared.collectioncolumnNumber {
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            break
+        }
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }
     
     
+}
+
+//MARK:-Target Action
+extension TodoListCell{
+    @objc func checkButtonTapped(_ sender:UIButton){
+        sender.isSelected.toggle()
+    }
 }

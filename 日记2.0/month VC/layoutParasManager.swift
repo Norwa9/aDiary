@@ -43,7 +43,7 @@ class layoutParasManager: NSObject {
     
     var todoListItemWidth:CGFloat{
         get{
-            return self.itemWidth - 2*self.collectionEdgesInset.left
+            return self.itemWidth
         }
     }
     

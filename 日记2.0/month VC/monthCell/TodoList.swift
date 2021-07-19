@@ -27,31 +27,21 @@ class TodoList: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fillModel(_ model:diaryInfo){
-        self.model = model
-        self.todos = model.getTodos(for: .unchecked)
-        
-        
-        //更新布局的DataSource
-        layout.dataSource = self.todos
-        self.collectionView.reloadData()
-    }
-    
     func initUI(){
         self.layout = TodoListLayout()
         layout.dataSource = self.todos
-        layout.inset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TodoListCell.self, forCellWithReuseIdentifier: TodoListCell.cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = APP_GRAY_COLOR()
+        collectionView.layer.cornerRadius = 10
         self.addSubview(collectionView)
         
         
-        collectionView.setDebugBorder()
+        //collectionView.setDebugBorder()
         
 
         
@@ -61,6 +51,16 @@ class TodoList: UIView {
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(self)
         }
+    }
+    
+    func fillModel(_ model:diaryInfo){
+        self.model = model
+        self.todos = model.getTodos(for: .unchecked)
+        
+        
+        //更新布局的DataSource
+        layout.dataSource = self.todos
+        self.collectionView.reloadData()
     }
 }
 

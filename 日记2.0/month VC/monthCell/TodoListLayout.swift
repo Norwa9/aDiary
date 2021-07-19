@@ -13,7 +13,7 @@ let kTodoListItemHeight:CGFloat = 30
 class TodoListLayout: UICollectionViewLayout {
     var dataSource:[String]!
     
-    var inset:UIEdgeInsets = layoutParasManager.shared.collectionEdgesInset
+    var inset:UIEdgeInsets = .zero
     var totalHeight:CGFloat!
     var itemWidth:CGFloat{
         get{
