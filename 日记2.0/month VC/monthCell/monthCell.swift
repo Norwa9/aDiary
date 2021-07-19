@@ -254,8 +254,10 @@ class monthCell: UICollectionViewCell {
     }
     
     //MARK:-设置Model
+    ///设置monthCell的model
+    ///返回值表示使用model计算出的todoList的高度
     func fillCell(diary:diaryInfo){
-        self.updateWCons()
+        self.updateCons(diary)
         
         self.diary = diary
         self.titleLabel.attributedText = diary.content.getAttrTitle()
@@ -266,12 +268,7 @@ class monthCell: UICollectionViewCell {
         self.isLike = diary.islike
         self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
-        
-        let height = self.todoListView.fillModel(diary)
-        self.todoListView.snp.updateConstraints { make in
-            make.height.equalTo(height)
-        }
-        print("\(diary.date)的todo高度:\(height)")
+        self.todoListView.fillModel(diary)
         
     }
     
@@ -342,10 +339,18 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     
 }
 
-//MARK:-瀑布流切换
+//MARK:-更新约束
 extension monthCell{
-    ///切换单双列展示时，更新宽度约束
-    func updateWCons(){
+    ///更新约束
+    func updateCons(_ model:diaryInfo? = nil){
+        //计算得到todoList高度时
+        if let diary = model{
+            self.todoListView.snp.updateConstraints { (make) in
+                make.height.equalTo(diary.calculateTodosContentHeihgt())
+            }
+        }
+        
+        //瀑布流切换时
         self.containerView.snp.updateConstraints { (update) in
             update.width.equalTo(layoutParasManager.shared.itemWidth)
         }

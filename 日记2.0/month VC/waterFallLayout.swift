@@ -97,7 +97,9 @@ class waterFallLayout: UICollectionViewFlowLayout {
     ///使用数据填充cell，然后利用其autoLayout计算其准确的高度
     func calculateItemSizeWithIndex(index:Int) ->CGSize{
         let tempCell = self.templateCellWithReuseIdentifier(reuseIdentifier: monthCell.reusableID, index: index) as! monthCell
-        tempCell.fillCell(diary: self.dateSource[index])
+        let diary = self.dateSource[index]
+        
+        tempCell.fillCell(diary: diary)//数据填充cell，以计算content高度
         
         let cellHeight = tempCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         return CGSize(width: self.itemWidth, height: cellHeight)

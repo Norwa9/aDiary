@@ -326,7 +326,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
                     //让cell以平滑动画更新size
                     for cell in self.collectionView.visibleCells{
                         let cell = cell as! monthCell
-                        cell.updateWCons()
+                        cell.updateCons()
                     }
                 }, completion: nil)
             } completion: { (_) in

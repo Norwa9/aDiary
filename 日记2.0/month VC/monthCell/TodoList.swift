@@ -27,7 +27,7 @@ class TodoList: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fillModel(_ model:diaryInfo) -> CGFloat{
+    func fillModel(_ model:diaryInfo){
         self.model = model
         self.todos = model.getTodos(for: .unchecked)
         
@@ -35,15 +35,12 @@ class TodoList: UIView {
         //更新布局的DataSource
         layout.dataSource = self.todos
         self.collectionView.reloadData()
-        
-        return layout.totalHeight
     }
     
     func initUI(){
         self.layout = TodoListLayout()
-        layout.lineSpacing = 5
         layout.dataSource = self.todos
-        layout.inset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        layout.inset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
