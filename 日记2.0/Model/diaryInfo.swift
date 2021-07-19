@@ -237,8 +237,13 @@ extension diaryInfo{
     
     func calculateTodosContentHeihgt()->CGFloat{
         let todos = self.getTodos(for: .unchecked)
-        let todoListContentHeight:CGFloat = CGFloat(todos.count) * (kTodoListItemHeight + kTodoListLineSpacing)
-        return todoListContentHeight
+        let count = todos.count
+        if count > 0{
+            let todoListContentHeight:CGFloat = CGFloat(todos.count) * (kTodoListItemHeight + kTodoListLineSpacing) + kTodoListLineSpacing
+            return todoListContentHeight
+        }else{
+            return 0
+        }
     }
 }
 

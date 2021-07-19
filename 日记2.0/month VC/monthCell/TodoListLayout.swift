@@ -27,7 +27,11 @@ class TodoListLayout: UICollectionViewLayout {
     override func prepare() {
         super.prepare()
         let itemNum = dataSource.count
-        totalHeight = (itemHeight + lineSpacing) * CGFloat(itemNum)
+        if itemNum>0{
+            totalHeight = (itemHeight + lineSpacing) * CGFloat(itemNum) + lineSpacing
+        }else{
+            totalHeight = 0
+        }
         self.layoutAttributesArray = calculateLayoutAttributesArray(itemNum: itemNum)
         
     }
@@ -37,7 +41,7 @@ class TodoListLayout: UICollectionViewLayout {
         for index in 0..<itemNum{
             let layoutAttribute = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
             layoutAttribute.frame = CGRect(x: self.insetX,
-                                           y: (self.lineSpacing + self.itemHeight) * CGFloat(index) + self.lineSpacing / 2,
+                                           y: (self.lineSpacing + self.itemHeight) * CGFloat(index) + self.lineSpacing,
                                            width: self.itemWidth,
                                            height: self.itemHeight)
             layoutAttributesArray.append(layoutAttribute)
