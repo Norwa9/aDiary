@@ -13,7 +13,7 @@ let kTodoListItemHeight:CGFloat = 30
 class TodoListLayout: UICollectionViewLayout {
     var dataSource:[String]!
     
-    var inset:UIEdgeInsets = .zero
+    var insetX:CGFloat = layoutParasManager.shared.todoListCellInset.left
     var totalHeight:CGFloat!
     var itemWidth:CGFloat{
         get{
@@ -34,10 +34,9 @@ class TodoListLayout: UICollectionViewLayout {
     
     func calculateLayoutAttributesArray(itemNum:Int) -> [UICollectionViewLayoutAttributes]{
         var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
-        let leftInset = self.inset.left
         for index in 0..<itemNum{
             let layoutAttribute = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
-            layoutAttribute.frame = CGRect(x: leftInset,
+            layoutAttribute.frame = CGRect(x: self.insetX,
                                            y: (self.lineSpacing + self.itemHeight) * CGFloat(index) + self.lineSpacing / 2,
                                            width: self.itemWidth,
                                            height: self.itemHeight)

@@ -31,7 +31,8 @@ class TodoListCell: UICollectionViewCell {
         
         //containerView
         contentView.addSubview(containerView)
-        
+        containerView.backgroundColor = .white
+        containerView.layer.cornerRadius = 4
         
         //checkButton
         containerView.addSubview(checkButton)
@@ -59,8 +60,8 @@ class TodoListCell: UICollectionViewCell {
         contentLabel.snp.makeConstraints { make in
             make.left.equalTo(checkButton.snp.right).offset(5)
             make.right.equalTo(containerView).offset(-5)
-            make.top.equalTo(checkButton)
-            make.bottom.equalTo(checkButton)
+            make.height.equalTo(30)
+            make.centerY.equalTo(checkButton)
         }
     }
     
@@ -108,5 +109,14 @@ class TodoListCell: UICollectionViewCell {
 extension TodoListCell{
     @objc func checkButtonTapped(_ sender:UIButton){
         sender.isSelected.toggle()
+        
+        guard let aString = self.contentLabel.attributedText else{return}
+        
+        if sender.isSelected{
+            self.contentLabel.attributedText = aString.addStrikethroughStyle()
+        }else{
+            self.contentLabel.attributedText = aString.removeStrikethroughStyle()
+        }
+        
     }
 }

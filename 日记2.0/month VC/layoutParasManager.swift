@@ -34,6 +34,7 @@ class layoutParasManager: NSObject {
         }
     }
     
+    ///monthCell的宽度
     var itemWidth:CGFloat{
         //设置getter方法，每次访问KitemWidth总能获得最新的值
         get{
@@ -41,9 +42,22 @@ class layoutParasManager: NSObject {
         }
     }
     
+    
+    //MARK:-todo list paras
+    ///todo list CollectionView的宽度
+    var todoListViewWidth:CGFloat{
+        get{
+            return self.itemWidth - 10.0 - 10.0
+        }
+    }
+    
+    ///内部cell的inset
+    var todoListCellInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    
+    ///todo list cell的宽度
     var todoListItemWidth:CGFloat{
         get{
-            return self.itemWidth
+            return self.todoListViewWidth - todoListCellInset.left - todoListCellInset.right
         }
     }
     
