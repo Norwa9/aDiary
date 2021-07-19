@@ -26,6 +26,9 @@ class monthCell: UICollectionViewCell {
     var islikeImageView:UIImageView = UIImageView()
     var wordNumLabel:UILabel = UILabel()
     var albumView:UICollectionView!
+    var photos:[UIImage] = [UIImage]()
+    var diary:diaryInfo!
+    
     private var layout:UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection  = .horizontal
@@ -33,8 +36,6 @@ class monthCell: UICollectionViewCell {
         layout.itemSize = CGSize(width: monthCell.KphotoHeight, height: monthCell.KphotoHeight)
         return layout
     }()
-    var photos:[UIImage] = [UIImage]()
-    var diary:diaryInfo!
     
     var tags:[String]!{
         didSet{

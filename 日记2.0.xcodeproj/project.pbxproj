@@ -181,6 +181,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2A56C926A568820090D411 /* monthCell */ = {
+			isa = PBXGroup;
+			children = (
+				EAA29EC425C9840F00AA6971 /* monthCell.swift */,
+				EA537CDD266273D800C2E9EE /* photoCell.swift */,
+			);
+			path = monthCell;
+			sourceTree = "<group>";
+		};
 		893AAD9C6A217E8210A0AB91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,19 +215,6 @@
 				1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		EA51D1A225D04DEF0007BDFA /* monthVC component */ = {
-			isa = PBXGroup;
-			children = (
-				EAA29EC725C9925B00AA6971 /* monthButton.swift */,
-				EAA29EC425C9840F00AA6971 /* monthCell.swift */,
-				EA537CDD266273D800C2E9EE /* photoCell.swift */,
-				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
-				EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */,
-				EA5CFFA926749057008E06FA /* layoutParasManager.swift */,
-			);
-			path = "monthVC component";
 			sourceTree = "<group>";
 		};
 		EA51D1FC25D809550007BDFA /* resource */ = {
@@ -331,10 +327,12 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E4F25C5784300AA6971 /* monthVC.swift */,
-				EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */,
-				EADA85FC2625DA60007D1134 /* customAlert */,
-				EAA29E8B25C8245700AA6971 /* filterVC */,
-				EA51D1A225D04DEF0007BDFA /* monthVC component */,
+				EAA29EC725C9925B00AA6971 /* monthButton.swift */,
+				EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */,
+				EA5CFFA926749057008E06FA /* layoutParasManager.swift */,
+				1B2A56C926A568820090D411 /* monthCell */,
+				EADA85FC2625DA60007D1134 /* calendar */,
+				EAA29E8B25C8245700AA6971 /* filter */,
 			);
 			path = "month VC";
 			sourceTree = "<group>";
@@ -367,14 +365,14 @@
 			path = "today VC";
 			sourceTree = "<group>";
 		};
-		EAA29E8B25C8245700AA6971 /* filterVC */ = {
+		EAA29E8B25C8245700AA6971 /* filter */ = {
 			isa = PBXGroup;
 			children = (
 				EA51D19C25D04D750007BDFA /* filterMenu.swift */,
 				EA51D19F25D04D7E0007BDFA /* filterMenu.xib */,
 				EA38493E262EBAA3001B693F /* filterModel.swift */,
 			);
-			path = filterVC;
+			path = filter;
 			sourceTree = "<group>";
 		};
 		EAA29EA825C836E200AA6971 /* tagsView */ = {
@@ -419,13 +417,15 @@
 			path = TextFormatter;
 			sourceTree = "<group>";
 		};
-		EADA85FC2625DA60007D1134 /* customAlert */ = {
+		EADA85FC2625DA60007D1134 /* calendar */ = {
 			isa = PBXGroup;
 			children = (
+				EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */,
 				EADA85FD2625DA98007D1134 /* customAlertView.swift */,
 				EADA86012625DAA1007D1134 /* customAlertView.xib */,
+				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
 			);
-			path = customAlert;
+			path = calendar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
