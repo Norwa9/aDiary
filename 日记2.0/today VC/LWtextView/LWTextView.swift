@@ -27,6 +27,21 @@ class LWTextView: UITextView {
             return
         }
         
+        let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange)).unLoadCheckboxes()
+        
+        if self.textStorage.length >= self.selectedRange.upperBound {
+            if let rtfd = try? attributedString.data(from: NSMakeRange(0, attributedString.length), documentAttributes: [NSAttributedString.DocumentAttributeKey.documentType:NSAttributedString.DocumentType.rtfd]) {
+
+                UIPasteboard.general.setItems([
+                    [kUTTypePlainText as String: attributedString.string],
+                    ["UIPasteboard.attributed.text": rtfd],
+                    [kUTTypeFlatRTFD as String: rtfd]
+                ])
+
+                return
+            }
+        }
+        
         super.copy(sender)
     }
     
