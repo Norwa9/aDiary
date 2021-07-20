@@ -44,18 +44,18 @@ class layoutParasManager: NSObject {
     
     
     //MARK:-todo list paras
-    ///todo list CollectionView的宽度
-    let todoListLineSpacing:CGFloat = 5
+    let todoListLineSpacing:CGFloat = 2.5
     let todoListItemHeight:CGFloat = 30
     
-    var todoListViewWidth:CGFloat{
+    ///todo list CollectionView的宽度
+    private var todoListViewWidth:CGFloat{
         get{
             return self.itemWidth - 10.0 - 10.0
         }
     }
     
     ///内部cell的inset
-    var todoListCellInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+    var todoListCellInset = UIEdgeInsets(top: 0, left: 2.5, bottom: 0, right: 2.5)
     
     ///todo list cell的宽度
     var todoListItemWidth:CGFloat{
@@ -64,6 +64,37 @@ class layoutParasManager: NSObject {
         }
     }
     
+    //MARK:-album view paras
+    let albumViewLineSpacing:CGFloat = 5
+    ///内部cell的inset
+    let albumViewCellInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
+    
+    ///album CollectionView的宽度
+    var albumViewWidth:CGFloat{
+        get{
+            return self.itemWidth - 15.0 - 15.0//15.0 albumView距离containerView的边界
+        }
+    }
+    
+    ///album View cell的宽度
+    var albumViewItemWidth:CGFloat{
+        get{
+            return self.albumViewWidth - albumViewCellInset.left - albumViewCellInset.right
+        }
+    }
+    
+    ///album View cell的高度
+    var albumViewItemHeight:CGFloat{
+        get{
+            return self.albumViewItemWidth
+        }
+    }
+    
+    var albumViewHeight:CGFloat{
+        get{
+            return self.albumViewItemHeight + 2 * albumViewCellInset.top
+        }
+    }
     
     override init() {
         super.init()

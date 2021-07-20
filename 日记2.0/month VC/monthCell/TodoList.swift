@@ -41,7 +41,7 @@ class TodoList: UIView {
         collectionView.register(TodoListCell.self, forCellWithReuseIdentifier: TodoListCell.cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .darkGray//.black.withAlphaComponent(0.5)
+        collectionView.backgroundColor = APP_GRAY_COLOR()//.black.withAlphaComponent(0.5)
         collectionView.layer.cornerRadius = 5
         self.addSubview(collectionView)
         

@@ -79,8 +79,8 @@ extension String{
             let contentPara = NSMutableParagraphStyle()
             contentPara.lineSpacing = 3
             let contentAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
-//                .font : UIFont(name: "DIN Alternate", size: 14)!,
+//                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
+                .font : UIFont(name: "DIN Alternate", size: 14)!,
                 .paragraphStyle:contentPara,
             ]
             mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))

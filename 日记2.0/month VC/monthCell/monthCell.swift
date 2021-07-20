@@ -12,7 +12,7 @@ import TagListView
 //let kMonthCellWidth:CGFloat = UIScreen.main.bounds.width / 2
 
 class monthCell: UICollectionViewCell {
-    static let KphotoHeight:CGFloat = 150
+    //static let KphotoHeight:CGFloat = 150
     var hasSelected:Bool = false
     
     static let reusableID = "monthCell"
@@ -30,13 +30,7 @@ class monthCell: UICollectionViewCell {
     var photos:[UIImage] = [UIImage]()
     var diary:diaryInfo!
     
-    private var albumViewLayout:UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection  = .horizontal
-        layout.minimumLineSpacing = 5
-        layout.itemSize = CGSize(width: monthCell.KphotoHeight, height: monthCell.KphotoHeight)
-        return layout
-    }()
+    var albumViewLayout:AlbumViewLayout!
     
     var tags:[String]!{
         didSet{
@@ -113,6 +107,7 @@ class monthCell: UICollectionViewCell {
         splitLine.translatesAutoresizingMaskIntoConstraints = false
         
         //albumView
+        albumViewLayout = AlbumViewLayout()
         albumView = UICollectionView(frame: .zero, collectionViewLayout: albumViewLayout)
         albumView.delegate = self
         albumView.dataSource = self
@@ -126,6 +121,9 @@ class monthCell: UICollectionViewCell {
         //contentLabel
         contentLabel.numberOfLines = 0
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentLabel.clipsToBounds = true
+        contentLabel.layer.cornerRadius = 5
+        contentLabel.backgroundColor = APP_GRAY_COLOR().withAlphaComponent(0.7)
         
         //tags Label
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 10)!
@@ -143,7 +141,7 @@ class monthCell: UICollectionViewCell {
         
         //word Number Label
         wordNumLabel.textAlignment = .right
-        wordNumLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        wordNumLabel.font = UIFont(name: "DIN Alternate", size: 11)
 //        wordNumLabel.textColor = .lightGray
         wordNumLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -198,7 +196,7 @@ class monthCell: UICollectionViewCell {
             make.top.equalTo(splitLine.snp.bottom).offset(2)
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
-            make.height.equalTo(monthCell.KphotoHeight)
+            make.height.equalTo(0)
         }
         
         contentLabel.snp.makeConstraints { (make) in
@@ -274,7 +272,7 @@ class monthCell: UICollectionViewCell {
         let contains = diary.containsImage
         
         self.albumView.snp.updateConstraints { (make) in
-            make.height.equalTo(contains ? monthCell.KphotoHeight : 0)
+            make.height.equalTo(contains ? layoutParasManager.shared.albumViewHeight : 0)
         }
         if !contains{
             //如果没有照片，则将albumView清空，防止复用的出现在其他cell里
@@ -301,6 +299,7 @@ class monthCell: UICollectionViewCell {
             */
             if diary.date == self.diary.date{
                 self.photos = images
+                self.albumViewLayout.itemNum = images.count
                 self.albumView.reloadData()
                 self.albumView.layoutIfNeeded()
                 self.albumView.fadeIn()//渐显动画
@@ -310,9 +309,6 @@ class monthCell: UICollectionViewCell {
             }
         }
     }
-    
-    
-    
 }
 //MARK:-reuse
 extension monthCell{
@@ -320,27 +316,6 @@ extension monthCell{
         super.prepareForReuse()
         self.todoListView.todos = []
     }
-}
-
-//MARK:-内嵌的Collection View
-extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        print("dequeue photo cell")
-        let cell = albumView.dequeueReusableCell(withReuseIdentifier: photoCell.photoCellID, for: indexPath) as! photoCell
-        let row = indexPath.item
-        cell.photo = photos[row]
-        return cell
-    }
-    
-    
 }
 
 //MARK:-更新约束
@@ -358,6 +333,11 @@ extension monthCell{
         self.todoListView.collectionView.performBatchUpdates({
             self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
         }, completion: nil)
+        
+        let contains = diary.containsImage
+        self.albumView.snp.updateConstraints { (make) in
+            make.height.equalTo(contains ? layoutParasManager.shared.albumViewHeight : 0)
+        }
         
         //瀑布流切换时
         self.containerView.snp.updateConstraints { (update) in
@@ -407,4 +387,25 @@ extension monthCell{
 
 
     }
+}
+
+//MARK:-内嵌的Collection View
+extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        print("dequeue photo cell")
+        let cell = albumView.dequeueReusableCell(withReuseIdentifier: photoCell.photoCellID, for: indexPath) as! photoCell
+        let row = indexPath.item
+        cell.photo = photos[row]
+        return cell
+    }
+    
+    
 }

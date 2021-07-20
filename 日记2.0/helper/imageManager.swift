@@ -30,8 +30,9 @@ class imageManager{
             for imageTuple in imageAttrTuples{
                 let location = imageTuple.0
                 if let attachment = aString.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: location){
-                    let ratio = img.size.height / monthCell.KphotoHeight
-                    let size = CGSize(width: img.size.width / ratio, height: monthCell.KphotoHeight)
+                    let photoHeight = layoutParasManager.shared.albumViewItemHeight
+                    let ratio = img.size.height / photoHeight
+                    let size = CGSize(width: img.size.width / ratio, height: photoHeight)
                     let compressedImage = img.compressPic(toSize: size)
                     images.append(compressedImage)
                 }

@@ -102,6 +102,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
         tempCell.setViewModel(diary)//数据填充cell，以计算content高度
         
         let cellHeight = tempCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        print("日期:\(diary.date)cellHeight:\(cellHeight)")
         return CGSize(width: self.itemWidth, height: cellHeight)
     }
     
