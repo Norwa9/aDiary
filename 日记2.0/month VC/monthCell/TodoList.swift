@@ -24,6 +24,10 @@ class TodoList: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        self.layout = TodoListLayout()
+        layout.dataSource = self.todos
+        
         initUI()
         setupConstraint()
     }
@@ -33,10 +37,8 @@ class TodoList: UIView {
     }
     
     func initUI(){
-        self.layout = TodoListLayout()
-        layout.dataSource = self.todos
         
-        
+        //collectionView
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(TodoListCell.self, forCellWithReuseIdentifier: TodoListCell.cellId)
         collectionView.delegate = self
