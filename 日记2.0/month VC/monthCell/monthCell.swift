@@ -79,7 +79,6 @@ class monthCell: UICollectionViewCell {
     }
     
     
-//    let kMonthCellWidth = (UIScreen.main.bounds.width) / 2 - 15//它决定了cell的宽度
     //MARK:-UI界面搭建
     private func initUI(){
         contentView.addSubview(containerView)
@@ -106,35 +105,29 @@ class monthCell: UICollectionViewCell {
         
         //titleLabel
         titleLabel.numberOfLines = 0
-        containerView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //分隔线
-        containerView.addSubview(splitLine)
         splitLine.backgroundColor = UIColor.colorWithHex(hexColor: 0xF1F1F1)
         splitLine.layer.cornerRadius = 2
         splitLine.translatesAutoresizingMaskIntoConstraints = false
         
-        //collectionView
+        //albumView
         albumView = UICollectionView(frame: .zero, collectionViewLayout: albumViewLayout)
-        containerView.addSubview(albumView)
         albumView.delegate = self
         albumView.dataSource = self
         albumView.isScrollEnabled = true
         albumView.showsHorizontalScrollIndicator = false
         albumView.register(photoCell.self, forCellWithReuseIdentifier: photoCell.photoCellID)
         albumView.translatesAutoresizingMaskIntoConstraints = false
-        
         albumView.backgroundColor = .clear
         albumView.layer.cornerRadius = 10
         
         //contentLabel
         contentLabel.numberOfLines = 0
-        containerView.addSubview(contentLabel)
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //tags Label
-        containerView.addSubview(tagsLabel)
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 10)!
         tagsLabel.alignment = .left
         tagsLabel.tagBackgroundColor = .lightGray
@@ -145,36 +138,41 @@ class monthCell: UICollectionViewCell {
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
-        containerView.addSubview(dateLabel)
         dateLabel.font = UIFont(name: "DIN Alternate", size: 11)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //word Number Label
-        containerView.addSubview(wordNumLabel)
         wordNumLabel.textAlignment = .right
         wordNumLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
 //        wordNumLabel.textColor = .lightGray
         wordNumLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //islikeImageView
-        containerView.addSubview(islikeImageView)
         islikeImageView.contentMode = .scaleAspectFill
         islikeImageView.translatesAutoresizingMaskIntoConstraints = false
         
         //moodImageView
-        containerView.addSubview(moodImageView)
         moodImageView.contentMode = .scaleAspectFill
         moodImageView.translatesAutoresizingMaskIntoConstraints = false
         
         //todo-list
         todoListView = TodoList(frame: .zero)
-        containerView.addSubview(todoListView)
         
+        
+        containerView.addSubview(albumView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(splitLine)
+        containerView.addSubview(contentLabel)
+        containerView.addSubview(tagsLabel)
+        containerView.addSubview(dateLabel)
+        containerView.addSubview(wordNumLabel)
+        containerView.addSubview(islikeImageView)
+        containerView.addSubview(moodImageView)
+        containerView.addSubview(todoListView)
     }
     
     //MARK:-Auto layout
     private func setupConstraints() {
-        
         containerView.snp.makeConstraints { (make) in
             make.left.equalTo(contentView)
             make.right.equalTo(contentView)
@@ -182,7 +180,6 @@ class monthCell: UICollectionViewCell {
             make.bottom.equalTo(contentView)
             make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
-        
         
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(containerView).offset(15)
