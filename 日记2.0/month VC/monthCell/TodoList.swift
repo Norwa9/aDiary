@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol todoListDelegate:class {
+protocol todoListDelegate:AnyObject {
     func todoDidCheck(todo:String)
 }
 
@@ -98,11 +98,13 @@ extension TodoList:UICollectionViewDataSource{
 extension TodoList:todoListDelegate{
     //
     func todoDidCheck(todo: String) {
-        guard let index = todos.firstIndex(of: todo) else {return}
+        guard let indexInUnchecks = todos.firstIndex(of: todo) else {return}
+        
+        var todoAttributesTuplesCopy = viewModel.todoAttributesTuples
+        
         var count = 0
-        for todoAttrTuple in viewModel.todoAttributesTuples{
-            if count == index{
-                var todoAttributesTuplesCopy = viewModel.todoAttributesTuples
+        for (index,todoAttrTuple) in viewModel.todoAttributesTuples.enumerated(){
+            if count == indexInUnchecks{
                 todoAttributesTuplesCopy[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
                 LWRealmManager.shared.update {
                     //反转attribute的值
@@ -112,7 +114,8 @@ extension TodoList:todoListDelegate{
                 DiaryStore.shared.addOrUpdate(viewModel)
                 return
             }
-            if todoAttrTuple.1 == 0{
+            if todoAttrTuple.1 == self.todoListType.rawValue{
+                //计算所有todo中的unchecks个数
                 count += 1
             }
         }

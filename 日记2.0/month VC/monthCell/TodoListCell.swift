@@ -69,9 +69,8 @@ class TodoListCell: UICollectionViewCell {
     
     
     func fillData(todo:String){
-        self.updateCons()
-        
         self.todo = todo
+        
         if todo.hasPrefix("- [ ] "){
             isDone = false
         }
@@ -83,11 +82,18 @@ class TodoListCell: UICollectionViewCell {
             isDone = false
         }
         
-        self.contentLabel.text = self.todo.replacingOccurrences(of: "- [ ] ", with: "").replacingOccurrences(of: "- [x] ", with: "")
-        
+        self.updateUI()
     }
     
-    func updateCons(){
+    func updateUI(){
+        self.updateCons()
+        
+        
+        let text = self.todo.replacingOccurrences(of: "- [ ] ", with: "").replacingOccurrences(of: "- [x] ", with: "")
+        self.contentLabel.text = text
+    }
+    
+    private func updateCons(){
         let curWidth = layoutParasManager.shared.todoListItemWidth
         self.containerView.snp.updateConstraints { (make) in
             make.width.equalTo(curWidth)
@@ -102,6 +108,12 @@ class TodoListCell: UICollectionViewCell {
         }
         self.setNeedsLayout()
         self.layoutIfNeeded()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.contentLabel.attributedText = nil
+        self.checkButton.isSelected = false
     }
     
     
