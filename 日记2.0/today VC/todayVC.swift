@@ -32,7 +32,7 @@ class todayVC: UIViewController {
         return tagsViewController
     }()
     
-    @IBOutlet weak var textView:UITextView!
+    @IBOutlet weak var textView:LWTextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
 
@@ -56,6 +56,7 @@ class todayVC: UIViewController {
         
         textView.delegate = self
         textView.font =  userDefaultManager.font
+        textView.diary = todayDiary
         
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
