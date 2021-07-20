@@ -41,7 +41,7 @@ class TodoList: UIView {
         collectionView.register(TodoListCell.self, forCellWithReuseIdentifier: TodoListCell.cellId)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .black.withAlphaComponent(0.5)
+        collectionView.backgroundColor = .darkGray//.black.withAlphaComponent(0.5)
         collectionView.layer.cornerRadius = 5
         self.addSubview(collectionView)
         
@@ -131,8 +131,8 @@ extension TodoList:todoListDelegate{
             collectionView.deleteItems(at: [IndexPath(row: row, section: 0)])
         } completion: { _ in}
         
-        //2.更新collection view的高度
+        //2.更新monthVC的collection view的布局
         let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData(forRow: -1,animated: true)
+        monthVC.reloadCollectionViewData(forRow: -1,animated: true)//让month cell以平滑动画移动到新位置上去
     }
 }
