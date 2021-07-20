@@ -99,7 +99,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
         let tempCell = self.templateCellWithReuseIdentifier(reuseIdentifier: monthCell.reusableID, index: index) as! monthCell
         let diary = self.dateSource[index]
         
-        tempCell.fillCell(diary: diary)//数据填充cell，以计算content高度
+        tempCell.setViewModel(diary)//数据填充cell，以计算content高度
         
         let cellHeight = tempCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         return CGSize(width: self.itemWidth, height: cellHeight)

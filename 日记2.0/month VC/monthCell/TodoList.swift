@@ -12,7 +12,7 @@ class TodoList: UIView {
     
     var layout:TodoListLayout!
     
-    var model:diaryInfo!
+    var viewModel:diaryInfo!
     
     ///未完成的todo
     var todos:[String] = []
@@ -53,12 +53,15 @@ class TodoList: UIView {
         }
     }
     
-    func fillModel(_ model:diaryInfo){
-        self.model = model
-        self.todos = model.getTodos(for: .unchecked)
+    func setViewModel(_ viewModel:diaryInfo){
+        self.viewModel = viewModel
+        updateUI()
         
-        
+    }
+    
+    func updateUI(){
         //更新布局的DataSource
+        self.todos = viewModel.getTodos(for: .unchecked)
         layout.dataSource = self.todos
         self.collectionView.reloadData()
     }

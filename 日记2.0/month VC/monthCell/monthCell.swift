@@ -254,12 +254,14 @@ class monthCell: UICollectionViewCell {
     }
     
     //MARK:-设置Model
-    ///设置monthCell的model
-    ///返回值表示使用model计算出的todoList的高度
-    func fillCell(diary:diaryInfo){
-        self.updateCons(diary)
-        
+    func setViewModel(_ diary:diaryInfo){
         self.diary = diary
+        self.updateUI()//获取viewModel后需要更新UI
+    }
+    
+    func updateUI(){
+        self.updateCons(self.diary)
+        
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
@@ -268,8 +270,8 @@ class monthCell: UICollectionViewCell {
         self.isLike = diary.islike
         self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
-        self.todoListView.fillModel(diary)
         
+        self.todoListView.setViewModel(diary)
     }
     
     //读取日记的所有图片
