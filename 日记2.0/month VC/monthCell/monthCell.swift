@@ -71,15 +71,9 @@ class monthCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        globalSetup()
+        initUI()
+        setupConstraints()
     }
-    
-    private func globalSetup() {
-        //对可重用的cell进行一些通用的初始化：例如阴影，圆角，约束等等。
-        setupContainerView()
-        setupSubviews()
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -87,19 +81,12 @@ class monthCell: UICollectionViewCell {
     
 //    let kMonthCellWidth = (UIScreen.main.bounds.width) / 2 - 15//它决定了cell的宽度
     //MARK:-UI界面搭建
-    private func setupContainerView() {
+    private func initUI(){
         contentView.addSubview(containerView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
-        containerView.snp.makeConstraints { (make) in
-            make.left.equalTo(contentView)
-            make.right.equalTo(contentView)
-            make.top.equalTo(contentView)
-            make.bottom.equalTo(contentView)
-            make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
-        }
-        
+        //contentView
         self.backgroundColor = UIColor.clear
         self.clipsToBounds = false
         self.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
@@ -110,16 +97,13 @@ class monthCell: UICollectionViewCell {
         contentView.layer.masksToBounds = false
         contentView.layer.cornerRadius = 10
         
-        
+        //containerView
         containerView.backgroundColor = .white
         containerView.layer.masksToBounds = true
         containerView.layer.cornerRadius = 10
         
         self.layoutSubviews()
         
-    }
-    
-    private func setupSubviews() {
         //titleLabel
         titleLabel.numberOfLines = 0
         containerView.addSubview(titleLabel)
@@ -186,7 +170,20 @@ class monthCell: UICollectionViewCell {
         todoListView = TodoList(frame: .zero)
         containerView.addSubview(todoListView)
         
-        //MARK:-Auto layout
+    }
+    
+    //MARK:-Auto layout
+    private func setupConstraints() {
+        
+        containerView.snp.makeConstraints { (make) in
+            make.left.equalTo(contentView)
+            make.right.equalTo(contentView)
+            make.top.equalTo(contentView)
+            make.bottom.equalTo(contentView)
+            make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
+        }
+        
+        
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
