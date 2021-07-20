@@ -49,60 +49,7 @@ extension NSAttributedString{
         
     }
     
-    ///读取富文本，并为图片附件设置正确的大小、方向
-    ///textViewScreenshot
-    ///loadTextViewContent(with:)
-    func processAttrString(bounds:CGRect,container:NSTextContainer,imageAttrTuples:[(Int,Int)],todoAttrTuples:[(Int,Int)])->NSMutableAttributedString{
-        
-        let mutableText = NSMutableAttributedString(attributedString: self)
-        
-        //1、施加用户自定义格式
-        let attrText = mutableText.addUserDefaultAttributes()
-        
-        //2.恢复.image格式
-        for tuple in imageAttrTuples{
-            let location = tuple.0//attribute location
-            let value = tuple.1//attribute value
-            if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
-                
-                print("读取时处理到到图片:\(location)")
-                
-                //1.重新添加attribute
-                attrText.addAttribute(.image, value: value, range: NSRange(location: location, length: 1))
-                
-                //2.调整图片bounds
-                let aspect = image.size.width / image.size.height
-                let pedding:CGFloat = 15
-                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
-                let newHeight = (newWidth / aspect)
-                let para = NSMutableParagraphStyle()
-                para.alignment = .center
-                attrText.addAttribute(.paragraphStyle, value: para, range: NSRange(location: location, length: 1))
-                attchment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-            }
-        }
-        
-        //TODO:3.恢复todo
-        for tuple in todoAttrTuples{
-            let location = tuple.0//attribute location
-            let value = tuple.1//attribute value
-            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
-                print("读取时处理到到todo:\(location)")
-                //1.重新添加attribute
-                attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
-                
-                //2.调整bounds大小
-                let font = userDefaultManager.font
-                let size = font.pointSize + font.pointSize / 2
-                attachment.bounds = CGRect(x: CGFloat(0), y: (font.capHeight - size) / 2, width: size, height: size)
-            }
-            
-        }
-        
-        
-        
-        return attrText
-    }
+    
     
     //MARK:-应用用户的编辑器设定
     ///将用户的编辑器属性施加于attrString上

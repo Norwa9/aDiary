@@ -8,6 +8,8 @@
 import UIKit
 
 class TodoListCell: UICollectionViewCell {
+    weak var delegate:todoListDelegate?
+    
     static let cellId = "todoListCell"
     let containerView = UIView()
     let checkButton:UIButton = UIButton()
@@ -116,12 +118,10 @@ extension TodoListCell{
         if sender.isSelected{
             //完成
             self.contentLabel.attributedText = aString.addStrikethroughStyle()
-            
         }else{
             //未完成
             self.contentLabel.attributedText = aString.removeStrikethroughStyle()
-            
         }
-        
+        delegate?.todoDidCheck(todo: self.todo)
     }
 }

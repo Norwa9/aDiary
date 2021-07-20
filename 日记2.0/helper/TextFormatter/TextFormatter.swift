@@ -281,6 +281,7 @@ extension TextFormatter{
         return (hasTodoPrefix, hasIncompletedTask, whitespacePrefix + letterPrefix,checkPrefix)
     }
     
+    ///反转todo属性
     public func toggleTodo(location:Int,todoAttr:Int) {
         let attributedText = (todoAttr == 0) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
 
@@ -725,7 +726,7 @@ extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
         textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
-        let attributedText = diary.attributedString
+        let attributedText = diary.attributedString!
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
@@ -734,13 +735,82 @@ extension TextFormatter{
         print("读取到的todos:\(todoAttrTuples)")
         
         DispatchQueue.global(qos: .default).async {
-            let correctedAString = attributedText?.processAttrString(bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+            let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
             }
         }
-        
     }
+    
+    ///读取富文本，并为图片附件设置正确的大小、方向
+    ///textViewScreenshot
+    ///loadTextViewContent(with:)
+    func processAttrString(aString:NSAttributedString,bounds:CGRect,container:NSTextContainer,imageAttrTuples:[(Int,Int)],todoAttrTuples:[(Int,Int)])->NSMutableAttributedString{
+        
+        let mutableText = NSMutableAttributedString(attributedString: aString)
+        
+        //1、施加用户自定义格式
+        let attrText = mutableText.addUserDefaultAttributes()
+        
+        //2.恢复.image格式
+        for tuple in imageAttrTuples{
+            let location = tuple.0//attribute location
+            let value = tuple.1//attribute value
+            if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
+                
+                print("读取时处理到到图片:\(location)")
+                
+                //1.重新添加attribute
+                attrText.addAttribute(.image, value: value, range: NSRange(location: location, length: 1))
+                
+                //2.调整图片bounds
+                let aspect = image.size.width / image.size.height
+                let pedding:CGFloat = 15
+                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
+                let newHeight = (newWidth / aspect)
+                let para = NSMutableParagraphStyle()
+                para.alignment = .center
+                attrText.addAttribute(.paragraphStyle, value: para, range: NSRange(location: location, length: 1))
+                attchment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+            }
+        }
+        
+        //TODO:3.恢复todo
+        for tuple in todoAttrTuples{
+            let location = tuple.0//attribute location
+            let value = tuple.1//attribute value
+            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
+                print("读取时处理到到todo:\(location)")
+                //1.重新添加attribute
+                attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
+                
+                let attributedText = (value == 1) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
+
+                attrText.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
+
+                let range = NSRange(location: location, length: 0)
+                let paragraphRange = attrText.mutableString.paragraphRange(for: range)
+                
+                if value == 1 {
+                    attrText.addAttribute(.strikethroughStyle, value: 1, range: paragraphRange)
+                } else {
+                    attrText.removeAttribute(.strikethroughStyle, range: paragraphRange)
+                }
+                
+                //2.调整bounds大小
+                let font = userDefaultManager.font
+                let size = font.pointSize + font.pointSize / 2
+                attachment.bounds = CGRect(x: CGFloat(0), y: (font.capHeight - size) / 2, width: size, height: size)
+            }
+            
+        }
+        
+        
+        
+        return attrText
+    }
+    
+    
     
 //    ///根据日期string读取从文件目录富文本
 //    static func loadAttributedString(date_string:String) -> NSAttributedString?{
@@ -760,20 +830,10 @@ extension TextFormatter{
 //        return nil
 //    }
     
-    ///设置居左的输入模式
-    func setLeftTypingAttributes(){
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
-        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
-        let typingAttributes:[NSAttributedString.Key:Any] = [
-            .paragraphStyle: paragraphStyle,
-            .font:userDefaultManager.font
-        ]
-        self.textView.typingAttributes = typingAttributes
-    }
+    
 }
 
-//MARK:-placeHolder
+//MARK:-helper
 extension TextFormatter{
     ///设置textView的Placeholder
     func setPlaceholder(){
@@ -788,19 +848,31 @@ extension TextFormatter{
         let placeHolder = "标题.."
         self.textView.attributedText = NSAttributedString(string: placeHolder, attributes: attributes)
     }
+    
+    ///设置居左的输入模式
+    func setLeftTypingAttributes(){
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+        let typingAttributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle: paragraphStyle,
+            .font:userDefaultManager.font
+        ]
+        self.textView.typingAttributes = typingAttributes
+    }
 }
 
 //MARK:-分享
 extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
-        let aString = diary.attributedString ?? self.rawtextToRichtext(diary: diary)
+        let attributedText = diary.attributedString ?? self.rawtextToRichtext(diary: diary)
         //异步读取attributedString、异步处理图片bounds
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
         let todoAttrTuples = diary.todoAttributesTuples
         
-        let preparedText = aString.processAttrString(bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+        let preparedText = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
         
         self.textView.attributedText = preparedText
         textView.layer.cornerRadius = 10

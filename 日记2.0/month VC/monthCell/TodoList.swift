@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol todoListDelegate:class {
+    func todoDidCheck(todo:String)
+}
+
 class TodoList: UIView {
     var collectionView:UICollectionView!
     
@@ -16,6 +20,7 @@ class TodoList: UIView {
     
     ///未完成的todo
     var todos:[String] = []
+    var todoListType:todoType = .unchecked
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,7 +66,7 @@ class TodoList: UIView {
     
     func updateUI(){
         //更新布局的DataSource
-        self.todos = viewModel.getTodos(for: .unchecked)
+        self.todos = viewModel.getTodos(for: self.todoListType)
         layout.dataSource = self.todos
         self.collectionView.reloadData()
     }
@@ -81,10 +86,35 @@ extension TodoList:UICollectionViewDataSource{
         
         let row = indexPath.item
         cell.fillData(todo: todos[row])
-        
+        cell.delegate = self
         
         return cell
     }
     
     
+}
+
+//MARK:-todoListDelegate
+extension TodoList:todoListDelegate{
+    //
+    func todoDidCheck(todo: String) {
+        guard let index = todos.firstIndex(of: todo) else {return}
+        var count = 0
+        for todoAttrTuple in viewModel.todoAttributesTuples{
+            if count == index{
+                var todoAttributesTuplesCopy = viewModel.todoAttributesTuples
+                todoAttributesTuplesCopy[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
+                LWRealmManager.shared.update {
+                    //反转attribute的值
+                    //这里真个数组重新赋值，目的是触发todoAttributesTuples的setter
+                    viewModel.todoAttributesTuples = todoAttributesTuplesCopy
+                }
+                DiaryStore.shared.addOrUpdate(viewModel)
+                return
+            }
+            if todoAttrTuple.1 == 0{
+                count += 1
+            }
+        }
+    }
 }

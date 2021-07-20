@@ -191,11 +191,12 @@ extension diaryInfo{
 }
 
 //MARK:-dairyInfo + todo
+enum todoType:Int{
+    case unchecked = 0//已完成
+    case checked = 1//未完成
+    case all = 2//全部
+}
 extension diaryInfo{
-    enum todoType:Int{
-        case checked = 0//已完成
-        case unchecked = 1//未完成
-    }
     ///解析文本，返回所有的完成todo或者返回所有的未完成todo
     func getTodos(for type:todoType)->[String]{
         guard let attributedString = self.attributedString else {return []}
@@ -228,7 +229,10 @@ extension diaryInfo{
                 if hasIncompletedTask{
                     todos.append(todo)
                 }
+            case .all:
+                break
             }
+            
             
             
         }
