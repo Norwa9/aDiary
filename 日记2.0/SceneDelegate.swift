@@ -57,10 +57,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          */
         self.authApp(then: {
             //TODO:检查账户的可用性，如果账户由不可用->可用，需要为其配置环境
-            
-            
-            DiaryStore.shared.uploadLocalDataNotUploadedYet()
-            DiaryStore.shared.fetchRemoteChange()
+            //DiaryStore.shared.uploadLocalDataNotUploadedYet()
+            //DiaryStore.shared.fetchRemoteChange()
         })
         
         

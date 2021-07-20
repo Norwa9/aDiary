@@ -585,6 +585,7 @@ final class LWSyncEngine{
     }
     
     ///获取云端的变动
+    ///目前在两个场合中使用：1、App启动时；2、接收到远程通知时
     func fetchRemoteChanges() {
         if let currentOperation = cloudOperationQueue.operations.first{
             //队列中当前正在执行的是fetch任务，阻止再次fetch

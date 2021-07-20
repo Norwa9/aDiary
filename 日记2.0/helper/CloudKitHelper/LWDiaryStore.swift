@@ -79,7 +79,7 @@ public final class DiaryStore: ObservableObject {
         syncEngine?.uploadLocalDataNotUploadedYet()
     }
     
-    ///主动拉取云端变动
+    ///手动拉取云端变动
     public func fetchRemoteChange(){
         //展示菊花转
         indicatorViewManager.shared.start()
@@ -107,7 +107,7 @@ public final class DiaryStore: ObservableObject {
         DispatchQueue.main.async {
             //2.更新UI
             indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC().reloadMonthVC()
+            UIApplication.getMonthVC().reloadCollectionViewData(forRow: -1, animated: true)
             UIApplication.getTodayVC().reloadTodayVC()
             
         }
