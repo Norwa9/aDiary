@@ -123,8 +123,8 @@ class monthCell: UICollectionViewCell {
         contentLabel.numberOfLines = 0
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.clipsToBounds = true
-        contentLabel.layer.cornerRadius = 5
-        contentLabel.backgroundColor = APP_GRAY_COLOR().withAlphaComponent(0.7)
+        //contentLabel.layer.cornerRadius = 5
+        //contentLabel.backgroundColor = APP_GRAY_COLOR().withAlphaComponent(0.7)
         
         //tags Label
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
@@ -271,10 +271,6 @@ class monthCell: UICollectionViewCell {
     func fillImages(diary:diaryInfo){
         let iM = imageManager(diary: diary)
         let contains = diary.containsImage
-        
-        self.albumView.snp.updateConstraints { (make) in
-            make.height.equalTo(contains ? layoutParasManager.shared.albumViewHeight : 0)
-        }
         if !contains{
             //如果没有照片，则将albumView清空，防止复用的出现在其他cell里
             self.photos.removeAll()
