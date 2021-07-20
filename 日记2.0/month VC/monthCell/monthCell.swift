@@ -119,6 +119,7 @@ class monthCell: UICollectionViewCell {
         albumView.layer.cornerRadius = 10
         
         //contentLabel
+        //字号14
         contentLabel.numberOfLines = 0
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.clipsToBounds = true
@@ -126,7 +127,7 @@ class monthCell: UICollectionViewCell {
         contentLabel.backgroundColor = APP_GRAY_COLOR().withAlphaComponent(0.7)
         
         //tags Label
-        tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 10)!
+        tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
         tagsLabel.tagBackgroundColor = .lightGray
         tagsLabel.cornerRadius = 5
@@ -136,12 +137,12 @@ class monthCell: UICollectionViewCell {
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
-        dateLabel.font = UIFont(name: "DIN Alternate", size: 11)
+        dateLabel.font = UIFont(name: "DIN Alternate", size: 14)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //word Number Label
         wordNumLabel.textAlignment = .right
-        wordNumLabel.font = UIFont(name: "DIN Alternate", size: 11)
+        wordNumLabel.font = UIFont(name: "DIN Alternate", size: 14)
 //        wordNumLabel.textColor = .lightGray
         wordNumLabel.translatesAutoresizingMaskIntoConstraints = false
         
