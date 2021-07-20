@@ -7,9 +7,6 @@
 
 import UIKit
 
-let kTodoListLineSpacing:CGFloat = 5
-let kTodoListItemHeight:CGFloat = 30
-
 class TodoListLayout: UICollectionViewLayout {
     var dataSource:[String]!
     
@@ -20,8 +17,8 @@ class TodoListLayout: UICollectionViewLayout {
             return layoutParasManager.shared.todoListItemWidth
         }
     }
-    private var lineSpacing:CGFloat = kTodoListLineSpacing
-    private var itemHeight:CGFloat = kTodoListItemHeight
+    private var lineSpacing:CGFloat = layoutParasManager.shared.todoListLineSpacing
+    private var itemHeight:CGFloat = layoutParasManager.shared.todoListItemHeight
     private var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
     
     override func prepare() {

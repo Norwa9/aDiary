@@ -22,6 +22,7 @@
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
 		EA38493F262EBAA3001B693F /* filterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38493E262EBAA3001B693F /* filterModel.swift */; };
 		EA384942262ED17A001B693F /* introduction.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* introduction.txt */; };
+		EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */; };
 		EA38FEAA26A1E3AD00CEFC1A /* monthVC+calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */; };
 		EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA3ABAD625DFE05400911902 /* demoDiaries.txt */; };
 		EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ABAD925E019FD00911902 /* toolsBar.swift */; };
@@ -107,6 +108,7 @@
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
 		EA38493E262EBAA3001B693F /* filterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterModel.swift; sourceTree = "<group>"; };
 		EA384941262ED17A001B693F /* introduction.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = introduction.txt; sourceTree = "<group>"; };
+		EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewLayout.swift; sourceTree = "<group>"; };
 		EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "monthVC+calendar.swift"; sourceTree = "<group>"; };
 		EA3ABAD625DFE05400911902 /* demoDiaries.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demoDiaries.txt; sourceTree = "<group>"; };
 		EA3ABAD925E019FD00911902 /* toolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toolsBar.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				EAA29EC425C9840F00AA6971 /* monthCell.swift */,
 				EA537CDD266273D800C2E9EE /* photoCell.swift */,
+				EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */,
 				1B2A56CA26A569D70090D411 /* TodoList.swift */,
 				1B2A56D026A56C3F0090D411 /* TodoListCell.swift */,
 				1B2A56D226A5836A0090D411 /* TodoListLayout.swift */,
@@ -581,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
 				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
