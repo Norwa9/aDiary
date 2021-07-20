@@ -96,28 +96,40 @@ extension TodoList:UICollectionViewDataSource{
 
 //MARK:-todoListDelegate
 extension TodoList:todoListDelegate{
-    //
+    //按下了checkButton
     func todoDidCheck(todo: String) {
-        guard let indexInUnchecks = todos.firstIndex(of: todo) else {return}
+        let curTodos = viewModel.getTodos(for: self.todoListType)
+        guard let indexInUnchecks = curTodos.firstIndex(of: todo) else {return}
         
         var todoAttributesTuplesCopy = viewModel.todoAttributesTuples
         
         var count = 0
         for (index,todoAttrTuple) in viewModel.todoAttributesTuples.enumerated(){
-            if count == indexInUnchecks{
+            if count == indexInUnchecks && todoAttrTuple.1 == self.todoListType.rawValue{
                 todoAttributesTuplesCopy[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
                 LWRealmManager.shared.update {
                     //反转attribute的值
-                    //这里真个数组重新赋值，目的是触发todoAttributesTuples的setter
+                    //这里整个数组重新赋值，目的是触发todoAttributesTuples的setter
                     viewModel.todoAttributesTuples = todoAttributesTuplesCopy
                 }
                 DiaryStore.shared.addOrUpdate(viewModel)
+                updateTodoListViewAfterCheck(row: indexInUnchecks)
                 return
             }
             if todoAttrTuple.1 == self.todoListType.rawValue{
                 //计算所有todo中的unchecks个数
                 count += 1
             }
+        }
+    }
+    
+    
+    private func updateTodoListViewAfterCheck(row:Int){
+        self.todos.remove(at: row)
+        self.collectionView.performBatchUpdates {
+            collectionView.deleteItems(at: [IndexPath(row: row, section: 0)])
+        } completion: { _ in
+            
         }
     }
 }
