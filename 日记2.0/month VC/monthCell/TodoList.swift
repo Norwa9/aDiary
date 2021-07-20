@@ -60,13 +60,13 @@ class TodoList: UIView {
     
     func setViewModel(_ viewModel:diaryInfo){
         self.viewModel = viewModel
+        self.todos = viewModel.getTodos(for: self.todoListType)
         updateUI()
         
     }
     
     func updateUI(){
         //更新布局的DataSource
-        self.todos = viewModel.getTodos(for: self.todoListType)
         layout.dataSource = self.todos
         self.collectionView.reloadData()
     }
@@ -125,11 +125,14 @@ extension TodoList:todoListDelegate{
     
     
     private func updateTodoListViewAfterCheck(row:Int){
+        //1.collection view移除一个cell
         self.todos.remove(at: row)
         self.collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [IndexPath(row: row, section: 0)])
-        } completion: { _ in
-            
-        }
+        } completion: { _ in}
+        
+        //2.更新collection view的高度
+        let monthVC = UIApplication.getMonthVC()
+        monthVC.reloadCollectionViewData(forRow: -1,animated: true)
     }
 }

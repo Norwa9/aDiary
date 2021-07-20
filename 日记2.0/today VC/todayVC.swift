@@ -219,6 +219,7 @@ extension todayVC:UITextViewDelegate{
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let formatter = TextFormatter(textView: self.textView)
         let res = formatter.interactAttchment(with: characterRange,diary:todayDiary)
+        self.save()
         return res
     }
 

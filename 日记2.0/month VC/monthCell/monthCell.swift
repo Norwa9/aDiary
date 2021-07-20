@@ -260,7 +260,7 @@ class monthCell: UICollectionViewCell {
     }
     
     func updateUI(){
-        self.updateCons(self.diary)
+        self.updateCons()
         
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
@@ -320,6 +320,14 @@ class monthCell: UICollectionViewCell {
     
     
 }
+//MARK:-reuse
+extension monthCell{
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.todoListView.todos = []
+    }
+}
+
 //MARK:-内嵌的Collection View
 extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -344,16 +352,18 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
 //MARK:-更新约束
 extension monthCell{
     ///更新约束
-    func updateCons(_ diary:diaryInfo? = nil){
+    func updateCons(){
         //计算包含todoListView的正确高度
-        if let diary = diary{
+        if let diary = self.diary{
             //取得todoListView的高度
             self.todoListView.snp.updateConstraints { (make) in
                 make.height.equalTo(diary.calculateTodosContentHeihgt())
             }
         }
         //刷新todoListCell的样式，将会触发其updateCons()
-        self.todoListView.collectionView.reloadData()
+        self.todoListView.collectionView.performBatchUpdates({
+            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
+        }, completion: nil)
         
         //瀑布流切换时
         self.containerView.snp.updateConstraints { (update) in
