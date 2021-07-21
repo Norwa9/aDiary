@@ -679,6 +679,7 @@ extension TextFormatter{
     func save(with diary:diaryInfo){
         let attributedText = textView.attributedText!
         let result = attributedText.parseAttribuedText()
+        let todos = diary.getTodos(for: .unchecked)
         let imageAttrTuples = result.0
         let todoAttrTuples = result.1
         let cleanText = result.2
@@ -689,6 +690,7 @@ extension TextFormatter{
             diary.editedButNotUploaded = true
             diary.modTime = Date()
             diary.content = cleanText.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+            diary.todos = todos
             diary.rtfd = attributedText.data()
             diary.containsImage = containsImage
             diary.imageAttributesTuples = imageAttrTuples

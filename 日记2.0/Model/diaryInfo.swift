@@ -29,6 +29,7 @@ class diaryInfo:Object,Codable{
     @objc dynamic var modTime:Date? = nil
     @objc dynamic var editedButNotUploaded:Bool = false ///引入的目的是解决离线修改的同步问题(不必上传到云端)
     
+    var realmTodos:List<RealmString> = List<RealmString>()
     var realmTags:List<RealmString> = List<RealmString>()
     var realmImageAttrTuples = List<RealmTuple>()
     var realmTodoAttrTuples = List<RealmTuple>()
@@ -88,6 +89,7 @@ class diaryInfo:Object,Codable{
         }else{
             todoAttributesTuples = []
         }
+        let todos = record[.todos] as? [String] ?? []
 
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName
@@ -97,13 +99,15 @@ class diaryInfo:Object,Codable{
         self.day = Int(date.dateComponent(for: .day))!
         self.content = content
         self.islike = (islike != 0)
-        self.realmTags.append(objectsIn: tags.map({ RealmString(value: [$0]) }))
         self.mood = mood
         self.containsImage = (containsImage != 0)
         self.rtfd = rtfdData
         self.modTime = record.modificationDate
         self.imageAttributesTuples = imageAttributesTuples
         self.todoAttributesTuples = todoAttributesTuples
+        
+        self.realmTags.append(objectsIn: tags.map({ RealmString(value: [$0]) }))
+        self.realmTodos.append(objectsIn: todos.map({ RealmString(value: [$0]) }))
     }
     
     
@@ -190,65 +194,6 @@ extension diaryInfo{
     
 }
 
-//MARK:-dairyInfo + todo
-enum todoType:Int{
-    case unchecked = 0//已完成
-    case checked = 1//未完成
-    case all = 2//全部
-}
-extension diaryInfo{
-    ///解析文本，返回所有的完成todo或者返回所有的未完成todo
-    func getTodos(for type:todoType)->[String]{
-        guard let attributedString = self.attributedString else {return []}
-        
-        var todos = [String]()
-        
-        let mutableAttString = NSMutableAttributedString(attributedString: attributedString)
-        
-        //1.恢复attribute
-        for tuple in todoAttributesTuples{
-            mutableAttString.addAttribute(.todo, value: tuple.1, range: NSRange(location: tuple.0, length: 1))
-        }
-        
-        //2.将复选框attribute转换为占位符方便后续操作
-        let unloadAttrString = mutableAttString.unLoadCheckboxes()
-        unloadAttrString.string.enumerateLines { line, _ in
-            //print("unloaded:\(line)")
-            let res = TextFormatter.parseTodo(line: line)
-            let hasCompletedTask = res.0
-            let hasIncompletedTask = res.1
-            let cleanTodo = res.2//不含占位符
-            let todo = res.3//含有占位符
-            
-            switch type{
-            case .checked:
-                if hasCompletedTask{
-                    todos.append(todo)
-                }
-            case .unchecked:
-                if hasIncompletedTask{
-                    todos.append(todo)
-                }
-            case .all:
-                break
-            }
-            
-            
-            
-        }
-        return todos
-    }
-    
-    func calculateTodosContentHeihgt()->CGFloat{
-        let todos = self.getTodos(for: .unchecked)
-        let count = todos.count
-        if count > 0{
-            let todoListContentHeight:CGFloat = CGFloat(todos.count) * (layoutParasManager.shared.todoListItemHeight + layoutParasManager.shared.todoListLineSpacing) + layoutParasManager.shared.todoListLineSpacing
-            return todoListContentHeight
-        }else{
-            return 0
-        }
-    }
-}
+
 
 

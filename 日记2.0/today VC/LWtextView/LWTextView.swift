@@ -9,8 +9,6 @@ import UIKit
 import MobileCoreServices
 
 class LWTextView: UITextView {
-    var diary:diaryInfo?
-    
     ///从storeboard读取
     required init?(coder: NSCoder) {
         if #available(iOS 13.2, *) {
@@ -22,11 +20,6 @@ class LWTextView: UITextView {
     }
     
     override func copy(_ sender: Any?) {
-        guard let diary = diary else {
-            super.copy(sender)
-            return
-        }
-        
         let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange)).unLoadCheckboxes()
         
         if self.textStorage.length >= self.selectedRange.upperBound {
@@ -46,12 +39,6 @@ class LWTextView: UITextView {
     }
     
     override func cut(_ sender: Any?) {
-        guard let diary = diary else {
-            super.cut(sender)
-            print("return cut")
-            return
-        }
-        
         let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange)).unLoadCheckboxes()
 
         if self.textStorage.length >= self.selectedRange.upperBound {
@@ -80,12 +67,6 @@ class LWTextView: UITextView {
     }
     
     override func paste(_ sender: Any?) {
-        guard let diary = diary else {
-            super.paste(sender)
-            print("return paste")
-            return
-        }
-        
         for item in UIPasteboard.general.items {
             if let rtfd = item["UIPasteboard.attributed.text"] as? Data {
                 if let attributedString = try? NSAttributedString(data: rtfd, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.rtfd], documentAttributes: nil) {

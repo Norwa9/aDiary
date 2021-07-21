@@ -385,7 +385,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             self.filter()
         }else{
             self.configureDataSource(year: selectedYear, month: selectedMonth)
-            self.calendar.reloadData()
+            self.calendar?.reloadData()
         }
         
     }

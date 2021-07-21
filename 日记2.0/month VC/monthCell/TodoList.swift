@@ -62,7 +62,7 @@ class TodoList: UIView {
     
     func setViewModel(_ viewModel:diaryInfo){
         self.viewModel = viewModel
-        self.todos = viewModel.getTodos(for: self.todoListType)
+        self.todos = viewModel.todos
         updateUI()
         
     }
@@ -100,7 +100,7 @@ extension TodoList:UICollectionViewDataSource{
 extension TodoList:todoListDelegate{
     //按下了checkButton
     func todoDidCheck(todo: String) {
-        let curTodos = viewModel.getTodos(for: self.todoListType)
+        let curTodos = viewModel.todos
         guard let indexInUnchecks = curTodos.firstIndex(of: todo) else {return}
         
         var todoAttributesTuplesCopy = viewModel.todoAttributesTuples
