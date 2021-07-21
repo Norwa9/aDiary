@@ -43,8 +43,9 @@ class TodoListCell: UICollectionViewCell {
         checkButton.addTarget(self, action: #selector(checkButtonTapped(_:)), for: .touchUpInside)
         
         //contentLabel
-        contentLabel.font = UIFont(name: "DIN Alternate", size: 16)
+        contentLabel.font = UIFont(name: "DIN Alternate", size: 15)
         containerView.addSubview(contentLabel)
+        
     }
     
     private func setupConstraint(){

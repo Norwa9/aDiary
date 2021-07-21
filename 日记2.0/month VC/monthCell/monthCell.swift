@@ -208,8 +208,8 @@ class monthCell: UICollectionViewCell {
         }
         
         tagsLabel.snp.makeConstraints { (make) in
-            make.top.greaterThanOrEqualTo(contentLabel.snp.bottom).offset(5)
-            make.left.equalTo(contentLabel)
+            make.top.greaterThanOrEqualTo(todoListView.snp.bottom).offset(5)
+            make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
             make.bottom.equalTo(dateLabel.snp.top).offset(-5)
         }
@@ -218,7 +218,6 @@ class monthCell: UICollectionViewCell {
             make.left.equalTo(containerView).offset(10)
             make.right.equalTo(containerView).offset(-10)
             make.top.equalTo(contentLabel.snp.bottom).offset(5)
-            make.bottom.equalTo(dateLabel.snp.top).offset(-5)
             make.height.equalTo(100)
         }
         
