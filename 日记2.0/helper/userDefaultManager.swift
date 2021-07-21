@@ -11,7 +11,8 @@ import UIKit
 class userDefaultManager{
     public static var shared:UserDefaults? = UserDefaults(suiteName: "user.default")
     
-    static let DefaultFontSize:CGFloat = 20.0
+    ///默认字体大小
+    static let DefaultFontSize:CGFloat = 18.0
 //    static let DefaultFontName:String = "TimesNewRomanPSMT"
     static let defaultEditorLineSpacing:CGFloat = 3
     
