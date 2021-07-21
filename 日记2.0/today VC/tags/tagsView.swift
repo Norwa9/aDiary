@@ -71,8 +71,7 @@ class tagsView: UIViewController {
         selectedMood = sender.moodType
         //状态从未选改变到选中，则触发topbarButton的动画
         if sender.hasSelected{
-            let topbarView = UIApplication.getTopbarView()
-            topbarView.changeButtonImageView(topbarButtonIndex: 1, toImage: UIImage(named: sender.moodType.rawValue)!)
+            //TODO:
         }
         
     }

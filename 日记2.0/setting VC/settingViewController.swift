@@ -41,8 +41,6 @@ class settingViewController: UIViewController {
         userDefaultManager.lineSpacing = tempLineSpacing
         userDefaultManager.imageSizeStyle = tempImageSizeStyle
         
-        let todayVC = UIApplication.getTodayVC()
-        todayVC.reloadTodayVC()
         let monthVC = UIApplication.getMonthVC()
         monthVC.reloadCollectionViewData()
         

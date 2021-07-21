@@ -16,10 +16,10 @@ extension monthVC{
         //MARK:-日历
         //configure FSCalendar
         let calendarPedding:CGFloat = 10
-        let calendarWidth = monthButtonsContainer.frame.width - 2 * calendarPedding
+        let calendarWidth = monthBtnStackView.frame.width - 2 * calendarPedding
         let calendar = FSCalendar(frame: CGRect(
-                                    x: (monthButtonsContainer.frame.width - calendarWidth) / 2,
-                                    y: monthButtonsContainer.frame.maxY,
+                                    x: (monthBtnStackView.frame.width - calendarWidth) / 2,
+                                    y: monthBtnStackView.frame.maxY,
                                     width: calendarWidth,
                                     height: calendarHeight))
 //        calendar.layer.borderWidth = 1
@@ -46,97 +46,12 @@ extension monthVC{
         calendar.locale = Locale(identifier: "zh_CN")//设置周次为中文
         calendar.appearance.caseOptions = .weekdayUsesSingleUpperCase//设置为一、二···
         calendar.placeholderType = .none//仅显示当月日期cell
-        formatter.dateFormat = "MM"
-        curMonth = Int(formatter.string(from: calendar.currentPage))!
-        formatter.dateFormat = "yyyy"
-        curYear = Int(formatter.string(from: calendar.currentPage))!
-        formatter.dateFormat = "dd"
-        curDay = Int(formatter.string(from: calendar.currentPage))!
-        selectedMonth = curMonth
-        selectedYear = curYear
-        selectedDay = curDay
         self.calendar = calendar
         calendar.alpha = 0
-        self.monthButtonsContainer.addSubview(calendar)
-    }
-    
-    
-    
-    //MARK:-展示，收回日历
-    func animateCalendar(isShowing:Bool,plusDuration:TimeInterval = 0){
-        if !isShowing{
-            //展开日历
-            //1
-            calendarIsShowing = true
-            containerHeightAnchor.constant = originContainerHeihgt + calendarHeight
-            collectionViewTopInsetAnchor.constant = originTopInset + calendarHeight
-            UIView.animate(withDuration: 0.5 + plusDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseOut,.allowUserInteraction]) {
-                self.view.layoutIfNeeded()
-            } completion: { (_) in}
-            //2
-            UIView.animate(withDuration: 0.8 + plusDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseOut,.allowUserInteraction]) {
-                self.calendar.alpha = 1
-                self.monthButtonsContainer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            } completion: { (_) in
-                
-            }
-        }else{
-            //收回
-            //1
-            calendarIsShowing = false
-            containerHeightAnchor.constant = originContainerHeihgt
-            collectionViewTopInsetAnchor.constant = originTopInset
-            UIView.animate(withDuration: 0.5 + plusDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseIn,.allowUserInteraction]) {
-                self.view.layoutIfNeeded()
-            } completion: { (_) in}
-            //2
-            UIView.animate(withDuration: 0.3 + plusDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.curveEaseIn,.allowUserInteraction]) {
-                self.calendar.alpha = 0
-                self.monthButtonsContainer.backgroundColor =  #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
-            } completion: { (_) in
-                
-            }
-        }
+        self.monthBtnStackView.addSubview(calendar)
     }
 }
 
-//MARK:-ScrollView delegate
-extension monthVC:UIScrollViewDelegate{
-    ///下拉显示日历
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if originContainerHeihgt == nil {return}
-        let y = -scrollView.contentOffset.y
-        //print("offset:\(y)")
-        guard !isFilterMode,y > 0 else{
-            return
-        }
-        
-        ///展开日历
-        if !calendarIsShowing{
-            if y < collectionView.contentInset.top{
-                return//往上滑时不改变月份面板的高度
-            }
-            /*
-             content实际的滑动距离：(y - collectionView.contentInset.top)
-             */
-            containerHeightAnchor.constant = originContainerHeihgt + (y - collectionView.contentInset.top)
-            view.layoutIfNeeded()
-            //展开日历
-            if y > 100 && !collectionView.isDragging{
-                self.animateCalendar(isShowing: calendarIsShowing)
-            }
-        }
-        
-        ///收回日历
-        if calendarIsShowing{
-            if y > 100 && !collectionView.isDecelerating{
-               self.collectionView.isScrollEnabled = false
-               self.animateCalendar(isShowing: calendarIsShowing)
-               self.collectionView.isScrollEnabled = true
-           }
-        }
-    }
-}
 
 //MARK:-FSCalendar数据源和代理
 extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppearance,ExtendedFSCalendarDelegate{
@@ -171,7 +86,7 @@ extension monthVC:FSCalendarDelegate,FSCalendarDataSource,FSCalendarDelegateAppe
         let dateString = formatter.string(from: date)
         let predicate = NSPredicate(format: "date = %@", dateString)
         if let selectedDiary = LWRealmManager.shared.query(predicate: predicate).first{
-            pageVC.slideToTodayVC(selectedDiary: selectedDiary, completion: nil)
+            
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))

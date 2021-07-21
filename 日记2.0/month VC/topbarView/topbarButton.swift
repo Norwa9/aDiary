@@ -10,9 +10,7 @@ import UIKit
 class topbarButton: UIButton {
     var image:UIImage!{
         didSet{
-            //缩放image，防止锯齿问题。
-            let smallsize = buttonImageView.bounds.size
-            buttonImageView.image = image?.compressPic(toSize: smallsize)
+            buttonImageView.image = image
         }
     }
     var islike:Bool = false{
@@ -23,15 +21,22 @@ class topbarButton: UIButton {
 
     var buttonImageView:UIImageView!
     var holderView:UIView!
+    
+    init() {
+        super.init(frame: .zero)
+        setupUI()
+        setupConstraint()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        setupConstraint()
     }
 
     func setupUI(){
-//        self.layer.borderWidth = 3
         //holderView
-        holderView = UIView(frame: CGRect(origin: .zero, size: frame.size))
+        holderView = UIView()
         holderView.isUserInteractionEnabled = false//为什么不设置为false按钮不能响应点击？
         holderView.backgroundColor = .white
         holderView.layer.cornerRadius = 10
@@ -39,9 +44,20 @@ class topbarButton: UIButton {
         addSubview(holderView)
         
         //button image view
-        buttonImageView = UIImageView(frame: self.bounds.insetBy(dx: 5, dy: 5))
+        buttonImageView = UIImageView()
         buttonImageView.contentMode = .scaleAspectFill
         holderView.addSubview(buttonImageView)
+        
+    }
+    
+    func setupConstraint(){
+        holderView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        buttonImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+        }
         
     }
     
@@ -55,12 +71,11 @@ class topbarButton: UIButton {
 
     func switchLayoutModeIcon(){
         let columnNumber = layoutParasManager.shared.collectioncolumnNumber
-        guard let tempImageView = self.viewWithTag(98) as? UIImageView else{return}
         switch columnNumber {
         case 1:
-            tempImageView.image = UIImage(named: "waterfallmode")
+            image = UIImage(named: "waterfallmode")
         case 2:
-            tempImageView.image = UIImage(named: "listmode")
+            image = UIImage(named: "listmode")
         default:
             return
         }

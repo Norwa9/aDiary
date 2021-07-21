@@ -75,8 +75,7 @@ class customAlertView: UIView {
                 self.monthVC.popover.dismiss()
             }
             dismissQueue.sync {
-                let pageVC = UIApplication.getcustomPageViewController()
-                pageVC.slideToTodayVC(selectedDiary:selectedDiary,completion: {})
+                //TODO:打开todayVC
             }
         }
         

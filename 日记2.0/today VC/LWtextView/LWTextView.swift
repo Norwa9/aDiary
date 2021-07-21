@@ -11,7 +11,7 @@ import MobileCoreServices
 class LWTextView: UITextView {
     var diary:diaryInfo?
     
-    
+    ///从storeboard读取
     required init?(coder: NSCoder) {
         if #available(iOS 13.2, *) {
             super.init(coder: coder)

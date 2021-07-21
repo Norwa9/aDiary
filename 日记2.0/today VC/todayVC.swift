@@ -8,20 +8,8 @@
 import UIKit
 import FMPhotoPicker
 
-class todayVC: UIViewController {
-    var todayDiary:diaryInfo = {
-        let date = getTodayDate()
-        let predicate = NSPredicate(format: "date == %@", date)
-        if let todayDiary = LWRealmManager.shared.query(predicate: predicate).first{
-            return todayDiary
-        }else{
-            let newDiary = diaryInfo(dateString: date)
-            LWRealmManager.shared.add(newDiary)
-            return newDiary
-        }
-    }()
-    
-    weak var topbar:topbarView!
+class todayVC: UIViewController{
+    var todayDiary:diaryInfo!
     
     lazy var tagsViewController:tagsView = {
         //配置tagsView
@@ -35,8 +23,6 @@ class todayVC: UIViewController {
     @IBOutlet weak var textView:LWTextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
-
-    var lastDiary:String = ""
     
     var pickerConfig:FMPhotoPickerConfig = {
         var config = FMPhotoPickerConfig()
@@ -51,12 +37,18 @@ class todayVC: UIViewController {
     
     var diaryStore:DiaryStore!
     
-    func configureTodayView(){
+    var dismissPanGesture:UIPanGestureRecognizer!
+    var interactStartPoint:CGPoint?
+    
+    func initUI(){
         //textView
-        
         textView.delegate = self
-        textView.font =  userDefaultManager.font
-        textView.diary = todayDiary
+        
+        //panGesture
+        dismissPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        dismissPanGesture.maximumNumberOfTouches = 1
+        dismissPanGesture.delegate = self
+        view.addGestureRecognizer(dismissPanGesture)
         
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
@@ -68,42 +60,12 @@ class todayVC: UIViewController {
         keyBoardToolsBar.alpha = 0
     }
     
-    //MARK:-notification Center
-    func configureTopbar(){
-        //通知中心：响应button，响应键盘
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    func setupConstraints(){
+        
     }
-    //MARK:-topbar 按钮
-    func todayButtonsTapped(button:topbarButton){
-        switch button.tag {
-        case 1:
-            //设置“喜欢”
-            button.islike.toggle()
-            LWRealmManager.shared.update {
-                todayDiary.islike = button.islike
-            }
-            //刷新monthVC
-            let monthVC = UIApplication.getMonthVC()
-            monthVC.calendar.reloadData()
-            
-            break
-        case 2:
-            //传递当前的diary
-            tagsViewController.diary = todayDiary
-            //call viewDidLoad()
-            self.present(tagsViewController, animated: true, completion: nil)
-            break
-        case 3:
-            let vc = shareVC(diary: todayDiary)
-            vc.snapshot = textView.textViewImage()//传入textView的截图
-            present(vc, animated: true, completion: nil)
-            break
-        default:
-            return
-        }
-    }
+
+    //MARK:-target action
+    
     
     //MARK:-键盘delegate
     @objc func adjustForKeyboard(notification: Notification) {
@@ -121,8 +83,7 @@ class todayVC: UIViewController {
         } else{
             //2.键盘出现
             let x = keyBoardToolsBarFrame.origin.x
-            let containerVC = UIApplication.getPageViewContainer()
-            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - containerVC.topbarHeight - containerVC.view.safeAreaInsets.top
+            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height
             keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
             keyBoardToolsBar.alpha = 1
             textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
@@ -159,9 +120,6 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
 //MARK:-UITextView Delegate
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
-        //关闭左右滑动
-        let customPageVC = UIApplication.getcustomPageViewController()
-        customPageVC.pageScrollView.isScrollEnabled = false
         
         //如果日记为空，清除placeholder，开始输入
         if textView.textColor == UIColor.lightGray {
@@ -182,18 +140,8 @@ extension todayVC:UITextViewDelegate{
         }
     }
     
-//    func textViewDidChangeSelection(_ textView: UITextView) {
-//        let aString = textView.attributedText!
-//        aString.enumerateAttribute(.todo, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-//            print(range)
-//        })
-//    }
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        //开启左右滑动
-        let customPageVC = UIApplication.getcustomPageViewController()
-        customPageVC.pageScrollView.isScrollEnabled = true
-        
         save()
     }
     //MARK:-shouldChangeTextIn
@@ -232,16 +180,20 @@ extension todayVC:UITextViewDelegate{
 
 //MARK:-生命周期
 extension todayVC{
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //配置日记存储器
         diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
         
-        self.configureTopbar()
-        self.configureTodayView()
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        
+        self.initUI()
+        self.setupConstraints()
         self.loadTodayData()
+        
     }
     
     
@@ -258,29 +210,19 @@ extension todayVC{
 //MARK:-helper
 extension todayVC{
     //MARK:-读取日记内容
-    func loadTodayData(selectedDiary:diaryInfo? = nil){
-        
-        if let selectedDiary = selectedDiary{
-            todayDiary = selectedDiary
+    func loadTodayData(){
+        guard let diary = self.todayDiary else{
+            return
         }
         
         //读取textView
         let textFormatter = TextFormatter(textView: self.textView)
-        if todayDiary.content.count == 0{
+        if diary.content.count == 0{
             //设置文字引导
             textFormatter.setPlaceholder()
         }else{
-            textFormatter.loadTextViewContent(with: todayDiary)
+            textFormatter.loadTextViewContent(with: diary)
         }
-        
-        //load topbar info
-        topbar.dataLable1.text = todayDiary.date
-        topbar.dataLable1.sizeToFit()
-        
-        topbar.dataLable2.text = Date().getWeekday(dateString: todayDiary.date)
-        
-        topbar.button1.islike = todayDiary.islike
-        topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood)
     }
     
     //MARK:-保存更改
@@ -294,7 +236,7 @@ extension todayVC{
         if todayDiary.month == monthVC.selectedMonth{
             //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
             monthVC.reloadCollectionViewData(forRow: todayDiary.row)
-            monthVC.calendar.reloadData()
+            monthVC.calendar?.reloadData()
         }
     }
     
@@ -303,10 +245,50 @@ extension todayVC{
         //读取attributedString
         let textFormatter = TextFormatter(textView: self.textView)
         textFormatter.loadTextViewContent(with: todayDiary)
+    }
+    
+}
+
+
+//MARK:-UIGestureRecognizerDelegate
+extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
+    @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
+        //初始触摸点
+        let startingPoint: CGPoint
+        if let p = interactStartPoint{
+            startingPoint = p
+        }else{
+            startingPoint = gesture.location(in: nil)
+            interactStartPoint = startingPoint
+        }
         
-        //刷新图标
-        topbar.button1.islike = todayDiary.islike
-        topbar.button2.buttonImageView.image = UIImage(named: todayDiary.mood)
+        //当前触摸点
+        let currentLocation = gesture.location(in: nil)
+        
+        
+        //触摸进度
+        let progress = (currentLocation.y - startingPoint.y) / 100
+        print("PanGesture progress:\(progress)")
+        
+        if progress >= 1.0{
+            interactStartPoint = nil
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        
+    }
+    
+    //解决下拉dismiss和scrollview的冲突
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let y = scrollView.contentOffset.y
+        //解决下拉dismiss和scrollview的冲突
+        if y < 0 {
+            scrollView.contentOffset = .zero
+        }
+ 
     }
     
 }

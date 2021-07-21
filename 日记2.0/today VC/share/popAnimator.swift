@@ -34,7 +34,7 @@ class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
     func animationForPresent(using transitionContext: UIViewControllerContextTransitioning){
         let containerView = transitionContext.containerView
         //1.get fromVC and toVC
-        guard let rootVC = transitionContext.viewController(forKey: .from) as? pageViewContainer,let fromVC = rootVC.pageViewController.viewControllerList[0] as? todayVC else{
+        guard let fromVC = transitionContext.viewController(forKey: .to) as? todayVC else{
             print("1")
             return
         }
@@ -49,8 +49,8 @@ class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
 //        toVC.view.clipsToBounds = true
         
         
-        let topbarLabelFrame = rootVC.topBar.convert(rootVC.topBar.dataLable1.frame, to: rootVC.view)
-        let fromtextViewFrame = fromVC.view.convert(fromVC.textView.frame, to: rootVC.view)
+        let topbarLabelFrame:CGRect = .zero
+        let fromtextViewFrame = fromVC.textView.frame
         let imageViewFrame = toVC.scrollView.textImageView.frame
         let scaleRation = blurPresentationController.frameOfPresentedView.width / fromtextViewFrame.width//<1
         toVC.view.frame = blurPresentationController.frameOfPresentedView
@@ -67,12 +67,12 @@ class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
     func animationForDismiss(using transitionContext: UIViewControllerContextTransitioning){
         //1.get fromVC and toVC
         guard let fromVC = transitionContext.viewController(forKey: .from) as? shareVC else {return}
-        guard let rootVC = transitionContext.viewController(forKey: .to) as? pageViewContainer,let toVC = rootVC.pageViewController.viewControllerList[0] as? todayVC else{
+        guard let toVC = transitionContext.viewController(forKey: .to) as? todayVC else{
             print("2")
             return
         }
         
-        let toTextViewFrame = toVC.view.convert(toVC.textView.frame, to: rootVC.view)
+        let toTextViewFrame = toVC.textView.frame
         
         UIView.animate(withDuration: duration - 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction], animations: {
             

@@ -20,7 +20,6 @@ class monthButton: UIButton {
     }
     func configureUI(){
         //圆形
-        self.layer.cornerRadius = self.frame.width/2
         self.setupShadow(opacity: 1, radius: 1, offset: CGSize(width: 1, height: 0), color: UIColor.black.withAlphaComponent(0.35))
         
         //containView
