@@ -49,8 +49,6 @@ public final class DiaryStore: ObservableObject {
     ///提交添加或修改到云端
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑
-        //展示菊花转
-        indicatorViewManager.shared.start(style: .banner)
         //提交更新到云端
         syncEngine?.upload(diary)
     }
@@ -62,7 +60,6 @@ public final class DiaryStore: ObservableObject {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
         }
-        indicatorViewManager.shared.start(style: .banner)
         //云端删除+本地删除
         syncEngine?.delete(diary)
     }
@@ -74,8 +71,6 @@ public final class DiaryStore: ObservableObject {
     
     ///手动扫描离线修改的数据，然后上传
     public func uploadLocalDataNotUploadedYet(){
-        //展示菊花转
-        indicatorViewManager.shared.start()
         syncEngine?.uploadLocalDataNotUploadedYet()
     }
     

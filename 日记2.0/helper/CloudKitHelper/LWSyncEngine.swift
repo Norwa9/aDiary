@@ -81,6 +81,7 @@ final class LWSyncEngine{
         self.defaults = defaults
         self.buffer = initialDiaries
         
+        indicatorViewManager.shared.start()
         start()
     }
     

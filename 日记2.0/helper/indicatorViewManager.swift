@@ -56,6 +56,9 @@ class indicatorViewManager{
     func start(style:style = .center){
         DispatchQueue.main.async {
             let topWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first!
+            if topWindow.subviews.contains(self.containerView){
+                return
+            }
             topWindow.addSubview(self.containerView)
             
             ///根据样式更新约束
