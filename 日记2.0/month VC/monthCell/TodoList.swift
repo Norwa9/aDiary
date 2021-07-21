@@ -109,9 +109,11 @@ extension TodoList:todoListDelegate{
         for (index,todoAttrTuple) in viewModel.todoAttributesTuples.enumerated(){
             if count == indexInUnchecks && todoAttrTuple.1 == self.todoListType.rawValue{
                 todoAttributesTuplesCopy[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
+                self.todos.remove(at: indexInUnchecks)
                 LWRealmManager.shared.update {
                     //反转attribute的值
                     //这里整个数组重新赋值，目的是触发todoAttributesTuples的setter
+                    viewModel.todos = self.todos
                     viewModel.todoAttributesTuples = todoAttributesTuplesCopy
                 }
                 DiaryStore.shared.addOrUpdate(viewModel)
@@ -128,7 +130,6 @@ extension TodoList:todoListDelegate{
     
     private func updateTodoListViewAfterCheck(row:Int){
         //1.collection view移除一个cell
-        self.todos.remove(at: row)
         self.collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [IndexPath(row: row, section: 0)])
         } completion: { _ in}
