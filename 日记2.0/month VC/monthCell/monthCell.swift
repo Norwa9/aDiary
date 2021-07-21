@@ -213,11 +213,20 @@ class monthCell: UICollectionViewCell {
             make.right.equalTo(containerView).offset(-15)
             make.bottom.equalTo(dateLabel.snp.top).offset(-5)
         }
+        
+        todoListView.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(10)
+            make.right.equalTo(containerView).offset(-10)
+            make.top.equalTo(contentLabel.snp.bottom).offset(5)
+            make.bottom.equalTo(dateLabel.snp.top).offset(-5)
+            make.height.equalTo(100)
+        }
+        
         dateLabel.snp.makeConstraints { (make) in
             make.left.equalTo(containerView).offset(15)
             make.height.equalTo(20)
             make.width.equalTo(130)
-            make.bottom.equalTo(todoListView.snp.top).offset(-5)
+            make.bottom.equalTo(containerView).offset(-5)
         }
         moodImageView.snp.makeConstraints { (make) in
             make.right.equalTo(containerView).offset(-15)
@@ -238,12 +247,7 @@ class monthCell: UICollectionViewCell {
             make.centerY.equalTo(moodImageView)
         }
         
-        todoListView.snp.makeConstraints { make in
-            make.left.equalTo(containerView).offset(10)
-            make.right.equalTo(containerView).offset(-10)
-            make.bottom.equalTo(containerView).offset(-5)
-            make.height.equalTo(100)
-        }
+        
     }
     
     //MARK:-设置Model
@@ -348,12 +352,18 @@ extension monthCell{
             self.moodImageView.snp.updateConstraints { (update) in
                 update.right.equalTo(containerView).offset(-15)
             }
+            self.contentLabel.snp.updateConstraints { update in
+                update.height.lessThanOrEqualTo(200)//恢复内容高度
+            }
         case 2:
             self.wordNumLabel.snp.updateConstraints { (update) in
                 update.width.equalTo(0)
             }
             self.moodImageView.snp.updateConstraints { (update) in
                 update.right.equalTo(containerView).offset(-5)
+            }
+            self.contentLabel.snp.updateConstraints { update in
+                update.height.lessThanOrEqualTo(0)//内容高度=0
             }
         default:
             return
