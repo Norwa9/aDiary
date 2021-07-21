@@ -195,6 +195,11 @@ extension todayVC{
         self.loadTodayData()
         
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.save()
+    }
      
 }
 

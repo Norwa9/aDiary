@@ -33,15 +33,15 @@ extension diaryInfo{
 //MARK:-方法
 extension diaryInfo{
     ///解析文本，返回所有的完成todo或者返回所有的未完成todo
-    func getTodos(for type:todoType)->[String]{
-        guard let attributedString = self.attributedString else {return []}
+    func getTodos(for type:todoType,from aString:NSAttributedString?,currentTodoAttributes:[(Int,Int)])->[String]{
+        guard let attributedString = aString else {return []}
         
         var todos = [String]()
         
         let mutableAttString = NSMutableAttributedString(attributedString: attributedString)
         
         //1.恢复attribute
-        for tuple in todoAttributesTuples{
+        for tuple in currentTodoAttributes{
             mutableAttString.addAttribute(.todo, value: tuple.1, range: NSRange(location: tuple.0, length: 1))
         }
         
@@ -67,9 +67,6 @@ extension diaryInfo{
             case .all:
                 break
             }
-            
-            
-            
         }
         return todos
     }

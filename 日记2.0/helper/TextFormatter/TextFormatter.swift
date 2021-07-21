@@ -679,11 +679,12 @@ extension TextFormatter{
     func save(with diary:diaryInfo){
         let attributedText = textView.attributedText!
         let result = attributedText.parseAttribuedText()
-        let todos = diary.getTodos(for: .unchecked)
         let imageAttrTuples = result.0
         let todoAttrTuples = result.1
         let cleanText = result.2
         let containsImage = result.3
+        
+        let todos = diary.getTodos(for: .unchecked,from: attributedText,currentTodoAttributes: todoAttrTuples)//从最新的属性文本和属性信息数组中解析处todos
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
