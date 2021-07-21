@@ -122,7 +122,8 @@ extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         
         //如果日记为空，清除placeholder，开始输入
-        if textView.textColor == UIColor.lightGray {
+        //不可与strikeThrough的颜色一样，否者会导致textView误以为当前的todo是textview的占位符
+        if textView.textColor == UIColor.gray {
             textView.text = nil
             textView.textColor = UIColor.black
         }

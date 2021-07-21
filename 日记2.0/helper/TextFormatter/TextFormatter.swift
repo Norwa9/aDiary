@@ -844,7 +844,7 @@ extension TextFormatter{
         let attributes:[NSAttributedString.Key:Any] = [
             .font:userDefaultManager.font,
             .paragraphStyle : paraStyle,
-            .foregroundColor : UIColor.lightGray,
+            .foregroundColor : UIColor.gray,
         ]
         let placeHolder = "标题.."
         self.textView.attributedText = NSAttributedString(string: placeHolder, attributes: attributes)
