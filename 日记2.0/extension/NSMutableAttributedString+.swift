@@ -62,3 +62,18 @@ extension NSMutableAttributedString{
         }
     }
 }
+
+//MARK:-NSMutableAttributedString + todo
+extension NSMutableAttributedString{
+    @discardableResult func addCheckAttribute(range:NSRange) ->Self{
+        self.addAttribute(.strikethroughStyle, value: 1, range: range)
+        self.addAttribute(.foregroundColor, value: UIColor.lightGray, range: range)
+        return self
+    }
+    
+    @discardableResult func addUncheckAttribute(range:NSRange)->Self{
+        self.removeAttribute(.strikethroughStyle, range: range)
+        self.addAttribute(.foregroundColor, value: UIColor.black, range: range)
+        return self
+    }
+}

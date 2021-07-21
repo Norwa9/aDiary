@@ -127,13 +127,14 @@ extension TodoListCell{
         
         guard let aString = self.contentLabel.attributedText else{return}
         
-        
+        let mutableAttrString = NSMutableAttributedString(attributedString: aString)
+        let range = NSRange(location: 0, length: mutableAttrString.length)
         if sender.isSelected{
             //完成
-            self.contentLabel.attributedText = aString.addStrikethroughStyle()
+            self.contentLabel.attributedText = mutableAttrString.addCheckAttribute(range: range)
         }else{
             //未完成
-            self.contentLabel.attributedText = aString.removeStrikethroughStyle()
+            self.contentLabel.attributedText = mutableAttrString.addUncheckAttribute(range: range)
         }
         delegate?.todoDidCheck(todo: self.todo)
     }

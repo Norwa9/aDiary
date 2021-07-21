@@ -293,8 +293,10 @@ extension TextFormatter{
         
         if todoAttr == 0 {
             self.storage.addAttribute(.strikethroughStyle, value: 1, range: paragraph)
+            self.storage.addAttribute(.foregroundColor, value: UIColor.gray, range: paragraph)
         } else {
             self.storage.removeAttribute(.strikethroughStyle, range: paragraph)
+            self.storage.addAttribute(.foregroundColor, value: UIColor.black, range: paragraph)
         }
         
         if paragraph.contains(location) {
@@ -792,9 +794,9 @@ extension TextFormatter{
                 let paragraphRange = attrText.mutableString.paragraphRange(for: range)
                 
                 if value == 1 {
-                    attrText.addAttribute(.strikethroughStyle, value: 1, range: paragraphRange)
+                    attrText.addCheckAttribute(range: paragraphRange)
                 } else {
-                    attrText.removeAttribute(.strikethroughStyle, range: paragraphRange)
+                    attrText.addUncheckAttribute(range: paragraphRange)
                 }
                 
                 //2.调整bounds大小
@@ -838,7 +840,6 @@ extension TextFormatter{
     ///设置textView的Placeholder
     func setPlaceholder(){
         let paraStyle = NSMutableParagraphStyle()
-//        paraStyle.alignment = .left
         paraStyle.lineSpacing = userDefaultManager.lineSpacing
         let attributes:[NSAttributedString.Key:Any] = [
             .font:userDefaultManager.font,
