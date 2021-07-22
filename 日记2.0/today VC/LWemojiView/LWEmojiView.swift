@@ -35,10 +35,10 @@ class LWEmojiView: UIView {
         
         //textField
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 40, height: 40)
+        layout.itemSize = CGSize(width: 44, height: 44)
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 2
-        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = -20
+        layout.minimumInteritemSpacing = 5
         emojiCollection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         emojiCollection.register(LWEmojiCell.self, forCellWithReuseIdentifier: LWEmojiCell.reuseId)
         emojiCollection.contentInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
@@ -81,7 +81,6 @@ class LWEmojiView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         maxNum = Int(emojiCollection.bounds.width / 44) + 1
-        
     }
     
 //MARK:-helper

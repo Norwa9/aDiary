@@ -96,3 +96,13 @@ extension String{
         return mString
     }
 }
+
+//MARK:-String + UILabel
+extension String{
+    func changeWorldSpace(space:CGFloat) -> NSAttributedString{
+        let attributedString = NSMutableAttributedString.init(string: self, attributes: [.kern:space])
+        let paragraphStyle = NSMutableParagraphStyle()
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: .init(location: 0, length: attributedString.length))
+        return attributedString
+    }
+}

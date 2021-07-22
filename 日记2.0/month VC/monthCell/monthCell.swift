@@ -71,10 +71,6 @@ class monthCell: UICollectionViewCell {
         
         self.layoutSubviews()
         
-        //emojisLabel
-        emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)
-        emojisLabel.numberOfLines = 0
-        
         //titleLabel
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,6 +123,11 @@ class monthCell: UICollectionViewCell {
         
         //todo-list
         todoListView = TodoList(frame: .zero)
+        
+        //emojisLabel
+        emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)
+        emojisLabel.numberOfLines = 0
+        
         
         containerView.addSubview(emojisLabel)
         containerView.addSubview(albumView)
@@ -212,7 +213,8 @@ class monthCell: UICollectionViewCell {
     
     func updateUI(){
         self.updateCons()
-        self.emojisLabel.text = diary.emojis.joined()
+        
+        self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
