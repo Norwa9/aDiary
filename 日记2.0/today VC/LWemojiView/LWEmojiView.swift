@@ -7,11 +7,13 @@
 
 import UIKit
 import ISEmojiView
+import Popover
 
 class LWEmojiView: UIView {
-    var stack:[String] = []
-    var textField:UITextField!
-    var emojiPan:EmojiView!
+    var emojis:[String] = []
+    var emojiCollection:UICollectionView!
+    var emojiPanel:EmojiView!
+    var popover:Popover!
     init() {
         super.init(frame: .zero)
         initUI()
@@ -28,52 +30,106 @@ class LWEmojiView: UIView {
         self.backgroundColor = APP_GRAY_COLOR()
         
         //textField
-        textField = UITextField()
-        textField.placeholder = "😁"
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 40, height: 40)
+        layout.scrollDirection = .horizontal
+        emojiCollection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        emojiCollection.register(LWEmojiCell.self, forCellWithReuseIdentifier: LWEmojiCell.reuseId)
+        emojiCollection.delegate = self
+        emojiCollection.dataSource = self
+        emojiCollection.isScrollEnabled = false
+        emojiCollection.showsHorizontalScrollIndicator = false
+        emojiCollection.backgroundColor = .clear
+        
+        //gesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showEmojiPanel))
+        emojiCollection.addGestureRecognizer(tapGesture)
+        
+        //popover
+        let options = [
+            .type(.auto),
+            .cornerRadius(10),
+          .animationIn(0.3),
+            .arrowSize(CGSize(width: 5, height: 5)),
+            .springDamping(0.7),
+          ] as [PopoverOption]
+        popover = Popover(options: options)
         
         //emojiView
         let keyboardSettings = KeyboardSettings(bottomType: .categories)
-        emojiPan = EmojiView(keyboardSettings: keyboardSettings)
-        emojiPan.translatesAutoresizingMaskIntoConstraints = false
-        emojiPan.delegate = self
-        textField.inputView = emojiPan
+        keyboardSettings.countOfRecentsEmojis = 10
+        emojiPanel = EmojiView(keyboardSettings: keyboardSettings)
+        emojiPanel.translatesAutoresizingMaskIntoConstraints = false
+        emojiPanel.delegate = self
 
-        self.addSubview(textField)
+        self.addSubview(emojiCollection)
     }
     
     func setupCons(){
-        textField.snp.makeConstraints { make in
+        emojiCollection.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    func add(emoji:String){
-        
+    func push(with emoji:String){
+        emojis.append(emoji)
+        emojiCollection.reloadData()
+    }
+    
+    func pop(){
+        guard !emojis.isEmpty else {return}
+        emojis.removeLast()
+        emojiCollection.reloadData()
     }
     
     
 }
+//MARK:-target action
+extension LWEmojiView{
+    @objc func showEmojiPanel(){
+        let viewSize = CGSize(width: 400, height:300 )
+        let container = UIView(frame: CGRect(origin: .zero, size: viewSize))
+        container.addSubview(emojiPanel)
+        emojiPanel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        popover.show(container, fromView: emojiCollection)
+    }
+}
+
+
 //MARK:-EmojiViewDelegate
 extension LWEmojiView:EmojiViewDelegate{
     func emojiViewDidSelectEmoji(_ emoji: String, emojiView: EmojiView) {
-        textField.insertText(emoji)
-    }
-    // callback when tap change keyboard button on keyboard
-    func emojiViewDidPressChangeKeyboardButton(_ emojiView: EmojiView) {
-        textField.inputView = nil
-        textField.keyboardType = .default
-        textField.reloadInputViews()
+        self.push(with: emoji)
+        
     }
         
     // callback when tap delete button on keyboard
     func emojiViewDidPressDeleteBackwardButton(_ emojiView: EmojiView) {
-        textField.deleteBackward()
-    }
-
-    // callback when tap dismiss button on keyboard
-    func emojiViewDidPressDismissKeyboardButton(_ emojiView: EmojiView) {
-        textField.resignFirstResponder()
+        self.pop()
     }
 }
 
+//MARK:-UICollectionViewDataSource
+extension LWEmojiView:UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        emojis.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = emojiCollection.dequeueReusableCell(withReuseIdentifier: LWEmojiCell.reuseId, for: indexPath) as! LWEmojiCell
+        
+        let item = indexPath.item
+        cell.setEmoji(emojis[item])
+        
+        return cell
+    }
+    
+
+}
+//MARK:-UICollectionViewDelegate
+extension LWEmojiView:UICollectionViewDelegate{
+
+}
 

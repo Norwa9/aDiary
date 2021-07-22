@@ -105,7 +105,7 @@ class toolsBar: UIView {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.stopAnimatreIndicator()
             self.textView.resignFirstResponder()
-            self.todayVC.emojiView.textField.resignFirstResponder()
+            //self.todayVC.emojiView.textField.resignFirstResponder()
         }
         
     }

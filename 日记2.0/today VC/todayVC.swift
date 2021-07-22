@@ -75,6 +75,7 @@ class todayVC: UIViewController{
         emojiView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalTo(textView)
+            make.height.equalTo(44)
             make.bottom.equalTo(textView.snp.top).offset(-5)
         }
         
@@ -94,8 +95,6 @@ class todayVC: UIViewController{
         
         if textView.isFirstResponder {
             keyBoardToolsBar.keyboardType = .other
-        }else if emojiView.textField.isFirstResponder{
-            keyBoardToolsBar.keyboardType = .emoji
         }
         
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
