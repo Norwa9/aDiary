@@ -20,7 +20,10 @@ class todayVC: UIViewController{
         return tagsViewController
     }()
     
+    var isShowingEmojiView:Bool = true
     var emojiView:LWEmojiView!
+    let kEmojiViewHeight:CGFloat = 44
+    
     var textView:LWTextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
@@ -75,7 +78,7 @@ class todayVC: UIViewController{
         emojiView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalTo(textView)
-            make.height.equalTo(44)
+            make.height.equalTo(kEmojiViewHeight)
             make.bottom.equalTo(textView.snp.top).offset(-5)
         }
         
@@ -147,7 +150,7 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
 //MARK:-UITextView Delegate
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
-        
+        self.toggleEmojiView()
         //如果日记为空，清除placeholder，开始输入
         //不可与strikeThrough的颜色一样，否者会导致textView误以为当前的todo是textview的占位符
         if textView.textColor == UIColor.gray {
@@ -170,7 +173,7 @@ extension todayVC:UITextViewDelegate{
     
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        
+        self.toggleEmojiView()
     }
     //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -202,8 +205,23 @@ extension todayVC:UITextViewDelegate{
         return true
     }
 
+}
 
+//MARK:-emojiView
+extension todayVC{
+    func toggleEmojiView(){
+        let newHeight = isShowingEmojiView ? 0 : kEmojiViewHeight
+            isShowingEmojiView.toggle()
+        emojiView.snp.updateConstraints { (update) in
+            update.height.equalTo(newHeight)
+        }
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+            self.view.layoutIfNeeded()
+        } completion: { (_) in
+            
+        }
 
+    }
 }
 
 //MARK:-生命周期

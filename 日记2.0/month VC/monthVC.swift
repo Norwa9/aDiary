@@ -50,7 +50,7 @@ class monthVC: UIViewController {
     //calendar
     var lwCalendar: LWCalendar!
     var formatter = DateFormatter()
-    var isShowingCalendar:Bool = false
+    var isShowingCalendar:Bool = true
     let kCalendarHeight:CGFloat = 300
     //collection view
     var collectionView:UICollectionView!
