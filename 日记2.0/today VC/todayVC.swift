@@ -66,7 +66,7 @@ class todayVC: UIViewController{
     
     func setupConstraints(){
         textView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaInsets)
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
 
@@ -256,7 +256,7 @@ extension todayVC{
 //MARK:-UIGestureRecognizerDelegate
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
-        if draggingDownToDismiss == false{
+        if draggingDownToDismiss == false && textView.contentSize.height > view.bounds.height{
             return
         }
         //初始触摸点
@@ -296,7 +296,6 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
             scrollView.contentOffset = .zero
             draggingDownToDismiss = true//仅在scrollview到顶时，才启用下拉dismiss
         }
- 
     }
     
 }
