@@ -10,6 +10,7 @@ import ISEmojiView
 import Popover
 
 class LWEmojiView: UIView {
+    var maxNum:Int?
     var diary:diaryInfo
     var emojis:[String]
     var emojiCollection:UICollectionView!
@@ -36,8 +37,11 @@ class LWEmojiView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 40, height: 40)
         layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 2
         emojiCollection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         emojiCollection.register(LWEmojiCell.self, forCellWithReuseIdentifier: LWEmojiCell.reuseId)
+        emojiCollection.contentInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         emojiCollection.delegate = self
         emojiCollection.dataSource = self
         emojiCollection.isScrollEnabled = false
@@ -74,7 +78,16 @@ class LWEmojiView: UIView {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        maxNum = Int(emojiCollection.bounds.width / 44) + 1
+        
+    }
+    
+//MARK:-helper
+    
     func push(with emoji:String){
+        guard emojis.count < maxNum ?? 4 else {return}
         emojis.append(emoji)
         LWRealmManager.shared.update {
             diary.emojis = emojis
@@ -96,7 +109,7 @@ class LWEmojiView: UIView {
 //MARK:-target action
 extension LWEmojiView{
     @objc func showEmojiPanel(){
-        let viewSize = CGSize(width: 400, height:300 )
+        let viewSize = CGSize(width: 300, height:300 )
         let container = UIView(frame: CGRect(origin: .zero, size: viewSize))
         container.addSubview(emojiPanel)
         emojiPanel.snp.makeConstraints { make in
@@ -139,6 +152,18 @@ extension LWEmojiView:UICollectionViewDataSource{
 }
 //MARK:-UICollectionViewDelegate
 extension LWEmojiView:UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard indexPath.item == emojis.count - 1 else {return}
+        cell.transform = .init(translationX: 0, y: 40)
+        cell.alpha = 0
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+            cell.transform = .identity
+            cell.alpha = 1
+        } completion: { (_) in
+            
+        }
 
+    }
 }
 

@@ -17,6 +17,7 @@ class monthCell: UICollectionViewCell {
     
     static let reusableID = "monthCell"
     private var containerView = UIView()
+    var emojisLabel:UILabel = UILabel()
     var titleLabel:UILabel = UILabel()
     var splitLine:UIView = UIView()//标题下的分割线
     var contentLabel:UILabel = UILabel()
@@ -69,6 +70,10 @@ class monthCell: UICollectionViewCell {
         containerView.layer.cornerRadius = 10
         
         self.layoutSubviews()
+        
+        //emojisLabel
+        emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)
+        emojisLabel.numberOfLines = 0
         
         //titleLabel
         titleLabel.numberOfLines = 0
@@ -123,7 +128,7 @@ class monthCell: UICollectionViewCell {
         //todo-list
         todoListView = TodoList(frame: .zero)
         
-        
+        containerView.addSubview(emojisLabel)
         containerView.addSubview(albumView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(splitLine)
@@ -188,7 +193,12 @@ class monthCell: UICollectionViewCell {
             make.top.greaterThanOrEqualTo(todoListView.snp.bottom).offset(5)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
-            make.bottom.equalTo(containerView).offset(-5)
+        }
+        
+        emojisLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(tagsLabel.snp.bottom).offset(5)
+            make.left.right.equalTo(tagsLabel)
+            make.bottom.equalTo(containerView.snp.bottom).offset(-5)
         }
         
         
@@ -202,7 +212,7 @@ class monthCell: UICollectionViewCell {
     
     func updateUI(){
         self.updateCons()
-        
+        self.emojisLabel.text = diary.emojis.joined()
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
@@ -257,6 +267,7 @@ extension monthCell{
     override func prepareForReuse() {
         super.prepareForReuse()
         self.todoListView.todos = []
+        self.emojisLabel.text = ""
     }
 }
 
