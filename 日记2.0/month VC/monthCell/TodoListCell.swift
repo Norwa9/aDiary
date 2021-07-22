@@ -13,7 +13,7 @@ class TodoListCell: UICollectionViewCell {
     static let cellId = "todoListCell"
     let containerView = UIView()
     let checkButton:UIButton = UIButton()
-    let contentLabel:UILabel = UILabel()
+    let contentLabel:UILabel = GradientLabel()
     private var isDone:Bool = false
     var todo:String!
     
@@ -44,6 +44,7 @@ class TodoListCell: UICollectionViewCell {
         
         //contentLabel
         contentLabel.font = UIFont(name: "DIN Alternate", size: 15)
+        contentLabel.clipsToBounds = true
         containerView.addSubview(contentLabel)
         
     }
@@ -63,7 +64,7 @@ class TodoListCell: UICollectionViewCell {
         
         contentLabel.snp.makeConstraints { make in
             make.left.equalTo(checkButton.snp.right).offset(5)
-            make.right.equalTo(containerView).offset(-5)
+            make.right.equalTo(containerView)
             make.height.equalTo(30)
             make.centerY.equalTo(checkButton)
         }
@@ -138,5 +139,29 @@ extension TodoListCell{
             self.contentLabel.attributedText = mutableAttrString.addUncheckAttribute(range: range)
         }
         delegate?.todoDidCheck(todo: self.todo)
+    }
+}
+
+
+///渐变label
+class GradientLabel: UILabel {
+
+    override class var layerClass: AnyClass {
+        return CAGradientLayer.self
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        if let gradLayer =  layer as?  CAGradientLayer {
+            gradLayer.colors = [UIColor.white.cgColor, APP_GRAY_COLOR().cgColor]
+            gradLayer.startPoint = CGPoint(x:0,y:0.5)
+            gradLayer.endPoint = CGPoint(x:1.0,y:0.5)
+            gradLayer.locations = [0.7, 1.0];
+        }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
