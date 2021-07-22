@@ -102,7 +102,7 @@ public final class DiaryStore: ObservableObject {
         DispatchQueue.main.async {
             //2.更新UI
             indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC().reloadCollectionViewData(forRow: -1, animated: true)
+            UIApplication.getMonthVC().reloadMonthVC()
             
         }
         

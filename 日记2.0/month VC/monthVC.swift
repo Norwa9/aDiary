@@ -211,7 +211,7 @@ class monthVC: UIViewController {
         
         //获取到真实的frame后，布局月份按钮
         self.view.layoutIfNeeded()
-        let buttonDiameter:CGFloat = 30
+        let buttonDiameter:CGFloat = 25
         let insetY:CGFloat = 5
         let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * buttonDiameter) / 13.0
         for i in 0..<12{
