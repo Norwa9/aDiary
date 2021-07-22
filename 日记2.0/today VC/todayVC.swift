@@ -37,6 +37,7 @@ class todayVC: UIViewController{
     
     var diaryStore:DiaryStore!
     
+    var draggingDownToDismiss = false
     var dismissPanGesture:UIPanGestureRecognizer!
     var interactStartPoint:CGPoint?
     
@@ -250,6 +251,9 @@ extension todayVC{
 //MARK:-UIGestureRecognizerDelegate
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
+        if draggingDownToDismiss == false{
+            return
+        }
         //初始触摸点
         let startingPoint: CGPoint
         if let p = interactStartPoint{
@@ -269,6 +273,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         
         if progress >= 1.0{
             interactStartPoint = nil
+            draggingDownToDismiss = false
             self.dismiss(animated: true, completion: nil)
         }
         
@@ -284,6 +289,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         //解决下拉dismiss和scrollview的冲突
         if y < 0 {
             scrollView.contentOffset = .zero
+            draggingDownToDismiss = true//仅在scrollview到顶时，才启用下拉dismiss
         }
  
     }
