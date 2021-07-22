@@ -233,7 +233,7 @@ extension todayVC{
         if todayDiary.month == monthVC.selectedMonth{
             //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
             monthVC.reloadCollectionViewData(forRow: todayDiary.row)
-            monthVC.calendar?.reloadData()
+            monthVC.lwCalendar?.reloadData()
         }
     }
     

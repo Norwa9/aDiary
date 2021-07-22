@@ -47,7 +47,7 @@ class monthVC: UIViewController {
         return Popover(options: options, showHandler: nil, dismissHandler: nil)
     }()
     //calendar
-    weak var calendar: FSCalendar!
+    var lwCalendar: LWCalendar!
     let calendarHeight:CGFloat = 300
     var calendarHeightOriginFrame:CGRect!
     var formatter = DateFormatter()
@@ -160,7 +160,9 @@ class monthVC: UIViewController {
         backToCurMonthButton.setupShadow()
         
         //calendar
-        //self.initCalendarUI()
+        lwCalendar = LWCalendar(frame: .zero)
+        lwCalendar.dataSource = self
+        lwCalendar.delegate = self
         
         
         
@@ -171,6 +173,7 @@ class monthVC: UIViewController {
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
         self.view.addSubview(backToCurMonthButton)
+        self.view.addSubview(lwCalendar)
     }
     
     
@@ -209,10 +212,14 @@ class monthVC: UIViewController {
             make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
+        lwCalendar.snp.makeConstraints { make in
+            make.edges.equalTo(collectionView)
+        }
+        
         //获取到真实的frame后，布局月份按钮
         self.view.layoutIfNeeded()
         let buttonDiameter:CGFloat = 25
-        let insetY:CGFloat = 5
+        let insetY:CGFloat = (40 - 25) / 2
         let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * buttonDiameter) / 13.0
         for i in 0..<12{
             let x = buttonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
@@ -239,7 +246,7 @@ class monthVC: UIViewController {
         }else{
             selectedMonth = tappedMonth
             updateUI()
-            calendar?.setCurrentPage(formatter.date(from: "\(selectedYear)-\(tappedMonth)")!, animated: false)
+            lwCalendar?.setCurrentPage(formatter.date(from: "\(selectedYear!)-\(tappedMonth)")!, animated: false)
             
         }
     }
@@ -255,7 +262,7 @@ class monthVC: UIViewController {
         selectedMonth = month
         updateUI()
         //跳转日历
-        calendar?.setCurrentPage(curDate, animated: false)
+        lwCalendar?.setCurrentPage(curDate, animated: false)
     }
     
     func adjustBackToCurrentMonthButton(){
@@ -385,7 +392,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             self.filter()
         }else{
             self.configureDataSource(year: selectedYear, month: selectedMonth)
-            self.calendar?.reloadData()
+            self.lwCalendar?.reloadData()
         }
         
     }

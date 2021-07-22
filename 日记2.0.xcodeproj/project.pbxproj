@@ -17,6 +17,7 @@
 		1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D226A5836A0090D411 /* TodoListLayout.swift */; };
 		1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6963E26A6CFE00009472F /* LWTextView.swift */; };
 		1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964526A820980009472F /* diaryInfo+Todo.swift */; };
+		1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964726A91C5B0009472F /* LWCalendar.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -24,7 +25,6 @@
 		EA38493F262EBAA3001B693F /* filterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38493E262EBAA3001B693F /* filterModel.swift */; };
 		EA384942262ED17A001B693F /* introduction.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* introduction.txt */; };
 		EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */; };
-		EA38FEAA26A1E3AD00CEFC1A /* monthVC+calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */; };
 		EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA3ABAD625DFE05400911902 /* demoDiaries.txt */; };
 		EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ABAD925E019FD00911902 /* toolsBar.swift */; };
 		EA3ABADD25E01A5100911902 /* toolsBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3ABADC25E01A5100911902 /* toolsBar.xib */; };
@@ -100,6 +100,7 @@
 		1B2A56D226A5836A0090D411 /* TodoListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListLayout.swift; sourceTree = "<group>"; };
 		1BB6963E26A6CFE00009472F /* LWTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextView.swift; sourceTree = "<group>"; };
 		1BB6964526A820980009472F /* diaryInfo+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Todo.swift"; sourceTree = "<group>"; };
+		1BB6964726A91C5B0009472F /* LWCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCalendar.swift; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -109,7 +110,6 @@
 		EA38493E262EBAA3001B693F /* filterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterModel.swift; sourceTree = "<group>"; };
 		EA384941262ED17A001B693F /* introduction.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = introduction.txt; sourceTree = "<group>"; };
 		EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewLayout.swift; sourceTree = "<group>"; };
-		EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "monthVC+calendar.swift"; sourceTree = "<group>"; };
 		EA3ABAD625DFE05400911902 /* demoDiaries.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demoDiaries.txt; sourceTree = "<group>"; };
 		EA3ABAD925E019FD00911902 /* toolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toolsBar.swift; sourceTree = "<group>"; };
 		EA3ABADC25E01A5100911902 /* toolsBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = toolsBar.xib; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 		EADA85FC2625DA60007D1134 /* calendar */ = {
 			isa = PBXGroup;
 			children = (
-				EA38FEA926A1E3AD00CEFC1A /* monthVC+calendar.swift */,
+				1BB6964726A91C5B0009472F /* LWCalendar.swift */,
 				EADA85FD2625DA98007D1134 /* customAlertView.swift */,
 				EADA86012625DAA1007D1134 /* customAlertView.xib */,
 				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
@@ -597,7 +597,6 @@
 				EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */,
 				EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
-				EA38FEAA26A1E3AD00CEFC1A /* monthVC+calendar.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
@@ -623,6 +622,7 @@
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
+				1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoList.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,

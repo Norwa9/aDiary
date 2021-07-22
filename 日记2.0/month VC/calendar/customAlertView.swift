@@ -76,6 +76,7 @@ class customAlertView: UIView {
             }
             dismissQueue.sync {
                 //TODO:打开todayVC
+                
             }
         }
         
