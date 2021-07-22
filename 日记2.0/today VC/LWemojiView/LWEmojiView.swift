@@ -54,7 +54,7 @@ class LWEmojiView: UIView {
             .cornerRadius(10),
           .animationIn(0.3),
             .arrowSize(CGSize(width: 5, height: 5)),
-            .springDamping(0.7),
+            .springDamping(0.9),
           ] as [PopoverOption]
         popover = Popover(options: options)
         

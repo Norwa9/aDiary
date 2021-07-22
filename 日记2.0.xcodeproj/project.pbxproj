@@ -21,7 +21,6 @@
 		1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964A26A95D810009472F /* LWEmojiView.swift */; };
 		1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964E26A970040009472F /* LWEmojiCell.swift */; };
 		1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */; };
-		BE4ECE4141B0476DFF02A003 /* Pods___2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49FDD32E6BACD4C5B919BF0D /* Pods___2_0.framework */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -108,7 +107,6 @@
 		1BB6964A26A95D810009472F /* LWEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWEmojiView.swift; sourceTree = "<group>"; };
 		1BB6964E26A970040009472F /* LWEmojiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWEmojiCell.swift; sourceTree = "<group>"; };
 		1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+emoji.swift"; sourceTree = "<group>"; };
-		49FDD32E6BACD4C5B919BF0D /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods___2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
-				BE4ECE4141B0476DFF02A003 /* Pods___2_0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +238,6 @@
 			isa = PBXGroup;
 			children = (
 				EA9AF51626821E5F00D77908 /* CloudKit.framework */,
-				49FDD32E6BACD4C5B919BF0D /* Pods___2_0.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

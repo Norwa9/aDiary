@@ -34,6 +34,7 @@ class monthVC: UIViewController {
     var monthBtnStackView:UIView!
     var searchBar:UISearchBar!
     var isFilterMode:Bool = false
+    let kTopViewHeight:CGFloat = 40
     //popover
     var filterView:filterMenu!
     var popover:Popover = {
@@ -48,9 +49,9 @@ class monthVC: UIViewController {
     }()
     //calendar
     var lwCalendar: LWCalendar!
-    let calendarHeight:CGFloat = 300
-    var calendarHeightOriginFrame:CGRect!
     var formatter = DateFormatter()
+    var isShowingCalendar:Bool = false
+    let kCalendarHeight:CGFloat = 300
     //collection view
     var collectionView:UICollectionView!
     var flowLayout:waterFallLayout!///瀑布流布局
@@ -127,6 +128,12 @@ class monthVC: UIViewController {
         monthBtnStackView.backgroundColor = .secondarySystemGroupedBackground
         monthBtnStackView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
         
+        //calendar
+        lwCalendar = LWCalendar(frame: .zero)
+        lwCalendar.dataSource = self
+        lwCalendar.delegate = self
+        lwCalendar.alpha = 0
+        
         //search Bar
         searchBar = UISearchBar()
         searchBar.placeholder = "查找所有日记"
@@ -159,21 +166,19 @@ class monthVC: UIViewController {
         backToCurMonthButton.frame.size = CGSize(width: 100, height: 40)
         backToCurMonthButton.setupShadow()
         
-        //calendar
-        lwCalendar = LWCalendar(frame: .zero)
-        lwCalendar.dataSource = self
-        lwCalendar.delegate = self
+        
         
         
         
         self.view.addSubview(topbar)
         self.view.addSubview(topView)
-        self.topView.addSubview(monthBtnStackView)
+        self.view.addSubview(monthBtnStackView)
+        self.monthBtnStackView.addSubview(lwCalendar)
         self.topView.addSubview(searchBar)
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
         self.view.addSubview(backToCurMonthButton)
-        self.view.addSubview(lwCalendar)
+        
     }
     
     
@@ -188,12 +193,19 @@ class monthVC: UIViewController {
             make.top.equalTo(topbar.snp.bottom).offset(5)
             make.left.equalTo(view).offset(5)
             make.right.equalTo(view).offset(-5)
-            make.height.equalTo(40)
+            make.height.equalTo(kTopViewHeight)
             make.bottom.equalTo(collectionView.snp.top).offset(-5)
         }
         
         monthBtnStackView.snp.makeConstraints { (make) in
             make.edges.equalTo(topView)
+        }
+        
+        lwCalendar.snp.makeConstraints { (make) in
+            //初始时calendar高度被挤压为0
+            make.top.equalToSuperview().offset(kTopViewHeight)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(kCalendarHeight)
         }
         
         searchBar.snp.makeConstraints { make in
@@ -212,19 +224,15 @@ class monthVC: UIViewController {
             make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
-        lwCalendar.snp.makeConstraints { make in
-            make.edges.equalTo(collectionView)
-        }
-        
-        //获取到真实的frame后，布局月份按钮
-        self.view.layoutIfNeeded()
-        let buttonDiameter:CGFloat = 25
-        let insetY:CGFloat = (40 - 25) / 2
-        let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * buttonDiameter) / 13.0
+        //月份按钮不方便使用auto layout，使用frame来布局
+        self.view.layoutIfNeeded()//获取到真实的frame
+        let kButtonDiameter:CGFloat = 25
+        let insetY:CGFloat = (kTopViewHeight - 25) / 2
+        let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * kButtonDiameter) / 13.0
         for i in 0..<12{
-            let x = buttonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
+            let x = kButtonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
             let y = insetY
-            let button = monthButton(frame: CGRect(x: x, y: y, width: buttonDiameter, height: buttonDiameter))
+            let button = monthButton(frame: CGRect(x: x, y: y, width: kButtonDiameter, height: kButtonDiameter))
             button.monthVC = self
             button.monthLabel.text = "\(i+1)"
             button.tag = i+1
@@ -236,7 +244,7 @@ class monthVC: UIViewController {
     
     
 
-    //MARK:-button事件
+    //MARK:-action target
     ///按下月份按钮
     @objc func monthDidTap(sender:monthButton){
         formatter.dateFormat = "yyyy-MM"
@@ -249,6 +257,23 @@ class monthVC: UIViewController {
             lwCalendar?.setCurrentPage(formatter.date(from: "\(selectedYear!)-\(tappedMonth)")!, animated: false)
             
         }
+    }
+    
+     func showCalendar(){
+        let newHeihgt = isShowingCalendar ? (kTopViewHeight + kCalendarHeight) : kTopViewHeight
+        
+        isShowingCalendar.toggle()
+        
+        topView.snp.updateConstraints { (update) in
+            update.height.equalTo(newHeihgt)
+        }
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+            self.lwCalendar.alpha = self.isShowingCalendar ? 0 : 1
+            self.view.layoutIfNeeded()
+        } completion: { (_) in
+            
+        }
+        
     }
     
     ///返回本月按钮
@@ -315,6 +340,8 @@ class monthVC: UIViewController {
     ///topbar按钮触发事件
     func monthButtonsTapped(button: topbarButton){
         switch button.tag {
+        case 0:
+            showCalendar()
         case 1:
             //切换单双列展示
             layoutParasManager.shared.switchLayoutMode()

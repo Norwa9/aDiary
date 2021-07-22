@@ -17,10 +17,11 @@ class topbarView: UIView {
     
     var dataLable1:UILabel!
     var dataLable2:UILabel!
-    
+    var button0:topbarButton!
     var button1:topbarButton!
     var button2:topbarButton!
     var button3:topbarButton!
+    
     
     var topbarButtons:[topbarButton] = []
     
@@ -56,6 +57,8 @@ class topbarView: UIView {
         dataLable2.font = appDefaultFonts.dateLable2Font
         self.addSubview(dataLable2)
         
+        
+        
         //button3：搜索
         button3 = topbarButton()
         button3.image = UIImage(named: "search")?.withHorizontallyFlippedOrientation()
@@ -84,8 +87,15 @@ class topbarView: UIView {
         button1.tag = 1
         self.addSubview(button1)
         
+        //button0：日历
+        button0 = topbarButton()
+        button0.image = UIImage(named: "calendar")?.withHorizontallyFlippedOrientation()
+        button0.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
+        button0.tag = 0
+        self.addSubview(button0)
         
-        topbarButtons = [button1,button2,button3]
+        
+        topbarButtons = [button0,button1,button2,button3]
     }
     
     func setupUIconstraint(){
@@ -118,6 +128,12 @@ class topbarView: UIView {
         button1.snp.makeConstraints { make in
             make.top.equalTo(button2)
             make.right.equalTo(button2.snp.left).inset(-10)
+            make.size.equalTo(buttonSize)
+        }
+        
+        button0.snp.makeConstraints { make in
+            make.top.equalTo(button1)
+            make.right.equalTo(button1.snp.left).inset(-10)
             make.size.equalTo(buttonSize)
         }
     }

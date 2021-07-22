@@ -19,9 +19,6 @@ class LWCalendar: FSCalendar {
     }
     
     func initUI(){
-        //MARK:-日历
-        //configure FSCalendar
-        self.setDebugBorder()
         self.register(DIYCalendarCell.self, forCellReuseIdentifier: "cell")
         
         self.firstWeekday = 2
@@ -44,10 +41,6 @@ class LWCalendar: FSCalendar {
         self.appearance.eventOffset = CGPoint(x: 0, y: -5)
         self.appearance.eventDefaultColor = .black
         self.appearance.headerDateFormat = "yyyy年M月"
-        
-        
-        self.alpha = 0
-//        self.alpha = 1
     }
     
     
