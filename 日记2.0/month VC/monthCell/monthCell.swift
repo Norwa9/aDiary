@@ -65,7 +65,7 @@ class monthCell: UICollectionViewCell {
         
         //containerView
         containerView.backgroundColor = .white
-        containerView.layer.masksToBounds = true
+        containerView.layer.masksToBounds = false
         containerView.layer.cornerRadius = 10
         
         self.layoutSubviews()
@@ -110,7 +110,14 @@ class monthCell: UICollectionViewCell {
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
-        dateLabel.font = UIFont(name: "DIN Alternate", size: 14)
+        dateLabel.font = UIFont(name: "DIN Alternate", size: 10)
+        dateLabel.textAlignment = .center
+        dateLabel.backgroundColor = .white
+        dateLabel.layer.cornerRadius = 5
+        dateLabel.layer.borderWidth = 1
+        dateLabel.layer.borderColor = UIColor.systemGray5.cgColor
+        dateLabel.layer.masksToBounds = true
+        dateLabel.adjustsFontSizeToFitWidth = true
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //todo-list
@@ -136,10 +143,17 @@ class monthCell: UICollectionViewCell {
             make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
         
+        dateLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(containerView).offset(-5)
+            make.height.equalTo(20)
+            make.width.equalTo(60)
+            make.bottom.equalTo(containerView.snp.top).offset(15)
+        }
+        
         titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(containerView.snp.top).offset(10)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
-            make.top.equalTo(containerView).offset(8)
         }
         
         splitLine.snp.makeConstraints { (make) in
@@ -163,13 +177,6 @@ class monthCell: UICollectionViewCell {
             make.height.lessThanOrEqualTo(200)
         }
         
-        tagsLabel.snp.makeConstraints { (make) in
-            make.top.greaterThanOrEqualTo(todoListView.snp.bottom).offset(5)
-            make.left.equalTo(containerView).offset(15)
-            make.right.equalTo(containerView).offset(-15)
-            make.bottom.equalTo(dateLabel.snp.top).offset(-5)
-        }
-        
         todoListView.snp.makeConstraints { make in
             make.left.equalTo(containerView).offset(10)
             make.right.equalTo(containerView).offset(-10)
@@ -177,10 +184,10 @@ class monthCell: UICollectionViewCell {
             make.height.equalTo(100)
         }
         
-        dateLabel.snp.makeConstraints { (make) in
+        tagsLabel.snp.makeConstraints { (make) in
+            make.top.greaterThanOrEqualTo(todoListView.snp.bottom).offset(5)
             make.left.equalTo(containerView).offset(15)
-            make.height.equalTo(20)
-            make.width.equalTo(130)
+            make.right.equalTo(containerView).offset(-15)
             make.bottom.equalTo(containerView).offset(-5)
         }
         
@@ -199,7 +206,7 @@ class monthCell: UICollectionViewCell {
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
-        self.dateLabel.text = "\(diary.day)号，\(diary.weekDay)"
+        self.dateLabel.text = "\(diary.day)号 \(diary.weekDay)"
         self.fillImages(diary: diary)
         
         self.todoListView.setViewModel(diary)
