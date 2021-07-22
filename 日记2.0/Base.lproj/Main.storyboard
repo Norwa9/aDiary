@@ -72,27 +72,9 @@
                     <view key="view" contentMode="scaleToFill" id="Tvs-eW-7aN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YcO-Ao-Ucu" customClass="LWTextView" customModule="日记2_0" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4N9-Gg-cTU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="YcO-Ao-Ucu" firstAttribute="top" secondItem="4N9-Gg-cTU" secondAttribute="top" id="RZU-I0-joS"/>
-                            <constraint firstItem="4N9-Gg-cTU" firstAttribute="trailing" secondItem="YcO-Ao-Ucu" secondAttribute="trailing" id="UhH-5Z-Xjo"/>
-                            <constraint firstItem="YcO-Ao-Ucu" firstAttribute="leading" secondItem="4N9-Gg-cTU" secondAttribute="leading" id="el0-4j-1qV"/>
-                            <constraint firstAttribute="bottom" secondItem="YcO-Ao-Ucu" secondAttribute="bottom" id="uAd-8x-qKz"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="textView" destination="YcO-Ao-Ucu" id="hX4-hV-J3X"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bbo-Nf-099" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

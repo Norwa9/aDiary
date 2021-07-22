@@ -9,6 +9,10 @@ import UIKit
 import MobileCoreServices
 
 class LWTextView: UITextView {
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+    }
+    
     ///从storeboard读取
     required init?(coder: NSCoder) {
         if #available(iOS 13.2, *) {

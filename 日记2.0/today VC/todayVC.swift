@@ -20,7 +20,8 @@ class todayVC: UIViewController{
         return tagsViewController
     }()
     
-    @IBOutlet weak var textView:LWTextView!
+//    @IBOutlet weak var textView:LWTextView!
+    var textView:LWTextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
     
@@ -43,7 +44,9 @@ class todayVC: UIViewController{
     
     func initUI(){
         //textView
+        textView = LWTextView(frame: self.view.bounds, textContainer: nil)
         textView.delegate = self
+        self.view.addSubview(textView)
         
         //panGesture
         dismissPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
@@ -62,7 +65,9 @@ class todayVC: UIViewController{
     }
     
     func setupConstraints(){
-        
+        textView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaInsets)
+        }
     }
 
     //MARK:-target action
