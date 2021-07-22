@@ -10,11 +10,14 @@ import ISEmojiView
 import Popover
 
 class LWEmojiView: UIView {
-    var emojis:[String] = []
+    var diary:diaryInfo
+    var emojis:[String]
     var emojiCollection:UICollectionView!
     var emojiPanel:EmojiView!
     var popover:Popover!
-    init() {
+    init(model:diaryInfo) {
+        self.diary = model
+        self.emojis = model.emojis
         super.init(frame: .zero)
         initUI()
         setupCons()
@@ -73,12 +76,18 @@ class LWEmojiView: UIView {
     
     func push(with emoji:String){
         emojis.append(emoji)
+        LWRealmManager.shared.update {
+            diary.emojis = emojis
+        }
         emojiCollection.reloadData()
     }
     
     func pop(){
         guard !emojis.isEmpty else {return}
         emojis.removeLast()
+        LWRealmManager.shared.update {
+            diary.emojis = emojis
+        }
         emojiCollection.reloadData()
     }
     

@@ -44,7 +44,7 @@ class todayVC: UIViewController{
     
     func initUI(){
         //emojiView
-        emojiView = LWEmojiView()
+        emojiView = LWEmojiView(model: todayDiary)
         
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)

@@ -31,6 +31,7 @@ class diaryInfo:Object,Codable{
     
     var realmTodos:List<RealmString> = List<RealmString>()
     var realmTags:List<RealmString> = List<RealmString>()
+    var realmEmojis:List<RealmString> = List<RealmString>()
     var realmImageAttrTuples = List<RealmTuple>()
     var realmTodoAttrTuples = List<RealmTuple>()
     
@@ -90,6 +91,7 @@ class diaryInfo:Object,Codable{
             todoAttributesTuples = []
         }
         let todos = record[.todos] as? [String] ?? []
+        let emojis = record[.emojis] as? [String] ?? []
 
         self.ckData = record.encodedSystemFields
         self.id = record.recordID.recordName
@@ -108,6 +110,7 @@ class diaryInfo:Object,Codable{
         
         self.realmTags.append(objectsIn: tags.map({ RealmString(value: [$0]) }))
         self.realmTodos.append(objectsIn: todos.map({ RealmString(value: [$0]) }))
+        self.realmEmojis.append(objectsIn: emojis.map({ RealmString(value: [$0]) }))
     }
     
     

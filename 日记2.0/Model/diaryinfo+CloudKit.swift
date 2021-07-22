@@ -35,6 +35,7 @@ enum RecordKey: String {
     case imageAttributesTuples
     case todoAttributesTuples
     case todos
+    case emojis
     
 }
 //MARK:diaryInfo+CloudKit
@@ -55,6 +56,7 @@ extension diaryInfo {
         r[.imageAttributesTuples] = tuples2dictString(imageAttributesTuples)
         r[.todoAttributesTuples] = tuples2dictString(todoAttributesTuples)
         r[.todos] = todos
+        r[.emojis] = emojis
         return r
     }
     
