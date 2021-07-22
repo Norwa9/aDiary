@@ -22,9 +22,6 @@ class monthCell: UICollectionViewCell {
     var contentLabel:UILabel = UILabel()
     var dateLabel:UILabel = UILabel()
     var tagsLabel:TagListView = TagListView()
-    var moodImageView:UIImageView = UIImageView()
-    var islikeImageView:UIImageView = UIImageView()
-    var wordNumLabel:UILabel = UILabel()
     var albumView:UICollectionView!
     var todoListView:TodoList!
     var photos:[UIImage] = [UIImage]()
@@ -36,30 +33,6 @@ class monthCell: UICollectionViewCell {
         didSet{
             self.tagsLabel.removeAllTags()
             self.tagsLabel.addTags(tags)
-        }
-    }
-
-    var wordNum:Int = 0{
-        didSet{
-            wordNumLabel.text = "\(wordNum)字"
-            wordNumLabel.sizeToFit()
-        }
-    }
-    var isLike:Bool!{
-        didSet{
-            let smallsize = islikeImageView.bounds.size
-            if isLike{
-                self.islikeImageView.image = #imageLiteral(resourceName: "star2").compressPic(toSize: smallsize)
-            }else{
-                self.islikeImageView.image = #imageLiteral(resourceName: "star1").compressPic(toSize: smallsize)
-            }
-        }
-    }
-    var moodType:moodTypes!{
-        didSet{
-            //缩放image，防止锯齿问题。
-            let smallsize = moodImageView.bounds.size
-            moodImageView.image = UIImage(named: moodType.rawValue)?.compressPic(toSize: smallsize)
         }
     }
     
@@ -140,20 +113,6 @@ class monthCell: UICollectionViewCell {
         dateLabel.font = UIFont(name: "DIN Alternate", size: 14)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        //word Number Label
-        wordNumLabel.textAlignment = .right
-        wordNumLabel.font = UIFont(name: "DIN Alternate", size: 14)
-//        wordNumLabel.textColor = .lightGray
-        wordNumLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        //islikeImageView
-        islikeImageView.contentMode = .scaleAspectFill
-        islikeImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        //moodImageView
-        moodImageView.contentMode = .scaleAspectFill
-        moodImageView.translatesAutoresizingMaskIntoConstraints = false
-        
         //todo-list
         todoListView = TodoList(frame: .zero)
         
@@ -164,9 +123,6 @@ class monthCell: UICollectionViewCell {
         containerView.addSubview(contentLabel)
         containerView.addSubview(tagsLabel)
         containerView.addSubview(dateLabel)
-        containerView.addSubview(wordNumLabel)
-        containerView.addSubview(islikeImageView)
-        containerView.addSubview(moodImageView)
         containerView.addSubview(todoListView)
     }
     
@@ -227,24 +183,6 @@ class monthCell: UICollectionViewCell {
             make.width.equalTo(130)
             make.bottom.equalTo(containerView).offset(-5)
         }
-        moodImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(containerView).offset(-15)
-            make.centerY.equalTo(dateLabel)
-            make.height.equalTo(20)
-            make.width.equalTo(20)
-        }
-        islikeImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(moodImageView.snp.left).offset(-2)
-            make.centerY.equalTo(moodImageView)
-            make.height.equalTo(20)
-            make.width.equalTo(20)
-        }
-        wordNumLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(islikeImageView.snp.left).offset(-2)
-            make.height.equalTo(20)
-            make.width.equalTo(50)
-            make.centerY.equalTo(moodImageView)
-        }
         
         
     }
@@ -262,9 +200,6 @@ class monthCell: UICollectionViewCell {
         self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
         self.dateLabel.text = "\(diary.day)号，\(diary.weekDay)"
-        self.wordNum = diary.content.count
-        self.isLike = diary.islike
-        self.moodType = moodTypes(rawValue: diary.mood)!
         self.fillImages(diary: diary)
         
         self.todoListView.setViewModel(diary)
@@ -345,22 +280,10 @@ extension monthCell{
         }
         switch layoutParasManager.shared.collectioncolumnNumber {
         case 1:
-            self.wordNumLabel.snp.updateConstraints { (update) in
-                update.width.equalTo(50)
-            }
-            self.moodImageView.snp.updateConstraints { (update) in
-                update.right.equalTo(containerView).offset(-15)
-            }
             self.contentLabel.snp.updateConstraints { update in
                 update.height.lessThanOrEqualTo(200)//恢复内容高度
             }
         case 2:
-            self.wordNumLabel.snp.updateConstraints { (update) in
-                update.width.equalTo(0)
-            }
-            self.moodImageView.snp.updateConstraints { (update) in
-                update.right.equalTo(containerView).offset(-5)
-            }
             self.contentLabel.snp.updateConstraints { update in
                 update.height.lessThanOrEqualTo(0)//内容高度=0
             }
