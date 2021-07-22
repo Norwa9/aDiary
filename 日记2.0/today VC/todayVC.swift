@@ -46,7 +46,6 @@ class todayVC: UIViewController{
         //emojiView
         emojiView = LWEmojiView()
         
-        
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
         textView.delegate = self
@@ -92,6 +91,13 @@ class todayVC: UIViewController{
     //MARK:-键盘delegate
     @objc func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        if textView.isFirstResponder {
+            keyBoardToolsBar.keyboardType = .other
+        }else if emojiView.textField.isFirstResponder{
+            keyBoardToolsBar.keyboardType = .emoji
+        }
+        
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
 //        print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
@@ -165,7 +171,7 @@ extension todayVC:UITextViewDelegate{
     
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        save()
+        
     }
     //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

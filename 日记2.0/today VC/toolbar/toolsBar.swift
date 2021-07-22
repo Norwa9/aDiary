@@ -8,6 +8,10 @@
 import UIKit
 import NVActivityIndicatorView
 
+enum currentKeyBoardType:Int{
+    case emoji
+    case other
+}
 class toolsBar: UIView {
     weak var todayVC:todayVC!
     weak var textView:UITextView!
@@ -20,6 +24,11 @@ class toolsBar: UIView {
     var insertImageButtonImageView:UIImageView!
     var numberListButtonImageView:UIImageView!
     var indicator:NVActivityIndicatorView!
+    var keyboardType:currentKeyBoardType? {
+        didSet{
+            updateToolBarUI()
+        }
+    }
     
     func configureUI(){
         //save button
@@ -76,11 +85,27 @@ class toolsBar: UIView {
         numberListButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
     }
     
+    func updateToolBarUI(){
+        switch keyboardType {
+        case .emoji:
+            insertTimeButton.alpha = 0
+            numberListButton.alpha = 0
+            insertImageButton.alpha = 0
+        default:
+            insertTimeButton.alpha = 1
+            numberListButton.alpha = 1
+            insertImageButton.alpha = 1
+            break
+        }
+    }
+    
     @objc func saveButtonTapped(){
         self.statAnimateIndicator()
+        self.todayVC.save()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.stopAnimatreIndicator()
             self.textView.resignFirstResponder()
+            self.todayVC.emojiView.textField.resignFirstResponder()
         }
         
     }

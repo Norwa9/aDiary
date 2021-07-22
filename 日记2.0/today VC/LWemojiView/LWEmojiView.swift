@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import ISEmojiView
 
 class LWEmojiView: UIView {
     var stack:[String] = []
     var textField:UITextField!
-    
+    var emojiPan:EmojiView!
     init() {
         super.init(frame: .zero)
         initUI()
@@ -22,13 +23,21 @@ class LWEmojiView: UIView {
     }
     
     func initUI(){
+        //self
         self.layer.cornerRadius = 10
         self.backgroundColor = APP_GRAY_COLOR()
         
+        //textField
         textField = UITextField()
         textField.placeholder = "😁"
         
-        
+        //emojiView
+        let keyboardSettings = KeyboardSettings(bottomType: .categories)
+        emojiPan = EmojiView(keyboardSettings: keyboardSettings)
+        emojiPan.translatesAutoresizingMaskIntoConstraints = false
+        emojiPan.delegate = self
+        textField.inputView = emojiPan
+
         self.addSubview(textField)
     }
     
@@ -44,3 +53,27 @@ class LWEmojiView: UIView {
     
     
 }
+//MARK:-EmojiViewDelegate
+extension LWEmojiView:EmojiViewDelegate{
+    func emojiViewDidSelectEmoji(_ emoji: String, emojiView: EmojiView) {
+        textField.insertText(emoji)
+    }
+    // callback when tap change keyboard button on keyboard
+    func emojiViewDidPressChangeKeyboardButton(_ emojiView: EmojiView) {
+        textField.inputView = nil
+        textField.keyboardType = .default
+        textField.reloadInputViews()
+    }
+        
+    // callback when tap delete button on keyboard
+    func emojiViewDidPressDeleteBackwardButton(_ emojiView: EmojiView) {
+        textField.deleteBackward()
+    }
+
+    // callback when tap dismiss button on keyboard
+    func emojiViewDidPressDismissKeyboardButton(_ emojiView: EmojiView) {
+        textField.resignFirstResponder()
+    }
+}
+
+
