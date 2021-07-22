@@ -1,6 +1,7 @@
 PODS:
   - FMPhotoPicker (1.3.0)
   - FSCalendar (2.8.2)
+  - ISEmojiView (0.2.6)
   - JXPhotoBrowser (3.1.3)
   - MJRefresh (3.6.1)
   - NVActivityIndicatorView (5.1.1):
@@ -18,6 +19,7 @@ PODS:
 DEPENDENCIES:
   - FMPhotoPicker (~> 1.3.0)
   - FSCalendar
+  - ISEmojiView
   - JXPhotoBrowser (~> 3.0)
   - MJRefresh
   - NVActivityIndicatorView
@@ -30,6 +32,7 @@ SPEC REPOS:
   trunk:
     - FMPhotoPicker
     - FSCalendar
+    - ISEmojiView
     - JXPhotoBrowser
     - MJRefresh
     - NVActivityIndicatorView
@@ -42,6 +45,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   FMPhotoPicker: 954d3c3e72521baffecdc23422ae149fdde3cd63
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   JXPhotoBrowser: d32e94e1226d43bf5ed83164e3f5b651fed625e0
   MJRefresh: d2c1970d1cf6e77fcfcdfe76c943dfab8dbfa5c1
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
@@ -51,6 +55,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
 
-PODFILE CHECKSUM: 74c55dc75c263e7e2cf492f8a7b0930f9c811a6f
+PODFILE CHECKSUM: 34002f71c51618431288bc800594d62e79ab2280
 
 COCOAPODS: 1.10.1

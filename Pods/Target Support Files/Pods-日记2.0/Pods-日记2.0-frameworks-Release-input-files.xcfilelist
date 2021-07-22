@@ -1,6 +1,7 @@
 ${PODS_ROOT}/Target Support Files/Pods-日记2.0/Pods-日记2.0-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/FMPhotoPicker/FMPhotoPicker.framework
 ${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework
+${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework
 ${BUILT_PRODUCTS_DIR}/JXPhotoBrowser/JXPhotoBrowser.framework
 ${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework
 ${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework
