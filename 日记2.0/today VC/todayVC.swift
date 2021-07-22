@@ -20,7 +20,7 @@ class todayVC: UIViewController{
         return tagsViewController
     }()
     
-//    @IBOutlet weak var textView:LWTextView!
+    var emojiView:LWEmojiView!
     var textView:LWTextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
@@ -43,10 +43,14 @@ class todayVC: UIViewController{
     var interactStartPoint:CGPoint?
     
     func initUI(){
+        //emojiView
+        emojiView = LWEmojiView()
+        
+        
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
         textView.delegate = self
-        self.view.addSubview(textView)
+        
         
         //panGesture
         dismissPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
@@ -59,14 +63,26 @@ class todayVC: UIViewController{
         keyBoardToolsBarFrame = keyBoardToolsBar.frame
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.todayVC = self
-        self.view.addSubview(keyBoardToolsBar)
+        
         view.layoutIfNeeded()
         keyBoardToolsBar.alpha = 0
+        
+        self.view.addSubview(emojiView)
+        self.view.addSubview(textView)
+        self.view.addSubview(keyBoardToolsBar)
     }
-    
+    //MARK:-auto layout
     func setupConstraints(){
+        emojiView.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.right.equalTo(textView)
+            make.bottom.equalTo(textView.snp.top).offset(-5)
+        }
+        
         textView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+            make.bottom.equalTo(self.view)
         }
     }
 

@@ -18,6 +18,7 @@
 		1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6963E26A6CFE00009472F /* LWTextView.swift */; };
 		1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964526A820980009472F /* diaryInfo+Todo.swift */; };
 		1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964726A91C5B0009472F /* LWCalendar.swift */; };
+		1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964A26A95D810009472F /* LWEmojiView.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
@@ -101,6 +102,7 @@
 		1BB6963E26A6CFE00009472F /* LWTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextView.swift; sourceTree = "<group>"; };
 		1BB6964526A820980009472F /* diaryInfo+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Todo.swift"; sourceTree = "<group>"; };
 		1BB6964726A91C5B0009472F /* LWCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCalendar.swift; sourceTree = "<group>"; };
+		1BB6964A26A95D810009472F /* LWEmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWEmojiView.swift; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
@@ -217,6 +219,14 @@
 				1BB6963E26A6CFE00009472F /* LWTextView.swift */,
 			);
 			path = LWtextView;
+			sourceTree = "<group>";
+		};
+		1BB6964926A95BBD0009472F /* LWemojiView */ = {
+			isa = PBXGroup;
+			children = (
+				1BB6964A26A95D810009472F /* LWEmojiView.swift */,
+			);
+			path = LWemojiView;
 			sourceTree = "<group>";
 		};
 		893AAD9C6A217E8210A0AB91 /* Frameworks */ = {
@@ -384,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				1BB6964926A95BBD0009472F /* LWemojiView */,
 				1BB6963D26A6CFC80009472F /* LWtextView */,
 				EA537BB726357FA900C2E9EE /* share */,
 				EAA29EA825C836E200AA6971 /* tags */,
@@ -633,6 +644,7 @@
 				EA51D1F725D7FCE10007BDFA /* dataManager.swift in Sources */,
 				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
+				1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
