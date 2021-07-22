@@ -233,7 +233,7 @@ extension todayVC{
 
 //MARK:-helper
 extension todayVC{
-    //MARK:-读取日记内容
+//MARK:-读取日记内容
     func loadTodayData(){
         guard let diary = self.todayDiary else{
             return

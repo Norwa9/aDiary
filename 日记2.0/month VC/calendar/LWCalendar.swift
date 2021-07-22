@@ -80,11 +80,12 @@ extension monthVC:FSCalendarDelegate{
         let dateString = formatter.string(from: date)
         let predicate = NSPredicate(format: "date = %@", dateString)
         if let selectedDiary = LWRealmManager.shared.query(predicate: predicate).first{
-            guard let todayVC = storyboard?.instantiateViewController(identifier: "todayVC") as? todayVC else{
+            guard let vc = storyboard?.instantiateViewController(identifier: "todayVC") as? todayVC else{
                 return
             }
-            todayVC.todayDiary = selectedDiary
-            self.present(todayVC, animated: true, completion: nil)
+            vc.todayDiary = selectedDiary
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
