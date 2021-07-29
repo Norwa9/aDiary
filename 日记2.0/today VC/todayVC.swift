@@ -116,7 +116,7 @@ class todayVC: UIViewController{
             let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height
             keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
             keyBoardToolsBar.alpha = 1
-            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height + keyBoardToolsBarFrame.height, right: 0)
         }
         textView.scrollRangeToVisible(textView.selectedRange)
     }
@@ -209,6 +209,7 @@ extension todayVC:UITextViewDelegate{
 
 //MARK:-emojiView
 extension todayVC{
+    ///显示/隐藏表情盘
     func toggleEmojiView(){
         let newHeight = isShowingEmojiView ? 0 : kEmojiViewHeight
             isShowingEmojiView.toggle()
