@@ -84,8 +84,27 @@ class LWRealmManager{
         }
     }
     
+    
+}
+
+//MARK:-查询
+extension LWRealmManager{
+    ///查询
     func query(predicate:NSPredicate)->Results<diaryInfo>{
         let res = realm.objects(diaryInfo.self).filter(predicate)
+        return res
+    }
+    
+    ///Date()格式日期查询
+    func queryFor(date:Date)->Results<diaryInfo>{
+        let dateCN = DateToCNString(date: date)
+        let res = self.queryFor(dateCN: dateCN)
+        return res
+    }
+    ///年-月-日格式日期查询
+    func queryFor(dateCN:String)->Results<diaryInfo>{
+        let predicate = NSPredicate(format: "date = %@", dateCN)
+        let res = self.query(predicate: predicate)
         return res
     }
 }

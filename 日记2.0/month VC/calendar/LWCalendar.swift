@@ -128,16 +128,19 @@ extension monthVC:FSCalendarDelegateAppearance{
     
     //event dot数量
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        formatter.dateFormat = "yyyy年M月d日"
-        let localDB = LWRealmManager.shared.localDatabase
-
-        for diary in localDB{
-            //如果有内容
-            if diary.date == formatter.string(from: date) && diary.content.count != 0{
+        if let model = LWRealmManager.shared.queryFor(date: date).first{
+            if model.todos.isEmpty{
+                return 0
+            }else{
+                /*
+                 TODO:发现最大dot数=3，需要自己写一个view来显示更多的dot
+                 */
                 return 1
             }
+            
+        }else{
+            return 0
         }
-        return 0
     }
     
     //事件点默认颜色
