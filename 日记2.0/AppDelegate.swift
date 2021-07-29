@@ -92,7 +92,7 @@ extension AppDelegate{
     
     ///生成今日日记
     private func loadToday(){
-        let date = getTodayDate()
+        let date = GetTodayDate()
         let predicate = NSPredicate(format: "date = %@", date)
         let res = LWRealmManager.shared.query(predicate: predicate)
         if res.isEmpty{

@@ -13,7 +13,7 @@ import RealmSwift
 func LoadIntroText(){
     if !userDefaultManager.hasInitialized{
         userDefaultManager.hasInitialized = true
-        let date = getTodayDate()
+        let date = GetTodayDate()
         if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
             if let textContents = try? String(contentsOf: levelFileURL) {
                 let introDiary = diaryInfo(dateString: date)

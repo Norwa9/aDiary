@@ -46,7 +46,7 @@ func getDateComponent(for date:Date,for key:dateInfo) -> Int{
     }
 }
 
-func getTodayDate()->String{
+func GetTodayDate()->String{
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
     let date = Date()

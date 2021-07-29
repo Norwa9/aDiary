@@ -212,7 +212,8 @@ class monthCell: UICollectionViewCell {
     }
     
     func updateUI(){
-        self.updateCons()
+        updateCons()
+        setPropmt()
         
         self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         self.titleLabel.attributedText = diary.content.getAttrTitle()
@@ -225,7 +226,7 @@ class monthCell: UICollectionViewCell {
     }
     
     //读取日记的所有图片
-    func fillImages(diary:diaryInfo){
+    private func fillImages(diary:diaryInfo){
         let iM = imageManager(diary: diary)
         let contains = diary.containsImage
         if !contains{
@@ -261,6 +262,16 @@ class monthCell: UICollectionViewCell {
                 //self.row表示是当前点击的cell
                 print("diary.date:\(diary.date) != self.diary.date:\(self.diary.date)")
             }
+        }
+    }
+    
+    ///设置今日提示
+    private func setPropmt(){
+        if diary.date == GetTodayDate(){
+            self.containerView.layer.borderWidth = 2;
+            self.containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
+        }else{
+            self.containerView.layer.borderWidth = 0;
         }
     }
 }
