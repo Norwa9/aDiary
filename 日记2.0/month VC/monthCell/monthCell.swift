@@ -89,7 +89,7 @@ class monthCell: UICollectionViewCell {
         albumView.showsHorizontalScrollIndicator = false
         albumView.register(photoCell.self, forCellWithReuseIdentifier: photoCell.photoCellID)
         albumView.translatesAutoresizingMaskIntoConstraints = false
-        albumView.backgroundColor = .clear
+        albumView.backgroundColor = .systemGray6
         albumView.layer.cornerRadius = 10
         
         //contentLabel
@@ -164,8 +164,8 @@ class monthCell: UICollectionViewCell {
         
         albumView.snp.makeConstraints { (make) in
             make.top.equalTo(splitLine.snp.bottom).offset(2)
-            make.left.equalTo(titleLabel)
-            make.right.equalTo(titleLabel)
+            make.left.equalTo(containerView)
+            make.right.equalTo(containerView)
             make.height.equalTo(0)
         }
         

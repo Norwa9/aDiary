@@ -67,12 +67,12 @@ class layoutParasManager: NSObject {
     //MARK:-album view paras
     let albumViewLineSpacing:CGFloat = 5
     ///内部cell的inset
-    let albumViewCellInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
+    let albumViewCellInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     
     ///album CollectionView的宽度
     var albumViewWidth:CGFloat{
         get{
-            return self.itemWidth - 15.0 - 15.0//15.0 albumView距离containerView的边界
+            return self.itemWidth//15.0 albumView距离containerView的边界
         }
     }
     

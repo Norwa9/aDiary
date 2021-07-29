@@ -48,7 +48,7 @@ class AlbumViewLayout: UICollectionViewFlowLayout {
         var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
         for index in 0..<itemNum{
             let layoutAttribute = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
-            layoutAttribute.frame = CGRect(x: (self.lineSpacing + self.itemWidth) * CGFloat(index) + self.lineSpacing,
+            layoutAttribute.frame = CGRect(x: (self.lineSpacing + self.itemWidth) * CGFloat(index) + self.insetX,
                                            y: insetY,
                                            width: self.itemWidth,
                                            height: self.itemHeight)

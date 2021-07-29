@@ -33,11 +33,11 @@ class photoCell: UICollectionViewCell {
         //UI设置
         photoPreviewView = UIImageView()
         photoPreviewView.contentMode = .scaleAspectFill
-        photoPreviewView.layer.cornerRadius = 6
+        photoPreviewView.layer.cornerRadius = 10
+        photoPreviewView.clipsToBounds = true
         photoPreviewView.layer.borderWidth = 2
         photoPreviewView.layer.borderColor = UIColor.lightGray.cgColor
-        photoPreviewView.clipsToBounds = true
-        photoPreviewView.layer.borderColor = APP_GRAY_COLOR().cgColor
+        
         self.addSubview(photoPreviewView)
         
     }
