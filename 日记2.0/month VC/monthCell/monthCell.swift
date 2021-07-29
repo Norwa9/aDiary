@@ -111,14 +111,9 @@ class monthCell: UICollectionViewCell {
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
-        dateLabel.font = UIFont(name: "DIN Alternate", size: 10)
+        dateLabel.font = UIFont(name: "DIN Alternate", size: 20)
         dateLabel.textAlignment = .center
-        dateLabel.backgroundColor = .white
-        dateLabel.layer.cornerRadius = 5
-        dateLabel.layer.borderWidth = 1
-        dateLabel.layer.borderColor = UIColor.systemGray5.cgColor
-        dateLabel.layer.masksToBounds = true
-        dateLabel.adjustsFontSizeToFitWidth = true
+        dateLabel.textColor = .gray
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //todo-list
@@ -150,14 +145,12 @@ class monthCell: UICollectionViewCell {
         }
         
         dateLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(containerView).offset(-5)
-            make.height.equalTo(20)
-            make.width.equalTo(60)
-            make.bottom.equalTo(containerView.snp.top).offset(15)
+            make.top.equalTo(containerView).offset(2)
+            make.centerX.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(containerView.snp.top).offset(10)
+            make.top.equalTo(dateLabel.snp.bottom).offset(2)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
         }
