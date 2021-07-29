@@ -41,6 +41,7 @@ class DIYCalendarCell: FSCalendarCell {
         bgView = UIView(frame: self.bounds)
         bgView.layer.cornerRadius = 7
         self.backgroundView = bgView
+        self.backgroundView?.layer.masksToBounds = true
         
         //设置新的cell选取效果：绿色圆环
         self.shapeLayer.isHidden = true
@@ -53,17 +54,20 @@ class DIYCalendarCell: FSCalendarCell {
     }
     
     func initUI(forDate date:Date){
-        /*
-         在这里初始化与日期信息相关的UI
-         */
-        
-//        print("initUI")
         //初始化cell背景色
         self.date = date
         if date.compare(Date()) == .orderedDescending{
             self.clearBGColor()
         }else{
             bgView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
+        }
+        
+        //设置当日提示
+        if DateToCNString(date: self.date) == GetTodayDate(){
+            self.backgroundView?.layer.borderWidth = 2;
+            self.backgroundView?.layer.borderColor = APP_GREEN_COLOR().cgColor
+        }else{
+            self.backgroundView?.layer.borderWidth = 0;
         }
     }
     

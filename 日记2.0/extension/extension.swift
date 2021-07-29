@@ -53,6 +53,12 @@ func GetTodayDate()->String{
     return formatter.string(from: date)
 }
 
+func DateToCNString(date:Date)->String{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy年M月d日"
+    return formatter.string(from: date)
+}
+
 
 
 

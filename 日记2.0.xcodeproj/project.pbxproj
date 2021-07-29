@@ -370,9 +370,9 @@
 				EAA29EC725C9925B00AA6971 /* monthButton.swift */,
 				EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */,
 				EA5CFFA926749057008E06FA /* layoutParasManager.swift */,
+				EADA85FC2625DA60007D1134 /* calendar */,
 				EAA29E5525C5785100AA6971 /* topbarView */,
 				1B2A56C926A568820090D411 /* monthCell */,
-				EADA85FC2625DA60007D1134 /* calendar */,
 				EAA29E8B25C8245700AA6971 /* filter */,
 			);
 			path = "month VC";
