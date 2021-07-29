@@ -261,7 +261,7 @@ extension todayVC{
         let textFormatter = TextFormatter(textView: self.textView)
         if diary.content.count == 0{
             //设置文字引导
-            textFormatter.setPlaceholder()
+            //textFormatter.setPlaceholder()
         }else{
             textFormatter.loadTextViewContent(with: diary)
         }
