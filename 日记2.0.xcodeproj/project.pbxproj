@@ -90,6 +90,7 @@
 		EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DE26248B14007D1134 /* NSAttrString+.swift */; };
 		EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85FD2625DA98007D1134 /* customAlertView.swift */; };
 		EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EADA86012625DAA1007D1134 /* customAlertView.xib */; };
+		EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2EB26B303AC004D1A52 /* globalConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,6 +182,7 @@
 		EADA85DE26248B14007D1134 /* NSAttrString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttrString+.swift"; sourceTree = "<group>"; };
 		EADA85FD2625DA98007D1134 /* customAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customAlertView.swift; sourceTree = "<group>"; };
 		EADA86012625DAA1007D1134 /* customAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = customAlertView.xib; sourceTree = "<group>"; };
+		EADBC2EB26B303AC004D1A52 /* globalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +387,7 @@
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
 				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
 				EA3189AE26934ED5001B9042 /* globalFuncs.swift */,
+				EADBC2EB26B303AC004D1A52 /* globalConstants.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataManager.swift */,
 				EA9AE7B3260F634200D44221 /* userDefaultManager.swift */,
 				EA6EFE8226297E84004B0FA1 /* exportManager.swift */,
@@ -631,6 +634,7 @@
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
+				EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */,
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
 				1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,

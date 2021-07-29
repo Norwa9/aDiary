@@ -37,7 +37,6 @@ class photoCell: UICollectionViewCell {
         photoPreviewView.clipsToBounds = true
         photoPreviewView.layer.borderWidth = 2
         photoPreviewView.layer.borderColor = UIColor.lightGray.cgColor
-        
         self.addSubview(photoPreviewView)
         
     }

@@ -55,6 +55,8 @@ class monthVC: UIViewController {
     //collection view
     var collectionView:UICollectionView!
     var flowLayout:waterFallLayout!///瀑布流布局
+    var blurEffectView:UIVisualEffectView!
+    let kBlurEffectViewHeight:CGFloat = 200
     //data source
     var filteredDiaries = [diaryInfo]()
     var resultDiaries = [diaryInfo]()
@@ -118,6 +120,17 @@ class monthVC: UIViewController {
         collectionView.register(monthCell.self, forCellWithReuseIdentifier: monthCell.reusableID)
         collectionView.showsVerticalScrollIndicator = false
         
+        let blurEffect = UIBlurEffect(style: .light)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.isUserInteractionEnabled = false
+        blurEffectView.frame = CGRect(x:0, y:kScreenHeight - kBlurEffectViewHeight, width: kScreenWidth, height: kBlurEffectViewHeight);
+        let gradientLayer = CAGradientLayer()//底部创建渐变层
+        gradientLayer.colors = [UIColor.clear.cgColor,
+                                UIColor.black.cgColor]
+        gradientLayer.frame = blurEffectView.bounds
+        gradientLayer.locations = [0,0.85,1]
+        blurEffectView.layer.mask = gradientLayer
+        
         //topView
         topView = UIView()
         topView.layer.cornerRadius = 10
@@ -178,6 +191,7 @@ class monthVC: UIViewController {
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
         self.view.addSubview(backToCurMonthButton)
+        view.addSubview(blurEffectView)
         
     }
     
@@ -221,7 +235,8 @@ class monthVC: UIViewController {
         }
         
         collectionView.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
         }
         
         //月份按钮不方便使用auto layout，使用frame来布局
@@ -303,12 +318,12 @@ class monthVC: UIViewController {
     }
     
     func showBackButton(toShow:Bool){
-        let screenHeight = UIScreen.main.bounds.height
+        let screenHeight = kScreenHeight
         if toShow{
             //显示
             self.isShowingBackButton = true
             UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseInOut) {
-                self.backToCurMonthButton.frame.origin.y = screenHeight * 0.9
+                self.backToCurMonthButton.frame.origin.y = screenHeight - self.kBlurEffectViewHeight - 50
                 self.backToCurMonthButton.center.x = self.view.center.x
             } completion: { (_) in
                 
