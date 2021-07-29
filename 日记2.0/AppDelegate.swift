@@ -14,26 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
-        //读取引导文案到今日
-//        LoadIntroText()
+        //LoadIntroText()
         
-        //配置realm
-        self.configureRealm()
+        configDatabase()
+        
+        loadToday()
+        
+        UIApplication.shared.registerForRemoteNotifications()//注册iCloud静默通知
         
         
-        /*
-         做了3个初始化：
-         1.初始化realm:读取本地数据库，填充数据源
-         2.初始化DiaryStore
-            3.init()里初始化了syncEngine:上传本地数据、然后获取云端数据变动
-         */
-        _ = LWRealmManager.shared
-        _ = DiaryStore.shared
-        
-        //注册静默通知，以监听iCloud数据库的变化
-        UIApplication.shared.registerForRemoteNotifications()
         return true
     }
     
@@ -59,10 +49,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-//MARK:-配置realm数据库
+//MARK:-配置数据库
 extension AppDelegate{
+    private func configDatabase(){
+        //配置realm
+        self.configureRealm()
+        
+        
+        /*
+         做了3个初始化：
+         1.初始化realm:读取本地数据库，填充数据源
+         2.初始化DiaryStore
+            3.init()里初始化了syncEngine:上传本地数据、然后获取云端数据变动
+         */
+        _ = LWRealmManager.shared
+        _ = DiaryStore.shared
+    }
+    
     ///配置数据库，用于数据库的迭代更新
-    func configureRealm(){
+    private func configureRealm(){
         let schemaVersion: UInt64 = 0
         LWRealmManager.schemaVersion = schemaVersion
         let config = Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: { migration, oldSchemaVersion in
@@ -82,6 +87,16 @@ extension AppDelegate{
                 /* 处理打开 Realm 时所发生的错误 */
                 print("Realm 数据库配置失败：\(error.localizedDescription)")
             }
+        }
+    }
+    
+    ///生成今日日记
+    private func loadToday(){
+        let date = getTodayDate()
+        let predicate = NSPredicate(format: "date = %@", date)
+        let res = LWRealmManager.shared.query(predicate: predicate)
+        if res.isEmpty{
+            LWRealmManager.shared.add(diaryInfo(dateString: date))
         }
     }
 }
