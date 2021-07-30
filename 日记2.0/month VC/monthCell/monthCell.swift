@@ -333,7 +333,7 @@ extension monthCell{
 extension monthCell{
     func showSelectionPrompt(){
         UIView.animate(withDuration: 0.2) {
-            self.containerView.backgroundColor = .systemGray4
+            self.containerView.backgroundColor = .systemGray6
         } completion: { (_) in
             self.containerView.backgroundColor = .white
         }

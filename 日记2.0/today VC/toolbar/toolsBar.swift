@@ -19,10 +19,12 @@ class toolsBar: UIView {
     @IBOutlet weak var insertTimeButton:UIButton!
     @IBOutlet weak var insertImageButton:UIButton!
     @IBOutlet weak var numberListButton:UIButton!
+    @IBOutlet weak var todoListButton:UIButton!
     var saveButtonImageView:UIImageView!
     var insertTimeButtonImageView:UIImageView!
     var insertImageButtonImageView:UIImageView!
     var numberListButtonImageView:UIImageView!
+    var todoListButtonImageView:UIImageView!
     var indicator:NVActivityIndicatorView!
     var keyboardType:currentKeyBoardType? {
         didSet{
@@ -74,7 +76,7 @@ class toolsBar: UIView {
         
         //create number list
         numberListButton.backgroundColor = .systemBackground
-        numberListButton.addTarget(self, action: #selector(setNumberList), for: .touchUpInside)
+        numberListButton.addTarget(self, action: #selector(insertNumberList), for: .touchUpInside)
         numberListButton.layer.cornerRadius = 10
         numberListButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
         numberListButtonImageView = UIImageView(image: UIImage(named: "numberList"))
@@ -83,6 +85,18 @@ class toolsBar: UIView {
         width = numberListButton.frame.width
         height = numberListButton.frame.height
         numberListButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
+        
+        //todo list button
+        todoListButton.backgroundColor = .systemBackground
+        todoListButton.addTarget(self, action: #selector(insertTodoList), for: .touchUpInside)
+        todoListButton.layer.cornerRadius = 10
+        todoListButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
+        todoListButtonImageView = UIImageView(image: UIImage(named: "checkbox_empty"))
+        todoListButton.contentMode = .scaleAspectFit
+        todoListButton.addSubview(todoListButtonImageView)
+        width = todoListButton.frame.width
+        height = todoListButton.frame.height
+        todoListButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
     }
     
     func updateToolBarUI(){
@@ -98,7 +112,7 @@ class toolsBar: UIView {
             break
         }
     }
-    
+    //MARK:-action target
     @objc func saveButtonTapped(){
         self.statAnimateIndicator()
         self.todayVC.save()
@@ -119,7 +133,12 @@ class toolsBar: UIView {
         todayVC.importPicture()
     }
     
-    @objc func setNumberList(){
+    @objc func insertNumberList(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.orderedList()
+    }
+    
+    @objc func insertTodoList(){
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.todoList()
     }
