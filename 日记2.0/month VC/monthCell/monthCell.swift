@@ -206,7 +206,7 @@ class monthCell: UICollectionViewCell {
     
     func updateUI(){
         updateCons()
-        setPropmt()
+        setTodayPropmt()
         
         self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         self.titleLabel.attributedText = diary.content.getAttrTitle()
@@ -259,7 +259,7 @@ class monthCell: UICollectionViewCell {
     }
     
     ///设置今日提示
-    private func setPropmt(){
+    private func setTodayPropmt(){
         if diary.date == GetTodayDate(){
             self.containerView.layer.borderWidth = 2;
             self.containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
@@ -333,7 +333,7 @@ extension monthCell{
 extension monthCell{
     func showSelectionPrompt(){
         UIView.animate(withDuration: 0.2) {
-            self.containerView.backgroundColor = APP_GRAY_COLOR()
+            self.containerView.backgroundColor = .systemGray4
         } completion: { (_) in
             self.containerView.backgroundColor = .white
         }

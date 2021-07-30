@@ -461,7 +461,10 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let row = indexPath.row
         let selectedDiary = filteredDiaries[row]
         let cell = collectionView.cellForItem(at: indexPath) as! monthCell
+        
+        //点击动画
         cell.bounceAnimation(usingSpringWithDamping: 0.8)
+        cell.showSelectionPrompt()
         
         let vc = storyboard?.instantiateViewController(identifier: "todayVC") as! todayVC
         vc.todayDiary = selectedDiary
