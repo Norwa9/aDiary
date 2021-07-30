@@ -145,7 +145,7 @@ class topbarView: UIView {
 extension topbarView{
     @objc func tapped(sender:topbarButton){
         //animation
-        sender.bounceAnimation(usingSpringWithDamping: 0.5)
+        sender.bounceAnimation(usingSpringWithDamping: 0.8)
         
         let monthVC = UIApplication.getMonthVC()
         monthVC.monthButtonsTapped(button: sender)

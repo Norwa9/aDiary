@@ -13,11 +13,6 @@ class topbarButton: UIButton {
             buttonImageView.image = image
         }
     }
-    var islike:Bool = false{
-        didSet{
-            AnimatelikeImage()
-        }
-    }
 
     var buttonImageView:UIImageView!
     var holderView:UIView!
@@ -59,14 +54,6 @@ class topbarButton: UIButton {
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         }
         
-    }
-    
-    func AnimatelikeImage(){
-        if !islike {
-            image = UIImage(named: "star1")
-        }else{
-            image = UIImage(named: "star2")
-        }
     }
 
     func switchLayoutModeIcon(){

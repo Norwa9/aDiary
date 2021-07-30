@@ -56,7 +56,7 @@ class monthVC: UIViewController {
     var collectionView:UICollectionView!
     var flowLayout:waterFallLayout!///瀑布流布局
     var blurEffectView:UIVisualEffectView!
-    let kBlurEffectViewHeight:CGFloat = 200
+    let kBlurEffectViewHeight:CGFloat = 120
     //data source
     var filteredDiaries = [diaryInfo]()
     var resultDiaries = [diaryInfo]()
@@ -128,7 +128,7 @@ class monthVC: UIViewController {
         gradientLayer.colors = [UIColor.clear.cgColor,
                                 UIColor.black.cgColor]
         gradientLayer.frame = blurEffectView.bounds
-        gradientLayer.locations = [0,0.85,1]
+        gradientLayer.locations = [0,0.9,1]
         blurEffectView.layer.mask = gradientLayer
         
         //topView
@@ -342,7 +342,7 @@ class monthVC: UIViewController {
     
     ///-popover
     @objc func filterButtonDidTapped(sender:topbarButton){
-        sender.bounceAnimation(usingSpringWithDamping: 0.5)
+        sender.bounceAnimation(usingSpringWithDamping: 0.8)
         
         //popover view
         let viewSize = CGSize(width: 315, height:440 )
