@@ -11,13 +11,10 @@ import UIKit
 class tagsView: UIViewController {
     //data
     var diary:diaryInfo!
-    var selectedMood:moodTypes?
     var selectedTags = [String]()///局部变量，用来存储当前日记实时选择的tags
     
     @IBOutlet weak var doneButton:UIButton!
     @IBOutlet weak var dragBar:UIView!
-    @IBOutlet weak var iconsContainer:UIView!
-    var moodButtons = [moodButton]()
     @IBOutlet weak var tagsTableView:UITableView!
     
     var editMode:Bool = false{
@@ -52,18 +49,6 @@ class tagsView: UIViewController {
         //configure drag bar
         dragBar.layer.cornerRadius = 4
         
-        
-        iconsContainer.backgroundColor = .systemBackground
-        let frame = iconsContainer.frame
-        let pedding = (frame.width - frame.height * 3) / 4
-        for i in 0..<moodTypes.allCases.count{
-            let button = moodButton(frame: CGRect(x: pedding * CGFloat(i+1) + frame.height * CGFloat(i), y: 0, width: frame.height, height: frame.height))
-            button.moodType = moodTypes.allCases[i]
-            button.addTarget(self, action: #selector(moodButtonTapped(sender:)), for: .touchUpInside)
-            iconsContainer.addSubview(button)
-            moodButtons.append(button)
-        }
-        
         let nib = UINib(nibName: tagsCell.reusableId, bundle: Bundle.main)
         tagsTableView.register(nib, forCellReuseIdentifier: tagsCell.reusableId)
         tagsTableView.delegate = self
@@ -74,22 +59,6 @@ class tagsView: UIViewController {
     }
     
     //MARK:-button target
-    @objc func moodButtonTapped(sender:moodButton){
-        for button in moodButtons{
-            if button != sender{
-                if button.hasSelected{
-                    button.animateSelectedView()
-                }
-            }
-        }
-        sender.animateSelectedView()
-        selectedMood = sender.moodType
-        //状态从未选改变到选中，则触发topbarButton的动画
-        if sender.hasSelected{
-            //TODO:
-        }
-        
-    }
     
     //done button
     @IBAction func done(){
@@ -294,19 +263,7 @@ extension tagsView{
 
     func bindData(){
         //绑定数据
-        selectedMood = moodTypes.init(rawValue: diary.mood)!
         selectedTags = diary.tags
-        
-        //恢复标签、心情选择状态
-        for button in moodButtons{
-            if button.hasSelected{
-                button.animateSelectedView()
-            }
-        }
-        if let mood = selectedMood{
-            let index = moodTypes.allCases.firstIndex(of: mood)! as Int
-            moodButtons[index].animateSelectedView()
-        }
         tagsTableView.reloadData()
     }
     
@@ -327,11 +284,6 @@ extension tagsView{
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         LWRealmManager.shared.update {
-            //保存tags和mood的选项
-            if let selectedMood = selectedMood{
-                diary.mood = selectedMood.rawValue
-            }
-            //print("tagsView关闭，保存已选中的tags:\(selectedTags)")
             diary.tags = selectedTags
         }
         self.completionHandler?()
