@@ -33,7 +33,7 @@ class AlbumViewLayout: UICollectionViewFlowLayout {
     override func prepare() {
         super.prepare()
         if itemNum>0{
-            let contentWith = (itemWidth + lineSpacing) * CGFloat(itemNum) + lineSpacing
+            let contentWith = (itemWidth + lineSpacing) * CGFloat(itemNum) + self.insetX
             totalWidth = max(contentWith, layoutParasManager.shared.albumViewWidth)
             totalHeight = layoutParasManager.shared.albumViewHeight
         }else{

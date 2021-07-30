@@ -89,7 +89,7 @@ class monthCell: UICollectionViewCell {
         albumView.showsHorizontalScrollIndicator = false
         albumView.register(photoCell.self, forCellWithReuseIdentifier: photoCell.photoCellID)
         albumView.translatesAutoresizingMaskIntoConstraints = false
-        //albumView.backgroundColor = .systemGray6
+        albumView.backgroundColor = .clear
         albumView.layer.cornerRadius = 10
         
         //contentLabel

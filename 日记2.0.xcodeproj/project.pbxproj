@@ -93,6 +93,7 @@
 		EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2EB26B303AC004D1A52 /* globalConstants.swift */; };
 		EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F026B448C7004D1A52 /* TopView.swift */; };
 		EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F526B44D02004D1A52 /* LWTagsView.swift */; };
+		EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F926B46CCD004D1A52 /* AlbumView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -187,6 +188,7 @@
 		EADBC2EB26B303AC004D1A52 /* globalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConstants.swift; sourceTree = "<group>"; };
 		EADBC2F026B448C7004D1A52 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		EADBC2F526B44D02004D1A52 /* LWTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTagsView.swift; sourceTree = "<group>"; };
+		EADBC2F926B46CCD004D1A52 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29EC425C9840F00AA6971 /* monthCell.swift */,
+				EADBC2F926B46CCD004D1A52 /* AlbumView.swift */,
 				EA537CDD266273D800C2E9EE /* photoCell.swift */,
 				EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */,
 				1B2A56CA26A569D70090D411 /* TodoList.swift */,
@@ -653,6 +656,7 @@
 				1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */,
 				EAA29E8D25C8248C00AA6971 /* tagsVC.swift in Sources */,
 				EA537BB926357FBF00C2E9EE /* shareVC.swift in Sources */,
+				EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
