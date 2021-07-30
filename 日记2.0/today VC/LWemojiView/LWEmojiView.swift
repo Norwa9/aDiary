@@ -10,7 +10,9 @@ import ISEmojiView
 import Popover
 
 class LWEmojiView: UIView {
-    var maxNum:Int?
+    ///最大展示的emoji个数
+    let maxNum:Int = 4
+    
     var diary:diaryInfo
     var emojis:[String]
     var emojiCollection:UICollectionView!
@@ -30,18 +32,20 @@ class LWEmojiView: UIView {
     
     func initUI(){
         //self
-        self.layer.cornerRadius = 10
-        self.backgroundColor = APP_GRAY_COLOR()
+        self.layer.cornerRadius = 5
+        self.backgroundColor = .systemGray6
         
         //textField
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 44, height: 44)
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = -20
-        layout.minimumInteritemSpacing = 5
+        let inset:CGFloat = 2
+        let itemWidth = (kEmojiViewHeight - 2 * inset) / 2
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         emojiCollection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         emojiCollection.register(LWEmojiCell.self, forCellWithReuseIdentifier: LWEmojiCell.reuseId)
-        emojiCollection.contentInset = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        emojiCollection.contentInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
         emojiCollection.delegate = self
         emojiCollection.dataSource = self
         emojiCollection.isScrollEnabled = false
@@ -62,7 +66,7 @@ class LWEmojiView: UIView {
           ] as [PopoverOption]
         popover = Popover(options: options)
         
-        //emojiView
+        //emojiView keyboard
         let keyboardSettings = KeyboardSettings(bottomType: .categories)
         keyboardSettings.countOfRecentsEmojis = 10
         emojiPanel = EmojiView(keyboardSettings: keyboardSettings)
@@ -80,13 +84,12 @@ class LWEmojiView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        maxNum = Int(emojiCollection.bounds.width / 44) + 1
     }
     
 //MARK:-helper
     
     func push(with emoji:String){
-        guard emojis.count < maxNum ?? 4 else {return}
+        guard emojis.count < maxNum  else {return}
         emojis.append(emoji)
         LWRealmManager.shared.update {
             diary.emojis = emojis

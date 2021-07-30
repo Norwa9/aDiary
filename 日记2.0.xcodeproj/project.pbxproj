@@ -91,6 +91,8 @@
 		EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85FD2625DA98007D1134 /* customAlertView.swift */; };
 		EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EADA86012625DAA1007D1134 /* customAlertView.xib */; };
 		EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2EB26B303AC004D1A52 /* globalConstants.swift */; };
+		EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F026B448C7004D1A52 /* TopView.swift */; };
+		EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F526B44D02004D1A52 /* LWTagsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -183,6 +185,8 @@
 		EADA85FD2625DA98007D1134 /* customAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customAlertView.swift; sourceTree = "<group>"; };
 		EADA86012625DAA1007D1134 /* customAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = customAlertView.xib; sourceTree = "<group>"; };
 		EADBC2EB26B303AC004D1A52 /* globalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConstants.swift; sourceTree = "<group>"; };
+		EADBC2F026B448C7004D1A52 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		EADBC2F526B44D02004D1A52 /* LWTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTagsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,7 +407,9 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				EADBC2EF26B446F5004D1A52 /* topView */,
 				1BB6964926A95BBD0009472F /* LWemojiView */,
+				EADBC2F426B44CED004D1A52 /* LWTagsView */,
 				1BB6963D26A6CFC80009472F /* LWtextView */,
 				EA537BB726357FA900C2E9EE /* share */,
 				EAA29EA825C836E200AA6971 /* tags */,
@@ -474,6 +480,22 @@
 				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
 			);
 			path = calendar;
+			sourceTree = "<group>";
+		};
+		EADBC2EF26B446F5004D1A52 /* topView */ = {
+			isa = PBXGroup;
+			children = (
+				EADBC2F026B448C7004D1A52 /* TopView.swift */,
+			);
+			path = topView;
+			sourceTree = "<group>";
+		};
+		EADBC2F426B44CED004D1A52 /* LWTagsView */ = {
+			isa = PBXGroup;
+			children = (
+				EADBC2F526B44D02004D1A52 /* LWTagsView.swift */,
+			);
+			path = LWTagsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -645,6 +667,7 @@
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
 				1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */,
+				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoList.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
@@ -657,6 +680,7 @@
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
 				1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
+				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,

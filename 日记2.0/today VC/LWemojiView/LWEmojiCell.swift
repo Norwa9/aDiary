@@ -29,7 +29,8 @@ class LWEmojiCell: UICollectionViewCell {
         
         //emojiLabel
         emojiLabel = UILabel()
-        emojiLabel.font = UIFont(name: "Apple color emoji", size: 30)
+        emojiLabel.font = UIFont(name: "Apple color emoji", size: 15)
+        emojiLabel.adjustsFontSizeToFitWidth = true
         emojiLabel.textAlignment = .center
         emojiLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(emojiLabel)

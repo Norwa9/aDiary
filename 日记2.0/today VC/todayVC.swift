@@ -7,23 +7,15 @@
 
 import UIKit
 import FMPhotoPicker
-
+let ktopViewHeight:CGFloat = 44
 class todayVC: UIViewController{
     var todayDiary:diaryInfo!
     
-    lazy var tagsViewController:tagsView = {
-        //配置tagsView
-        let tagsViewController = tagsView()
-        tagsViewController.transitioningDelegate = tagsViewController
-        tagsViewController.modalPresentationStyle = .custom//模态
-        tagsViewController.completionHandler = save
-        return tagsViewController
-    }()
+    ///顶部容器视图
+    var topView:TopView!
+    var isShowingTopView:Bool = true
     
-    var isShowingEmojiView:Bool = true
-    var emojiView:LWEmojiView!
-    let kEmojiViewHeight:CGFloat = 44
-    
+    ///输入区
     var textView:LWTextView!
     var keyBoardToolsBar:toolsBar!
     var keyBoardToolsBarFrame:CGRect!
@@ -46,8 +38,8 @@ class todayVC: UIViewController{
     var interactStartPoint:CGPoint?
     
     func initUI(){
-        //emojiView
-        emojiView = LWEmojiView(model: todayDiary)
+        //topView
+        topView = TopView(model: self.todayDiary)
         
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
@@ -69,16 +61,16 @@ class todayVC: UIViewController{
         view.layoutIfNeeded()
         keyBoardToolsBar.alpha = 0
         
-        self.view.addSubview(emojiView)
+        self.view.addSubview(topView)
         self.view.addSubview(textView)
         self.view.addSubview(keyBoardToolsBar)
     }
     //MARK:-auto layout
     func setupConstraints(){
-        emojiView.snp.makeConstraints { make in
+        topView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalTo(textView)
-            make.height.equalTo(kEmojiViewHeight)
+            make.height.equalTo(ktopViewHeight)
             make.bottom.equalTo(textView.snp.top).offset(-5)
         }
         
@@ -211,9 +203,9 @@ extension todayVC:UITextViewDelegate{
 extension todayVC{
     ///显示/隐藏表情盘
     func toggleEmojiView(){
-        let newHeight = isShowingEmojiView ? 0 : kEmojiViewHeight
-            isShowingEmojiView.toggle()
-        emojiView.snp.updateConstraints { (update) in
+        let newHeight = isShowingTopView ? 0 : ktopViewHeight
+            isShowingTopView.toggle()
+        topView.snp.updateConstraints { (update) in
             update.height.equalTo(newHeight)
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {

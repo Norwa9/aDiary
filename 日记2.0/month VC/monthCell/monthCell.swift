@@ -121,7 +121,6 @@ class monthCell: UICollectionViewCell {
         
         //emojisLabel
         emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)
-        emojisLabel.numberOfLines = 0
         
         
         containerView.addSubview(emojisLabel)
@@ -149,8 +148,13 @@ class monthCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints { (make) in
+        emojisLabel.snp.makeConstraints { (make) in
             make.top.equalTo(dateLabel.snp.bottom).offset(2)
+            make.left.right.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(emojisLabel.snp.bottom).offset(2)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
         }
@@ -187,15 +191,9 @@ class monthCell: UICollectionViewCell {
             make.top.greaterThanOrEqualTo(todoListView.snp.bottom).offset(5)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
-        }
-        
-        emojisLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(tagsLabel.snp.bottom).offset(5)
-            make.left.right.equalTo(tagsLabel)
             make.bottom.equalTo(containerView.snp.bottom).offset(-5)
         }
-        
-        
+   
     }
     
     //MARK:-设置Model

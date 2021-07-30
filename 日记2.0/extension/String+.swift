@@ -100,9 +100,13 @@ extension String{
 //MARK:-String + UILabel
 extension String{
     func changeWorldSpace(space:CGFloat) -> NSAttributedString{
+        //紧凑间隔
         let attributedString = NSMutableAttributedString.init(string: self, attributes: [.kern:space])
         let paragraphStyle = NSMutableParagraphStyle()
+        //居中排版
+        paragraphStyle.alignment = .center
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: .init(location: 0, length: attributedString.length))
+        
         return attributedString
     }
 }

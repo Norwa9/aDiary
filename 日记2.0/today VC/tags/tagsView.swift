@@ -30,7 +30,22 @@ class tagsView: UIViewController {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
-    var completionHandler:(()->Void)!
+    ///tagsViewController dismiss后的行为
+    var completionHandler:(()->Void)?
+    
+    ///自定义初始化
+    init(model:diaryInfo) {
+        self.diary = model
+        let nibName = (String(describing: type(of: self)) as NSString).components(separatedBy: ".").first!
+        super.init(nibName: nibName, bundle: Bundle.main)
+        
+        self.transitioningDelegate = self
+        self.modalPresentationStyle = .custom//模态
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK:-初始化UI
     func setupUI(){
@@ -319,8 +334,6 @@ extension tagsView{
             //print("tagsView关闭，保存已选中的tags:\(selectedTags)")
             diary.tags = selectedTags
         }
-        
-        //调用.save()
-        self.completionHandler()
+        self.completionHandler?()
     }
 }
