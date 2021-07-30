@@ -8,14 +8,17 @@
 import UIKit
 import ISEmojiView
 import Popover
-
+///emoji的大小。是LWEmojiView的高度的一半
+let kEmojiItemWidth = kEmojiViewHeight / 2
 class LWEmojiView: UIView {
     ///最大展示的emoji个数
-    let maxNum:Int = 4
+    let maxNum:Int = 8
+    
+
     
     var diary:diaryInfo
     var emojis:[String]
-    var emojiCollection:UICollectionView!
+    var collectionView:UICollectionView!
     var emojiPanel:EmojiView!
     var popover:Popover!
     init(model:diaryInfo) {
@@ -37,24 +40,21 @@ class LWEmojiView: UIView {
         
         //textField
         let layout = UICollectionViewFlowLayout()
-        let inset:CGFloat = 2
-        let itemWidth = (kEmojiViewHeight - 2 * inset) / 2
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
-        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: kEmojiItemWidth, height: kEmojiItemWidth)
+        layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        emojiCollection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        emojiCollection.register(LWEmojiCell.self, forCellWithReuseIdentifier: LWEmojiCell.reuseId)
-        emojiCollection.contentInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        emojiCollection.delegate = self
-        emojiCollection.dataSource = self
-        emojiCollection.isScrollEnabled = false
-        emojiCollection.showsHorizontalScrollIndicator = false
-        emojiCollection.backgroundColor = .clear
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(LWEmojiCell.self, forCellWithReuseIdentifier: LWEmojiCell.reuseId)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.isScrollEnabled = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
         
         //gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showEmojiPanel))
-        emojiCollection.addGestureRecognizer(tapGesture)
+        collectionView.addGestureRecognizer(tapGesture)
         
         //popover
         let options = [
@@ -73,13 +73,16 @@ class LWEmojiView: UIView {
         emojiPanel.translatesAutoresizingMaskIntoConstraints = false
         emojiPanel.delegate = self
 
-        self.addSubview(emojiCollection)
+        self.addSubview(collectionView)
+        
     }
     
     func setupCons(){
-        emojiCollection.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+//        updateView(num: emojis.count)//设置正确的宽度
     }
     
     override func layoutSubviews() {
@@ -94,7 +97,8 @@ class LWEmojiView: UIView {
         LWRealmManager.shared.update {
             diary.emojis = emojis
         }
-        emojiCollection.reloadData()
+        collectionView.reloadData()
+        updateView(num: emojis.count)
     }
     
     func pop(){
@@ -103,7 +107,19 @@ class LWEmojiView: UIView {
         LWRealmManager.shared.update {
             diary.emojis = emojis
         }
-        emojiCollection.reloadData()
+        collectionView.reloadData()
+        updateView(num: emojis.count)
+    }
+    
+    private func updateView(num:Int){
+        let contentWidth = max(kEmojiViewHeight, ceil(CGFloat(num) / 2) * kEmojiItemWidth)
+        print("contentWidth:\(contentWidth)")
+        self.snp.updateConstraints { (update) in
+            update.width.equalTo(contentWidth)
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.layoutIfNeeded()
+        }
     }
     
     
@@ -117,7 +133,7 @@ extension LWEmojiView{
         emojiPanel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        popover.show(container, fromView: emojiCollection)
+        popover.show(container, fromView: collectionView)
     }
 }
 
@@ -142,7 +158,7 @@ extension LWEmojiView:UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = emojiCollection.dequeueReusableCell(withReuseIdentifier: LWEmojiCell.reuseId, for: indexPath) as! LWEmojiCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LWEmojiCell.reuseId, for: indexPath) as! LWEmojiCell
         
         let item = indexPath.item
         cell.setEmoji(emojis[item])

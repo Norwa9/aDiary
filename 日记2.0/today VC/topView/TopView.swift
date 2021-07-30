@@ -63,7 +63,7 @@ class TopView: UIView {
         emojiView.snp.makeConstraints { (make) in
             make.leading.equalTo(dateLable.snp.trailing).offset(2)
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(emojiView.snp.height)
+            make.width.equalTo(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth)
         }
         
         tagsView.snp.makeConstraints { (make) in
