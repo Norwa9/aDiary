@@ -381,7 +381,7 @@ class monthVC: UIViewController {
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     //读取某年某月的日记，或读取全部日记
     func configureDataSource(year:Int,month:Int){
-        print("configureDataSource")
+        //print("configureDataSource")
         DispatchQueue.main.async { [self] in
             let dataSource = diariesForMonth(forYear: year, forMonth: month)
             filteredDiaries.removeAll()

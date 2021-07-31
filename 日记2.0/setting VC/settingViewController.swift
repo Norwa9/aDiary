@@ -147,9 +147,9 @@ class settingViewController: UIViewController {
     ///导出
     @IBAction func exportAll(){
         indicatorViewManager.shared.start()
-//        exportManager.shared.exportAll(){ [self] in
-//        }
-        indicatorViewManager.shared.stop()
+        exportManager.shared.exportAll(){ [self] in
+            indicatorViewManager.shared.stop()
+        }
 
 //        let fileURL = DataContainerSingleton.sharedDataContainer.savePlistFile()
 //        do {
