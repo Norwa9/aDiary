@@ -423,7 +423,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             
             self.view.layoutIfNeeded()//预加载cell，避免第一次进入collectionview加载带来的卡顿
         }else{
-            self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
+            if isFilterMode{
+                self.collectionView.reloadData()
+            }else{
+                self.collectionView.reloadItems(at: [IndexPath(row: forRow, section: 0)])
+            }
         }
     }
     
