@@ -57,12 +57,11 @@ class DIYCalendarCell: FSCalendarCell {
         //有内容的，设置背景色
         let res = LWRealmManager.shared.queryFor(date: date)
         if let model = res.first{
-            if model.content == ""{
-                clearBGColor()
-            }else{
-                bgView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
-            }
+            bgView.backgroundColor = model.content == "" ? .clear : #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
+        }else{
+            bgView.backgroundColor = .clear
         }
+        
         
         //设置当日提示
         if DateToCNString(date: date) == GetTodayDate(){
@@ -99,10 +98,6 @@ class DIYCalendarCell: FSCalendarCell {
     }
     
     
-    //MARK:-
-    func clearBGColor(){
-        bgView.backgroundColor = .clear
-    }
     
     
     

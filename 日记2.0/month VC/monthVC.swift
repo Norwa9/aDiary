@@ -476,7 +476,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     
     //滑动时cell的动画
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.isDragging || isFilterMode{
+        if collectionView.isDragging || isFilterMode || collectionView.contentOffset.y > kScreenHeight{
             return
         }else{
             guard let cell = cell as? monthCell else{return}
