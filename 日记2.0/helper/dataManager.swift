@@ -81,7 +81,8 @@ class dataManager {
         }
     }
     
-    func updateAllTagsAfterSync(){
+    ///将当前所有日记的tag求一个并集
+    func updateTags(){
         let d1 = Date()
         var tagsSet = Set<String>()
         for diary in LWRealmManager.shared.localDatabase{

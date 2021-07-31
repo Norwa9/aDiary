@@ -94,6 +94,7 @@
 		EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F026B448C7004D1A52 /* TopView.swift */; };
 		EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F526B44D02004D1A52 /* LWTagsView.swift */; };
 		EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F926B46CCD004D1A52 /* AlbumView.swift */; };
+		EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2FD26B4F03F004D1A52 /* migrationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -189,6 +190,7 @@
 		EADBC2F026B448C7004D1A52 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		EADBC2F526B44D02004D1A52 /* LWTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTagsView.swift; sourceTree = "<group>"; };
 		EADBC2F926B46CCD004D1A52 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
+		EADBC2FD26B4F03F004D1A52 /* migrationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = migrationHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +361,8 @@
 				EAA29E7725C59ABB00AA6971 /* helper */,
 				EACB1719267A1B63007BF160 /* extension */,
 				EA51D1FC25D809550007BDFA /* resource */,
+				EADBC30426B4F1D9004D1A52 /* ignore */,
+				EADBC2FC26B4F000004D1A52 /* migration */,
 			);
 			path = "日记2.0";
 			sourceTree = "<group>";
@@ -499,6 +503,21 @@
 				EADBC2F526B44D02004D1A52 /* LWTagsView.swift */,
 			);
 			path = LWTagsView;
+			sourceTree = "<group>";
+		};
+		EADBC2FC26B4F000004D1A52 /* migration */ = {
+			isa = PBXGroup;
+			children = (
+				EADBC2FD26B4F03F004D1A52 /* migrationHelper.swift */,
+			);
+			path = migration;
+			sourceTree = "<group>";
+		};
+		EADBC30426B4F1D9004D1A52 /* ignore */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ignore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -666,6 +685,7 @@
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
+				EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */,
 				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,

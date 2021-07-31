@@ -7,6 +7,7 @@
 
 import UIKit
 
+let kVersion:String = "2.0"
 class settingViewController: UIViewController {
     @IBOutlet weak var saveButton:UIButton!
     //font setting
@@ -50,7 +51,7 @@ class settingViewController: UIViewController {
     @IBAction func dismissVC(){
         dismiss(animated: true, completion: nil)
     }
-    
+    //MARK:-UI
     ///字体大小
     @IBAction func fontSizeDidChange(_ sender: UIStepper) {
         let fontSize = sender.value
@@ -65,6 +66,7 @@ class settingViewController: UIViewController {
         updateExampleTextView(withFontSize:tempFontSize,withFontStyle: tempFontName,withLineSpacing: tempLineSpacing)
     }
     
+    //MARK:-安全
     ///生物识别
     @IBAction func useBiometricsSwitchDidChange(_ sender: UISwitch) {
         //如果已经设定了密码，此时可以自由开启关闭生物识别
@@ -141,13 +143,14 @@ class settingViewController: UIViewController {
         
     }
     
+    //MARK:-导入、导出
     ///导出
     @IBAction func exportAll(){
-        showSpinner(onView: self.view)
-        exportManager.shared.exportAll(){ [self] in
-            print("stopAnimating")
-            removeSpinner()
-        }
+        indicatorViewManager.shared.start()
+//        exportManager.shared.exportAll(){ [self] in
+//        }
+        indicatorViewManager.shared.stop()
+
 //        let fileURL = DataContainerSingleton.sharedDataContainer.savePlistFile()
 //        do {
 //            let plistData = try Data(contentsOf: fileURL)
@@ -163,8 +166,8 @@ class settingViewController: UIViewController {
     @IBAction func importFromDayGram(){
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.text"], in: .import)
         documentPicker.delegate = self
-       documentPicker.allowsMultipleSelection = false
-       present(documentPicker, animated: true, completion: nil)
+        documentPicker.allowsMultipleSelection = false
+        present(documentPicker, animated: true, completion: nil)
     }
     
 }
@@ -231,7 +234,7 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
         return pickerlabel
     }
 }
-
+//MARK:-UIDocumentPickerDelegate
 extension settingViewController:UIDocumentPickerDelegate{
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard controller.documentPickerMode == .import, let url = urls.first, let importText = try? String(contentsOfFile: url.path) else { return }
@@ -322,8 +325,8 @@ extension settingViewController{
         //插入文字
         let text =
         """
-        版本1.6
-        Version1.6
+        版本\(kVersion)
+        Version\(kVersion)
 
         """
         textView.insertText(text)

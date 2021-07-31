@@ -76,8 +76,6 @@ public final class DiaryStore: ObservableObject {
     
     ///手动拉取云端变动
     public func fetchRemoteChange(){
-        //展示菊花转
-        indicatorViewManager.shared.start()
         syncEngine?.fetchRemoteChanges()
     }
     
@@ -91,11 +89,11 @@ public final class DiaryStore: ObservableObject {
         os_log("将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
         //1.将云端变动保存到本地数据库
         diaries.forEach { updatedDiary in
-//            let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
+            //let newerModel = diaryInfo.resolveOfflineConflict(serverModel: updatedDiary)
             LWRealmManager.shared.add(updatedDiary)
         }
         //2.
-        dataManager.shared.updateAllTagsAfterSync()
+        dataManager.shared.updateTags()
         
         
         os_log("云端更新已应用到本地数据库!", log: log, type: .debug)

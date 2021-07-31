@@ -733,8 +733,8 @@ extension TextFormatter{
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
         let todoAttrTuples = diary.todoAttributesTuples
-        print("读取到的images:\(imageAttrTuples)")
-        print("读取到的todos:\(todoAttrTuples)")
+        //print("读取到的images:\(imageAttrTuples)")
+        //print("读取到的todos:\(todoAttrTuples)")
         
         DispatchQueue.global(qos: .default).async {
             let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
