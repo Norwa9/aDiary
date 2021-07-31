@@ -11,17 +11,8 @@ class exportManager{
     
     static let shared = exportManager()
     
+    ///导出PDF
     func exportAll(completion: @escaping() -> Void){
-//        guard let todayVC = UIApplication.getTodayVC() else{
-//            print("exportManager can't get todayVC")
-//            completion()
-//            return
-//        }
-//        guard let textView = todayVC.textView else{
-//            print("exportManager can't get textView")
-//            completion()
-//            return
-//        }
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenWidth))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
