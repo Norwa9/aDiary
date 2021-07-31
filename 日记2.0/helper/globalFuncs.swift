@@ -113,7 +113,6 @@ func filterDiary()->[diaryInfo]{
     //------Background Thread-------
     
     let keywords = filterModel.shared.searchText
-    let selectedMood = filterModel.shared.selectedMood
     let selectedTags = filterModel.shared.selectedTags
     let sortStyle = filterModel.shared.selectedSortstyle
     
@@ -137,12 +136,7 @@ func filterDiary()->[diaryInfo]{
         }
     }
     
-    //2筛选：心情和标签
-    if let mood = selectedMood{
-        resultDiaries = resultDiaries.filter{ (item: diaryInfo) -> Bool in
-            return item.mood == mood.rawValue
-        }
-    }
+    //2筛选：心情和标签(已去除)
     
     //3筛选标签
     resultDiaries = resultDiaries.filter{ (item: diaryInfo) -> Bool in

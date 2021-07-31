@@ -6,6 +6,7 @@
 //
 
 import Foundation
+///只给自己用的
 class MigrationHelper{
     ///0731,1.6->2.0
     ///从pList文件中读取diaryDict,并解析diaryDict转成模型diaryInfo

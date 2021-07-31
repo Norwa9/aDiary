@@ -11,38 +11,19 @@ class filterMenu: UIView {
     weak var monthVC:monthVC!
     var contentView:UIView!
     @IBOutlet weak var tableView:UITableView!
-    
     let buttonSize = CGSize(width: 40, height: 40)
     @IBOutlet weak var doneButton:UIButton!
-    lazy var buttons = [moodButton]()
     @IBOutlet weak var sortStyleSegmentControl:UISegmentedControl!
     
-    //初始化默认属性配置
     func configureUI(){
-        //sort style
+        //sortStyleSegmentControl
         sortStyleSegmentControl.addTarget(self, action: #selector(sortStyleChange(_:)), for: .valueChanged)
-        //恢复选取值
-        sortStyleSegmentControl.selectedSegmentIndex = filterModel.shared.selectedSortstyle.rawValue
+        sortStyleSegmentControl.selectedSegmentIndex = filterModel.shared.selectedSortstyle.rawValue        //恢复选取的值
         
-        
-        //mood buttons
-        for i in 0..<3 {
-            let button = moodButton(frame: CGRect(origin: CGPoint(x: 130 + CGFloat(i) * 50, y: 103), size: buttonSize))
-            button.moodType = moodTypes.allCases[i]
-            button.addTarget(self, action: #selector(moodButtonTapped(sender:)), for: .touchUpInside)
-            self.addSubview(button)
-            buttons.append(button)
-        }
+        //doneButton
         doneButton.layer.cornerRadius = 5
         doneButton.setupShadow()
-        
-        //恢复选取值
-        if let selectedMood = filterModel.shared.selectedMood,let index = moodTypes.allCases.firstIndex(of: selectedMood){
-            let selectedButton = buttons[index]
-            moodButtonTapped(sender: selectedButton)
-        }
-        
-        
+
         //table view
         tableView.delegate = self
         tableView.dataSource = self
@@ -54,31 +35,6 @@ class filterMenu: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         //布局相关设置：layoutSubviews()中可以获取autolayout后view的准确frame
-    }
-    
-    //button target
-    @objc func moodButtonTapped(sender:moodButton){
-        for button in buttons{
-            if button == sender{
-                sender.animateSelectedView()
-            }else{
-                //关闭其他按钮
-                if button.hasSelected{
-                    button.animateSelectedView()
-                }
-            }
-        }
-        
-        //查看选择了哪个mood
-        for button in buttons{
-            if button.hasSelected{
-                filterModel.shared.selectedMood = button.moodType
-                return
-            }
-        }
-        //没有选择mood
-        filterModel.shared.selectedMood = nil
-        
     }
     
     @IBAction func done(){

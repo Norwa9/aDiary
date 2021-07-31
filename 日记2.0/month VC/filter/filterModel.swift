@@ -12,13 +12,11 @@ class filterModel {
     static let shared = filterModel()
     
     var searchText:String = ""
-    var selectedMood:moodTypes? = nil
     var selectedTags = [String]()
     var selectedSortstyle:sortStyle = .dateDescending
     
     func clear(){
         self.searchText = ""
-        self.selectedMood = nil
         self.selectedTags.removeAll()
         self.selectedSortstyle = .dateDescending
     }
