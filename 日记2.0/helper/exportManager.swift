@@ -22,9 +22,10 @@ class exportManager{
 //            completion()
 //            return
 //        }
-        let textView = UITextView()
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenWidth))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
+        let formatter = TextFormatter(textView: textView)
         
         let dateFomatter = DateFormatter()
         dateFomatter.dateFormat = "yyyy年M月d日"
@@ -63,7 +64,6 @@ class exportManager{
                     alldiaryString.insert(NSAttributedString(string: "\n"), at: alldiaryString.length)
                     
                     //正文
-                    let formatter = TextFormatter(textView: textView)
                     let imageAttrTuples = diary.imageAttributesTuples
                     let todoAttrTuples = diary.todoAttributesTuples
                     let formatteredAString = formatter.processAttrString(aString: aString, bounds: textViewBounds, container: textContainer, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
