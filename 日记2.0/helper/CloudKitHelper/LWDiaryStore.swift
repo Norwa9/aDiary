@@ -32,9 +32,7 @@ public final class DiaryStore: ObservableObject {
         self.container = CKContainer(identifier: SyncConstants.containerIdentifier)
         
         self.defaults = UserDefaults.standard
-        
-        let initialDB = LWRealmManager.shared.localDatabase
-        self.syncEngine = LWSyncEngine.init(defaults: self.defaults, initialDiaries: initialDB.toArray())
+        self.syncEngine = LWSyncEngine.init(defaults: self.defaults)
         
         self.syncEngine?.didUpdateModels = { [weak self] models in
             self?.updateAfterSync(models)

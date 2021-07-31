@@ -482,9 +482,9 @@
 			isa = PBXGroup;
 			children = (
 				1BB6964726A91C5B0009472F /* LWCalendar.swift */,
+				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
 				EADA85FD2625DA98007D1134 /* customAlertView.swift */,
 				EADA86012625DAA1007D1134 /* customAlertView.xib */,
-				EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */,
 			);
 			path = calendar;
 			sourceTree = "<group>";

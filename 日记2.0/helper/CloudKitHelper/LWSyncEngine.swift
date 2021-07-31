@@ -30,7 +30,7 @@ final class LWSyncEngine{
         return "\(SyncConstants.customZoneID.zoneName).subscription"
     }()
     
-    private var buffer:[diaryInfo]
+    private var buffer:[diaryInfo] = []
     private var deleteBuffer:[diaryInfo] = []
     
     private let workQueue = DispatchQueue(label: "SyncEngine.Work",qos: .userInitiated)
@@ -77,9 +77,8 @@ final class LWSyncEngine{
     ///删除云端数据后调用，用来更新本地数据
     var didDeleteModels: ([String]) -> Void = { _ in }
     
-    init(defaults:UserDefaults,initialDiaries:[diaryInfo]) {
+    init(defaults:UserDefaults) {
         self.defaults = defaults
-        self.buffer = initialDiaries
         
         indicatorViewManager.shared.start(style: .banner)
         start()
@@ -322,18 +321,18 @@ final class LWSyncEngine{
         
         //检查本地数据库中：新建的但未上传、离线修改的但未上传 的数据
         self.buffer = LWRealmManager.shared.localDatabase.toArray()
-        let diaries = buffer.filter({
+        let needsUpload = buffer.filter({
             return ($0.ckData == nil || $0.editedButNotUploaded)
-        })
+        }).suffix(399)//cloudKit一次最多上传400个记录
         
-        guard !diaries.isEmpty else {
+        if needsUpload.isEmpty{
             os_log("本地没有未上传的日记...",log:log,type:.debug)
             return
         }
         
-        os_log("发现 %d 篇本地日记未上传", log: self.log, type: .debug, diaries.count)
+        os_log("发现 %d 篇本地日记未上传", log: self.log, type: .debug, needsUpload.count)
         
-        let records = diaries.map({ $0.record })
+        let records = needsUpload.map({ $0.record })
         
         uploadRecords(records)
     }
@@ -439,6 +438,7 @@ final class LWSyncEngine{
 
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
+            self.uploadLocalDataNotUploadedYet()//分批上传情景下：继续检查本地数据库是否有未上传的数据
             self.buffer = []
         }
     }

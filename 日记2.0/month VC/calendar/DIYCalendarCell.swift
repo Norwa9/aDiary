@@ -14,7 +14,6 @@ enum  SelectionType: Int {
 }
 
 class DIYCalendarCell: FSCalendarCell {
-    var date:Date!
     var bgView:UIView!
     
     weak var selectionLayer: CAShapeLayer!//选中视图：圆环
@@ -38,6 +37,7 @@ class DIYCalendarCell: FSCalendarCell {
          所以可以在init内对cell的统一特性进行初始化。
          */
         //设置cell的灰色圆角矩形背景
+        
         bgView = UIView(frame: self.bounds)
         bgView.layer.cornerRadius = 7
         self.backgroundView = bgView
@@ -54,16 +54,18 @@ class DIYCalendarCell: FSCalendarCell {
     }
     
     func initUI(forDate date:Date){
-        //初始化cell背景色
-        self.date = date
-        if date.compare(Date()) == .orderedDescending{
-            self.clearBGColor()
-        }else{
-            bgView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
+        //有内容的，设置背景色
+        let res = LWRealmManager.shared.queryFor(date: date)
+        if let model = res.first{
+            if model.content == ""{
+                clearBGColor()
+            }else{
+                bgView.backgroundColor = #colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)
+            }
         }
         
         //设置当日提示
-        if DateToCNString(date: self.date) == GetTodayDate(){
+        if DateToCNString(date: date) == GetTodayDate(){
             self.backgroundView?.layer.borderWidth = 2;
             self.backgroundView?.layer.borderColor = APP_GREEN_COLOR().cgColor
         }else{
@@ -73,11 +75,8 @@ class DIYCalendarCell: FSCalendarCell {
     
     
     override func layoutSubviews() {
-//        print("FSCalendar Cell layoutSubviews")
         super.layoutSubviews()
-        
 
-        
         //1.更新cell的selected状态
         self.backgroundView?.frame = self.bounds.insetBy(dx: 2, dy: 1)
         self.selectionLayer.frame = self.contentView.bounds
