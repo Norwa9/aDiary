@@ -62,7 +62,6 @@ class DIYCalendarCell: FSCalendarCell {
             bgView.backgroundColor = .clear
         }
         
-        
         //设置当日提示
         if DateToCNString(date: date) == GetTodayDate(){
             self.backgroundView?.layer.borderWidth = 2;

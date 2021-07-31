@@ -8,6 +8,15 @@
 import Foundation
 import UIKit
 extension UIApplication{
+    static func getTodayVC() ->todayVC?{
+        if let vc = UIApplication.getTopViewController() as? todayVC{
+            return vc
+        }else{
+            print("无法获取todayVC")
+            return nil
+        }
+    }
+    
     static func getMonthVC() -> monthVC {
         return UIApplication.shared.windows[0].rootViewController as! monthVC
     }

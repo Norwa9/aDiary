@@ -50,7 +50,7 @@ class todayVC: UIViewController{
         dismissPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         dismissPanGesture.maximumNumberOfTouches = 1
         dismissPanGesture.delegate = self
-        view.addGestureRecognizer(dismissPanGesture)
+        //view.addGestureRecognizer(dismissPanGesture)
         
         //tools bar
         keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
@@ -235,8 +235,8 @@ extension todayVC{
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         self.save()
     }
      

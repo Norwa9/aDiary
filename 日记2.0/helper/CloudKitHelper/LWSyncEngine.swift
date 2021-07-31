@@ -428,7 +428,11 @@ final class LWSyncEngine{
     private func updateLocalModelsAfterUpload(with records: [CKRecord]) {
         os_log("将buffer内的本地记录标记为[已上传]，并清空buffer", log: self.log, type: .error)
         for r in records{
-            guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else { continue }
+            guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else {
+                //print("continue")
+                continue
+                
+            }
             //*赋值ckData，表示该日记已经在云端有副本
             LWRealmManager.shared.update {
                 model.editedButNotUploaded = false
