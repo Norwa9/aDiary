@@ -9,7 +9,7 @@ import UIKit
 import ISEmojiView
 import Popover
 ///emoji的大小。是LWEmojiView的高度的一半
-let kEmojiItemWidth = kEmojiViewHeight / 2
+let kEmojiItemWidth = kEmojiViewWidth / 2
 class LWEmojiView: UIView {
     ///最大展示的emoji个数
     let maxNum:Int = 8
@@ -112,7 +112,7 @@ class LWEmojiView: UIView {
     }
     
     private func updateView(num:Int){
-        let contentWidth = max(kEmojiViewHeight, ceil(CGFloat(num) / 2) * kEmojiItemWidth)
+        let contentWidth = max(kEmojiViewWidth, ceil(CGFloat(num) / 2) * kEmojiItemWidth)
         print("contentWidth:\(contentWidth)")
         self.snp.updateConstraints { (update) in
             update.width.equalTo(contentWidth)

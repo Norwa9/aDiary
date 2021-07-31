@@ -9,6 +9,7 @@ import UIKit
 import TagListView
 
 let kEmojiViewHeight = ktopViewHeight
+let kEmojiViewWidth = kEmojiViewHeight
 
 class TopView: UIView {
     ///模型
@@ -42,7 +43,7 @@ class TopView: UIView {
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
         dateLable.font = UIFont(name: "DIN Alternate", size: 24)
-        dateLable.text = "\(month)月\(day)日,\(weekDay)"
+        dateLable.text = "\(month)月\(day)日丨\(weekDay)"
         
         //心情
         emojiView = LWEmojiView(model: self.model)
@@ -60,10 +61,12 @@ class TopView: UIView {
             make.leading.top.bottom.equalToSuperview()
         }
         
+        let emojiViewWidth = max(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth, kEmojiViewWidth)
         emojiView.snp.makeConstraints { (make) in
             make.leading.equalTo(dateLable.snp.trailing).offset(2)
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth)
+            
+            make.width.equalTo(emojiViewWidth)
         }
         
         tagsView.snp.makeConstraints { (make) in
