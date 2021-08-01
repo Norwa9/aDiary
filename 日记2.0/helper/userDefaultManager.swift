@@ -13,7 +13,7 @@ class userDefaultManager{
     
     ///默认字体大小
     static let DefaultFontSize:CGFloat = 18.0
-//    static let DefaultFontName:String = "TimesNewRomanPSMT"
+    static let DefaultFontName:String = "DINAlternate-Bold"
     static let defaultEditorLineSpacing:CGFloat = 3
     
     private struct constants {
@@ -34,7 +34,7 @@ class userDefaultManager{
             if let returnFontName = shared?.object(forKey: constants.fontNameKey) as? String{
                 return returnFontName
             }else{
-                return nil
+                return self.DefaultFontName
             }
         }
         set{
@@ -123,7 +123,7 @@ class userDefaultManager{
                 return style
             }
             //0:大，1:中，2:小
-            return 1
+            return 0
         }
         set {
             shared?.set(newValue, forKey: constants.imageSizeStyle)

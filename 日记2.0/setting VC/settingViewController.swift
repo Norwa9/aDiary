@@ -264,9 +264,9 @@ extension settingViewController{
         //添加字体
         familyFonts.append(nil)//默认字体
         for fontFamily in UIFont.familyNames{
-//            print("fontFamily:\(fontFamily)")
+            //print("fontFamily:\(fontFamily)")
             for fontName in UIFont.fontNames(forFamilyName: fontFamily){
-//                print("fontName:\(fontName),")
+                //print("fontName:\(fontName),")
                 familyFonts.append(fontName)
             }
         }
@@ -318,7 +318,7 @@ extension settingViewController{
     }
     
     ///设置字体示意
-    func setupExampleTextView(imageScalingFactor:CGFloat){
+    private func setupExampleTextView(imageScalingFactor:CGFloat){
         self.view.layoutIfNeeded()
         textView.attributedText = nil
         
@@ -332,7 +332,7 @@ extension settingViewController{
         textView.insertText(text)
         
         
-        //插入图片
+        //插入图标
         let attachment = NSTextAttachment()
         let image = UIImage(named: "icon-1024.png")!
         let imageAspectRatio = image.size.height / image.size.width
@@ -353,46 +353,6 @@ extension settingViewController{
         //更新textView的字体等信息
         updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
         
-//        textView.layer.borderWidth = 1
-//        textView.layer.borderColor = UIColor.black.cgColor
-//        textView.layer.cornerRadius = 5
     }
     
-}
-
-extension settingViewController {
-    func showSpinner(onView : UIView) {
-        let spinnerView = UIView.init(frame: onView.bounds)
-        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let ai = UIActivityIndicatorView.init(style: .large)
-        ai.color = .black
-        ai.startAnimating()
-        ai.center = spinnerView.center
-        spinnerView.alpha = 0
-        
-        DispatchQueue.main.async {
-            spinnerView.addSubview(ai)
-            onView.addSubview(spinnerView)
-            UIView.animate(withDuration: 0.5) {
-                spinnerView.alpha = 1
-            } completion: { (_) in
-                
-            }
-
-        }
-        
-        vSpinner = spinnerView
-    }
-    
-    func removeSpinner() {
-        DispatchQueue.main.async { [self] in
-            UIView.animate(withDuration: 0.5) {
-                vSpinner?.alpha = 0
-            } completion: { (_) in
-                vSpinner?.removeFromSuperview()
-                vSpinner = nil
-            }
-            
-        }
-    }
 }
