@@ -483,7 +483,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt monthCell")
+        //print("cellForItemAt monthCell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: monthCell.reusableID, for: indexPath) as! monthCell
         let row = indexPath.row
         let diary = filteredDiaries[row]
