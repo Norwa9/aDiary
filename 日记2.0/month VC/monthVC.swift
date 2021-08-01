@@ -586,6 +586,8 @@ extension monthVC:UISearchBarDelegate{
             topbar.dataLable2.text = "共\(LWRealmManager.shared.localDatabase.count)篇，\(dataManager.shared.getTotalWordcount())字"
             topbar.dataLable1.sizeToFit()//更新tempLabel1的宽度，使得rectbar1能够正确匹配它的长度
             topbar.dataLable2.sizeToFit()
+            topbar.forwardBtn.alpha = 0
+            topbar.backwordBtn.alpha = 0
         }else{//退出搜索模式
             searchBar.resignFirstResponder()
             searchBar.searchTextField.text = ""
@@ -594,6 +596,8 @@ extension monthVC:UISearchBarDelegate{
             topbar.dataLable1.text = "\(selectedYear!)年"
             topbar.dataLable2.text = "\(selectedMonth!)月"
             topbar.dataLable1.sizeToFit()
+            topbar.forwardBtn.alpha = 1
+            topbar.backwordBtn.alpha = 1
             //退出后重新显示当月日记
             configureDataSource(year: selectedYear, month: selectedMonth)
         }
