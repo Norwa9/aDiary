@@ -21,7 +21,6 @@ class AttributedBox {
     public static func getUnChecked() -> NSMutableAttributedString? {
         let checkboxText = getCleanUnchecked()
         checkboxText.append(NSAttributedString(string: " "))
-
         return checkboxText
     }
 

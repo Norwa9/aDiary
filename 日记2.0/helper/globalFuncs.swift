@@ -12,9 +12,31 @@ import RealmSwift
 //MARK:-导入用户引导
 func LoadIntroText(){
     let date = GetTodayDate()
-    if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt"),let textContents = try? String(contentsOf: levelFileURL){
+    if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt"),let content = try? String(contentsOf: levelFileURL){
         let introDiary = diaryInfo(dateString: date)
-        introDiary.content = textContents
+        
+        let attributedText = NSMutableAttributedString(string: content)
+        
+        attributedText.loadCheckboxes()
+        let imageAttchment = GetAttachment(image:UIImage(named:"icon_roundCornor")!)
+        attributedText.insert(imageAttchment, at: attributedText.length)
+        
+        let parseRes = attributedText.parseAttribuedText()
+        let imageAttrTuples = parseRes.0
+        let todoAttrTuples = parseRes.1
+        let cleanText = parseRes.2.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        let containsImage = parseRes.3
+        let todos = introDiary.getTodos(for: .unchecked,from: attributedText,currentTodoAttributes: todoAttrTuples)//从最新的属性文本和属性信息数组中解析处todos
+        
+        introDiary.content = cleanText
+        introDiary.rtfd = attributedText.data()
+        introDiary.todoAttributesTuples = todoAttrTuples
+        introDiary.imageAttributesTuples = imageAttrTuples
+        introDiary.containsImage = containsImage
+        introDiary.todos = todos
+        introDiary.emojis.append("👏🏻")
+        introDiary.emojis.append("😘")
+        introDiary.tags.append("你好新用户")
         if LWRealmManager.shared.queryFor(dateCN: date).isEmpty{
             LWRealmManager.shared.add(introDiary)
         }

@@ -105,6 +105,7 @@ final class LWSyncEngine{
                     
                 }
             default:
+                indicatorViewManager.shared.stop()
                 break
             }
         })

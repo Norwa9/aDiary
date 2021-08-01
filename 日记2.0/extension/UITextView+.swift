@@ -34,3 +34,21 @@ extension UITextView{
     }
     
 }
+
+//MARK:-全局函数
+func GetAttachment(image:UIImage)->NSAttributedString{
+    let attachment = NSTextAttachment()
+    let imageAspectRatio = image.size.height / image.size.width
+    let pedding:CGFloat = 15
+    let textViewW = kScreenWidth - 2 * kTextViewPeddingX
+    let imageWidth = (textViewW - 2 * pedding)
+    let imageHeight = (imageWidth * imageAspectRatio)
+    let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))//修改尺寸，防止从存储中读取富文本时图片方向错位
+    attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
+    attachment.bounds = CGRect(x: 0, y: 0,
+                               width: imageWidth / userDefaultManager.imageScalingFactor,
+                               height: imageHeight / userDefaultManager.imageScalingFactor)
+    let aString = NSMutableAttributedString(attachment: attachment)
+    aString.addAttribute(.image, value: 1, range: NSRange(location: 0, length: 1))
+    return aString
+}

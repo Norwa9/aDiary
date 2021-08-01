@@ -8,6 +8,7 @@
 import UIKit
 import FMPhotoPicker
 let ktopViewHeight:CGFloat = 44
+let kTextViewPeddingX:CGFloat = 10
 class todayVC: UIViewController{
     var todayDiary:diaryInfo!
     
@@ -75,8 +76,8 @@ class todayVC: UIViewController{
         }
         
         textView.snp.makeConstraints { make in
-            make.left.equalTo(self.view).offset(10)
-            make.right.equalTo(self.view).offset(-10)
+            make.left.equalTo(self.view).offset(kTextViewPeddingX)
+            make.right.equalTo(self.view).offset(-kTextViewPeddingX)
             make.bottom.equalTo(self.view)
         }
     }
