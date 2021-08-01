@@ -65,7 +65,6 @@
                         <segment title="日期升序"/>
                         <segment title="字数降序"/>
                         <segment title="字数升序"/>
-                        <segment title="收藏"/>
                     </segments>
                 </segmentedControl>
             </subviews>
