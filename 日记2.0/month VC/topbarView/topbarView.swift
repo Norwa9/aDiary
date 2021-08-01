@@ -17,6 +17,8 @@ class topbarView: UIView {
     
     var dataLable1:UILabel!
     var dataLable2:UILabel!
+    var backwordBtn:UIButton!
+    var forwardBtn:UIButton!
     var button0:topbarButton!
     var button1:topbarButton!
     var button2:topbarButton!
@@ -51,6 +53,23 @@ class topbarView: UIView {
         dataLable1.text = "\(curYear)年"
         dataLable1.sizeToFit()
         self.addSubview(dataLable1)
+        
+        //backward button
+        backwordBtn = UIButton()
+        backwordBtn.setImage(UIImage(named: "chevron.backward.circle"), for: .normal)
+        backwordBtn.setImage(UIImage(named: "chevron.backward.circle.fill"), for: .selected)
+        backwordBtn.tag = 0
+        backwordBtn.addTarget(self, action: #selector(yearChangeAction(_:)), for: .touchUpInside)
+        self.addSubview(backwordBtn)
+        
+        //forward button
+        forwardBtn = UIButton()
+        forwardBtn.setImage(UIImage(named: "chevron.forward.circle"), for: .normal)
+        forwardBtn.setImage(UIImage(named: "chevron.forward.circle.fill"), for: .selected)
+        forwardBtn.tag = 1
+        forwardBtn.addTarget(self, action: #selector(yearChangeAction(_:)), for: .touchUpInside)
+        self.addSubview(forwardBtn)
+        
         //dataLable2
         dataLable2 = UILabel()
         dataLable2.text = "\(curMonth)月"
@@ -99,15 +118,27 @@ class topbarView: UIView {
     }
     
     func setupUIconstraint(){
+        backwordBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(dataLable1)
+            make.left.equalToSuperview().inset(10)
+            make.size.equalTo(CGSize(width: 20, height: 20))
+        }
+        
         dataLable1.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(16)
+            make.left.equalTo(backwordBtn.snp.right).offset(1)
             make.top.equalToSuperview()
-            make.size.equalTo(CGSize(width: 195, height: 25))
+            make.height.equalTo(25)
+        }
+        
+        forwardBtn.snp.makeConstraints { (make) in
+            make.left.equalTo(dataLable1.snp.right).offset(1)
+            make.centerY.equalTo(backwordBtn)
+            make.size.equalTo(backwordBtn)
         }
         
         dataLable2.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(16)
-            make.top.equalToSuperview().inset(25)
+            make.left.equalTo(dataLable1)
+            make.top.equalTo(dataLable1.snp.bottom)
             make.size.equalTo(CGSize(width: 159, height: 25))
         }
         
@@ -149,5 +180,15 @@ extension topbarView{
         
         let monthVC = UIApplication.getMonthVC()
         monthVC.monthButtonsTapped(button: sender)
+    }
+    
+    @objc func yearChangeAction(_ sender:UIButton){
+        let monthVC = UIApplication.getMonthVC()
+        if sender.tag == 0{
+            monthVC.selectedYear -= 1
+        }else{
+            monthVC.selectedYear += 1
+        }
+        monthVC.updateUI()
     }
 }

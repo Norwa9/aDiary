@@ -82,24 +82,51 @@ class monthVC: UIViewController {
         updateUI()
     }
     
+    ///selectedYear或者selectedMonth更新后，调用updateUI更新视图界面
     func updateUI(){
         //更新dataLable1
         topbar.dataLable1.text = "\(selectedYear!)年"
         topbar.dataLable1.sizeToFit()
         
-        //更新dataLable2
-        //更新数据源
         if selectedMonth > 0{
+            //更新dataLable2
             topbar.dataLable2.text = "\(selectedMonth!)月"
             topbar.dataLable2.sizeToFit()
-            monthButtons[selectedMonth - 1].animateBackgroundColor()
+            
+            //更新collectionView
             configureDataSource(year: selectedYear, month: selectedMonth)
-            adjustBackToCurrentMonthButton()
+            
+            //更新日历
+            formatter.dateFormat = "yyyy-MM"
+            lwCalendar?.setCurrentPage(formatter.date(from: "\(selectedYear!)-\(selectedMonth!)")!, animated: true)
+            
+            //更新月份按钮
+            updateMonthBtns()
+            
+            //更新返回按钮
+            updateBackToCurrentMonthButton()
+            return
         }
         
         //更新返回本月按钮
-        adjustBackToCurrentMonthButton()
+        updateBackToCurrentMonthButton()
+        
+        
     }
+    
+    //更新monthButtons的点亮状态
+    private func updateMonthBtns(){
+        for button in monthButtons{
+            if button.hasSelected{
+                button.animateBackgroundColor()
+            }
+            
+            if button.tag == selectedMonth{
+                button.animateBackgroundColor()
+            }
+        }
+    }
+    
     
     //MARK:-初始化UI
     private func initUI(){
@@ -262,15 +289,12 @@ class monthVC: UIViewController {
     //MARK:-action target
     ///按下月份按钮
     @objc func monthDidTap(sender:monthButton){
-        formatter.dateFormat = "yyyy-MM"
         let tappedMonth = sender.tag
         if tappedMonth == selectedMonth{
-                //animateCalendar(isShowing: calendarIsShowing)
+            
         }else{
             selectedMonth = tappedMonth
             updateUI()
-            lwCalendar?.setCurrentPage(formatter.date(from: "\(selectedYear!)-\(tappedMonth)")!, animated: false)
-            
         }
     }
     
@@ -305,7 +329,8 @@ class monthVC: UIViewController {
         lwCalendar?.setCurrentPage(curDate, animated: false)
     }
     
-    func adjustBackToCurrentMonthButton(){
+    ///返回按钮的显示与否
+    func updateBackToCurrentMonthButton(){
         if selectedMonth != curMonth || selectedYear != curYear{
             if !isShowingBackButton{
                 showBackButton(toShow: true)
@@ -317,7 +342,7 @@ class monthVC: UIViewController {
         }
     }
     
-    func showBackButton(toShow:Bool){
+    private func showBackButton(toShow:Bool){
         let screenHeight = kScreenHeight
         if toShow{
             //显示
@@ -545,7 +570,7 @@ extension monthVC:UISearchBarDelegate{
         self.setupMJRefresh(isFitlerMode: isFilterMode)
         
         //隐藏或显示backButton
-        adjustBackToCurrentMonthButton()
+        updateBackToCurrentMonthButton()
         
         //searh图标是临时添加到button3上面的
         if isFilterMode{//进入搜索模式

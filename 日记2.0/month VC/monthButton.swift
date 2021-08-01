@@ -39,7 +39,6 @@ class monthButton: UIButton {
     
     func animateBackgroundColor(){
         if !hasSelected{
-            checkButtonsState()
             hasSelected = true
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseIn) {
                 self.containView.backgroundColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
@@ -54,14 +53,6 @@ class monthButton: UIButton {
                 self.monthLabel.textColor = .black
             } completion: { (_) in
                 
-            }
-        }
-    }
-    
-    func checkButtonsState(){
-        for button in monthVC.monthButtons{
-            if button.hasSelected && button.tag != self.tag{
-                button.animateBackgroundColor()
             }
         }
     }
