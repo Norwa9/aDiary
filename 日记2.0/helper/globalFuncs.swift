@@ -11,15 +11,12 @@ import RealmSwift
 
 //MARK:-导入用户引导
 func LoadIntroText(){
-    if !userDefaultManager.hasInitialized{
-        userDefaultManager.hasInitialized = true
-        let date = GetTodayDate()
-        if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt") {
-            if let textContents = try? String(contentsOf: levelFileURL) {
-                let introDiary = diaryInfo(dateString: date)
-                introDiary.content = textContents
-                LWRealmManager.shared.add(introDiary)
-            }
+    let date = GetTodayDate()
+    if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt"),let textContents = try? String(contentsOf: levelFileURL){
+        let introDiary = diaryInfo(dateString: date)
+        introDiary.content = textContents
+        if LWRealmManager.shared.queryFor(dateCN: date).isEmpty{
+            LWRealmManager.shared.add(introDiary)
         }
     }
 }

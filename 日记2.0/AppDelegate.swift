@@ -15,10 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //LoadIntroText()
-        
         configDatabase()
         
+        loadIntroductionIfNeed()
         loadToday()
         
         UIApplication.shared.registerForRemoteNotifications()//注册iCloud静默通知
@@ -87,6 +86,13 @@ extension AppDelegate{
                 /* 处理打开 Realm 时所发生的错误 */
                 print("Realm 数据库配置失败：\(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func loadIntroductionIfNeed(){
+        if !userDefaultManager.hasInitialized{
+            LoadIntroText()
+            userDefaultManager.hasInitialized = true
         }
     }
     
