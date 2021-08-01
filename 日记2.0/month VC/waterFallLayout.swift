@@ -56,7 +56,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
          实际上：self.itemWidth仅仅影响itemX的计算
          最好是让self.itemWidth与containerView的宽度约束值同步
          */
-        self.itemWidth = layoutParasManager.shared.itemWidth
+        self.itemWidth = layoutParasManager.shared.monthCellWidth
         ///缩进
         self.viewInset = self.collectionView!.contentInset
         self.calculateAttributesWithItemWidth(itemWidth)

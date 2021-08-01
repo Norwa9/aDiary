@@ -140,7 +140,7 @@ class monthCell: UICollectionViewCell {
             make.right.equalTo(contentView)
             make.top.equalTo(contentView)
             make.bottom.equalTo(contentView)
-            make.width.equalTo(layoutParasManager.shared.itemWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
+            make.width.equalTo(layoutParasManager.shared.monthCellWidth)//必须限制住contentView的宽度，否者contentView的宽度错乱
         }
         
         dateLabel.snp.makeConstraints { (make) in
@@ -166,24 +166,24 @@ class monthCell: UICollectionViewCell {
             make.height.equalTo(1)
         }
         
-        albumView.snp.makeConstraints { (make) in
+        contentLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(titleLabel)
+            make.right.equalTo(titleLabel)
             make.top.equalTo(splitLine.snp.bottom).offset(2)
+            make.height.lessThanOrEqualTo(200)
+        }
+        
+        albumView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentLabel.snp.bottom).offset(2)
             make.left.equalTo(containerView)
             make.right.equalTo(containerView)
             make.height.equalTo(0)
         }
         
-        contentLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(titleLabel)
-            make.right.equalTo(titleLabel)
-            make.top.equalTo(albumView.snp.bottom).offset(2)
-            make.height.lessThanOrEqualTo(200)
-        }
-        
         todoListView.snp.makeConstraints { make in
             make.left.equalTo(containerView).offset(10)
             make.right.equalTo(containerView).offset(-10)
-            make.top.equalTo(contentLabel.snp.bottom).offset(5)
+            make.top.equalTo(albumView.snp.bottom).offset(5)
             make.height.equalTo(100)
         }
         
@@ -298,7 +298,7 @@ extension monthCell{
         
         //瀑布流切换时
         self.containerView.snp.updateConstraints { (update) in
-            update.width.equalTo(layoutParasManager.shared.itemWidth)
+            update.width.equalTo(layoutParasManager.shared.monthCellWidth)
         }
         switch layoutParasManager.shared.collectioncolumnNumber {
         case 1:

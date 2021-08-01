@@ -35,7 +35,7 @@ class layoutParasManager: NSObject {
     }
     
     ///monthCell的宽度
-    var itemWidth:CGFloat{
+    var monthCellWidth:CGFloat{
         //设置getter方法，每次访问KitemWidth总能获得最新的值
         get{
             return (contentWidth -  CGFloat((collectioncolumnNumber - 1)) * collectionInteritemSpacing ) / CGFloat(collectioncolumnNumber)
@@ -50,7 +50,7 @@ class layoutParasManager: NSObject {
     ///todo list CollectionView的宽度
     private var todoListViewWidth:CGFloat{
         get{
-            return self.itemWidth - 10.0 - 10.0
+            return self.monthCellWidth - 10.0 - 10.0
         }
     }
     
@@ -72,14 +72,21 @@ class layoutParasManager: NSObject {
     ///album CollectionView的宽度
     var albumViewWidth:CGFloat{
         get{
-            return self.itemWidth//15.0 albumView距离containerView的边界
+            return self.monthCellWidth//15.0 albumView距离containerView的边界
+        }
+    }
+    
+    ///一个cell的宽度能显示的照片数量
+    var albumItemToShow:Int{
+        get{
+            return 3
         }
     }
     
     ///album View cell的宽度
     var albumViewItemWidth:CGFloat{
         get{
-            return self.albumViewWidth - albumViewCellInset.left - albumViewCellInset.right
+            return (albumViewWidth - albumViewCellInset.left - albumViewCellInset.right - CGFloat(albumItemToShow - 1) * albumViewLineSpacing) / CGFloat(albumItemToShow)
         }
     }
     
