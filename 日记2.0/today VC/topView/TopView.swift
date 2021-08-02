@@ -47,7 +47,7 @@ class TopView: UIView {
         let day = model.date.dateComponent(for: .day)
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
-        dateLable.text = "\(weekDay)/\(month)/\(day)"
+        dateLable.text = "\(month)月\(day)日 \(weekDay)"
         
         //更新约束
         updateCons()

@@ -196,7 +196,7 @@ extension todayVC:UITextViewDelegate{
     
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        
+        toggleTopView()
     }
     
     //MARK:-shouldChangeTextIn
@@ -267,7 +267,7 @@ extension todayVC{
         let textFormatter = TextFormatter(textView: self.textView)
         if model.content.count == 0{
             //设置文字引导
-            //textFormatter.setPlaceholder()
+            textView.attributedText = nil
         }else{
             textFormatter.loadTextViewContent(with: model)
         }
@@ -347,7 +347,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         }
         if y > 50 && isShowingTopView{
             toggleTopView()
-        }else if y < 50 && !isShowingTopView{
+        }else if y < 10 && !isShowingTopView{
             toggleTopView()
         }
     }
