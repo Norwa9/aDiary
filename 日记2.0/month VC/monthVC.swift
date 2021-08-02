@@ -61,6 +61,8 @@ class monthVC: UIViewController {
     var filteredDiaries = [diaryInfo]()
     var resultDiaries = [diaryInfo]()
     var footer:MJRefreshAutoNormalFooter!
+    //编辑器
+    var editorVC:todayVC!
     
     //MARK:-生命周期
     override func viewDidLoad() {
@@ -73,6 +75,10 @@ class monthVC: UIViewController {
     }
     
     func loadData(){
+        //预加载todayVC
+        editorVC = storyboard?.instantiateViewController(identifier: "todayVC") as! todayVC
+        
+        //设置基础数据
         self.curYear = getDateComponent(for: Date(), for: .year)
         self.curMonth = getDateComponent(for: Date(), for: .month)
         self.curDay = getDateComponent(for: Date(), for: .day)
@@ -495,10 +501,9 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         cell.bounceAnimation(usingSpringWithDamping: 0.8)
         cell.showSelectionPrompt()
         
-        let vc = storyboard?.instantiateViewController(identifier: "todayVC") as! todayVC
-        vc.todayDiary = selectedDiary
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+        editorVC.model = selectedDiary
+        editorVC.modalPresentationStyle = .fullScreen
+        self.present(editorVC, animated: true, completion: nil)
         
     }
     

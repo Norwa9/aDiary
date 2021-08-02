@@ -83,7 +83,7 @@ extension monthVC:FSCalendarDelegate{
             guard let vc = storyboard?.instantiateViewController(identifier: "todayVC") as? todayVC else{
                 return
             }
-            vc.todayDiary = selectedDiary
+            vc.model = selectedDiary
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }else{

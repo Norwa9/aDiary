@@ -10,7 +10,7 @@ import FMPhotoPicker
 let ktopViewHeight:CGFloat = 44
 let kTextViewPeddingX:CGFloat = 10
 class todayVC: UIViewController{
-    var todayDiary:diaryInfo!
+    var model:diaryInfo!
     
     ///顶部容器视图
     var topView:TopView!
@@ -40,7 +40,7 @@ class todayVC: UIViewController{
     
     func initUI(){
         //topView
-        topView = TopView(model: self.todayDiary)
+        topView = TopView(model: self.model)
         
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
@@ -191,7 +191,7 @@ extension todayVC:UITextViewDelegate{
     //MARK:-shouldInteractWith
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let formatter = TextFormatter(textView: self.textView)
-        let res = formatter.interactAttchment(with: characterRange,diary:todayDiary)
+        let res = formatter.interactAttchment(with: characterRange,diary:model)
         if let type = res,type == .todo{
             self.save()
         }
@@ -247,7 +247,7 @@ extension todayVC{
 extension todayVC{
 //MARK:-读取日记内容
     func loadTodayData(){
-        guard let diary = self.todayDiary else{
+        guard let diary = self.model else{
             return
         }
         
@@ -265,13 +265,13 @@ extension todayVC{
     func save(){
         //保存数据
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.save(with: todayDiary)
+        textFormatter.save(with: model)
         
         //更新monthVC的UI
         let monthVC = UIApplication.getMonthVC()
-        if todayDiary.month == monthVC.selectedMonth{
+        if model.month == monthVC.selectedMonth{
             //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
-            monthVC.reloadCollectionViewData(forRow: todayDiary.row)
+            monthVC.reloadCollectionViewData(forRow: model.row)
             monthVC.lwCalendar?.reloadData()
         }
     }
@@ -280,7 +280,7 @@ extension todayVC{
     func reloadTodayVC(){
         //读取attributedString
         let textFormatter = TextFormatter(textView: self.textView)
-        textFormatter.loadTextViewContent(with: todayDiary)
+        textFormatter.loadTextViewContent(with: model)
     }
     
 }
