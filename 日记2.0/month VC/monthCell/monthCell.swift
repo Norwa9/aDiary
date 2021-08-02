@@ -24,7 +24,7 @@ class monthCell: UICollectionViewCell {
     var dateLabel:UILabel = UILabel()
     var tagsLabel:TagListView = TagListView()
     var albumView:UICollectionView!
-    var todoListView:TodoList!
+    var todoListView:TodoListView!
     var photos:[UIImage] = [UIImage]()
     var diary:diaryInfo!
     
@@ -117,7 +117,7 @@ class monthCell: UICollectionViewCell {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //todo-list
-        todoListView = TodoList(frame: .zero)
+        todoListView = TodoListView(frame: .zero)
         
         //emojisLabel
         emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)

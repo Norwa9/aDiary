@@ -11,7 +11,7 @@ protocol todoListDelegate:AnyObject {
     func todoDidCheck(todo:String)
 }
 
-class TodoList: UIView {
+class TodoListView: UIView {
     var collectionView:UICollectionView!
     
     var layout:TodoListLayout!
@@ -74,11 +74,11 @@ class TodoList: UIView {
     }
 }
 
-extension TodoList:UICollectionViewDelegate{
+extension TodoListView:UICollectionViewDelegate{
     
 }
 
-extension TodoList:UICollectionViewDataSource{
+extension TodoListView:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return todos.count
     }
@@ -97,7 +97,7 @@ extension TodoList:UICollectionViewDataSource{
 }
 
 //MARK:-todoListDelegate
-extension TodoList:todoListDelegate{
+extension TodoListView:todoListDelegate{
     //按下了checkButton
     func todoDidCheck(todo: String) {
         let curTodos = viewModel.todos
@@ -132,7 +132,9 @@ extension TodoList:todoListDelegate{
         //1.collection view移除一个cell
         self.collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [IndexPath(row: row, section: 0)])
-        } completion: { _ in}
+        } completion: { _ in
+            self.updateUI()//重新计算collectionView的content高度
+        }
         
         //2.更新monthVC的collection view的布局
         let monthVC = UIApplication.getMonthVC()
