@@ -49,7 +49,7 @@ class LWEmojiView: UIView {
     private func initUI(){
         //self
         self.layer.cornerRadius = 5
-        self.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        self.backgroundColor = .systemGray5
         
         //textField
         let layout = UICollectionViewFlowLayout()

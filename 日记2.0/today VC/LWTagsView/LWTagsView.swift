@@ -43,7 +43,7 @@ class LWTagsView: UIView {
     
     private func initUI(){
         //self
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         self.layer.cornerRadius = 5
         
         //UI
