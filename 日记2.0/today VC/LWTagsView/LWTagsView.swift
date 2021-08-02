@@ -35,7 +35,7 @@ class LWTagsView: UIView {
         tagsLabel.removeAllTags()
         
         for tag in model.tags{
-            tagsLabel.addTag(tag)
+            tagsLabel.addTag("#"+tag)
         }
         
         tagsLabel.addTag("添加+")

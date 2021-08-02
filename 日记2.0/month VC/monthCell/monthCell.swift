@@ -33,7 +33,10 @@ class monthCell: UICollectionViewCell {
     var tags:[String]!{
         didSet{
             self.tagsLabel.removeAllTags()
-            self.tagsLabel.addTags(tags)
+            let hashTags = tags.compactMap { (tag) -> String in
+                return "#" + tag
+            }
+            self.tagsLabel.addTags(hashTags)
         }
     }
     

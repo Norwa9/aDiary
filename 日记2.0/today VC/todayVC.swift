@@ -173,7 +173,7 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
 //MARK:-UITextView Delegate
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
-        self.toggleTopView()
+        if isShowingTopView{toggleTopView()}
         //如果日记为空，清除placeholder，开始输入
         //不可与strikeThrough的颜色一样，否者会导致textView误以为当前的todo是textview的占位符
         if textView.textColor == UIColor.gray {
@@ -196,8 +196,9 @@ extension todayVC:UITextViewDelegate{
     
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.toggleTopView()
+        
     }
+    
     //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
