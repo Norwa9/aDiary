@@ -8,7 +8,7 @@
 import UIKit
 import FMPhotoPicker
 let ktopViewHeight:CGFloat = 44
-let kTextViewPeddingX:CGFloat = 10
+let kTextViewPeddingX:CGFloat = 0
 class todayVC: UIViewController{
     var model:diaryInfo! {
         didSet{
