@@ -9,7 +9,7 @@ import UIKit
 import ISEmojiView
 import Popover
 ///emoji的大小。是LWEmojiView的高度的一半
-let kEmojiItemWidth = kEmojiViewWidth / 2
+let kEmojiItemWidth = kEmojiViewHeight
 class LWEmojiView: UIView {
     var model:diaryInfo!{
         didSet{
@@ -48,7 +48,7 @@ class LWEmojiView: UIView {
     private func initUI(){
         //self
         self.layer.cornerRadius = 5
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .white
         
         //textField
         let layout = UICollectionViewFlowLayout()
@@ -89,6 +89,7 @@ class LWEmojiView: UIView {
         
     }
     
+    //MARK:-auto layout
     private func setupCons(){
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -124,14 +125,14 @@ class LWEmojiView: UIView {
     }
     
     private func updateView(num:Int){
-        let contentWidth = max(kEmojiViewWidth, ceil(CGFloat(num) / 2) * kEmojiItemWidth)
-        print("contentWidth:\(contentWidth)")
-        self.snp.updateConstraints { (update) in
-            update.width.equalTo(contentWidth)
-        }
-        UIView.animate(withDuration: 0.5) {
-            self.layoutIfNeeded()
-        }
+//        let contentWidth = max(kEmojiViewWidth, ceil(CGFloat(num) / 2) * kEmojiItemWidth)
+//        print("contentWidth:\(contentWidth)")
+//        self.snp.updateConstraints { (update) in
+//            update.width.equalTo(contentWidth)
+//        }
+//        UIView.animate(withDuration: 0.5) {
+//            self.layoutIfNeeded()
+//        }
     }
     
     

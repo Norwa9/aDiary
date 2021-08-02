@@ -8,9 +8,7 @@
 import UIKit
 import TagListView
 
-let kEmojiViewHeight = ktopViewHeight
-let kEmojiViewWidth = kEmojiViewHeight
-
+let kEmojiViewHeight = 25
 class TopView: UIView {
     ///模型
     var model:diaryInfo!{
@@ -83,34 +81,35 @@ class TopView: UIView {
     
     private func setConstriants(){
         dateLable.snp.makeConstraints { (make) in
-            make.leading.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
         
         emojiView.snp.makeConstraints { (make) in
-            make.leading.equalTo(dateLable.snp.trailing).offset(2)
-            make.top.bottom.equalToSuperview()
-            
-            make.width.equalTo(0)
+            make.leading.right.equalToSuperview()
+            make.top.equalTo(dateLable.snp.bottom).offset(2)
+            make.height.equalTo(25)
         }
         
         tagsView.snp.makeConstraints { (make) in
-            make.top.bottom.equalTo(emojiView)
-            make.leading.equalTo(emojiView.snp.trailing).offset(2)
+            make.leading.right.equalToSuperview()
+            make.top.equalTo(emojiView.snp.bottom).offset(2)
+            make.height.greaterThanOrEqualTo(25)
+            make.bottom.equalToSuperview()
         }
         
         dismissBtn.snp.makeConstraints { (make) in
-            make.top.bottom.right.equalToSuperview()
-            make.width.equalTo(dismissBtn.snp.height)
-            make.left.equalTo(tagsView.snp.right)
+            make.top.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 44, height: 44))
         }
         
     }
     
     private func updateCons(){
-        let emojiViewWidth = max(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth, kEmojiViewWidth)
-        emojiView.snp.updateConstraints { (update) in
-            update.width.equalTo(emojiViewWidth)
-        }
+//        let emojiViewWidth = max(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth, kEmojiViewWidth)
+//        emojiView.snp.updateConstraints { (update) in
+//            update.width.equalTo(emojiViewWidth)
+//        }
         
         self.layoutIfNeeded()
     }

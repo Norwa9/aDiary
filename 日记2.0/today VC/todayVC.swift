@@ -7,7 +7,7 @@
 
 import UIKit
 import FMPhotoPicker
-let ktopViewHeight:CGFloat = 44
+
 let kTextViewPeddingX:CGFloat = 0
 class todayVC: UIViewController{
     var model:diaryInfo! {
@@ -102,11 +102,10 @@ class todayVC: UIViewController{
         topView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalTo(textView)
-            make.height.equalTo(ktopViewHeight)
-            make.bottom.equalTo(textView.snp.top).offset(-5)
         }
         
         textView.snp.makeConstraints { make in
+            make.top.equalTo(topView.snp.bottom).offset(5)
             make.left.equalTo(self.view).offset(kTextViewPeddingX)
             make.right.equalTo(self.view).offset(-kTextViewPeddingX)
             make.bottom.equalTo(self.view)
@@ -235,15 +234,19 @@ extension todayVC:UITextViewDelegate{
 extension todayVC{
     ///显示/隐藏表情盘
     func toggleTopView(){
-        let newHeight = isShowingTopView ? 0 : ktopViewHeight
         isShowingTopView.toggle()
-        topView.snp.updateConstraints { (update) in
-            update.height.equalTo(newHeight)
+        let topViewHeight = topView.bounds.height
+        textView.snp.updateConstraints { (update) in
+            if isShowingTopView{
+                update.top.equalTo(topView.snp.bottom).offset(5)
+            }else{
+                update.top.equalTo(topView.snp.bottom).offset(-topViewHeight)
+            }
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             self.view.layoutIfNeeded()
         } completion: { (_) in
-            
+
         }
 
     }
@@ -257,6 +260,7 @@ extension todayVC{
     func updateUI(){
         //调用setter，更新UI
         topView.model = model
+        topView.layoutIfNeeded()
         
         //读取textView
         let textFormatter = TextFormatter(textView: self.textView)
@@ -332,15 +336,17 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        print(y)
+        //print(y)
+        
+        if textView.isFirstResponder {return}
         //解决下拉dismiss和scrollview的冲突
         if y < 0 {
             scrollView.contentOffset = .zero
             draggingDownToDismiss = true//仅在scrollview到顶时，才启用下拉dismiss
         }
-        if y > ktopViewHeight && isShowingTopView{
+        if y > 50 && isShowingTopView{
             toggleTopView()
-        }else if y < ktopViewHeight && !isShowingTopView{
+        }else if y < 50 && !isShowingTopView{
             toggleTopView()
         }
     }

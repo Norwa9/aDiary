@@ -43,16 +43,16 @@ class LWTagsView: UIView {
     
     private func initUI(){
         //self
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .white
         self.layer.cornerRadius = 5
         
         //UI
         tagsLabel = TagListView()
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = .white
+        tagsLabel.tagBackgroundColor = .black
+        tagsLabel.textColor = .white
         tagsLabel.cornerRadius = 5
-        tagsLabel.textColor = .black
         tagsLabel.clipsToBounds = true
         tagsLabel.isUserInteractionEnabled = false
         
