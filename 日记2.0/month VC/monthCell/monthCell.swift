@@ -171,7 +171,7 @@ class monthCell: UICollectionViewCell {
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
             make.top.equalTo(splitLine.snp.bottom).offset(2)
-            make.height.lessThanOrEqualTo(200)
+            make.height.lessThanOrEqualTo(150)
         }
         
         albumView.snp.makeConstraints { (make) in
