@@ -696,8 +696,8 @@ extension monthVC {
     
     func performDelete(_ indexPath:IndexPath){
         let row = indexPath.item
-        print("row:\(row)")
         let delteDiary = filteredDiaries[row]
+        indicatorViewManager.shared.start(style: .center)
         DiaryStore.shared.delete(with: delteDiary.id)
         
     }
