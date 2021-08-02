@@ -255,6 +255,9 @@ extension todayVC{
 extension todayVC{
 //MARK:-读取日记内容
     func updateUI(){
+        //调用setter，更新UI
+        topView.model = model
+        
         //读取textView
         let textFormatter = TextFormatter(textView: self.textView)
         if model.content.count == 0{

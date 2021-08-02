@@ -15,7 +15,7 @@ class TopView: UIView {
     ///模型
     var model:diaryInfo!{
         didSet{
-            updateUI()
+            setModel()
         }
     }
     
@@ -111,6 +111,8 @@ class TopView: UIView {
         emojiView.snp.updateConstraints { (update) in
             update.width.equalTo(emojiViewWidth)
         }
+        
+        self.layoutIfNeeded()
     }
     
     //MARK:-target action

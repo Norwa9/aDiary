@@ -155,7 +155,8 @@ extension waterFallLayout{
         let maxInfo:ColumnInfo = self.highestColumn(columnHeight: self.columnHeightArray)
         let height = maxInfo.columnHeight + self.viewInset.bottom + self.lineSpacing
         let width = self.collectionView!.bounds.size.width - self.viewInset.left - self.viewInset.right
-        return CGSize(width: width, height: height)
+        let extraHeight:CGFloat = 75//为了防止底部的渐变图层遮挡cell的内容
+        return CGSize(width: width, height: height + extraHeight)
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
