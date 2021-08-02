@@ -34,11 +34,11 @@ class LWTagsView: UIView {
     private func updateUI(){
         tagsLabel.removeAllTags()
         
-        tagsLabel.addTag("+")//place holder
-        
         for tag in model.tags{
             tagsLabel.addTag(tag)
         }
+        
+        tagsLabel.addTag("添加+")
     }
     
     private func initUI(){
@@ -50,7 +50,7 @@ class LWTagsView: UIView {
         tagsLabel = TagListView()
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = .lightGray
+        tagsLabel.tagBackgroundColor = .black
         tagsLabel.cornerRadius = 5
         tagsLabel.textColor = .white
         tagsLabel.clipsToBounds = true

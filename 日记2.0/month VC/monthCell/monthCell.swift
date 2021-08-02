@@ -104,9 +104,9 @@ class monthCell: UICollectionViewCell {
         //tags Label
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = .systemGray6
+        tagsLabel.tagBackgroundColor = .black
         tagsLabel.cornerRadius = 5
-        tagsLabel.textColor = .gray
+        tagsLabel.textColor = .white
         tagsLabel.clipsToBounds = true
         tagsLabel.isUserInteractionEnabled = false
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
