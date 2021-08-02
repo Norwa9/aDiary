@@ -11,19 +11,22 @@ import Popover
 ///emoji的大小。是LWEmojiView的高度的一半
 let kEmojiItemWidth = kEmojiViewWidth / 2
 class LWEmojiView: UIView {
+    var model:diaryInfo!{
+        didSet{
+            setModel()
+        }
+    }
+    
     ///最大展示的emoji个数
     let maxNum:Int = 8
     
-
     
-    var diary:diaryInfo
-    var emojis:[String]
+    
+    var emojis:[String] = []
     var collectionView:UICollectionView!
     var emojiPanel:EmojiView!
     var popover:Popover!
-    init(model:diaryInfo) {
-        self.diary = model
-        self.emojis = model.emojis
+    init() {
         super.init(frame: .zero)
         initUI()
         setupCons()
@@ -33,7 +36,16 @@ class LWEmojiView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initUI(){
+    func setModel(){
+        updateUI()
+    }
+    
+    private func updateUI(){
+        self.emojis = model.emojis
+        collectionView.reloadData()
+    }
+    
+    private func initUI(){
         //self
         self.layer.cornerRadius = 5
         self.backgroundColor = .systemGray6
@@ -77,7 +89,7 @@ class LWEmojiView: UIView {
         
     }
     
-    func setupCons(){
+    private func setupCons(){
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -95,7 +107,7 @@ class LWEmojiView: UIView {
         guard emojis.count < maxNum  else {return}
         emojis.append(emoji)
         LWRealmManager.shared.update {
-            diary.emojis = emojis
+            model.emojis = emojis
         }
         collectionView.reloadData()
         updateView(num: emojis.count)
@@ -105,7 +117,7 @@ class LWEmojiView: UIView {
         guard !emojis.isEmpty else {return}
         emojis.removeLast()
         LWRealmManager.shared.update {
-            diary.emojis = emojis
+            model.emojis = emojis
         }
         collectionView.reloadData()
         updateView(num: emojis.count)

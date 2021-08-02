@@ -8,12 +8,15 @@
 import UIKit
 import TagListView
 class LWTagsView: UIView {
-    var model:diaryInfo!
+    var model:diaryInfo!{
+        didSet{
+            setModel()
+        }
+    }
     
     var tagsLabel:TagListView!
     
-    init(model:diaryInfo) {
-        self.model = model
+    init() {
         super.init(frame: .zero)
         initUI()
         setConstriants()
@@ -24,6 +27,19 @@ class LWTagsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setModel(){
+        updateUI()
+    }
+    
+    private func updateUI(){
+        tagsLabel.removeAllTags()
+        
+        tagsLabel.addTag("+")//place holder
+        
+        for tag in model.tags{
+            tagsLabel.addTag(tag)
+        }
+    }
     
     private func initUI(){
         //self
@@ -40,8 +56,6 @@ class LWTagsView: UIView {
         tagsLabel.clipsToBounds = true
         tagsLabel.isUserInteractionEnabled = false
         
-        updateTags()
-        
         
         self.addSubview(tagsLabel)
     }
@@ -49,13 +63,6 @@ class LWTagsView: UIView {
     private func setConstriants(){
         tagsLabel.snp.makeConstraints { (make) in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2))
-        }
-    }
-    
-    func updateTags(){
-        tagsLabel.removeAllTags()
-        for tag in model.tags{
-            tagsLabel.addTag(tag)
         }
     }
     
@@ -67,7 +74,7 @@ class LWTagsView: UIView {
     
     @objc func showTagsViewController(){
         let vc = tagsView(model: model)
-        vc.completionHandler = updateTags
+        vc.completionHandler = updateUI
         guard let todayVC = UIApplication.getTopViewController() as? todayVC else{
             print("无法获取todayVC")
             return

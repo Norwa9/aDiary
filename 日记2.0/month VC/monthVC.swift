@@ -77,6 +77,7 @@ class monthVC: UIViewController {
     func loadData(){
         //预加载todayVC
         editorVC = storyboard?.instantiateViewController(identifier: "todayVC")
+        let _ = editorVC.view
         
         //设置基础数据
         self.curYear = getDateComponent(for: Date(), for: .year)

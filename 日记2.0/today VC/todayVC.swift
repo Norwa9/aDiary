@@ -42,9 +42,35 @@ class todayVC: UIViewController{
     var dismissPanGesture:UIPanGestureRecognizer!
     var interactStartPoint:CGPoint?
     
-    func initUI(){
+    //MARK:-生命周期
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //配置日记存储器
+        diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        
+        self.initUI()
+        self.setupConstraints()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.save()
+    }
+    
+    //MARK:-setModel
+    func setModel(){
+        updateUI()
+    }
+    
+    private func initUI(){
         //topView
-        topView = TopView(model: self.model)
+        topView = TopView()
         
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
@@ -70,8 +96,9 @@ class todayVC: UIViewController{
         self.view.addSubview(textView)
         self.view.addSubview(keyBoardToolsBar)
     }
+    
     //MARK:-auto layout
-    func setupConstraints(){
+    private func setupConstraints(){
         topView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalTo(textView)
@@ -222,45 +249,19 @@ extension todayVC{
     }
 }
 
-//MARK:-生命周期
-extension todayVC{
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //配置日记存储器
-        diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
-        
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
-        
-        self.initUI()
-        self.setupConstraints()
-        
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.save()
-    }
-     
-}
+
 
 //MARK:-helper
 extension todayVC{
 //MARK:-读取日记内容
-    func setModel(){
-        guard let diary = self.model else{
-            return
-        }
-        
+    func updateUI(){
         //读取textView
         let textFormatter = TextFormatter(textView: self.textView)
-        if diary.content.count == 0{
+        if model.content.count == 0{
             //设置文字引导
             //textFormatter.setPlaceholder()
         }else{
-            textFormatter.loadTextViewContent(with: diary)
+            textFormatter.loadTextViewContent(with: model)
         }
     }
     

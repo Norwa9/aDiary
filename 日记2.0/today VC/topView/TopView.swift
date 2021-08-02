@@ -13,7 +13,11 @@ let kEmojiViewWidth = kEmojiViewHeight
 
 class TopView: UIView {
     ///模型
-    var model:diaryInfo
+    var model:diaryInfo!{
+        didSet{
+            updateUI()
+        }
+    }
     
     ///日期
     var dateLable:UILabel!
@@ -26,9 +30,7 @@ class TopView: UIView {
     
     var dismissBtn:UIButton!
     
-    init(model:diaryInfo) {
-        self.model = model
-        
+    init() {
         super.init(frame: .zero)
         initUI()
         setConstriants()
@@ -38,20 +40,35 @@ class TopView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initUI(){
-        //日期
-        dateLable = UILabel()
+    func setModel(){
+        updateUI()
+    }
+    
+    private func updateUI(){
+        //从model获取日期
         let day = model.date.dateComponent(for: .day)
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
-        dateLable.font = UIFont(name: "DIN Alternate", size: 22)
         dateLable.text = "\(weekDay)/\(month)/\(day)"
         
+        //更新约束
+        updateCons()
+        
+        //给emojiView和tagsView装填视图
+        emojiView.model = model
+        tagsView.model = model
+    }
+    
+    private func initUI(){
+        //日期
+        dateLable = UILabel()
+        dateLable.font = UIFont(name: "DIN Alternate", size: 22)
+        
         //心情
-        emojiView = LWEmojiView(model: self.model)
+        emojiView = LWEmojiView()
         
         //标签
-        tagsView = LWTagsView(model: self.model)
+        tagsView = LWTagsView()
         
         //关闭按钮
         dismissBtn = UIButton()
@@ -69,12 +86,11 @@ class TopView: UIView {
             make.leading.top.bottom.equalToSuperview()
         }
         
-        let emojiViewWidth = max(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth, kEmojiViewWidth)
         emojiView.snp.makeConstraints { (make) in
             make.leading.equalTo(dateLable.snp.trailing).offset(2)
             make.top.bottom.equalToSuperview()
             
-            make.width.equalTo(emojiViewWidth)
+            make.width.equalTo(0)
         }
         
         tagsView.snp.makeConstraints { (make) in
@@ -88,6 +104,13 @@ class TopView: UIView {
             make.left.equalTo(tagsView.snp.right)
         }
         
+    }
+    
+    private func updateCons(){
+        let emojiViewWidth = max(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth, kEmojiViewWidth)
+        emojiView.snp.updateConstraints { (update) in
+            update.width.equalTo(emojiViewWidth)
+        }
     }
     
     //MARK:-target action
