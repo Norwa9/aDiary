@@ -10,7 +10,11 @@ import FMPhotoPicker
 let ktopViewHeight:CGFloat = 44
 let kTextViewPeddingX:CGFloat = 10
 class todayVC: UIViewController{
-    var model:diaryInfo!
+    var model:diaryInfo! {
+        didSet{
+            setModel()
+        }
+    }
     
     ///顶部容器视图
     var topView:TopView!
@@ -232,7 +236,6 @@ extension todayVC{
         
         self.initUI()
         self.setupConstraints()
-        self.loadTodayData()
         
     }
     
@@ -246,7 +249,7 @@ extension todayVC{
 //MARK:-helper
 extension todayVC{
 //MARK:-读取日记内容
-    func loadTodayData(){
+    func setModel(){
         guard let diary = self.model else{
             return
         }
