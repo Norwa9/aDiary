@@ -8,7 +8,7 @@
 import UIKit
 import TagListView
 
-let kEmojiViewHeight = 25
+let kEmojiViewHeight:CGFloat = 25
 class TopView: UIView {
     ///模型
     var model:diaryInfo!{
@@ -86,8 +86,9 @@ class TopView: UIView {
         }
         
         emojiView.snp.makeConstraints { (make) in
-            make.leading.right.equalToSuperview()
             make.top.equalTo(dateLable.snp.bottom).offset(2)
+            make.centerX.equalTo(dateLable)
+            make.width.equalTo(0)
             make.height.equalTo(25)
         }
         

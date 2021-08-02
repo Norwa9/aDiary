@@ -41,14 +41,15 @@ class LWEmojiView: UIView {
     }
     
     private func updateUI(){
-        self.emojis = model.emojis
+        emojis = model.emojis
+        updateView(num: emojis.count)//设置正确的宽度
         collectionView.reloadData()
     }
     
     private func initUI(){
         //self
         self.layer.cornerRadius = 5
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         
         //textField
         let layout = UICollectionViewFlowLayout()
@@ -94,8 +95,6 @@ class LWEmojiView: UIView {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-//        updateView(num: emojis.count)//设置正确的宽度
     }
     
     override func layoutSubviews() {
@@ -125,14 +124,14 @@ class LWEmojiView: UIView {
     }
     
     private func updateView(num:Int){
-//        let contentWidth = max(kEmojiViewWidth, ceil(CGFloat(num) / 2) * kEmojiItemWidth)
-//        print("contentWidth:\(contentWidth)")
-//        self.snp.updateConstraints { (update) in
-//            update.width.equalTo(contentWidth)
-//        }
-//        UIView.animate(withDuration: 0.5) {
-//            self.layoutIfNeeded()
-//        }
+        let contentWidth:CGFloat = CGFloat(max(1, num)) * kEmojiItemWidth
+        print("contentWidth:\(contentWidth)")
+        self.snp.updateConstraints { (update) in
+            update.width.equalTo(contentWidth)
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.layoutIfNeeded()
+        }
     }
     
     

@@ -13,7 +13,7 @@ class tagsVC: UIPresentationController {
     let viewHeight:CGFloat = 400
     let viewWidth:CGFloat = 400
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissController))

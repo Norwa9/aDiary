@@ -241,7 +241,7 @@ extension todayVC{
             if isShowingTopView{
                 update.top.equalTo(topView.snp.bottom).offset(5)
             }else{
-                update.top.equalTo(topView.snp.bottom).offset(-topViewHeight)
+                update.top.equalTo(topView.snp.bottom).offset(-topViewHeight - 5)
             }
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
