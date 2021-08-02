@@ -37,6 +37,7 @@ func LoadIntroText(){
         introDiary.emojis.append("👏🏻")
         introDiary.emojis.append("😘")
         introDiary.tags.append("你好新用户")
+        dataManager.shared.tags.append("你好新用户")
         if LWRealmManager.shared.queryFor(dateCN: date).isEmpty{
             LWRealmManager.shared.add(introDiary)
         }
