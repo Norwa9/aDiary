@@ -97,15 +97,16 @@ class monthCell: UICollectionViewCell {
         contentLabel.numberOfLines = 0
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.clipsToBounds = true
+        contentLabel.textColor = UIColor.colorWithHex(hexColor: 0x5D5E61)//石岩灰
         //contentLabel.layer.cornerRadius = 5
         //contentLabel.backgroundColor = APP_GRAY_COLOR().withAlphaComponent(0.7)
         
         //tags Label
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = .lightGray
+        tagsLabel.tagBackgroundColor = .systemGray6
         tagsLabel.cornerRadius = 5
-        tagsLabel.textColor = .white
+        tagsLabel.textColor = .gray
         tagsLabel.clipsToBounds = true
         tagsLabel.isUserInteractionEnabled = false
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
