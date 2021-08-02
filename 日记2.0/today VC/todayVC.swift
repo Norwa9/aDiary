@@ -174,7 +174,7 @@ extension todayVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate
 //MARK:-UITextView Delegate
 extension todayVC:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
-        self.toggleEmojiView()
+        self.toggleTopView()
         //如果日记为空，清除placeholder，开始输入
         //不可与strikeThrough的颜色一样，否者会导致textView误以为当前的todo是textview的占位符
         if textView.textColor == UIColor.gray {
@@ -197,7 +197,7 @@ extension todayVC:UITextViewDelegate{
     
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.toggleEmojiView()
+        self.toggleTopView()
     }
     //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -234,9 +234,9 @@ extension todayVC:UITextViewDelegate{
 //MARK:-emojiView
 extension todayVC{
     ///显示/隐藏表情盘
-    func toggleEmojiView(){
+    func toggleTopView(){
         let newHeight = isShowingTopView ? 0 : ktopViewHeight
-            isShowingTopView.toggle()
+        isShowingTopView.toggle()
         topView.snp.updateConstraints { (update) in
             update.height.equalTo(newHeight)
         }
@@ -329,12 +329,19 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
+        print(y)
         //解决下拉dismiss和scrollview的冲突
         if y < 0 {
             scrollView.contentOffset = .zero
             draggingDownToDismiss = true//仅在scrollview到顶时，才启用下拉dismiss
+        }
+        if y > ktopViewHeight && isShowingTopView{
+            toggleTopView()
+        }else if y < ktopViewHeight && !isShowingTopView{
+            toggleTopView()
         }
     }
     
