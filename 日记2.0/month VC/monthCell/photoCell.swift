@@ -47,4 +47,16 @@ class photoCell: UICollectionViewCell {
             make.size.equalTo(self)
         }
     }
+    
+    //手动传递点击事件给monthCell
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let monthCell = self.superview?.superview?.superview?.superview as? monthCell{
+            print("点击识别到monthCell")
+            super.touchesBegan(touches, with: event)
+            monthCell.touchesBegan(touches, with: event)
+        }else{
+            print("识别错误")
+        }
+    }
+    
 }
