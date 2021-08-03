@@ -339,16 +339,23 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         //print(y)
         
         if textView.isFirstResponder {return}
+        
         //解决下拉dismiss和scrollview的冲突
         if y < 0 {
             scrollView.contentOffset = .zero
             draggingDownToDismiss = true//仅在scrollview到顶时，才启用下拉dismiss
         }
-        if y > 50 && isShowingTopView{
-            toggleTopView()
-        }else if y < 10 && !isShowingTopView{
-            toggleTopView()
+        
+        //自动隐藏/显示topView
+        //当内容高度不及屏幕高度时，会出现bug
+        if textView.contentSize.height > kScreenHeight{
+            if y > 50 && isShowingTopView{
+                toggleTopView()
+            }else if y < 10 && !isShowingTopView{
+                toggleTopView()
+            }
         }
+        
     }
     
 }
