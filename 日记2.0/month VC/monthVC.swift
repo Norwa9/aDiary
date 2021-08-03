@@ -608,6 +608,7 @@ extension monthVC:UISearchBarDelegate{
         
         //切换动画
         UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseInOut) {
+            self.topbar.button0.alpha = self.isFilterMode ? 0:1
             self.monthBtnStackView.alpha = self.isFilterMode ? 0:1
             self.searchBar.alpha = self.isFilterMode ? 1:0
             self.filterButton.alpha = self.isFilterMode ? 1:0
