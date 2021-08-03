@@ -78,6 +78,7 @@ class monthVC: UIViewController {
         //预加载todayVC
         editorVC = storyboard?.instantiateViewController(identifier: "todayVC")
         let _ = editorVC.view
+        editorVC.modalPresentationStyle = .fullScreen
         
         //设置基础数据
         self.curYear = getDateComponent(for: Date(), for: .year)
@@ -502,10 +503,12 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         cell.bounceAnimation(usingSpringWithDamping: 0.8)
         cell.showSelectionPrompt()
         
-        editorVC.model = selectedDiary
-        editorVC.modalPresentationStyle = .fullScreen
+        presentEditorVC(withViewModel: selectedDiary)
+    }
+    
+    func presentEditorVC(withViewModel viewModel:diaryInfo){
+        editorVC.model = viewModel
         self.present(editorVC, animated: true, completion: nil)
-        
     }
     
     

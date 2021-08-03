@@ -25,6 +25,3 @@ class AlbumView: UIView {
     }
 }
 
-class LWAlbumCollectionView: UICollectionView {
-    
-}

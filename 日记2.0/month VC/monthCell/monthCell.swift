@@ -362,5 +362,10 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let monthVC = UIApplication.getMonthVC()
+        monthVC.presentEditorVC(withViewModel: diary)
+    }
+    
     
 }
