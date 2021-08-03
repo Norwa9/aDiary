@@ -61,6 +61,7 @@ class todayVC: UIViewController{
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.save()
+        self.textView.attributedText = nil//清空，防止复用vc重新出现上一篇的内容
     }
     
     //MARK:-setModel
@@ -268,12 +269,7 @@ extension todayVC{
         
         //读取textView
         let textFormatter = TextFormatter(textView: self.textView)
-        if model.content.count == 0{
-            //设置文字引导
-            textView.attributedText = nil
-        }else{
-            textFormatter.loadTextViewContent(with: model)
-        }
+        textFormatter.loadTextViewContent(with: model)
     }
     
     //MARK:-保存更改
