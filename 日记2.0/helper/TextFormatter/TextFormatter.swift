@@ -707,20 +707,26 @@ extension TextFormatter{
         DiaryStore.shared.addOrUpdate(diary)
     }
     
-    ///处理纯文本
+    
     /*
      1.替换图片的占位符"P"
      2.删除头部和尾部多余的空格
      3.去除所有todo条目
      */
+    ///处理纯文本
     static func parsePlainText(text:String,allTodos:[String])->String{
         var res:String
         //替换图片的占位符"P"
         res = text.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
         //去除所有todo条目
         for todo in allTodos{
-            let cleanTodo = todo.trimmingCharacters(in: .whitespacesAndNewlines)
-            res = res.replacingOccurrences(of: cleanTodo, with: "")
+            let todoWithoutLineBreak = todo.trimmingCharacters(in: .whitespacesAndNewlines)
+            let todoWithLineBreak = todoWithoutLineBreak + "\n"
+            if todo == allTodos.last{
+                res = res.replacingOccurrences(of: todoWithoutLineBreak, with: "")
+            }else{
+                res = res.replacingOccurrences(of: todoWithLineBreak, with: "")
+            }
         }
         //最后删除头部和尾部多余的空格
         res = res.trimmingCharacters(in: .whitespacesAndNewlines)
