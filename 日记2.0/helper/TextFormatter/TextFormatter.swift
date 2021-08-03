@@ -683,17 +683,20 @@ extension TextFormatter{
         let result = attributedText.parseAttribuedText()
         let imageAttrTuples = result.0
         let todoAttrTuples = result.1
-        let cleanText = result.2
+        let text = result.2
         let containsImage = result.3
+        let incompletedTodos = result.4
+        let allTodos = result.6
         
-        let todos = diary.getTodos(for: .unchecked,from: attributedText,currentTodoAttributes: todoAttrTuples)//从最新的属性文本和属性信息数组中解析处todos
+        
+        let plainText = parsePlainText(text: text,allTodos: allTodos)
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
             diary.editedButNotUploaded = true
             diary.modTime = Date()
-            diary.content = cleanText.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
-            diary.todos = todos
+            diary.content = plainText
+            diary.todos = incompletedTodos
             diary.rtfd = attributedText.data()
             diary.containsImage = containsImage
             diary.imageAttributesTuples = imageAttrTuples
@@ -704,21 +707,25 @@ extension TextFormatter{
         DiaryStore.shared.addOrUpdate(diary)
     }
     
-    ///检查是否存在图片
-    private func checkIfContainsImage(_ aString:NSAttributedString)->Bool{
-        let bounds = textView.bounds
-        let container = textView.textContainer
-        let storage = self.storage
-            
-        var containsImage = false
-        aString.enumerateAttribute(.image, in: NSRange(location: 0, length: aString.length), options: [], using: { [] (object, range, pointer) in
-            let location = range.location
-            if let imageAttachment = storage.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let _ = imageAttachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
-                containsImage = true
-                pointer.pointee = true
-            }
-        })
-        return containsImage
+    ///处理纯文本
+    /*
+     1.替换图片的占位符"P"
+     2.删除头部和尾部多余的空格
+     3.去除所有todo条目
+     */
+    private func parsePlainText(text:String,allTodos:[String])->String{
+        var res:String
+        //替换图片的占位符"P"
+        res = text.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        //删除头部和尾部多余的空格
+        res = res.trimmingCharacters(in: .whitespacesAndNewlines)
+        //去除所有todo条目
+        for todo in allTodos{
+            let cleanTodo = todo.trimmingCharacters(in: .whitespacesAndNewlines)
+            res = res.replacingOccurrences(of: cleanTodo, with: "")
+        }
+        
+        return res
     }
     
 }

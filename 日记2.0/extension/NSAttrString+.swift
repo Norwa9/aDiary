@@ -12,11 +12,17 @@ extension NSAttributedString{
     
     //MARK:解析
     ///存储时解析attribuedText中的image属性和todo属性
-    func parseAttribuedText()->([(Int,Int)],[(Int,Int)],cleanText:String,containImage:Bool){
+    /*返回值：
+     (imageAttrTuples, todoAttrTuples, incompletedTodos, completedTodos, allTodos, cleanText, containsImage)
+     */
+    func parseAttribuedText()->([(Int,Int)],[(Int,Int)],cleanText:String,containImage:Bool,[String],[String],[String]){
         let attrText = NSMutableAttributedString(attributedString: self)
         var containsImage:Bool = false
         var imageAttrTuples = [(Int,Int)]()
         var todoAttrTuples = [(Int,Int)]()
+        var incompletedTodos = [String]()
+        var completedTodos = [String]()
+        var allTodos = [String]()
         
         attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
             let location = range.location
@@ -35,7 +41,16 @@ extension NSAttributedString{
             
             //2.todo
             if let todoAttrValue = attrText.attribute(.todo, at: location, effectiveRange: nil) as? Int{
-                let checked = (todoAttrValue == 1) ? "打钩":"没打钩"
+                let checked = (todoAttrValue == 1)
+                let lineRange = attrText.mutableString.paragraphRange(for: range)
+                let todo = attrText.attributedSubstring(from: lineRange).string
+                if(checked){
+                    completedTodos.append(todo)
+                }else{
+                    incompletedTodos.append(todo)
+                }
+                allTodos.append(todo)
+                
                 print("存储时扫描到todo:\(range),\(checked)")
                 todoAttrTuples.append((location,todoAttrValue))
             }
@@ -45,7 +60,7 @@ extension NSAttributedString{
         
         print("存储images:\(imageAttrTuples)")
         print("存储todos:\(todoAttrTuples)")
-        return (imageAttrTuples,todoAttrTuples,cleanText,containsImage)
+        return (imageAttrTuples, todoAttrTuples, cleanText, containsImage, incompletedTodos, completedTodos, allTodos)
         
     }
     
