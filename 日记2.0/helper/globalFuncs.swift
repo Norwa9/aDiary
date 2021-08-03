@@ -24,16 +24,18 @@ func LoadIntroText(){
         let parseRes = attributedText.parseAttribuedText()
         let imageAttrTuples = parseRes.0
         let todoAttrTuples = parseRes.1
-        let cleanText = parseRes.2.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        let text = parseRes.2
         let containsImage = parseRes.3
-        let todos = introDiary.getTodos(for: .unchecked,from: attributedText,currentTodoAttributes: todoAttrTuples)//从最新的属性文本和属性信息数组中解析处todos
+        let incompletedTodos = parseRes.4
+        let allTodos = parseRes.6
+        let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
         
-        introDiary.content = cleanText
+        introDiary.content = plainText
         introDiary.rtfd = attributedText.data()
         introDiary.todoAttributesTuples = todoAttrTuples
         introDiary.imageAttributesTuples = imageAttrTuples
         introDiary.containsImage = containsImage
-        introDiary.todos = todos
+        introDiary.todos = incompletedTodos
         introDiary.emojis.append("👏🏻")
         introDiary.emojis.append("😘")
         introDiary.tags.append("你好新用户")
