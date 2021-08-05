@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,26 +22,35 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgG-dX-Orp">
-                    <rect key="frame" x="31" y="58" width="339" height="288"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgG-dX-Orp">
+                    <rect key="frame" x="30" y="58" width="340" height="288"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="288" id="Weg-FS-44P"/>
+                    </constraints>
                 </tableView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yjV-M6-Xd6">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yjV-M6-Xd6">
                     <rect key="frame" x="171" y="5" width="58" height="4"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemGray3Color"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="4" id="fc9-Rh-kqH"/>
+                        <constraint firstAttribute="width" constant="58" id="hHd-Ix-aKY"/>
+                    </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="标签" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ik-tM-JPC">
-                    <rect key="frame" x="31" y="15" width="90" height="43"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标签" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ik-tM-JPC">
+                    <rect key="frame" x="31" y="15" width="45" height="43"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="43" id="f16-yY-xPB"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTL-mO-4KW">
-                    <rect key="frame" x="176" y="354" width="48" height="39"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTL-mO-4KW">
+                    <rect key="frame" x="177.5" y="354" width="45" height="39"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="39" id="Dwr-cT-3Uj"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <state key="normal" title="完成">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -53,6 +62,18 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="yjV-M6-Xd6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="8qz-yc-b8C"/>
+                <constraint firstItem="MTL-mO-4KW" firstAttribute="top" secondItem="PgG-dX-Orp" secondAttribute="bottom" constant="8" id="Kec-yK-bGB"/>
+                <constraint firstItem="yjV-M6-Xd6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="5" id="Mvj-FA-eAH"/>
+                <constraint firstItem="MTL-mO-4KW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="REs-4l-GaA"/>
+                <constraint firstItem="PgG-dX-Orp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="VC1-rZ-twh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="MTL-mO-4KW" secondAttribute="bottom" constant="7" id="Yb3-DC-glO"/>
+                <constraint firstItem="PgG-dX-Orp" firstAttribute="top" secondItem="9Ik-tM-JPC" secondAttribute="bottom" id="fqh-2G-V3M"/>
+                <constraint firstItem="9Ik-tM-JPC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="gQq-fw-lbs"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PgG-dX-Orp" secondAttribute="trailing" constant="30" id="sRc-N6-dfh"/>
+                <constraint firstItem="9Ik-tM-JPC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="31" id="tb0-sp-rf2"/>
+            </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
