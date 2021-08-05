@@ -30,14 +30,8 @@ class DIYCalendarCell: FSCalendarCell {
     
     override init!(frame: CGRect) {
         super.init(frame: frame)
-         
-        /*
-         因为reuse机制，整个程序过程中只会创建一定数量的cell，
-         也就是init在开始时调用，后面就不再调用。
-         所以可以在init内对cell的统一特性进行初始化。
-         */
-        //设置cell的灰色圆角矩形背景
         
+        //设置cell的灰色圆角矩形背景
         bgView = UIView(frame: self.bounds)
         bgView.layer.cornerRadius = 7
         self.backgroundView = bgView
@@ -62,7 +56,7 @@ class DIYCalendarCell: FSCalendarCell {
             bgView.backgroundColor = .clear
         }
         
-        //设置当日提示
+        //给今日cell加上绿色边框
         if DateToCNString(date: date) == GetTodayDate(){
             self.backgroundView?.layer.borderWidth = 2;
             self.backgroundView?.layer.borderColor = APP_GREEN_COLOR().cgColor
@@ -80,15 +74,17 @@ class DIYCalendarCell: FSCalendarCell {
         self.selectionLayer.frame = self.contentView.bounds
         switch selectionType {
         case .single:
-            self.selectionLayer.isHidden = false
-            let diameter: CGFloat = min(self.contentView.frame.width, self.contentView.frame.height)
-            let square = CGRect(
-                x: self.contentView.frame.width / 2 - diameter / 2,
-                y: self.contentView.frame.height / 2 - diameter / 2,
-                width: diameter,
-                height: diameter)
-            let cyclePath = UIBezierPath(ovalIn: square.insetBy(dx: 5, dy: 5))
-            self.selectionLayer.path = cyclePath.cgPath
+            self.selectionLayer.isHidden = true//取消选中提示
+//            self.selectionLayer.isHidden = false
+//            //在layoutSubviews里才能获取正确的contentView.frmae
+//            let diameter: CGFloat = min(self.contentView.frame.width, self.contentView.frame.height)
+//            let square = CGRect(
+//                x: self.contentView.frame.width / 2 - diameter / 2,
+//                y: self.contentView.frame.height / 2 - diameter / 2,
+//                width: diameter,
+//                height: diameter)
+//            let cyclePath = UIBezierPath(ovalIn: square.insetBy(dx: 5, dy: 5))
+//            self.selectionLayer.path = cyclePath.cgPath
         default:
             self.selectionLayer.isHidden = true
             break

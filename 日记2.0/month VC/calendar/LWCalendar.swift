@@ -37,7 +37,7 @@ class LWCalendar: FSCalendar {
         self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         self.appearance.eventSelectionColor = .black
         self.appearance.selectionColor = #colorLiteral(red: 0.2, green: 0.231372549, blue: 0.2509803922, alpha: 1)
-        self.appearance.titleSelectionColor = APP_GREEN_COLOR()
+        self.appearance.titleSelectionColor = .black
         self.appearance.eventOffset = CGPoint(x: 0, y: -5)
         self.appearance.eventDefaultColor = .black
         self.appearance.headerDateFormat = "yyyy年M月"
@@ -140,20 +140,12 @@ extension monthVC:FSCalendarDelegateAppearance{
     
     //事件点默认颜色
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        formatter.dateFormat = "yyyy年M月d日"
-        let localDB = LWRealmManager.shared.localDatabase
-        for diary in localDB{
-            //如果有内容
-            if diary.date == formatter.string(from: date) && diary.islike{
-                return [.yellow]
-            }
-        }
-        return [.black]
+        return nil
     }
     
     //事件点选取状态的颜色
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
-        return [APP_GREEN_COLOR()]
+        return nil
     }
 }
 
