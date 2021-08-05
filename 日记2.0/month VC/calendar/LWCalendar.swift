@@ -127,7 +127,7 @@ extension monthVC:FSCalendarDelegateAppearance{
                 /*
                  TODO:发现最大dot数=3，需要自己写一个view来显示更多的dot
                  */
-                return 1
+                return model.todos.count
             }
             
         }else{
