@@ -94,6 +94,8 @@ class monthCell: UICollectionViewCell {
         albumView.translatesAutoresizingMaskIntoConstraints = false
         albumView.backgroundColor = .clear
         albumView.layer.cornerRadius = 10
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(albumViewTapped))
+        albumView.addGestureRecognizer(tapGes)
         
         //contentLabel
         //字号14
@@ -368,4 +370,13 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     }
     
     
+}
+
+
+//MARK:-action targets
+extension monthCell{
+    @objc func albumViewTapped(){
+        let monthVC = UIApplication.getMonthVC()
+        monthVC.presentEditorVC(withViewModel: diary)
+    }
 }
