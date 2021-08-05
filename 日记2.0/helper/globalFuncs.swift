@@ -18,8 +18,8 @@ func LoadIntroText(){
         let attributedText = NSMutableAttributedString(string: content)
         
         attributedText.loadCheckboxes()
-        let imageAttchment = GetAttachment(image:UIImage(named:"icon-1024")!)
-        attributedText.insert(imageAttchment, at: attributedText.length)
+        let iconAttchment = GetAttachment(image:UIImage(named:"icon-1024")!)
+        attributedText.insert(iconAttchment, at: attributedText.length)
         
         let parseRes = attributedText.parseAttribuedText()
         let imageAttrTuples = parseRes.0
