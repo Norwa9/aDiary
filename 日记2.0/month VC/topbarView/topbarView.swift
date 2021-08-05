@@ -179,7 +179,7 @@ extension topbarView{
         sender.bounceAnimation(usingSpringWithDamping: 0.8)
         
         let monthVC = UIApplication.getMonthVC()
-        monthVC.monthButtonsTapped(button: sender)
+        monthVC.topToolButtonTapped(button: sender)
     }
     
     @objc func yearChangeAction(_ sender:UIButton){

@@ -50,7 +50,7 @@ class monthVC: UIViewController {
     //calendar
     var lwCalendar: LWCalendar!
     var formatter = DateFormatter()
-    var isShowingCalendar:Bool = true
+    var isShowingCalendar:Bool = false
     let kCalendarHeight:CGFloat = 300
     //collection view
     var collectionView:UICollectionView!
@@ -306,16 +306,16 @@ class monthVC: UIViewController {
         }
     }
     
-     func showCalendar(){
-        let newHeihgt = isShowingCalendar ? (kTopViewHeight + kCalendarHeight) : kTopViewHeight
-        
+     func toggleCalendar(){
         isShowingCalendar.toggle()
+        
+        let newHeihgt = isShowingCalendar ? (kTopViewHeight + kCalendarHeight) : kTopViewHeight
         
         topView.snp.updateConstraints { (update) in
             update.height.equalTo(newHeihgt)
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
-            self.lwCalendar.alpha = self.isShowingCalendar ? 0 : 1
+            self.lwCalendar.alpha = self.isShowingCalendar ? 1 : 0
             self.view.layoutIfNeeded()
         } completion: { (_) in
             
@@ -386,10 +386,10 @@ class monthVC: UIViewController {
     }
     
     ///topbar按钮触发事件
-    func monthButtonsTapped(button: topbarButton){
+    func topToolButtonTapped(button: topbarButton){
         switch button.tag {
         case 0:
-            showCalendar()
+            toggleCalendar()
         case 1:
             //切换单双列展示
             layoutParasManager.shared.switchLayoutMode()
@@ -576,8 +576,13 @@ extension monthVC:UISearchBarDelegate{
     func switchToFilterView(button:topbarButton){
         isFilterMode.toggle()
         
+        //配置下拉刷新控件
         self.setupMJRefresh(isFitlerMode: isFilterMode)
         
+        //隐藏或显示日历
+        if isShowingCalendar{
+            toggleCalendar()
+        }
         //隐藏或显示backButton
         updateBackToCurrentMonthButton()
         
