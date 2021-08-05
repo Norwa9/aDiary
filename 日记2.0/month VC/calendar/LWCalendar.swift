@@ -67,13 +67,10 @@ extension monthVC:FSCalendarDelegate{
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let cell = calendar.cell(for: date, at: monthPosition)
         //1、显示绿色圆环
-        self.configureVisibleCells()
+        //self.configureVisibleCells()
         
-//        //2、如果选中未来日期，摇晃cell
-//        if date.compare(Date()) == .orderedDescending{
-//            cell?.shake()
-//            return
-//        }
+        //1.bounce
+        cell?.bounceAnimation(usingSpringWithDamping: 0.8, scaleFactor: 0.9)
         
         //2、进入日记
         formatter.dateFormat = "yyyy年M月d日"
