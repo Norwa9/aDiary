@@ -81,7 +81,8 @@ extension String{
             let contentAttributes:[NSAttributedString.Key : Any] = [
                 .font : UIFont(name: "DIN Alternate", size: 14)!,
                 .paragraphStyle:contentPara,
-                .foregroundColor : UIColor.colorWithHex(hexColor: 0x5D5E61)//石岩灰
+//                .foregroundColor : UIColor.colorWithHex(hexColor: 0x5D5E61)//石岩灰
+                .foregroundColor : UIColor.secondaryLabel,
             ]
             mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
             //获取第一段Range

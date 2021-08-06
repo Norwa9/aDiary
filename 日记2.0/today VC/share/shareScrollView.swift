@@ -38,26 +38,28 @@ class shareScrollView:UIScrollView{
     }
     
     func setupUI(){
+        self.backgroundColor = .systemBackground
         self.alwaysBounceVertical = true
         self.showsVerticalScrollIndicator = false
         
         dateLabel.textAlignment = .center
         dateLabel.text = diary.date
         dateLabel.font = UIFont.init(name: "DIN Alternate", size: 32)!
+        dateLabel.textColor = .label
         
         weekLabel.textAlignment = .center
         weekLabel.text = Date().getWeekday(dateString: diary.date)
         weekLabel.font = UIFont.init(name: "DIN Alternate", size: 24)!
+        weekLabel.textColor = .label
         
         textImageView.contentMode = .scaleAspectFill///!!!!!!!
         textImageView.image = textViewScreenshot
         textImageView.layer.cornerRadius = 10
         textImageView.layer.borderWidth = 1
-        textImageView.layer.borderColor = UIColor.lightGray.cgColor
+        textImageView.layer.borderColor = UIColor.systemGray2.cgColor
         
-        signature.backgroundColor = .white
         signature.text = "分享自"
-        signature.textColor = UIColor.gray
+        signature.textColor = UIColor.secondaryLabel
         signature.font = UIFont.init(name: "DIN Alternate", size: 18)!
         signature.textAlignment = .center
         
@@ -141,7 +143,7 @@ class shareScrollView:UIScrollView{
 
 
 
-///图标视图
+//MARK:-class:iconView图标视图类
 class iconView: UIView {
     let iconImageView = UIImageView()
     let appNameLabel = UILabel()
@@ -155,7 +157,7 @@ class iconView: UIView {
     }
     
     func initUI(){
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         self.layer.cornerRadius = 15
         self.setupShadow(opacity: 0.5, radius: 1, offset: CGSize(width: 0, height: 0), color: .black)
         

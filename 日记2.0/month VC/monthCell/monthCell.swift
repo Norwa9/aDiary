@@ -59,16 +59,16 @@ class monthCell: UICollectionViewCell {
         //contentView
         self.backgroundColor = UIColor.systemBackground
         self.clipsToBounds = false
-        self.setupShadow(opacity: 1, radius: 2, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
+        self.setupShadow(opacity: 1, radius: 2, offset: .zero, color: UIColor.label.withAlphaComponent(0.35))
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = false
         
-        contentView.backgroundColor = UIColor.white
+        contentView.backgroundColor = monthCellDynamicColor
         contentView.layer.masksToBounds = false
         contentView.layer.cornerRadius = 10
         
         //containerView
-        containerView.backgroundColor = UIColor.secondarySystemBackground
+        containerView.backgroundColor = monthCellDynamicColor
         containerView.layer.masksToBounds = false
         containerView.layer.cornerRadius = 10
         
@@ -336,7 +336,7 @@ extension monthCell{
         UIView.animate(withDuration: 0.2) {
             self.containerView.backgroundColor = .systemGray6
         } completion: { (_) in
-            self.containerView.backgroundColor = .secondarySystemBackground
+            self.containerView.backgroundColor = monthCellDynamicColor
         }
 
 

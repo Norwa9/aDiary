@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -76,10 +74,10 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
             <connections>
-                <outlet property="containerView" destination="FjI-iD-KhA" id="f0O-IH-PDn"/>
                 <outlet property="editButton" destination="020-a8-ge6" id="9j5-KN-c32"/>
-                <outlet property="selectionPropt" destination="6pD-qg-soi" id="Rlb-rk-MKt"/>
-                <outlet property="selectionProptContainer" destination="kMJ-K9-gqs" id="as4-hk-Rhf"/>
+                <outlet property="selectedContainerView" destination="kMJ-K9-gqs" id="as4-hk-Rhf"/>
+                <outlet property="selectedImageView" destination="6pD-qg-soi" id="Rlb-rk-MKt"/>
+                <outlet property="tagSelectedPromptView" destination="FjI-iD-KhA" id="f0O-IH-PDn"/>
                 <outlet property="tagsLabel" destination="77I-oc-XGQ" id="u3K-xO-CeD"/>
             </connections>
             <point key="canvasLocation" x="-28.260869565217394" y="158.03571428571428"/>

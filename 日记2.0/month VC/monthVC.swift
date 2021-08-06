@@ -162,7 +162,7 @@ class monthVC: UIViewController {
         blurEffectView.frame = CGRect(x:0, y:kScreenHeight - kBlurEffectViewHeight, width: kScreenWidth, height: kBlurEffectViewHeight);
         let gradientLayer = CAGradientLayer()//底部创建渐变层
         gradientLayer.colors = [UIColor.clear.cgColor,
-                                UIColor.black.cgColor]
+                                UIColor.label.cgColor]
         gradientLayer.frame = blurEffectView.bounds
         gradientLayer.locations = [0,0.9,1]
         blurEffectView.layer.mask = gradientLayer
@@ -174,7 +174,7 @@ class monthVC: UIViewController {
         //monthBtnStackView
         monthBtnStackView = UIView()
         monthBtnStackView.layer.cornerRadius = 10
-        monthBtnStackView.backgroundColor = .secondarySystemBackground
+        monthBtnStackView.backgroundColor = monthBtnStackViewDynamicColor
         monthBtnStackView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
         
         //calendar
@@ -716,6 +716,16 @@ extension monthVC {
         self.present(ac, animated: true, completion: nil)
     }
 }
-
+//MARK:-切换深色模式监听事件
+extension monthVC{
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if UITraitCollection.current.userInterfaceStyle == .dark{
+            blurEffectView.alpha = 0
+        }else{
+            blurEffectView.alpha = 1
+        }
+    }
+}
 
 

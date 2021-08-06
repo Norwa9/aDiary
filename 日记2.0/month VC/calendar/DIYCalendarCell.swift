@@ -51,7 +51,7 @@ class DIYCalendarCell: FSCalendarCell {
         //有内容的，设置背景色
         let res = LWRealmManager.shared.queryFor(date: date)
         if let model = res.first{
-            bgView.backgroundColor = model.content == "" ? .clear : .tertiarySystemBackground
+            bgView.backgroundColor = model.content == "" ? .clear : calendarCellBackgroudDynamicColor
         }else{
             bgView.backgroundColor = .clear
         }

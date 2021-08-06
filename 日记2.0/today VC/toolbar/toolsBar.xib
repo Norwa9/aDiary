@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +25,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hl-P5-9lK">
                     <rect key="frame" x="50" y="5" width="30" height="30"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="Bq1-WD-0iv"/>
                         <constraint firstAttribute="height" constant="30" id="s1W-Yz-dvh"/>
@@ -32,7 +33,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pyo-XQ-goJ">
                     <rect key="frame" x="355" y="5" width="49" height="30"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="O2p-Ef-dD6"/>
                         <constraint firstAttribute="width" constant="49" id="ad2-rx-c3G"/>
@@ -40,7 +41,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2P-wk-5YV">
                     <rect key="frame" x="10" y="5" width="30" height="30"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="KNA-qh-pAl"/>
                         <constraint firstAttribute="width" constant="30" id="aUy-Oh-8wg"/>
@@ -48,7 +49,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kiz-fx-37o">
                     <rect key="frame" x="90" y="5" width="30" height="30"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="QR0-u8-CuT"/>
                         <constraint firstAttribute="height" constant="30" id="g8A-4l-Tlk"/>
@@ -56,7 +57,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umS-MG-ZuF">
                     <rect key="frame" x="130" y="5" width="30" height="30"/>
-                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="CAB-dY-Pl4"/>
                         <constraint firstAttribute="width" constant="30" id="ppq-Je-ovv"/>
@@ -64,7 +65,7 @@
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Pyo-XQ-goJ" secondAttribute="bottom" constant="5" id="1Js-oE-yq2"/>
                 <constraint firstItem="umS-MG-ZuF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3Gn-tl-02S"/>
@@ -90,4 +91,12 @@
             <point key="canvasLocation" x="105.79710144927537" y="79.6875"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

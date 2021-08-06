@@ -255,9 +255,9 @@ extension settingViewController:UIDocumentPickerDelegate{
 extension settingViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
-        fontSettingContainer.backgroundColor = .white
-        backupSettingContainer.backgroundColor = .white
-        securitySettingContainer.backgroundColor = .white
+        fontSettingContainer.backgroundColor = settingContainerDynamicColor
+        backupSettingContainer.backgroundColor = settingContainerDynamicColor
+        securitySettingContainer.backgroundColor = settingContainerDynamicColor
         textView.backgroundColor = .clear
         
         //添加字体

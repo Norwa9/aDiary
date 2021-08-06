@@ -26,7 +26,7 @@ public class TextFormatter{
     
 //MARK:-MarkDown：Number List
     //创建数字列表
-    func orderedList(){
+    func insertOrderedList(){
         //获取当前range所在段落的range
         guard let pRange = getCurParagraphRange() else { return }
         //print("pRange:\(pRange)")
@@ -163,7 +163,7 @@ public class TextFormatter{
 }
 //MARK:-todo复选框
 extension TextFormatter{
-    public func todoList(){
+    public func insertTodoList(){
         //selectedRange可能覆盖到【多个段落】
         guard let pRange = getCurParagraphRange() else{return}
         
@@ -293,10 +293,10 @@ extension TextFormatter{
         
         if todoAttr == 0 {
             self.storage.addAttribute(.strikethroughStyle, value: 1, range: paragraph)
-            self.storage.addAttribute(.foregroundColor, value: UIColor.gray, range: paragraph)
+            self.storage.addAttribute(.foregroundColor, value: UIColor.systemGray, range: paragraph)
         } else {
             self.storage.removeAttribute(.strikethroughStyle, range: paragraph)
-            self.storage.addAttribute(.foregroundColor, value: UIColor.black, range: paragraph)
+            self.storage.addAttribute(.foregroundColor, value: UIColor.label, range: paragraph)
         }
         
         if paragraph.contains(location) {
@@ -458,8 +458,13 @@ extension TextFormatter{
         let parStyle = NSMutableParagraphStyle()
         parStyle.alignment = .left
         parStyle.lineSpacing = CGFloat(userDefaultManager.lineSpacing)
-        self.textView.textStorage.addAttribute(.paragraphStyle, value: parStyle, range: parRange)
-        self.textView.textStorage.addAttribute(.font, value: userDefaultManager.font, range: parRange)
+        let attributes: [NSAttributedString.Key:Any] = [
+            .font:userDefaultManager.font,
+            .paragraphStyle : parStyle,
+            .font : userDefaultManager.font,
+            .foregroundColor : UIColor.label,
+        ]
+        self.textView.textStorage.addAttributes(attributes, range: parRange)
         
         //设定光标位置
         if let select = selectRange {
@@ -739,7 +744,6 @@ extension TextFormatter{
 //MARK:-读取
 extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
-        textView.textColor = UIColor.black
         self.setLeftTypingAttributes()//内容居左
         let attributedText = diary.attributedString!
         let bounds = textView.bounds
@@ -870,7 +874,8 @@ extension TextFormatter{
         paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
         let typingAttributes:[NSAttributedString.Key:Any] = [
             .paragraphStyle: paragraphStyle,
-            .font:userDefaultManager.font
+            .font:userDefaultManager.font,
+            .foregroundColor : UIColor.label
         ]
         self.textView.typingAttributes = typingAttributes
     }

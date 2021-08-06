@@ -54,7 +54,7 @@ extension NSMutableAttributedString{
             if length >= range.upperBound, let checked = AttributedBox.getChecked() {
                 
                 //let color = NightNight.theme == .night ? UIColor.white : UIColor.black
-                let color = UIColor.black
+                let color = UIColor.label
                 addAttribute(.strikethroughColor, value: color, range: parRange)
                 
                 replaceCharacters(in: range, with: checked)
@@ -67,13 +67,13 @@ extension NSMutableAttributedString{
 extension NSMutableAttributedString{
     @discardableResult func addCheckAttribute(range:NSRange) ->Self{
         self.addAttribute(.strikethroughStyle, value: 1, range: range)
-        self.addAttribute(.foregroundColor, value: UIColor.lightGray, range: range)
+        self.addAttribute(.foregroundColor, value: UIColor.systemGray, range: range)
         return self
     }
     
     @discardableResult func addUncheckAttribute(range:NSRange)->Self{
         self.removeAttribute(.strikethroughStyle, range: range)
-        self.addAttribute(.foregroundColor, value: UIColor.black, range: range)
+        self.addAttribute(.foregroundColor, value: UIColor.label, range: range)
         return self
     }
 }

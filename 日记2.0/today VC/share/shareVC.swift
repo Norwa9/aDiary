@@ -103,7 +103,7 @@ class shareVC: UIViewController {
         }
         
         //view
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.clipsToBounds = true//裁剪过长的scrollview
         view.layer.cornerRadius = Kradius
         

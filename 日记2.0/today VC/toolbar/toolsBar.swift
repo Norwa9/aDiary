@@ -34,7 +34,7 @@ class toolsBar: UIView {
     
     func configureUI(){
         //save button
-        saveButton.backgroundColor = .systemBackground
+        saveButton.backgroundColor = .tertiarySystemBackground
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 10
         saveButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -51,7 +51,7 @@ class toolsBar: UIView {
         saveButton.addSubview(indicator)
         
         //add time button
-        insertTimeButton.backgroundColor = .systemBackground
+        insertTimeButton.backgroundColor = .tertiarySystemBackground
         insertTimeButton.addTarget(self, action: #selector(insertTimeToTextView), for: .touchUpInside)
         insertTimeButton.layer.cornerRadius = 10
         insertTimeButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -63,7 +63,7 @@ class toolsBar: UIView {
         insertTimeButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         //insert picture button
-        insertImageButton.backgroundColor = .systemBackground
+        insertImageButton.backgroundColor = .tertiarySystemBackground
         insertImageButton.addTarget(self, action: #selector(insertImageToTextView), for: .touchUpInside)
         insertImageButton.layer.cornerRadius = 10
         insertImageButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -75,7 +75,7 @@ class toolsBar: UIView {
         insertImageButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         //create number list
-        numberListButton.backgroundColor = .systemBackground
+        numberListButton.backgroundColor = .tertiarySystemBackground
         numberListButton.addTarget(self, action: #selector(insertNumberList), for: .touchUpInside)
         numberListButton.layer.cornerRadius = 10
         numberListButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -87,7 +87,7 @@ class toolsBar: UIView {
         numberListButtonImageView.centerInSuperview(size: CGSize(width: width*0.8, height: height*0.8))
         
         //todo list button
-        todoListButton.backgroundColor = .systemBackground
+        todoListButton.backgroundColor = .tertiarySystemBackground
         todoListButton.addTarget(self, action: #selector(insertTodoList), for: .touchUpInside)
         todoListButton.layer.cornerRadius = 10
         todoListButton.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
@@ -135,12 +135,12 @@ class toolsBar: UIView {
     
     @objc func insertNumberList(){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.orderedList()
+        textFormatter.insertOrderedList()
     }
     
     @objc func insertTodoList(){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.todoList()
+        textFormatter.insertTodoList()
     }
     
 //MARK:-以下内容不需要修改

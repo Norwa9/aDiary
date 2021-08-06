@@ -31,15 +31,16 @@ class LWCalendar: FSCalendar {
         self.backgroundColor = .clear
         self.appearance.todayColor = .clear
         self.appearance.titleTodayColor = .label
+        self.appearance.titleSelectionColor = .label
+        self.appearance.titleDefaultColor = .label
         self.headerHeight = 0//移除年月份栏
         self.appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
         self.appearance.titleFont = UIFont.appCalendarCellTitleFont()
         self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         self.appearance.eventSelectionColor = .black
         self.appearance.selectionColor = #colorLiteral(red: 0.2, green: 0.231372549, blue: 0.2509803922, alpha: 1)
-        self.appearance.titleSelectionColor = .black
         self.appearance.eventOffset = CGPoint(x: 0, y: -5)
-        self.appearance.eventDefaultColor = .black
+        self.appearance.eventDefaultColor = eventDotDynamicColor
         self.appearance.headerDateFormat = "yyyy年M月"
     }
     

@@ -16,10 +16,10 @@ class tagsCell: UITableViewCell {
     var delegate:tagsCellEditProtocol!
     static let reusableId = "tagsCell"
     
-    @IBOutlet weak var containerView:UIView!
+    @IBOutlet weak var tagSelectedPromptView:UIView!
     @IBOutlet weak var tagsLabel:UILabel!
-    @IBOutlet weak var selectionPropt:UIImageView!
-    @IBOutlet weak var selectionProptContainer:UIView!
+    @IBOutlet weak var selectedImageView:UIImageView!
+    @IBOutlet weak var selectedContainerView:UIView!
     @IBOutlet weak var editButton:UIButton!
     
     ///是否被选中
@@ -34,18 +34,19 @@ class tagsCell: UITableViewCell {
     func setupCellView(){
         self.backgroundColor = .systemBackground
         
-        containerView.layer.cornerRadius = 7
-        containerView.backgroundColor = .secondarySystemBackground
+        //tags
+        tagSelectedPromptView.layer.cornerRadius = 7
+        tagSelectedPromptView.backgroundColor = .clear
         
         tagsLabel.textColor = .label
         tagsLabel.backgroundColor = .clear
         
-        selectionPropt.alpha = 0
-        selectionPropt.contentMode = .scaleAspectFit
-        
-        selectionProptContainer.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        selectionProptContainer.layer.borderWidth = 1
-        selectionProptContainer.layer.cornerRadius = 5
+        //勾选图标以及其容器视图
+        selectedImageView.alpha = 0
+        selectedImageView.contentMode = .scaleAspectFit
+        selectedContainerView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        selectedContainerView.layer.borderWidth = 1
+        selectedContainerView.layer.cornerRadius = 5
         
         editButton.layer.cornerRadius = 4
         editButton.backgroundColor = .lightGray
@@ -57,10 +58,12 @@ class tagsCell: UITableViewCell {
         delegate.editButtonDidTapped(tag: tagsLabel.text!)
     }
     
-    func setView(hasSelected:Bool,isEditMode:Bool = false){
+    public func setView(hasSelected:Bool,isEditMode:Bool = false){
         self.hasSelected = hasSelected
-        selectionPropt.alpha = hasSelected ? 1:0
-        containerView.backgroundColor = hasSelected ? UIColor.colorWithHex(hexColor: 0xF7F5F2) : .secondarySystemBackground
+        
+        selectedImageView.alpha = hasSelected ? 1:0
+        
+        tagSelectedPromptView.backgroundColor = hasSelected ? .systemGray6 : .clear
         
         editButton.alpha = isEditMode ? 1:0
     }
@@ -70,25 +73,25 @@ class tagsCell: UITableViewCell {
         if self.hasSelected == true{
             self.hasSelected = false
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.5, options: .curveEaseInOut) { [self] in
-                self.containerView.backgroundColor = .secondarySystemBackground
-                selectionPropt.alpha = 0
+                self.tagSelectedPromptView.backgroundColor = .clear
+                selectedImageView.alpha = 0
                 
-                selectionPropt.transform = .identity
+                selectedImageView.transform = .identity
             } completion: { (_) in
             }
         }else{
         //选中
             self.hasSelected = true
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.5, options: .curveEaseInOut) { [self] in
-                self.containerView.backgroundColor = UIColor.colorWithHex(hexColor: 0xF7F5F2)
+                self.tagSelectedPromptView.backgroundColor = .systemGray6
                 
-                selectionPropt.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-                selectionPropt.transform = CGAffineTransform(translationX: 0, y: -5)
-                selectionPropt.alpha = 1
+                selectedImageView.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+                selectedImageView.transform = CGAffineTransform(translationX: 0, y: -5)
+                selectedImageView.alpha = 1
                 
             } completion: { (_) in
                 UIView.animate(withDuration: duration * 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                    self.selectionPropt.transform = CGAffineTransform(translationX: 0, y: 0)
+                    self.selectedImageView.transform = CGAffineTransform(translationX: 0, y: 0)
                 } completion: { (_) in
                     
                 }
