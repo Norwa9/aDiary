@@ -13,6 +13,8 @@ class exportManager{
     
     ///导出PDF
     func exportAll(completion: @escaping() -> Void){
+        indicatorViewManager.shared.start(style: .export)
+        
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenWidth))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
@@ -68,7 +70,7 @@ class exportManager{
 
             //打印pdf参考：https://stackoverflow.com/questions/56849245/swift-save-uitextview-text-to-pdf-doc-and-txt-file-formate-and-display
             let aString = alldiaryString
-            let filename = "导出日记:\(GetTodayDate())"
+            let filename = "aDiary日记导出PDF:\(GetTodayDate())"
             //主线程打印pdf。
             //通过排查下面的一些代码必须在主线程运行，但是不明白其中的道理。。
             DispatchQueue.main.async {
@@ -96,11 +98,15 @@ class exportManager{
                 //必须置于主线程，不知道为什么
                 //--
                 UIGraphicsBeginPDFContextToData(pdfData, rect, nil)
-
-                for i in 1...render.numberOfPages {
+                
+                let pagesNun = render.numberOfPages
+                for i in 1...pagesNun {
                     UIGraphicsBeginPDFPage();
                     let bounds = UIGraphicsGetPDFContextBounds()
                     render.drawPage(at: i - 1, in: bounds)
+                    
+                    let progress = i / pagesNun
+                    indicatorViewManager.shared.progress = Float(progress)
                 }
                 UIGraphicsEndPDFContext();
                 //--
@@ -120,6 +126,7 @@ class exportManager{
                 let url = URL(fileURLWithPath: filePath)
 
                 completion()
+                indicatorViewManager.shared.stop()
                 let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 UIApplication.getTopViewController()!.present(activityVC, animated: true, completion: nil)
             }//main thread
