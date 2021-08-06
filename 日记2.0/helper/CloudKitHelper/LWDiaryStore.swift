@@ -43,6 +43,11 @@ public final class DiaryStore: ObservableObject {
         }
     }
     
+    ///开始云同步逻辑
+    public func startEngine(){
+        self.syncEngine?.start()
+    }
+    
     //MARK:-helper
     ///提交添加或修改到云端
     func addOrUpdate(_ diary:diaryInfo) {

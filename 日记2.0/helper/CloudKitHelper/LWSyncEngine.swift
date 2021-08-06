@@ -84,28 +84,25 @@ final class LWSyncEngine{
         buffer = LWRealmManager.shared.localDatabase.toArray()
         
         indicatorViewManager.shared.start(style: .banner)
-        start()
     }
     
     
     
     //MARK:-初始化
-    func start(){
+    public func start(){
+        print("开启LWSyncEngine")
         //0.最开始检查用户状态
         checkAccountStatus( {[weak self] accoutStatus in
             guard let self = self else{return}
             switch accoutStatus{
             case .available:
-                //1.配置iCloud环境
+                    //1.配置iCloud环境
                 self.prepareCloudEnvironment {
                     os_log("iCloud环境配置成功！", log: self.log, type: .debug)
-                    //环境配置成功后，才执行事务
                     //2.同步未上传的本地数据
                     self.uploadLocalDataNotUploadedYet()
                     //3.获取其他设备向云端提交的变动
                     self.fetchRemoteChanges()
-                    //4.更新本地的tags
-                    
                 }
             default:
                 indicatorViewManager.shared.stop()

@@ -16,10 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         configDatabase()
-        
-        loadIntroductionIfNeed()
-        loadToday()
-        
+
         UIApplication.shared.registerForRemoteNotifications()//注册iCloud静默通知
         
         
@@ -54,15 +51,13 @@ extension AppDelegate{
         //配置realm
         self.configureRealm()
         
-        
-        /*
-         做了3个初始化：
-         1.初始化realm:读取本地数据库，填充数据源
-         2.初始化DiaryStore
-            3.init()里初始化了syncEngine:上传本地数据、然后获取云端数据变动
-         */
+        //1.初始化realm:读取本地数据库，填充数据源
         _ = LWRealmManager.shared
-        _ = DiaryStore.shared
+        loadIntroductionIfNeed()
+        createTodayDiary()
+        //2.初始化DiaryStore,云同步开始工作
+        let store = DiaryStore.shared
+        store.startEngine()
     }
     
     ///配置数据库，用于数据库的迭代更新
@@ -93,16 +88,18 @@ extension AppDelegate{
         if !userDefaultManager.hasInitialized{
             LoadIntroText()
             userDefaultManager.hasInitialized = true
+            print("引导日志创建成功")
         }
     }
     
     ///生成今日日记
-    private func loadToday(){
+    private func createTodayDiary(){
         let date = GetTodayDate()
         let predicate = NSPredicate(format: "date = %@", date)
         let res = LWRealmManager.shared.query(predicate: predicate)
         if res.isEmpty{
             LWRealmManager.shared.add(diaryInfo(dateString: date))
+            print("今日日记创建成功")
         }
     }
 }
