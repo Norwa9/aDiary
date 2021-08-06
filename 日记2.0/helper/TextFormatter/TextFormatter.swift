@@ -461,7 +461,6 @@ extension TextFormatter{
         let attributes: [NSAttributedString.Key:Any] = [
             .font:userDefaultManager.font,
             .paragraphStyle : parStyle,
-            .font : userDefaultManager.font,
             .foregroundColor : UIColor.label,
         ]
         self.textView.textStorage.addAttributes(attributes, range: parRange)
