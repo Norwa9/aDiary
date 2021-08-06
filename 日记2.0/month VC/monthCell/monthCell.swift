@@ -57,7 +57,7 @@ class monthCell: UICollectionViewCell {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         //contentView
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = UIColor.systemBackground
         self.clipsToBounds = false
         self.setupShadow(opacity: 1, radius: 2, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
         self.layer.cornerRadius = 10
@@ -68,7 +68,7 @@ class monthCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 10
         
         //containerView
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = UIColor.secondarySystemBackground
         containerView.layer.masksToBounds = false
         containerView.layer.cornerRadius = 10
         
@@ -79,7 +79,7 @@ class monthCell: UICollectionViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //分隔线
-        splitLine.backgroundColor = UIColor.colorWithHex(hexColor: 0xF1F1F1)
+        splitLine.backgroundColor = UIColor.separator
         splitLine.layer.cornerRadius = 2
         splitLine.translatesAutoresizingMaskIntoConstraints = false
         
@@ -102,16 +102,13 @@ class monthCell: UICollectionViewCell {
         contentLabel.numberOfLines = 0
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.clipsToBounds = true
-        contentLabel.textColor = UIColor.colorWithHex(hexColor: 0x5D5E61)//石岩灰
-        //contentLabel.layer.cornerRadius = 5
-        //contentLabel.backgroundColor = APP_GRAY_COLOR().withAlphaComponent(0.7)
         
         //tags Label
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
         tagsLabel.tagBackgroundColor = .black
-        tagsLabel.cornerRadius = 5
         tagsLabel.textColor = .white
+        tagsLabel.cornerRadius = 5
         tagsLabel.clipsToBounds = true
         tagsLabel.isUserInteractionEnabled = false
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -339,7 +336,7 @@ extension monthCell{
         UIView.animate(withDuration: 0.2) {
             self.containerView.backgroundColor = .systemGray6
         } completion: { (_) in
-            self.containerView.backgroundColor = .white
+            self.containerView.backgroundColor = .secondarySystemBackground
         }
 
 

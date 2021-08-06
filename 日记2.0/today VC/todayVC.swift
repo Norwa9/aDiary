@@ -248,7 +248,7 @@ extension todayVC{
             }
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
-            self.view.backgroundColor = self.isShowingTopView ? .systemGray6 : .white
+            self.view.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
             self.view.layoutIfNeeded()
         } completion: { (_) in
 

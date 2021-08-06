@@ -13,7 +13,7 @@ class TodoListCell: UICollectionViewCell {
     static let cellId = "todoListCell"
     let containerView = UIView()
     let checkButton:UIButton = UIButton()
-    let contentLabel:UILabel = GradientLabel()
+    let contentLabel:UILabel = UILabel()
     private var isDone:Bool = false
     var todo:String!
     
@@ -30,10 +30,11 @@ class TodoListCell: UICollectionViewCell {
     
     private func initUI(){
         //contentView.setDebugBorder()
+        self.backgroundColor = .tertiarySystemBackground
         
         //containerView
         contentView.addSubview(containerView)
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = .tertiarySystemBackground
         containerView.layer.cornerRadius = 4
         
         //checkButton
@@ -44,6 +45,7 @@ class TodoListCell: UICollectionViewCell {
         
         //contentLabel
         contentLabel.font = UIFont(name: "DIN Alternate", size: 15)
+        contentLabel.textColor = .label
         contentLabel.clipsToBounds = true
         containerView.addSubview(contentLabel)
         
@@ -154,10 +156,11 @@ class GradientLabel: UILabel {
         super.init(frame: frame)
 
         if let gradLayer =  layer as?  CAGradientLayer {
-            gradLayer.colors = [UIColor.white.cgColor, APP_GRAY_COLOR().cgColor]
+            gradLayer.colors = [UIColor.systemBackground.cgColor, APP_GRAY_COLOR().cgColor]
             gradLayer.startPoint = CGPoint(x:0,y:0.5)
             gradLayer.endPoint = CGPoint(x:1.0,y:0.5)
             gradLayer.locations = [0.7, 1.0];
+            gradLayer.backgroundColor = UIColor.systemBackground.cgColor
         }
     }
 

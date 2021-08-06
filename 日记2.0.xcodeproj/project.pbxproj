@@ -347,16 +347,16 @@
 		EAA29E2B25C5768200AA6971 /* 日记2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				EAA29E3525C5768600AA6971 /* Assets.xcassets */,
 				EA9AF51426821E5700D77908 /* 日记2.0.entitlements */,
+				EAA29E3A25C5768600AA6971 /* Info.plist */,
 				EAA29E2C25C5768200AA6971 /* AppDelegate.swift */,
 				EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */,
 				EAA29E3225C5768200AA6971 /* Main.storyboard */,
+				EAA29E3725C5768600AA6971 /* LaunchScreen.storyboard */,
 				EAA29E8425C5A79100AA6971 /* today VC */,
 				EAA29E5B25C5801F00AA6971 /* month VC */,
 				EA9AE7C4261078ED00D44221 /* setting VC */,
-				EAA29E3525C5768600AA6971 /* Assets.xcassets */,
-				EAA29E3725C5768600AA6971 /* LaunchScreen.storyboard */,
-				EAA29E3A25C5768600AA6971 /* Info.plist */,
 				EA3189B326934F44001B9042 /* Model */,
 				EAA29E7725C59ABB00AA6971 /* helper */,
 				EACB1719267A1B63007BF160 /* extension */,

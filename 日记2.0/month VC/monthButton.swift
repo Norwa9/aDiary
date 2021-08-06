@@ -27,14 +27,14 @@ class monthButton: UIButton {
         containView.fillSuperview()
         containView.layer.cornerRadius = self.frame.width/2
         containView.isUserInteractionEnabled = false
-        containView.backgroundColor = .white
+        containView.backgroundColor = .tertiarySystemBackground
         
         //monthLabel
         containView.addSubview(monthLabel)
         monthLabel.font = UIFont.appMonthButtonFont()
+        monthLabel.textColor = .label
         monthLabel.fillSuperview()
         monthLabel.textAlignment = .center
-        monthLabel.textColor = .black
     }
     
     func animateBackgroundColor(){
@@ -49,8 +49,8 @@ class monthButton: UIButton {
         }else{
             hasSelected = false
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseIn) {
-                self.containView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.monthLabel.textColor = .black
+                self.containView.backgroundColor = .tertiarySystemBackground
+                self.monthLabel.textColor = .label
             } completion: { (_) in
                 
             }

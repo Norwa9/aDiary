@@ -32,7 +32,13 @@ class tagsCell: UITableViewCell {
     }
 
     func setupCellView(){
+        self.backgroundColor = .systemBackground
+        
         containerView.layer.cornerRadius = 7
+        containerView.backgroundColor = .secondarySystemBackground
+        
+        tagsLabel.textColor = .label
+        tagsLabel.backgroundColor = .clear
         
         selectionPropt.alpha = 0
         selectionPropt.contentMode = .scaleAspectFit
@@ -54,7 +60,7 @@ class tagsCell: UITableViewCell {
     func setView(hasSelected:Bool,isEditMode:Bool = false){
         self.hasSelected = hasSelected
         selectionPropt.alpha = hasSelected ? 1:0
-        containerView.backgroundColor = hasSelected ? UIColor.colorWithHex(hexColor: 0xF7F5F2) : .white
+        containerView.backgroundColor = hasSelected ? UIColor.colorWithHex(hexColor: 0xF7F5F2) : .secondarySystemBackground
         
         editButton.alpha = isEditMode ? 1:0
     }
@@ -64,7 +70,7 @@ class tagsCell: UITableViewCell {
         if self.hasSelected == true{
             self.hasSelected = false
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.5, options: .curveEaseInOut) { [self] in
-                self.containerView.backgroundColor = .white
+                self.containerView.backgroundColor = .secondarySystemBackground
                 selectionPropt.alpha = 0
                 
                 selectionPropt.transform = .identity

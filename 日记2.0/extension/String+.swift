@@ -58,9 +58,9 @@ extension String{
             let titlePara = NSMutableParagraphStyle()
             titlePara.lineSpacing = 3
             let titleAttributes:[NSAttributedString.Key : Any] = [
-//                .font : UIFont.systemFont(ofSize: 17, weight: .medium),
                 .font : UIFont(name: "DIN Alternate", size: 17)!,
                 .paragraphStyle:titlePara,
+                .foregroundColor : UIColor.label
             ]
             
             let titleRange = NSMakeRange(0, firstPara.utf16.count)
@@ -79,9 +79,9 @@ extension String{
             let contentPara = NSMutableParagraphStyle()
             contentPara.lineSpacing = 3
             let contentAttributes:[NSAttributedString.Key : Any] = [
-//                .font : UIFont.systemFont(ofSize: 14, weight: .regular),
                 .font : UIFont(name: "DIN Alternate", size: 14)!,
                 .paragraphStyle:contentPara,
+                .foregroundColor : UIColor.colorWithHex(hexColor: 0x5D5E61)//石岩灰
             ]
             mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))
             //获取第一段Range

@@ -30,7 +30,7 @@ class LWCalendar: FSCalendar {
         self.layer.cornerRadius = 10
         self.backgroundColor = .clear
         self.appearance.todayColor = .clear
-        self.appearance.titleTodayColor = .black
+        self.appearance.titleTodayColor = .label
         self.headerHeight = 0//移除年月份栏
         self.appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
         self.appearance.titleFont = UIFont.appCalendarCellTitleFont()

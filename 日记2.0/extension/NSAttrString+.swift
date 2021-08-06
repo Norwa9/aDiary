@@ -75,7 +75,7 @@ extension NSAttributedString{
         let attributes: [NSAttributedString.Key:Any] = [
             .font:userDefaultManager.font,
             .paragraphStyle : paraStyle,
-            .foregroundColor : UIColor.black,
+            .foregroundColor : UIColor.label,
         ]
         let mutableAttr = NSMutableAttributedString(attributedString: self)
         mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))

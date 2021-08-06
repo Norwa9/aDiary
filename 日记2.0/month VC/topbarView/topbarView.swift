@@ -38,6 +38,8 @@ class topbarView: UIView {
     }
     
     func initUI(){
+        self.backgroundColor = .systemBackground
+        
         //get current date
         let timeNow = Date()
         timeFormatter.dateFormat = "yyyy"
@@ -52,6 +54,7 @@ class topbarView: UIView {
         dataLable1.font = appDefaultFonts.dateLable1Font
         dataLable1.text = "\(curYear)年"
         dataLable1.sizeToFit()
+        dataLable1.textColor = .label
         self.addSubview(dataLable1)
         
         //backward button
@@ -74,6 +77,7 @@ class topbarView: UIView {
         dataLable2 = UILabel()
         dataLable2.text = "\(curMonth)月"
         dataLable2.font = appDefaultFonts.dateLable2Font
+        dataLable2.textColor = .label
         self.addSubview(dataLable2)
         
         

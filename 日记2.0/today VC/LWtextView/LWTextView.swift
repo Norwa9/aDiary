@@ -11,8 +11,8 @@ import MobileCoreServices
 class LWTextView: UITextView {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        self.backgroundColor = .white
-        self.textColor = .black
+        self.backgroundColor = .systemBackground
+        self.textColor = .label
         self.layer.cornerRadius = 15
     }
     

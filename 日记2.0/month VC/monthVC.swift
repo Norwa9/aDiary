@@ -138,6 +138,7 @@ class monthVC: UIViewController {
     
     //MARK:-初始化UI
     private func initUI(){
+        self.view.backgroundColor = .systemBackground
         //topBar
         topbar = topbarView(frame: .zero)
         
@@ -148,7 +149,7 @@ class monthVC: UIViewController {
         flowLayout.lineSpacing = layoutParasManager.shared.collectionLineSpacing
         flowLayout.dateSource = filteredDiaries
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.contentInset = layoutParasManager.shared.collectionEdgesInset
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -173,7 +174,7 @@ class monthVC: UIViewController {
         //monthBtnStackView
         monthBtnStackView = UIView()
         monthBtnStackView.layer.cornerRadius = 10
-        monthBtnStackView.backgroundColor = .secondarySystemGroupedBackground
+        monthBtnStackView.backgroundColor = .secondarySystemBackground
         monthBtnStackView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
         
         //calendar

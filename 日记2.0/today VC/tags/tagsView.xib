@@ -31,7 +31,7 @@
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yjV-M6-Xd6">
                     <rect key="frame" x="171" y="5" width="58" height="4"/>
-                    <color key="backgroundColor" systemColor="systemGray3Color"/>
+                    <color key="backgroundColor" systemColor="separatorColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="4" id="fc9-Rh-kqH"/>
                         <constraint firstAttribute="width" constant="58" id="hHd-Ix-aKY"/>
@@ -43,7 +43,6 @@
                         <constraint firstAttribute="height" constant="43" id="f16-yY-xPB"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                    <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTL-mO-4KW">
@@ -53,7 +52,7 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <state key="normal" title="完成">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" systemColor="labelColor"/>
                     </state>
                     <connections>
                         <action selector="done" destination="-1" eventType="touchUpInside" id="nGu-Sf-F9y"/>
@@ -81,11 +80,14 @@
         </view>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

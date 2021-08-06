@@ -26,11 +26,14 @@ class customAlertView: UIView {
     }
     
     func configureUI(){
+        self.backgroundColor = .systemBackground
+        
         //标题
         title.frame = CGRect(x: 0, y: 12, width: 150, height: 24)
         title.textAlignment = .center
         title.font = UIFont.init(name: "DIN Alternate", size: 20)
         title.text = "无日记"
+        title.textColor = .label
         self.addSubview(title)
         
         //创建按钮
@@ -48,6 +51,7 @@ class customAlertView: UIView {
         cancelButton.frame = CGRect(x: 16, y: 44, width: 30, height: 30)
         let cancelButtonAttributes:[NSAttributedString.Key:Any] = [
             .font:UIFont.init(name: "DIN Alternate", size: 15)!,
+            .foregroundColor : UIColor.label,
         ]
         let attr2 = NSAttributedString(string: "取消", attributes: cancelButtonAttributes)
         cancelButton.setAttributedTitle(attr2, for: .normal)

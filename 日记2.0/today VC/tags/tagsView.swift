@@ -47,6 +47,7 @@ class tagsView: UIViewController {
     //MARK:-初始化UI
     func setupUI(){
         //configure drag bar
+        self.view.backgroundColor = .systemBackground
         dragBar.layer.cornerRadius = 4
         
         let nib = UINib(nibName: tagsCell.reusableId, bundle: Bundle.main)
@@ -55,6 +56,7 @@ class tagsView: UIViewController {
         tagsTableView.dataSource = self
         tagsTableView.separatorStyle = .none
         tagsTableView.showsVerticalScrollIndicator = false
+        tagsTableView.backgroundColor = .clear
         
     }
     
@@ -148,7 +150,7 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let customFooterView = UIView()
-        customFooterView.backgroundColor = .white
+        customFooterView.backgroundColor = .clear
         
         let addBtn = UIButton()
         addBtn.setImage(UIImage(named: "add"), for: .normal)
@@ -171,7 +173,7 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
         editBtn.addTarget(self, action: (#selector(switchEditMode)), for: .touchUpInside)
         
         let splitLine = UIView()
-        splitLine.backgroundColor = .lightGray
+        splitLine.backgroundColor = .separator
         customFooterView.addSubview(splitLine)
         splitLine.snp.makeConstraints { (make) in
             make.top.equalTo(customFooterView.snp.top)
