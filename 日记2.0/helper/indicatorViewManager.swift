@@ -23,9 +23,12 @@ class indicatorViewManager{
     ///进度
     var progress:Float = 0{
         didSet{
-            UIView.animate(withDuration: 0.1) {
-                self.progressView.progress = self.progress
-            }
+            print("progress:\(self.progress)")
+            self.progressView.setProgress(self.progress, animated: true)
+//            DispatchQueue.main.async {
+//                print("progress:\(self.progress)")
+//                self.progressView.setProgress(self.progress, animated: true)
+//            }
         }
     }
     
@@ -92,6 +95,7 @@ class indicatorViewManager{
     func start(style:Style = .center){
         DispatchQueue.main.async { [self] in
             if topWindow.subviews.contains(self.containerView){
+                print("contains(self.containerView)")
                 return
             }
             topWindow.addSubview(self.containerView)
@@ -116,6 +120,8 @@ class indicatorViewManager{
         switch style{
         ///底部
         case .banner:
+            progressView.alpha = 0
+            indicatorView.alpha = 1
             self.containerView.snp.makeConstraints { (make) in
                 make.bottom.equalTo(topWindow).offset(-50)
                 make.centerX.equalTo(topWindow)
@@ -124,6 +130,8 @@ class indicatorViewManager{
             break
         ///正中央
         case .center:
+            progressView.alpha = 0
+            indicatorView.alpha = 1
             self.containerView.snp.makeConstraints { (make) in
                 make.center.equalTo(topWindow)
                 make.size.equalTo(CGSize(width: 60, height: 60))
@@ -135,7 +143,8 @@ class indicatorViewManager{
             progressView.alpha = 1
             indicatorView.alpha = 0
             self.containerView.snp.makeConstraints { (make) in
-                make.center.equalTo(topWindow)
+                make.centerX.equalToSuperview()
+                make.top.equalToSuperview().offset(300)
                 make.size.equalTo(CGSize(width: 200, height: 20))
             }
             break

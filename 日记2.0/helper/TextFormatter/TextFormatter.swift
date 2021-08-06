@@ -773,7 +773,7 @@ extension TextFormatter{
             let value = tuple.1//attribute value
             if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
-                print("读取时处理到到图片:\(location)")
+                //print("读取时处理到到图片:\(location)")
                 
                 //1.重新添加attribute
                 attrText.addAttribute(.image, value: value, range: NSRange(location: location, length: 1))
@@ -795,7 +795,7 @@ extension TextFormatter{
             let location = tuple.0//attribute location
             let value = tuple.1//attribute value
             if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
-                print("读取时处理到到todo:\(location)")
+                //print("读取时处理到到todo:\(location)")
                 //1.重新添加attribute
                 attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
                 
