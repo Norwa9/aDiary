@@ -60,7 +60,6 @@ class topbarView: UIView {
         //backward button
         backwordBtn = UIButton()
         backwordBtn.setImage(UIImage(named: "chevron.backward.circle"), for: .normal)
-        backwordBtn.setImage(UIImage(named: "chevron.backward.circle.fill"), for: .selected)
         backwordBtn.tag = 0
         backwordBtn.addTarget(self, action: #selector(yearChangeAction(_:)), for: .touchUpInside)
         self.addSubview(backwordBtn)
@@ -68,7 +67,6 @@ class topbarView: UIView {
         //forward button
         forwardBtn = UIButton()
         forwardBtn.setImage(UIImage(named: "chevron.forward.circle"), for: .normal)
-        forwardBtn.setImage(UIImage(named: "chevron.forward.circle.fill"), for: .selected)
         forwardBtn.tag = 1
         forwardBtn.addTarget(self, action: #selector(yearChangeAction(_:)), for: .touchUpInside)
         self.addSubview(forwardBtn)
@@ -112,7 +110,7 @@ class topbarView: UIView {
         
         //button0：日历
         button0 = topbarButton()
-        button0.image = UIImage(named: "calendar")?.withHorizontallyFlippedOrientation()
+        button0.image = UIImage(named: "calendar")
         button0.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button0.tag = 0
         self.addSubview(button0)
