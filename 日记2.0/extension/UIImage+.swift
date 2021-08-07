@@ -84,6 +84,7 @@ extension UIImage{
 //                UIRectFill(rect)
         //4. 图像绘制
         //切回角
+        UIColor.lightGray.setStroke()
         let path = UIBezierPath(roundedRect: rect, cornerRadius: radius)
         path.addClip()
         self.draw(in: rect)
