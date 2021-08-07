@@ -96,6 +96,8 @@
 		EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2F926B46CCD004D1A52 /* AlbumView.swift */; };
 		EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC2FD26B4F03F004D1A52 /* migrationHelper.swift */; };
 		EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC33126BD671F004D1A52 /* UIColor+DarkMode.swift */; };
+		EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADBC33B26BE9278004D1A52 /* StoreKit.framework */; };
+		EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC33F26BE988B004D1A52 /* LWIAPHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +195,8 @@
 		EADBC2F926B46CCD004D1A52 /* AlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumView.swift; sourceTree = "<group>"; };
 		EADBC2FD26B4F03F004D1A52 /* migrationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = migrationHelper.swift; sourceTree = "<group>"; };
 		EADBC33126BD671F004D1A52 /* UIColor+DarkMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+DarkMode.swift"; sourceTree = "<group>"; };
+		EADBC33B26BE9278004D1A52 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		EADBC33F26BE988B004D1A52 /* LWIAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWIAPHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
+				EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +255,7 @@
 		893AAD9C6A217E8210A0AB91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EADBC33B26BE9278004D1A52 /* StoreKit.framework */,
 				EA9AF51626821E5F00D77908 /* CloudKit.framework */,
 			);
 			name = Frameworks;
@@ -396,6 +402,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EADBC33E26BE9878004D1A52 /* IAPHelper */,
 				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
 				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
@@ -523,6 +530,14 @@
 			path = ignore;
 			sourceTree = "<group>";
 		};
+		EADBC33E26BE9878004D1A52 /* IAPHelper */ = {
+			isa = PBXGroup;
+			children = (
+				EADBC33F26BE988B004D1A52 /* LWIAPHelper.swift */,
+			);
+			path = IAPHelper;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -648,6 +663,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */,
 				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,

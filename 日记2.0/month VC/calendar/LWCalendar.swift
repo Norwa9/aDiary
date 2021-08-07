@@ -20,7 +20,7 @@ class LWCalendar: FSCalendar {
     
     func initUI(){
         self.register(DIYCalendarCell.self, forCellReuseIdentifier: "cell")
-        
+        self.appearance.headerDateFormat = "yyyy年M月"
         self.firstWeekday = 2
         self.locale = Locale(identifier: "zh_CN")//设置周次为中文
         self.placeholderType = .none//仅显示当月日期cell
@@ -38,10 +38,12 @@ class LWCalendar: FSCalendar {
         self.appearance.titleFont = UIFont.appCalendarCellTitleFont()
         self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         self.appearance.eventSelectionColor = .black
-        self.appearance.selectionColor = #colorLiteral(red: 0.2, green: 0.231372549, blue: 0.2509803922, alpha: 1)
+        
+        //event dot
         self.appearance.eventOffset = CGPoint(x: 0, y: -5)
+        self.appearance.selectionColor = eventDotDynamicColor
         self.appearance.eventDefaultColor = eventDotDynamicColor
-        self.appearance.headerDateFormat = "yyyy年M月"
+        
     }
     
     
