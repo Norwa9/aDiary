@@ -602,7 +602,7 @@ extension monthVC:UISearchBarDelegate{
             searchBar.resignFirstResponder()
             searchBar.searchTextField.text = ""
             filterModel.shared.clear()//移除所有的搜索参数
-            button.image = UIImage(named: "search")?.withHorizontallyFlippedOrientation()
+            button.image = UIImage(named: "search")
             topbar.dataLable1.text = "\(selectedYear!)年"
             topbar.dataLable2.text = "\(selectedMonth!)月"
             topbar.dataLable1.sizeToFit()

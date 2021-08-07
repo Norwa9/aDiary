@@ -82,7 +82,7 @@ class topbarView: UIView {
         
         //button3：搜索
         button3 = topbarButton()
-        button3.image = UIImage(named: "search")?.withHorizontallyFlippedOrientation()
+        button3.image = UIImage(named: "search")
         button3.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
         button3.tag = 3
         self.addSubview(button3)

@@ -32,7 +32,7 @@ class tagsCell: UITableViewCell {
     }
 
     func setupCellView(){
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .clear
         
         //tags
         tagSelectedPromptView.layer.cornerRadius = 7
