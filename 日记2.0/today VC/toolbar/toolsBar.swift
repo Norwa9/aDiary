@@ -115,11 +115,9 @@ class toolsBar: UIView {
     //MARK:-action target
     @objc func saveButtonTapped(){
         self.statAnimateIndicator()
-        self.todayVC.save()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.stopAnimatreIndicator()
             self.textView.resignFirstResponder()
-            //self.todayVC.emojiView.textField.resignFirstResponder()
         }
         
     }

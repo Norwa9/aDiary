@@ -60,7 +60,7 @@ class todayVC: UIViewController{
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.save()
+        //self.save()
         self.textView.attributedText = nil//清空，防止复用vc重新出现上一篇的内容
     }
     
@@ -195,6 +195,7 @@ extension todayVC:UITextViewDelegate{
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
         toggleTopView()
+        save()
     }
     
     //MARK:-shouldChangeTextIn
