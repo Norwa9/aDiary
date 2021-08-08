@@ -356,9 +356,22 @@ extension settingViewController{
     
 }
 
-extension settingViewController{
+extension settingViewController:UIFontPickerViewControllerDelegate{
     @IBAction func showIAPViewController(){
-        let vc = IAPViewController()
-        self.present(vc, animated: true, completion: nil)
+//        let vc = IAPViewController()
+//        self.present(vc, animated: true, completion: nil)
+        let fontConfig = UIFontPickerViewController.Configuration()
+        fontConfig.includeFaces = true
+        let fontPicker = UIFontPickerViewController(configuration: fontConfig)
+        fontPicker.delegate = self
+        self.present(fontPicker, animated: true, completion: nil)
+    }
+    
+    func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
+        if let descriptor = viewController.selectedFontDescriptor{
+            let font = UIFont(descriptor: descriptor, size: 20)
+            textView.font = font
+            textView.text = "\(font.fontName)"
+        }
     }
 }
