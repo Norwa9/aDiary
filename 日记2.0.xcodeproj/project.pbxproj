@@ -101,6 +101,7 @@
 		EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34526BE9FA7004D1A52 /* IAPViewController.swift */; };
 		EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */; };
 		EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */; };
+		EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -203,6 +204,7 @@
 		EADBC34526BE9FA7004D1A52 /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
 		EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+.swift"; sourceTree = "<group>"; };
 		EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayView.swift; sourceTree = "<group>"; };
+		EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewHepler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -559,6 +561,7 @@
 		EADBC35526C01349004D1A52 /* whatsNew */ = {
 			isa = PBXGroup;
 			children = (
+				EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */,
 			);
 			path = whatsNew;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				EA537BB926357FBF00C2E9EE /* shareVC.swift in Sources */,
 				EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
+				EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */,
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
 				EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */,

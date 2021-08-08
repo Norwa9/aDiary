@@ -74,6 +74,14 @@ class monthVC: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let vc = WhatsNewHelper.getWhatsNewViewController(){
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     func loadData(){
         //预加载todayVC
         editorVC = storyboard?.instantiateViewController(identifier: "todayVC")
@@ -166,6 +174,11 @@ class monthVC: UIViewController {
         gradientLayer.frame = blurEffectView.bounds
         gradientLayer.locations = [0,0.9,1]
         blurEffectView.layer.mask = gradientLayer
+        if UITraitCollection.current.userInterfaceStyle == .dark{
+            blurEffectView.alpha = 0
+        }else{
+            blurEffectView.alpha = 1
+        }
         
         //topView
         topView = UIView()

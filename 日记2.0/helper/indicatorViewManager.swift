@@ -55,7 +55,7 @@ class indicatorViewManager{
         progressView.alpha = 0
         
         //菊花条视图
-        indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .lightGray, padding: .zero)
+        indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .systemGray2, padding: .zero)
         
         //模糊视图
         let blurEffect = UIBlurEffect(style: .extraLight)

@@ -15,4 +15,5 @@ pod 'FMPhotoPicker', '~> 1.3.0'
 pod 'NVActivityIndicatorView'
 pod 'RealmSwift'
 pod 'ISEmojiView'
+pod 'WhatsNewKit'
 end

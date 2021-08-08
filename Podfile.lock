@@ -8,13 +8,14 @@ PODS:
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - Popover (1.3.0)
-  - Realm (10.11.0):
-    - Realm/Headers (= 10.11.0)
-  - Realm/Headers (10.11.0)
-  - RealmSwift (10.11.0):
-    - Realm (= 10.11.0)
+  - Realm (10.12.0):
+    - Realm/Headers (= 10.12.0)
+  - Realm/Headers (10.12.0)
+  - RealmSwift (10.12.0):
+    - Realm (= 10.12.0)
   - SnapKit (5.0.1)
   - TagListView (1.4.1)
+  - WhatsNewKit (1.3.7)
 
 DEPENDENCIES:
   - FMPhotoPicker (~> 1.3.0)
@@ -27,6 +28,7 @@ DEPENDENCIES:
   - RealmSwift
   - SnapKit
   - TagListView
+  - WhatsNewKit
 
 SPEC REPOS:
   trunk:
@@ -41,6 +43,7 @@ SPEC REPOS:
     - RealmSwift
     - SnapKit
     - TagListView
+    - WhatsNewKit
 
 SPEC CHECKSUMS:
   FMPhotoPicker: 954d3c3e72521baffecdc23422ae149fdde3cd63
@@ -50,11 +53,12 @@ SPEC CHECKSUMS:
   MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   Popover: 10e1d9528f81d9504df984b7b3f491292bc1822d
-  Realm: 39ff23f0f709cd4ed93eb47ee6593c2158945b38
-  RealmSwift: 42713e09a8631070d6c12c3c5fb22b8edc1daa41
+  Realm: 32488213acb44660539c619d620cec1bac046166
+  RealmSwift: 0abdca6231d5ff8a4f84cef9c1121ef95a483faf
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
+  WhatsNewKit: c87028c4059dccd113495422801914cc53f6aab0
 
-PODFILE CHECKSUM: 34002f71c51618431288bc800594d62e79ab2280
+PODFILE CHECKSUM: 98c140d8c62fa0ee10541aa0666149a0059dfc0c
 
 COCOAPODS: 1.10.1
