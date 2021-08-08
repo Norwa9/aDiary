@@ -10,7 +10,7 @@ import WhatsNewKit
 
 class WhatsNewHelper{
     static func getWhatsNewViewController()->WhatsNewViewController?{
-        //MARK:-1
+        //MARK:-1:WhatsNew items
         let version = WhatsNew.Version.current()
         let whatsNew = WhatsNew(
             // The Version
@@ -27,7 +27,7 @@ class WhatsNewHelper{
             ]
         )
         
-        //MARK:-2
+        //MARK:-2:custom configuration
         // Initialize default Configuration
         var configuration = WhatsNewViewController.Configuration()
         configuration.apply(animation: .slideDown)
@@ -36,7 +36,7 @@ class WhatsNewHelper{
         )
         // And many more configuration properties...
         
-        //MARK:-3
+        //MARK:-3:versionStore
         let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
         //let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
