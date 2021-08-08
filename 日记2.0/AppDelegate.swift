@@ -7,18 +7,20 @@
 
 import UIKit
 import RealmSwift
+import StoreKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         configDatabase()
 
         UIApplication.shared.registerForRemoteNotifications()//注册iCloud静默通知
         
+        ///IAP应用内购买交易事务队列
+        /**Unfinished transactions stay in the payment queue. StoreKit calls the app’s persistent observer’s paymentQueue(_:updatedTransactions:) every time upon launching or resuming from the background until the app finishes these transactions.
+         */
+        SKPaymentQueue.default().add(LWIAPHelper.shared)
         
         return true
     }
@@ -42,7 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
+    func applicationWillTerminate(_ application: UIApplication) {
+        //在App结束时移除交易监听
+        SKPaymentQueue.default().remove(LWIAPHelper.shared)
+    }
 }
 
 //MARK:-配置数据库

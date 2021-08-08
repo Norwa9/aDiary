@@ -355,3 +355,10 @@ extension settingViewController{
     }
     
 }
+
+extension settingViewController{
+    @IBAction func showIAPViewController(){
+        let vc = IAPViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
+}

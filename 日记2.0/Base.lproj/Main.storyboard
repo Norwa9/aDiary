@@ -407,6 +407,14 @@
                                                                     <action selector="exportAll" destination="EGw-IB-yRo" eventType="touchUpInside" id="RNl-o8-J8d"/>
                                                                 </connections>
                                                             </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NJW-dq-GiG">
+                                                                <rect key="frame" x="302" y="15" width="31" height="30"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <state key="normal" title="赞助"/>
+                                                                <connections>
+                                                                    <action selector="showIAPViewController" destination="EGw-IB-yRo" eventType="touchUpInside" id="iNF-VN-Snc"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemTealColor"/>
                                                         <constraints>

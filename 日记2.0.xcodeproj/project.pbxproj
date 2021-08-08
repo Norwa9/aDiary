@@ -98,6 +98,9 @@
 		EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC33126BD671F004D1A52 /* UIColor+DarkMode.swift */; };
 		EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EADBC33B26BE9278004D1A52 /* StoreKit.framework */; };
 		EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC33F26BE988B004D1A52 /* LWIAPHelper.swift */; };
+		EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34526BE9FA7004D1A52 /* IAPViewController.swift */; };
+		EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */; };
+		EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +200,9 @@
 		EADBC33126BD671F004D1A52 /* UIColor+DarkMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+DarkMode.swift"; sourceTree = "<group>"; };
 		EADBC33B26BE9278004D1A52 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		EADBC33F26BE988B004D1A52 /* LWIAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWIAPHelper.swift; sourceTree = "<group>"; };
+		EADBC34526BE9FA7004D1A52 /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
+		EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+.swift"; sourceTree = "<group>"; };
+		EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +335,7 @@
 		EA9AE7C4261078ED00D44221 /* setting VC */ = {
 			isa = PBXGroup;
 			children = (
+				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
 				EA9AE7C52610790900D44221 /* settingViewController.swift */,
 			);
 			path = "setting VC";
@@ -534,8 +541,18 @@
 			isa = PBXGroup;
 			children = (
 				EADBC33F26BE988B004D1A52 /* LWIAPHelper.swift */,
+				EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */,
 			);
 			path = IAPHelper;
+			sourceTree = "<group>";
+		};
+		EADBC34426BE9F8D004D1A52 /* IAPViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EADBC34526BE9FA7004D1A52 /* IAPViewController.swift */,
+				EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */,
+			);
+			path = IAPViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -668,12 +685,14 @@
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
 				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
+				EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */,
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
 				1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */,
 				1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
+				EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterModel.swift in Sources */,
@@ -714,6 +733,7 @@
 				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoListView.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
+				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
