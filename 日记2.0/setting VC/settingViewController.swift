@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StoreKit
 
 let kVersion:String = "2.0"
 class settingViewController: UIViewController {
@@ -356,10 +357,18 @@ extension settingViewController{
     
 }
 
+//MARK:-跳转app store评价
+extension settingViewController{
+    @IBAction func requestReview(){
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+}
+
+//MARK:-选取字体
 extension settingViewController:UIFontPickerViewControllerDelegate{
-    @IBAction func showIAPViewController(){
-//        let vc = IAPViewController()
-//        self.present(vc, animated: true, completion: nil)
+    func presentFontPickerVC(){
         let fontConfig = UIFontPickerViewController.Configuration()
         fontConfig.includeFaces = true
         let fontPicker = UIFontPickerViewController(configuration: fontConfig)
@@ -373,5 +382,15 @@ extension settingViewController:UIFontPickerViewControllerDelegate{
             textView.font = font
             textView.text = "\(font.fontName)"
         }
+    }
+}
+
+//MARK:-订阅
+extension settingViewController{
+    @IBAction func showIAPViewController(){
+
+        let vc = IAPViewController()
+        self.present(vc, animated: true, completion: nil)
+        
     }
 }
