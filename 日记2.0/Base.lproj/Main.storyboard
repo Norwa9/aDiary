@@ -414,7 +414,7 @@
                                                                     <action selector="requestReview" destination="EGw-IB-yRo" eventType="touchUpInside" id="c8a-sC-MzI"/>
                                                                 </connections>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支持开发者💪" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9j-fU-QHR">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支持开发者🍗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9j-fU-QHR">
                                                                 <rect key="frame" x="8" y="83" width="66" height="12"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="66" id="6tZ-W2-KcW"/>

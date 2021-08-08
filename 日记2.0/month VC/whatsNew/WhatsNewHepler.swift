@@ -34,11 +34,19 @@ class WhatsNewHelper{
         configuration.completionButton = WhatsNewViewController.CompletionButton(
             title:"知道了"
         )
+        configuration.detailButton = WhatsNewViewController.DetailButton(
+            title: "好评鼓励👏",
+            action:.custom(action: { _ in
+                if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            })
+        )
         // And many more configuration properties...
         
         //MARK:-3:versionStore
-        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-        //let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+//        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
+        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
             whatsNew: whatsNew,
