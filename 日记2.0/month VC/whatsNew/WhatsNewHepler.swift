@@ -45,8 +45,8 @@ class WhatsNewHelper{
         // And many more configuration properties...
         
         //MARK:-3:versionStore
-//        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
+        //let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
             whatsNew: whatsNew,
