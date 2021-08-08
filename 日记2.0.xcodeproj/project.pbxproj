@@ -394,6 +394,7 @@
 		EAA29E5B25C5801F00AA6971 /* month VC */ = {
 			isa = PBXGroup;
 			children = (
+				EADBC35526C01349004D1A52 /* whatsNew */,
 				EAA29E5525C5785100AA6971 /* topbarView */,
 				EAA29E4F25C5784300AA6971 /* monthVC.swift */,
 				EAA29EC725C9925B00AA6971 /* monthButton.swift */,
@@ -553,6 +554,13 @@
 				EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */,
 			);
 			path = IAPViewController;
+			sourceTree = "<group>";
+		};
+		EADBC35526C01349004D1A52 /* whatsNew */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = whatsNew;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

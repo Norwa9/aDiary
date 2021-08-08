@@ -26,6 +26,7 @@ class userDefaultManager{
         static let appPasswordKey = "password"
         static let lineSpacingKey = "lineSpacing"
         static let layoutType = "layoutType"
+        static let requestReviewTimes = "requestReviewTimes"
     }
     
     
@@ -163,6 +164,20 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.layoutType)
+        }
+    }
+    
+    ///打分的请求次数
+    static var requestReviewTimes:Int{
+        get{
+            if let times = shared?.object(forKey: constants.requestReviewTimes) as? Int {
+                return times
+            }else{
+                return 0
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.requestReviewTimes)
         }
     }
     

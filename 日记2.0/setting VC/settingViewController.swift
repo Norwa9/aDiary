@@ -355,6 +355,16 @@ extension settingViewController{
         
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if userDefaultManager.requestReviewTimes % 2 == 0{
+            SKStoreReviewController.requestReview()
+            userDefaultManager.requestReviewTimes += 1
+        }
+        
+    }
+    
 }
 
 //MARK:-跳转app store评价
@@ -384,7 +394,28 @@ extension settingViewController:UIFontPickerViewControllerDelegate{
         }
     }
 }
-
+//MARK:-深色模式
+extension settingViewController{
+    @objc func appearanceModeDidChange(_ sender:UISegmentedControl){
+        // 这里就简单介绍一下，实际项目中，如果是iOS应用这么写没问题，但是对于iPadOS应用还需要判断scene的状态是否激活
+        #if os(iOS)
+        let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+        switch sender.selectedSegmentIndex {
+        case 0:
+            scene?.window?.overrideUserInterfaceStyle = .unspecified
+        case 1:
+            scene?.window?.overrideUserInterfaceStyle = .light
+        case 2:
+            scene?.window?.overrideUserInterfaceStyle = .dark
+        default:
+            scene?.window?.overrideUserInterfaceStyle = .unspecified
+        }
+        #endif
+        
+        
+    }
+}
+    
 //MARK:-订阅
 extension settingViewController{
     @IBAction func showIAPViewController(){
