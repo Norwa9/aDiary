@@ -378,7 +378,6 @@
 				EAA29E7725C59ABB00AA6971 /* helper */,
 				EACB1719267A1B63007BF160 /* extension */,
 				EA51D1FC25D809550007BDFA /* resource */,
-				EADBC30426B4F1D9004D1A52 /* ignore */,
 				EADBC2FC26B4F000004D1A52 /* migration */,
 			);
 			path = "日记2.0";
@@ -531,13 +530,6 @@
 				EADBC2FD26B4F03F004D1A52 /* migrationHelper.swift */,
 			);
 			path = migration;
-			sourceTree = "<group>";
-		};
-		EADBC30426B4F1D9004D1A52 /* ignore */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ignore;
 			sourceTree = "<group>";
 		};
 		EADBC33E26BE9878004D1A52 /* IAPHelper */ = {

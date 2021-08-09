@@ -13,7 +13,7 @@ import RealmSwift
 func LoadIntroText(){
     let date = GetTodayDate()
     if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt"),let content = try? String(contentsOf: levelFileURL){
-        //设置引导的文案、图片、待办、标签···
+        //1.设置引导的文案：图片、待办、标签···
         let introDiary = diaryInfo(dateString: date)
         let attributedText = NSMutableAttributedString(string: content)
         attributedText.loadCheckboxes()
@@ -38,8 +38,11 @@ func LoadIntroText(){
         introDiary.tags.append("你好新用户")
         dataManager.shared.tags.append("你好新用户")
         
-        //TODO:(未测试)随便给ckData赋值，强行标记引导日记为已上传，防止第二设备下载App后今日的日记被覆盖
+        //2.TODO:(未测试)随便给ckData赋值，强行标记引导日记为已上传，防止第二设备下载App后今日的日记被覆盖
         introDiary.ckData = "不需要上传".data(using: .utf8)
+        
+        //3.指定新的默认字体
+        userDefaultManager.fontName = "DINAlternate-Bold"
         
         if LWRealmManager.shared.queryFor(dateCN: date).isEmpty{
             LWRealmManager.shared.add(introDiary)

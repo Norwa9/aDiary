@@ -211,8 +211,8 @@ extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let fontStyle = familyFonts[row]
-        tempFontName = fontStyle
+        let name = familyFonts[row]
+        tempFontName = name
         updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName,withLineSpacing: tempLineSpacing)
     }
     
@@ -380,7 +380,7 @@ extension settingViewController{
 extension settingViewController:UIFontPickerViewControllerDelegate{
     func presentFontPickerVC(){
         let fontConfig = UIFontPickerViewController.Configuration()
-        fontConfig.includeFaces = true
+        fontConfig.includeFaces = true//选取字体族下的不同字体
         let fontPicker = UIFontPickerViewController(configuration: fontConfig)
         fontPicker.delegate = self
         self.present(fontPicker, animated: true, completion: nil)

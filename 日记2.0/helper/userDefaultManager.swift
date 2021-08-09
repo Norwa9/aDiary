@@ -13,7 +13,6 @@ class userDefaultManager{
     
     ///默认字体大小
     static let DefaultFontSize:CGFloat = 18.0
-    static let DefaultFontName:String = "DINAlternate-Bold"
     static let defaultEditorLineSpacing:CGFloat = 3
     
     private struct constants {
@@ -35,7 +34,7 @@ class userDefaultManager{
             if let returnFontName = shared?.object(forKey: constants.fontNameKey) as? String{
                 return returnFontName
             }else{
-                return self.DefaultFontName
+                return nil
             }
         }
         set{
