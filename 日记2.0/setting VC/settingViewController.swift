@@ -375,10 +375,10 @@ extension settingViewController{
 //MARK:-跳转app store评价
 extension settingViewController{
     @IBAction func requestReview(){
-        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-        //presentFontPickerVC()
+//        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        }
+        presentFontPickerVC()
     }
 }
 
@@ -413,8 +413,10 @@ extension settingViewController:UIFontPickerViewControllerDelegate{
             let font2 = UIFont(descriptor: nameDescriptor, size: 20)
             
             
+            let font3 = UIFont(name: fontName, size: 20)
             
-            textView.font = font1
+            textView.font = font3
+            print(font3?.fontName)
             textView.text = "\(font1.familyName),\(font1.fontName)" + "\(font2.familyName),\(font2.fontName)"
         }
     }
