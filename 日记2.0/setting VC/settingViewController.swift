@@ -8,7 +8,6 @@
 import UIKit
 import StoreKit
 
-let kVersion:String = "2.0"
 class settingViewController: UIViewController {
     @IBOutlet weak var saveButton:UIButton!
     //font setting
@@ -322,11 +321,12 @@ extension settingViewController{
         self.view.layoutIfNeeded()
         textView.attributedText = nil
         
+        let shortVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
         //插入文字
         let text =
         """
-        版本\(kVersion)
-        Version\(kVersion)
+        版本\(shortVersionString)
+        Version\(shortVersionString)
 
         """
         textView.insertText(text)
@@ -363,6 +363,15 @@ extension settingViewController{
             userDefaultManager.requestReviewTimes += 1
         }
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(fontsChangedNotification(_:)),
+            name: kCTFontManagerRegisteredFontsChangedNotification as NSNotification.Name,
+            object: nil)
+    }
+    
+    @objc func fontsChangedNotification(_ sender: Any){
+        print("改变")
     }
     
 }
@@ -370,8 +379,13 @@ extension settingViewController{
 //MARK:-跳转app store评价
 extension settingViewController{
     @IBAction func requestReview(){
-        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        }
+        presentFontPickerVC()
+        let arr = CTFontManagerCopyRegisteredFontDescriptors(.persistent, true)
+        CTFontManagerRequestFonts(arr) { (arr) in
+            print(arr)
         }
     }
 }
@@ -388,9 +402,11 @@ extension settingViewController:UIFontPickerViewControllerDelegate{
     
     func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
         if let descriptor = viewController.selectedFontDescriptor{
-            let font = UIFont(descriptor: descriptor, size: 20)
-            textView.font = font
-            textView.text = "\(font.fontName)"
+            let attr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontFamilyAttribute")
+            let newDescriptor = UIFontDescriptor(fontAttributes: [attr : "B612 Mono"])
+            let newFont = UIFont(descriptor: newDescriptor, size: 20)
+            textView.font = newFont
+            textView.text = "\(newFont.fontName)"
         }
     }
 }
