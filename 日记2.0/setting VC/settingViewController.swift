@@ -177,8 +177,11 @@ extension settingViewController{
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.alignment = .center
         paraStyle.lineSpacing = lineSpacing
+        let nameAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontNameAttribute")
+        let customFont = UIFont(descriptor: UIFontDescriptor(fontAttributes: [nameAttr : fontName]), size: fontSize)
         let attributes: [NSAttributedString.Key:Any] = [
-            .font: (fontName != nil) ? UIFont(name: fontName!, size: fontSize)! : UIFont.systemFont(ofSize: fontSize, weight: .regular),
+//            .font: (fontName != nil) ? UIFont(name: fontName!, size: fontSize)! : UIFont.systemFont(ofSize: fontSize, weight: .regular),
+            .font: (fontName != nil) ? UIFont(name: fontName!, size: fontSize)! : customFont,
             .paragraphStyle : paraStyle
         ]
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
@@ -262,12 +265,15 @@ extension settingViewController{
         
         //添加字体
         familyFonts.append(nil)//默认字体
-        for fontFamily in UIFont.familyNames{
-            //print("fontFamily:\(fontFamily)")
-            for fontName in UIFont.fontNames(forFamilyName: fontFamily){
-                //print("fontName:\(fontName),")
-                familyFonts.append(fontName)
-            }
+//        for fontFamily in UIFont.familyNames{
+//            //print("fontFamily:\(fontFamily)")
+//            for fontName in UIFont.fontNames(forFamilyName: fontFamily){
+//                //print("fontName:\(fontName),")
+//                familyFonts.append(fontName)
+//            }
+//        }
+        for name in userDefaultManager.userInsatlledFontNames{
+            familyFonts.append(name)
         }
         
         //image size segment control
@@ -362,16 +368,6 @@ extension settingViewController{
             SKStoreReviewController.requestReview()
             userDefaultManager.requestReviewTimes += 1
         }
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(fontsChangedNotification(_:)),
-            name: kCTFontManagerRegisteredFontsChangedNotification as NSNotification.Name,
-            object: nil)
-    }
-    
-    @objc func fontsChangedNotification(_ sender: Any){
-        print("改变")
     }
     
 }
@@ -379,14 +375,10 @@ extension settingViewController{
 //MARK:-跳转app store评价
 extension settingViewController{
     @IBAction func requestReview(){
-//        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
-//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//        }
-        presentFontPickerVC()
-        let arr = CTFontManagerCopyRegisteredFontDescriptors(.persistent, true)
-        CTFontManagerRequestFonts(arr) { (arr) in
-            print(arr)
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+        //presentFontPickerVC()
     }
 }
 
@@ -402,11 +394,28 @@ extension settingViewController:UIFontPickerViewControllerDelegate{
     
     func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
         if let descriptor = viewController.selectedFontDescriptor{
-            let attr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontFamilyAttribute")
-            let newDescriptor = UIFontDescriptor(fontAttributes: [attr : "B612 Mono"])
-            let newFont = UIFont(descriptor: newDescriptor, size: 20)
-            textView.font = newFont
-            textView.text = "\(newFont.fontName)"
+            print(descriptor.fontAttributes)
+            let font = UIFont(descriptor: descriptor, size: 20)
+            
+            let familyName = font.familyName
+            let fontName = font.fontName
+            
+            if !userDefaultManager.userInsatlledFontNames.contains(fontName){
+                userDefaultManager.userInsatlledFontNames.append(fontName)
+            }
+            
+            
+            let familyAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontFamilyAttribute")
+            let nameAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontNameAttribute")
+            let familyDescriptor = UIFontDescriptor(fontAttributes: [familyAttr : familyName])
+            let nameDescriptor = UIFontDescriptor(fontAttributes: [nameAttr : fontName])
+            let font1 = UIFont(descriptor: familyDescriptor, size: 20)
+            let font2 = UIFont(descriptor: nameDescriptor, size: 20)
+            
+            
+            
+            textView.font = font1
+            textView.text = "\(font1.familyName),\(font1.fontName)" + "\(font2.familyName),\(font2.fontName)"
         }
     }
 }

@@ -26,6 +26,7 @@ class userDefaultManager{
         static let lineSpacingKey = "lineSpacing"
         static let layoutType = "layoutType"
         static let requestReviewTimes = "requestReviewTimes"
+        static let userInsatlledFontNames = "userInsatlledFontNames"
     }
     
     
@@ -177,6 +178,19 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.requestReviewTimes)
+        }
+    }
+    
+    static var userInsatlledFontNames:[String]{
+        get{
+            if let names = shared?.object(forKey: constants.userInsatlledFontNames) as? [String] {
+                return names
+            }else{
+                return []
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.userInsatlledFontNames)
         }
     }
     
