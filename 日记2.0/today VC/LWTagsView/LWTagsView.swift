@@ -50,7 +50,7 @@ class LWTagsView: UIView {
         tagsLabel = TagListView()
         tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = .black
+        tagsLabel.tagBackgroundColor = .systemGray3
         tagsLabel.textColor = .white
         tagsLabel.cornerRadius = 5
         tagsLabel.clipsToBounds = true
