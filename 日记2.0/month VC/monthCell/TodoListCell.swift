@@ -119,6 +119,7 @@ class TodoListCell: UICollectionViewCell {
         super.prepareForReuse()
         self.contentLabel.attributedText = nil
         self.checkButton.isSelected = false
+        self.delegate = nil
     }
     
     
@@ -128,7 +129,7 @@ class TodoListCell: UICollectionViewCell {
 extension TodoListCell{
     @objc func checkButtonTapped(_ sender:UIButton){
         sender.isSelected.toggle()
-        
+        self.bounceAnimation(usingSpringWithDamping: 0.7)
         guard let aString = self.contentLabel.attributedText else{return}
         
         let mutableAttrString = NSMutableAttributedString(attributedString: aString)

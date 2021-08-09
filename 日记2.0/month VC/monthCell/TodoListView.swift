@@ -75,7 +75,6 @@ class TodoListView: UIView {
 }
 
 extension TodoListView:UICollectionViewDelegate{
-    
 }
 
 //MARK:-data source
@@ -104,18 +103,23 @@ extension TodoListView:todoListDelegate{
         let curTodos = viewModel.todos
         guard let indexInUnchecks = curTodos.firstIndex(of: todo) else {return}
         
-        var todoAttributesTuplesCopy = viewModel.todoAttributesTuples
+        
+        //按照location顺序排列，确保todo是按顺序的
+        var orderedTodoAttributesTuples = viewModel.todoAttributesTuples.sorted { (t1, t2) -> Bool in
+            return t1.0 < t2.0
+        }
         
         var count = 0
-        for (index,todoAttrTuple) in viewModel.todoAttributesTuples.enumerated(){
+        for (index,todoAttrTuple) in orderedTodoAttributesTuples.enumerated(){
             if count == indexInUnchecks && todoAttrTuple.1 == self.todoListType.rawValue{
-                todoAttributesTuplesCopy[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
+                orderedTodoAttributesTuples[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
+                print("text:\(todos[indexInUnchecks]),indexInUnchecks:\(indexInUnchecks),indexInAll:\(index)")
                 self.todos.remove(at: indexInUnchecks)
                 LWRealmManager.shared.update {
                     //反转attribute的值
                     //这里整个数组重新赋值，目的是触发todoAttributesTuples的setter
                     viewModel.todos = self.todos
-                    viewModel.todoAttributesTuples = todoAttributesTuplesCopy
+                    viewModel.todoAttributesTuples = orderedTodoAttributesTuples
                 }
                 DiaryStore.shared.addOrUpdate(viewModel)
                 updateTodoListViewAfterCheck(row: indexInUnchecks)
@@ -137,8 +141,10 @@ extension TodoListView:todoListDelegate{
             self.updateUI()//重新计算collectionView的content高度
         }
         
-        //2.更新monthVC的collection view的布局
+        //2.
+        //更新monthVC的collection view的布局，涉及到其他cell的位置改变
+        //不能只更新单个cell
         let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData(forRow: -1,animated: true)//让month cell以平滑动画移动到新位置上去
+        monthVC.reloadCollectionViewData(forRow: -1,animated: true)//更新全部cell
     }
 }
