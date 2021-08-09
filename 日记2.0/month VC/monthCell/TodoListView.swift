@@ -73,7 +73,7 @@ class TodoListView: UIView {
         self.collectionView.reloadData()
     }
 }
-
+//MARK:-UICollectionViewDelegate
 extension TodoListView:UICollectionViewDelegate{
 }
 
@@ -113,7 +113,6 @@ extension TodoListView:todoListDelegate{
         for (index,todoAttrTuple) in orderedTodoAttributesTuples.enumerated(){
             if count == indexInUnchecks && todoAttrTuple.1 == self.todoListType.rawValue{
                 orderedTodoAttributesTuples[index].1 = (todoAttrTuple.1 == 0 ? 1 : 0)
-                print("text:\(todos[indexInUnchecks]),indexInUnchecks:\(indexInUnchecks),indexInAll:\(index)")
                 self.todos.remove(at: indexInUnchecks)
                 LWRealmManager.shared.update {
                     //反转attribute的值
@@ -145,6 +144,6 @@ extension TodoListView:todoListDelegate{
         //更新monthVC的collection view的布局，涉及到其他cell的位置改变
         //不能只更新单个cell
         let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData(forRow: -1,animated: true)//更新全部cell
+        monthVC.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//更新全部cell
     }
 }

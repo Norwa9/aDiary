@@ -441,7 +441,8 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     ///更新UI
-    func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false){
+    ///parameter:
+    func reloadCollectionViewData(forRow:Int = -1,animated:Bool = false,animationDuration:TimeInterval = 1.0){
         if forRow == -1{
             if !animated{
                 self.collectionView.reloadData()
@@ -453,7 +454,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
             self.view.isUserInteractionEnabled = false
             
             ///更新瀑布流布局
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+            UIView.animate(withDuration: animationDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
                 self.collectionView.performBatchUpdates({
                     //让cell以平滑动画移动到新位置上去
                     self.collectionView.reloadData()

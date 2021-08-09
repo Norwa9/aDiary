@@ -122,14 +122,13 @@ class TodoListCell: UICollectionViewCell {
         self.delegate = nil
     }
     
-    
 }
 
 //MARK:-Target Action
 extension TodoListCell{
     @objc func checkButtonTapped(_ sender:UIButton){
         sender.isSelected.toggle()
-        self.bounceAnimation(usingSpringWithDamping: 0.7)
+        self.bounceAnimation(usingSpringWithDamping: 0.9)
         guard let aString = self.contentLabel.attributedText else{return}
         
         let mutableAttrString = NSMutableAttributedString(attributedString: aString)
