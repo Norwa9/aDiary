@@ -614,7 +614,7 @@ extension monthVC:UISearchBarDelegate{
         }else{//退出搜索模式
             searchBar.resignFirstResponder()
             searchBar.searchTextField.text = ""
-            filterModel.shared.clear()//移除所有的搜索参数
+            filterHelper.shared.clear()//移除所有的搜索参数
             button.image = UIImage(named: "search")
             topbar.dataLable1.text = "\(selectedYear!)年"
             topbar.dataLable2.text = "\(selectedMonth!)月"
@@ -649,33 +649,29 @@ extension monthVC:UISearchBarDelegate{
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
+
     
-    //根据搜索框信息更新filteredData
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterModel.shared.searchText = searchText
-        self.filter()
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        filterHelper.shared.searchText = searchBar.text ?? ""
+        filter()
     }
     
     func filter(){
-        DispatchQueue.main.async {[self] in
-            
-            let arr = filterDiary()//全局函数:实际上速度大概在0.5s左右
-            
-            DispatchQueue.main.async {
-                resultDiaries = arr
-                filteredDiaries = Array(resultDiaries.prefix(20))
-                print("search results:\(filteredDiaries.count)")
-                flowLayout.dateSource = filteredDiaries//提供布局的计算依据
-                //更新collectionView
-                reloadCollectionViewData()//如果数据源很多，将会很耗时！
-                
-                //更新topbar label
-                var totalNum = 0
-                for diary in resultDiaries{
-                    totalNum += diary.content.count
-                }
-                topbar.dataLable2.text = "共\(resultDiaries.count)篇，\(totalNum)字"
+        indicatorViewManager.shared.start()
+        filterHelper.shared.filter { [self] res in
+            resultDiaries = res
+            filteredDiaries = Array(resultDiaries.prefix(20))
+            print("search results:\(filteredDiaries.count)")
+            flowLayout.dateSource = filteredDiaries//提供布局的计算依据
+            //更新collectionView
+            reloadCollectionViewData()//如果数据源很多，将会很耗时！
+            //更新topbar label
+            var totalNum = 0
+            for diary in resultDiaries{
+                totalNum += diary.content.count
             }
+            topbar.dataLable2.text = "共\(resultDiaries.count)篇，\(totalNum)字"
+            indicatorViewManager.shared.stop()
         }
     }
     

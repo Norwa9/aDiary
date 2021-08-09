@@ -18,7 +18,7 @@ class filterMenu: UIView {
     func configureUI(){
         //sortStyleSegmentControl
         sortStyleSegmentControl.addTarget(self, action: #selector(sortStyleChange(_:)), for: .valueChanged)
-        sortStyleSegmentControl.selectedSegmentIndex = filterModel.shared.selectedSortstyle.rawValue        //恢复选取的值
+        sortStyleSegmentControl.selectedSegmentIndex = filterHelper.shared.selectedSortstyle.rawValue        //恢复选取的值
         
         //doneButton
         doneButton.layer.cornerRadius = 5
@@ -45,7 +45,7 @@ class filterMenu: UIView {
     
     @objc func sortStyleChange(_ sender:UISegmentedControl){
         let index = sender.selectedSegmentIndex
-        filterModel.shared.selectedSortstyle = sortStyle.init(rawValue: index)!
+        filterHelper.shared.selectedSortstyle = sortStyle.init(rawValue: index)!
     }
     
    
@@ -101,7 +101,7 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
         let row = indexPath.row
         let text = dataManager.shared.tags[row]
         cell.tagsLabel.text = text
-        let selectedState = filterModel.shared.selectedTags.contains(text)
+        let selectedState = filterHelper.shared.selectedTags.contains(text)
         cell.setView(hasSelected: selectedState)
         return cell
     }
@@ -114,10 +114,10 @@ extension filterMenu:UITableViewDelegate,UITableViewDataSource{
         
         let tag = dataManager.shared.tags[row]
         //选取，反选
-        if let firstIndex = filterModel.shared.selectedTags.firstIndex(of: tag){
-            filterModel.shared.selectedTags.remove(at: firstIndex)
+        if let firstIndex = filterHelper.shared.selectedTags.firstIndex(of: tag){
+            filterHelper.shared.selectedTags.remove(at: firstIndex)
         }else{
-            filterModel.shared.selectedTags.append(tag)
+            filterHelper.shared.selectedTags.append(tag)
         }
     }
     
