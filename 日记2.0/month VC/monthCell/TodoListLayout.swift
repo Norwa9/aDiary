@@ -23,6 +23,7 @@ class TodoListLayout: UICollectionViewLayout {
     
     override func prepare() {
         super.prepare()
+        layoutAttributesArray = []
         let itemNum = dataSource.count
         if itemNum>0{
             totalHeight = (itemHeight + lineSpacing) * CGFloat(itemNum) + lineSpacing

@@ -215,8 +215,7 @@ class monthCell: UICollectionViewCell {
         self.tags = diary.tags
         self.dateLabel.text = "\(diary.day)号 \(diary.weekDay)"
         self.fillImages(diary: diary)
-        
-        self.todoListView.setViewModel(diary)
+        self.todoListView.setViewModel(diary)//触发updateUI
     }
     
     //读取日记的所有图片
@@ -282,17 +281,13 @@ extension monthCell{
 extension monthCell{
     ///更新约束
     func updateCons(){
-        //计算包含todoListView的正确高度
+        //计算todoListView的内容高度
         if let diary = self.diary{
             //取得todoListView的高度
             self.todoListView.snp.updateConstraints { (make) in
                 make.height.equalTo(diary.calculateTodosContentHeihgt())
             }
         }
-        //刷新todoListCell的样式，将会触发其updateCons()
-        self.todoListView.collectionView.performBatchUpdates({
-            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
-        }, completion: nil)
         
         let contains = diary.containsImage
         self.albumView.snp.updateConstraints { (make) in

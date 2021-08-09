@@ -47,6 +47,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         super.prepare()
+        layoutAttributesArray = []
         self.columnNumber = layoutParasManager.shared.collectioncolumnNumber
         /**
          根据CollectionView宽度、列数、列间距计算Cell的宽度
