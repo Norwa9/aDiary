@@ -375,10 +375,10 @@ extension settingViewController{
 //MARK:-跳转app store评价
 extension settingViewController{
     @IBAction func requestReview(){
-//        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
-//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//        }
-        presentFontPickerVC()
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        //presentFontPickerVC()
     }
 }
 
