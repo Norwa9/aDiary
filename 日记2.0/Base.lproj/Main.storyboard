@@ -235,39 +235,41 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFb-Vp-dry">
-                                                                <rect key="frame" x="175" y="359" width="200" height="90"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="90" id="E5X-8Z-fti"/>
-                                                                    <constraint firstAttribute="width" constant="200" id="ndd-Oo-1o8"/>
-                                                                </constraints>
-                                                            </pickerView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fO-YK-eq9">
+                                                                <rect key="frame" x="277" y="369.5" width="92" height="30"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <state key="normal" title="选取字体"/>
+                                                                <connections>
+                                                                    <action selector="presentFontPickerVC" destination="EGw-IB-yRo" eventType="touchUpInside" id="Thh-Gd-fTS"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemTealColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="trailing" secondItem="I68-Mx-b4g" secondAttribute="trailing" constant="10" id="3lP-hy-c7Z"/>
+                                                            <constraint firstItem="2fO-YK-eq9" firstAttribute="width" secondItem="D3D-1P-lK3" secondAttribute="width" multiplier="0.978723" id="3xu-OJ-dvC"/>
                                                             <constraint firstAttribute="trailing" secondItem="3yx-PP-NXH" secondAttribute="trailing" constant="8" id="6ct-mg-32k"/>
                                                             <constraint firstItem="SVC-Xu-BHd" firstAttribute="leading" secondItem="Wwo-eL-b1O" secondAttribute="leading" constant="13" id="BXn-4a-XJT"/>
                                                             <constraint firstItem="3yx-PP-NXH" firstAttribute="top" secondItem="I68-Mx-b4g" secondAttribute="bottom" constant="8" id="FYU-Ke-Ssn"/>
                                                             <constraint firstAttribute="bottom" secondItem="n6C-7n-aTC" secondAttribute="bottom" constant="54" id="FlV-v4-O9Y"/>
                                                             <constraint firstItem="I68-Mx-b4g" firstAttribute="leading" secondItem="Wwo-eL-b1O" secondAttribute="leading" constant="10" id="Fqs-we-nGM"/>
+                                                            <constraint firstItem="2fO-YK-eq9" firstAttribute="centerX" secondItem="D3D-1P-lK3" secondAttribute="centerX" id="M5N-db-KZw"/>
                                                             <constraint firstItem="D3D-1P-lK3" firstAttribute="top" secondItem="U37-AM-XnO" secondAttribute="bottom" constant="11" id="Sms-OG-f3J"/>
                                                             <constraint firstItem="JtY-IV-zKa" firstAttribute="top" secondItem="I68-Mx-b4g" secondAttribute="bottom" constant="13" id="TbZ-4s-BuM"/>
                                                             <constraint firstAttribute="trailing" secondItem="U37-AM-XnO" secondAttribute="trailing" constant="8" id="Xgq-LC-9GN"/>
+                                                            <constraint firstItem="2fO-YK-eq9" firstAttribute="centerY" secondItem="n6C-7n-aTC" secondAttribute="centerY" id="Zis-h8-A5u"/>
                                                             <constraint firstItem="I68-Mx-b4g" firstAttribute="top" secondItem="Wwo-eL-b1O" secondAttribute="top" constant="8" id="Zyx-Ls-Aib"/>
-                                                            <constraint firstItem="jFb-Vp-dry" firstAttribute="top" secondItem="D3D-1P-lK3" secondAttribute="bottom" constant="2" id="aYP-WZ-qFw"/>
                                                             <constraint firstItem="SVC-Xu-BHd" firstAttribute="top" secondItem="JtY-IV-zKa" secondAttribute="bottom" constant="20" id="aqe-YF-wuM"/>
                                                             <constraint firstItem="I68-Mx-b4g" firstAttribute="leading" secondItem="Wwo-eL-b1O" secondAttribute="leading" constant="10" id="bYN-ec-cEv"/>
                                                             <constraint firstItem="JtY-IV-zKa" firstAttribute="leading" secondItem="Wwo-eL-b1O" secondAttribute="leading" constant="13" id="dcn-FZ-pmP"/>
                                                             <constraint firstAttribute="trailing" secondItem="D3D-1P-lK3" secondAttribute="trailing" constant="8" id="fHG-wN-dnh"/>
                                                             <constraint firstAttribute="height" constant="449" id="gMZ-xk-7mm"/>
-                                                            <constraint firstAttribute="bottom" secondItem="jFb-Vp-dry" secondAttribute="bottom" id="grw-5j-OC1"/>
+                                                            <constraint firstItem="2fO-YK-eq9" firstAttribute="height" secondItem="D3D-1P-lK3" secondAttribute="height" multiplier="0.9375" id="hAo-hr-mle"/>
                                                             <constraint firstAttribute="trailing" secondItem="I68-Mx-b4g" secondAttribute="trailing" constant="10" id="hCe-97-2Is"/>
                                                             <constraint firstItem="D3D-1P-lK3" firstAttribute="leading" secondItem="0Ad-ww-K2v" secondAttribute="trailing" constant="19" id="hzG-2t-hZd"/>
                                                             <constraint firstItem="n6C-7n-aTC" firstAttribute="leading" secondItem="Wwo-eL-b1O" secondAttribute="leading" constant="13" id="kI5-zA-ER5"/>
                                                             <constraint firstItem="U37-AM-XnO" firstAttribute="top" secondItem="3yx-PP-NXH" secondAttribute="bottom" constant="9" id="nV6-fZ-QzP"/>
                                                             <constraint firstItem="49w-9K-kfK" firstAttribute="top" secondItem="SVC-Xu-BHd" secondAttribute="bottom" constant="21" id="oB7-Vh-YYe"/>
-                                                            <constraint firstAttribute="trailing" secondItem="jFb-Vp-dry" secondAttribute="trailing" constant="3" id="oZf-kH-sXa"/>
                                                             <constraint firstItem="0Ad-ww-K2v" firstAttribute="centerY" secondItem="D3D-1P-lK3" secondAttribute="centerY" id="otR-VI-EyB"/>
                                                             <constraint firstItem="n6C-7n-aTC" firstAttribute="top" secondItem="49w-9K-kfK" secondAttribute="bottom" constant="23" id="rfp-yv-T6M"/>
                                                             <constraint firstItem="49w-9K-kfK" firstAttribute="leading" secondItem="Wwo-eL-b1O" secondAttribute="leading" constant="13" id="xHv-6J-ues"/>
@@ -563,7 +565,6 @@
                         <outlet property="fontSettingContainer" destination="Wwo-eL-b1O" id="T7y-Ki-XpN"/>
                         <outlet property="fontSizeLabel" destination="0Ad-ww-K2v" id="9Ai-yy-vGg"/>
                         <outlet property="fontSizeStepper" destination="D3D-1P-lK3" id="6FZ-vh-cFs"/>
-                        <outlet property="fontStylePicker" destination="jFb-Vp-dry" id="4Nk-DX-XSy"/>
                         <outlet property="imageSizeSegment" destination="3yx-PP-NXH" id="ivg-fl-A5l"/>
                         <outlet property="lineSpacingStepper" destination="U37-AM-XnO" id="L3e-nj-Kqn"/>
                         <outlet property="passwordSwitch" destination="Qpp-sK-ukG" id="bZ4-TE-ibX"/>

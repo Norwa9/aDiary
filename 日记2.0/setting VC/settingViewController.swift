@@ -17,7 +17,6 @@ class settingViewController: UIViewController {
     @IBOutlet weak var fontSizeLabel:UILabel!
     @IBOutlet weak var fontSizeStepper:UIStepper!
     @IBOutlet weak var lineSpacingStepper:UIStepper!
-    @IBOutlet weak var fontStylePicker:UIPickerView!
     var familyFonts = [String?]()
     var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
@@ -174,14 +173,23 @@ class settingViewController: UIViewController {
 //MARK:-UITextView
 extension settingViewController{
     func updateExampleTextView(withFontSize fontSize:CGFloat,withFontStyle fontName:String?,withLineSpacing lineSpacing:CGFloat){
+        //1.行间距
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.alignment = .center
         paraStyle.lineSpacing = lineSpacing
+        
+        //2.字体
         let nameAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontNameAttribute")
-        let customFont = UIFont(descriptor: UIFontDescriptor(fontAttributes: [nameAttr : fontName]), size: fontSize)
+        var font:UIFont
+        if let name = fontName{
+            font = UIFont(descriptor: UIFontDescriptor(fontAttributes: [nameAttr : name]), size: fontSize)
+        }else{
+            font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        }
+        
+        
         let attributes: [NSAttributedString.Key:Any] = [
-//            .font: (fontName != nil) ? UIFont(name: fontName!, size: fontSize)! : UIFont.systemFont(ofSize: fontSize, weight: .regular),
-            .font: (fontName != nil) ? UIFont(name: fontName!, size: fontSize)! : customFont,
+            .font: font,
             .paragraphStyle : paraStyle
         ]
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
@@ -198,44 +206,6 @@ extension settingViewController{
     }
 }
 
-//MARK:-UIPickerView
-extension settingViewController:UIPickerViewDelegate,UIPickerViewDataSource{
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return familyFonts.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return familyFonts[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let name = familyFonts[row]
-        tempFontName = name
-        updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName,withLineSpacing: tempLineSpacing)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let pickerlabel = UILabel()
-        pickerlabel.adjustsFontSizeToFitWidth = true
-        pickerlabel.textAlignment = .center
-        pickerlabel.backgroundColor = .clear
-        if row == 0{
-            //默认字体
-            pickerlabel.font = .systemFont(ofSize: 12, weight: .regular)
-            pickerlabel.text = "系统字体"
-        }else{
-            //其他字体
-            pickerlabel.font = UIFont(name: familyFonts[row]!, size: 12)
-            pickerlabel.text = familyFonts[row]
-        }
-        
-        return pickerlabel
-    }
-}
 //MARK:-UIDocumentPickerDelegate
 extension settingViewController:UIDocumentPickerDelegate{
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
@@ -292,19 +262,6 @@ extension settingViewController{
         lineSpacingStepper.minimumValue = 0
         lineSpacingStepper.maximumValue = 10
         lineSpacingStepper.value = Double(userDefaultManager.lineSpacing)
-        
-        //font style picker
-        fontStylePicker.dataSource = self
-        fontStylePicker.delegate = self
-        if let fontName = userDefaultManager.fontName{
-            if let selectedRow = familyFonts.firstIndex(of: fontName){
-                fontStylePicker.selectRow(selectedRow, inComponent: 0, animated: true)
-            }
-        }else{
-            fontStylePicker.selectRow(0, inComponent: 0, animated: true)
-        }
-        
-        
         
         //security
         passwordSwitch.isOn = userDefaultManager.usePassword
@@ -384,7 +341,7 @@ extension settingViewController{
 
 //MARK:-选取字体
 extension settingViewController:UIFontPickerViewControllerDelegate{
-    func presentFontPickerVC(){
+    @IBAction func presentFontPickerVC(){
         let fontConfig = UIFontPickerViewController.Configuration()
         fontConfig.includeFaces = true//选取字体族下的不同字体
         let fontPicker = UIFontPickerViewController(configuration: fontConfig)
@@ -395,29 +352,12 @@ extension settingViewController:UIFontPickerViewControllerDelegate{
     func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
         if let descriptor = viewController.selectedFontDescriptor{
             print(descriptor.fontAttributes)
-            let font = UIFont(descriptor: descriptor, size: 20)
+            let selectedFont = UIFont(descriptor: descriptor, size: 20)
+            let selectedFontName = selectedFont.fontName
             
-            let familyName = font.familyName
-            let fontName = font.fontName
-            
-            if !userDefaultManager.userInsatlledFontNames.contains(fontName){
-                userDefaultManager.userInsatlledFontNames.append(fontName)
-            }
-            
-            
-            let familyAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontFamilyAttribute")
-            let nameAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontNameAttribute")
-            let familyDescriptor = UIFontDescriptor(fontAttributes: [familyAttr : familyName])
-            let nameDescriptor = UIFontDescriptor(fontAttributes: [nameAttr : fontName])
-            let font1 = UIFont(descriptor: familyDescriptor, size: 20)
-            let font2 = UIFont(descriptor: nameDescriptor, size: 20)
-            
-            
-            let font3 = UIFont(name: fontName, size: 20)
-            
-            textView.font = font3
-            print(font3?.fontName)
-            textView.text = "\(font1.familyName),\(font1.fontName)" + "\(font2.familyName),\(font2.fontName)"
+            //更新示例
+            tempFontName = selectedFontName
+            self.updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
         }
     }
 }

@@ -33,7 +33,12 @@ class userDefaultManager{
     static var fontName:String?{
         get{
             if let returnFontName = shared?.object(forKey: constants.fontNameKey) as? String{
-                return returnFontName
+                //检查字体是否真实存在
+                if let _ = UIFont(name: returnFontName, size: self.fontSize){
+                    return returnFontName
+                }else{
+                    return nil
+                }
             }else{
                 return nil
             }
@@ -45,9 +50,11 @@ class userDefaultManager{
     
     static var font:UIFont{
         get{
-            if let userFontName = self.fontName{
-                return UIFont(name: userFontName, size: self.fontSize)!
+            if let font = self.fontName{
+                return UIFont(name: font, size: self.fontSize)!
             }else{
+                //自定义字体被移除，重置fontName
+                self.fontName = nil
                 return UIFont.systemFont(ofSize: self.fontSize, weight: .regular)
             }
         }
