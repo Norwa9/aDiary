@@ -205,10 +205,10 @@ class monthCell: UICollectionViewCell {
         self.updateUI()//获取viewModel后需要更新UI
     }
     
-    func updateUI(){
-        updateCons()
-        setTodayPropmt()
+    private func updateUI(){
+        setTodayPropmtEdge()//绿色边框
         
+        updateCons()//更新约束
         self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
@@ -259,7 +259,7 @@ class monthCell: UICollectionViewCell {
     }
     
     ///设置今日提示
-    private func setTodayPropmt(){
+    private func setTodayPropmtEdge(){
         if diary.date == GetTodayDate(){
             self.containerView.layer.borderWidth = 2;
             self.containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
@@ -287,10 +287,10 @@ extension monthCell{
                 make.height.equalTo(diary.calculateTodosContentHeihgt())
             }
         }
-        //刷新todoListCell的样式，将会触发其updateCons()
-        self.todoListView.collectionView.performBatchUpdates({
-            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
-        }, completion: nil)
+//        //刷新todoListCell的样式，将会触发其updateCons()
+//        self.todoListView.collectionView.performBatchUpdates({
+//            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
+//        }, completion: nil)
         
         let contains = diary.containsImage
         self.albumView.snp.updateConstraints { (make) in

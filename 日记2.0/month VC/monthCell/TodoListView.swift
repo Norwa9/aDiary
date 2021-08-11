@@ -70,7 +70,9 @@ class TodoListView: UIView {
     func updateUI(){
         //更新布局的DataSource
         layout.dataSource = self.todos
-        self.collectionView.reloadData()
+        collectionView.performBatchUpdates({
+            collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
+        }, completion: nil)
     }
 }
 //MARK:-UICollectionViewDelegate
