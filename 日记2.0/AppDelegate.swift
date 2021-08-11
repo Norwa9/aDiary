@@ -13,6 +13,7 @@ import StoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        
         //1.数据库
         configDatabase()
 
@@ -54,6 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         //在App结束时移除交易监听
         SKPaymentQueue.default().remove(LWIAPHelper.shared)
+    }
+}
+//MARK:-UISplitViewController
+extension AppDelegate{
+    private func confgureUISplitViewController(){
+        
     }
 }
 
