@@ -218,9 +218,6 @@ class monthVC: UIViewController {
         backToCurMonthButton.addTarget(self, action: #selector(backToCurMonthButtonTapped), for: .touchUpInside)
         backToCurMonthButton.setupShadow()
         
-        //bottom gradient view
-        layoutBottomGradientView()
-        
         
         
         self.view.addSubview(topbar)
@@ -231,6 +228,8 @@ class monthVC: UIViewController {
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
         self.view.addSubview(backToCurMonthButton)
+        //bottom gradient view
+        layoutBottomGradientView()
         
     }
     
@@ -245,8 +244,12 @@ class monthVC: UIViewController {
             blurEffectView.alpha = 1
         }
         
-        blurEffectView.frame = CGRect(x:0, y:globalConstantsManager.shared.kScreenHeight - kBlurEffectViewHeight, width: globalConstantsManager.shared.kScreenWidth, height: kBlurEffectViewHeight);
-        print("kScreenHeight:\(globalConstantsManager.shared.kScreenHeight)")
+        blurEffectView.frame = CGRect(
+            x:0,
+            y:globalConstantsManager.shared.kScreenHeight - kBlurEffectViewHeight,
+            width: globalConstantsManager.shared.kScreenWidth,
+            height: kBlurEffectViewHeight);
+        print("kScreenHeight:\(globalConstantsManager.shared.kScreenHeight),kScreenWidth:\(globalConstantsManager.shared.kScreenWidth)")
         let gradientLayer = CAGradientLayer()//底部创建渐变层
         gradientLayer.colors = [UIColor.clear.cgColor,
                                 UIColor.label.cgColor]
@@ -773,6 +776,7 @@ extension monthVC{
         }
         
         //2.更新底部阴影
+        print("更新底部阴影")
         blurEffectView.removeFromSuperview()
         layoutBottomGradientView()
         
