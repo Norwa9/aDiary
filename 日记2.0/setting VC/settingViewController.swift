@@ -259,7 +259,7 @@ extension settingViewController{
         BiometricsSwitch.isOn = userDefaultManager.useBiometrics
         
         //notification
-        dailyRemindSwitch.isOn = userDefaultManager.dailyRemindEnable
+        //dailyRemindSwitch.isOn = userDefaultManager.dailyRemindEnable
         
         //add shadow & round corner
         fontSettingContainer.setupShadow()
