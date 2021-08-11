@@ -184,10 +184,15 @@ extension diaryInfo{
     
     ///富文本NSAttributedString
     ///注意：里面没有自定义的attribute
-    var attributedString:NSAttributedString?{
+    ///注意：主线程中进行，会导致卡顿！
+    var attributedString:NSAttributedString{
         get{
             if let rtfd = self.rtfd{
-                return try? NSAttributedString(data: rtfd, options: [.documentType:NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8], documentAttributes: nil)
+                do {
+                    return try NSAttributedString(data: rtfd, options: [.documentType:NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8], documentAttributes: nil)
+                } catch  {
+                    return NSAttributedString(string: self.content)
+                }
             }else{
                 return NSAttributedString(string: self.content)
             }

@@ -174,3 +174,17 @@ func tuples2dictString(_ tuples:[(Int,Int)]) -> String?{
 }
 
 
+//MARK:-读取rtfd文件
+func LoadRTFD(rtfd:Data?) -> NSAttributedString?{
+    let aString:NSAttributedString?
+    if let rtfd = rtfd{
+        do {
+            try aString =  NSAttributedString(data: rtfd, options: [.documentType:NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8], documentAttributes: nil)
+        } catch{
+            aString = nil
+        }
+    }else{
+        aString = nil
+    }
+    return aString
+}

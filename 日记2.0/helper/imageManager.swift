@@ -21,11 +21,11 @@ class imageManager{
     func extractImages(callback: @escaping (_ images:[UIImage],_ diary:diaryInfo)->()) {
         //在后台线程访问了diary将会导致崩溃，必须在创建该变量的线程之外使用该变量
         //解决办法，创建临时变量
-        let aString = diary.attributedString
+        let rtfd = diary.rtfd
         let imageAttrTuples = diary.imageAttributesTuples
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
-            guard let aString = aString else{return}
+            guard let aString = LoadRTFD(rtfd: rtfd) else{return}
             var images:[UIImage] = []
             for imageTuple in imageAttrTuples{
                 let location = imageTuple.0

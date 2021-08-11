@@ -48,7 +48,7 @@ class exportManager{
                 .foregroundColor : APP_GREEN_COLOR()
             ]
             for diary in sortedAllDiary{
-                if let aString = diary.attributedString,aString.length != 0{
+                if let rtfd = diary.rtfd,let aString = LoadRTFD(rtfd: rtfd),aString.length != 0{
                     //日期
                     let date = diary.date
                     let dateTitle = NSAttributedString(string: date, attributes: titleAttributes)

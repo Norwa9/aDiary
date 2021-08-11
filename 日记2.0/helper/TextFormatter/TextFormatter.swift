@@ -744,7 +744,8 @@ extension TextFormatter{
 extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
         self.setLeftTypingAttributes()//内容居左
-        let attributedText = diary.attributedString!
+        let cleanContent = diary.content
+        let rtfd = diary.rtfd
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
@@ -753,6 +754,7 @@ extension TextFormatter{
         //print("读取到的todos:\(todoAttrTuples)")
         
         DispatchQueue.global(qos: .default).async {
+            let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
             let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
@@ -883,7 +885,7 @@ extension TextFormatter{
 //MARK:-分享
 extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
-        let attributedText = diary.attributedString ?? self.rawtextToRichtext(diary: diary)
+        let attributedText = diary.attributedString
         //异步读取attributedString、异步处理图片bounds
         let bounds = textView.bounds
         let container = textView.textContainer
