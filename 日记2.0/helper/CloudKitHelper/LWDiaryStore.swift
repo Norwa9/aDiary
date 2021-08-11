@@ -104,7 +104,7 @@ public final class DiaryStore: ObservableObject {
             //2.更新UI
             indicatorViewManager.shared.stop()
             UIApplication.getMonthVC().reloadMonthVC()
-            
+            UIApplication.getTodayVC()?.reloadTodayVC()
         }
         
     }

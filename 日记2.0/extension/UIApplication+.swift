@@ -9,8 +9,11 @@ import Foundation
 import UIKit
 extension UIApplication{
     static func getTodayVC() ->todayVC?{
-        if let vc = UIApplication.getTopViewController() as? todayVC{
-            return vc
+        let vc = UIApplication.getTopViewController()
+        if let todayVC = vc as? todayVC{
+            return todayVC
+        }else if let tagsView = vc as? tagsView{
+            return tagsView.presentingViewController as? todayVC
         }else{
             print("无法获取todayVC")
             return nil
@@ -20,11 +23,6 @@ extension UIApplication{
     static func getMonthVC() -> monthVC {
         return UIApplication.shared.windows[0].rootViewController as! monthVC
     }
-    
-    static func getTopbarView()-> topbarView {
-        return UIApplication.getMonthVC().topbar
-    }
-    
     
     //返回最上层的ViewController
     class func getTopViewController(base: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.rootViewController) -> UIViewController? {

@@ -94,6 +94,7 @@ class indicatorViewManager{
     ///开始显示菊花
     func start(style:Style = .center){
         DispatchQueue.main.async { [self] in
+            topWindow.isUserInteractionEnabled = false
             if topWindow.subviews.contains(self.containerView){
                 print("contains(self.containerView)")
                 return
@@ -153,7 +154,8 @@ class indicatorViewManager{
     
     ///结束显示菊花
     func stop(){
-        DispatchQueue.main.async {
+        DispatchQueue.main.async {[self] in
+            topWindow.isUserInteractionEnabled = true
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
                 self.blurEffectView.alpha = 0
                 self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
