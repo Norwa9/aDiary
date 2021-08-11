@@ -80,7 +80,12 @@ class monthVC: UIViewController {
         
         if let vc = WhatsNewHelper.getWhatsNewViewController(){
             self.present(vc, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                vc.dismiss(animated: true, completion: nil)
+            }
         }
+        
+        
     }
     
     func loadData(){
