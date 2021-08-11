@@ -40,7 +40,7 @@ func GetAttachment(image:UIImage)->NSAttributedString{
     let attachment = NSTextAttachment()
     let imageAspectRatio = image.size.height / image.size.width
     let pedding:CGFloat = 15
-    let textViewW = kScreenWidth - 2 * kTextViewPeddingX
+    let textViewW = globalConstantsManager.shared.kScreenWidth - 2 * kTextViewPeddingX
     let imageWidth = (textViewW - 2 * pedding)
     let imageHeight = (imageWidth * imageAspectRatio)
     let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))//修改尺寸，防止从存储中读取富文本时图片方向错位

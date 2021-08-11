@@ -11,7 +11,7 @@ class tagsVC: UIPresentationController {
     let blurEffectView: UIVisualEffectView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     let viewHeight:CGFloat = 400
-    let viewWidth:CGFloat = kScreenWidth - 20
+    let viewWidth:CGFloat = globalConstantsManager.shared.tagsVCWidth
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -63,3 +63,18 @@ class tagsVC: UIPresentationController {
     }
 }
 
+//MARK:-旋转屏幕
+extension tagsVC{
+    @objc private func onDeviceDirectionChange(){
+        guard UIDevice.current.userInterfaceIdiom == .pad else{
+            return
+        }
+        //只响应横竖的变化
+        guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
+            return
+        }
+        
+        self.containerView?.layoutSubviews()
+        
+    }
+}

@@ -51,7 +51,7 @@ class todayVC: UIViewController{
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
+        notificationCenter.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         self.initUI()
         self.setupConstraints()
@@ -344,7 +344,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         
         //自动隐藏/显示topView
         //当内容高度不及屏幕高度时，会出现bug
-        if textView.contentSize.height > kScreenHeight{
+        if textView.contentSize.height > globalConstantsManager.shared.kScreenHeight{
             if y > 50 && isShowingTopView{
                 toggleTopView()
             }else if y < 10 && !isShowingTopView{
@@ -354,4 +354,26 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         
     }
     
+}
+
+//MARK:-旋转屏幕
+extension todayVC{
+    @objc private func onDeviceDirectionChange(){
+        guard UIDevice.current.userInterfaceIdiom == .pad else{
+            return
+        }
+        //只响应横竖的变化
+        guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
+            return
+        }
+        
+        //1.重新读取日记，以显示正确的图片bounds
+        let formatter = TextFormatter(textView: self.textView)
+        if model != nil{
+            formatter.loadTextViewContent(with: model)
+        }
+        
+        //2.关闭表情盘（如果存在的话）
+        topView.emojiView.popover.dismiss()
+    }
 }

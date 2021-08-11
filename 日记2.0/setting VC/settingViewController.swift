@@ -269,9 +269,8 @@ extension settingViewController{
         securitySettingContainer.layer.cornerRadius = 10
         backupSettingContainer.layer.cornerRadius = 10
         
-        setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
-        
     }
+
     
     ///设置字体示意
     private func setupExampleTextView(imageScalingFactor:CGFloat){
@@ -319,6 +318,8 @@ extension settingViewController{
             SKStoreReviewController.requestReview()
             userDefaultManager.requestReviewTimes += 1
         }
+        //此时设置示例textView，才能取得正确的frame以正确显示图片的大小
+        setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
     }
     
 }

@@ -70,6 +70,7 @@ class monthVC: UIViewController {
         
         initUI()
         setupConstraint()
+        addObservers()
         loadData()
         
     }
@@ -130,6 +131,12 @@ class monthVC: UIViewController {
         
     }
     
+    ///添加通知
+    private func addObservers(){
+        //屏幕旋转通知
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+    
     //更新monthButtons的点亮状态
     private func updateMonthBtns(){
         for button in monthButtons{
@@ -163,22 +170,6 @@ class monthVC: UIViewController {
         collectionView.dataSource = self
         collectionView.register(monthCell.self, forCellWithReuseIdentifier: monthCell.reusableID)
         collectionView.showsVerticalScrollIndicator = false
-        
-        let blurEffect = UIBlurEffect(style: .light)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.isUserInteractionEnabled = false
-        blurEffectView.frame = CGRect(x:0, y:kScreenHeight - kBlurEffectViewHeight, width: kScreenWidth, height: kBlurEffectViewHeight);
-        let gradientLayer = CAGradientLayer()//底部创建渐变层
-        gradientLayer.colors = [UIColor.clear.cgColor,
-                                UIColor.label.cgColor]
-        gradientLayer.frame = blurEffectView.bounds
-        gradientLayer.locations = [0,0.9,1]
-        blurEffectView.layer.mask = gradientLayer
-        if UITraitCollection.current.userInterfaceStyle == .dark{
-            blurEffectView.alpha = 0
-        }else{
-            blurEffectView.alpha = 1
-        }
         
         //topView
         topView = UIView()
@@ -225,10 +216,10 @@ class monthVC: UIViewController {
         let attributedString = NSAttributedString(string: string, attributes: attributes)
         backToCurMonthButton.setAttributedTitle(attributedString, for: .normal)
         backToCurMonthButton.addTarget(self, action: #selector(backToCurMonthButtonTapped), for: .touchUpInside)
-        backToCurMonthButton.frame.size = CGSize(width: 100, height: 40)
         backToCurMonthButton.setupShadow()
         
-        
+        //bottom gradient view
+        layoutBottomGradientView()
         
         
         
@@ -240,10 +231,30 @@ class monthVC: UIViewController {
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
         self.view.addSubview(backToCurMonthButton)
-        view.addSubview(blurEffectView)
         
     }
     
+    ///布局底部渐变图层
+    private func layoutBottomGradientView(){
+        let blurEffect = UIBlurEffect(style: .light)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.isUserInteractionEnabled = false
+        if UITraitCollection.current.userInterfaceStyle == .dark{
+            blurEffectView.alpha = 0
+        }else{
+            blurEffectView.alpha = 1
+        }
+        
+        blurEffectView.frame = CGRect(x:0, y:globalConstantsManager.shared.kScreenHeight - kBlurEffectViewHeight, width: globalConstantsManager.shared.kScreenWidth, height: kBlurEffectViewHeight);
+        print("kScreenHeight:\(globalConstantsManager.shared.kScreenHeight)")
+        let gradientLayer = CAGradientLayer()//底部创建渐变层
+        gradientLayer.colors = [UIColor.clear.cgColor,
+                                UIColor.label.cgColor]
+        gradientLayer.frame = blurEffectView.bounds
+        gradientLayer.locations = [0,0.9,1]
+        blurEffectView.layer.mask = gradientLayer
+        self.view.addSubview(blurEffectView)
+    }
     
     //MARK:-auto layout
     private func setupConstraint(){
@@ -288,7 +299,13 @@ class monthVC: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        //月份按钮不方便使用auto layout，使用frame来布局
+        backToCurMonthButton.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: 100, height: 40))
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(100)
+        }
+        
+        //使用frame 布局monthButtons
         self.view.layoutIfNeeded()//获取到真实的frame
         let kButtonDiameter:CGFloat = 25
         let insetY:CGFloat = (kTopViewHeight - 25) / 2
@@ -305,8 +322,6 @@ class monthVC: UIViewController {
             monthBtnStackView.addSubview(button)
         }
     }
-    
-    
 
     //MARK:-action target
     ///按下月份按钮
@@ -365,26 +380,19 @@ class monthVC: UIViewController {
     }
     
     private func showBackButton(toShow:Bool){
-        let screenHeight = kScreenHeight
-        if toShow{
-            //显示
-            self.isShowingBackButton = true
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseInOut) {
-                self.backToCurMonthButton.frame.origin.y = screenHeight - self.kBlurEffectViewHeight - 50
-                self.backToCurMonthButton.center.x = self.view.center.x
-            } completion: { (_) in
-                
-            }
-        }else{
-            //隐藏
-            self.isShowingBackButton = false
-            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseIn) {
-                self.backToCurMonthButton.frame.origin.y = screenHeight * 1.1
-                self.backToCurMonthButton.center.x = self.view.center.x
-            } completion: { (_) in
-                
+        self.isShowingBackButton.toggle()
+        
+        backToCurMonthButton.snp.updateConstraints { (update) in
+            if toShow{
+                update.bottom.equalToSuperview().offset(-(kBlurEffectViewHeight + 50))
+            }else{
+                update.bottom.equalToSuperview().offset(100)
             }
         }
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseInOut) {
+            self.view.layoutIfNeeded()
+        } completion: { (_) in}
+        
     }
     
     ///-popover
@@ -529,7 +537,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     
     //滑动时cell的动画
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.isDragging || isFilterMode || collectionView.contentOffset.y > kScreenHeight{
+        if collectionView.isDragging || isFilterMode || collectionView.contentOffset.y > globalConstantsManager.shared.kScreenHeight{
             return
         }else{
             guard let cell = cell as? monthCell else{return}
@@ -736,4 +744,45 @@ extension monthVC{
             blurEffectView.alpha = 1
         }
     }
+
 }
+
+//MARK:-屏幕旋转
+extension monthVC{
+    
+    @objc private func onDeviceDirectionChange(){
+        guard UIDevice.current.userInterfaceIdiom == .pad else{
+            return
+        }
+        //只响应横竖的变化
+        guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
+            return
+        }
+        print("onDeviceDirectionChange:\(UIDevice.current.orientation.rawValue)")
+        //1.更新month Buttons
+        let kButtonDiameter:CGFloat = 25
+        let insetY:CGFloat = (kTopViewHeight - 25) / 2
+        let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * kButtonDiameter) / 13.0
+        UIView.animate(withDuration: 0.2) {
+            for i in 0..<12{
+                let x = kButtonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
+                let y = insetY
+                let button = self.monthButtons[i]
+                button.frame.origin = CGPoint(x: x, y: y)
+            }
+        }
+        
+        //2.更新底部阴影
+        blurEffectView.removeFromSuperview()
+        layoutBottomGradientView()
+        
+        //3.刷新flowlayout
+        reloadCollectionViewData(forRow: -1, animated: true)
+        
+        //4.更新搜索栏
+        if isFilterMode{
+            popover.dismiss()
+        }
+    }
+}
+
