@@ -287,10 +287,10 @@ extension monthCell{
                 make.height.equalTo(diary.calculateTodosContentHeihgt())
             }
         }
-//        //刷新todoListCell的样式，将会触发其updateCons()
-//        self.todoListView.collectionView.performBatchUpdates({
-//            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
-//        }, completion: nil)
+        //切换布局模式时，刷新todoListCell的宽度
+        self.todoListView.collectionView.performBatchUpdates({
+            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
+        }, completion: nil)
         
         let contains = diary.containsImage
         self.albumView.snp.updateConstraints { (make) in
