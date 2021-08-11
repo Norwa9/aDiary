@@ -13,14 +13,21 @@ import StoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        //1.数据库
         configDatabase()
 
-        UIApplication.shared.registerForRemoteNotifications()//注册iCloud静默通知
+        //2.注册iCloud静默通知
+        UIApplication.shared.registerForRemoteNotifications()
         
-        ///IAP应用内购买交易事务队列
-        /**Unfinished transactions stay in the payment queue. StoreKit calls the app’s persistent observer’s paymentQueue(_:updatedTransactions:) every time upon launching or resuming from the background until the app finishes these transactions.
+        //3.IAP
+        /**
+         IAP应用内购买交易事务队列
+         Unfinished transactions stay in the payment queue. StoreKit calls the app’s persistent observer’s paymentQueue(_:updatedTransactions:) every time upon launching or resuming from the background until the app finishes these transactions.
          */
         SKPaymentQueue.default().add(LWIAPHelper.shared)
+        
+        //4.
+        
         
         return true
     }

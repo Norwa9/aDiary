@@ -26,7 +26,11 @@ class userDefaultManager{
         static let lineSpacingKey = "lineSpacing"
         static let layoutType = "layoutType"
         static let requestReviewTimes = "requestReviewTimes"
-        static let userInsatlledFontNames = "userInsatlledFontNames"
+        static let dailyRemindEnable = "dailyRemindEnable"
+        static let dailyRemindAtHour = "dailyRemindAtHour"
+        static let dailyRemindAtMinute = "dailyRemindAtMinute"
+        
+        
     }
     
     
@@ -188,19 +192,47 @@ class userDefaultManager{
         }
     }
     
-    static var userInsatlledFontNames:[String]{
+    //MARK:-每日提醒
+    static var dailyRemindEnable:Bool{
         get{
-            if let names = shared?.object(forKey: constants.userInsatlledFontNames) as? [String] {
-                return names
+            if let enable = shared?.object(forKey: constants.dailyRemindEnable) as? Bool {
+                return enable
             }else{
-                return []
+                return true
             }
         }
         set{
-            shared?.set(newValue, forKey: constants.userInsatlledFontNames)
+            shared?.set(newValue, forKey: constants.dailyRemindEnable)
         }
     }
     
+    ///每日提醒时间：时
+    static var dailyRemindAtHour:Int{
+        get{
+            if let hour = shared?.object(forKey: constants.dailyRemindAtHour) as? Int {
+                return hour
+            }else{
+                return 22//默认在晚上10点
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.dailyRemindAtHour)
+        }
+    }
+    
+    ///每日提醒时间：分
+    static var dailyRemindAtMinute:Int{
+        get{
+            if let minute = shared?.object(forKey: constants.dailyRemindAtMinute) as? Int {
+                return minute
+            }else{
+                return 0
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.dailyRemindAtMinute)
+        }
+    }
     
 }
 

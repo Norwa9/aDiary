@@ -48,7 +48,7 @@ class shareScrollView:UIScrollView{
         dateLabel.textColor = .label
         
         weekLabel.textAlignment = .center
-        weekLabel.text = Date().getWeekday(dateString: diary.date)
+        weekLabel.text = GetWeekday(dateString: diary.date)
         weekLabel.font = UIFont.init(name: "DIN Alternate", size: 24)!
         weekLabel.textColor = .label
         

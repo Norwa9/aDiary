@@ -17,7 +17,6 @@ class settingViewController: UIViewController {
     @IBOutlet weak var fontSizeLabel:UILabel!
     @IBOutlet weak var fontSizeStepper:UIStepper!
     @IBOutlet weak var lineSpacingStepper:UIStepper!
-    var familyFonts = [String?]()
     var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
     var tempFontName:String? = userDefaultManager.fontName
@@ -30,6 +29,11 @@ class settingViewController: UIViewController {
     
     //back up setting
     @IBOutlet weak var backupSettingContainer:UIView!
+    
+    //notification setting
+    @IBOutlet weak var dailyRemindSwitch:UISwitch!
+    
+    //other
     var activityIndicator:UIActivityIndicatorView!//进度条
     var vSpinner : UIView?
     
@@ -233,19 +237,6 @@ extension settingViewController{
         securitySettingContainer.backgroundColor = settingContainerDynamicColor
         textView.backgroundColor = .clear
         
-        //添加字体
-        familyFonts.append(nil)//默认字体
-//        for fontFamily in UIFont.familyNames{
-//            //print("fontFamily:\(fontFamily)")
-//            for fontName in UIFont.fontNames(forFamilyName: fontFamily){
-//                //print("fontName:\(fontName),")
-//                familyFonts.append(fontName)
-//            }
-//        }
-        for name in userDefaultManager.userInsatlledFontNames{
-            familyFonts.append(name)
-        }
-        
         //image size segment control
         imageSizeSegment.selectedSegmentIndex = userDefaultManager.imageSizeStyle
         imageSizeSegment.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
@@ -266,6 +257,9 @@ extension settingViewController{
         //security
         passwordSwitch.isOn = userDefaultManager.usePassword
         BiometricsSwitch.isOn = userDefaultManager.useBiometrics
+        
+        //notification
+        dailyRemindSwitch.isOn = userDefaultManager.dailyRemindEnable
         
         //add shadow & round corner
         fontSettingContainer.setupShadow()
@@ -390,5 +384,57 @@ extension settingViewController{
         let vc = IAPViewController()
         self.present(vc, animated: true, completion: nil)
         
+    }
+}
+
+
+//MARK:-每日提醒
+extension settingViewController{
+    ///每日提醒开关行为
+    @IBAction func dailyReminderDidChange(_ sender: UISwitch){
+        //一、开启每日提醒功能
+        if sender.isOn{
+            //需要先检查App的本地通知权限是否被用户关闭了
+            LWNotificationHelper.shared.enableDailyRemind {
+                DispatchQueue.main.async(execute: { () -> Void in
+                    //1.恢复开关
+                    sender.setOn(false, animated: true)
+                    
+                    //2.弹出警告框
+                    let alertController = UIAlertController(title: "消息推送权限已被关闭",
+                                                message: "想要App发送提醒。点击“设置”，开启通知。",
+                                                preferredStyle: .alert)
+                     
+                    let cancelAction = UIAlertAction(title:"取消", style: .cancel, handler:nil)
+                     
+                    let settingsAction = UIAlertAction(title:"设置", style: .default, handler: {
+                        (action) -> Void in
+                        let url = URL(string: UIApplication.openSettingsURLString)
+                        if let url = url, UIApplication.shared.canOpenURL(url) {
+                            if #available(iOS 10, *) {
+                                UIApplication.shared.open(url, options: [:],
+                                                          completionHandler: {
+                                                            (success) in
+                                })
+                            } else {
+                                UIApplication.shared.openURL(url)
+                            }
+                        }
+                    })
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(settingsAction)
+                    self.present(alertController, animated: true, completion: nil)
+                })
+            } requestFailureCompletion: {
+                //1.恢复开关
+                sender.setOn(false, animated: true)
+            }
+        }
+        
+        
+        //二、关闭每日提醒功能
+        if sender.isOn == false{
+            LWNotificationHelper.shared.disableDailyRemind()
+        }
     }
 }

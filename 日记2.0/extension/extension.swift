@@ -30,6 +30,8 @@ enum dateInfo {
     case year
     case weekDay
 }
+
+
 func getDateComponent(for date:Date,for key:dateInfo) -> Int{
     
     let calendar = Calendar.current
@@ -44,6 +46,24 @@ func getDateComponent(for date:Date,for key:dateInfo) -> Int{
     case .weekDay:
         return dateComponents.weekday! - 1
     }
+}
+
+///获取今天的日期或者指定日期的weekday
+func GetWeekday(dateString:String?) -> String{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy年M月d日"
+    let date:Date
+    if let dateString = dateString{
+        date = formatter.date(from: dateString)!
+    }else{
+        date = Date()
+    }
+    formatter.dateFormat = "EEE"
+    let string =  formatter.string(from: date)
+    #if targetEnvironment(simulator)
+        return weekDaysCN[string]!
+    #endif
+    return string
 }
 
 func GetTodayDate()->String{
@@ -87,30 +107,4 @@ func getDocumentsDirectory() -> URL {
     return paths[0]
 }
 
-
-
-extension Date{
-    //获取当前星期几
-    func getWeekday()->String{
-        let weekDays = [NSNull.init(),"周日","周一","周二","周三","周四","周五","周六"] as [Any]
-        let calendar = NSCalendar.init(calendarIdentifier: .gregorian)
-        let timeZone = NSTimeZone.init(name: "Asia/Shanghai")
-        calendar?.timeZone = timeZone! as TimeZone
-        let calendarUnit = NSCalendar.Unit.weekday
-        let theComponents = calendar?.components(calendarUnit, from: self)
-        return weekDays[(theComponents?.weekday)!] as! String
-    }
-    
-    func getWeekday(dateString:String) -> String{
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy年M月d日"
-        let date = formatter.date(from: dateString)
-        formatter.dateFormat = "EEE"
-        let string =  formatter.string(from: date!)
-        #if targetEnvironment(simulator)
-            return weekDaysCN[string]!
-        #endif
-        return string
-    }
-}
 
