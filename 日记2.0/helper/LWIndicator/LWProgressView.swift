@@ -45,7 +45,7 @@ class LWProgressView: LWCustomIndicatorView {
         }
     }
     
-    override func startAnimating() {
+    override func present() {
         self.containerView.alpha = 0
         self.progressView.transform = .init(scaleX: 0.01, y: 0.01)
         self.backgroundColor = .clear
@@ -56,7 +56,7 @@ class LWProgressView: LWCustomIndicatorView {
         } completion: { (_) in}
     }
     
-    override func stopAnimating() {
+    override func dismiss() {
         UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
             self.containerView.alpha = 0
             self.progressView.transform = .init(scaleX: 0.01, y: 0.01)

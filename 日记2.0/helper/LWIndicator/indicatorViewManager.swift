@@ -29,7 +29,7 @@ class indicatorViewManager{
         }
     }
     //MARK:-public
-    ///开始显示菊花
+    ///展示指示器
     public func start(type:indicatorType){
         DispatchQueue.main.async { [self] in
             topWindow.isUserInteractionEnabled = false
@@ -45,18 +45,18 @@ class indicatorViewManager{
             }
             
             //开始转
-            indicatorView.startAnimating()
+            indicatorView.present()
         }
         
     }
     
-    ///结束显示菊花
+    ///关闭指示器
     public func stop(){
         DispatchQueue.main.async {[self] in
             topWindow.isUserInteractionEnabled = true
             
             //结束转动
-            indicatorView.stopAnimating()
+            indicatorView.dismiss()
         }
     }
     

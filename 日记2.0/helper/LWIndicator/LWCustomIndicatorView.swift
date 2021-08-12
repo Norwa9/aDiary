@@ -60,11 +60,11 @@ class LWCustomIndicatorView:UIView{
     }
     
     //MARK:-protected
-    func startAnimating(){
+    func present(){
         
     }
     
-    func stopAnimating(){
+    func dismiss(){
         
     }
     ///初始化UI
