@@ -70,7 +70,7 @@ class indicatorViewManager{
             indicatorView.setLabel("正在导出...")
         case .checkRemoteChange:
             indicatorView =  LWDefaultIndicatorView()
-            indicatorView.setLabel("正在获取云端的数据(变动)...\n(如果网络状况不佳，可重启App重试。)")
+            indicatorView.setLabel("正在获取云端数据变动\n(如果网络状况不佳，可重启App重试)")
         case .fetchRemoteChange:
             indicatorView =  LWDefaultIndicatorView()
             indicatorView.setLabel("检测到其它设备的修改，正在同步...")

@@ -72,17 +72,18 @@ class LWCustomIndicatorView:UIView{
         //提示lable
         label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont(name: "DIN Alternate", size: 10)
-        label.textColor = .systemGray
+        label.font = UIFont(name: "DIN Alternate", size: 12)
+        label.textColor = .secondaryLabel
         label.numberOfLines = 0
         
         //模糊视图
-        let blurEffect = UIBlurEffect(style: .extraLight)
+        let blurEffect = UIBlurEffect(style: .light)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         
         //指示器+模糊视图的容器视图
         containerView = UIView()
-        containerView.layer.cornerRadius = 5
+        containerView.backgroundColor = .systemBackground
+        containerView.layer.cornerRadius = 7
         containerView.layer.masksToBounds = true
         
         containerView.addSubview(blurEffectView)

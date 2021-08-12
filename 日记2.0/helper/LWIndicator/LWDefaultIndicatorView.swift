@@ -27,7 +27,7 @@ class LWDefaultIndicatorView: LWCustomIndicatorView {
         containerView.layer.cornerRadius = 10
         
         //菊花条视图
-        indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .systemGray2, padding: .zero)
+        indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .systemGray, padding: .zero)
         containerView.addSubview(indicatorView)
     }
     
@@ -49,7 +49,7 @@ class LWDefaultIndicatorView: LWCustomIndicatorView {
         containerView.alpha = 0
         indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
         backgroundColor = .clear
-        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
             self.containerView.alpha = 1
             self.indicatorView.transform = .identity
             self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
@@ -57,7 +57,7 @@ class LWDefaultIndicatorView: LWCustomIndicatorView {
     }
     
     override func dismiss() {
-        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
             self.containerView.alpha = 0
             self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
             self.backgroundColor = .clear
