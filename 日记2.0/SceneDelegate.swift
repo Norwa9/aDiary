@@ -15,7 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let visualEffectView:UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.frame = UIScreen.main.bounds
         visualEffectView.alpha = 1
         return visualEffectView
     }()

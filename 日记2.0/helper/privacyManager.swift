@@ -10,6 +10,15 @@ import UIKit
 import LocalAuthentication
 //MARK:-进入后台添加高斯模糊，恢复前台解锁后移除高斯模糊
 extension SceneDelegate{
+    ///添加高斯模糊遮罩
+    func addPrivacyMaskView(){
+        self.visualEffectView.alpha = 1
+        UIApplication.getTopWindow().addSubview(visualEffectView)
+        visualEffectView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+    
     func lockApp(){
         //如果用户正在正在输入提示框时进入后台。此时再进入app，再次进入验证弹出第二个提示框。
         //所以当用户正在输入密码却进入后台时，将dismiss之前展示的提示框。
@@ -19,8 +28,7 @@ extension SceneDelegate{
         if ac != nil{
             ac.dismiss(animated: true, completion: nil)
         }
-        self.visualEffectView.alpha = 1
-        UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.addSubview(self.visualEffectView)
+        addPrivacyMaskView()
     }
     
     
@@ -33,8 +41,7 @@ extension SceneDelegate{
         }
         
         //开始认真之前先加上模糊
-        self.visualEffectView.alpha = 1
-        UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.addSubview(self.visualEffectView)
+        addPrivacyMaskView()
         
         //如果设置了生物识别
         if userDefaultManager.useBiometrics{
