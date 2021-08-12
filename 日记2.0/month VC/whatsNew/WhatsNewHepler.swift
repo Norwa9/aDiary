@@ -64,7 +64,7 @@ class WhatsNewHelper{
             items: [
                 WhatsNew.Item(
                     title: "适配iPad",
-                    subtitle: "为iPad的屏幕尺寸更新了UI",
+                    subtitle: "欢迎前往下载体验",
                     image: UIImage(named: "ipad")
                 ),
                 WhatsNew.Item(
