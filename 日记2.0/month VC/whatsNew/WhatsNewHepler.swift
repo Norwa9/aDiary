@@ -53,6 +53,34 @@ class WhatsNewHelper{
         )
         arr.append(whatsNew220)
         
+        //MARK:-2.3
+        let version230 = WhatsNew.Version(major: 2, minor: 3, patch: 0)
+        let whatsNew230 = WhatsNew(
+            // The Version
+            version: version230,
+            // The Title
+            title: "新特性",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "适配iPad",
+                    subtitle: "为iPad的屏幕尺寸更新了UI",
+                    image: UIImage(named: "ipad")
+                ),
+                WhatsNew.Item(
+                    title: "可使用第三方应用提供的字体",
+                    subtitle: "例如在iFont安装的字体",
+                    image: UIImage(named: "font")
+                ),
+                WhatsNew.Item(
+                    title: "适配深色模式主题",
+                    subtitle: "系统开启深色模式后将自动切换",
+                    image: UIImage(named: "moon")
+                )
+            ]
+        )
+        arr.append(whatsNew230)
+        
         
         return arr
     }
