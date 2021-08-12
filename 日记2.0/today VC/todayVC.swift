@@ -382,3 +382,12 @@ extension todayVC{
         topView.emojiView.popover.dismiss()
     }
 }
+
+//MARK:-深色模式
+extension todayVC{
+    ///切换模式后重新读取，以显示正确的todo复选框的素材
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        reloadTodayVC()
+    }
+}

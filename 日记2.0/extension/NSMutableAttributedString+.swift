@@ -42,9 +42,15 @@ extension NSMutableAttributedString{
     public func loadCheckboxes() {
         while mutableString.contains("- [ ] ") {
             let range = mutableString.range(of: "- [ ] ")
+            let parRange = mutableString.paragraphRange(for: range)
             if length >= range.upperBound, let unChecked = AttributedBox.getUnChecked() {
-                replaceCharacters(in: range, with: unChecked)
+                removeAttribute(.strikethroughStyle, range: parRange)
+                
+                addAttribute(.foregroundColor, value: UIColor.label, range: parRange)
+                replaceCharacters(in: range, with: unChecked)//注意顺序
             }
+            
+            
         }
         
         while mutableString.contains("- [x] ") {
@@ -52,11 +58,9 @@ extension NSMutableAttributedString{
             let parRange = mutableString.paragraphRange(for: range)
             
             if length >= range.upperBound, let checked = AttributedBox.getChecked() {
-                
-                //let color = NightNight.theme == .night ? UIColor.white : UIColor.black
-                let color = UIColor.label
-                addAttribute(.strikethroughColor, value: color, range: parRange)
-                
+                addAttribute(.strikethroughStyle, value: 1, range: parRange)
+                addAttribute(.foregroundColor, value: UIColor.systemGray, range: parRange)
+                addAttribute(.strikethroughColor, value: UIColor.systemGray, range: parRange)
                 replaceCharacters(in: range, with: checked)
             }
         }
