@@ -674,7 +674,7 @@ extension monthVC:UISearchBarDelegate{
     }
     
     func filter(){
-        indicatorViewManager.shared.start()
+        indicatorViewManager.shared.start(type: .other)
         filterHelper.shared.filter { [self] res in
             resultDiaries = res
             filteredDiaries = Array(resultDiaries.prefix(20))
@@ -736,7 +736,7 @@ extension monthVC {
         ac.addAction(UIAlertAction(title: "确定", style: .destructive, handler: { [self] _ in
             let row = indexPath.item
             let delteDiary = filteredDiaries[row]
-            indicatorViewManager.shared.start(style: .center)
+            indicatorViewManager.shared.start(type: .other)
             DiaryStore.shared.delete(with: delteDiary.id)
         }))
         self.present(ac, animated: true, completion: nil)

@@ -38,17 +38,73 @@ class indicatorViewManager{
     ///高斯模糊图层
     let blurEffectView:UIVisualEffectView!
     
-    ///容器图层
+    ///指示器的容器图层
     let containerView:UIView!
     
     ///指示器的样式
-    enum Style:Int{
-        case banner //顶部横幅
-        case center //显示在中部
-        case export //导出
+    enum indicatorType:Int{
+        ///打开App时获取云端变化
+        case checkRemoteChange
+        
+        ///App运行过程中接收到云端变化
+        case fetchRemoteChange
+        
+        ///导出
+        case progress
+        
+        ///内购
+        case iap
+        
+        ///其它情况
+        ///删除、搜索过滤
+        case other
+    }
+    //MARK:-public
+    ///开始显示菊花
+    public func start(type:indicatorType){
+        DispatchQueue.main.async { [self] in
+            topWindow.isUserInteractionEnabled = false
+            if topWindow.subviews.contains(self.containerView){
+                print("contains(self.containerView)")
+                return
+            }
+            topWindow.addSubview(self.containerView)
+            
+            ///根据样式更新约束
+            updateView(style: type)
+            
+            //开始转
+            self.indicatorView.startAnimating()
+            self.blurEffectView.alpha = 0
+            self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+                self.blurEffectView.alpha = 1
+                self.indicatorView.transform = .identity
+            } completion: { (_) in}
+        }
+        
     }
     
-    init() {
+    ///结束显示菊花
+    public func stop(){
+        DispatchQueue.main.async {[self] in
+            topWindow.isUserInteractionEnabled = true
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+                self.blurEffectView.alpha = 0
+                self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
+            } completion: { (_) in
+                self.indicatorView.stopAnimating()
+                self.blurEffectView.alpha = 1
+                self.indicatorView.transform = .identity
+                self.containerView.removeFromSuperview()
+            }
+            
+            
+        }
+    }
+    
+    //MARK:-private
+    private init() {
         //进度条
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0
@@ -91,46 +147,23 @@ class indicatorViewManager{
         }
     }
     
-    ///开始显示菊花
-    func start(style:Style = .center){
-        DispatchQueue.main.async { [self] in
-            topWindow.isUserInteractionEnabled = false
-            if topWindow.subviews.contains(self.containerView){
-                print("contains(self.containerView)")
-                return
-            }
-            topWindow.addSubview(self.containerView)
-            
-            ///根据样式更新约束
-            updateView(style: style)
-            
-            //开始转
-            self.indicatorView.startAnimating()
-            self.blurEffectView.alpha = 0
-            self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
-                self.blurEffectView.alpha = 1
-                self.indicatorView.transform = .identity
-            } completion: { (_) in}
-        }
-        
-    }
     
-    private func updateView(style:Style){
+    //MARK:-根据type配置不同的indicator view
+    private func updateView(style:indicatorType){
         self.containerView.snp.removeConstraints()
         switch style{
-        ///底部
-        case .banner:
-            progressView.alpha = 0
-            indicatorView.alpha = 1
-            self.containerView.snp.makeConstraints { (make) in
-                make.bottom.equalTo(topWindow).offset(-50)
-                make.centerX.equalTo(topWindow)
-                make.size.equalTo(CGSize(width: 50, height: 50))
-            }
-            break
+//        ///底部
+//        case .checkRemoteChange:
+//            progressView.alpha = 0
+//            indicatorView.alpha = 1
+//            self.containerView.snp.makeConstraints { (make) in
+//                make.bottom.equalTo(topWindow).offset(-50)
+//                make.centerX.equalTo(topWindow)
+//                make.size.equalTo(CGSize(width: 50, height: 50))
+//            }
+//            break
         ///正中央
-        case .center:
+        case .fetchRemoteChange,.checkRemoteChange,.iap,.other:
             progressView.alpha = 0
             indicatorView.alpha = 1
             self.containerView.snp.makeConstraints { (make) in
@@ -138,8 +171,8 @@ class indicatorViewManager{
                 make.size.equalTo(CGSize(width: 60, height: 60))
             }
             break
-        ///导出模式
-        case .export:
+        ///进度条
+        case .progress:
             progressView.progress = 0
             progressView.alpha = 1
             indicatorView.alpha = 0
@@ -152,22 +185,6 @@ class indicatorViewManager{
         }
     }
     
-    ///结束显示菊花
-    func stop(){
-        DispatchQueue.main.async {[self] in
-            topWindow.isUserInteractionEnabled = true
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
-                self.blurEffectView.alpha = 0
-                self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
-            } completion: { (_) in
-                self.indicatorView.stopAnimating()
-                self.blurEffectView.alpha = 1
-                self.indicatorView.transform = .identity
-                self.containerView.removeFromSuperview()
-            }
-            
-            
-        }
-    }
+    
     
 }

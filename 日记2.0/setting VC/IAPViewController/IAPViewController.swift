@@ -94,14 +94,14 @@ extension IAPViewController{
     ///
     @objc func button1Action(){
         if let product = productView1.product{
-            indicatorViewManager.shared.start()
+            indicatorViewManager.shared.start(type: .iap)
             IAPHelper.buy(product: product)
         }
     }
     
     ///恢复所有订阅
     @objc func restoreBtnAction(){
-        indicatorViewManager.shared.start()
+        indicatorViewManager.shared.start(type: .iap)
         IAPHelper.restore()
     }
 }

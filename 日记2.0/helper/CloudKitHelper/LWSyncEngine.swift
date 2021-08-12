@@ -83,7 +83,7 @@ final class LWSyncEngine{
         //将buffer初始化为App打开时的数据库（后续数据库新增model，buffer并不会更新）
         buffer = LWRealmManager.shared.localDatabase.toArray()
         
-        indicatorViewManager.shared.start(style: .banner)
+        indicatorViewManager.shared.start(type: .checkRemoteChange)
     }
     
     

@@ -13,7 +13,7 @@ class exportManager{
     
     ///导出PDF
     func exportAll(completion: @escaping() -> Void){
-        indicatorViewManager.shared.start(style: .center)
+        indicatorViewManager.shared.start(type: .checkRemoteChange)
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth, height: globalConstantsManager.shared.kScreenWidth))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer

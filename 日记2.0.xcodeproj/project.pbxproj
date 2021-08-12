@@ -16,6 +16,7 @@
 		1B2A56D126A56C3F0090D411 /* TodoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D026A56C3F0090D411 /* TodoListCell.swift */; };
 		1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D226A5836A0090D411 /* TodoListLayout.swift */; };
 		1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */; };
+		1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */; };
 		1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6963E26A6CFE00009472F /* LWTextView.swift */; };
 		1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964526A820980009472F /* diaryInfo+Todo.swift */; };
 		1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964726A91C5B0009472F /* LWCalendar.swift */; };
@@ -115,6 +116,7 @@
 		1B2A56D026A56C3F0090D411 /* TodoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListCell.swift; sourceTree = "<group>"; };
 		1B2A56D226A5836A0090D411 /* TodoListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListLayout.swift; sourceTree = "<group>"; };
 		1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWNotificationHelper.swift; sourceTree = "<group>"; };
+		1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCustomIndicatorView.swift; sourceTree = "<group>"; };
 		1BB6963E26A6CFE00009472F /* LWTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextView.swift; sourceTree = "<group>"; };
 		1BB6964526A820980009472F /* diaryInfo+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Todo.swift"; sourceTree = "<group>"; };
 		1BB6964726A91C5B0009472F /* LWCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCalendar.swift; sourceTree = "<group>"; };
@@ -234,6 +236,15 @@
 				1B2A56D226A5836A0090D411 /* TodoListLayout.swift */,
 			);
 			path = monthCell;
+			sourceTree = "<group>";
+		};
+		1B3AEB1126C4F78800C057A4 /* LWIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				1B2A566D269D81280090D411 /* indicatorViewManager.swift */,
+				1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */,
+			);
+			path = LWIndicator;
 			sourceTree = "<group>";
 		};
 		1BB6963C26A6CF8F0009472F /* toolbar */ = {
@@ -416,6 +427,7 @@
 				EADBC33E26BE9878004D1A52 /* IAPHelper */,
 				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
+				1B3AEB1126C4F78800C057A4 /* LWIndicator */,
 				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
 				EA3189AE26934ED5001B9042 /* globalFuncs.swift */,
 				EADBC2EB26B303AC004D1A52 /* globalConstants.swift */,
@@ -425,7 +437,6 @@
 				EA6EFE892629C050004B0FA1 /* fileManager.swift */,
 				EA537B9C2632FD9500C2E9EE /* imageManager.swift */,
 				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
-				1B2A566D269D81280090D411 /* indicatorViewManager.swift */,
 				1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */,
 			);
 			path = helper;
@@ -703,6 +714,7 @@
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */,
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
+				1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */,
 				EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */,
 				EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,

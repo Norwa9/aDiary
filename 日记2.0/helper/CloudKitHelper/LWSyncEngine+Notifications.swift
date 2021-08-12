@@ -26,7 +26,7 @@ extension LWSyncEngine {
 
         os_log("接收到远程CloudKit更新通知", log: log, type: .debug)
 
-        indicatorViewManager.shared.start()
+        indicatorViewManager.shared.start(type: .fetchRemoteChange)
         fetchRemoteChanges()
 
         return true
