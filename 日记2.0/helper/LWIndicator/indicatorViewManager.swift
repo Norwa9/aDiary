@@ -18,12 +18,14 @@ class indicatorViewManager{
             return UIApplication.getTopWindow()
         }
     }
-    var indicatorView:LWCustomIndicatorView = LWCustomIndicatorView()
+    var indicatorView:LWCustomIndicatorView!
     
     ///进度
     var progress:Float = 0{
         didSet{
-            indicatorView.setProgress(progress: progress)
+            if let progressView = indicatorView as? LWProgressView{
+                progressView.setProgress(progress: progress)
+            }
 //            DispatchQueue.main.async {
 //                print("progress:\(self.progress)")
 //                self.progressView.setProgress(self.progress, animated: true)
@@ -35,15 +37,19 @@ class indicatorViewManager{
     public func start(type:indicatorType){
         DispatchQueue.main.async { [self] in
             topWindow.isUserInteractionEnabled = false
-            if topWindow.subviews.contains(self.indicatorView){
-                print("contains(self.containerView)")
-                return
+            for subView in topWindow.subviews{
+                if ((subView as? LWCustomIndicatorView) != nil){
+                    return
+                }
             }
+            indicatorView = indicatorFactory(type: type)
             topWindow.addSubview(indicatorView)
-            indicatorView.configureSubviews(withType: type)
+            indicatorView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
             
             //开始转
-            self.indicatorView.startAnimating()
+            indicatorView.startAnimating()
         }
         
     }
@@ -54,9 +60,21 @@ class indicatorViewManager{
             topWindow.isUserInteractionEnabled = true
             
             //结束转动
-            self.indicatorView.stopAnimating()
+            indicatorView.stopAnimating()
         }
     }
     
-    //MARK:-public
+    //MARK:-private
+    private func indicatorFactory(type:indicatorType) -> LWCustomIndicatorView{
+        var indicatorView:LWCustomIndicatorView
+        switch type {
+        case .progress:
+            indicatorView = LWProgressView()
+            indicatorView.setLabel("正在导出...")
+        default:
+            indicatorView =  LWDefaultIndicatorView()
+            indicatorView.setLabel("正在云同步。\n为了保证数据安全，请勿操作。")
+        }
+        return indicatorView
+    }
 }

@@ -17,6 +17,8 @@
 		1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56D226A5836A0090D411 /* TodoListLayout.swift */; };
 		1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */; };
 		1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */; };
+		1B3AEB1526C50E7100C057A4 /* LWDefaultIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */; };
+		1B3AEB1726C50FC600C057A4 /* LWProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */; };
 		1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6963E26A6CFE00009472F /* LWTextView.swift */; };
 		1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964526A820980009472F /* diaryInfo+Todo.swift */; };
 		1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964726A91C5B0009472F /* LWCalendar.swift */; };
@@ -117,6 +119,8 @@
 		1B2A56D226A5836A0090D411 /* TodoListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListLayout.swift; sourceTree = "<group>"; };
 		1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWNotificationHelper.swift; sourceTree = "<group>"; };
 		1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCustomIndicatorView.swift; sourceTree = "<group>"; };
+		1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDefaultIndicatorView.swift; sourceTree = "<group>"; };
+		1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWProgressView.swift; sourceTree = "<group>"; };
 		1BB6963E26A6CFE00009472F /* LWTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextView.swift; sourceTree = "<group>"; };
 		1BB6964526A820980009472F /* diaryInfo+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Todo.swift"; sourceTree = "<group>"; };
 		1BB6964726A91C5B0009472F /* LWCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCalendar.swift; sourceTree = "<group>"; };
@@ -243,6 +247,8 @@
 			children = (
 				1B2A566D269D81280090D411 /* indicatorViewManager.swift */,
 				1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */,
+				1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */,
+				1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */,
 			);
 			path = LWIndicator;
 			sourceTree = "<group>";
@@ -708,6 +714,7 @@
 				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
 				1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */,
 				1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */,
+				1B3AEB1526C50E7100C057A4 /* LWDefaultIndicatorView.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
 				EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
@@ -738,6 +745,7 @@
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
 				EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */,
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
+				1B3AEB1726C50FC600C057A4 /* LWProgressView.swift in Sources */,
 				1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */,

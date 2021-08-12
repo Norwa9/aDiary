@@ -58,15 +58,6 @@ class LWCustomIndicatorView:UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //MARK:-public
-    public func configureSubviews(withType type:indicatorType){
-        self.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        updateSubViewsCons(withType: type)
-        
-    }
     
     public func startAnimating(){
         indicatorView.startAnimating()
@@ -93,10 +84,9 @@ class LWCustomIndicatorView:UIView{
         }
     }
     
-    ///设置进度
-    public func setProgress(progress:Float){
-        print("progress:\(progress)")
-        self.progressView.setProgress(progress, animated: true)
+    func setLabel(_ text:String){
+        label.text = text
+        layoutIfNeeded()
     }
     
     //MARK:-private
@@ -104,7 +94,6 @@ class LWCustomIndicatorView:UIView{
         //进度条
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0
-        progressView.alpha = 0
         
         //菊花条视图
         indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .systemGray2, padding: .zero)
@@ -122,7 +111,7 @@ class LWCustomIndicatorView:UIView{
         
         //指示器+模糊视图的容器视图
         containerView = UIView()
-        containerView.layer.cornerRadius = 10
+        containerView.layer.cornerRadius = 5
         containerView.layer.masksToBounds = true
         
         containerView.addSubview(blurEffectView)
@@ -133,13 +122,14 @@ class LWCustomIndicatorView:UIView{
         
     }
     
-    //MARK:-设置约束
-    private func setBaseConstrains(){
+    //MARK:-设置约束(protected)
+    func setBaseConstrains(){
         containerView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        
         blurEffectView.snp.makeConstraints { make in
-            make.edges.equalTo(self.containerView)
+            make.edges.equalTo(containerView)
         }
         
         label.snp.makeConstraints { make in
@@ -153,47 +143,5 @@ class LWCustomIndicatorView:UIView{
         //indicatorView和progressView的布局暂时先不初始化
         //等确定了指示器类型（菊花or进度条）后再布局，这样就可以“撑起”containerView
         
-    }
-    
-    //MARK:-根据type配置不同的indicator view的约束
-    private func updateSubViewsCons(withType type:indicatorType){
-        switch type{
-        ///正中央
-        case .fetchRemoteChange,.checkRemoteChange,.iap,.other:
-            progressView.alpha = 0
-            indicatorView.alpha = 1
-            label.text = "正在云同步。\n为了保证数据安全，请勿操作。"
-            
-            indicatorView.snp.removeConstraints()
-            progressView.snp.removeConstraints()
-            indicatorView.snp.makeConstraints { make in
-                make.size.equalTo(CGSize(width: 60, height: 60))
-                make.top.equalToSuperview().offset(10)
-                make.centerX.equalToSuperview()
-                make.left.greaterThanOrEqualTo(containerView).offset(10)
-                make.right.lessThanOrEqualTo(containerView).offset(-10)
-                make.bottom.equalTo(label.snp.top)
-            }
-        ///进度条
-        case .progress:
-            progressView.progress = 0
-            progressView.alpha = 1
-            indicatorView.alpha = 0
-            label.text = "正在导出..."
-            
-            indicatorView.snp.removeConstraints()
-            progressView.snp.removeConstraints()
-            progressView.snp.makeConstraints { make in
-                make.size.equalTo(CGSize(width: 200, height: 10))
-                make.top.equalToSuperview().offset(10)
-                make.centerX.equalToSuperview()
-                make.left.greaterThanOrEqualTo(containerView).offset(10)
-                make.right.lessThanOrEqualTo(containerView).offset(-10)
-                make.bottom.equalTo(label.snp.top)
-            }
-        }
-        
-        
-        self.layoutIfNeeded()
     }
 }
