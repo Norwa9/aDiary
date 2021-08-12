@@ -37,11 +37,11 @@ class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
             return
         }
         containerView.addSubview(toVC.view)
-        toVC.view.frame = blurPresentationController.frameOfPresentedView
+        toVC.view.frame = globalConstantsManager.shared.kBoundsFrameOfShareView
         toVC.view.frame.origin.y = -1000
         //3.change original size to final size with animation
         UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: [.curveEaseInOut,.allowUserInteraction]) {
-            toVC.view.frame.origin.y = blurPresentationController.frameOfPresentedView.origin.y
+            toVC.view.frame.origin.y = globalConstantsManager.shared.kBoundsFrameOfShareView.origin.y
         } completion: { (completed) in
             transitionContext.completeTransition(completed)
         }
@@ -54,7 +54,7 @@ class PopAnimator:NSObject,UIViewControllerAnimatedTransitioning{
         
         UIView.animate(withDuration: duration - 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction], animations: {
             
-            fromVC.view.frame.origin.y = 1000
+            fromVC.view.frame.origin.y = globalConstantsManager.shared.kScreenHeight + 100
         }) { (completed) in
             transitionContext.completeTransition(completed)
             

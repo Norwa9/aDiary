@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 class blurPresentationController: UIPresentationController {
-    static let frameOfPresentedView = UIScreen.main.bounds.insetBy(dx: 20, dy: 70)
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     private lazy var blurView = UIVisualEffectView(effect: nil)
     
@@ -34,7 +33,7 @@ class blurPresentationController: UIPresentationController {
     }
     
     override var frameOfPresentedViewInContainerView: CGRect{
-        return blurPresentationController.frameOfPresentedView
+        return globalConstantsManager.shared.kBoundsFrameOfShareView
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {

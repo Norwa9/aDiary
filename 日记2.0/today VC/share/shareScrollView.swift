@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 ///分享视图
 class shareScrollView:UIScrollView{
-    let kContentW = blurPresentationController.frameOfPresentedView.size.width
+    let kContentW = globalConstantsManager.shared.kBoundsFrameOfShareView.width
     ///分享日期
     let dateLabel = UILabel()
     ///周几

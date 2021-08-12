@@ -64,5 +64,11 @@ class globalConstantsManager{
             return min(kScreenWidth,kScreenHeight) - 20
         }
     }
+    
+    var kBoundsFrameOfShareView:CGRect{
+        get{
+            return CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight).insetBy(dx: 20, dy: 70)
+        }
+    }
 }
 

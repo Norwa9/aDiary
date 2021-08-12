@@ -58,7 +58,7 @@ class shareVC: UIViewController {
     
     init(monthCell:monthCell) {
         let diary = monthCell.diary!
-        let textformatter = TextFormatter(textView: UITextView(frame: CGRect(x: 0, y: 0, width: 380, height: 703)))
+        let textformatter = TextFormatter(textView: UITextView(frame: CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth, height: globalConstantsManager.shared.kScreenHeight)))
         let snapshot = textformatter.textViewScreenshot(diary: diary)
         self.diary = diary
         self.snapshot = snapshot

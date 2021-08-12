@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 import TagListView
 
-//let kMonthCellWidth:CGFloat = UIScreen.main.bounds.width / 2
-
 class monthCell: UICollectionViewCell {
     //static let KphotoHeight:CGFloat = 150
     var isFilterMode:Bool{
