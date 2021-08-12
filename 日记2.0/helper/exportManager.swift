@@ -13,7 +13,7 @@ class exportManager{
     
     ///导出PDF
     func exportAll(completion: @escaping() -> Void){
-        indicatorViewManager.shared.start(type: .checkRemoteChange)
+        indicatorViewManager.shared.start(type: .progress)
         let textView = UITextView(frame: CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth, height: globalConstantsManager.shared.kScreenWidth))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
@@ -106,6 +106,7 @@ class exportManager{
                     UIGraphicsBeginPDFPage();
                     let bounds = UIGraphicsGetPDFContextBounds()
                     render.drawPage(at: i - 1, in: bounds)
+                    indicatorViewManager.shared.progress = progress
                 }
                 UIGraphicsEndPDFContext();
                 //--

@@ -39,4 +39,7 @@ extension UIApplication{
         return base
     }
     
+    static func getTopWindow() -> UIWindow{
+        return UIApplication.shared.windows.filter {$0.isKeyWindow}.first!
+    }
 }
