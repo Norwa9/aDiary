@@ -13,7 +13,11 @@ import TagListView
 
 class monthCell: UICollectionViewCell {
     //static let KphotoHeight:CGFloat = 150
-    var hasSelected:Bool = false
+    var isFilterMode:Bool{
+        get{
+            UIApplication.getMonthVC().isFilterMode
+        }
+    }
     
     static let reusableID = "monthCell"
     private var containerView = UIView()
@@ -213,7 +217,7 @@ class monthCell: UICollectionViewCell {
         self.titleLabel.attributedText = diary.content.getAttrTitle()
         self.contentLabel.attributedText = diary.content.getAttrContent()
         self.tags = diary.tags
-        self.dateLabel.text = "\(diary.day)号 \(diary.weekDay)"
+        self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
         self.fillImages(diary: diary)
         self.todoListView.setViewModel(diary)//触发updateUI
     }
