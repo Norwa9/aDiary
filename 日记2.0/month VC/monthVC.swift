@@ -674,7 +674,6 @@ extension monthVC:UISearchBarDelegate{
     }
     
     func filter(){
-        indicatorViewManager.shared.start(type: .other)
         filterHelper.shared.filter { [self] res in
             resultDiaries = res
             filteredDiaries = Array(resultDiaries.prefix(20))
@@ -688,7 +687,7 @@ extension monthVC:UISearchBarDelegate{
                 totalNum += diary.content.count
             }
             topbar.dataLable2.text = "共\(resultDiaries.count)篇，\(totalNum)字"
-            indicatorViewManager.shared.stop()
+            
         }
     }
     

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class filterHelper {
     static let shared = filterHelper()
@@ -14,7 +15,7 @@ class filterHelper {
     var searchText:String = ""
     var selectedTags = [String]()
     var selectedSortstyle:sortStyle = .dateDescending
-    
+    var notificationToken:NotificationToken!
     func clear(){
         self.searchText = ""
         self.selectedTags.removeAll()
@@ -25,21 +26,16 @@ class filterHelper {
     typealias filterCompletion = ( ([diaryInfo]) -> Void)?
     public func filter(completionHandler: filterCompletion ){
         let res = self.filterDiary()//0.5s左右
-        completionHandler?(res)
+        completionHandler?(res)   
     }
     
     //MARK:-获取符合筛选条件的所有日记
     private func filterDiary()->[diaryInfo]{
-        //------Background Thread-------
-        
         let keywords = filterHelper.shared.searchText
         let selectedTags = filterHelper.shared.selectedTags
         let sortStyle = filterHelper.shared.selectedSortstyle
         
-        //不能在后台线程访问主线程创建的realm对象
-        //❌let localDB = LWRealmManager.shared.localDatabase
-        let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
-        print("allDiary.count:\(allDiary.count)")
+        let allDiary = LWRealmManager.shared.localDatabase
         var resultDiaries = [diaryInfo]()
         
         //1筛选：关键字
@@ -98,7 +94,6 @@ class filterHelper {
                     }
                     return false
                 }
-            
         }
     }
 }
