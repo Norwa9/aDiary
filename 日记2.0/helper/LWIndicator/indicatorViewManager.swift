@@ -26,10 +26,6 @@ class indicatorViewManager{
             if let progressView = indicatorView as? LWProgressView{
                 progressView.setProgress(progress: progress)
             }
-//            DispatchQueue.main.async {
-//                print("progress:\(self.progress)")
-//                self.progressView.setProgress(self.progress, animated: true)
-//            }
         }
     }
     //MARK:-public
@@ -65,15 +61,21 @@ class indicatorViewManager{
     }
     
     //MARK:-private
+    ///实例化LWCustomIndicatorView的子类对象
     private func indicatorFactory(type:indicatorType) -> LWCustomIndicatorView{
         var indicatorView:LWCustomIndicatorView
         switch type {
         case .progress:
             indicatorView = LWProgressView()
             indicatorView.setLabel("正在导出...")
+        case .checkRemoteChange:
+            indicatorView =  LWDefaultIndicatorView()
+            indicatorView.setLabel("正在获取云端的数据(变动)...\n(如果网络状况不佳，可重启App重试。)")
+        case .fetchRemoteChange:
+            indicatorView =  LWDefaultIndicatorView()
+            indicatorView.setLabel("检测到其它设备的修改，正在同步...")
         default:
             indicatorView =  LWDefaultIndicatorView()
-            indicatorView.setLabel("正在云同步。\n为了保证数据安全，请勿操作。")
         }
         return indicatorView
     }

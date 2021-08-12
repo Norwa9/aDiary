@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import NVActivityIndicatorView
+
 ///指示器的样式
 enum indicatorType:Int{
     ///打开App时获取云端变化
@@ -28,19 +28,13 @@ enum indicatorType:Int{
 }
 
 class LWCustomIndicatorView:UIView{
-    
-    
     var topWindow:UIWindow {
         get{
             return UIApplication.shared.windows.filter {$0.isKeyWindow}.first!
         }
     }
     
-    ///菊花指示器图层
-    var indicatorView:NVActivityIndicatorView!
-    ///进度条
-    var progressView:UIProgressView!
-    
+    ///加载时的提示语句
     var label:UILabel!
     
     ///高斯模糊图层
@@ -58,46 +52,23 @@ class LWCustomIndicatorView:UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //MARK:-public
     
-    public func startAnimating(){
-        indicatorView.startAnimating()
-        self.containerView.alpha = 0
-        self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
-        self.backgroundColor = .clear
-        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
-            self.containerView.alpha = 1
-            self.indicatorView.transform = .identity
-            self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        } completion: { (_) in}
-    }
-    
-    public func stopAnimating(){
-        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
-            self.containerView.alpha = 0
-            self.indicatorView.transform = .init(scaleX: 0.01, y: 0.01)
-            self.backgroundColor = .clear
-        } completion: { (_) in
-            self.indicatorView.stopAnimating()
-            self.containerView.alpha = 1
-            self.indicatorView.transform = .identity
-            self.removeFromSuperview()
-        }
-    }
-    
-    func setLabel(_ text:String){
+    public func setLabel(_ text:String){
         label.text = text
         layoutIfNeeded()
     }
     
-    //MARK:-private
-    private func initUI() {
-        //进度条
-        progressView = UIProgressView(progressViewStyle: .default)
-        progressView.progress = 0
+    //MARK:-protected
+    func startAnimating(){
         
-        //菊花条视图
-        indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .systemGray2, padding: .zero)
+    }
+    
+    func stopAnimating(){
         
+    }
+    ///初始化UI
+    func initUI() {
         //提示lable
         label = UILabel()
         label.textAlignment = .center
@@ -115,14 +86,11 @@ class LWCustomIndicatorView:UIView{
         containerView.layer.masksToBounds = true
         
         containerView.addSubview(blurEffectView)
-        containerView.addSubview(indicatorView)
-        containerView.addSubview(progressView)
         containerView.addSubview(label)
         self.addSubview(containerView)
-        
     }
     
-    //MARK:-设置约束(protected)
+    ///设置约束
     func setBaseConstrains(){
         containerView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -134,14 +102,11 @@ class LWCustomIndicatorView:UIView{
         
         label.snp.makeConstraints { make in
             make.height.lessThanOrEqualTo(60)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-5)
             make.left.greaterThanOrEqualTo(containerView).offset(10)
             make.right.lessThanOrEqualTo(containerView).offset(-10)
             make.centerX.equalToSuperview()
         }
-        
-        //indicatorView和progressView的布局暂时先不初始化
-        //等确定了指示器类型（菊花or进度条）后再布局，这样就可以“撑起”containerView
         
     }
 }

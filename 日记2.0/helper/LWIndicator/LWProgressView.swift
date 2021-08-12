@@ -8,10 +8,19 @@
 import UIKit
 
 class LWProgressView: LWCustomIndicatorView {
-
+    ///进度条
+    var progressView:UIProgressView!
+    
     override init() {
         super.init()
+    }
+    
+    override func initUI() {
+        super.initUI()
+        //进度条
+        progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0
+        containerView.addSubview(progressView)
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +42,29 @@ class LWProgressView: LWCustomIndicatorView {
             make.left.greaterThanOrEqualTo(containerView).offset(10)
             make.right.lessThanOrEqualTo(containerView).offset(-10)
             make.bottom.equalTo(label.snp.top)
+        }
+    }
+    
+    override func startAnimating() {
+        self.containerView.alpha = 0
+        self.progressView.transform = .init(scaleX: 0.01, y: 0.01)
+        self.backgroundColor = .clear
+        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+            self.containerView.alpha = 1
+            self.progressView.transform = .identity
+            self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        } completion: { (_) in}
+    }
+    
+    override func stopAnimating() {
+        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+            self.containerView.alpha = 0
+            self.progressView.transform = .init(scaleX: 0.01, y: 0.01)
+            self.backgroundColor = .clear
+        } completion: { (_) in
+            self.containerView.alpha = 1
+            self.progressView.transform = .identity
+            self.removeFromSuperview()
         }
     }
 
