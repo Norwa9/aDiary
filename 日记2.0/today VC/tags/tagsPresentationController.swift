@@ -11,7 +11,11 @@ class tagsPresentationController: UIPresentationController {
     let blurEffectView: UIVisualEffectView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     let viewHeight:CGFloat = 400
-    let viewWidth:CGFloat = globalConstantsManager.shared.tagsVCWidth
+    var viewWidth:CGFloat{
+        get{
+            return globalConstantsManager.shared.tagsVCWidth
+        }
+    }
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         //背景模糊视图
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
@@ -79,7 +83,7 @@ extension tagsPresentationController{
             return
         }
         print("tagsPresentationController onDeviceDirectionChange")
-        
+        print("presentedView?.frame.size:\(presentedView?.frame.size)")
         //presentedViewController:tagsView
         //presentingViewController:monthVC
         //self.presentedView?.layoutIfNeeded()

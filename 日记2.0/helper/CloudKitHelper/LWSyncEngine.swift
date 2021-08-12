@@ -105,7 +105,7 @@ final class LWSyncEngine{
                     self.fetchRemoteChanges()
                 }
             default:
-                indicatorViewManager.shared.stop()
+                indicatorViewManager.shared.stop(errorText: "❌iCloud账户不可用...")
                 break
             }
         })

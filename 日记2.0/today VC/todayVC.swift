@@ -288,13 +288,6 @@ extension todayVC{
         }
     }
     
-    //MARK:-刷新UI
-    func reloadTodayVC(){
-        //读取attributedString
-        let textFormatter = TextFormatter(textView: self.textView)
-        textFormatter.loadTextViewContent(with: model)
-    }
-    
 }
 
 
@@ -380,6 +373,12 @@ extension todayVC{
         
         //2.关闭表情盘（如果存在的话）
         topView.emojiView.popover.dismiss()
+        
+        //3.调整toolbar
+        UIView.animate(withDuration: 0.5) {[self] in
+            keyBoardToolsBar.frame.size.width = globalConstantsManager.shared.kScreenWidth
+        }
+        
     }
 }
 
@@ -388,6 +387,6 @@ extension todayVC{
     ///切换模式后重新读取，以显示正确的todo复选框的素材
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        reloadTodayVC()
+        updateUI()
     }
 }
