@@ -49,8 +49,11 @@ class todayVC: UIViewController{
         diaryStore =  DiaryStore.shared//同时会获取远端数据，上传本地未上传的数据
         
         let notificationCenter = NotificationCenter.default
+        //键盘出现
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        //键盘出现、隐藏、旋转···
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        //设备方向
         notificationCenter.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         self.initUI()
@@ -128,8 +131,9 @@ class todayVC: UIViewController{
         
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
-//        print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
+        //print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
         if notification.name == UIResponder.keyboardWillHideNotification {
+            print("keyboardWillHideNotification")
             //1.键盘隐藏
             let x = keyBoardToolsBarFrame.origin.x
             let y = keyBoardToolsBarFrame.origin.y
@@ -137,6 +141,7 @@ class todayVC: UIViewController{
             keyBoardToolsBar.alpha = 0
             textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
         } else{
+            print("keyboardWillChangeFrameNotification")
             //2.键盘出现
             let x = keyBoardToolsBarFrame.origin.x
             let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height
