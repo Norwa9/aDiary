@@ -128,7 +128,17 @@ class exportManager{
                 completion()
                 indicatorViewManager.shared.stop()
                 let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                UIApplication.getTopViewController()!.present(activityVC, animated: true, completion: nil)
+                let topVC = UIApplication.getTopViewController()!
+                
+                //ipad上要挂载到某个view上
+                let isPad = ( UIDevice.current.userInterfaceIdiom == .pad)
+                if isPad {
+                    activityVC.popoverPresentationController?.sourceView = topVC.view
+                    activityVC.popoverPresentationController?.sourceRect = CGRect(x: topVC.view.bounds.width / 2, y: topVC.view.bounds.height / 2, width: 0, height: 0)
+                    activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.any
+                }
+                
+                topVC.present(activityVC, animated: true, completion: nil)
             }//main thread
 
         }//backgournd thread
