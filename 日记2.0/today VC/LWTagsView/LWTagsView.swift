@@ -73,7 +73,7 @@ class LWTagsView: UIView {
     }
     
     @objc func showTagsViewController(){
-        let vc = tagsView(model: model)
+        let vc = tagsViewController(model: model)
         vc.completionHandler = updateUI
         guard let todayVC = UIApplication.getTopViewController() as? todayVC else{
             print("无法获取todayVC")

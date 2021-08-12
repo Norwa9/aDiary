@@ -69,8 +69,8 @@
 		EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7825C59AD000AA6971 /* UIView+.swift */; };
 		EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7D25C59E4700AA6971 /* topbarButton.swift */; };
 		EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8125C5A75F00AA6971 /* todayVC.swift */; };
-		EAA29E8D25C8248C00AA6971 /* tagsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8C25C8248C00AA6971 /* tagsVC.swift */; };
-		EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9725C8277A00AA6971 /* tagsView.swift */; };
+		EAA29E8D25C8248C00AA6971 /* tagsPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */; };
+		EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9725C8277A00AA6971 /* tagsViewController.swift */; };
 		EAA29E9A25C8277A00AA6971 /* tagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E9825C8277A00AA6971 /* tagsView.xib */; };
 		EAA29E9E25C832F900AA6971 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
 		EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA025C833FF00AA6971 /* moodButton.swift */; };
@@ -173,8 +173,8 @@
 		EAA29E7825C59AD000AA6971 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		EAA29E7D25C59E4700AA6971 /* topbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topbarButton.swift; sourceTree = "<group>"; };
 		EAA29E8125C5A75F00AA6971 /* todayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todayVC.swift; sourceTree = "<group>"; };
-		EAA29E8C25C8248C00AA6971 /* tagsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsVC.swift; sourceTree = "<group>"; };
-		EAA29E9725C8277A00AA6971 /* tagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsView.swift; sourceTree = "<group>"; };
+		EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsPresentationController.swift; sourceTree = "<group>"; };
+		EAA29E9725C8277A00AA6971 /* tagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsViewController.swift; sourceTree = "<group>"; };
 		EAA29E9825C8277A00AA6971 /* tagsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsView.xib; sourceTree = "<group>"; };
 		EAA29E9D25C832F900AA6971 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
 		EAA29EA025C833FF00AA6971 /* moodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodButton.swift; sourceTree = "<group>"; };
@@ -460,8 +460,8 @@
 		EAA29EA825C836E200AA6971 /* tags */ = {
 			isa = PBXGroup;
 			children = (
-				EAA29E8C25C8248C00AA6971 /* tagsVC.swift */,
-				EAA29E9725C8277A00AA6971 /* tagsView.swift */,
+				EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */,
+				EAA29E9725C8277A00AA6971 /* tagsViewController.swift */,
 				EAA29E9825C8277A00AA6971 /* tagsView.xib */,
 				EAA29EA925C8370600AA6971 /* tagsCell.swift */,
 				EAA29EAA25C8370600AA6971 /* tagsCell.xib */,
@@ -717,7 +717,7 @@
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
 				1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */,
-				EAA29E8D25C8248C00AA6971 /* tagsVC.swift in Sources */,
+				EAA29E8D25C8248C00AA6971 /* tagsPresentationController.swift in Sources */,
 				EA537BB926357FBF00C2E9EE /* shareVC.swift in Sources */,
 				EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
@@ -729,7 +729,7 @@
 				1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */,
-				EAA29E9925C8277A00AA6971 /* tagsView.swift in Sources */,
+				EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
 				EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */,
 				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,

@@ -12,7 +12,7 @@ extension UIApplication{
         let vc = UIApplication.getTopViewController()
         if let todayVC = vc as? todayVC{
             return todayVC
-        }else if let tagsView = vc as? tagsView{
+        }else if let tagsView = vc as? tagsViewController{
             return tagsView.presentingViewController as? todayVC
         }else{
             print("无法获取todayVC")

@@ -7,12 +7,13 @@
 
 import UIKit
 
-class tagsVC: UIPresentationController {
+class tagsPresentationController: UIPresentationController {
     let blurEffectView: UIVisualEffectView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     let viewHeight:CGFloat = 400
     let viewWidth:CGFloat = globalConstantsManager.shared.tagsVCWidth
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+        //背景模糊视图
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
@@ -34,12 +35,14 @@ class tagsVC: UIPresentationController {
     override func presentationTransitionWillBegin() {
         self.blurEffectView.alpha = 0
         self.containerView?.addSubview(blurEffectView)
+        //显示背景视图（随着动画进度渐显）
         self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             self.blurEffectView.alpha = 0.7
         }, completion: { (UIViewControllerTransitionCoordinatorContext) in })
     }
     
     override func dismissalTransitionWillBegin() {
+        //移除背景视图
         self.presentedViewController.transitionCoordinator?.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
             self.blurEffectView.alpha = 0
         }, completion: { (UIViewControllerTransitionCoordinatorContext) in
@@ -49,6 +52,7 @@ class tagsVC: UIPresentationController {
     
     override func containerViewWillLayoutSubviews() {
         super.containerViewWillLayoutSubviews()
+        
         presentedView!.roundCorners([.allCorners], radius: 22)//扩展
     }
 
@@ -64,7 +68,7 @@ class tagsVC: UIPresentationController {
 }
 
 //MARK:-旋转屏幕
-extension tagsVC{
+extension tagsPresentationController{
     @objc private func onDeviceDirectionChange(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
             return
@@ -73,8 +77,10 @@ extension tagsVC{
         guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
             return
         }
-        
-        self.containerView?.layoutSubviews()
+        //presentedViewController:tagsView
+        //presentingViewController:tagsVC
+        self.presentedView?.layoutSubviews()
+        //self.containerView?.layoutSubviews()
         
     }
 }

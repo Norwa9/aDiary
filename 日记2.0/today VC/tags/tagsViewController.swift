@@ -8,7 +8,7 @@
 import UIKit
 
 
-class tagsView: UIViewController {
+class tagsViewController: UIViewController {
     //data
     var diary:diaryInfo!
     var selectedTags = [String]()///局部变量，用来存储当前日记实时选择的tags
@@ -99,7 +99,7 @@ class tagsView: UIViewController {
 }
 
 //MARK:-UITableViewDelegate
-extension tagsView:UITableViewDelegate,UITableViewDataSource{
+extension tagsViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataManager.shared.tags.count
@@ -187,7 +187,7 @@ extension tagsView:UITableViewDelegate,UITableViewDataSource{
 }
 
 //MARK:-标签管理
-extension tagsView:tagsCellEditProtocol{
+extension tagsViewController:tagsCellEditProtocol{
     
     @objc func switchEditMode(){
         self.editMode.toggle()
@@ -254,14 +254,14 @@ extension tagsView:tagsCellEditProtocol{
     }
 }
 
-extension tagsView:UIViewControllerTransitioningDelegate{
+extension tagsViewController:UIViewControllerTransitioningDelegate{
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return tagsVC(presentedViewController: presented, presenting: presenting)
+        return tagsPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 
 //MARK:-life cycle
-extension tagsView{
+extension tagsViewController{
 
     func bindData(){
         //绑定数据
