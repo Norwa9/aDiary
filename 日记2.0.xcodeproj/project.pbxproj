@@ -71,7 +71,7 @@
 		EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8125C5A75F00AA6971 /* todayVC.swift */; };
 		EAA29E8D25C8248C00AA6971 /* tagsPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */; };
 		EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9725C8277A00AA6971 /* tagsViewController.swift */; };
-		EAA29E9A25C8277A00AA6971 /* tagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E9825C8277A00AA6971 /* tagsView.xib */; };
+		EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E9825C8277A00AA6971 /* tagsViewController.xib */; };
 		EAA29E9E25C832F900AA6971 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
 		EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA025C833FF00AA6971 /* moodButton.swift */; };
 		EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA925C8370600AA6971 /* tagsCell.swift */; };
@@ -175,7 +175,7 @@
 		EAA29E8125C5A75F00AA6971 /* todayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todayVC.swift; sourceTree = "<group>"; };
 		EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsPresentationController.swift; sourceTree = "<group>"; };
 		EAA29E9725C8277A00AA6971 /* tagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsViewController.swift; sourceTree = "<group>"; };
-		EAA29E9825C8277A00AA6971 /* tagsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsView.xib; sourceTree = "<group>"; };
+		EAA29E9825C8277A00AA6971 /* tagsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsViewController.xib; sourceTree = "<group>"; };
 		EAA29E9D25C832F900AA6971 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
 		EAA29EA025C833FF00AA6971 /* moodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodButton.swift; sourceTree = "<group>"; };
 		EAA29EA925C8370600AA6971 /* tagsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsCell.swift; sourceTree = "<group>"; };
@@ -462,7 +462,7 @@
 			children = (
 				EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */,
 				EAA29E9725C8277A00AA6971 /* tagsViewController.swift */,
-				EAA29E9825C8277A00AA6971 /* tagsView.xib */,
+				EAA29E9825C8277A00AA6971 /* tagsViewController.xib */,
 				EAA29EA925C8370600AA6971 /* tagsCell.swift */,
 				EAA29EAA25C8370600AA6971 /* tagsCell.xib */,
 			);
@@ -633,7 +633,7 @@
 				EAA29E3625C5768600AA6971 /* Assets.xcassets in Resources */,
 				EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */,
 				EA3ABADD25E01A5100911902 /* toolsBar.xib in Resources */,
-				EAA29E9A25C8277A00AA6971 /* tagsView.xib in Resources */,
+				EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

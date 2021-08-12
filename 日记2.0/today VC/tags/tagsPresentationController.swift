@@ -21,6 +21,7 @@ class tagsPresentationController: UIPresentationController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.blurEffectView.isUserInteractionEnabled = true
         self.blurEffectView.addGestureRecognizer(tapGestureRecognizer)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
@@ -77,9 +78,11 @@ extension tagsPresentationController{
         guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
             return
         }
+        print("tagsPresentationController onDeviceDirectionChange")
+        
         //presentedViewController:tagsView
-        //presentingViewController:tagsVC
-        self.presentedView?.layoutSubviews()
+        //presentingViewController:monthVC
+        //self.presentedView?.layoutIfNeeded()
         //self.containerView?.layoutSubviews()
         
     }

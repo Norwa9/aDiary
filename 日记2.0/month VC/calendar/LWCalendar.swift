@@ -38,7 +38,6 @@ class LWCalendar: FSCalendar {
         self.appearance.titleFont = UIFont.appCalendarCellTitleFont()
         self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         self.appearance.eventSelectionColor = .black
-        
         //event dot
         self.appearance.eventOffset = CGPoint(x: 0, y: -5)
         self.appearance.selectionColor = eventDotDynamicColor
