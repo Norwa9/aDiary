@@ -13,8 +13,10 @@ class exportManager{
     
     ///导出PDF
     func exportAll(completion: @escaping() -> Void){
+        let W = min(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
+        let H = max(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
         indicatorViewManager.shared.start(type: .progress)
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth, height: globalConstantsManager.shared.kScreenWidth))
+        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: W, height: H))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
         let formatter = TextFormatter(textView: textView)
@@ -69,7 +71,7 @@ class exportManager{
 
             //打印pdf参考：https://stackoverflow.com/questions/56849245/swift-save-uitextview-text-to-pdf-doc-and-txt-file-formate-and-display
             let aString = alldiaryString
-            let filename = "aDiary日记导出PDF:\(GetTodayDate())"
+            let filename = "aDiary日记导出PDF-\(GetTodayDate())"
             //print("1111111111")
             //主线程打印pdf。
             //通过排查下面的一些代码必须在主线程运行，但是不明白其中的道理。。

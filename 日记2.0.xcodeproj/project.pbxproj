@@ -19,20 +19,8 @@
 		1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */; };
 		1B3AEB1526C50E7100C057A4 /* LWDefaultIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */; };
 		1B3AEB1726C50FC600C057A4 /* LWProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */; };
-		1B3AEB3926C65C3200C057A4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */; };
-		1B3AEB3B26C65C3200C057A4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */; };
-		1B3AEB3E26C65C3300C057A4 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB3D26C65C3300C057A4 /* RoamWidget.swift */; };
-		1B3AEB4126C65C3600C057A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4026C65C3600C057A4 /* Assets.xcassets */; };
-		1B3AEB4326C65C3600C057A4 /* LwWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB3F26C65C3300C057A4 /* LwWidget.intentdefinition */; };
-		1B3AEB4426C65C3700C057A4 /* LwWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB3F26C65C3300C057A4 /* LwWidget.intentdefinition */; };
-		1B3AEB4726C65C3700C057A4 /* LwWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1B3AEB3726C65C3200C057A4 /* LwWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1B3AEB5026C65DF700C057A4 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		1B3AEB5226C65E0E00C057A4 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
-		1B3AEB5426C65FF100C057A4 /* MainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5326C65FF100C057A4 /* MainWidget.swift */; };
-		1B3AEB5526C6645E00C057A4 /* MainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5326C65FF100C057A4 /* MainWidget.swift */; };
-		1B3AEB5626C6646E00C057A4 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
-		1B3AEB5726C6647100C057A4 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
-		1B3AEB5826C6647300C057A4 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB3D26C65C3300C057A4 /* RoamWidget.swift */; };
 		1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6963E26A6CFE00009472F /* LWTextView.swift */; };
 		1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964526A820980009472F /* diaryInfo+Todo.swift */; };
 		1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964726A91C5B0009472F /* LWCalendar.swift */; };
@@ -122,16 +110,6 @@
 		EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		1B3AEB4526C65C3700C057A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EAA29E2125C5768200AA6971 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1B3AEB3626C65C3200C057A4;
-			remoteInfo = LwWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		1B3AEB4B26C65C3700C057A4 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -139,7 +117,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				1B3AEB4726C65C3700C057A4 /* LwWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -159,16 +136,10 @@
 		1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCustomIndicatorView.swift; sourceTree = "<group>"; };
 		1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDefaultIndicatorView.swift; sourceTree = "<group>"; };
 		1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWProgressView.swift; sourceTree = "<group>"; };
-		1B3AEB3726C65C3200C057A4 /* LwWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LwWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		1B3AEB3D26C65C3300C057A4 /* RoamWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoamWidget.swift; sourceTree = "<group>"; };
-		1B3AEB3F26C65C3300C057A4 /* LwWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = LwWidget.intentdefinition; sourceTree = "<group>"; };
-		1B3AEB4026C65C3600C057A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1B3AEB4226C65C3600C057A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B3AEB4F26C65DF700C057A4 /* roamData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamData.swift; sourceTree = "<group>"; };
 		1B3AEB5126C65E0E00C057A4 /* roamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamView.swift; sourceTree = "<group>"; };
-		1B3AEB5326C65FF100C057A4 /* MainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWidget.swift; sourceTree = "<group>"; };
 		1BB6963E26A6CFE00009472F /* LWTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextView.swift; sourceTree = "<group>"; };
 		1BB6964526A820980009472F /* diaryInfo+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Todo.swift"; sourceTree = "<group>"; };
 		1BB6964726A91C5B0009472F /* LWCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCalendar.swift; sourceTree = "<group>"; };
@@ -264,15 +235,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1B3AEB3426C65C3200C057A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1B3AEB3B26C65C3200C057A4 /* SwiftUI.framework in Frameworks */,
-				1B3AEB3926C65C3200C057A4 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EAA29E2625C5768200AA6971 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,18 +270,6 @@
 				1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */,
 			);
 			path = LWIndicator;
-			sourceTree = "<group>";
-		};
-		1B3AEB3C26C65C3300C057A4 /* LwWidget */ = {
-			isa = PBXGroup;
-			children = (
-				1B3AEB5326C65FF100C057A4 /* MainWidget.swift */,
-				1B3AEB3D26C65C3300C057A4 /* RoamWidget.swift */,
-				1B3AEB3F26C65C3300C057A4 /* LwWidget.intentdefinition */,
-				1B3AEB4026C65C3600C057A4 /* Assets.xcassets */,
-				1B3AEB4226C65C3600C057A4 /* Info.plist */,
-			);
-			path = LwWidget;
 			sourceTree = "<group>";
 		};
 		1B3AEB4C26C65D9700C057A4 /* LWWidget */ = {
@@ -462,7 +412,6 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E2B25C5768200AA6971 /* 日记2.0 */,
-				1B3AEB3C26C65C3300C057A4 /* LwWidget */,
 				EAA29E2A25C5768200AA6971 /* Products */,
 				A94BAB4002626E25F81338D3 /* Pods */,
 				893AAD9C6A217E8210A0AB91 /* Frameworks */,
@@ -473,7 +422,6 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E2925C5768200AA6971 /* 日记2.0.app */,
-				1B3AEB3726C65C3200C057A4 /* LwWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -492,10 +440,10 @@
 				EAA29E5B25C5801F00AA6971 /* month VC */,
 				EA9AE7C4261078ED00D44221 /* setting VC */,
 				EA3189B326934F44001B9042 /* Model */,
-				EAA29E7725C59ABB00AA6971 /* helper */,
 				EACB1719267A1B63007BF160 /* extension */,
 				EA51D1FC25D809550007BDFA /* resource */,
 				EADBC2FC26B4F000004D1A52 /* migration */,
+				EAA29E7725C59ABB00AA6971 /* helper */,
 			);
 			path = "日记2.0";
 			sourceTree = "<group>";
@@ -680,23 +628,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1B3AEB3626C65C3200C057A4 /* LwWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1B3AEB4826C65C3700C057A4 /* Build configuration list for PBXNativeTarget "LwWidgetExtension" */;
-			buildPhases = (
-				1B3AEB3326C65C3200C057A4 /* Sources */,
-				1B3AEB3426C65C3200C057A4 /* Frameworks */,
-				1B3AEB3526C65C3200C057A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LwWidgetExtension;
-			productName = LwWidgetExtension;
-			productReference = 1B3AEB3726C65C3200C057A4 /* LwWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		EAA29E2825C5768200AA6971 /* 日记2.0 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAA29E3D25C5768600AA6971 /* Build configuration list for PBXNativeTarget "日记2.0" */;
@@ -711,7 +642,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1B3AEB4626C65C3700C057A4 /* PBXTargetDependency */,
 			);
 			name = "日记2.0";
 			productName = "日记2.0";
@@ -727,9 +657,6 @@
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					1B3AEB3626C65C3200C057A4 = {
-						CreatedOnToolsVersion = 12.5;
-					};
 					EAA29E2825C5768200AA6971 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -749,20 +676,11 @@
 			projectRoot = "";
 			targets = (
 				EAA29E2825C5768200AA6971 /* 日记2.0 */,
-				1B3AEB3626C65C3200C057A4 /* LwWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1B3AEB3526C65C3200C057A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1B3AEB4126C65C3600C057A4 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EAA29E2725C5768200AA6971 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -829,24 +747,11 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1B3AEB3326C65C3200C057A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1B3AEB3E26C65C3300C057A4 /* RoamWidget.swift in Sources */,
-				1B3AEB5526C6645E00C057A4 /* MainWidget.swift in Sources */,
-				1B3AEB5626C6646E00C057A4 /* roamData.swift in Sources */,
-				1B3AEB5726C6647100C057A4 /* roamView.swift in Sources */,
-				1B3AEB4326C65C3600C057A4 /* LwWidget.intentdefinition in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EAA29E2525C5768200AA6971 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */,
-				1B3AEB5426C65FF100C057A4 /* MainWidget.swift in Sources */,
 				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
@@ -867,7 +772,6 @@
 				1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */,
 				EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */,
 				EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */,
-				1B3AEB5826C6647300C057A4 /* RoamWidget.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
@@ -893,7 +797,6 @@
 				1B3AEB1726C50FC600C057A4 /* LWProgressView.swift in Sources */,
 				1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */,
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
-				1B3AEB4426C65C3700C057A4 /* LwWidget.intentdefinition in Sources */,
 				EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
@@ -938,14 +841,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		1B3AEB4626C65C3700C057A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1B3AEB3626C65C3200C057A4 /* LwWidgetExtension */;
-			targetProxy = 1B3AEB4526C65C3700C057A4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		EAA29E3225C5768200AA6971 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -966,50 +861,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1B3AEB4926C65C3700C057A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
-				INFOPLIST_FILE = LwWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.LwWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1B3AEB4A26C65C3700C057A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
-				INFOPLIST_FILE = LwWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.LwWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		EAA29E3B25C5768600AA6971 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1179,15 +1030,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1B3AEB4826C65C3700C057A4 /* Build configuration list for PBXNativeTarget "LwWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1B3AEB4926C65C3700C057A4 /* Debug */,
-				1B3AEB4A26C65C3700C057A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		EAA29E2425C5768200AA6971 /* Build configuration list for PBXProject "日记2.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
