@@ -29,6 +29,7 @@ class userDefaultManager{
         static let dailyRemindEnable = "dailyRemindEnable"
         static let dailyRemindAtHour = "dailyRemindAtHour"
         static let dailyRemindAtMinute = "dailyRemindAtMinute"
+        static let iCloudEnable = "iCloudEnable"
         
         
     }
@@ -231,6 +232,20 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.dailyRemindAtMinute)
+        }
+    }
+    
+    //MARK:-iCloud开关
+    static var iCloudEnable:Bool{
+        get{
+            if let enable = shared?.object(forKey: constants.iCloudEnable) as? Bool {
+                return enable
+            }else{
+                return true
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.iCloudEnable)
         }
     }
     

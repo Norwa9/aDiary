@@ -31,6 +31,9 @@ class indicatorViewManager{
     //MARK:-public
     ///展示指示器
     public func start(type:indicatorType){
+        if !userDefaultManager.iCloudEnable{
+            return
+        }
         DispatchQueue.main.async { [self] in
             topWindow.isUserInteractionEnabled = false
             for subView in topWindow.subviews{
@@ -52,6 +55,9 @@ class indicatorViewManager{
     
     ///关闭指示器
     public func stop(withText:String? = nil){
+        if !userDefaultManager.iCloudEnable{
+            return
+        }
         DispatchQueue.main.async {[self] in
             topWindow.isUserInteractionEnabled = true
             
