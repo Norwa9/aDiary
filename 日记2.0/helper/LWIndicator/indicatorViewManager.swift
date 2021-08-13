@@ -82,6 +82,9 @@ class indicatorViewManager{
         case .fetchRemoteChange:
             indicatorView =  LWDefaultIndicatorView()
             indicatorView.setLabel("检测到其它设备的修改，正在同步...")
+        case .delete:
+            indicatorView =  LWDefaultIndicatorView()
+            indicatorView.setLabel("正在删除云端上对应的日记...")
         default:
             indicatorView =  LWDefaultIndicatorView()
         }

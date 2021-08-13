@@ -457,7 +457,10 @@ final class LWSyncEngine{
     }
     
     private func deleteRecords(_ records:[CKRecord]){
-        guard !records.isEmpty else{return}
+        guard !records.isEmpty else{
+            indicatorViewManager.shared.stop()
+            return
+        }
         
         os_log("正在删除%d个记录...", log: log, type: .debug,records.count)
         
@@ -501,11 +504,12 @@ final class LWSyncEngine{
                     self.handleDeleteError(error, records: records)
                 }
             } else {
-                os_log("成功删除%d个记录！", log: self.log, type: .info, records.count)
+                os_log("成功删除云端上的%d个记录！", log: self.log, type: .info, records.count)
 
                 DispatchQueue.main.async {
-                    guard let recordIDs = recordIDs else { return }
-                    self.updateLocalModelsAfterDelete(with: recordIDs)
+                    //本地数据已删除、云端数据也已删除，结束指示器
+                    indicatorViewManager.shared.stop()
+                    self.deleteBuffer = []
                 }
             }
         }
@@ -521,12 +525,13 @@ final class LWSyncEngine{
     private func handleDeleteError(_ error: Error, records: [CKRecord]) {
         guard let ckError = error as? CKError else {
             os_log("Error was not a CKError, giving up: %{public}@", log: self.log, type: .fault, String(describing: error))
+            indicatorViewManager.shared.stop()
             return
         }
 
         if ckError.code == CKError.Code.limitExceeded {
             os_log("CloudKit batch limit exceeded, sending records in chunks", log: self.log, type: .error)
-
+            
             fatalError("Not implemented: batch deletes. Here we should divide the records in chunks and delete in batches instead of trying everything at once.")
         } else {
             let result = error.retryCloudKitOperationIfPossible(self.log) { self.deleteRecords(records) }
@@ -537,19 +542,7 @@ final class LWSyncEngine{
         }
     }
     
-    ///更新本地数据库
-    ///删除本地数据库对应的Model
-    private func updateLocalModelsAfterDelete(with recordIDs: [CKRecord.ID]) {
-        os_log("将deleteBuffer内的本地记录删除，并清空buffer", log: self.log, type: .error)
-        
-        let ids = recordIDs.map{$0.recordName}
-        
-        DispatchQueue.main.async {
-            indicatorViewManager.shared.stop()
-            self.didDeleteModels(ids)
-            self.deleteBuffer = []
-        }
-    }
+    
     
     
     //MARK:-获取云端数据库的变化

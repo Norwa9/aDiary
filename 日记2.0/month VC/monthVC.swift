@@ -735,7 +735,6 @@ extension monthVC {
         ac.addAction(UIAlertAction(title: "确定", style: .destructive, handler: { [self] _ in
             let row = indexPath.item
             let delteDiary = filteredDiaries[row]
-            indicatorViewManager.shared.start(type: .other)
             DiaryStore.shared.delete(with: delteDiary.id)
         }))
         self.present(ac, animated: true, completion: nil)

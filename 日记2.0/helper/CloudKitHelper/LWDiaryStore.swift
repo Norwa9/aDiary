@@ -42,44 +42,34 @@ public final class DiaryStore: ObservableObject {
             self?.updateAfterDelete(identifiers)
         }
     }
-    
+    //MARK:-public
     ///开始云同步逻辑
     public func startEngine(){
         self.syncEngine?.start()
     }
     
-    //MARK:-helper
-    ///提交添加或修改到云端
+    ///新建或修改
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑
         //提交更新到云端
         syncEngine?.upload(diary)
     }
     
-    ///提交删除到云端
-    ///同时更新本地数据库
+    ///删除
     public func delete(with id: String) {
         guard let diary = self.diaryWithID(id) else {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
         }
-        //云端删除+本地删除
+        indicatorViewManager.shared.start(type: .delete)
+        
+        //尝试云端删除（在没有iCloud账户、无网络下可能失败）
         syncEngine?.delete(diary)
-    }
-
-    ///处理CloudKit发来的更新通知
-    public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {
-        syncEngine?.processSubscriptionNotification(with: userInfo)
-    }
-    
-    ///手动扫描离线修改的数据，然后上传
-    public func uploadLocalDataNotUploadedYet(){
-        syncEngine?.uploadLocalDataNotUploadedYet()
-    }
-    
-    ///手动拉取云端变动
-    public func fetchRemoteChange(){
-        syncEngine?.fetchRemoteChanges()
+        
+        //然后再本地删除，因为需要引用diary
+        let predicate = NSPredicate(format: "id == %@", id)
+        LWRealmManager.shared.delete(predicate: predicate)
+        UIApplication.getMonthVC().reloadMonthVC()
     }
     
     ///将获取的云端变动保存到本地，以及更新UI
@@ -111,7 +101,7 @@ public final class DiaryStore: ObservableObject {
     
     private func updateAfterDelete(_ ids:[String]){
         if ids.isEmpty{
-            //云端没有删除
+            //云端通知没有删除事件
             indicatorViewManager.shared.stop()
             return
         }
@@ -129,6 +119,21 @@ public final class DiaryStore: ObservableObject {
             UIApplication.getMonthVC().reloadMonthVC()
             
         }
+    }
+    
+    ///处理CloudKit发来的更新通知
+    public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {
+        syncEngine?.processSubscriptionNotification(with: userInfo)
+    }
+    
+    ///上传待上传数据
+    public func uploadLocalDataNotUploadedYet(){
+        syncEngine?.uploadLocalDataNotUploadedYet()
+    }
+    
+    ///手动拉取云端变动
+    public func fetchRemoteChange(){
+        syncEngine?.fetchRemoteChanges()
     }
 }
 
