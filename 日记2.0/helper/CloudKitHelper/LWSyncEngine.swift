@@ -105,7 +105,7 @@ final class LWSyncEngine{
                     self.fetchRemoteChanges()
                 }
             default:
-                indicatorViewManager.shared.stop(errorText: "❌iCloud账户不可用...")
+                indicatorViewManager.shared.stop(withText: "iCloud账户不可用，取消同步")
                 break
             }
         })
@@ -447,7 +447,7 @@ final class LWSyncEngine{
         }
     }
     
-    //MARK:-删除
+    //MARK:-手动删除
     ///删除指定Model
     func delete(_ diary: diaryInfo) {
         deleteBuffer.append(diary)
@@ -482,6 +482,7 @@ final class LWSyncEngine{
                     type: .error,
                     record.recordType
                 )
+                indicatorViewManager.shared.stop()
                 return
             }
 

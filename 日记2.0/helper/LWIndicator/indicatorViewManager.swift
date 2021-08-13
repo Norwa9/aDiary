@@ -51,12 +51,12 @@ class indicatorViewManager{
     }
     
     ///关闭指示器
-    public func stop(errorText:String? = nil){
+    public func stop(withText:String? = nil){
         DispatchQueue.main.async {[self] in
             topWindow.isUserInteractionEnabled = true
             
                 //错误结束转动
-            if let text = errorText{
+            if let text = withText{
                 indicatorView.setLabel(text)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     indicatorView.dismiss()

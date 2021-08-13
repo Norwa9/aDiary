@@ -76,7 +76,7 @@ extension Error{
         guard let retryDelay:Double = effectiveError.retryAfterSeconds else {
             os_log("此错误不是可恢复错误", log:effectiveLog,type:.error)
             DispatchQueue.main.async {
-                indicatorViewManager.shared.stop(errorText: "❌同步错误，请检查网络状态，并重启App重试")
+                indicatorViewManager.shared.stop(withText: "⚠️无法连接iCloud，请检查网络状态⚠️")
             }
             return false
         }
