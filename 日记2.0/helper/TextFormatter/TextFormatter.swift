@@ -865,6 +865,16 @@ extension TextFormatter{
 //        return nil
 //    }
     
+    ///屏幕旋转时，刷新textView的文本内容
+    func reloadTextViewOnOrientionChange(with diary:diaryInfo){
+        let bounds = textView.bounds
+        let container = textView.textContainer
+        let imageAttrTuples = diary.imageAttributesTuples
+        let todoAttrTuples = diary.todoAttributesTuples
+        let attributedText = textView.attributedText ?? NSAttributedString(string: "")
+        let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+        self.textView.attributedText = correctedAString
+    }
     
 }
 

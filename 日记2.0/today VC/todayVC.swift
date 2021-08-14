@@ -354,6 +354,17 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     
 }
 
+//MARK:-深色模式
+extension todayVC{
+    ///切换模式后重新读取，以显示正确的todo复选框的素材
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        textView.reloadTodoImage()
+    }
+    
+}
+
+
 //MARK:-旋转屏幕
 extension todayVC{
     @objc private func onDeviceDirectionChange(){
@@ -365,11 +376,8 @@ extension todayVC{
             return
         }
         
-        //1.重新读取日记，以显示正确的图片bounds
-        let formatter = TextFormatter(textView: self.textView)
-        if model != nil{
-            formatter.loadTextViewContent(with: model)
-        }
+        //1.重新读取textView上的当前内容，以显示正确的图片bounds
+        textView.resizeImagesAttchement()
         
         //2.关闭表情盘（如果存在的话）
         topView.emojiView.popover.dismiss()
@@ -382,11 +390,4 @@ extension todayVC{
     }
 }
 
-//MARK:-深色模式
-extension todayVC{
-    ///切换模式后重新读取，以显示正确的todo复选框的素材
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        updateUI()
-    }
-}
+

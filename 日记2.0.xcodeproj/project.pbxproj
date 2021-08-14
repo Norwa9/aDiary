@@ -451,6 +451,13 @@
 			path = intent;
 			sourceTree = "<group>";
 		};
+		EA63BAFB26C82197004E64E5 /* protocal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = protocal;
+			sourceTree = "<group>";
+		};
 		EA8E71092694972C007189B1 /* CloudKitHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,6 +517,7 @@
 				EA51D1FC25D809550007BDFA /* resource */,
 				EADBC2FC26B4F000004D1A52 /* migration */,
 				EAA29E7725C59ABB00AA6971 /* helper */,
+				EA63BAFB26C82197004E64E5 /* protocal */,
 			);
 			path = "日记2.0";
 			sourceTree = "<group>";
