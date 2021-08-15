@@ -25,7 +25,7 @@ class layoutParasManager: NSObject {
     }
     
     let collectionInteritemSpacing:CGFloat = 10
-    let collectionLineSpacing:CGFloat = 10
+    let collectionLineSpacing:CGFloat = 15
     
     ///collectionview的宽度
     private var contentWidth:CGFloat{

@@ -84,6 +84,7 @@ class monthCell: UICollectionViewCell {
         splitLine.backgroundColor = UIColor.separator
         splitLine.layer.cornerRadius = 2
         splitLine.translatesAutoresizingMaskIntoConstraints = false
+        splitLine.alpha  = 0
         
         //albumView
         albumViewLayout = AlbumViewLayout()
@@ -164,17 +165,11 @@ class monthCell: UICollectionViewCell {
             make.right.equalTo(containerView).offset(-15)
         }
         
-        splitLine.snp.makeConstraints { (make) in
-            make.left.equalTo(titleLabel).offset(-3)
-            make.right.equalTo(titleLabel).offset(3)
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
-            make.height.equalTo(1)
-        }
         
         contentLabel.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
-            make.top.equalTo(splitLine.snp.bottom).offset(2)
+            make.top.equalTo(titleLabel.snp.bottom).offset(2)
             make.height.lessThanOrEqualTo(150)
         }
         
