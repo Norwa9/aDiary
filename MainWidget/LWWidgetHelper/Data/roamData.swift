@@ -6,3 +6,14 @@
 //
 
 import Foundation
+import RealmSwift
+
+struct RoamData{
+    let content: String
+}
+
+struct RoamDataLoader {
+    static func load(completion: @escaping (Result<RoamData, Error>) -> Void){
+    
+    }
+}

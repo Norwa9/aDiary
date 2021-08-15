@@ -57,8 +57,9 @@
 		EA63BAC826C6C57D004E64E5 /* MainWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
 		EA63BAE226C6C6D2004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
-		EA63BAF726C6CDEB004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
+		EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
+		EA63BB0526C91C9A004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
@@ -856,9 +857,9 @@
 			files = (
 				EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */,
 				EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */,
-				EA63BAF726C6CDEB004E64E5 /* roamData.swift in Sources */,
 				EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */,
 				EA63BAC426C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */,
+				EA63BB0526C91C9A004E64E5 /* roamData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,6 +897,7 @@
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
+				EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
 				1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */,

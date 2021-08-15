@@ -11,23 +11,23 @@ import Intents
 
 @available(iOS 14.0, *)
 struct RoamProvider: IntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+    func placeholder(in context: Context) -> RoamEntry {
+        RoamEntry(date: Date(), configuration: ConfigurationIntent())
     }
 
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
+    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (RoamEntry) -> ()) {
+        let entry = RoamEntry(date: Date(), configuration: configuration)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+        var entries: [RoamEntry] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = RoamEntry(date: entryDate, configuration: configuration)
             entries.append(entry)
         }
 
@@ -36,10 +36,19 @@ struct RoamProvider: IntentTimelineProvider {
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct RoamEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
+    let date: RoamData
 }
+
+struct RoamPlaceholderView : View{
+    var body: some View{
+        Text("随机浏览日记")
+    }
+}
+
+
 
 @available(iOS 14.0, *)
 struct RoamEntryView : View {
