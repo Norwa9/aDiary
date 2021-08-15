@@ -105,9 +105,9 @@ class monthCell: UICollectionViewCell {
         contentLabel.numberOfLines = 0
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.clipsToBounds = true
+        contentLabel.baselineAdjustment = .alignCenters
         
         //tags Label
-        tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
         tagsLabel.alignment = .left
         tagsLabel.tagBackgroundColor = .systemGray3
         tagsLabel.textColor = .white
@@ -117,7 +117,6 @@ class monthCell: UICollectionViewCell {
         tagsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //data Label
-        dateLabel.font = UIFont(name: "DIN Alternate", size: 20)
         dateLabel.textAlignment = .center
         dateLabel.textColor = .gray
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -204,15 +203,24 @@ class monthCell: UICollectionViewCell {
     
     private func updateUI(){
         setTodayPropmtEdge()//绿色边框
+         
+        self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
+        
+        self.titleLabel.attributedText = diary.content.getAttrTitle()
+        
+        self.contentLabel.attributedText = diary.content.getAttrContent()
+        
+        self.tagsLabel.textFont = userDefaultManager.monthCellContentFont
+        self.tags = diary.tags
+        
+        self.dateLabel.font = userDefaultManager.monthCellDateLabelFont
+        self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
+        
+        self.fillImages(diary: diary)
+        
+        self.todoListView.setViewModel(diary)//触发updateUI
         
         updateCons()//更新约束
-        self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
-        self.titleLabel.attributedText = diary.content.getAttrTitle()
-        self.contentLabel.attributedText = diary.content.getAttrContent()
-        self.tags = diary.tags
-        self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
-        self.fillImages(diary: diary)
-        self.todoListView.setViewModel(diary)//触发updateUI
     }
     
     //读取日记的所有图片

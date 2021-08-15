@@ -34,7 +34,7 @@ class userDefaultManager{
         
     }
     
-    
+    //MARK:-字体
     static var fontName:String?{
         get{
             if let returnFontName = shared?.object(forKey: constants.fontNameKey) as? String{
@@ -78,6 +78,73 @@ class userDefaultManager{
         }
     }
     
+    static var monthCellDateLabelFont:UIFont{
+//        get{
+//            if let name = self.fontName{
+//                return UIFont(name: name, size: 20)!
+//            }else{
+//                return UIFont(name: "DIN Alternate", size: 20)!
+//            }
+//        }
+        get{
+            return UIFont(name: "DIN Alternate", size: 20)!
+        }
+    }
+    
+    static var monthCellTitleFont:UIFont{
+//        get{
+//            if let name = self.fontName{
+//                return UIFont(name: name, size: 17)!
+//            }else{
+//                return UIFont(name: "DIN Alternate", size: 17)!
+//            }
+//        }
+        get{
+            return UIFont(name: "DIN Alternate", size: 17)!
+        }
+    }
+    
+    static var monthCellContentFont:UIFont{
+//        get{
+//            if let name = self.fontName{
+//                return UIFont(name: name, size: 14)!
+//            }else{
+//                return UIFont(name: "DIN Alternate", size: 14)!
+//            }
+//        }
+        get{
+            return UIFont(name: "DIN Alternate", size: 14)!
+        }
+    }
+    
+    static var todoListFont:UIFont{
+//        get{
+//            if let name = self.fontName{
+//                return UIFont(name: name, size: 15)!
+//            }else{
+//                return UIFont(name: "DIN Alternate", size: 15)!
+//            }
+//        }
+        get{
+            return UIFont(name: "DIN Alternate", size: 15)!
+        }
+    }
+    
+    ///字体行间距
+    static var lineSpacing: CGFloat {
+        get {
+            if let result = shared?.object(forKey: constants.lineSpacingKey) as? CGFloat {
+                return result
+            }
+            
+            return defaultEditorLineSpacing
+        }
+        set {
+            shared?.set(newValue, forKey: constants.lineSpacingKey)
+        }
+    }
+    
+    //MARK:-密码
     static var useBiometrics:Bool{
         get{
             if let returnBiometrics = shared?.object(forKey: constants.useBiometricsKey) as? Bool{
@@ -117,19 +184,9 @@ class userDefaultManager{
         }
     }
     
-    static var lineSpacing: CGFloat {
-        get {
-            if let result = shared?.object(forKey: constants.lineSpacingKey) as? CGFloat {
-                return result
-            }
-            
-            return defaultEditorLineSpacing
-        }
-        set {
-            shared?.set(newValue, forKey: constants.lineSpacingKey)
-        }
-    }
     
+    
+    //MARK:-图片
     static var imageSizeStyle:Int{
         get {
             if let style = shared?.object(forKey: constants.imageSizeStyle) as? Int {
@@ -149,6 +206,7 @@ class userDefaultManager{
         }
     }
     
+    //MARK:-初始化
     static var hasInitialized:Bool{
         get{
             if let initlized = shared?.object(forKey: constants.hasInitialized) as? Bool {
@@ -162,6 +220,7 @@ class userDefaultManager{
         }
     }
     
+    //MARK:-首页布局
     /*
      list = 1 // 列表
      waterFall = 2 //瀑布流
@@ -179,6 +238,7 @@ class userDefaultManager{
         }
     }
     
+    //MARK:-store kit
     ///打分的请求次数
     static var requestReviewTimes:Int{
         get{

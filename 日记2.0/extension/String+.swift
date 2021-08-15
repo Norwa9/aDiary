@@ -58,9 +58,9 @@ extension String{
             let titlePara = NSMutableParagraphStyle()
             titlePara.lineSpacing = 3
             let titleAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont(name: "DIN Alternate", size: 17)!,
+                .font : userDefaultManager.monthCellTitleFont,
                 .paragraphStyle:titlePara,
-                .foregroundColor : UIColor.label
+                .foregroundColor : UIColor.label,
             ]
             
             let titleRange = NSMakeRange(0, firstPara.utf16.count)
@@ -79,9 +79,8 @@ extension String{
             let contentPara = NSMutableParagraphStyle()
             contentPara.lineSpacing = 3
             let contentAttributes:[NSAttributedString.Key : Any] = [
-                .font : UIFont(name: "DIN Alternate", size: 14)!,
+                .font : userDefaultManager.monthCellContentFont,
                 .paragraphStyle:contentPara,
-//                .foregroundColor : UIColor.colorWithHex(hexColor: 0x5D5E61)//石岩灰
                 .foregroundColor : UIColor.secondaryLabel,
             ]
             mString.addAttributes(contentAttributes, range: NSRange(location: 0, length: mString.length))

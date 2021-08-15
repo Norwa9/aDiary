@@ -44,7 +44,6 @@ class TodoListCell: UICollectionViewCell {
         checkButton.addTarget(self, action: #selector(checkButtonTapped(_:)), for: .touchUpInside)
         
         //contentLabel
-        contentLabel.font = UIFont(name: "DIN Alternate", size: 15)
         contentLabel.textColor = .label
         contentLabel.clipsToBounds = true
         containerView.addSubview(contentLabel)
@@ -95,7 +94,9 @@ class TodoListCell: UICollectionViewCell {
         
         
         let text = self.todo.replacingOccurrences(of: "- [ ] ", with: "").replacingOccurrences(of: "- [x] ", with: "")
-        self.contentLabel.text = text
+        contentLabel.text = text
+        contentLabel.font = userDefaultManager.todoListFont//防止换了字体后旧字体仍然被重用
+        contentLabel.baselineAdjustment = .alignCenters
     }
     
     private func updateCons(){
