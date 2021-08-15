@@ -39,7 +39,7 @@ struct RoamProvider: IntentTimelineProvider {
 struct RoamEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
-    let date: RoamData
+//    let data: RoamData
 }
 
 struct RoamPlaceholderView : View{
