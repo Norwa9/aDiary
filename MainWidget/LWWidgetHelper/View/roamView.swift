@@ -9,16 +9,18 @@ import Foundation
 import SwiftUI
 
 struct RoamView: View {
-    var content:String = "随机查看一篇日记"
+    var roamData : RoamData
     var body: some View {
-        Text(content)
-            .multilineTextAlignment(.center)
-            .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text(roamData.date)
+                .multilineTextAlignment(.leading)
+                .font(.custom("DIN Alternate", size: 18))
+            Text(roamData.content)
+                .multilineTextAlignment(.leading)
+                .font(.custom("DIN Alternate", size: 15))
+                .padding(.all)
+                .widgetURL(URL(string: "\(roamData.date)"))
+        }
     }
 }
 
-struct RoamView_Previews: PreviewProvider {
-    static var previews: some View {
-        RoamView(content: "PlaceHolder")
-    }
-}

@@ -27,8 +27,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          */
         SKPaymentQueue.default().add(LWIAPHelper.shared)
         
-        //4.
+        //4.Widget
+        LWWidgetProvider.shared.setRoamData()
         
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let url = url.absoluteString
+        print("url:\(url)")
+        
+        let topVC = UIApplication.getTopViewController()
+        if topVC as? todayVC != nil{
+            return false
+        }
+        
+        let monthVC = UIApplication.getMonthVC()
+        let res = LWRealmManager.shared.queryFor(dateCN: url)
+        if !res.isEmpty{
+            monthVC.presentEditorVC(withViewModel: res.first!)
+        }
         
         return true
     }

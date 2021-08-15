@@ -21,6 +21,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     //提示框
     var ac:UIAlertController!
     
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        print("openURLContexts")
+        if URLContexts.count > 0{
+            let urlContext = URLContexts.first!
+            let url = urlContext.url.absoluteString
+            let dateCN = DateEn2CN(dateEN: url)
+            
+            let topVC = UIApplication.getTopViewController()
+            if topVC as? todayVC != nil{
+                return
+            }
+            
+            let monthVC = UIApplication.getMonthVC()
+            let res = LWRealmManager.shared.queryFor(dateCN: dateCN)
+            if !res.isEmpty{
+                monthVC.presentEditorVC(withViewModel: res.first!)
+            }
+            
+        }
+    }
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.

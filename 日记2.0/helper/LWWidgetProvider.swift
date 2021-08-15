@@ -13,10 +13,17 @@ class LWWidgetProvider{
     
     func setRoamData(){
         let db = LWRealmManager.shared.localDatabase
-        
         let roamDiary = db.randomElement()
+        
         if let diary = roamDiary{
-            defaults.setValue(diary.content, forKey: "roam")
+            let dateEn = DateCN2En(dateCN: diary.date)
+            let roamData = RoamData(date: dateEn, content: diary.content)
+            let jsonEncoder = JSONEncoder()
+            if let storedData = try? jsonEncoder.encode(roamData) {
+               defaults.set(storedData, forKey:"roamData")
+            } else {
+                print("Failed to save roamData")
+            }
         }
     }
     

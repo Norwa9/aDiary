@@ -79,7 +79,21 @@ func DateToCNString(date:Date)->String{
     return formatter.string(from: date)
 }
 
+func DateCN2En(dateCN:String) ->String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy年M月d日"
+    let date = formatter.date(from: dateCN)!
+    formatter.dateFormat = "yyyy-M-d"
+    return formatter.string(from: date)
+}
 
+func DateEn2CN(dateEN:String) -> String{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-M-d"
+    let date = formatter.date(from: dateEN)!
+    formatter.dateFormat = "yyyy年M月d日"
+    return formatter.string(from: date)
+}
 
 
 func howManyDaysInThisMonth(year:Int,month:Int)->Int{

@@ -7,19 +7,28 @@
 
 import Foundation
 
-struct RoamData{
+struct RoamData:Codable{
+    let date : String
     let content: String
 }
 
 struct RoamDataLoader {
     static func load(completion: @escaping (Result<RoamData, Error>) -> Void){
-        let userDefault = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content")
-        if let content = userDefault?.object(forKey: "roam") as? String{
-            let roamData = RoamData(content: content)
-            completion(.success(roamData))
+        let defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content")!
+        let error = NSError(domain: "widget", code: 0, userInfo: nil   )
+        
+        if let savedRoamData = defaults.object(forKey: "roamData") as? Data {
+            let jsonDecoder = JSONDecoder()
+            do {
+               let roamData = try jsonDecoder.decode(RoamData.self, from: savedRoamData)
+                completion(.success(roamData))
+            } catch {
+                completion(.failure(error))
+                print("Failed to decode roamData")
+            }
         }else{
-            let error = NSError(domain: "widget", code: 0, userInfo: nil   )
             completion(.failure(error))
+            print("Failed to load savedRoamData")
         }
     }
 }

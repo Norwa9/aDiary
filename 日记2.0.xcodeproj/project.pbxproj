@@ -60,6 +60,7 @@
 		EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */; };
+		EA66AAD926C94B63001D3D24 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
@@ -140,6 +141,16 @@
 				EA63BAC826C6C57D004E64E5 /* MainWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA66AAD326C939DB001D3D24 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -713,6 +724,7 @@
 				EA63BAB626C6C57B004E64E5 /* Sources */,
 				EA63BAB726C6C57B004E64E5 /* Frameworks */,
 				EA63BAB826C6C57B004E64E5 /* Resources */,
+				EA66AAD326C939DB001D3D24 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -862,6 +874,7 @@
 				EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */,
 				EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */,
 				EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */,
+				EA66AAD926C94B63001D3D24 /* extension.swift in Sources */,
 				EA63BAC426C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */,
 				EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */,
 			);

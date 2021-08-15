@@ -12,24 +12,24 @@ import Intents
 @available(iOS 14.0, *)
 struct RoamProvider: IntentTimelineProvider {
     func placeholder(in context: Context) -> RoamEntry {
-        RoamEntry(date: Date(), data: RoamData(content: "随机浏览日记"))
+        RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记"))
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (RoamEntry) -> ()) {
-        let entry = RoamEntry(date: Date(), data: RoamData(content: "随机浏览日记"))
+        let entry = RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记"))
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
-        let refreshDate = Calendar.current.date(byAdding: .minute, value: 60, to: currentDate)!
+        let refreshDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
         
         RoamDataLoader.load { (result) in
             let roamData: RoamData
             if case .success(let fetchedData) = result {
                 roamData = fetchedData
             } else {
-                roamData = RoamData(content: "很遗憾本次更新失败,等待下一次更新.")
+                roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.")
             }
             let entry = RoamEntry(date: currentDate, data: roamData)
             let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
@@ -58,7 +58,7 @@ struct RoamEntryView : View {
 
     @ViewBuilder
     var body: some View {
-        RoamView(content: entry.data.content)
+        RoamView(roamData: RoamData(date: entry.data.date, content: entry.data.content))
     }
 }
 
@@ -71,6 +71,6 @@ struct RoamWidget: Widget {
             RoamEntryView(entry: entry)
         }
         .configurationDisplayName("回忆")
-        .description("随机查看一篇日记")
+        .description("随机查看一篇日记(开发中...)")
     }
 }
