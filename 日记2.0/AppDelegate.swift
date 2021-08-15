@@ -57,12 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SKPaymentQueue.default().remove(LWIAPHelper.shared)
     }
 }
-//MARK:-UISplitViewController
-extension AppDelegate{
-    private func confgureUISplitViewController(){
-        
-    }
-}
 
 //MARK:-配置数据库
 extension AppDelegate{

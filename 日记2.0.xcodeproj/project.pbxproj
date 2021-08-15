@@ -56,10 +56,10 @@
 		EA63BAC526C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAC026C6C57B004E64E5 /* MainWidget.intentdefinition */; };
 		EA63BAC826C6C57D004E64E5 /* MainWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
-		EA63BAE226C6C6D2004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
 		EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
 		EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
-		EA66AA9526C92952001D3D24 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
+		EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
+		EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
@@ -198,6 +198,8 @@
 		EA63BAC126C6C57D004E64E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA63BAC326C6C57D004E64E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoamWidget.swift; sourceTree = "<group>"; };
+		EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MainWidgetExtension.entitlements; sourceTree = "<group>"; };
+		EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidgetProvider.swift; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 		EAA29E2025C5768200AA6971 = {
 			isa = PBXGroup;
 			children = (
+				EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */,
 				EAA29E2B25C5768200AA6971 /* 日记2.0 */,
 				EA63BABD26C6C57B004E64E5 /* MainWidget */,
 				EAA29E2A25C5768200AA6971 /* Products */,
@@ -565,6 +568,7 @@
 				EA537B9C2632FD9500C2E9EE /* imageManager.swift */,
 				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
 				1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */,
+				EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -859,6 +863,7 @@
 				EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */,
 				EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */,
 				EA63BAC426C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */,
+				EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,7 +887,6 @@
 				EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,
-				EA66AA9526C92952001D3D24 /* roamView.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */,
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
 				1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */,
@@ -927,7 +931,6 @@
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
-				EA63BAE226C6C6D2004E64E5 /* RoamWidget.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EA63BAC526C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
@@ -951,6 +954,7 @@
 				1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
+				EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */,
 				EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */,
 				1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */,
 			);
@@ -991,6 +995,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = MainWidget/Info.plist;
@@ -1013,6 +1018,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = MainWidget/Info.plist;
