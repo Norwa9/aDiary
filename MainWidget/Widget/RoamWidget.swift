@@ -38,12 +38,14 @@ struct RoamProvider: IntentTimelineProvider {
                 roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.")
             }
             let entry = RoamEntry(date: currentDate, data: roamData)
+            //entries提供了下次更新的数据,policy提供了下次更新的时间。
             let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
             completion(timeline)//刷新widget
         }
     }
 }
 
+///Widget的Model，其中的Date是TimelineEntry的属性，是保存的是显示数据的时间，不可删除，需要自定义属性在它下面添加即可
 struct RoamEntry: TimelineEntry {
     ///date保存的是显示数据的时间，不可删除
     let date: Date
@@ -52,6 +54,7 @@ struct RoamEntry: TimelineEntry {
     let data: RoamData
 }
 
+///PlaceholderView用于显示默认Widget，当Widget还没获取到数据的时候会默认显示这里的布局。
 struct RoamPlaceholderView : View{
     //这里是PlaceholderView - 提醒用户选择部件功能
     var body: some View{
@@ -73,6 +76,7 @@ struct RoamEntryView : View {
     }
 }
 
+///Widget的入口，这里定义了Widget的Kind、Provider、View等
 struct RoamWidget: Widget {
     let kind: String = "RoamWidget"
 
