@@ -27,9 +27,12 @@ class userDefaultManager{
         static let layoutType = "layoutType"
         static let requestReviewTimes = "requestReviewTimes"
         static let dailyRemindEnable = "dailyRemindEnable"
+        static let dailyRemindTime = "dailyRemindTime"
         static let dailyRemindAtHour = "dailyRemindAtHour"
         static let dailyRemindAtMinute = "dailyRemindAtMinute"
         static let iCloudEnable = "iCloudEnable"
+        static let appearanceMode = "appearanceMode"
+        
         
         
     }
@@ -267,31 +270,52 @@ class userDefaultManager{
         }
     }
     
-    ///每日提醒时间：时
-    static var dailyRemindAtHour:Int{
+    ///每日提醒时间（私有）
+    static var dailyRemindTimeString:String{
         get{
-            if let hour = shared?.object(forKey: constants.dailyRemindAtHour) as? Int {
-                return hour
+            if let time = shared?.object(forKey: constants.dailyRemindTime) as? String {
+                return time
             }else{
-                return 22//默认在晚上10点
+                return "22:00"//默认在晚上10点
             }
         }
         set{
-            shared?.set(newValue, forKey: constants.dailyRemindAtHour)
+            shared?.set(newValue, forKey: constants.dailyRemindTime)
+        }
+    }
+    ///每日提醒时间
+    static var dailyRemindTimeDate:Date{
+        get{
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            let date = formatter.date(from: dailyRemindTimeString)!
+            return date
+        }
+        set{
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            let string = formatter.string(from: newValue)
+            dailyRemindTimeString = string
+        }
+    }
+    
+    ///每日提醒时间：时
+    static var dailyRemindAtHour:Int{
+        get{
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH"
+            let hour = formatter.string(from: dailyRemindTimeDate)
+            return Int(hour)!
         }
     }
     
     ///每日提醒时间：分
     static var dailyRemindAtMinute:Int{
         get{
-            if let minute = shared?.object(forKey: constants.dailyRemindAtMinute) as? Int {
-                return minute
-            }else{
-                return 0
-            }
-        }
-        set{
-            shared?.set(newValue, forKey: constants.dailyRemindAtMinute)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "mm"
+            let minute = formatter.string(from: dailyRemindTimeDate)
+            return Int(minute)!
         }
     }
     
@@ -308,6 +332,22 @@ class userDefaultManager{
             shared?.set(newValue, forKey: constants.iCloudEnable)
         }
     }
+    
+    //MARK:-外观模式（深色）
+    static var appearanceMode:Int{
+        get{
+            if let mode = shared?.object(forKey: constants.appearanceMode) as? Int {
+                return mode
+            }else{
+                return 0
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.appearanceMode)
+        }
+    }
+    
+    
     
 }
 

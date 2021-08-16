@@ -15,7 +15,7 @@ extension UIApplication{
         }else if let tagsView = vc as? tagsViewController{
             return tagsView.presentingViewController as? todayVC
         }else{
-            print("无法获取todayVC")
+            print("getTodayVC 无法获取todayVC")
             return nil
         }
     }

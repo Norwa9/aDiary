@@ -427,8 +427,8 @@ class monthVC: UIViewController {
             reloadCollectionViewData(forRow: -1,animated: true)//刷新数据源，同时伴有动画效果
         case 2:
             //进入设置界面
-            let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
-//            let settingVC = LWSettingViewController()
+//            let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
+            let settingVC = LWSettingViewController()
             present(settingVC, animated: true, completion: nil)
         case 3:
             //进入搜索模式

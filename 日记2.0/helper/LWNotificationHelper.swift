@@ -63,7 +63,7 @@ class LWNotificationHelper:NSObject{
         }
     }
     
-    private func register(){
+    public func register(){
         userDefaultManager.dailyRemindEnable = true
         self.registerCategories()//注册对通知的后续行为
         self.configureNotifications()//配置通知的内容
@@ -97,8 +97,9 @@ class LWNotificationHelper:NSObject{
         var dateComponents = DateComponents()
         dateComponents.hour = userDefaultManager.dailyRemindAtHour
         dateComponents.minute = userDefaultManager.dailyRemindAtMinute
-        
+        print("设置每日提醒：时间为\(dateComponents.hour!)-\(dateComponents.minute!)")
         center.removeAllPendingNotificationRequests()
+        center.removeAllDeliveredNotifications()
         //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)//测试
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         

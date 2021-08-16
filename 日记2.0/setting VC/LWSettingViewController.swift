@@ -54,6 +54,8 @@ class LWSettingViewController: UIViewController {
     var backupContainer:UIView!
     var backupContainerTitle:UILabel!
     var exportPDFButton:UIButton!
+    var iCloudTitle:UILabel!
+    var iCloudSwitch:UISwitch!
     
     //其它
     var otherContainer:UIView!
@@ -103,6 +105,8 @@ class LWSettingViewController: UIViewController {
         //-确认/返回
         saveButton = UIButton()
         dismissButton = UIButton()
+        containerView.addSubview(saveButton)
+        containerView.addSubview(dismissButton)
         
         //-字体
         fontContainerView = UIView()
@@ -132,7 +136,7 @@ class LWSettingViewController: UIViewController {
         
         fontPickerTitle = UILabel()
         fontPickerButton = UIButton()
-        fontContainerView.addSubview(fontSizeTitle)
+        fontContainerView.addSubview(fontPickerTitle)
         fontContainerView.addSubview(fontPickerButton)
         
         //-隐私
@@ -156,7 +160,11 @@ class LWSettingViewController: UIViewController {
         containerView.addSubview(backupContainer)
         containerView.addSubview(backupContainerTitle)
         
+        iCloudTitle = UILabel()
+        iCloudSwitch = UISwitch()
         exportPDFButton = UIButton()
+        backupContainer.addSubview(iCloudTitle)
+        backupContainer.addSubview(iCloudSwitch)
         backupContainer.addSubview(exportPDFButton)
         
         //-其它(评价，深色模式，本地通知)
@@ -166,7 +174,7 @@ class LWSettingViewController: UIViewController {
         containerView.addSubview(otherContainerTitle)
         
         darkModeLabel = UILabel()
-        darkModeSegment = UISegmentedControl(items: ["跟随系统","深色","浅色"])
+        darkModeSegment = UISegmentedControl(items: ["自动","浅色","深色"])
         otherContainer.addSubview(darkModeLabel)
         otherContainer.addSubview(darkModeSegment)
         
@@ -196,12 +204,16 @@ class LWSettingViewController: UIViewController {
         settingTitle.text = "设置"
         settingTitle.font = .systemFont(ofSize: 20, weight: .bold)
         
+        saveButton.setTitle("保存", for: .normal)
+        saveButton.setTitleColor(APP_GREEN_COLOR(), for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         dismissButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
+        dismissButton.setTitle("返回", for: .normal)
+        dismissButton.setTitleColor(.label, for: .normal)
         
         //字体
         fontContainerTitle.text = "字体"
-        fontContainerTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        fontContainerTitle.font = .systemFont(ofSize: 22, weight: .medium)
         fontContainerView.backgroundColor = settingContainerDynamicColor
         fontContainerView.setupShadow()
         fontContainerView.layer.cornerRadius = 10
@@ -222,6 +234,7 @@ class LWSettingViewController: UIViewController {
         lineSpacingStepper.addTarget(self, action: #selector(lineSapacingChange), for: .valueChanged)
         
         fontSizeTitle.text = "字体大小"
+        fontSizeTitle.font = .systemFont(ofSize: 18, weight: .medium)
         fontSizeStepper.stepValue = 1
         fontSizeStepper.minimumValue = 10
         fontSizeStepper.maximumValue = 40
@@ -229,45 +242,70 @@ class LWSettingViewController: UIViewController {
         fontSizeLabel.text = String(Int(userDefaultManager.fontSize))
         fontSizeStepper.addTarget(self, action: #selector(fontSizeDidChange(_:)), for: .valueChanged)
         
-        fontPickerTitle.text = "字体"
+        fontPickerTitle.text = "字体样式"
         fontPickerTitle.font = .systemFont(ofSize: 18, weight: .medium)
         fontPickerButton.setTitle("选取自定义字体", for: .normal)
+        fontPickerButton.setTitleColor(.link, for: .normal)
         fontPickerButton.addTarget(self, action: #selector(presentFontPickerVC), for: .touchUpInside)
         
         //隐私
         privacyContainerTitle.text = "隐私"
-        privacyContainerTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        privacyContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
         privacyContainer.backgroundColor = settingContainerDynamicColor
         privacyContainer.setupShadow()
         privacyContainer.layer.cornerRadius = 10
         
         passwordLabel.text = "使用App密码"
+        passwordLabel.font = .systemFont(ofSize: 18, weight: .medium)
         passwordSwitch.isOn = userDefaultManager.usePassword
         passwordSwitch.addTarget(self, action: #selector(usePasswordSwitchDidChange(_:)), for: .valueChanged)
         biometricsLabel.text = "使用FaceID/TouchID"
+        biometricsLabel.font = .systemFont(ofSize: 18, weight: .medium)
         biometricsSwitch.isOn = userDefaultManager.useBiometrics
         biometricsSwitch.addTarget(self, action: #selector(useBiometricsSwitchDidChange(_:)), for: .valueChanged)
         
         //备份
         backupContainerTitle.text = "备份"
-        backupContainerTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        backupContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
         backupContainer.backgroundColor = settingContainerDynamicColor
         backupContainer.setupShadow()
         backupContainer.layer.cornerRadius = 10
         
+        iCloudTitle.text = "iCloud备份"
+        iCloudTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        iCloudSwitch.isOn = userDefaultManager.iCloudEnable
+        iCloudSwitch.addTarget(self, action: #selector(iCloudDidChange), for: .touchUpInside)
         exportPDFButton.setTitle("导出所有日记为PDF", for: .normal)
+        exportPDFButton.setTitleColor(.link, for: .normal)
+        exportPDFButton.contentHorizontalAlignment = .leading
         exportPDFButton.addTarget(self, action: #selector(exportAll), for: .touchUpInside)
         
         //其它
         otherContainerTitle.text = "其它"
-        otherContainerTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        otherContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
         otherContainer.backgroundColor = settingContainerDynamicColor
         otherContainer.setupShadow()
         otherContainer.layer.cornerRadius = 10
         
+        darkModeLabel.text = "外观模式"
+        darkModeLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        darkModeSegment.selectedSegmentIndex = userDefaultManager.appearanceMode
+        darkModeSegment.addTarget(self, action: #selector(appearanceModeDidChange(_:)), for: .valueChanged)
+        dailyRemindLabel.text = "每日提醒"
+        dailyRemindLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        dailyRemindSwitch.isOn = userDefaultManager.dailyRemindEnable
+        dailyRemindSwitch.addTarget(self, action: #selector(dailyReminderDidChange(_:)), for: .valueChanged)
+        dailyRemindDatePicker.datePickerMode = .time
+        dailyRemindDatePicker.locale = Locale(identifier: "zh_CN")
+        dailyRemindDatePicker.setDate(userDefaultManager.dailyRemindTimeDate, animated: true)
+        dailyRemindDatePicker.addTarget(self, action: #selector(dateDidChange(_:)), for: .valueChanged)
         requestReviewButton.setTitle("好评鼓励", for: .normal)
+        requestReviewButton.setTitleColor(.link, for: .normal)
+        requestReviewButton.contentHorizontalAlignment = .leading
         requestReviewButton.addTarget(self, action: #selector(requestReview), for: .touchUpInside)
         requestReviewLabel.text = "支持开发者🍗"
+        requestReviewLabel.font = .systemFont(ofSize: 10)
+        
         
         
         
@@ -291,9 +329,197 @@ class LWSettingViewController: UIViewController {
             make.leading.equalToSuperview().offset(10)
         }
         
+        saveButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-10)
+            make.centerY.equalTo(settingTitle)
+            make.width.equalTo(50)
+        }
+        
+        dismissButton.snp.makeConstraints { make in
+            make.right.equalTo(saveButton.snp.left).offset(-5)
+            make.centerY.equalTo(saveButton)
+            make.width.equalTo(50)
+        }
+        
+        //字体
+        fontContainerTitle.snp.makeConstraints { make in
+            make.top.equalTo(settingTitle.snp.bottom).offset(40)
+            make.left.equalToSuperview().offset(15)
+        }
+        
+        fontContainerView.snp.makeConstraints { make in
+            make.top.equalTo(fontContainerTitle.snp.bottom)
+            make.left.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-10)
+        }
+        
+        textView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(2)
+            make.left.equalToSuperview().offset(2)
+            make.right.equalToSuperview().offset(-2)
+            make.height.equalTo(430)
+        }
+        
+        imageSizeTitle.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(10)
+            make.top.equalTo(textView.snp.bottom).offset(20)
+        }
+        
+        imageSizeSegment.snp.makeConstraints { make in
+            make.centerY.equalTo(imageSizeTitle)
+            make.right.equalTo(textView).offset(-10)
+            make.width.equalTo(100)
+        }
+        
+        lineSpacingTitle.snp.makeConstraints { make in
+            make.top.equalTo(imageSizeTitle.snp.bottom).offset(20)
+            make.left.equalTo(imageSizeTitle)
+        }
+        
+        lineSpacingStepper.snp.makeConstraints { make in
+            make.centerY.equalTo(lineSpacingTitle)
+            make.width.equalTo(100)
+            make.centerX.equalTo(imageSizeSegment)
+        }
+        
+        fontSizeTitle.snp.makeConstraints { make in
+            make.left.equalTo(imageSizeTitle)
+            make.top.equalTo(lineSpacingTitle.snp.bottom).offset(20)
+        }
+        
+        fontSizeStepper.snp.makeConstraints { make in
+            make.centerX.equalTo(imageSizeSegment)
+            make.centerY.equalTo(fontSizeTitle)
+            make.width.equalTo(100)
+        }
+        
+        fontPickerTitle.snp.makeConstraints { make in
+            make.left.equalTo(imageSizeTitle)
+            make.top.equalTo(fontSizeTitle.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        
+        fontPickerButton.snp.makeConstraints { make in
+            make.right.equalTo(imageSizeSegment)
+            make.centerY.equalTo(fontPickerTitle)
+            make.width.equalTo(150)
+        }
+        
+        //隐私
+        privacyContainerTitle.snp.makeConstraints { make in
+            make.top.equalTo(fontContainerView.snp.bottom).offset(20)
+            make.left.equalTo(fontContainerTitle)
+        }
+        
+        privacyContainer.snp.makeConstraints { make in
+            make.top.equalTo(privacyContainerTitle.snp.bottom)
+            make.left.right.equalTo(fontContainerView)
+        }
+        
+        passwordLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(10)
+        }
+        
+        passwordSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(passwordLabel)
+            make.right.equalToSuperview().offset(-10)
+        }
+        
+        biometricsLabel.snp.makeConstraints { make in
+            make.top.equalTo(passwordLabel.snp.bottom).offset(20)
+            make.left.equalTo(passwordLabel)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        
+        biometricsSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(biometricsLabel)
+            make.right.equalToSuperview().offset(-10)
+        }
         
         
+        //备份
+        backupContainerTitle.snp.makeConstraints { make in
+            make.top.equalTo(privacyContainer.snp.bottom).offset(20)
+            make.left.equalTo(fontContainerTitle)
+        }
         
+        backupContainer.snp.makeConstraints { make in
+            make.top.equalTo(backupContainerTitle.snp.bottom)
+            make.left.right.equalTo(fontContainerView)
+        }
+        
+        iCloudTitle.snp.makeConstraints { make in
+            make.left.top.equalToSuperview().offset(20)
+        }
+
+        iCloudSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(iCloudTitle)
+            make.right.equalToSuperview().offset(-10)
+        }
+
+        exportPDFButton.snp.makeConstraints { make in
+            make.top.equalTo(iCloudTitle.snp.bottom).offset(20)
+            make.left.equalTo(iCloudTitle)
+            make.bottom.equalToSuperview().offset(-10)
+            make.width.equalTo(200)
+        }
+        
+        //其它
+        otherContainerTitle.snp.makeConstraints { make in
+            make.top.equalTo(backupContainer.snp.bottom).offset(20)
+            make.left.equalTo(fontContainerTitle)
+        }
+        
+        otherContainer.snp.makeConstraints { make in
+            make.top.equalTo(otherContainerTitle.snp.bottom)
+            make.left.right.equalTo(fontContainerView)
+        }
+        
+        darkModeLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.left.top.equalToSuperview().offset(10)
+        }
+        
+        darkModeSegment.snp.makeConstraints { make in
+            make.centerY.equalTo(darkModeLabel)
+            make.right.equalToSuperview().offset(-10)
+            make.width.equalTo(150)
+        }
+        
+        dailyRemindLabel.snp.makeConstraints { make in
+            make.top.equalTo(darkModeLabel.snp.bottom).offset(20)
+            make.left.equalTo(darkModeLabel)
+        }
+        
+        dailyRemindSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(dailyRemindLabel)
+            make.right.equalTo(dailyRemindDatePicker.snp.left).offset(-10)
+        }
+        
+        dailyRemindDatePicker.snp.makeConstraints { make in
+            make.centerY.equalTo(dailyRemindLabel)
+            make.right.equalTo(darkModeSegment)
+        }
+        
+        requestReviewButton.snp.makeConstraints { make in
+            make.top.equalTo(dailyRemindLabel.snp.bottom).offset(20)
+            make.left.equalTo(darkModeLabel)
+            make.bottom.equalToSuperview().offset(-20)
+            make.width.equalTo(100)
+        }
+        
+        requestReviewLabel.snp.makeConstraints { make in
+            make.top.equalTo(requestReviewButton.snp.bottom).offset(-5)
+            make.left.equalTo(requestReviewButton)
+        }
+        
+        infoLabel.snp.makeConstraints { make in
+            make.top.equalTo(otherContainer.snp.bottom).offset(20)
+            make.left.right.equalTo(otherContainer)
+            make.height.equalTo(100)
+            make.bottom.equalToSuperview().offset(-50)
+        }
         
         
     }
@@ -411,6 +637,11 @@ class LWSettingViewController: UIViewController {
         }
     }
     
+    //MARK:-iCloud
+    @objc func iCloudDidChange(_ sender:UISwitch){
+        userDefaultManager.iCloudEnable = sender.isOn
+    }
+    
     //MARK:-导出
     @objc func exportAll(){
         exportManager.shared.exportAll(){
@@ -428,7 +659,7 @@ class LWSettingViewController: UIViewController {
     
     //MARK:-切换显示模式
     @objc func appearanceModeDidChange(_ sender:UISegmentedControl){
-        // 这里就简单介绍一下，实际项目中，如果是iOS应用这么写没问题，但是对于iPadOS应用还需要判断scene的状态是否激活
+        // 实际项目中，如果是iOS应用这么写没问题，但是对于iPadOS应用还需要判断scene的状态是否激活
         #if os(iOS)
         let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
         switch sender.selectedSegmentIndex {
@@ -440,7 +671,9 @@ class LWSettingViewController: UIViewController {
             scene?.window?.overrideUserInterfaceStyle = .dark
         default:
             scene?.window?.overrideUserInterfaceStyle = .unspecified
+            userDefaultManager.appearanceMode = 2
         }
+        userDefaultManager.appearanceMode = sender.selectedSegmentIndex
         #endif
     }
     
@@ -452,7 +685,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
-    //MARK:-每日提醒开关行为
+    //MARK:-每日提醒
     @objc func dailyReminderDidChange(_ sender: UISwitch){
         //一、开启每日提醒功能
         if sender.isOn{
@@ -498,6 +731,17 @@ class LWSettingViewController: UIViewController {
         if sender.isOn == false{
             LWNotificationHelper.shared.disableDailyRemind()
         }
+        
+        userDefaultManager.dailyRemindEnable = sender.isOn
+    }
+    
+    @objc func dateDidChange(_ picker:UIDatePicker){
+        userDefaultManager.dailyRemindTimeDate = picker.date
+        if dailyRemindSwitch.isOn{
+            //重新注册新的时间通知提醒
+            LWNotificationHelper.shared.register()
+        }
+        print(picker.date)
     }
 }
 
@@ -523,6 +767,7 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
         }
     }
 }
+
 
 
 //MARK:-示例textView
