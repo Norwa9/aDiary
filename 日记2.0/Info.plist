@@ -43,6 +43,10 @@
 	<string>获取Face ID以进入app</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>访问相册以添加照片</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>ConfigurationIntent</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array/>
 	<key>UIApplicationSceneManifest</key>

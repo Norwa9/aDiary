@@ -53,8 +53,6 @@
 		EA63BABC26C6C57B004E64E5 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */; };
 		EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BABE26C6C57B004E64E5 /* MainWidget.swift */; };
 		EA63BAC226C6C57D004E64E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA63BAC126C6C57D004E64E5 /* Assets.xcassets */; };
-		EA63BAC426C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAC026C6C57B004E64E5 /* MainWidget.intentdefinition */; };
-		EA63BAC526C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAC026C6C57B004E64E5 /* MainWidget.intentdefinition */; };
 		EA63BAC826C6C57D004E64E5 /* MainWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
 		EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
@@ -62,6 +60,8 @@
 		EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */; };
 		EA66AAD926C94B63001D3D24 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
+		EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
+		EA66AAE026C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
@@ -207,12 +207,13 @@
 		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
 		EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MainWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA63BABE26C6C57B004E64E5 /* MainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWidget.swift; sourceTree = "<group>"; };
-		EA63BAC026C6C57B004E64E5 /* MainWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = MainWidget.intentdefinition; sourceTree = "<group>"; };
 		EA63BAC126C6C57D004E64E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA63BAC326C6C57D004E64E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoamWidget.swift; sourceTree = "<group>"; };
 		EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MainWidgetExtension.entitlements; sourceTree = "<group>"; };
 		EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidgetProvider.swift; sourceTree = "<group>"; };
+		EA66AAE126C961B9001D3D24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/MainWidget.intentdefinition; sourceTree = "<group>"; };
+		EA66AAE526C961BE001D3D24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWidget.strings; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
@@ -462,7 +463,7 @@
 		EA63BAD126C6C5E8004E64E5 /* intent */ = {
 			isa = PBXGroup;
 			children = (
-				EA63BAC026C6C57B004E64E5 /* MainWidget.intentdefinition */,
+				EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */,
 			);
 			path = intent;
 			sourceTree = "<group>";
@@ -552,7 +553,6 @@
 		EAA29E5B25C5801F00AA6971 /* month VC */ = {
 			isa = PBXGroup;
 			children = (
-				EADBC35526C01349004D1A52 /* whatsNew */,
 				EAA29E5525C5785100AA6971 /* topbarView */,
 				EAA29E4F25C5784300AA6971 /* monthVC.swift */,
 				EAA29EC725C9925B00AA6971 /* monthButton.swift */,
@@ -568,6 +568,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EADBC35526C01349004D1A52 /* whatsNew */,
 				EADBC33E26BE9878004D1A52 /* IAPHelper */,
 				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
@@ -878,7 +879,7 @@
 				EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */,
 				EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */,
 				EA66AAD926C94B63001D3D24 /* extension.swift in Sources */,
-				EA63BAC426C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */,
+				EA66AAE026C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -949,7 +950,7 @@
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
-				EA63BAC526C6C57D004E64E5 /* MainWidget.intentdefinition in Sources */,
+				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
 				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
@@ -988,6 +989,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA66AAE126C961B9001D3D24 /* Base */,
+				EA66AAE526C961BE001D3D24 /* en */,
+			);
+			name = MainWidget.intentdefinition;
+			sourceTree = "<group>";
+		};
 		EAA29E3225C5768200AA6971 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1014,6 +1024,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = MainWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1022,6 +1033,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.MainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1037,6 +1049,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = MainWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1045,6 +1058,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.MainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1178,7 +1192,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1186,7 +1200,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1203,7 +1217,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1211,7 +1225,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
