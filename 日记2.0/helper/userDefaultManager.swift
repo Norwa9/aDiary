@@ -32,6 +32,7 @@ class userDefaultManager{
         static let dailyRemindAtMinute = "dailyRemindAtMinute"
         static let iCloudEnable = "iCloudEnable"
         static let appearanceMode = "appearanceMode"
+        static let deleteBufferIDs = "deleteBufferIDs"
         
         
         
@@ -319,7 +320,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-iCloud开关
+    //MARK:-iCloud
     static var iCloudEnable:Bool{
         get{
             if let enable = shared?.object(forKey: constants.iCloudEnable) as? Bool {
@@ -330,6 +331,19 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.iCloudEnable)
+        }
+    }
+    
+    static var deleteBufferIDs:[String]{
+        get{
+            if let ids = shared?.object(forKey: constants.deleteBufferIDs) as? [String] {
+                return ids
+            }else{
+                return []
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.deleteBufferIDs)
         }
     }
     

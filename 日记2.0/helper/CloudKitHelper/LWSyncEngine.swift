@@ -30,9 +30,6 @@ final class LWSyncEngine{
         return "\(SyncConstants.customZoneID.zoneName).subscription"
     }()
     
-    private var buffer:[diaryInfo] = []
-    private var deleteBuffer:[diaryInfo] = []
-    
     private let workQueue = DispatchQueue(label: "SyncEngine.Work",qos: .userInitiated)
     
     private let cloudQueue = DispatchQueue(label: "SyncEngine.Cloud",qos: .userInitiated)
@@ -79,9 +76,6 @@ final class LWSyncEngine{
     
     init(defaults:UserDefaults) {
         self.defaults = defaults
-        
-        //将buffer初始化为App打开时的数据库（后续数据库新增model，buffer并不会更新）
-        buffer = LWRealmManager.shared.localDatabase.toArray()
         
         indicatorViewManager.shared.start(type: .checkRemoteChange)
     }
@@ -320,27 +314,30 @@ final class LWSyncEngine{
     func uploadLocalDataNotUploadedYet(){
         os_log("检查本地未上传的日记...",log:log,type:.debug)
         
-        //检查本地数据库中：新建的但未上传、离线修改的但未上传 的数据
-        let needsUpload = buffer.filter({
+        //检查[当前的]本地数据库中：新建的但未上传、离线修改的但未上传 的数据
+        let db = LWRealmManager.shared.localDatabase.toArray()
+        let needsUpload = db.filter({
             return ($0.ckData == nil || $0.editedButNotUploaded)
         }).suffix(399)//cloudKit一次最多上传400个记录
         
-        if needsUpload.isEmpty{
-            os_log("本地没有未上传的日记...",log:log,type:.debug)
+        let needsDeleteIDs = userDefaultManager.deleteBufferIDs
+        
+        if needsUpload.isEmpty && needsDeleteIDs.isEmpty{
+            os_log("本地没有需要上传的日记...",log:log,type:.debug)
             return
         }
         
-        os_log("发现 %d 篇本地日记未上传", log: self.log, type: .debug, needsUpload.count)
+        os_log("发现 %d 篇本地日记未上传, %d 篇日记在云端未删除", log: self.log, type: .debug, needsUpload.count,needsDeleteIDs.count)
         
-        let records = needsUpload.map({ $0.record })
+        let recordsNeedsUpload = needsUpload.map({ $0.record })
         
-        uploadRecords(records)
+        uploadRecords(recordsNeedsUpload)
+        deleteRecords(needsDeleteIDs)
     }
     
     ///上传指定Model
     func upload(_ diray: diaryInfo) {
-        buffer.append(diray)
-
+        
         uploadRecords([diray.record])
     }
     
@@ -427,8 +424,9 @@ final class LWSyncEngine{
     ///主要功能：将上传成功的Model打上标记
     private func updateLocalModelsAfterUpload(with records: [CKRecord]) {
         os_log("将buffer内的本地记录标记为[已上传]，并清空buffer", log: self.log, type: .error)
+        let db = LWRealmManager.shared.localDatabase
         for r in records{
-            guard let model = buffer.first(where: { $0.id == r.recordID.recordName }) else {
+            guard let model = db.first(where: { $0.id == r.recordID.recordName }) else {
                 //print("continue")
                 continue
                 
@@ -442,33 +440,33 @@ final class LWSyncEngine{
 
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
-            self.buffer = Array(self.buffer.dropFirst(399))//分批上传情况下，一批最多完成上传399个
-            self.uploadLocalDataNotUploadedYet()//分批上传情景下：继续检查本地数据库是否有未上传的数据
         }
     }
     
     //MARK:-手动删除
     ///删除指定Model
-    func delete(_ diary: diaryInfo) {
-        deleteBuffer.append(diary)
-        
-        deleteRecords([diary.record])
+    func delete(_ id: String) {
+        if !userDefaultManager.deleteBufferIDs.contains(id){
+            userDefaultManager.deleteBufferIDs.append(id)
+        }
+        print("[delete]当前的deleteBuffer大小:\(userDefaultManager.deleteBufferIDs.count)")
+        deleteRecords([id])
         
     }
     
-    private func deleteRecords(_ records:[CKRecord]){
-        guard !records.isEmpty else{
+    private func deleteRecords(_ ids:[String]){
+        guard !ids.isEmpty else{
             indicatorViewManager.shared.stop()
             return
         }
         
-        os_log("正在删除%d个记录...", log: log, type: .debug,records.count)
+        os_log("正在删除%d个记录...", log: log, type: .debug,ids.count)
         
-        let ids = records.map { (r) -> CKRecord.ID in
-            return r.recordID
+        let recordIDs = ids.map { (id) -> CKRecord.ID in
+            return CKRecord.ID(recordName: id,zoneID: SyncConstants.customZoneID)
         }
         
-        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: ids)
+        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDs)
         
         operation.perRecordCompletionBlock = { [weak self] record, error in
             guard let self = self else { return }
@@ -491,7 +489,7 @@ final class LWSyncEngine{
 
             os_log("Conflict resolved, will retry delete", log: self.log, type: .info)
 
-            self.deleteRecords([resolvedRecord])
+            self.deleteRecords([resolvedRecord.recordID.recordName])
         }
 
         operation.modifyRecordsCompletionBlock = { [weak self] _, recordIDs, error in
@@ -501,15 +499,22 @@ final class LWSyncEngine{
                 os_log("删除记录失败: %{public}@", log: self.log, type: .error, String(describing: error))
 
                 DispatchQueue.main.async {
-                    self.handleDeleteError(error, records: records)
+                    self.handleDeleteError(error, recordIDs: ids)
                 }
             } else {
-                os_log("成功删除云端上的%d个记录！", log: self.log, type: .info, records.count)
+                os_log("成功删除云端上的%d个记录！", log: self.log, type: .info, ids.count)
 
                 DispatchQueue.main.async {
                     //本地数据已删除、云端数据也已删除，结束指示器
                     indicatorViewManager.shared.stop()
-                    self.deleteBuffer = []
+                    if let ids = recordIDs{
+                        for id in ids{
+                            if let index = userDefaultManager.deleteBufferIDs.firstIndex(of: id.recordName){
+                                userDefaultManager.deleteBufferIDs.remove(at: index)
+                                print("[complete]成功删除云端数据，移除出数组。现在deleteBuffer的大小为：\(userDefaultManager.deleteBufferIDs.count)")
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -522,7 +527,7 @@ final class LWSyncEngine{
     }
     
     ///处理删除错误
-    private func handleDeleteError(_ error: Error, records: [CKRecord]) {
+    private func handleDeleteError(_ error: Error, recordIDs: [String]) {
         guard let ckError = error as? CKError else {
             os_log("Error was not a CKError, giving up: %{public}@", log: self.log, type: .fault, String(describing: error))
             indicatorViewManager.shared.stop()
@@ -534,7 +539,7 @@ final class LWSyncEngine{
             
             fatalError("Not implemented: batch deletes. Here we should divide the records in chunks and delete in batches instead of trying everything at once.")
         } else {
-            let result = error.retryCloudKitOperationIfPossible(self.log) { self.deleteRecords(records) }
+            let result = error.retryCloudKitOperationIfPossible(self.log) { self.deleteRecords(recordIDs) }
 
             if !result {
                 os_log("Error is not recoverable: %{public}@", log: self.log, type: .error, String(describing: error))

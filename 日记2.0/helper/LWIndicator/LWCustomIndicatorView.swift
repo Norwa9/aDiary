@@ -22,6 +22,10 @@ enum indicatorType:Int{
     ///内购
     case iap
     
+    ///恢复
+    case recover
+    
+    ///删除
     case delete
     
     ///其它情况

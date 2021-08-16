@@ -643,7 +643,7 @@ class LWSettingViewController: UIViewController {
         userDefaultManager.iCloudEnable = sender.isOn
         if sender.isOn == true{
             //恢复iCloud：1.上传本地数据，2.下载远程数据
-            indicatorViewManager.shared.start(type: .checkRemoteChange)
+            indicatorViewManager.shared.start(type: .recover)
             DiaryStore.shared.startEngine()
         }
     }

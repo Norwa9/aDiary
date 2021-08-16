@@ -63,15 +63,19 @@ public final class DiaryStore: ObservableObject {
     
     ///删除
     public func delete(with id: String) {
-        guard let diary = self.diaryWithID(id) else {
+        guard let _ = LWRealmManager.shared.diaryWithID(id) else {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
+        }
+        //加入待删除列表
+        if !userDefaultManager.deleteBufferIDs.contains(id){
+            userDefaultManager.deleteBufferIDs.append(id)
         }
         if userDefaultManager.iCloudEnable{
             indicatorViewManager.shared.start(type: .delete)
             
             //尝试云端删除（在没有iCloud账户、无网络下可能失败）
-            syncEngine?.delete(diary)
+            syncEngine?.delete(id)
         }
         //再本地删除，因为需要引用diary
         let predicate = NSPredicate(format: "id == %@", id)
@@ -106,17 +110,24 @@ public final class DiaryStore: ObservableObject {
         
     }
     
-    private func updateAfterDelete(_ ids:[String]){
-        if ids.isEmpty{
+    ///接收到云端的删除信号后，删除相应的本地数据
+    private func updateAfterDelete(_ deletedIDs:[String]){
+        if deletedIDs.isEmpty{
             //云端通知没有删除事件
             indicatorViewManager.shared.stop()
             return
         }
         
         //1.删除
-        for id in ids{
+        for id in deletedIDs{
+            //删除本地数据库数据
             let predicate = NSPredicate(format: "id == %@", id)
             LWRealmManager.shared.delete(predicate: predicate)
+            
+            //假设设备A通知设备B删除x，且设备B在离线时也删除了日记x，那么设备B就把x从自己的待删除列表中移除
+            if let index = userDefaultManager.deleteBufferIDs.firstIndex(of: id){
+                userDefaultManager.deleteBufferIDs.remove(at: index)
+            }
         }
         
         os_log("云端的删除已应用到本地数据库!", log: log, type: .debug)
@@ -134,12 +145,5 @@ public final class DiaryStore: ObservableObject {
             return
         }
         syncEngine?.processSubscriptionNotification(with: userInfo)
-    }
-}
-
-//MARK:-helper
-extension DiaryStore{
-    func diaryWithID(_ id:String) -> diaryInfo? {
-        return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
     }
 }

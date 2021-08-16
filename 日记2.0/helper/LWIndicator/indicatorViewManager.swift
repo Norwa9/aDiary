@@ -91,6 +91,9 @@ class indicatorViewManager{
         case .delete:
             indicatorView =  LWDefaultIndicatorView()
             indicatorView.setLabel("正在删除云端上对应的日记...")
+        case .recover:
+            indicatorView =  LWDefaultIndicatorView()
+            indicatorView.setLabel("请稍后...\n正在上传本地数据和恢复云端数据")
         default:
             indicatorView =  LWDefaultIndicatorView()
         }

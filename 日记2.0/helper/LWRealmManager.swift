@@ -107,6 +107,11 @@ extension LWRealmManager{
         let res = self.query(predicate: predicate)
         return res
     }
+    
+    ///通过id查询日记
+    func diaryWithID(_ id:String) -> diaryInfo? {
+        return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
+    }
 }
 
 //MARK:-LWRealmManager+DiaryInfo
