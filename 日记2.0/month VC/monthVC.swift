@@ -428,6 +428,7 @@ class monthVC: UIViewController {
         case 2:
             //进入设置界面
             let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
+//            let settingVC = LWSettingViewController()
             present(settingVC, animated: true, completion: nil)
         case 3:
             //进入搜索模式

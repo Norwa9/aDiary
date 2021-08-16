@@ -33,10 +33,6 @@ class settingViewController: UIViewController {
     //notification setting
     @IBOutlet weak var dailyRemindSwitch:UISwitch!
     
-    //other
-    var activityIndicator:UIActivityIndicatorView!//进度条
-    var vSpinner : UIView?
-    
 //MARK:-IBActions
     @IBAction func save(_ sender: Any) {
         //保存设置
