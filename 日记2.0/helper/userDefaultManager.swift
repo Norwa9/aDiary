@@ -262,7 +262,7 @@ class userDefaultManager{
             if let enable = shared?.object(forKey: constants.dailyRemindEnable) as? Bool {
                 return enable
             }else{
-                return true
+                return false
             }
         }
         set{

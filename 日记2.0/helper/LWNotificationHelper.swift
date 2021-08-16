@@ -64,6 +64,7 @@ class LWNotificationHelper:NSObject{
     }
     
     public func register(){
+        print("注销通知")
         userDefaultManager.dailyRemindEnable = true
         self.registerCategories()//注册对通知的后续行为
         self.configureNotifications()//配置通知的内容

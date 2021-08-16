@@ -320,8 +320,8 @@ class LWSettingViewController: UIViewController {
         }
         
         containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalTo(globalConstantsManager.shared.kScreenWidth)//必须为常量
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
         }
         
         settingTitle.snp.makeConstraints { make in
@@ -450,7 +450,8 @@ class LWSettingViewController: UIViewController {
         }
         
         iCloudTitle.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(10)
         }
 
         iCloudSwitch.snp.makeConstraints { make in
@@ -478,7 +479,7 @@ class LWSettingViewController: UIViewController {
         
         darkModeLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
-            make.left.top.equalToSuperview().offset(10)
+            make.left.equalToSuperview().offset(10)
         }
         
         darkModeSegment.snp.makeConstraints { make in
@@ -741,7 +742,6 @@ class LWSettingViewController: UIViewController {
             //重新注册新的时间通知提醒
             LWNotificationHelper.shared.register()
         }
-        print(picker.date)
     }
 }
 
