@@ -369,8 +369,6 @@ extension settingViewController{
             scene?.window?.overrideUserInterfaceStyle = .unspecified
         }
         #endif
-        
-        
     }
 }
     
