@@ -78,7 +78,7 @@ struct RoamEntryView : View {
 
 ///Widget的入口，这里定义了Widget的Kind、Provider、View等
 struct RoamWidget: Widget {
-    let kind: String = "RoamWidget"
+    let kind: String = WidgetKindKeys.RoamWidget
 
     @available(iOS 14.0, *)
     public var body: some WidgetConfiguration {

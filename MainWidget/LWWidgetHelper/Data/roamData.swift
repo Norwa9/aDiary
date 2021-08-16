@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct WidgetKindKeys {
+    static let RoamWidget = "RoamWidget"
+}
+
 struct RoamData:Codable{
     let date : String
     let content: String
@@ -17,7 +21,7 @@ struct RoamDataLoader {
         let defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content")!
         let error = NSError(domain: "widget", code: 0, userInfo: nil   )
         
-        if let savedRoamData = defaults.object(forKey: "roamData") as? Data {
+        if let savedRoamData = defaults.object(forKey: WidgetKindKeys.RoamWidget) as? Data {
             let jsonDecoder = JSONDecoder()
             do {
                let roamData = try jsonDecoder.decode(RoamData.self, from: savedRoamData)

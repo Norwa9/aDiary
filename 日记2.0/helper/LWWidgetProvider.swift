@@ -20,7 +20,7 @@ class LWWidgetProvider{
             let roamData = RoamData(date: dateEn, content: diary.content)
             let jsonEncoder = JSONEncoder()
             if let storedData = try? jsonEncoder.encode(roamData) {
-               defaults.set(storedData, forKey:"roamData")
+                defaults.set(storedData, forKey: WidgetKindKeys.RoamWidget)
             } else {
                 print("Failed to save roamData")
             }
