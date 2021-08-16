@@ -45,12 +45,18 @@ public final class DiaryStore: ObservableObject {
     //MARK:-public
     ///开始云同步逻辑
     public func startEngine(){
+        if userDefaultManager.iCloudEnable == false{
+            return
+        }
         self.syncEngine?.start()
     }
     
     ///新建或修改
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑
+        if userDefaultManager.iCloudEnable == false{
+            return
+        }
         //提交更新到云端
         syncEngine?.upload(diary)
     }
@@ -61,12 +67,13 @@ public final class DiaryStore: ObservableObject {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
         }
-        indicatorViewManager.shared.start(type: .delete)
-        
-        //尝试云端删除（在没有iCloud账户、无网络下可能失败）
-        syncEngine?.delete(diary)
-        
-        //然后再本地删除，因为需要引用diary
+        if userDefaultManager.iCloudEnable{
+            indicatorViewManager.shared.start(type: .delete)
+            
+            //尝试云端删除（在没有iCloud账户、无网络下可能失败）
+            syncEngine?.delete(diary)
+        }
+        //再本地删除，因为需要引用diary
         let predicate = NSPredicate(format: "id == %@", id)
         LWRealmManager.shared.delete(predicate: predicate)
         UIApplication.getMonthVC().reloadMonthVC()
@@ -123,17 +130,10 @@ public final class DiaryStore: ObservableObject {
     
     ///处理CloudKit发来的更新通知
     public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {
+        if userDefaultManager.iCloudEnable == false{
+            return
+        }
         syncEngine?.processSubscriptionNotification(with: userInfo)
-    }
-    
-    ///上传待上传数据
-    public func uploadLocalDataNotUploadedYet(){
-        syncEngine?.uploadLocalDataNotUploadedYet()
-    }
-    
-    ///手动拉取云端变动
-    public func fetchRemoteChange(){
-        syncEngine?.fetchRemoteChanges()
     }
 }
 
