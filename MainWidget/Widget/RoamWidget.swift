@@ -15,15 +15,21 @@ struct RoamProvider: IntentTimelineProvider {
         RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记"))
     }
 
+    ///选取小组件界面的预览视图
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (RoamEntry) -> ()) {
         let entry = RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记"))
         completion(entry)
     }
 
+    ///getTimeline
+    ///方法就是Widget在桌面显示时的刷新事件，返回的是一个Timeline实例，其中包含要显示的所有条目：预期显示的时间（条目的日期）以及时间轴“过期”的时间。
+    ///因为Widget程序无法像天气应用程序那样“预测”它的未来状态，因此只能用时间轴的形式告诉它什么时间显示什么数据。
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let currentDate = Date()
+        //每5分钟获取数据显示，之后又重新运行一次getTimeline.(getTimeline最高的刷新频率是5分钟一次)
         let refreshDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
         
+        //逃逸闭包传入匿名函数 当调用completion时调用该匿名函数刷新Widget
         RoamDataLoader.load { (result) in
             let roamData: RoamData
             if case .success(let fetchedData) = result {
@@ -33,13 +39,16 @@ struct RoamProvider: IntentTimelineProvider {
             }
             let entry = RoamEntry(date: currentDate, data: roamData)
             let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
-            completion(timeline)
+            completion(timeline)//刷新widget
         }
     }
 }
 
 struct RoamEntry: TimelineEntry {
+    ///date保存的是显示数据的时间，不可删除
     let date: Date
+    
+    //自定义属性
     let data: RoamData
 }
 
@@ -50,7 +59,9 @@ struct RoamPlaceholderView : View{
     }
 }
 
+
 @available(iOS 14.0, *)
+///Widget显示的View，在这个View上编辑界面，显示数据，也可以自定义View之后在这里调用。而且，一个Widget是可以直接支持3个尺寸的界面的。
 struct RoamEntryView : View {
     //这里是Widget的类型判断
     @Environment(\.widgetFamily) var family : WidgetFamily
@@ -71,6 +82,7 @@ struct RoamWidget: Widget {
             RoamEntryView(entry: entry)
         }
         .configurationDisplayName("回忆")
-        .description("随机查看一篇日记(开发中...)")
+        .description("显示一篇随机的日记(开发中...)")
+        .supportedFamilies([.systemLarge])
     }
 }
