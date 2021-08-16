@@ -83,11 +83,11 @@ class LWNotificationHelper:NSObject{
         let month = getDateComponent(for: Date(), for: .month)
         let day = getDateComponent(for: Date(), for: .day)
         let weekday = GetWeekday(dateString: nil)
-        let title = "今天是\(month)月\(day)日，\(weekday)，该写日记啦"
+        let title = "今天是\(month)月\(day)日，\(weekday)"
         content.title = title
         
         //2.body
-        content.body = "点击创建"
+        content.body = "写日记"
         
         //3.
         content.categoryIdentifier = notifActions.writtingRemind.rawValue
