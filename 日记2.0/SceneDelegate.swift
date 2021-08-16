@@ -24,19 +24,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         print("openURLContexts")
         if URLContexts.count > 0{
-            let urlContext = URLContexts.first!
-            let url = urlContext.url.absoluteString
-            let dateCN = DateEn2CN(dateEN: url)
-            
-            let topVC = UIApplication.getTopViewController()
-            if topVC as? todayVC != nil{
+            guard let topVC = UIApplication.getTopViewController() as? monthVC else{
                 return
             }
-            
-            let monthVC = UIApplication.getMonthVC()
-            let res = LWRealmManager.shared.queryFor(dateCN: dateCN)
-            if !res.isEmpty{
-                monthVC.presentEditorVC(withViewModel: res.first!)
+            let url = URLContexts.first!.url.absoluteString//yyyy-MM-d
+            let dateCN = DateEn2CN(dateEN: url)//yyyy年MM月d日
+            if let diary = LWRealmManager.shared.queryFor(dateCN: dateCN).first{
+                topVC.presentEditorVC(withViewModel: diary)
             }
             
         }
