@@ -81,6 +81,35 @@ class WhatsNewHelper{
         )
         arr.append(whatsNew230)
         
+        //MARK:-2.4
+        let version240 = WhatsNew.Version(major: 2, minor: 4, patch: 0)
+        let whatsNew240 = WhatsNew(
+            // The Version
+            version: version240,
+            // The Title
+            title: "新特性",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "添加iCloud功能开关",
+                    subtitle: "手动设置是否开启云同步",
+                    image: UIImage(named: "iCloud")
+                ),
+                WhatsNew.Item(
+                    title: "添加每日提醒开关",
+                    subtitle: "设置每天提醒记录的时间",
+                    image: UIImage(named: "remind")
+                ),
+                WhatsNew.Item(
+                    title: "修复了一些Bug",
+                    subtitle: "",
+                    image: UIImage(named: "bug")
+                )
+                
+            ]
+        )
+        arr.append(whatsNew240)
+        
         
         return arr
     }
@@ -109,7 +138,7 @@ class WhatsNewHelper{
         
         //MARK:-3:versionStore
         let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-        //let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
         guard let whatsNew = currentWhatsNew else{return nil}//无法取得（或没有定义）当前的whatsNew
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
