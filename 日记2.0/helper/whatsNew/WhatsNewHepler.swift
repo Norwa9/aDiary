@@ -91,13 +91,18 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
+                    title: "添加显示模式开关",
+                    subtitle: "自动，浅色，深色",
+                    image: UIImage(named: "segment")
+                ),
+                WhatsNew.Item(
                     title: "添加iCloud功能开关",
-                    subtitle: "手动设置是否开启云同步",
+                    subtitle: "开启，关闭",
                     image: UIImage(named: "iCloud")
                 ),
                 WhatsNew.Item(
                     title: "添加每日提醒开关",
-                    subtitle: "设置每天提醒记录的时间",
+                    subtitle: "以及设置提醒的时间",
                     image: UIImage(named: "remind")
                 ),
                 WhatsNew.Item(
