@@ -16,4 +16,6 @@ pod 'NVActivityIndicatorView'
 pod 'RealmSwift'
 pod 'ISEmojiView'
 pod 'WhatsNewKit'
+pod 'AttributedString'
+
 end

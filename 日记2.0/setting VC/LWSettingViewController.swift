@@ -7,6 +7,7 @@
 
 import UIKit
 import StoreKit
+import AttributedString
 
 class LWSettingViewController: UIViewController {
     var scrollView:UIScrollView!
@@ -93,6 +94,7 @@ class LWSettingViewController: UIViewController {
         setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
     }
     
+    //MARK:-实例化UI
     private func initUI(){
         scrollView = UIScrollView()
         view.addSubview(scrollView)
@@ -198,6 +200,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
+    //MARK:-填充UI
     private func setupUI(){
         scrollView.backgroundColor = .systemBackground
         
@@ -306,7 +309,16 @@ class LWSettingViewController: UIViewController {
         requestReviewLabel.text = "支持开发者🍗"
         requestReviewLabel.font = .systemFont(ofSize: 10)
         
-        
+        infoLabel.numberOfLines = 0
+        let info: ASAttributedString =
+            .init(
+                """
+                \("期待收到你的使用建议",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
+                \("📮norwa99@163.com",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
+                \(.image(#imageLiteral(resourceName: "wechat"),.custom(size: CGSize(width: 17, height: 17)))) \("n0rway99(加我进用户群)",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
+                """
+            )
+        infoLabel.attributed.text = info
         
         
         
@@ -314,6 +326,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
+    //MARK:-约束
     private func setupConstraints(){
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -747,6 +760,23 @@ class LWSettingViewController: UIViewController {
             //重新注册新的时间通知提醒
             LWNotificationHelper.shared.register()
         }
+    }
+    
+    func richTextDidClicked(_ result: ASAttributedString.Action.Result) {
+        switch result.content {
+        case .string(let value):
+            let text = value.string
+            if text.contains("@"){
+                UIPasteboard.general.string = "norwa99@163.com"
+            }else if text.contains("n0rway99"){
+                UIPasteboard.general.string = "n0rway99"
+            }
+            
+        case .attachment(let _):
+            return
+        }
+        
+        
     }
 }
 
