@@ -675,7 +675,6 @@ class LWSettingViewController: UIViewController {
         if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-        //presentFontPickerVC()
     }
     
     //MARK:-切换显示模式
@@ -743,7 +742,9 @@ class LWSettingViewController: UIViewController {
                 })
             } requestFailureCompletion: {
                 //1.恢复开关
-                sender.setOn(false, animated: true)
+                DispatchQueue.main.async {
+                    sender.setOn(false, animated: true)
+                }
             }
         }
         

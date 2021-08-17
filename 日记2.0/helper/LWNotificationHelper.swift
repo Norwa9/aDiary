@@ -88,7 +88,7 @@ class LWNotificationHelper:NSObject{
         content.title = title
         
         //2.body
-        content.body = "写日记"
+        content.body = "点击开始记录"
         
         //3.
         content.categoryIdentifier = notifActions.writtingRemind.rawValue

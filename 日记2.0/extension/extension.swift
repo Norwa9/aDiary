@@ -60,9 +60,6 @@ func GetWeekday(dateString:String?) -> String{
     }
     formatter.dateFormat = "EEE"
     let string =  formatter.string(from: date)
-    #if targetEnvironment(simulator)
-        return weekDaysCN[string]!
-    #endif
     return string
 }
 
