@@ -315,9 +315,10 @@ class LWSettingViewController: UIViewController {
         let info: ASAttributedString =
             .init(
                 """
-                \("期待收到你的使用建议",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
-                \("📮norwa99@163.com",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
-                \(.image(#imageLiteral(resourceName: "wechat"),.custom(size: CGSize(width: 17, height: 17)))) \("n0rway99(加我进用户群)",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
+                \("期待收到你的使用建议。",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
+                \("长按复制联系方式：",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
+                \(.image(#imageLiteral(resourceName: "mail"), .custom(size: CGSize(width: 17, height: 17)))) \("norwa99@163.com",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
+                \(.image(#imageLiteral(resourceName: "wechat"),.custom(size: CGSize(width: 17, height: 17)))) \("n0rway99(进用户群)",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
                 """
             )
         infoLabel.attributed.text = info
@@ -536,10 +537,10 @@ class LWSettingViewController: UIViewController {
         }
         
         infoLabel.snp.makeConstraints { make in
-            make.top.equalTo(otherContainer.snp.bottom).offset(20)
+            make.top.equalTo(otherContainer.snp.bottom).offset(50)
             make.left.right.equalTo(otherContainer)
             make.height.equalTo(100)
-            make.bottom.equalToSuperview().offset(-50)
+            make.bottom.equalToSuperview().offset(-20)
         }
         
         
