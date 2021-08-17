@@ -82,6 +82,9 @@ class LWSettingViewController: UIViewController {
         initUI()
         setupUI()
         setupConstraints()
+        
+        //此时设置示例textView，才能取得正确的frame以正确显示图片的大小
+        setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,8 +93,7 @@ class LWSettingViewController: UIViewController {
             SKStoreReviewController.requestReview()
             userDefaultManager.requestReviewTimes += 1
         }
-        //此时设置示例textView，才能取得正确的frame以正确显示图片的大小
-        setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
+        
     }
     
     //MARK:-实例化UI
@@ -867,5 +869,10 @@ extension LWSettingViewController{
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
         textView.attributedText = mutableAttr
+        
+        textView.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            self.textView.alpha = 1
+        }
     }
 }
