@@ -240,11 +240,11 @@ class LWSettingViewController: UIViewController {
         
         fontSizeTitle.text = "字体大小"
         fontSizeTitle.font = .systemFont(ofSize: 18, weight: .medium)
-        fontSizeStepper.stepValue = 1
+        fontSizeLabel.text = String(Int(userDefaultManager.fontSize))
+        fontSizeLabel.font = .systemFont(ofSize: 18)
         fontSizeStepper.minimumValue = 10
         fontSizeStepper.maximumValue = 40
         fontSizeStepper.value = Double(userDefaultManager.fontSize)
-        fontSizeLabel.text = String(Int(userDefaultManager.fontSize))
         fontSizeStepper.addTarget(self, action: #selector(fontSizeDidChange(_:)), for: .valueChanged)
         
         fontPickerTitle.text = "字体样式"
@@ -383,7 +383,6 @@ class LWSettingViewController: UIViewController {
         imageSizeSegment.snp.makeConstraints { make in
             make.centerY.equalTo(imageSizeTitle)
             make.right.equalTo(textView).offset(-10)
-            make.width.equalTo(100)
         }
         
         lineSpacingTitle.snp.makeConstraints { make in
@@ -393,8 +392,8 @@ class LWSettingViewController: UIViewController {
         
         lineSpacingStepper.snp.makeConstraints { make in
             make.centerY.equalTo(lineSpacingTitle)
-            make.width.equalTo(100)
-            make.centerX.equalTo(imageSizeSegment)
+            make.width.equalTo(imageSizeSegment)
+            make.right.equalTo(imageSizeSegment)
         }
         
         fontSizeTitle.snp.makeConstraints { make in
@@ -403,9 +402,15 @@ class LWSettingViewController: UIViewController {
         }
         
         fontSizeStepper.snp.makeConstraints { make in
-            make.centerX.equalTo(imageSizeSegment)
             make.centerY.equalTo(fontSizeTitle)
-            make.width.equalTo(100)
+            make.width.equalTo(imageSizeSegment)
+            make.right.equalTo(imageSizeSegment)
+        }
+        
+        fontSizeLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(fontSizeStepper.snp.left).offset(-5)
+            make.centerY.equalTo(fontSizeStepper)
+            make.width.equalTo(30)
         }
         
         fontPickerTitle.snp.makeConstraints { make in
