@@ -372,7 +372,7 @@ class LWSettingViewController: UIViewController {
             make.top.equalToSuperview().offset(2)
             make.left.equalToSuperview().offset(2)
             make.right.equalToSuperview().offset(-2)
-            make.height.equalTo(430)
+            make.height.equalTo(100)
         }
         
         imageSizeTitle.snp.makeConstraints { make in
@@ -566,7 +566,6 @@ class LWSettingViewController: UIViewController {
     ///图片大小
     @objc func segmentedControlChanged(_ sender:UISegmentedControl){
         tempImageSizeStyle = sender.selectedSegmentIndex
-        setupExampleTextView(imageScalingFactor: CGFloat(tempImageSizeStyle+1))
     }
     
     ///字体大小
@@ -819,34 +818,16 @@ extension LWSettingViewController{
         self.view.layoutIfNeeded()
         textView.attributedText = nil
         
-        let shortVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
         //插入文字
+        let shortVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
         let text =
         """
+
+        aDiary
         版本\(shortVersionString)
-        Version\(shortVersionString)
 
         """
         textView.insertText(text)
-        
-        
-        //插入图标
-        let attachment = NSTextAttachment()
-        let image = UIImage(named: "icon-1024.png")!
-        let imageAspectRatio = image.size.height / image.size.width
-        let imageWidth = self.fontContainerView.frame.width
-        print(imageWidth)
-        let imageHeight = imageWidth * imageAspectRatio
-        let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))
-        attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
-        let pedding:CGFloat = 15.0
-        attachment.bounds = CGRect(x: 0, y: 0,
-                                   width: (imageWidth - 2 * pedding) / imageScalingFactor,
-                                   height: (imageHeight - 2 * pedding) / imageScalingFactor)
-        let attStr = NSAttributedString(attachment: attachment)
-        let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
-        mutableStr.insert(attStr, at: textView.attributedText.length)
-        textView.attributedText = mutableStr
         
         //更新textView的字体等信息
         updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
@@ -875,10 +856,5 @@ extension LWSettingViewController{
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
         textView.attributedText = mutableAttr
-        
-        textView.alpha = 0
-        UIView.animate(withDuration: 0.5) {
-            self.textView.alpha = 1
-        }
     }
 }
