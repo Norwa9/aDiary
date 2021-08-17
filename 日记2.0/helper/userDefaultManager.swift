@@ -69,6 +69,17 @@ class userDefaultManager{
         }
     }
     
+    
+    static func customFont(withSize size:CGFloat) -> UIFont{
+        if let font = self.fontName{
+            return UIFont(name: font, size: size)!
+        }else{
+            //自定义字体被移除，重置fontName
+            self.fontName = nil
+            return UIFont.systemFont(ofSize: size, weight: .regular)
+        }
+    }
+    
     static var fontSize:CGFloat{
         get{
             if let returnFontSize = shared?.object(forKey: constants.fontSizeKey) as? CGFloat{

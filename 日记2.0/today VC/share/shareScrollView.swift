@@ -7,19 +7,22 @@
 
 import Foundation
 import UIKit
+import TagListView
 ///分享视图
 class shareScrollView:UIScrollView{
     let kContentW = globalConstantsManager.shared.kBoundsFrameOfShareView.width
     ///分享日期
     let dateLabel = UILabel()
-    ///周几
-    let weekLabel = UILabel()
+    ///emoji
+    let emojisLabel = UILabel()
+    ///标签
+    let tagsLabel = TagListView()
     ///日记内容的快照
     let textImageView = UIImageView()
     ///用户签名
     let signature = UILabel()
     ///图标
-    let icon = iconView()
+    let iconView = IconView()
     
     var scrollViewScreenshot:UIImage!
     var textViewScreenshot:UIImage
@@ -43,14 +46,22 @@ class shareScrollView:UIScrollView{
         self.showsVerticalScrollIndicator = false
         
         dateLabel.textAlignment = .center
-        dateLabel.text = diary.date
-        dateLabel.font = UIFont.init(name: "DIN Alternate", size: 32)!
+        dateLabel.text = diary.date + " " + GetWeekday(dateString: diary.date)
+        dateLabel.font = userDefaultManager.customFont(withSize: 24)
         dateLabel.textColor = .label
         
-        weekLabel.textAlignment = .center
-        weekLabel.text = GetWeekday(dateString: diary.date)
-        weekLabel.font = UIFont.init(name: "DIN Alternate", size: 24)!
-        weekLabel.textColor = .label
+        emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
+        
+        for tag in diary.tags{
+            tagsLabel.addTag("#\(tag)")
+        }
+        tagsLabel.textFont = userDefaultManager.customFont(withSize: 14)
+        tagsLabel.alignment = .left
+        tagsLabel.tagBackgroundColor = .systemGray3
+        tagsLabel.textColor = .white
+        tagsLabel.cornerRadius = 5
+        tagsLabel.clipsToBounds = true
+        tagsLabel.isUserInteractionEnabled = false
         
         textImageView.contentMode = .scaleAspectFill///!!!!!!!
         textImageView.image = textViewScreenshot
@@ -58,18 +69,19 @@ class shareScrollView:UIScrollView{
         textImageView.layer.borderWidth = 1
         textImageView.layer.borderColor = UIColor.systemGray2.cgColor
         
-        signature.text = "分享自"
+        signature.text = "via 'aDiary'  "
         signature.textColor = UIColor.secondaryLabel
-        signature.font = UIFont.init(name: "DIN Alternate", size: 18)!
-        signature.textAlignment = .center
+        signature.font = UIFont.init(name: "DIN Alternate", size: 15)!
+        signature.textAlignment = .right
         
-        icon.iconImageView.image = UIImage(named: "icon-1024")
+        iconView.iconImageView.image = UIImage(named: "icon-1024")
         
         self.addSubview(dateLabel)
-        self.addSubview(weekLabel)
+        self.addSubview(emojisLabel)
+        self.addSubview(tagsLabel)
         self.addSubview(textImageView)
         self.addSubview(signature)
-        self.addSubview(icon)
+        self.addSubview(iconView)
         
     }
     
@@ -87,36 +99,37 @@ class shareScrollView:UIScrollView{
             make.width.equalTo(kContentW)
         }
         
-        self.weekLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self.dateLabel.snp.bottom)
-            make.bottom.equalTo(self.textImageView.snp.top)
+        self.emojisLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.dateLabel.snp.bottom).offset(4)
             make.width.equalTo(kContentW)
+        }
+        
+        self.tagsLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(emojisLabel.snp.bottom).offset(5)
+            make.centerX.equalTo(dateLabel)
+            make.width.equalTo(kContentW - 20)//左右缩进各5
         }
         
         let textViewWidth = kContentW - 10
         let textViewHeight = textViewScreenshot.size.height / textViewScreenshot.size.width * textViewWidth
         self.textImageView.snp.makeConstraints { (make) in
 //            make.centerX.equalTo(self.snp.centerX) ❌
-            make.centerX.equalTo(weekLabel)
+            make.top.equalTo(tagsLabel.snp.bottom).offset(4)
+            make.centerX.equalTo(dateLabel)
             make.width.equalTo(textViewWidth)
             make.height.equalTo(textViewHeight)
         }
         
         self.signature.snp.makeConstraints { (make) in
 //            make.centerX.equalTo(self.snp.centerX) ❌
-            make.top.equalTo(self.textImageView.snp.bottom).offset(10)
-            make.width.equalTo(kContentW)
-        }
-        
-        self.icon.snp.makeConstraints { (make) in
-            make.top.equalTo(self.signature.snp.bottom).offset(2)
-            make.size.equalTo(CGSize(width: 80, height: 80))
-            make.centerX.equalTo(signature.snp.centerX)
-            make.bottom.equalTo(self.snp.bottom).offset(-20)
+            make.top.equalTo(self.textImageView.snp.bottom).offset(5)
+            make.width.equalTo(kContentW - 20)
+            make.height.equalTo(25)
+            make.bottom.equalTo(self).offset(-10)
         }
         
         self.layoutIfNeeded()//获取正确的frame
-        contentSize = CGSize(width: kContentW, height: dateLabel.frame.height + weekLabel.frame.height + textImageView.frame.height + signature.frame.height + icon.frame.height + 20)
+        contentSize = CGSize(width: kContentW, height: dateLabel.frame.height + emojisLabel.frame.height + tagsLabel.frame.height + textImageView.frame.height + signature.frame.height + 20)
         self.scrollViewScreenshot = getScreenshot(contentSize: contentSize)
         
     }
@@ -144,7 +157,7 @@ class shareScrollView:UIScrollView{
 
 
 //MARK:-class:iconView图标视图类
-class iconView: UIView {
+class IconView: UIView {
     let iconImageView = UIImageView()
     let appNameLabel = UILabel()
     
@@ -158,13 +171,13 @@ class iconView: UIView {
     
     func initUI(){
         self.backgroundColor = .systemBackground
-        self.layer.cornerRadius = 15
+        self.layer.cornerRadius = 2
         self.setupShadow(opacity: 0.5, radius: 1, offset: CGSize(width: 0, height: 0), color: .black)
         
         self.addSubview(iconImageView)
         iconImageView.contentMode = .scaleAspectFit
         iconImageView.clipsToBounds = true
-        iconImageView.layer.cornerRadius = 15
+        iconImageView.layer.cornerRadius = 2
         
         
         self.addSubview(appNameLabel)
@@ -172,6 +185,7 @@ class iconView: UIView {
         appNameLabel.textAlignment = .center
         appNameLabel.text = "aDiary"
         appNameLabel.textColor = .white
+        appNameLabel.alpha = 0
         
         self.iconImageView.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
