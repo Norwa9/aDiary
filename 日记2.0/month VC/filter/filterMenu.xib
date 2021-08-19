@@ -21,27 +21,33 @@
             <rect key="frame" x="0.0" y="0.0" width="315" height="440"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="标签" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8RU-AO-iJM">
-                    <rect key="frame" x="21" y="103" width="60" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标签" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8RU-AO-iJM">
+                    <rect key="frame" x="21" y="103" width="60" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="zSd-49-4v8"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="16"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KFl-EO-wbb">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFl-EO-wbb">
                     <rect key="frame" x="102" y="103" width="1" height="305"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="separatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="kU3-gl-6qn"/>
+                    </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ohm-uW-oLs">
-                    <rect key="frame" x="112" y="103" width="183" height="305"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ohm-uW-oLs">
+                    <rect key="frame" x="112" y="103" width="193" height="305"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPK-cg-OzN">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPK-cg-OzN">
                     <rect key="frame" x="16" y="394" width="50" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="OID-4S-8E5"/>
+                        <constraint firstAttribute="width" constant="50" id="OgU-7G-4Jl"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="18"/>
                     <state key="normal" title="确定">
                         <color key="titleColor" red="0.0078431372549019607" green="0.60784313725490191" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
@@ -50,16 +56,17 @@
                         <action selector="done" destination="-1" eventType="touchUpInside" id="QcH-ID-sRf"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="附加条件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ixl-vf-hDp">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="附加条件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ixl-vf-hDp">
                     <rect key="frame" x="21" y="12" width="80" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="TB7-Wv-ST3"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BqL-yn-3FC">
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BqL-yn-3FC">
                     <rect key="frame" x="8" y="54" width="299" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="日期降序"/>
                         <segment title="日期升序"/>
@@ -70,6 +77,25 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="CPK-cg-OzN" secondAttribute="bottom" constant="16" id="0MP-SS-211"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ohm-uW-oLs" secondAttribute="bottom" constant="32" id="532-1x-uly"/>
+                <constraint firstItem="KFl-EO-wbb" firstAttribute="top" secondItem="8RU-AO-iJM" secondAttribute="top" id="9tR-x4-lXu"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ohm-uW-oLs" secondAttribute="trailing" constant="10" id="O1i-55-PWR"/>
+                <constraint firstItem="ohm-uW-oLs" firstAttribute="leading" secondItem="8RU-AO-iJM" secondAttribute="trailing" constant="31" id="QoT-mQ-hbR"/>
+                <constraint firstItem="KFl-EO-wbb" firstAttribute="bottom" secondItem="ohm-uW-oLs" secondAttribute="bottom" id="R6U-fh-Wrc"/>
+                <constraint firstItem="BqL-yn-3FC" firstAttribute="top" secondItem="Ixl-vf-hDp" secondAttribute="bottom" constant="18" id="RXS-Yy-hFu"/>
+                <constraint firstItem="8RU-AO-iJM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="21" id="SHB-SJ-Xh1"/>
+                <constraint firstItem="ohm-uW-oLs" firstAttribute="leading" secondItem="KFl-EO-wbb" secondAttribute="trailing" constant="9" id="TdP-2v-CAO"/>
+                <constraint firstItem="KFl-EO-wbb" firstAttribute="centerY" secondItem="ohm-uW-oLs" secondAttribute="centerY" id="WhP-6s-0E8"/>
+                <constraint firstItem="ohm-uW-oLs" firstAttribute="top" secondItem="8RU-AO-iJM" secondAttribute="top" id="gye-iE-nRw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BqL-yn-3FC" secondAttribute="trailing" constant="8" id="lgy-lX-wFm"/>
+                <constraint firstItem="8RU-AO-iJM" firstAttribute="top" secondItem="BqL-yn-3FC" secondAttribute="bottom" constant="18" id="mpm-Vo-WcC"/>
+                <constraint firstItem="BqL-yn-3FC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="nFv-t5-9fR"/>
+                <constraint firstItem="Ixl-vf-hDp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="ofZ-Gl-q3M"/>
+                <constraint firstItem="CPK-cg-OzN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="pEA-nM-MwG"/>
+                <constraint firstItem="Ixl-vf-hDp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="21" id="y4h-v4-n38"/>
+            </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
