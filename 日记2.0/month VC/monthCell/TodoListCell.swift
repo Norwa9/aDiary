@@ -31,11 +31,12 @@ class TodoListCell: UICollectionViewCell {
     private func initUI(){
         //contentView.setDebugBorder()
         self.backgroundColor = .tertiarySystemBackground
+        self.clipsToBounds = true
+        self.layer.cornerRadius = 4
         
         //containerView
         contentView.addSubview(containerView)
         containerView.backgroundColor = .tertiarySystemBackground
-        containerView.layer.cornerRadius = 4
         
         //checkButton
         containerView.addSubview(checkButton)
