@@ -81,14 +81,11 @@ class LWNotificationHelper:NSObject{
     private func configureNotifications(){
         let content = UNMutableNotificationContent()
         //1.title
-        let month = getDateComponent(for: Date(), for: .month)
-        let day = getDateComponent(for: Date(), for: .day)
-        let weekday = GetWeekday(dateString: nil)
-        let title = "今天是\(month)月\(day)日，\(weekday)"
+        let title = "每日记录提醒"
         content.title = title
         
         //2.body
-        content.body = "点击开始记录"
+//        content.body = ""
         
         //3.
         content.categoryIdentifier = notifActions.writtingRemind.rawValue
@@ -100,7 +97,7 @@ class LWNotificationHelper:NSObject{
         dateComponents.minute = userDefaultManager.dailyRemindAtMinute
         print("设置每日提醒：时间为\(dateComponents.hour!):\(dateComponents.minute!)")
         center.removeAllPendingNotificationRequests()
-        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)//测试
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 61, repeats: true)//测试，请退出APP到后台测试，在App内部不会显示通知！！
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
