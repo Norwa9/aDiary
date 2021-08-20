@@ -2,6 +2,7 @@ PODS:
   - AttributedString (2.2.0)
   - FMPhotoPicker (1.3.0)
   - FSCalendar (2.8.2)
+  - Hero (1.6.1)
   - ISEmojiView (0.2.6)
   - JXPhotoBrowser (3.1.3)
   - MJRefresh (3.7.2)
@@ -22,6 +23,7 @@ DEPENDENCIES:
   - AttributedString
   - FMPhotoPicker (~> 1.3.0)
   - FSCalendar
+  - Hero
   - ISEmojiView
   - JXPhotoBrowser (~> 3.0)
   - MJRefresh
@@ -37,6 +39,7 @@ SPEC REPOS:
     - AttributedString
     - FMPhotoPicker
     - FSCalendar
+    - Hero
     - ISEmojiView
     - JXPhotoBrowser
     - MJRefresh
@@ -52,6 +55,7 @@ SPEC CHECKSUMS:
   AttributedString: 386c1af029cc3186288d9feb84fbbb097928843f
   FMPhotoPicker: 954d3c3e72521baffecdc23422ae149fdde3cd63
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  Hero: 215865ba3ae41dd9bb08cd6c60a645529c6fc94b
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
   JXPhotoBrowser: d32e94e1226d43bf5ed83164e3f5b651fed625e0
   MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
@@ -63,6 +67,6 @@ SPEC CHECKSUMS:
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   WhatsNewKit: c87028c4059dccd113495422801914cc53f6aab0
 
-PODFILE CHECKSUM: 93ccb6415bf33358077edfd59e9465189e5d54b7
+PODFILE CHECKSUM: 6d9f8a5bcd074fb1103cd9a5b95ab8a1311ff554
 
 COCOAPODS: 1.10.1
