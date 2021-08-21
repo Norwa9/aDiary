@@ -346,7 +346,7 @@ extension monthCell{
     }
 }
 
-//MARK:-内嵌的Collection View
+//MARK:-内嵌的albumView
 extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

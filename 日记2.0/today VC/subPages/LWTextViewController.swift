@@ -59,13 +59,13 @@ class LWTextViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        load()
+        //load()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         print("textVC viewDidDisappear")
-        textView.attributedText = nil
+        //textView.attributedText = nil
     }
     
     private func initUI(){

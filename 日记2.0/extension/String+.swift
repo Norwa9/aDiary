@@ -43,13 +43,13 @@ extension String{
         return formatter.string(from: rawDate)
     }
     
-    func parsePageIndex()->String{
+    func parsePageIndex()->Int{
         if let splitIndex = self.firstIndex(of: "-"){
             let index2 = self.index(after: splitIndex)
             let indexString = String(self[index2..<endIndex])
-            return indexString
+            return Int(indexString)!
         }
-        return "0"
+        return 0
     }
 }
 

@@ -63,7 +63,8 @@ class todayVC: UIViewController{
         topView.model = model
         topView.layoutIfNeeded()
         
-        subpagesView.models = [model]
+        let models = LWRealmManager.shared.queryAllPages(ofDate: model.date).toArray()
+        subpagesView.models = models
     }
     
     private func initUI(){

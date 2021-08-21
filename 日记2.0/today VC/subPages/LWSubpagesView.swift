@@ -47,10 +47,11 @@ class LWSubpagesView: UIView {
     func updateUI(){
         segmentTitles.removeAll()
         for model in models{
+//            segmentTitles.append(model.date)
             let pageIndex = model.date.parsePageIndex()
-            segmentTitles.append("第\(pageIndex)篇")
+            segmentTitles.append("page.\(pageIndex + 1)")
         }
-        segmentTitles.append("+")
+        segmentTitles.append("新建")
         segmentDataSource.titles = segmentTitles
         segmentedView.reloadData()
         pagingView.reloadData()
@@ -60,15 +61,15 @@ class LWSubpagesView: UIView {
         //segmentedView
         segmentedView.delegate = self
         segmentDataSource.titleSelectedColor = APP_GREEN_COLOR()
-        segmentDataSource.titleNormalFont = userDefaultManager.customFont(withSize: 14)
+        segmentDataSource.titleNormalFont = userDefaultManager.customFont(withSize: 12)
         segmentDataSource.isTitleZoomEnabled = true
+        segmentDataSource.itemSpacing = 10
+        segmentDataSource.isItemSpacingAverageEnabled = false
         segmentedView.dataSource = segmentDataSource
+        segmentedView.listContainer = pagingView.listContainerView//列表和categoryView联动
         
         
-        
-        
-        //列表和categoryView联动
-        segmentedView.listContainer = pagingView.listContainerView
+        pagingView.automaticallyDisplayListVerticalScrollIndicator = false
         self.addSubview(pagingView)
         
     }
@@ -95,7 +96,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     }
     
     func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
-        return 50
+        return 30
     }
     
     func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
