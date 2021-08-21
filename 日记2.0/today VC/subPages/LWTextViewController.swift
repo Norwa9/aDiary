@@ -9,20 +9,47 @@ import UIKit
 import JXPagingView
 
 class LWTextViewController: UIViewController {
+    var model:diaryInfo!
+    
+    var textForamtter:TextFormatter!
+    
     let textView = LWTextView()
     
     var listViewDidScrollCallback: ((UIScrollView) -> ())?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        initUI()
+        setupConstraints()
+        load()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
+    private func initUI(){
+        self.view.addSubview(textView)
+        textView.delegate = self
+    }
+    
+    private func setupConstraints(){
+        textView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    func load(){
+        let textFormatter = TextFormatter(textView: self.textView)
+        textFormatter.loadTextViewContent(with: model)
+    }
+    
+    
+    
+}
+
+extension LWTextViewController : UITextViewDelegate{
     
 }
 

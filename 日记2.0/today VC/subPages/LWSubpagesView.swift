@@ -76,7 +76,9 @@ extension LWSubpagesView : JXPagingViewDelegate{
     }
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
-        return LWTextViewController()
+        let vc = LWTextViewController()
+        vc.model = models[index]
+        return vc
     }
     
     
