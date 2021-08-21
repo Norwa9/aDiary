@@ -10,6 +10,7 @@ import JXPagingView
 import JXSegmentedView
 
 class LWSubpagesView: UIView {
+    var todayVC:todayVC!
     lazy var pagingView: JXPagingView = JXPagingView(delegate: self)
     
     lazy var segmentedView: JXSegmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(50)))
@@ -122,10 +123,18 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
         guard index == self.models.count , let mainPage = mainPage else{
             return
         }
+        
         let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
         self.models.append(newPage)
         self.updateUI()
     }
+    
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        guard index < self.models.count else {return}
+        let model = models[index]
+        todayVC.topView.model = model//更新topView
+    }
+    
 }
 
 extension JXPagingListContainerView: JXSegmentedViewListContainer {}
