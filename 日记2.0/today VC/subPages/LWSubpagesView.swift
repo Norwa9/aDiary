@@ -8,6 +8,7 @@
 import UIKit
 import JXPagingView
 import JXSegmentedView
+import StoreKit
 
 class LWSubpagesView: UIView {
     var todayVC:todayVC!
@@ -125,8 +126,11 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
         }
         
         let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
-        self.models.append(newPage)
-        self.updateUI()
+        models.append(newPage)
+        if models.count > 2{
+            SKStoreReviewController.requestReview()
+        }
+        updateUI()
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {

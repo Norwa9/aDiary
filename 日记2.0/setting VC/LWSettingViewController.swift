@@ -89,10 +89,6 @@ class LWSettingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if userDefaultManager.requestReviewTimes % 2 == 0{
-            SKStoreReviewController.requestReview()
-            userDefaultManager.requestReviewTimes += 1
-        }
         
     }
     
