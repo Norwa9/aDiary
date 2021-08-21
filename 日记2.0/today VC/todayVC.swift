@@ -10,7 +10,7 @@ import UIKit
 
 let kTextViewPeddingX:CGFloat = 0
 class todayVC: UIViewController{
-    ///引入多页的概念后，model是第一页，也是主页面
+    ///引入多页的概念后，model是pages的初始页面
     var model:diaryInfo! {
         didSet{
             setModel()

@@ -31,6 +31,7 @@ class monthCell: UICollectionViewCell {
     var diary:diaryInfo!
     var models:[diaryInfo]!
     var pageSegmentControl:UISegmentedControl!
+    var cellRow:Int!
     
     var albumViewLayout:AlbumViewLayout!
     
@@ -213,6 +214,7 @@ class monthCell: UICollectionViewCell {
     //MARK:-设置Model
     func setViewModel(_ diary:diaryInfo){
         self.diary = diary
+        self.setupSegmentControl()
         self.updateUI()//获取viewModel后需要更新UI
     }
     
@@ -221,14 +223,6 @@ class monthCell: UICollectionViewCell {
         
         self.dateLabel.font = userDefaultManager.monthCellDateLabelFont
         self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
-        
-        let pagesNum = LWRealmManager.shared.queryPagesNum(ofDate: diary.date)
-        pageSegmentControl.removeAllSegments()
-        for index in 0..<pagesNum{
-            let numsOfSeg = pageSegmentControl.numberOfSegments
-            pageSegmentControl.insertSegment(withTitle: "\(index+1)", at: numsOfSeg, animated: true)
-        }
-        
         
         self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         
@@ -245,6 +239,20 @@ class monthCell: UICollectionViewCell {
         self.todoListView.setViewModel(diary)//触发updateUI
         
         updateCons()//更新约束
+    }
+    
+    private func setupSegmentControl(){
+        let pagesNum = LWRealmManager.shared.queryPagesNum(ofDate: diary.date.parsePageDate())
+        pageSegmentControl.removeAllSegments()
+        pageSegmentControl.snp.updateConstraints { (update) in
+            update.height.equalTo( pagesNum == 1 ? 0 : 25 )
+        }
+        for index in 0..<pagesNum{
+            let numsOfSeg = pageSegmentControl.numberOfSegments
+            pageSegmentControl.insertSegment(withTitle: "\(index+1)", at: numsOfSeg, animated: false)
+        }
+        pageSegmentControl.selectedSegmentIndex = 0
+        
     }
     
     //读取日记的所有图片
@@ -406,12 +414,18 @@ extension monthCell{
     }
     
     @objc func pagesSegmentDidSelected(_ sender:UISegmentedControl){
-//        let index = sender.selectedSegmentIndex
-//        let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index)
-//        self.setViewModel(selectedDiary)
-    }
-    
-    private func updateCollection(curPageIndex:Int){
+        let index = sender.selectedSegmentIndex
+        let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index)
+        //更新cell的内容
+        self.diary = selectedDiary
+        self.updateUI()
+        
+        //平滑更新collectionView的布局
+        let monthVC = UIApplication.getMonthVC()
+        monthVC.filteredDiaries[cellRow] = selectedDiary//替换之后，cell
+        monthVC.flowLayout.dateSource = monthVC.filteredDiaries//这样才能更新布局
+        monthVC.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//平滑更新布局
         
     }
+
 }

@@ -522,6 +522,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let row = indexPath.row
         let diary = filteredDiaries[row]
         cell.setViewModel(diary)
+        cell.cellRow = row
         
         return cell
     }
