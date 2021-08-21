@@ -16,10 +16,15 @@ class LWSubpagesView: UIView {
     var segmentDataSource = JXSegmentedTitleDataSource()
     var segmentTitles = [String]()
     
-    var models:[diaryInfo] = []
+    var models:[diaryInfo] = []{
+        didSet{
+            updateUI()
+        }
+    }
     
     ///获得当前的textView
     var textView:LWTextView{
+        print("get listContainerView.scrollView")
         return pagingView.listContainerView.scrollView as! LWTextView
     }
     
@@ -30,9 +35,18 @@ class LWSubpagesView: UIView {
         setupConstraints()
     }
     
+    func updateUI(){
+        segmentTitles.removeAll()
+        for model in models{
+            segmentTitles.append(model.date)
+        }
+        segmentDataSource.titles = segmentTitles
+        segmentedView.reloadData()
+        pagingView.reloadData()
+    }
+    
     private func initUI(){
         //segmentedView
-        segmentDataSource.titles = segmentTitles
         segmentedView.delegate = self
         segmentedView.dataSource = segmentDataSource
         
@@ -76,6 +90,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     }
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
+        print("initListAtIndex, index:\(index)")
         let vc = LWTextViewController()
         vc.model = models[index]
         return vc

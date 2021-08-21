@@ -12,8 +12,13 @@ enum currentKeyBoardType:Int{
     case emoji
     case other
 }
+
+protocol LWPhotoPickerDelegate : NSObject {
+    func showPhotoPicker()
+}
+
 class toolsBar: UIView {
-    weak var todayVC:todayVC!
+    weak var delegate:LWPhotoPickerDelegate?
     weak var textView:UITextView!
     @IBOutlet weak var saveButton:UIButton!
     @IBOutlet weak var insertTimeButton:UIButton!
@@ -128,7 +133,7 @@ class toolsBar: UIView {
     }
     
     @objc func insertImageToTextView(){
-        todayVC.importPicture()
+        delegate?.showPhotoPicker()
     }
     
     @objc func insertNumberList(){
