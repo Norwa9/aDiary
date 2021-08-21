@@ -63,7 +63,7 @@ public final class DiaryStore: ObservableObject {
     
     ///删除
     public func delete(with id: String) {
-        guard let _ = LWRealmManager.shared.diaryWithID(id) else {
+        guard let _ = LWRealmManager.shared.queryDiaryWithID(id) else {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
         }

@@ -28,11 +28,30 @@ extension String{
     }
     ///返回年、月、日(String)
     func dateComponent(for dayComponent:dayComponents)->String{
+        //由于date中加入了子页面下标，需要提取真实的日期信息
+        let dateCN:String
+        if let splitIndex = self.firstIndex(of: "-"){
+            dateCN = String(self[..<splitIndex])
+        }else{
+            dateCN = self
+        }
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy年M月d日"
-        let rawDate = formatter.date(from: self)!
+        let rawDate = formatter.date(from: dateCN)!
         formatter.dateFormat = dayComponent.rawValue
         return formatter.string(from: rawDate)
+    }
+    
+    func parsePageIndex()->Int?{
+        if let splitIndex = self.firstIndex(of: "-"){
+            let index2 = self.index(after: splitIndex)
+            let string = String(self[index2..<endIndex])
+            if let pageIndex = Int(string){
+                return pageIndex
+            }
+        }
+        return nil
     }
 }
 

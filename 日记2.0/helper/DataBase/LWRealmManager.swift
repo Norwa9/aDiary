@@ -40,8 +40,7 @@ class LWRealmManager{
         return realm.objects(diaryInfo.self)
     }
     
-    //MARK:-增删查改
-    typealias updateBlock = ()->(Void)
+    //MARK:-增加
     func add(_ diary:diaryInfo){
         do{
             try realm.write(){
@@ -53,17 +52,14 @@ class LWRealmManager{
         }
     }
     
-    func update(updateBlock:updateBlock){
-        do{
-            try realm.write(){
-                //如果diary已经添加到realm被realm所管理，这个diary不能在write事务block之外修改！
-                updateBlock()
-            }
-        }catch let error{
-            print("[更新]Realm数据库操作错误：\(error.localizedDescription)")
-        }
+    ///创建子页面
+    ///参数pageNumber：页面下标。从1开始，0已经被主日记所使用
+    func createPage(withDate:String,pageNumber:Int){
+        
     }
     
+    //MARK:-删除
+    ///删除方法1：指定model删除
     func delete(_ diaries:[diaryInfo]){
         do{
             try realm.write(){
@@ -73,6 +69,8 @@ class LWRealmManager{
             print("[逐个删除]Realm数据库操作错误：\(error.localizedDescription)")
         }
     }
+    
+    ///删除方法2：指定谓语删除
     func delete(predicate:NSPredicate){
         let res = self.query(predicate: predicate)
         do{
@@ -83,8 +81,6 @@ class LWRealmManager{
             print("[述语批量删除]Realm数据库操作错误：\(error.localizedDescription)")
         }
     }
-    
-    
 }
 
 //MARK:-查询
@@ -109,8 +105,47 @@ extension LWRealmManager{
     }
     
     ///通过id查询日记
-    func diaryWithID(_ id:String) -> diaryInfo? {
+    func queryDiaryWithID(_ id:String) -> diaryInfo? {
         return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
+    }
+    
+    ///查询某日所有页面的数量
+    func queryPagesNum(ofDate dateCN:String) ->Int{
+        let predicate = NSPredicate(format: "date BEGINSWITH %@", dateCN)
+        let res = self.query(predicate: predicate)
+        return res.count
+    }
+    
+    ///查询某日的所有页面（主页面+所有子页面）
+    func queryAllPages(ofDate dateCN:String) -> Results<diaryInfo>{
+        let prefix = dateCN
+        let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
+        let res = self.query(predicate: predicate)
+        return res
+    }
+    
+    ///查询某日的所有子页面
+    func querySubpages(ofDate dateCN:String) -> Results<diaryInfo>{
+        let prefix = dateCN + "-"
+        let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
+        let res = self.query(predicate: predicate)
+        return res
+    }
+    
+}
+
+//MARK:-修改
+extension LWRealmManager{
+    typealias updateBlock = ()->(Void)
+    func update(updateBlock:updateBlock){
+        do{
+            try realm.write(){
+                //如果diary已经添加到realm被realm所管理，这个diary不能在write事务block之外修改！
+                updateBlock()
+            }
+        }catch let error{
+            print("[更新]Realm数据库操作错误：\(error.localizedDescription)")
+        }
     }
 }
 

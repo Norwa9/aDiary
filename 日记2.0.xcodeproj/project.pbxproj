@@ -475,6 +475,14 @@
 			path = protocal;
 			sourceTree = "<group>";
 		};
+		EA67911126D109D800B44ECA /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
 		EA8E71092694972C007189B1 /* CloudKitHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,12 +576,12 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EA67911126D109D800B44ECA /* DataBase */,
 				EADBC35526C01349004D1A52 /* whatsNew */,
 				EADBC33E26BE9878004D1A52 /* IAPHelper */,
 				EAD20DA326A072C70014B8B5 /* TextFormatter */,
 				EA8E71092694972C007189B1 /* CloudKitHelper */,
 				1B3AEB1126C4F78800C057A4 /* LWIndicator */,
-				1B2A5647269824CB0090D411 /* LWRealmManager.swift */,
 				EA3189AE26934ED5001B9042 /* globalFuncs.swift */,
 				EADBC2EB26B303AC004D1A52 /* globalConstants.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataManager.swift */,

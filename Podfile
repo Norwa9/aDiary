@@ -17,6 +17,7 @@ pod 'RealmSwift'
 pod 'ISEmojiView'
 pod 'WhatsNewKit'
 pod 'AttributedString'
-pod 'Hero'
+pod 'JXPagingView/Paging'
+
 
 end
