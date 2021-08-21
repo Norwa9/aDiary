@@ -22,6 +22,15 @@ class LWSubpagesView: UIView {
         }
     }
     
+    var mainPage:diaryInfo?{
+        get{
+            if let main = models.first{
+                return main
+            }
+            return nil
+        }
+    }
+    
     ///获得当前的textView
     var textView:LWTextView{
         print("get listContainerView.scrollView")
@@ -38,8 +47,10 @@ class LWSubpagesView: UIView {
     func updateUI(){
         segmentTitles.removeAll()
         for model in models{
-            segmentTitles.append(model.date)
+            let pageIndex = model.date.parsePageIndex()
+            segmentTitles.append("第\(pageIndex)篇")
         }
+        segmentTitles.append("+")
         segmentDataSource.titles = segmentTitles
         segmentedView.reloadData()
         pagingView.reloadData()
@@ -48,11 +59,17 @@ class LWSubpagesView: UIView {
     private func initUI(){
         //segmentedView
         segmentedView.delegate = self
+        segmentDataSource.titleSelectedColor = APP_GREEN_COLOR()
+        segmentDataSource.titleNormalFont = userDefaultManager.customFont(withSize: 14)
+        segmentDataSource.isTitleZoomEnabled = true
         segmentedView.dataSource = segmentDataSource
         
-        self.addSubview(pagingView)
+        
+        
+        
         //列表和categoryView联动
         segmentedView.listContainer = pagingView.listContainerView
+        self.addSubview(pagingView)
         
     }
     
@@ -86,7 +103,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     }
     
     func numberOfLists(in pagingView: JXPagingView) -> Int {
-        return segmentTitles.count
+        return models.count
     }
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
@@ -100,7 +117,14 @@ extension LWSubpagesView : JXPagingViewDelegate{
 }
 
 extension LWSubpagesView : JXSegmentedViewDelegate{
-    
+    func segmentedView(_ segmentedView: JXSegmentedView, didClickSelectedItemAt index: Int) {
+        guard index == self.models.count , let mainPage = mainPage else{
+            return
+        }
+        let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
+        self.models.append(newPage)
+        self.updateUI()
+    }
 }
 
 extension JXPagingListContainerView: JXSegmentedViewListContainer {}

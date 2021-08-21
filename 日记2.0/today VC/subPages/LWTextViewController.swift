@@ -57,9 +57,9 @@ class LWTextViewController: UIViewController {
         print("textVC viewWillAppear")
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        load()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

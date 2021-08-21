@@ -54,8 +54,12 @@ class LWRealmManager{
     
     ///创建子页面
     ///参数pageNumber：页面下标。从1开始，0已经被主日记所使用
-    func createPage(withDate:String,pageNumber:Int){
-        
+    func createPage(withDate dateCN:String,pageNumber:Int) -> diaryInfo{
+        let subPageDateCN = dateCN + "-" + "\(pageNumber)"
+        let page = diaryInfo(dateString: subPageDateCN)
+        self.add(page)
+        print("创建日期：\(subPageDateCN) 成功")
+        return page
     }
     
     //MARK:-删除
@@ -149,10 +153,7 @@ extension LWRealmManager{
     }
 }
 
-//MARK:-LWRealmManager+DiaryInfo
+//MARK:-helper
 extension LWRealmManager{
-    ///更新所有日记的tag
-    func updateTagForAll(){
-        
-    }
+    
 }
