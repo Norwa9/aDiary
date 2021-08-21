@@ -18,6 +18,7 @@ pod 'ISEmojiView'
 pod 'WhatsNewKit'
 pod 'AttributedString'
 pod 'JXPagingView/Paging'
+pod 'JXSegmentedView'
 
 
 end

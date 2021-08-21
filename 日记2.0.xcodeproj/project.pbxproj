@@ -63,6 +63,8 @@
 		EA66AAD926C94B63001D3D24 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
 		EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
 		EA66AAE026C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
+		EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914226D1216200B44ECA /* LWSubpagesView.swift */; };
+		EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914526D1218400B44ECA /* LWTextViewController.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
@@ -158,7 +160,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0FA20EA040333E891D11EA33 /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods___2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FA20EA040333E891D11EA33 /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods___2_0.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+CloudKit.swift"; sourceTree = "<group>"; };
 		1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LWSyncEngine+Notifications.swift"; sourceTree = "<group>"; };
 		1B2A5647269824CB0090D411 /* LWRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRealmManager.swift; sourceTree = "<group>"; };
@@ -216,6 +218,8 @@
 		EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidgetProvider.swift; sourceTree = "<group>"; };
 		EA66AAE126C961B9001D3D24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/MainWidget.intentdefinition; sourceTree = "<group>"; };
 		EA66AAE526C961BE001D3D24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWidget.strings; sourceTree = "<group>"; };
+		EA67914226D1216200B44ECA /* LWSubpagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSubpagesView.swift; sourceTree = "<group>"; };
+		EA67914526D1218400B44ECA /* LWTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewController.swift; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
@@ -487,6 +491,15 @@
 			path = DataBase;
 			sourceTree = "<group>";
 		};
+		EA67913826D11D4600B44ECA /* subPages */ = {
+			isa = PBXGroup;
+			children = (
+				EA67914226D1216200B44ECA /* LWSubpagesView.swift */,
+				EA67914526D1218400B44ECA /* LWTextViewController.swift */,
+			);
+			path = subPages;
+			sourceTree = "<group>";
+		};
 		EA8E71092694972C007189B1 /* CloudKitHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				EA67913826D11D4600B44ECA /* subPages */,
 				EADBC2EF26B446F5004D1A52 /* topView */,
 				1BB6964926A95BBD0009472F /* LWemojiView */,
 				EADBC2F426B44CED004D1A52 /* LWTagsView */,
@@ -915,6 +929,7 @@
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
 				EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */,
 				1B3AEB5A26CA105500C057A4 /* LWSettingViewController.swift in Sources */,
+				EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */,
@@ -961,6 +976,7 @@
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
+				EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
