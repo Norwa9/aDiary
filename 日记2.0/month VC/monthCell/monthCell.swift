@@ -29,6 +29,8 @@ class monthCell: UICollectionViewCell {
     var todoListView:TodoListView!
     var photos:[UIImage] = [UIImage]()
     var diary:diaryInfo!
+    var models:[diaryInfo]!
+    var pageSegmentControl:UISegmentedControl!
     
     var albumViewLayout:AlbumViewLayout!
     
@@ -80,6 +82,10 @@ class monthCell: UICollectionViewCell {
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        //页面选择
+        pageSegmentControl = UISegmentedControl()
+        pageSegmentControl.addTarget(self, action: #selector(pagesSegmentDidSelected(_:)), for: .valueChanged)
+        
         //分隔线
         splitLine.backgroundColor = UIColor.separator
         splitLine.layer.cornerRadius = 2
@@ -127,15 +133,16 @@ class monthCell: UICollectionViewCell {
         //emojisLabel
         emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)
         
-        
-        containerView.addSubview(emojisLabel)
-        containerView.addSubview(albumView)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(splitLine)
-        containerView.addSubview(contentLabel)
-        containerView.addSubview(tagsLabel)
         containerView.addSubview(dateLabel)
+        contentView.addSubview(pageSegmentControl)
+        containerView.addSubview(emojisLabel)
+        containerView.addSubview(splitLine)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(contentLabel)
+        containerView.addSubview(albumView)
         containerView.addSubview(todoListView)
+        containerView.addSubview(tagsLabel)
+        
     }
     
     //MARK:-Auto layout
@@ -153,8 +160,16 @@ class monthCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
         
-        emojisLabel.snp.makeConstraints { (make) in
+        pageSegmentControl.snp.makeConstraints { (make) in
             make.top.equalTo(dateLabel.snp.bottom).offset(2)
+            make.height.equalTo(25)
+            make.centerX.equalTo(dateLabel)
+            make.bottom.equalTo(emojisLabel.snp.top)
+        }
+        
+        emojisLabel.snp.makeConstraints { (make) in
+//            make.top.equalTo(dateLabel.snp.bottom).offset(2)
+            make.top.equalTo(pageSegmentControl.snp.bottom).offset(2)
             make.left.right.equalToSuperview()
         }
         
@@ -203,7 +218,18 @@ class monthCell: UICollectionViewCell {
     
     private func updateUI(){
         setTodayPropmtEdge()//绿色边框
-         
+        
+        self.dateLabel.font = userDefaultManager.monthCellDateLabelFont
+        self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
+        
+        let pagesNum = LWRealmManager.shared.queryPagesNum(ofDate: diary.date)
+        pageSegmentControl.removeAllSegments()
+        for index in 0..<pagesNum{
+            let numsOfSeg = pageSegmentControl.numberOfSegments
+            pageSegmentControl.insertSegment(withTitle: "\(index+1)", at: numsOfSeg, animated: true)
+        }
+        
+        
         self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         
         self.titleLabel.attributedText = diary.content.getAttrTitle()
@@ -213,8 +239,6 @@ class monthCell: UICollectionViewCell {
         self.tagsLabel.textFont = userDefaultManager.monthCellContentFont
         self.tags = diary.tags
         
-        self.dateLabel.font = userDefaultManager.monthCellDateLabelFont
-        self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
         
         self.fillImages(diary: diary)
         
@@ -279,6 +303,7 @@ extension monthCell{
         super.prepareForReuse()
         self.todoListView.todos = []
         self.emojisLabel.text = ""
+        self.pageSegmentControl.removeAllSegments()
     }
 }
 
@@ -378,5 +403,15 @@ extension monthCell{
     @objc func albumViewTapped(){
         let monthVC = UIApplication.getMonthVC()
         monthVC.presentEditorVC(withViewModel: diary)
+    }
+    
+    @objc func pagesSegmentDidSelected(_ sender:UISegmentedControl){
+//        let index = sender.selectedSegmentIndex
+//        let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index)
+//        self.setViewModel(selectedDiary)
+    }
+    
+    private func updateCollection(curPageIndex:Int){
+        
     }
 }

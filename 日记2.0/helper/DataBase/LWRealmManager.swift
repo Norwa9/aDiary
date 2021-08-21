@@ -136,6 +136,20 @@ extension LWRealmManager{
         return res
     }
     
+    ///查询某日的某页
+    func queryPage(ofDate dateCN:String,pageIndex:Int) -> diaryInfo{
+        //dateCN可能是2021年9月14日，也可能是2021年9月14日-1，所以先提提取准确的日期
+        let correctedDateCN = dateCN.parsePageDate()
+        let prefix = correctedDateCN + "-" + "\(pageIndex)"
+        let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
+        if let res = self.query(predicate: predicate).first{
+            return res
+        }else{
+            //pageIndex = 0
+            return queryFor(dateCN: correctedDateCN).first!
+        }
+        
+    }
 }
 
 //MARK:-修改

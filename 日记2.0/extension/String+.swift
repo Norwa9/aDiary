@@ -43,6 +43,7 @@ extension String{
         return formatter.string(from: rawDate)
     }
     
+    ///提取日期中的页码信息：例如2021年9月14日-1 > 1
     func parsePageIndex()->Int{
         if let splitIndex = self.firstIndex(of: "-"){
             let index2 = self.index(after: splitIndex)
@@ -50,6 +51,16 @@ extension String{
             return Int(indexString)!
         }
         return 0
+    }
+    
+    ///提取准确的日期：例如2021年9月14日-1 -> 2021年9月14日
+    func parsePageDate()->String{
+        if let splitIndex = self.firstIndex(of: "-"){
+            let dateString = String(self[startIndex..<splitIndex])
+            return dateString
+        }else{
+            return self
+        }
     }
 }
 
