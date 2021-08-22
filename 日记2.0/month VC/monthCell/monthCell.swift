@@ -295,7 +295,7 @@ class monthCell: UICollectionViewCell {
     
     ///设置今日提示
     private func setTodayPropmtEdge(){
-        if diary.date == GetTodayDate(){
+        if diary.trueDate == GetTodayDate(){
             self.containerView.layer.borderWidth = 2;
             self.containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
         }else{
