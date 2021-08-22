@@ -245,10 +245,16 @@ class monthCell: UICollectionViewCell {
         pageSegmentControl.snp.updateConstraints { (update) in
             update.height.equalTo( pagesNum == 1 ? 0 : 25 )
         }
-        for index in 0..<pagesNum{
+        let visableNum = min(pagesNum, 4)//限制最多显示的seg个数
+        for index in 0..<visableNum{
             let numsOfSeg = pageSegmentControl.numberOfSegments
             pageSegmentControl.insertSegment(withTitle: "\(index+1)", at: numsOfSeg, animated: false)
         }
+        if visableNum >= 4{
+            pageSegmentControl.insertSegment(withTitle: "...", at: visableNum, animated: false)
+        }
+        
+        
         pageSegmentControl.selectedSegmentIndex = diary.indexOfPage//
         
     }
