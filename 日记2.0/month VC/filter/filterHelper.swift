@@ -35,7 +35,9 @@ class filterHelper {
         let selectedTags = filterHelper.shared.selectedTags
         let sortStyle = filterHelper.shared.selectedSortstyle
         
-        let allDiary = LWRealmManager.shared.localDatabase
+        let allDiary = LWRealmManager.shared.localDatabase.filter { (d) -> Bool in
+            return d.isMainPage
+        }
         var resultDiaries = [diaryInfo]()
         
         //1筛选：关键字

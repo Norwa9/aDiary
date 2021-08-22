@@ -220,7 +220,7 @@ class monthCell: UICollectionViewCell {
         setTodayPropmtEdge()//绿色边框
         
         self.dateLabel.font = userDefaultManager.monthCellDateLabelFont
-        self.dateLabel.text = isFilterMode ? diary.date : "\(diary.day)号 \(diary.weekDay)"
+        self.dateLabel.text = isFilterMode ? diary.trueDate : "\(diary.day)号 \(diary.weekDay)"
         
         self.emojisLabel.attributedText = diary.emojis.joined().changeWorldSpace(space: -7)
         

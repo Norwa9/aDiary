@@ -8,6 +8,16 @@
 import Foundation
 
 extension diaryInfo{
+    ///是否是主页面
+    var isMainPage:Bool{
+        get{
+            if date.contains("-"){
+                return false
+            }else{
+                return true
+            }
+        }
+    }
     ///引入多页面后，date不一定就是真实的日期了
     ///用这个计算属性计算真实的日记，如2021年9月14日-1 -> 2021年9月14日
     var trueDate:String{
