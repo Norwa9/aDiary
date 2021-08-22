@@ -130,7 +130,17 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
         }
         return false
     }
-    return sortedDiaries
+    
+    //过滤掉子页面
+    let mainPage = sortedDiaries.filter { (d) -> Bool in
+        if let _ = d.date.firstIndex(of: "-"){
+            return false
+        }else{
+            return true
+        }
+    }
+    
+    return mainPage
     
 }
 

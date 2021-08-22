@@ -64,6 +64,7 @@
 		EA66AAE026C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
 		EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914226D1216200B44ECA /* LWSubpagesView.swift */; };
 		EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914526D1218400B44ECA /* LWTextViewController.swift */; };
+		EA67915C26D1F35D00B44ECA /* diary+subPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67915B26D1F35C00B44ECA /* diary+subPages.swift */; };
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
@@ -218,6 +219,7 @@
 		EA66AAE526C961BE001D3D24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWidget.strings; sourceTree = "<group>"; };
 		EA67914226D1216200B44ECA /* LWSubpagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSubpagesView.swift; sourceTree = "<group>"; };
 		EA67914526D1218400B44ECA /* LWTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewController.swift; sourceTree = "<group>"; };
+		EA67915B26D1F35C00B44ECA /* diary+subPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diary+subPages.swift"; sourceTree = "<group>"; };
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				1BB6964526A820980009472F /* diaryInfo+Todo.swift */,
 				1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */,
 				1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */,
+				EA67915B26D1F35C00B44ECA /* diary+subPages.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
 				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
+				EA67915C26D1F35D00B44ECA /* diary+subPages.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,

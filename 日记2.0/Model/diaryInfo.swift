@@ -156,10 +156,10 @@ extension diaryInfo{
     
     var row:Int{
         get{
-            let diries = diariesForMonth(forYear: year, forMonth: month)
+            let monthDiries = diariesForMonth(forYear: year, forMonth: month)
             var count = 0
-            for diary in diries{
-                if diary.date == self.date{
+            for diary in monthDiries{
+                if diary.date == self.trueDate{
                     return count
                 }
                 count += 1
