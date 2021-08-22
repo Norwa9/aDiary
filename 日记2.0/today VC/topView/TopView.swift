@@ -28,6 +28,8 @@ class TopView: UIView {
     
     var dismissBtn:UIButton!
     
+    var multiPagesBtn:UIButton!
+    
     init() {
         super.init(frame: .zero)
         initUI()
@@ -73,10 +75,15 @@ class TopView: UIView {
         dismissBtn.setImage(#imageLiteral(resourceName: "close"), for: .normal)
         dismissBtn.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         
+        multiPagesBtn = UIButton()
+        multiPagesBtn.setImage(#imageLiteral(resourceName: "multipages"), for: .normal)
+        multiPagesBtn.addTarget(self, action: #selector(manageMultiPages(_:)), for: .touchUpInside)
+        
         self.addSubview(dateLable)
         self.addSubview(tagsView)
         self.addSubview(emojiView)
         self.addSubview(dismissBtn)
+        self.addSubview(multiPagesBtn)
     }
     
     private func setConstriants(){
@@ -100,8 +107,14 @@ class TopView: UIView {
         }
         
         dismissBtn.snp.makeConstraints { (make) in
-            make.top.right.equalToSuperview()
-            make.size.equalTo(CGSize(width: 44, height: 44))
+            make.top.right.equalToSuperview().offset(-10)
+            make.size.equalTo(CGSize(width: 35, height: 35))
+        }
+        
+        multiPagesBtn.snp.makeConstraints { (make) in
+            make.size.equalTo(dismissBtn)
+            make.right.equalTo(dismissBtn.snp.left).offset(-10)
+            make.centerY.equalTo(dismissBtn)
         }
         
     }
@@ -118,6 +131,10 @@ class TopView: UIView {
     //MARK:-target action
     @objc func dismiss(){
         UIApplication.getTodayVC()?.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func manageMultiPages(_ sender:UIButton){
+        UIApplication.getTodayVC()?.subpagesView.manageMutiPages(sender)
     }
 }
 

@@ -46,7 +46,7 @@ class ManagePagesAlertView: UIView {
             .font:UIFont.init(name: "DIN Alternate", size: 15)!,
             .foregroundColor:APP_GREEN_COLOR()
         ]
-        let attr1 = NSAttributedString(string: "新建", attributes: createDiaryButtonAttributes)
+        let attr1 = NSAttributedString(string: "添加", attributes: createDiaryButtonAttributes)
         createDiaryButton.setAttributedTitle(attr1, for: .normal)
         createDiaryButton.addTarget(self, action: #selector(createSubpage), for: .touchUpInside)
         self.addSubview(createDiaryButton)
@@ -67,7 +67,7 @@ class ManagePagesAlertView: UIView {
     
     
     @objc func createSubpage() {
-        let ac = UIAlertController(title: "新建一页", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "添加新的一页", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
             self.cancelAction()
         }))

@@ -64,7 +64,6 @@ class LWSubpagesView: UIView {
             let pageIndex = model.date.parsePageIndex()
             segmentTitles.append("\(pageIndex + 1)页")
         }
-        segmentTitles.append("管理页面")
         segmentDataSource.titles = segmentTitles
         segmentedView.reloadData()
         pagingView.reloadData()
@@ -154,8 +153,23 @@ extension LWSubpagesView : JXPagingViewDelegate{
 }
 
 extension LWSubpagesView : JXSegmentedViewDelegate{
-    func segmentedView(_ segmentedView: JXSegmentedView, didClickSelectedItemAt index: Int) {
-        guard index == self.models.count , let mainPage = mainPage else{
+    ///更新topView
+    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
+        guard index < self.models.count else {return}
+        
+        let model = models[index]
+        todayVC.topView.model = model
+    }
+    
+}
+
+extension JXPagingListContainerView: JXSegmentedViewListContainer {}
+
+
+//MARK:-targetAction
+extension LWSubpagesView{
+    @objc func manageMutiPages(_ sender:UIButton){
+        guard let mainPage = mainPage else{
             return
         }
         let managePagesAlertView = ManagePagesAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
@@ -187,16 +201,6 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
             updateUI(currentIndex: 0)
         }
         
-        popover.show(managePagesAlertView, fromView: segmentedView)
+        popover.show(managePagesAlertView, fromView: sender)
     }
-    
-    func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
-        guard index < self.models.count else {return}
-        //更新topView
-        let model = models[index]
-        todayVC.topView.model = model
-    }
-    
 }
-
-extension JXPagingListContainerView: JXSegmentedViewListContainer {}
