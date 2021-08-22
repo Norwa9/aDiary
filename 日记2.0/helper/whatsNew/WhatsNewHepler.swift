@@ -115,6 +115,24 @@ class WhatsNewHelper{
         )
         arr.append(whatsNew240)
         
+        //MARK:-2.5
+        let version250 = WhatsNew.Version(major: 2, minor: 5, patch: 0)
+        let whatsNew250 = WhatsNew(
+            // The Version
+            version: version250,
+            // The Title
+            title: "新特性",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "新增多页日记",
+                    subtitle: "在编辑页可以为每天的日记创建更多的页面了。\n（注意：如果你同时在使用iPad版本的aDiary，需要同时更新到2.5版本以保证正常云同步。）",
+                    image: UIImage(named: "segment")
+                ),
+            ]
+        )
+        arr.append(whatsNew250)
+        
         
         return arr
     }
