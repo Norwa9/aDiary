@@ -143,7 +143,10 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
         let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
         models.append(newPage)
         if models.count > 2{
-            SKStoreReviewController.requestReview()
+            if userDefaultManager.requestReviewTimes % 2 == 0{
+                SKStoreReviewController.requestReview()
+                userDefaultManager.requestReviewTimes += 1
+            }
         }
         updateUI()
     }
