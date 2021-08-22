@@ -58,6 +58,7 @@ class LWRealmManager{
         let subPageDateCN = dateCN + "-" + "\(pageNumber)"
         let page = diaryInfo(dateString: subPageDateCN)
         self.add(page)
+        DiaryStore.shared.addOrUpdate(page)//上传云端
         print("创建日期：\(subPageDateCN) 成功")
         return page
     }
@@ -126,7 +127,7 @@ extension LWRealmManager{
         let prefix = dateCN + "-"
         let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
         let res = self.query(predicate: predicate)
-        //按照序号的大小排序
+        //按照子页面的序号的大小排序
         let sortedRes = res.sorted { (d1, d2) -> Bool in
             let index1 = d1.date.parsePageIndex()
             let index2 = d2.date.parsePageIndex()
@@ -141,6 +142,7 @@ extension LWRealmManager{
         let subPages = querySubpages(ofDate: trueDateCN)
         var allPages = [mainPage]
         for subPage in subPages{
+            print("查询子页面结果：\(subPage.date)")
             allPages.append(subPage)
         }
         return allPages
