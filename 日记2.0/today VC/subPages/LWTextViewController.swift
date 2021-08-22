@@ -65,7 +65,6 @@ class LWTextViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         print("textVC viewDidDisappear")
-        //textView.attributedText = nil
     }
     
     private func initUI(){
@@ -104,9 +103,6 @@ class LWTextViewController: UIViewController {
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.save(with: model)
     }
-    
-    
-    
 }
 
 //MARK:-键盘delegate

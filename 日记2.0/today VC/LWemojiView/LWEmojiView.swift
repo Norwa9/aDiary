@@ -78,6 +78,10 @@ class LWEmojiView: UIView {
             .springDamping(0.9),
           ] as [PopoverOption]
         popover = Popover(options: options)
+        popover.didDismissHandler = { [self] in
+            //选取完表情后上传云端
+            DiaryStore.shared.addOrUpdate(model)
+        }
         
         //emojiView keyboard
         let keyboardSettings = KeyboardSettings(bottomType: .categories)
