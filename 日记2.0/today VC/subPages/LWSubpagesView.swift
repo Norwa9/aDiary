@@ -204,6 +204,10 @@ extension LWSubpagesView{
             models.removeLast()
             DiaryStore.shared.delete(with: deleteDiary.id)
             
+            //防止奔溃：
+            todayVC.model = models.first//1.编辑器的model指向主页面
+            UIApplication.getMonthVC().reloadMonthVC()//2.刷新cell的model指向主页面
+            
             updateUI(currentIndex: 0)
         }
         
