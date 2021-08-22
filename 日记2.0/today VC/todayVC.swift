@@ -116,12 +116,12 @@ extension todayVC{
         print("toggleTopView")
         //return
         isShowingTopView.toggle()
-        let topViewHeight = topView.bounds.height
+        let inset = topView.bounds.height - topView.dateLable.bounds.height
         subpagesView.snp.updateConstraints { (update) in
             if isShowingTopView{
                 update.top.equalTo(topView.snp.bottom).offset(5)
             }else{
-                update.top.equalTo(topView.snp.bottom).offset(-topViewHeight - 5)
+                update.top.equalTo(topView.snp.bottom).offset(-inset + 2)
             }
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {

@@ -30,6 +30,8 @@ class TopView: UIView {
     
     var multiPagesBtn:UIButton!
     
+    var fullScreenBtn:UIButton!
+    
     init() {
         super.init(frame: .zero)
         initUI()
@@ -79,11 +81,16 @@ class TopView: UIView {
         multiPagesBtn.setImage(#imageLiteral(resourceName: "multipages"), for: .normal)
         multiPagesBtn.addTarget(self, action: #selector(manageMultiPages(_:)), for: .touchUpInside)
         
+        fullScreenBtn = UIButton()
+        fullScreenBtn.setImage(#imageLiteral(resourceName: "fullscreenOn"), for: .normal)
+        fullScreenBtn.addTarget(self, action: #selector(toggleFullScreen(_:)), for: .touchUpInside)
+        
         self.addSubview(dateLable)
         self.addSubview(tagsView)
         self.addSubview(emojiView)
         self.addSubview(dismissBtn)
         self.addSubview(multiPagesBtn)
+        self.addSubview(fullScreenBtn)
     }
     
     private func setConstriants(){
@@ -118,6 +125,12 @@ class TopView: UIView {
             make.centerY.equalTo(dismissBtn)
         }
         
+        fullScreenBtn.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: 35, height: 35))
+            make.right.equalTo(multiPagesBtn.snp.left).offset(-10)
+            make.centerY.equalTo(dismissBtn)
+        }
+        
     }
     
     private func updateCons(){
@@ -135,7 +148,20 @@ class TopView: UIView {
     }
     
     @objc func manageMultiPages(_ sender:UIButton){
+        multiPagesBtn.bounceAnimation(usingSpringWithDamping: 0.7)
         UIApplication.getTodayVC()?.subpagesView.manageMutiPages(sender)
+    }
+    
+    @objc func toggleFullScreen(_ sender:UIButton){
+        guard let todayVC = UIApplication.getTodayVC() else{return}
+        
+        todayVC.toggleTopView()
+        
+        //更新图片
+        let imageName = todayVC.isShowingTopView ? "fullscreenOff" : "fullscreenOn"
+        let image = UIImage(named: imageName)!
+        fullScreenBtn.bounceAnimation(usingSpringWithDamping: 0.7)
+        fullScreenBtn.setImage(image, for: .normal)
     }
 }
 

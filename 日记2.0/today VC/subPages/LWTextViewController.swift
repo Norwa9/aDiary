@@ -166,13 +166,10 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
 //MARK:-UITextView Delegate
 extension LWTextViewController : UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
-        print("textViewDidBeginEditing")
-//        if let todayVC = baseVC{
-//            if todayVC.isShowingTopView{
-//                todayVC.toggleTopView()
-//            }
-//        }
+        //print("textViewDidBeginEditing")
+        
     }
+    
     func textViewDidChange(_ textView: UITextView) {
         //print("textViewDidChange")
         //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
@@ -185,8 +182,7 @@ extension LWTextViewController : UITextViewDelegate{
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        print("textViewDidEndEditing")
-        //baseVC?.toggleTopView()
+        //print("textViewDidEndEditing")
         save()
     }
     
@@ -226,20 +222,10 @@ extension LWTextViewController : UIScrollViewDelegate{
         let y = scrollView.contentOffset.y
         //print("text view content offset : \(y)")
         
+        //禁止下拉
         if y < 0{
             textView.contentOffset = .zero
         }
-            
-        //自动隐藏/显示topView(当内容高度不及屏幕高度时，会出现bug)
-        guard let todayVC = baseVC,!textView.isFirstResponder else {return}
-        if textView.contentSize.height > globalConstantsManager.shared.kScreenHeight{
-            if y > 50 && todayVC.isShowingTopView{
-                todayVC.toggleTopView()
-            }else if y < 10 && !todayVC.isShowingTopView{
-                todayVC.toggleTopView()
-            }
-        }
-        
     }
 }
 
