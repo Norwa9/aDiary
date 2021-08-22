@@ -29,7 +29,7 @@ extension NSAttributedString{
             
             //1.image
             if let imageAttrValue = attrText.attribute(.image, at: location, effectiveRange: nil) as? Int{
-                print("存储时扫描到imgae:\(range)")
+                //print("存储时扫描到imgae:\(range)")
                 //1.记录
                 imageAttrTuples.append((location,imageAttrValue))
                 
@@ -51,15 +51,15 @@ extension NSAttributedString{
                 }
                 allTodos.append(todo)
                 
-                print("存储时扫描到todo:\(range),\(checked)")
+                //print("存储时扫描到todo:\(range),\(checked)")
                 todoAttrTuples.append((location,todoAttrValue))
             }
         })
         
         let cleanText = attrText.string
         
-        print("存储images:\(imageAttrTuples)")
-        print("存储todos:\(todoAttrTuples)")
+        //print("存储images:\(imageAttrTuples)")
+        //print("存储todos:\(todoAttrTuples)")
         return (imageAttrTuples, todoAttrTuples, cleanText, containsImage, incompletedTodos, completedTodos, allTodos)
         
     }
