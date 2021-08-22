@@ -803,6 +803,12 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
             //更新示例
             tempFontName = selectedFontName
             self.updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
+            
+            //打分
+            if userDefaultManager.requestReviewTimes % 2 == 0{
+                SKStoreReviewController.requestReview()
+                userDefaultManager.requestReviewTimes += 1
+            }
         }
     }
 }
