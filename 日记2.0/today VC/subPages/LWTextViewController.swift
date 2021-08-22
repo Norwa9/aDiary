@@ -78,6 +78,7 @@ class LWTextViewController: UIViewController {
         keyBoardToolsBarFrame = keyBoardToolsBar.frame
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.delegate = self
+        keyBoardToolsBar.setDebugBorder()
         view.layoutIfNeeded()
         keyBoardToolsBar.alpha = 0
         self.view.addSubview(keyBoardToolsBar)
@@ -127,12 +128,14 @@ extension LWTextViewController{
         } else{
             print("keyboardWillChangeFrameNotification")
             //2.键盘出现
+            let convertedTextViewFrame = view.convert(textView.frame, from: view.window)
+            let topInset = abs(convertedTextViewFrame.origin.y)
             let x = keyBoardToolsBarFrame.origin.x
-            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - 80 - 100
+            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - topInset
             //print("show point :\(CGPoint(x: x, y: y))")
             keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
             keyBoardToolsBar.alpha = 1
-            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height + keyBoardToolsBarFrame.height - 80 + 40, right: 0)
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
             //80=topview的高度，100=我也不知道为啥
         }
         textView.scrollRangeToVisible(textView.selectedRange)
