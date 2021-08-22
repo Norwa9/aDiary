@@ -110,8 +110,8 @@ class todayVC: UIViewController{
 extension todayVC{
     ///显示/隐藏表情盘
     func toggleTopView(){
-        return
         print("toggleTopView")
+        return
         isShowingTopView.toggle()
         let topViewHeight = topView.bounds.height
         subpagesView.snp.updateConstraints { (update) in
@@ -134,7 +134,7 @@ extension todayVC{
 //MARK:-UIGestureRecognizerDelegate
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
-        if draggingDownToDismiss == false && subpagesView.textView.contentSize.height > view.bounds.height{
+        if draggingDownToDismiss == false && subpagesView.mainTableView.contentSize.height > view.bounds.height{
             return
         }
         //初始触摸点
@@ -174,7 +174,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         let y = scrollView.contentOffset.y
         //print(y)
         
-        if subpagesView.textView.isFirstResponder {return}
+        if subpagesView.mainTableView.isFirstResponder {return}
         
         //解决下拉dismiss和scrollview的冲突
         if y < 0 {

@@ -33,10 +33,10 @@ class LWSubpagesView: UIView {
         }
     }
     
-    ///获得当前的textView
-    var textView:LWTextView{
-        print("get listContainerView.scrollView")
-        return pagingView.listContainerView.scrollView as! LWTextView
+    var mainTableView:UIScrollView{
+        get{
+            return pagingView.mainTableView
+        }
     }
     
     init() {
@@ -70,7 +70,6 @@ class LWSubpagesView: UIView {
         segmentedView.dataSource = segmentDataSource
         segmentedView.listContainer = pagingView.listContainerView//列表和categoryView联动
         
-        
         pagingView.automaticallyDisplayListVerticalScrollIndicator = false
         self.addSubview(pagingView)
         
@@ -91,6 +90,16 @@ class LWSubpagesView: UIView {
 extension LWSubpagesView : JXPagingViewDelegate{
     func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
         0
+    }
+    
+    func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
+        let y = scrollView.contentOffset.y
+        print("mainTableView y : \(y)")
+        print("mainTableView content height : \(scrollView.contentSize.height)")
+        if y < 0{
+            scrollView.contentOffset = .zero
+        }
+        
     }
     
     func tableHeaderView(in pagingView: JXPagingView) -> UIView {
