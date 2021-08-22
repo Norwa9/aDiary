@@ -311,10 +311,10 @@ class LWSettingViewController: UIViewController {
         let info: ASAttributedString =
             .init(
                 """
-                \("期待收到你的使用建议。",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
+                \("期待收到你的使用反馈和功能建议。",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
                 \("长按复制联系方式：",.font(.systemFont(ofSize: 15, weight: .medium)),.foreground(.secondaryLabel))
-                \(.image(#imageLiteral(resourceName: "mail"), .custom(size: CGSize(width: 17, height: 17)))) \("norwa99@163.com",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
-                \(.image(#imageLiteral(resourceName: "wechat"),.custom(size: CGSize(width: 17, height: 17)))) \("n0rway99(进用户群)",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))
+                \(.image(#imageLiteral(resourceName: "mail"), .custom(size: CGSize(width: 17, height: 17))))\("norwa99@163.com",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))\(.image(#imageLiteral(resourceName: "copy"), .custom(size: CGSize(width: 15, height: 15))))
+                \(.image(#imageLiteral(resourceName: "wechat"),.custom(size: CGSize(width: 15, height: 15)))) \("n0rway99(进用户群)",.font(.systemFont(ofSize: 15)),.foreground(.secondaryLabel),.action(richTextDidClicked))\((.image(#imageLiteral(resourceName: "copy"), .custom(size: CGSize(width: 15, height: 15)))))
                 """
             )
         infoLabel.attributed.text = info
