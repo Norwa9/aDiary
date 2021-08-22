@@ -251,7 +251,7 @@ class monthCell: UICollectionViewCell {
             let numsOfSeg = pageSegmentControl.numberOfSegments
             pageSegmentControl.insertSegment(withTitle: "\(index+1)", at: numsOfSeg, animated: false)
         }
-        pageSegmentControl.selectedSegmentIndex = 0
+        pageSegmentControl.selectedSegmentIndex = diary.indexOfPage//
         
     }
     
@@ -427,7 +427,6 @@ extension monthCell{
         monthVC.filteredDiaries[cellRow] = selectedDiary//替换之后，cell
         monthVC.flowLayout.dateSource = monthVC.filteredDiaries//这样才能更新布局
         monthVC.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//平滑更新布局
-        
     }
 
 }

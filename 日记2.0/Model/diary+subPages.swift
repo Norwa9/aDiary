@@ -15,4 +15,19 @@ extension diaryInfo{
             return self.date.parsePageDate()
         }
     }
+    
+    ///本页面在所有页面（主页+子页面）的下标
+    ///注意：按序号大小排序
+    var indexOfPage:Int{
+        get{
+            if !date.contains("-"){
+                return 0
+            }else{
+                let orderedSubPages = LWRealmManager.shared.querySubpages(ofDate: trueDate)
+                let subPageIndex = orderedSubPages.firstIndex(of: self)!//在子页中的下标
+                return subPageIndex + 1 //1表示主页
+            }
+        }
+    }
+
 }
