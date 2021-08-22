@@ -242,6 +242,7 @@ class monthCell: UICollectionViewCell {
     private func setupSegmentControl(){
         let pagesNum = LWRealmManager.shared.queryPagesNum(ofDate: diary.date.parsePageDate())
         pageSegmentControl.removeAllSegments()
+        pageSegmentControl.alpha = pagesNum == 1 ? 0 : 1//不知道为啥高度设置为0后还是隐约出现一点，所以隐藏它
         pageSegmentControl.snp.updateConstraints { (update) in
             update.height.equalTo( pagesNum == 1 ? 0 : 25 )
         }
