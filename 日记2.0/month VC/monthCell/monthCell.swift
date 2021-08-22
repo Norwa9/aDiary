@@ -415,7 +415,9 @@ extension monthCell{
     
     @objc func pagesSegmentDidSelected(_ sender:UISegmentedControl){
         let index = sender.selectedSegmentIndex
-        let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index)
+        guard let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index)else{
+            return
+        }
         //更新cell的内容
         self.diary = selectedDiary
         self.updateUI()

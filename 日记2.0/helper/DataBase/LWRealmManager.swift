@@ -129,26 +129,33 @@ extension LWRealmManager{
     }
     
     ///查询某日的所有子页面
-    func querySubpages(ofDate dateCN:String) -> Results<diaryInfo>{
+    func querySubpages(ofDate dateCN:String) -> [diaryInfo]{
         let prefix = dateCN + "-"
         let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
         let res = self.query(predicate: predicate)
-        return res
+        //按照序号的大小排序
+        let sortedRes = res.sorted { (d1, d2) -> Bool in
+            let index1 = d1.date.parsePageIndex()
+            let index2 = d2.date.parsePageIndex()
+            return index1 < index2
+        }
+        return sortedRes
     }
     
     ///查询某日的某页
-    func queryPage(ofDate dateCN:String,pageIndex:Int) -> diaryInfo{
+    ///参数pageIndex：0表示查询主页面，>0表示查询子页面
+    func queryPage(ofDate dateCN:String,pageIndex:Int) -> diaryInfo?{
         //dateCN可能是2021年9月14日，也可能是2021年9月14日-1，所以先提提取准确的日期
-        let correctedDateCN = dateCN.parsePageDate()
-        let prefix = correctedDateCN + "-" + "\(pageIndex)"
-        let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
-        if let res = self.query(predicate: predicate).first{
-            return res
-        }else{
-            //pageIndex = 0
-            return queryFor(dateCN: correctedDateCN).first!
+        let trueDate = dateCN.parsePageDate()
+        if pageIndex == 0{//pageIndex表示查询主页面
+            return queryFor(dateCN: trueDate).first!
+        }else{//查询的是子页面
+            let orderedSubPages = self.querySubpages(ofDate: trueDate)
+            guard pageIndex < orderedSubPages.count,pageIndex > 0 else{
+                return nil
+            }
+            return orderedSubPages[pageIndex - 1]
         }
-        
     }
 }
 
