@@ -13,7 +13,6 @@ class LWTextView: UITextView {
         super.init(frame: frame, textContainer: textContainer)
         self.backgroundColor = .systemBackground
         self.textColor = .label
-        self.layer.cornerRadius = 15
     }
     
     ///从storeboard读取

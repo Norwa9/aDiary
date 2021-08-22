@@ -82,7 +82,6 @@ class LWSubpagesView: UIView {
         segmentedView.backgroundColor = .systemGray6
         segmentedView.listContainer = pagingView.listContainerView//列表和categoryView联动
         
-        pagingView.automaticallyDisplayListVerticalScrollIndicator = false
         self.addSubview(pagingView)
         
     }
@@ -111,6 +110,7 @@ class LWSubpagesView: UIView {
     
 }
 
+//MARK:-JXPagingViewDelegate
 extension LWSubpagesView : JXPagingViewDelegate{
     func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
         0
@@ -152,6 +152,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     
 }
 
+//MARK:-JXSegmentedViewDelegate
 extension LWSubpagesView : JXSegmentedViewDelegate{
     ///更新topView
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {

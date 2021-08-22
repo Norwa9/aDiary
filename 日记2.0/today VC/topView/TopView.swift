@@ -107,7 +107,8 @@ class TopView: UIView {
         }
         
         dismissBtn.snp.makeConstraints { (make) in
-            make.top.right.equalToSuperview().offset(-10)
+            make.centerY.equalTo(dateLable)
+            make.right.equalToSuperview().offset(-10)
             make.size.equalTo(CGSize(width: 35, height: 35))
         }
         

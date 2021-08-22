@@ -78,7 +78,6 @@ class LWTextViewController: UIViewController {
         keyBoardToolsBarFrame = keyBoardToolsBar.frame
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.delegate = self
-        keyBoardToolsBar.setDebugBorder()
         view.layoutIfNeeded()
         keyBoardToolsBar.alpha = 0
         self.view.addSubview(keyBoardToolsBar)

@@ -114,7 +114,7 @@ extension todayVC{
     ///显示/隐藏表情盘
     func toggleTopView(){
         print("toggleTopView")
-        return
+        //return
         isShowingTopView.toggle()
         let topViewHeight = topView.bounds.height
         subpagesView.snp.updateConstraints { (update) in
@@ -126,6 +126,7 @@ extension todayVC{
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             self.view.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
+            self.subpagesView.segmentedView.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
             self.view.layoutIfNeeded()
         } completion: { (_) in
 
@@ -173,9 +174,8 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     
     //下拉dismiss
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        return 
         let y = scrollView.contentOffset.y
-        //print(y)
+//        print(y)
         
         if subpagesView.mainTableView.isFirstResponder {return}
         
