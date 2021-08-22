@@ -9,18 +9,22 @@ import UIKit
 import JXPagingView
 import JXSegmentedView
 import StoreKit
+import Popover
 
 class LWSubpagesView: UIView {
     var todayVC:todayVC!
     lazy var pagingView: JXPagingView = JXPagingView(delegate: self)
     
-    lazy var segmentedView: JXSegmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(50)))
+    lazy var segmentedView: JXSegmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(kSegmentedViewHeight)))
+    let kSegmentedViewHeight = 30
     var segmentDataSource = JXSegmentedTitleDataSource()
     var segmentTitles = [String]()
     
+    var popover:Popover!
+    
     var models:[diaryInfo] = []{
         didSet{
-            updateUI()
+            updateUI(currentIndex: currentPageIndex)
         }
     }
     
@@ -47,21 +51,24 @@ class LWSubpagesView: UIView {
         super.init(frame: .zero)
         
         initUI()
+        setupPopover()
         setupConstraints()
     }
     
-    func updateUI(){
+    ///更新UI
+    ///currentIndex表示：进入页面后section的初始index
+    func updateUI(currentIndex:Int){
         segmentTitles.removeAll()
         for model in models{
 //            segmentTitles.append(model.date)
             let pageIndex = model.date.parsePageIndex()
             segmentTitles.append("\(pageIndex + 1)页")
         }
-        segmentTitles.append("新建页面+")
+        segmentTitles.append("管理页面")
         segmentDataSource.titles = segmentTitles
         segmentedView.reloadData()
         pagingView.reloadData()
-        segmentedView.selectItemAt(index: currentPageIndex)
+        segmentedView.selectItemAt(index: currentIndex)
     }
     
     private func initUI(){
@@ -79,6 +86,18 @@ class LWSubpagesView: UIView {
         pagingView.automaticallyDisplayListVerticalScrollIndicator = false
         self.addSubview(pagingView)
         
+    }
+    
+    private func setupPopover(){
+        let options = [
+            .type(.auto),
+            .cornerRadius(10),
+          .animationIn(0.3),
+            .arrowSize(CGSize(width: 5, height: 5)),
+            .springDamping(0.7),
+          ] as [PopoverOption]
+        
+        popover = Popover(options: options, showHandler: nil, dismissHandler: nil)
     }
     
     private func setupConstraints(){
@@ -113,7 +132,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     }
     
     func heightForPinSectionHeader(in pagingView: JXPagingView) -> Int {
-        return 30
+        return kSegmentedViewHeight
     }
     
     func viewForPinSectionHeader(in pagingView: JXPagingView) -> UIView {
@@ -139,22 +158,43 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
         guard index == self.models.count , let mainPage = mainPage else{
             return
         }
+        let managePagesAlertView = ManagePagesAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
         
-        let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
-        models.append(newPage)
-        if models.count > 2{
-            if userDefaultManager.requestReviewTimes % 2 == 0{
-                SKStoreReviewController.requestReview()
-                userDefaultManager.requestReviewTimes += 1
-            }
+        //定义取消操作
+        managePagesAlertView.cancelAction = {
+            self.popover.dismiss()
         }
-        updateUI()
+        //定义创建页面操作
+        managePagesAlertView.createAction = { [self] in
+            let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
+            models.append(newPage)
+            if models.count > 2{
+                //请求打分
+                if userDefaultManager.requestReviewTimes % 2 == 0{
+                    SKStoreReviewController.requestReview()
+                    userDefaultManager.requestReviewTimes += 1
+                }
+            }
+            updateUI(currentIndex: models.count - 1)
+        }
+        
+        //定义删除页面操作
+        managePagesAlertView.deleteAction = { [self] in
+            //主页面不能删
+            guard let deleteDiary = models.last,models.count > 1 else{return}
+            models.removeLast()
+            DiaryStore.shared.delete(with: deleteDiary.id)
+            updateUI(currentIndex: 0)
+        }
+        
+        popover.show(managePagesAlertView, fromView: segmentedView)
     }
     
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         guard index < self.models.count else {return}
+        //更新topView
         let model = models[index]
-        todayVC.topView.model = model//更新topView
+        todayVC.topView.model = model
     }
     
 }

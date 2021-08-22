@@ -51,7 +51,7 @@ public final class DiaryStore: ObservableObject {
         self.syncEngine?.start()
     }
     
-    ///新建或修改
+    //MARK:-新建或修改
     func addOrUpdate(_ diary:diaryInfo) {
         //在textFormatter中已经实现了更新本地数据库的逻辑
         if userDefaultManager.iCloudEnable == false{
@@ -61,7 +61,7 @@ public final class DiaryStore: ObservableObject {
         syncEngine?.upload(diary)
     }
     
-    ///删除
+    //MARK:-删除
     public func delete(with id: String) {
         guard let _ = LWRealmManager.shared.queryDiaryWithID(id) else {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
@@ -83,7 +83,7 @@ public final class DiaryStore: ObservableObject {
         UIApplication.getMonthVC().reloadMonthVC()
     }
     
-    ///将获取的云端变动保存到本地，以及更新UI
+    //MARK:-将获取的云端变动保存到本地，以及更新UI
     private func updateAfterSync(_ diaries:[diaryInfo]){
         if diaries.isEmpty{
             //云端没有更新
@@ -110,7 +110,7 @@ public final class DiaryStore: ObservableObject {
         
     }
     
-    ///接收到云端的删除信号后，删除相应的本地数据
+    //MARK:-接收到云端的删除信号后，删除相应的本地数据
     private func updateAfterDelete(_ deletedIDs:[String]){
         if deletedIDs.isEmpty{
             //云端通知没有删除事件
@@ -139,7 +139,7 @@ public final class DiaryStore: ObservableObject {
         }
     }
     
-    ///处理CloudKit发来的更新通知
+    //MARK:-处理CloudKit发来的更新通知
     public func processSubscriptionNotification(with userInfo: [AnyHashable : Any]) {
         if userDefaultManager.iCloudEnable == false{
             return

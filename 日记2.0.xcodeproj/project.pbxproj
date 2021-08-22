@@ -68,6 +68,7 @@
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
+		EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */; };
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
 		EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */; };
@@ -223,6 +224,7 @@
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
+		EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePagesAlertView.swift; sourceTree = "<group>"; };
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
 		EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCloudKitConstants.swift; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 			children = (
 				EA67914226D1216200B44ECA /* LWSubpagesView.swift */,
 				EA67914526D1218400B44ECA /* LWTextViewController.swift */,
+				EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */,
 			);
 			path = subPages;
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 				1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
+				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,

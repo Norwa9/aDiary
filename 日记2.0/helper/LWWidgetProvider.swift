@@ -16,7 +16,7 @@ class LWWidgetProvider{
         let roamDiary = db.randomElement()
         
         if let diary = roamDiary{
-            let dateEn = DateCN2En(dateCN: diary.date)
+            let dateEn = DateCN2En(dateCN: diary.trueDate)
             let roamData = RoamData(date: dateEn, content: diary.content)
             let jsonEncoder = JSONEncoder()
             if let storedData = try? jsonEncoder.encode(roamData) {
