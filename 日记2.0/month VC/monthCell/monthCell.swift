@@ -165,7 +165,6 @@ class monthCell: UICollectionViewCell {
             make.top.equalTo(dateLabel.snp.bottom).offset(2)
             make.height.equalTo(25)
             make.centerX.equalTo(dateLabel)
-            make.bottom.equalTo(emojisLabel.snp.top)
         }
         
         emojisLabel.snp.makeConstraints { (make) in
