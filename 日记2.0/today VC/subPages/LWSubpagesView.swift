@@ -74,6 +74,7 @@ class LWSubpagesView: UIView {
         //segmentedView
         segmentedView.delegate = self
         segmentDataSource.titleSelectedColor = APP_GREEN_COLOR()
+        segmentDataSource.titleNormalColor = .label
         segmentDataSource.titleNormalFont = userDefaultManager.customFont(withSize: 12)
         segmentDataSource.isTitleZoomEnabled = true
         segmentDataSource.itemSpacing = 10
@@ -81,6 +82,7 @@ class LWSubpagesView: UIView {
         segmentedView.dataSource = segmentDataSource
         segmentedView.backgroundColor = .systemGray6
         segmentedView.listContainer = pagingView.listContainerView//列表和categoryView联动
+        
         
         
         pagingView.mainTableView.isScrollEnabled = false

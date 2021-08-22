@@ -83,6 +83,23 @@ public final class DiaryStore: ObservableObject {
         UIApplication.getMonthVC().reloadMonthVC()
     }
     
+    ///删除一个日期的主页面和所有子页面
+    public func deleteAllPage(withPageID id:String){
+        guard let page = LWRealmManager.shared.queryDiaryWithID(id),
+              let mainPage = LWRealmManager.shared.queryFor(dateCN: page.trueDate).first
+        else {
+            os_log("main page not found with id %@ for deletion.", log: self.log, type: .error, id)
+            return
+        }
+        
+        let allPages = LWRealmManager.shared.queryAllPages(ofDate: mainPage.trueDate)
+        
+        for page in allPages{
+            print("删除页面：\(page.date)")
+            delete(with: page.id)
+        }
+    }
+    
     //MARK:-将获取的云端变动保存到本地，以及更新UI
     private func updateAfterSync(_ diaries:[diaryInfo]){
         if diaries.isEmpty{

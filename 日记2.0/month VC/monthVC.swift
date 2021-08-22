@@ -732,12 +732,12 @@ extension monthVC {
     
     
     func performDelete(_ indexPath:IndexPath){
-        let ac = UIAlertController(title: "是否删除此篇日记？", message: "⚠️无法恢复⚠️", preferredStyle: .alert)
+        let ac = UIAlertController(title: "是否删除此篇日记？", message: "该日期下所有日记都会被删除", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         ac.addAction(UIAlertAction(title: "确定", style: .destructive, handler: { [self] _ in
             let row = indexPath.item
-            let delteDiary = filteredDiaries[row]
-            DiaryStore.shared.delete(with: delteDiary.id)
+            let cellModel = filteredDiaries[row]
+            DiaryStore.shared.deleteAllPage(withPageID: cellModel.id)
         }))
         self.present(ac, animated: true, completion: nil)
     }
