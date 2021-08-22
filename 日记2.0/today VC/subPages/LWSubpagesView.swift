@@ -82,6 +82,8 @@ class LWSubpagesView: UIView {
         segmentedView.backgroundColor = .systemGray6
         segmentedView.listContainer = pagingView.listContainerView//列表和categoryView联动
         
+        
+        pagingView.mainTableView.isScrollEnabled = false
         self.addSubview(pagingView)
         
     }

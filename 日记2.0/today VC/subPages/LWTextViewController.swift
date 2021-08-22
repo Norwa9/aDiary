@@ -135,7 +135,6 @@ extension LWTextViewController{
             keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
             keyBoardToolsBar.alpha = 1
             textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
-            //80=topview的高度，100=我也不知道为啥
         }
         textView.scrollRangeToVisible(textView.selectedRange)
     }

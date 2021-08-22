@@ -109,11 +109,11 @@ class TopView: UIView {
         dismissBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(dateLable)
             make.right.equalToSuperview().offset(-10)
-            make.size.equalTo(CGSize(width: 35, height: 35))
+            make.size.equalTo(CGSize(width: 30, height: 30))
         }
         
         multiPagesBtn.snp.makeConstraints { (make) in
-            make.size.equalTo(dismissBtn)
+            make.size.equalTo(CGSize(width: 35, height: 35))
             make.right.equalTo(dismissBtn.snp.left).offset(-10)
             make.centerY.equalTo(dismissBtn)
         }
