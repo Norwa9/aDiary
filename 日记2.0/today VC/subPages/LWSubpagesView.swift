@@ -116,6 +116,13 @@ class LWSubpagesView: UIView {
 
 //MARK:-JXPagingViewDelegate
 extension LWSubpagesView : JXPagingViewDelegate{
+    func mainTableViewDidScroll(_ scrollView: UIScrollView) {
+        let y = scrollView.contentOffset.y
+        print("mainTableViewDidScroll : \(y)")
+        
+    }
+    
+    
     func tableHeaderViewHeight(in pagingView: JXPagingView) -> Int {
         0
     }

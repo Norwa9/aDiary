@@ -392,7 +392,7 @@ class monthVC: UIViewController {
         
         backToCurMonthButton.snp.updateConstraints { (update) in
             if toShow{
-                update.bottom.equalToSuperview().offset(-(kBlurEffectViewHeight + 50))
+                update.bottom.equalToSuperview().offset(-kBlurEffectViewHeight)
             }else{
                 update.bottom.equalToSuperview().offset(100)
             }
