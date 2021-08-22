@@ -676,19 +676,15 @@ extension monthVC:UISearchBarDelegate{
     }
     
     func filter(){
-        filterHelper.shared.filter { [self] res in
-            resultDiaries = res
+        filterHelper.shared.filter { [self] results,num,wordCount in
+            resultDiaries = results
             filteredDiaries = Array(resultDiaries.prefix(20))
             print("search results:\(filteredDiaries.count)")
             flowLayout.dateSource = filteredDiaries//提供布局的计算依据
             //更新collectionView
             reloadCollectionViewData()//如果数据源很多，将会很耗时！
             //更新topbar label
-            var totalNum = 0
-            for diary in resultDiaries{
-                totalNum += diary.content.count
-            }
-            topbar.dataLable2.text = "共\(resultDiaries.count)篇，\(totalNum)字"
+            topbar.dataLable2.text = "共\(num)篇，\(wordCount)字"
             
         }
     }

@@ -23,33 +23,44 @@ class filterHelper {
     }
     
     ///根据条件异步筛选日记
-    typealias filterCompletion = ( ([diaryInfo]) -> Void)?
+    typealias filterCompletion = ( (_ res:[diaryInfo],_ num:Int,_ wordCount:Int) -> Void)?
     public func filter(completionHandler: filterCompletion ){
         let res = self.filterDiary()//0.5s左右
-        completionHandler?(res)   
+        completionHandler?(res.0,res.1,res.2)
     }
     
     //MARK:-获取符合筛选条件的所有日记
-    private func filterDiary()->[diaryInfo]{
+    private func filterDiary()->([diaryInfo],Int,Int){
         let keywords = filterHelper.shared.searchText
         let selectedTags = filterHelper.shared.selectedTags
         let sortStyle = filterHelper.shared.selectedSortstyle
         
-        let allDiary = LWRealmManager.shared.localDatabase.filter { (d) -> Bool in
+        let allDiary = LWRealmManager.shared.localDatabase
+        
+        //篇数
+        let count = allDiary.count
+        
+        //字数
+        var wordCount = 0
+        for diary in allDiary{
+            wordCount += diary.content.count
+        }
+        
+        let mainPages = allDiary.filter { (d) -> Bool in
             return d.isMainPage
         }
         var resultDiaries = [diaryInfo]()
         
         //1筛选：关键字
         if keywords != ""{
-            resultDiaries = allDiary.filter { (item: diaryInfo) -> Bool in
+            resultDiaries = mainPages.filter { (item: diaryInfo) -> Bool in
                 let content = item.content + item.todos.joined()//正文+todo
                 return content.range(of: keywords, options: .caseInsensitive, range: nil, locale: nil) != nil
             }
         }else{
             //如果没有关键词，返回所有日记
             print("无关键词")
-            for diary in allDiary{
+            for diary in mainPages{
                 resultDiaries.append(diary)
             }
         }
@@ -66,7 +77,7 @@ class filterHelper {
         dateFomatter.dateFormat = "yyyy年M月d日"
         switch sortStyle {
             case .dateDescending:
-                return resultDiaries.sorted { (d1, d2) -> Bool in
+                resultDiaries = resultDiaries.sorted { (d1, d2) -> Bool in
                     if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
                         if date1.compare(date2) ==  .orderedDescending{
                             return true
@@ -75,7 +86,7 @@ class filterHelper {
                     return false
                 }
             case .dateAscending:
-                return resultDiaries.sorted { (d1, d2) -> Bool in
+                resultDiaries =  resultDiaries.sorted { (d1, d2) -> Bool in
                     if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
                         if date1.compare(date2) ==  .orderedAscending{
                             return true
@@ -84,11 +95,11 @@ class filterHelper {
                     return false
                 }
             case .wordDescending:
-                return resultDiaries.sorted(by:{$0.content.count > $1.content.count})
+                resultDiaries =  resultDiaries.sorted(by:{$0.content.count > $1.content.count})
             case .wordAscending:
-                return resultDiaries.sorted(by:{$0.content.count < $1.content.count})
+                resultDiaries = resultDiaries.sorted(by:{$0.content.count < $1.content.count})
             case .like:
-                return resultDiaries.filter { $0.islike }.sorted { (d1, d2) -> Bool in
+                resultDiaries = resultDiaries.filter { $0.islike }.sorted { (d1, d2) -> Bool in
                     if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
                         if date1.compare(date2) ==  .orderedDescending{
                             return true
@@ -97,5 +108,7 @@ class filterHelper {
                     return false
                 }
         }
+        
+        return (resultDiaries,count,wordCount)
     }
 }

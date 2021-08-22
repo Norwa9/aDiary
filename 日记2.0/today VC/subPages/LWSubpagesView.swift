@@ -203,6 +203,7 @@ extension LWSubpagesView{
             guard let deleteDiary = models.last,models.count > 1 else{return}
             models.removeLast()
             DiaryStore.shared.delete(with: deleteDiary.id)
+            
             updateUI(currentIndex: 0)
         }
         
