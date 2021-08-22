@@ -119,10 +119,19 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
         unsortedResult = filteredResults
     }
     
+    //过滤掉子页面
+    let mainPage = unsortedResult.filter { (d) -> Bool in
+        if let _ = d.date.firstIndex(of: "-"){
+            return false
+        }else{
+            return true
+        }
+    }
+    
     //按日期排序
     let dateFomatter = DateFormatter()
     dateFomatter.dateFormat = "yyyy年M月d日"
-    let sortedDiaries = unsortedResult.sorted { (d1, d2) -> Bool in
+    let sortedDiaries = mainPage.sorted { (d1, d2) -> Bool in
         if let date1 = dateFomatter.date(from: d1.date) ,let date2 = dateFomatter.date(from: d2.date){
             if date1.compare(date2) ==  .orderedDescending{
                 return true
@@ -131,16 +140,7 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
         return false
     }
     
-    //过滤掉子页面
-    let mainPage = sortedDiaries.filter { (d) -> Bool in
-        if let _ = d.date.firstIndex(of: "-"){
-            return false
-        }else{
-            return true
-        }
-    }
-    
-    return mainPage
+    return sortedDiaries
     
 }
 
