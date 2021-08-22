@@ -38,7 +38,7 @@ class LWTagsView: UIView {
             tagsLabel.addTag("#"+tag)
         }
         
-        tagsLabel.addTag("添加+")
+        tagsLabel.addTag("添加标签+")
     }
     
     private func initUI(){

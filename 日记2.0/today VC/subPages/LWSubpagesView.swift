@@ -51,9 +51,9 @@ class LWSubpagesView: UIView {
         for model in models{
 //            segmentTitles.append(model.date)
             let pageIndex = model.date.parsePageIndex()
-            segmentTitles.append("page.\(pageIndex + 1)")
+            segmentTitles.append("\(pageIndex + 1)页")
         }
-        segmentTitles.append("新建")
+        segmentTitles.append("新建页面+")
         segmentDataSource.titles = segmentTitles
         segmentedView.reloadData()
         pagingView.reloadData()
@@ -68,6 +68,7 @@ class LWSubpagesView: UIView {
         segmentDataSource.itemSpacing = 10
         segmentDataSource.isItemSpacingAverageEnabled = false
         segmentedView.dataSource = segmentDataSource
+        segmentedView.backgroundColor = .systemGray6
         segmentedView.listContainer = pagingView.listContainerView//列表和categoryView联动
         
         pagingView.automaticallyDisplayListVerticalScrollIndicator = false
