@@ -223,9 +223,8 @@ extension LWTextViewController : UITextViewDelegate{
 //MARK:-UIScrollViewDelegate
 extension LWTextViewController : UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //self.listViewDidScrollCallback?(scrollView)
         let y = scrollView.contentOffset.y
-        print("text view content offset : \(y)")
+        //print("text view content offset : \(y)")
         
         if y < 0{
             textView.contentOffset = .zero
