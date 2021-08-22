@@ -30,14 +30,14 @@ class ManagePagesAlertView: UIView {
     }
     
     func configureUI(){
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .white
         
         //标题
         title.frame = CGRect(x: 0, y: 12, width: 150, height: 24)
         title.textAlignment = .center
         title.font = UIFont.init(name: "DIN Alternate", size: 20)
         title.text = "管理页面"
-        title.textColor = .label
+        title.textColor = .black
         self.addSubview(title)
         
         //创建按钮
