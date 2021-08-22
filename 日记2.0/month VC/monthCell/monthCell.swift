@@ -168,7 +168,6 @@ class monthCell: UICollectionViewCell {
         }
         
         emojisLabel.snp.makeConstraints { (make) in
-//            make.top.equalTo(dateLabel.snp.bottom).offset(2)
             make.top.equalTo(pageSegmentControl.snp.bottom).offset(2)
             make.left.right.equalToSuperview()
         }
@@ -414,7 +413,7 @@ extension monthCell{
     
     @objc func pagesSegmentDidSelected(_ sender:UISegmentedControl){
         let index = sender.selectedSegmentIndex
-        guard let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index)else{
+        guard let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index) else{
             return
         }
         //更新cell的内容

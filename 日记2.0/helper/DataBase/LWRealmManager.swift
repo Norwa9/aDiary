@@ -155,7 +155,7 @@ extension LWRealmManager{
             return queryFor(dateCN: trueDate).first!
         }else{//查询的是子页面
             let orderedSubPages = self.querySubpages(ofDate: trueDate)
-            guard pageIndex < orderedSubPages.count,pageIndex > 0 else{
+            guard pageIndex <= orderedSubPages.count,pageIndex > 0 else{
                 return nil
             }
             return orderedSubPages[pageIndex - 1]
