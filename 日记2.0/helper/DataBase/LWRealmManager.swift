@@ -120,13 +120,6 @@ extension LWRealmManager{
         return res.count
     }
     
-    ///查询某日的所有页面（主页面+所有子页面）
-    func queryAllPages(ofDate dateCN:String) -> Results<diaryInfo>{
-        let prefix = dateCN
-        let predicate = NSPredicate(format: "date BEGINSWITH %@", prefix)
-        let res = self.query(predicate: predicate)
-        return res
-    }
     
     ///查询某日的所有子页面
     func querySubpages(ofDate dateCN:String) -> [diaryInfo]{
@@ -140,6 +133,17 @@ extension LWRealmManager{
             return index1 < index2
         }
         return sortedRes
+    }
+    
+    ///查询某日的所有页面（主页面+所有子页面）
+    func queryAllPages(ofDate trueDateCN:String) -> [diaryInfo]{
+        let mainPage = queryFor(dateCN: trueDateCN).first!
+        let subPages = querySubpages(ofDate: trueDateCN)
+        var allPages = [mainPage]
+        for subPage in subPages{
+            allPages.append(subPage)
+        }
+        return allPages
     }
     
     ///查询某日的某页

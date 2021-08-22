@@ -24,6 +24,10 @@ class LWSubpagesView: UIView {
         }
     }
     
+    ///初始页面
+    var currentPageIndex:Int = 0
+    
+    ///主页面
     var mainPage:diaryInfo?{
         get{
             if let main = models.first{
@@ -57,6 +61,7 @@ class LWSubpagesView: UIView {
         segmentDataSource.titles = segmentTitles
         segmentedView.reloadData()
         pagingView.reloadData()
+        segmentedView.selectItemAt(index: currentPageIndex)
     }
     
     private func initUI(){

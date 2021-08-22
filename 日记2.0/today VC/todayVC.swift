@@ -10,7 +10,7 @@ import UIKit
 
 let kTextViewPeddingX:CGFloat = 0
 class todayVC: UIViewController{
-    ///引入多页的概念后，model是pages的初始页面
+    ///引入多页的概念后，传来的model可能是pages的主页面，也可能是子页面
     var model:diaryInfo! {
         didSet{
             setModel()
@@ -64,7 +64,10 @@ class todayVC: UIViewController{
         topView.model = model
         topView.layoutIfNeeded()
         
-        let models = LWRealmManager.shared.queryAllPages(ofDate: model.date).toArray()
+        //引入多页的概念后，传来的model可能是pages的主页面，也可能是子页面
+        let trueDate = model.trueDate//表示查询当日所有页面
+        let models = LWRealmManager.shared.queryAllPages(ofDate: trueDate)
+        subpagesView.currentPageIndex = model.indexOfPage
         subpagesView.models = models
     }
     
