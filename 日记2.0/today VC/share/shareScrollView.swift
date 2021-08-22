@@ -46,7 +46,7 @@ class shareScrollView:UIScrollView{
         self.showsVerticalScrollIndicator = false
         
         dateLabel.textAlignment = .center
-        dateLabel.text = diary.date + " " + GetWeekday(dateString: diary.date)
+        dateLabel.text = diary.date + " " + GetWeekday(dateString: diary.trueDate)
         dateLabel.font = userDefaultManager.customFont(withSize: 24)
         dateLabel.textColor = .label
         
