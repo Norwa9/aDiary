@@ -39,9 +39,6 @@ class LWTagsView: UIView {
         }
         
         tagsLabel.addTag("添加标签+")
-        
-        //选取完标签后更新上传云端
-        DiaryStore.shared.addOrUpdate(model)
     }
     
     private func initUI(){

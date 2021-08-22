@@ -289,5 +289,7 @@ extension tagsViewController{
             diary.tags = selectedTags
         }
         self.completionHandler?()
+        //选取完标签后更新上传云端
+        DiaryStore.shared.addOrUpdate(diary)
     }
 }
