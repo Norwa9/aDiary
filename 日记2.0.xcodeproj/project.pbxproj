@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B1ED87E26D372E4008D88FC /* newUserGuideHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1ED87D26D372E4008D88FC /* newUserGuideHelper.swift */; };
+		1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B1ED87F26D374E3008D88FC /* intro-page2.txt */; };
 		1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */; };
 		1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */; };
 		1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2A5647269824CB0090D411 /* LWRealmManager.swift */; };
@@ -31,7 +33,7 @@
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
 		EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38493E262EBAA3001B693F /* filterHelper.swift */; };
-		EA384942262ED17A001B693F /* introduction.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* introduction.txt */; };
+		EA384942262ED17A001B693F /* intro-page1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* intro-page1.txt */; };
 		EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */; };
 		EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA3ABAD625DFE05400911902 /* demoDiaries.txt */; };
 		EA3ABADA25E019FD00911902 /* toolsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3ABAD925E019FD00911902 /* toolsBar.swift */; };
@@ -161,6 +163,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B1ED87D26D372E4008D88FC /* newUserGuideHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newUserGuideHelper.swift; sourceTree = "<group>"; };
+		1B1ED87F26D374E3008D88FC /* intro-page2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "intro-page2.txt"; sourceTree = "<group>"; };
 		1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+CloudKit.swift"; sourceTree = "<group>"; };
 		1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LWSyncEngine+Notifications.swift"; sourceTree = "<group>"; };
 		1B2A5647269824CB0090D411 /* LWRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRealmManager.swift; sourceTree = "<group>"; };
@@ -191,7 +195,7 @@
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
 		EA38493E262EBAA3001B693F /* filterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterHelper.swift; sourceTree = "<group>"; };
-		EA384941262ED17A001B693F /* introduction.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = introduction.txt; sourceTree = "<group>"; };
+		EA384941262ED17A001B693F /* intro-page1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "intro-page1.txt"; sourceTree = "<group>"; };
 		EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewLayout.swift; sourceTree = "<group>"; };
 		EA3ABAD625DFE05400911902 /* demoDiaries.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demoDiaries.txt; sourceTree = "<group>"; };
 		EA3ABAD925E019FD00911902 /* toolsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toolsBar.swift; sourceTree = "<group>"; };
@@ -307,6 +311,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B1ED87C26D372AC008D88FC /* introduction */ = {
+			isa = PBXGroup;
+			children = (
+				EA384941262ED17A001B693F /* intro-page1.txt */,
+				1B1ED87F26D374E3008D88FC /* intro-page2.txt */,
+				1B1ED87D26D372E4008D88FC /* newUserGuideHelper.swift */,
+			);
+			path = introduction;
+			sourceTree = "<group>";
+		};
 		1B2A56C926A568820090D411 /* monthCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,7 +436,6 @@
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
 				EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */,
 				EA9AF4DF267E10E200D77908 /* icon-120.png */,
-				EA384941262ED17A001B693F /* introduction.txt */,
 				EA537B9F26345ABF00C2E9EE /* versionLog.txt */,
 				EA3ABAD625DFE05400911902 /* demoDiaries.txt */,
 			);
@@ -595,6 +608,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				1B1ED87C26D372AC008D88FC /* introduction */,
 				EA67911126D109D800B44ECA /* DataBase */,
 				EADBC35526C01349004D1A52 /* whatsNew */,
 				EADBC33E26BE9878004D1A52 /* IAPHelper */,
@@ -843,7 +857,8 @@
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
 				EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */,
-				EA384942262ED17A001B693F /* introduction.txt in Resources */,
+				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
+				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
 				EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */,
@@ -974,6 +989,7 @@
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
 				1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */,
+				1B1ED87E26D372E4008D88FC /* newUserGuideHelper.swift in Sources */,
 				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoListView.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,

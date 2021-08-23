@@ -117,7 +117,7 @@ extension AppDelegate{
     
     private func loadIntroductionIfNeed(){
         if !userDefaultManager.hasInitialized{
-            LoadIntroText()
+            NewUserGuideHelper.shared.initUserGuideDiary()
             userDefaultManager.hasInitialized = true
             print("引导日志创建成功")
         }

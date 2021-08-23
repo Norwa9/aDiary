@@ -9,46 +9,7 @@ import Foundation
 import UIKit
 import RealmSwift
 
-//MARK:-导入用户引导
-func LoadIntroText(){
-    let date = GetTodayDate()
-    if let levelFileURL = Bundle.main.url(forResource: "introduction", withExtension: "txt"),let content = try? String(contentsOf: levelFileURL){
-        //1.设置引导的文案：图片、待办、标签···
-        let introDiary = diaryInfo(dateString: date)
-        let attributedText = NSMutableAttributedString(string: content)
-        attributedText.loadCheckboxes()
-        let iconAttchment = GetAttachment(image:UIImage(named:"icon-1024")!)
-        attributedText.insert(iconAttchment, at: attributedText.length)
-        let parseRes = attributedText.parseAttribuedText()
-        let imageAttrTuples = parseRes.0
-        let todoAttrTuples = parseRes.1
-        let text = parseRes.2
-        let containsImage = parseRes.3
-        let incompletedTodos = parseRes.4
-        let allTodos = parseRes.6
-        let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
-        introDiary.content = plainText
-        introDiary.rtfd = attributedText.data()
-        introDiary.todoAttributesTuples = todoAttrTuples
-        introDiary.imageAttributesTuples = imageAttrTuples
-        introDiary.containsImage = containsImage
-        introDiary.todos = incompletedTodos
-        introDiary.emojis.append("👏🏻")
-        introDiary.emojis.append("😘")
-        introDiary.tags.append("你好新用户")
-        dataManager.shared.tags.append("你好新用户")
-        
-        //2.TODO:(未测试)随便给ckData赋值，强行标记引导日记为已上传，防止第二设备下载App后今日的日记被覆盖
-        introDiary.ckData = "不需要上传".data(using: .utf8)
-        
-        //3.指定新的默认字体
-        userDefaultManager.fontName = "DINAlternate-Bold"
-        
-        if LWRealmManager.shared.queryFor(dateCN: date).isEmpty{
-            LWRealmManager.shared.add(introDiary)
-        }
-    }
-}
+
 
 //MARK:-导入DayGram日记
 func parseDayGramText(text:String){
