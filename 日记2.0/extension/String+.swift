@@ -43,8 +43,9 @@ extension String{
         return formatter.string(from: rawDate)
     }
     
-    ///提取日期中的页码信息：例如2021年9月14日-1 > 1
-    func parsePageIndex()->Int{
+    ///提取日期中的猴后缀信息：例如2021年9月14日-1 > 1
+    ///注意：后续在引入删除页面功能后，后缀信息可能就不是一个连续的值。如果需要计算页面的序号，使用diaryInfo.indexOfPage属性
+    func parseDateSuffix()->Int{
         if let splitIndex = self.firstIndex(of: "-"){
             let index2 = self.index(after: splitIndex)
             let indexString = String(self[index2..<endIndex])

@@ -129,8 +129,8 @@ extension LWRealmManager{
         let res = self.query(predicate: predicate)
         //按照子页面的序号的大小排序
         let sortedRes = res.sorted { (d1, d2) -> Bool in
-            let index1 = d1.date.parsePageIndex()
-            let index2 = d2.date.parsePageIndex()
+            let index1 = d1.date.parseDateSuffix()
+            let index2 = d2.date.parseDateSuffix()
             return index1 < index2
         }
         return sortedRes

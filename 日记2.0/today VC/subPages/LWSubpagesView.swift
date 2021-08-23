@@ -61,7 +61,7 @@ class LWSubpagesView: UIView {
         segmentTitles.removeAll()
         for model in models{
 //            segmentTitles.append(model.date)
-            let pageIndex = model.date.parsePageIndex()
+            let pageIndex = model.date.parseDateSuffix()
             segmentTitles.append("\(pageIndex + 1)页")
         }
         segmentDataSource.titles = segmentTitles
