@@ -27,11 +27,18 @@ class exportManager{
         DispatchQueue.global(qos: .default).async{
             let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
             let sortedAllDiary = allDiary.sorted { (m1, m2) -> Bool in
-                let d1 = m1.date
-                let d2 = m2.date
+                let d1 = m1.trueDate
+                let d2 = m2.trueDate
                 if let date1 = dateFomatter.date(from: d1) ,let date2 = dateFomatter.date(from: d2){
+                    //如果日期不一样，日期早的排在前
                     if date1.compare(date2) ==  .orderedAscending{
                         return true
+                    }
+                    //如果日期一样，页面号小的排在前
+                    if date1.compare(date2) == .orderedSame{
+                        let pageIndex1 = m1.date.parsePageIndex()
+                        let pageIndex2 = m2.date.parsePageIndex()
+                        return pageIndex1 < pageIndex2
                     }
                 }
                 return false
