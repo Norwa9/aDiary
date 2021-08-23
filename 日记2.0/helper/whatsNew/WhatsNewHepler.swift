@@ -125,9 +125,9 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "新增多页日记",
-                    subtitle: "在编辑页可以为每天的日记创建更多的页面了。\n（注意：如果你同时在使用iPad版本的aDiary，需要同时更新到2.5版本以保证正常云同步。）",
-                    image: UIImage(named: "segment")
+                    title: "新增多页日记功能",
+                    subtitle: "入口在编辑页的右上角",
+                    image: UIImage(named: "multipages")
                 ),
             ]
         )
@@ -160,8 +160,8 @@ class WhatsNewHelper{
         // And many more configuration properties...
         
         //MARK:-3:versionStore
-        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+//        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
+        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
         guard let whatsNew = currentWhatsNew else{return nil}//无法取得（或没有定义）当前的whatsNew
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
