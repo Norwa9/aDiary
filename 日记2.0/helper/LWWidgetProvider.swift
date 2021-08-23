@@ -16,7 +16,11 @@ class LWWidgetProvider{
         let roamDiary = db.randomElement()
         
         if let diary = roamDiary{
-            let dateEn = DateCN2En(dateCN: diary.trueDate)
+            var dateEn = DateCN2En(dateCN: diary.trueDate)//转换为yyyy-MM-d
+            let pageNum = diary.indexOfPage
+            if pageNum > 0{
+                dateEn += " page.\(pageNum + 1)"//转换为yyyy-MM-d page.X
+            }
             let roamData = RoamData(date: dateEn, content: diary.content)
             let jsonEncoder = JSONEncoder()
             if let storedData = try? jsonEncoder.encode(roamData) {
