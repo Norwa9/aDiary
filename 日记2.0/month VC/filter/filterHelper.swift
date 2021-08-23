@@ -37,15 +37,6 @@ class filterHelper {
         
         let allDiary = LWRealmManager.shared.localDatabase
         
-        //篇数
-        let count = allDiary.count
-        
-        //字数
-        var wordCount = 0
-        for diary in allDiary{
-            wordCount += diary.content.count
-        }
-        
         let mainPages = allDiary.filter { (d) -> Bool in
             return d.isMainPage
         }
@@ -107,6 +98,15 @@ class filterHelper {
                     }
                     return false
                 }
+        }
+        
+        //篇数
+        let count = resultDiaries.count
+        
+        //字数
+        var wordCount = 0
+        for diary in resultDiaries{
+            wordCount += diary.content.count
         }
         
         return (resultDiaries,count,wordCount)
