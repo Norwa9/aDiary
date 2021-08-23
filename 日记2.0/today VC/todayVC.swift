@@ -127,6 +127,8 @@ extension todayVC{
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             self.view.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
             self.subpagesView.segmentedView.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
+            self.topView.tagsView.alpha = self.isShowingTopView ? 1 : 0
+            self.topView.emojiView.alpha = self.isShowingTopView ? 1 : 0
             self.view.layoutIfNeeded()
         } completion: { (_) in
 
