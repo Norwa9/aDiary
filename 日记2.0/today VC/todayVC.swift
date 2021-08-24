@@ -137,13 +137,7 @@ extension todayVC{
     
     func updateTopViewHeight(){
         if isShowingTopView{
-            UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut,.allowUserInteraction]) {
-                self.view.layoutIfNeeded()//平滑过渡tags的高度变化
-            } completion: { _ in
-                
-            }
-
-
+            self.view.layoutIfNeeded()//平滑过渡tags的高度变化
         }else{
             //如果希望隐藏topView，左右切换需要计算topView的高度
             let curInset = topView.bounds.height - topView.dateLable.bounds.height
