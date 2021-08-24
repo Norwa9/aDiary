@@ -162,6 +162,7 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
         
         let model = models[index]
         todayVC.topView.model = model
+        todayVC.updateTopViewHeight()
     }
     
 }

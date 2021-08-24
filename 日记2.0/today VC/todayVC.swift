@@ -134,6 +134,28 @@ extension todayVC{
 
         }
     }
+    
+    func updateTopViewHeight(){
+        if isShowingTopView{
+            UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut,.allowUserInteraction]) {
+                self.view.layoutIfNeeded()//平滑过渡tags的高度变化
+            } completion: { _ in
+                
+            }
+
+
+        }else{
+            //如果希望隐藏topView，左右切换需要计算topView的高度
+            let curInset = topView.bounds.height - topView.dateLable.bounds.height
+            subpagesView.snp.updateConstraints { (update) in
+                update.top.equalTo(topView.snp.bottom).offset(-curInset + 2)
+            }
+            subpagesView.pagingView.layoutSubviews()//不加的话textView底部会有空白条，不知道为啥
+            UIView.animate(withDuration: 0) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
 }
 
 
