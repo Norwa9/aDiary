@@ -262,7 +262,7 @@ class monthCell: UICollectionViewCell {
             let numsOfSeg = pageSegmentControl.numberOfSegments
             pageSegmentControl.insertSegment(withTitle: "\(index+1)", at: numsOfSeg, animated: false)
         }
-        if visableNum >= 4{
+        if pagesNum > 4{
             pageSegmentControl.insertSegment(withTitle: "...", at: visableNum, animated: false)
         }
         
