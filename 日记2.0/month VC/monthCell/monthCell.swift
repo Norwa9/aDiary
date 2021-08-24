@@ -209,7 +209,7 @@ class monthCell: UICollectionViewCell {
    
     }
     
-    //MARK:-设置Model
+    //MARK:-model setter
     func setViewModel(_ diary:diaryInfo){
         self.diary = diary
         self.setupSegmentControl()
@@ -239,7 +239,18 @@ class monthCell: UICollectionViewCell {
         updateCons()//更新约束
     }
     
+    //MARK:-setupSegmentControl
     private func setupSegmentControl(){
+        //如果是搜索模式，不显示页码选择器
+        if isFilterMode{
+            pageSegmentControl.snp.updateConstraints { (update) in
+                update.height.equalTo(0)
+            }
+            pageSegmentControl.alpha = 0
+            return
+        }
+        
+        
         let pagesNum = LWRealmManager.shared.queryPagesNum(ofDate: diary.date.parsePageDate())
         pageSegmentControl.removeAllSegments()
         pageSegmentControl.alpha = pagesNum == 1 ? 0 : 1//不知道为啥高度设置为0后还是隐约出现一点，所以隐藏它
@@ -260,7 +271,7 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    //读取日记的所有图片
+    //MARK:-images
     private func fillImages(diary:diaryInfo){
         let iM = imageManager(diary: diary)
         let contains = diary.containsImage
@@ -300,7 +311,7 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    ///设置今日提示
+    //MARK:-设置今日提示
     private func setTodayPropmtEdge(){
         if diary.trueDate == GetTodayDate(){
             self.containerView.layer.borderWidth = 2;
