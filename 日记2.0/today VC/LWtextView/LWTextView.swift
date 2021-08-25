@@ -9,7 +9,7 @@ import UIKit
 import MobileCoreServices
 import SubviewAttachingTextView
 
-class LWTextView: UITextView {
+class LWTextView: SubviewAttachingTextView {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         self.backgroundColor = .systemBackground
