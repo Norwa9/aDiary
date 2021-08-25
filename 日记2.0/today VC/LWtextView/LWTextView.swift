@@ -144,15 +144,13 @@ extension LWTextView : ScalableImageViewDelegate{
         let newViewModel = endView.viewModel
         newViewModel.bounds = endView.frame
         newViewModel.getNewestLocation(attributedString: self.attributedText){
+            print("newView.model.location : \(newViewModel.location)")
+            
             let newView = ScalableImageView(viewModel: newViewModel)
             newView.delegate = self
             newView.backgroundColor = .clear
             let newAttchment = SubviewTextAttachment(view: newView, size: newView.size)
-            
-            let mutable = NSMutableAttributedString(attributedString: self.attributedText!)
-            print("newView.model.location : \(newViewModel.location)")
-            mutable.replaceAttchment(newAttchment, attchmentAt: newViewModel.location, with: newViewModel.paraStyle)
-            self.attributedText = mutable
+            self.attributedText = self.attributedText.replacingAttchment(newAttchment, attchmentAt: newViewModel.location, with: newViewModel.paraStyle)
             self.selectedRange = NSRange(location: newViewModel.location, length: 0)
         }
     }

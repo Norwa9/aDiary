@@ -29,6 +29,13 @@ public extension NSAttributedString {
 
         return copy.copy() as! NSAttributedString
     }
+    
+    func replacingAttchment(_ attachment: NSTextAttachment, attchmentAt index: Int, with paragraphStyle: NSParagraphStyle? = nil) -> NSAttributedString {
+        let copy = self.mutableCopy() as! NSMutableAttributedString
+        copy.replaceAttchment(attachment, attchmentAt: index, with: paragraphStyle)
+
+        return copy.copy() as! NSAttributedString
+    }
 
     func addingAttributes(_ attributes: [NSAttributedString.Key : Any]) -> NSAttributedString {
         let copy = self.mutableCopy() as! NSMutableAttributedString
