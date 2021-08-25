@@ -28,7 +28,9 @@
 		1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964A26A95D810009472F /* LWEmojiView.swift */; };
 		1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964E26A970040009472F /* LWEmojiCell.swift */; };
 		1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */; };
+		473A0A72F694D851B9DFD60C /* Pods___2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6E30375E87367C7496EB26 /* Pods___2_0.framework */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
+		EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
@@ -163,6 +165,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A6E30375E87367C7496EB26 /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods___2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B1ED87D26D372E4008D88FC /* newUserGuideHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newUserGuideHelper.swift; sourceTree = "<group>"; };
 		1B1ED87F26D374E3008D88FC /* intro-page2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "intro-page2.txt"; sourceTree = "<group>"; };
 		1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+CloudKit.swift"; sourceTree = "<group>"; };
@@ -191,6 +194,7 @@
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
+		EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diary+ScalableImageView.swift"; sourceTree = "<group>"; };
 		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
 				EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */,
+				473A0A72F694D851B9DFD60C /* Pods___2_0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +409,7 @@
 				EA9AF51626821E5F00D77908 /* CloudKit.framework */,
 				1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */,
 				1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */,
+				0A6E30375E87367C7496EB26 /* Pods___2_0.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -417,6 +423,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		EA2235E326D6920A001FAD1D /* ScableImageView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ScableImageView;
+			sourceTree = "<group>";
+		};
 		EA3189B326934F44001B9042 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +439,7 @@
 				1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */,
 				1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */,
 				EA67915B26D1F35C00B44ECA /* diary+subPages.swift */,
+				EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -633,6 +647,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				EA2235E326D6920A001FAD1D /* ScableImageView */,
 				EA67913826D11D4600B44ECA /* subPages */,
 				EADBC2EF26B446F5004D1A52 /* topView */,
 				1BB6964926A95BBD0009472F /* LWemojiView */,
@@ -984,6 +999,7 @@
 				EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
 				EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */,
+				EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */,
 				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,

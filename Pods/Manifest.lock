@@ -7,6 +7,7 @@ PODS:
   - JXPhotoBrowser (3.1.3)
   - JXSegmentedView (1.2.7)
   - MJRefresh (3.7.2)
+  - NewPopMenu (2.1.2)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
@@ -17,6 +18,7 @@ PODS:
   - RealmSwift (10.12.0):
     - Realm (= 10.12.0)
   - SnapKit (5.0.1)
+  - SubviewAttachingTextView (1.5.0)
   - TagListView (1.4.1)
   - WhatsNewKit (1.3.7)
 
@@ -29,10 +31,12 @@ DEPENDENCIES:
   - JXPhotoBrowser (~> 3.0)
   - JXSegmentedView
   - MJRefresh
+  - NewPopMenu (~> 2.0)
   - NVActivityIndicatorView
   - Popover
   - RealmSwift
   - SnapKit
+  - SubviewAttachingTextView
   - TagListView
   - WhatsNewKit
 
@@ -46,11 +50,13 @@ SPEC REPOS:
     - JXPhotoBrowser
     - JXSegmentedView
     - MJRefresh
+    - NewPopMenu
     - NVActivityIndicatorView
     - Popover
     - Realm
     - RealmSwift
     - SnapKit
+    - SubviewAttachingTextView
     - TagListView
     - WhatsNewKit
 
@@ -63,14 +69,16 @@ SPEC CHECKSUMS:
   JXPhotoBrowser: d32e94e1226d43bf5ed83164e3f5b651fed625e0
   JXSegmentedView: eb1cad21f57c2543c00c3e08b8fd3c7ca54f5acd
   MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
+  NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   Popover: 10e1d9528f81d9504df984b7b3f491292bc1822d
   Realm: 32488213acb44660539c619d620cec1bac046166
   RealmSwift: 0abdca6231d5ff8a4f84cef9c1121ef95a483faf
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SubviewAttachingTextView: 4b6e2d07bc4200f1d030887ead5c705200d105d1
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   WhatsNewKit: c87028c4059dccd113495422801914cc53f6aab0
 
-PODFILE CHECKSUM: a70ea041098af3e53f741925eae85892d9c7505b
+PODFILE CHECKSUM: 9816fb8aed29aea14faa79f75e6258e4cdc4f9db
 
 COCOAPODS: 1.10.1

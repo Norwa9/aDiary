@@ -19,6 +19,7 @@ pod 'WhatsNewKit'
 pod 'AttributedString'
 pod 'JXPagingView/Paging'
 pod 'JXSegmentedView'
-
+pod 'SubviewAttachingTextView'
+pod 'NewPopMenu', '~> 2.0'
 
 end
