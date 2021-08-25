@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import PopMenu
 
-protocol scalableImageViewDelegate : NSObject {
+protocol ScalableImageViewDelegate : NSObject {
     func reloadScableImage(endView:ScalableImageView)
 }
 
@@ -19,7 +19,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     private var imageView:UIImageView!
     private var dot: UIView?
     var startFrame:CGRect!
-    weak var delegate:scalableImageViewDelegate?
+    weak var delegate:ScalableImageViewDelegate?
     
     var viewModel:ScalableImageViewModel
     

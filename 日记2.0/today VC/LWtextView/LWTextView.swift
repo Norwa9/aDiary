@@ -7,6 +7,7 @@
 
 import UIKit
 import MobileCoreServices
+import SubviewAttachingTextView
 
 class LWTextView: UITextView {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -135,4 +136,24 @@ class LWTextView: UITextView {
         return super.canPerformAction(action, withSender: sender)
     }
 
+}
+
+//MARK:-scalableImageViewDelegate
+extension LWTextView : ScalableImageViewDelegate{
+    func reloadScableImage(endView: ScalableImageView) {
+        let newViewModel = endView.viewModel
+        newViewModel.bounds = endView.frame
+        newViewModel.getNewestLocation(attributedString: self.attributedText){
+            let newView = ScalableImageView(viewModel: newViewModel)
+            newView.delegate = self
+            newView.backgroundColor = .clear
+            let newAttchment = SubviewTextAttachment(view: newView, size: newView.size)
+            
+            let mutable = NSMutableAttributedString(attributedString: self.attributedText!)
+            print("newView.model.location : \(newViewModel.location)")
+            mutable.replaceAttchment(newAttchment, attchmentAt: newViewModel.location, with: newViewModel.paraStyle)
+            self.attributedText = mutable
+            self.selectedRange = NSRange(location: newViewModel.location, length: 0)
+        }
+    }
 }

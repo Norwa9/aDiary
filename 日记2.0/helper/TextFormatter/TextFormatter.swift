@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import JXPhotoBrowser
+import SubviewAttachingTextView
 
 public class TextFormatter{
     private var textView: UITextView
@@ -622,6 +623,15 @@ extension TextFormatter{
         let time = formatter.string(from: Date())
         
         textView.insertText(time)
+    }
+    
+    func insertScalableImageView(image:UIImage){
+        let viewModel = ScalableImageViewModel(location: selectedRange.location, image: image, bounds: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
+        let view = ScalableImageView(viewModel: viewModel)
+        guard let lwtextView = textView as? ScalableImageViewDelegate else{return}
+        view.delegate = lwtextView
+        let subViewAttchment = SubviewTextAttachment(view: view, size: viewModel.bounds.size)
+        textView.textStorage.insertAttachment(subViewAttchment, at: viewModel.location, with: centerParagraphStyle)
     }
 }
 

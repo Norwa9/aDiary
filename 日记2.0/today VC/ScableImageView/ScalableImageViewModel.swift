@@ -27,7 +27,13 @@ class ScalableImageViewModel: NSObject {
     
     init(model:ScalableImageModel){
         self.location = model.location
-        self.image = UIImage(data: model.imageData) ?? #imageLiteral(resourceName: "bg")
+        var image:UIImage
+        if let imageData = model.imageData{
+            image = UIImage(data: imageData) ?? UIImage(named: "imageplaceholder")!
+        }else{
+            image = UIImage(named: "imageplaceholder")!
+        }
+        self.image = image
         self.bounds = CGRect.init(string: model.bounds) ?? .zero
         var paraStyle:NSMutableParagraphStyle
         switch model.paraStyle{

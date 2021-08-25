@@ -39,6 +39,7 @@
 		EA22360D26D6931A001FAD1D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360A26D6931A001FAD1D /* ViewExtension.swift */; };
 		EA22360E26D6931A001FAD1D /* BSGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360B26D6931A001FAD1D /* BSGestureRecognizer.swift */; };
 		EA22360F26D6931A001FAD1D /* UIGestureRecognizerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360C26D6931A001FAD1D /* UIGestureRecognizerExtension.swift */; };
+		EA22361426D696F6001FAD1D /* AttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22361326D696F6001FAD1D /* AttributedString+.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
@@ -211,6 +212,7 @@
 		EA22360A26D6931A001FAD1D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		EA22360B26D6931A001FAD1D /* BSGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSGestureRecognizer.swift; sourceTree = "<group>"; };
 		EA22360C26D6931A001FAD1D /* UIGestureRecognizerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGestureRecognizerExtension.swift; sourceTree = "<group>"; };
+		EA22361326D696F6001FAD1D /* AttributedString+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AttributedString+.swift"; sourceTree = "<group>"; };
 		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 		EA22360126D692DB001FAD1D /* extension */ = {
 			isa = PBXGroup;
 			children = (
+				EA22361326D696F6001FAD1D /* AttributedString+.swift */,
 				EA22360226D692E4001FAD1D /* CGRect+.swift */,
 				EA22360326D692E4001FAD1D /* SubviewTextAttachment+.swift */,
 				EA22360B26D6931A001FAD1D /* BSGestureRecognizer.swift */,
@@ -998,6 +1001,7 @@
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
 				1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */,
+				EA22361426D696F6001FAD1D /* AttributedString+.swift in Sources */,
 				1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */,
 				1B3AEB1526C50E7100C057A4 /* LWDefaultIndicatorView.swift in Sources */,
 				EA22360526D692E4001FAD1D /* SubviewTextAttachment+.swift in Sources */,

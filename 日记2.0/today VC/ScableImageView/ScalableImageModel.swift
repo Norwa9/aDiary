@@ -8,13 +8,14 @@
 import Foundation
 import UIKit
 import SubviewAttachingTextView
+import RealmSwift
 
-class ScalableImageModel: NSObject,Codable {
-    var location:Int
-    var imageData:Data
-    var bounds:String
-    var paraStyle:Int
-    var contentMode:Int
+class ScalableImageModel:NSObject,Codable {
+    @objc dynamic var location:Int = -1
+    @objc dynamic var imageData:Data? = nil
+    @objc dynamic var bounds:String = ""
+    @objc dynamic var paraStyle:Int = -1
+    @objc dynamic var contentMode:Int = -1
     
     init(location:Int,imageData:Data,bounds:String,paraStyle:Int,contentMode:Int) {
         self.location = location
