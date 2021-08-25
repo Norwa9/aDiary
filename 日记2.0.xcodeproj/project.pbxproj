@@ -28,9 +28,17 @@
 		1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964A26A95D810009472F /* LWEmojiView.swift */; };
 		1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964E26A970040009472F /* LWEmojiCell.swift */; };
 		1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */; };
-		473A0A72F694D851B9DFD60C /* Pods___2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6E30375E87367C7496EB26 /* Pods___2_0.framework */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */; };
+		EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235F926D692B0001FAD1D /* scalableImageView.swift */; };
+		EA2235FD26D692B0001FAD1D /* ScalableImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */; };
+		EA2235FE26D692B0001FAD1D /* ScalableImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235FB26D692B0001FAD1D /* ScalableImageViewModel.swift */; };
+		EA22360426D692E4001FAD1D /* CGRect+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360226D692E4001FAD1D /* CGRect+.swift */; };
+		EA22360526D692E4001FAD1D /* SubviewTextAttachment+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360326D692E4001FAD1D /* SubviewTextAttachment+.swift */; };
+		EA22360826D692F6001FAD1D /* LWTextAligment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360726D692F6001FAD1D /* LWTextAligment.swift */; };
+		EA22360D26D6931A001FAD1D /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360A26D6931A001FAD1D /* ViewExtension.swift */; };
+		EA22360E26D6931A001FAD1D /* BSGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360B26D6931A001FAD1D /* BSGestureRecognizer.swift */; };
+		EA22360F26D6931A001FAD1D /* UIGestureRecognizerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA22360C26D6931A001FAD1D /* UIGestureRecognizerExtension.swift */; };
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
@@ -165,7 +173,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0A6E30375E87367C7496EB26 /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods___2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B1ED87D26D372E4008D88FC /* newUserGuideHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newUserGuideHelper.swift; sourceTree = "<group>"; };
 		1B1ED87F26D374E3008D88FC /* intro-page2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "intro-page2.txt"; sourceTree = "<group>"; };
 		1B2A56232695B88F0090D411 /* diaryinfo+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+CloudKit.swift"; sourceTree = "<group>"; };
@@ -195,6 +202,15 @@
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diary+ScalableImageView.swift"; sourceTree = "<group>"; };
+		EA2235F926D692B0001FAD1D /* scalableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scalableImageView.swift; sourceTree = "<group>"; };
+		EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalableImageModel.swift; sourceTree = "<group>"; };
+		EA2235FB26D692B0001FAD1D /* ScalableImageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalableImageViewModel.swift; sourceTree = "<group>"; };
+		EA22360226D692E4001FAD1D /* CGRect+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+.swift"; sourceTree = "<group>"; };
+		EA22360326D692E4001FAD1D /* SubviewTextAttachment+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SubviewTextAttachment+.swift"; sourceTree = "<group>"; };
+		EA22360726D692F6001FAD1D /* LWTextAligment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWTextAligment.swift; sourceTree = "<group>"; };
+		EA22360A26D6931A001FAD1D /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		EA22360B26D6931A001FAD1D /* BSGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSGestureRecognizer.swift; sourceTree = "<group>"; };
+		EA22360C26D6931A001FAD1D /* UIGestureRecognizerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGestureRecognizerExtension.swift; sourceTree = "<group>"; };
 		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
@@ -309,7 +325,6 @@
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
 				EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */,
-				473A0A72F694D851B9DFD60C /* Pods___2_0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +424,6 @@
 				EA9AF51626821E5F00D77908 /* CloudKit.framework */,
 				1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */,
 				1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */,
-				0A6E30375E87367C7496EB26 /* Pods___2_0.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -426,8 +440,33 @@
 		EA2235E326D6920A001FAD1D /* ScableImageView */ = {
 			isa = PBXGroup;
 			children = (
+				EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */,
+				EA2235F926D692B0001FAD1D /* scalableImageView.swift */,
+				EA2235FB26D692B0001FAD1D /* ScalableImageViewModel.swift */,
+				EA22360026D692CF001FAD1D /* helper */,
+				EA22360126D692DB001FAD1D /* extension */,
 			);
 			path = ScableImageView;
+			sourceTree = "<group>";
+		};
+		EA22360026D692CF001FAD1D /* helper */ = {
+			isa = PBXGroup;
+			children = (
+				EA22360726D692F6001FAD1D /* LWTextAligment.swift */,
+			);
+			path = helper;
+			sourceTree = "<group>";
+		};
+		EA22360126D692DB001FAD1D /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				EA22360226D692E4001FAD1D /* CGRect+.swift */,
+				EA22360326D692E4001FAD1D /* SubviewTextAttachment+.swift */,
+				EA22360B26D6931A001FAD1D /* BSGestureRecognizer.swift */,
+				EA22360C26D6931A001FAD1D /* UIGestureRecognizerExtension.swift */,
+				EA22360A26D6931A001FAD1D /* ViewExtension.swift */,
+			);
+			path = extension;
 			sourceTree = "<group>";
 		};
 		EA3189B326934F44001B9042 /* Model */ = {
@@ -947,17 +986,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */,
+				EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */,
+				EA22360826D692F6001FAD1D /* LWTextAligment.swift in Sources */,
 				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
 				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
 				EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */,
+				EA22360E26D6931A001FAD1D /* BSGestureRecognizer.swift in Sources */,
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
 				1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */,
 				1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */,
 				1B3AEB1526C50E7100C057A4 /* LWDefaultIndicatorView.swift in Sources */,
+				EA22360526D692E4001FAD1D /* SubviewTextAttachment+.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
 				EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */,
 				1B3AEB5A26CA105500C057A4 /* LWSettingViewController.swift in Sources */,
@@ -997,6 +1040,7 @@
 				EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */,
 				EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */,
+				EA22360D26D6931A001FAD1D /* ViewExtension.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
 				EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */,
 				EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */,
@@ -1008,6 +1052,7 @@
 				1B1ED87E26D372E4008D88FC /* newUserGuideHelper.swift in Sources */,
 				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoListView.swift in Sources */,
+				EA22360426D692E4001FAD1D /* CGRect+.swift in Sources */,
 				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
@@ -1016,6 +1061,7 @@
 				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
 				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
+				EA2235FD26D692B0001FAD1D /* ScalableImageModel.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataManager.swift in Sources */,
 				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,
@@ -1032,11 +1078,13 @@
 				1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */,
 				EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */,
 				EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */,
+				EA22360F26D6931A001FAD1D /* UIGestureRecognizerExtension.swift in Sources */,
 				EADA85DB26248759007D1134 /* UIFont+.swift in Sources */,
 				1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
 				EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */,
+				EA2235FE26D692B0001FAD1D /* ScalableImageViewModel.swift in Sources */,
 				EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */,
 				1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */,
 			);
