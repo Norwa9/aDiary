@@ -21,6 +21,7 @@ PODS:
   - SubviewAttachingTextView (1.5.0)
   - TagListView (1.4.1)
   - WhatsNewKit (1.3.7)
+  - WXImageCompress (0.1.3)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - SubviewAttachingTextView
   - TagListView
   - WhatsNewKit
+  - WXImageCompress (~> 0.1.1)
   - YYModel
 
 SPEC REPOS:
@@ -61,6 +63,7 @@ SPEC REPOS:
     - SubviewAttachingTextView
     - TagListView
     - WhatsNewKit
+    - WXImageCompress
     - YYModel
 
 SPEC CHECKSUMS:
@@ -81,8 +84,9 @@ SPEC CHECKSUMS:
   SubviewAttachingTextView: 4b6e2d07bc4200f1d030887ead5c705200d105d1
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   WhatsNewKit: c87028c4059dccd113495422801914cc53f6aab0
+  WXImageCompress: 86c7a4d028c7fc9c74181468c318a9ec688fcdac
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: f96c99fb7be4039591187eb67bde8df21a8faee1
+PODFILE CHECKSUM: 16c6db523bac2090fa9253ce84b54a1eeae5506b
 
 COCOAPODS: 1.10.1

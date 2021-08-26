@@ -22,5 +22,6 @@ pod 'JXSegmentedView'
 pod 'SubviewAttachingTextView'
 pod 'NewPopMenu', '~> 2.0'
 pod 'YYModel'
+pod 'WXImageCompress', '~> 0.1.1'
 
 end

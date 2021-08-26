@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SubviewAttachingTextView
+import WXImageCompress
 
 class ScalableImageViewModel: NSObject {
     var image:UIImage?//image不是必须的
@@ -35,11 +36,10 @@ class ScalableImageViewModel: NSObject {
         
         print("压缩前大小")//例如原图21MB
         image?.printImageDataSize()
-        let compressedImage = image?.compressPic(toSize: CGSize(width: viewWidth * 2, height: viewHeight * 2))
+        let compressedImage = image?.wxCompress()
+        self.image = compressedImage
         print("压缩后大小")//压缩后4MB
         compressedImage?.printImageDataSize()
-        self.image = compressedImage
-        
         self.paraStyle = centerParagraphStyle
         super.init()
     }
