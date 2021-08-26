@@ -10,7 +10,7 @@ import UIKit
 import SubviewAttachingTextView
 import YYModel
 
-class ScalableImageModel:NSObject,YYModel {
+class ScalableImageModel:NSObject, Codable, YYModel {
     @objc dynamic var location:Int = -1
     @objc dynamic var bounds:String = ""
     @objc dynamic var imageScale:CGFloat = 0//高宽比

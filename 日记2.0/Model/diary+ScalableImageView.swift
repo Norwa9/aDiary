@@ -22,5 +22,14 @@ extension diaryInfo{
                 return []
             }
         }
+        set{
+            let jsonEncoder = JSONEncoder()
+            if let modelsData = try? jsonEncoder.encode(newValue) {
+                mood = String(data: modelsData, encoding: String.Encoding.utf8)!
+            } else {
+                print("Failed to Encode models")
+                mood = ""
+            }
+        }
     }
 }
