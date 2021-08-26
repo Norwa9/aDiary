@@ -627,7 +627,7 @@ extension TextFormatter{
     
     func insertScalableImageView(image:UIImage){
         let location = selectedRange.location
-        let defaultViewModel = ScalableImageViewModel(location: location, image: image)
+        let defaultViewModel = ScalableImageViewModel(location: location, image: image.compress(qualty: 0.8))
         let view = ScalableImageView(viewModel: defaultViewModel)
         view.delegate = textView
         let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
@@ -813,8 +813,8 @@ extension TextFormatter{
             if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
                 if let model = imageModels.filter({$0.location == location}).first{
-                    let viewModel = ScalableImageViewModel(model: model,image: image)
                     DispatchQueue.main.async {
+                        let viewModel = ScalableImageViewModel(model: model,image: image)
                         let view = ScalableImageView(viewModel: viewModel)
                         view.delegate = self.textView
                         let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)

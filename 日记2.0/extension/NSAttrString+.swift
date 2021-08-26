@@ -38,8 +38,9 @@ extension NSAttributedString{
                 scalableImageModels.append(model)
                 print("添加model:\(scalableImageModels.count)")
                 
-                //3.将view重新替换成imageAttchment
-                let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"),size: CGSize(width: 200, height: 200))
+                //3.将view重新替换成imageAttchmen
+                //bounds也要设置好来，否者重新塞入属性文本后，image的方向不对.
+                let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"),size: viewModel.bounds.size)
                 attrText.replaceAttchment(attchemnt, attchmentAt: location,with: centerParagraphStyle)
                 
                 containsImage = true

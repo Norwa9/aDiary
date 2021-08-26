@@ -20,13 +20,18 @@ class ScalableImageViewModel: NSObject {
     
     
     ///构造默认view的viewModel
-    init(location:Int,image:UIImage) {
+    init(location:Int,image:UIImage?) {
         self.location = location
         self.image = image
         
-        let imageAspectRation = image.size.height / image.size.width
+        var imageAspectRation:CGFloat
+        if let image = image{
+            imageAspectRation = image.size.height / image.size.width
+        }else{
+            imageAspectRation = 1
+        }
         let viewWidth = (globalConstantsManager.shared.kScreenWidth - 2 * 15) / userDefaultManager.imageScalingFactor
-        let viewHeight = (viewWidth / imageAspectRation)
+        let viewHeight = (viewWidth * imageAspectRation)
         self.bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
         
         self.paraStyle = centerParagraphStyle
@@ -36,7 +41,14 @@ class ScalableImageViewModel: NSObject {
     init(model:ScalableImageModel,image:UIImage){
         self.image = image
         self.location = model.location
-        self.bounds = CGRect.init(string: model.bounds) ?? .zero
+        
+        //恢复imageView的bounds，这个需要根据设备来适应
+        let bounds = CGRect.init(string: model.bounds) ?? .zero
+        let deviceAdaptatedWidth = globalConstantsManager.shared.kScreenWidth * model.viewScale
+        let imageViewAspectRatio = bounds.height / bounds.width
+        let deviceAdaptatedHeight = deviceAdaptatedWidth * imageViewAspectRatio
+        self.bounds = CGRect(origin: .zero, size: CGSize(width: deviceAdaptatedWidth, height: deviceAdaptatedHeight))
+        
         var paraStyle:NSMutableParagraphStyle
         switch model.paraStyle{
         case 0:

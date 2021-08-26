@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 extension UIImage{
+    //MARK:-压缩image到特定尺寸
     func compressPic(toSize:CGSize) -> UIImage{
         let toW = toSize.width
         let toH = toSize.height
@@ -21,6 +22,7 @@ extension UIImage{
         return img
     }
     
+    //MARK:-生成空的图片
     public static func emptyImage(with size: CGSize) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: size)
         let img = renderer.image { ctx in
@@ -39,6 +41,7 @@ extension UIImage{
         return img
     }
     
+    //MARK:-image切圆角
     func createRoundedRectImage(size: CGSize,radius:CGFloat,callBack: @escaping (_ image: UIImage) ->()) {
     //在子线程中执行
             DispatchQueue.global().async {
@@ -74,6 +77,7 @@ extension UIImage{
         
     }
     
+    //MARK:-image切圆角
     func createRoundedRectImage(size: CGSize,radius:CGFloat)->UIImage {
         let rect = CGRect(origin: CGPoint.zero, size: size)
         //1. 开启上下文
@@ -94,6 +98,18 @@ extension UIImage{
         UIGraphicsEndImageContext()
         
         return image!
+    }
+    
+    
+    func compress(qualty:CGFloat) -> UIImage?{
+        guard qualty > 0,qualty < 1 else{
+            return nil
+        }
+        if let compressedData = self.jpegData(compressionQuality: qualty){
+            return UIImage(data: compressedData)
+        }
+        return nil
+        
     }
 
 }
