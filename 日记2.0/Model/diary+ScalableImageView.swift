@@ -12,5 +12,15 @@ import RealmSwift
 
 
 extension diaryInfo{
-    
+    ///从json字符串里解析出模型数组
+    var scalableImageModels:[ScalableImageModel]{
+        get{
+            let jsonString = mood
+            if let models = NSArray.yy_modelArray(with: ScalableImageModel.self, json:jsonString ) as? [ScalableImageModel]{
+                return models
+            }else{
+                return []
+            }
+        }
+    }
 }
