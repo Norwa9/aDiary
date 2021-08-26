@@ -11,12 +11,12 @@ import JXPhotoBrowser
 import SubviewAttachingTextView
 
 public class TextFormatter{
-    private var textView: UITextView
+    private var textView: LWTextView
     private var storage: NSTextStorage
     private var range: NSRange//TextFormatter实例创建时，用户所选取的range
     private var selectedRange:NSRange
     
-    init(textView: UITextView){
+    init(textView: LWTextView){
         self.textView = textView
         self.range = textView.selectedRange
         self.storage = textView.textStorage
@@ -799,41 +799,32 @@ extension TextFormatter{
         let attrText = mutableText.addUserDefaultAttributes()
         
         //2.恢复.image格式
-        let fullRange = NSRange(location: 0, length: attrText.length)
-        attrText.enumerateAttribute(.attachment, in: fullRange, options: []) { objcet, range, stop in
-            if let attchemnt = objcet as? NSTextAttachment,let image = attchemnt.image{
-                let location = range.location
-                if let model = imageModels.filter({$0.location == location}).first{
-                    let viewModel = ScalableImageViewModel(model: model,image: image)
-                    attrText.replaceAttchment(viewModel.generateSubviewAttchmetn(), attchmentAt: viewModel.location, with: viewModel.paraStyle)
-                }else{
-                    print("\(location)对应的图片model没有找到！提供默认viewModel")
-                    let defaultViewModel = ScalableImageViewModel(location: location, image: image)
-                    attrText.replaceAttchment(defaultViewModel.generateSubviewAttchmetn(), attchmentAt: defaultViewModel.location, with: defaultViewModel.paraStyle)
-                }
-            }
-        }
-        
-        
         for tuple in imageAttrTuples{
             let location = tuple.0//attribute location
             let value = tuple.1//attribute value
             if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
-                //print("读取时处理到到图片:\(location)")
+                if let model = imageModels.filter({$0.location == location}).first{
+                    let viewModel = ScalableImageViewModel(model: model,image: image)
+                    DispatchQueue.main.async {
+                        let view = ScalableImageView(viewModel: viewModel)
+                        view.delegate = self.textView
+                        let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+                        attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: viewModel.paraStyle)
+                    }
+                }else{
+                    print("\(location)对应的图片model没有找到！提供默认viewModel")
+                    DispatchQueue.main.async {
+                        let defaultViewModel = ScalableImageViewModel(location: location, image: image)
+                        let view = ScalableImageView(viewModel: defaultViewModel)
+                        view.delegate = self.textView
+                        let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+                        attrText.replaceAttchment(subViewAttchment, attchmentAt: defaultViewModel.location, with: defaultViewModel.paraStyle)
+                    }
+                }
                 
-                //1.重新添加attribute
+                //重新添加.image属性（用于保存时检索图片attchment）
                 attrText.addAttribute(.image, value: value, range: NSRange(location: location, length: 1))
-                
-                //2.调整图片bounds
-                let aspect = image.size.width / image.size.height
-                let pedding:CGFloat = 15
-                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
-                let newHeight = (newWidth / aspect)
-                let para = NSMutableParagraphStyle()
-                para.alignment = .center
-                attrText.addAttribute(.paragraphStyle, value: para, range: NSRange(location: location, length: 1))
-                attchment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
             }
         }
         

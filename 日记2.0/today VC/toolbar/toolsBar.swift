@@ -19,7 +19,7 @@ protocol LWPhotoPickerDelegate : NSObject {
 
 class toolsBar: UIView {
     weak var delegate:LWPhotoPickerDelegate?
-    weak var textView:UITextView!
+    weak var textView:LWTextView!
     @IBOutlet weak var saveButton:UIButton!
     @IBOutlet weak var insertTimeButton:UIButton!
     @IBOutlet weak var insertImageButton:UIButton!

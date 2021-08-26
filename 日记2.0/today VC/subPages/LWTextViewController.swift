@@ -177,7 +177,7 @@ extension LWTextViewController : UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         //print("textViewDidChange")
         //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
-        let textFormatter = TextFormatter(textView: textView)
+        let textFormatter = TextFormatter(textView: textView as! LWTextView)
         if let curParaString = textFormatter.getCurParaString(){
             if curParaString == "\n"{
                 textFormatter.correctNum()
@@ -193,7 +193,7 @@ extension LWTextViewController : UITextViewDelegate{
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
         //print("shouldChangeTextIn\(range)")
-        let textFormatter = TextFormatter(textView: textView)
+        let textFormatter = TextFormatter(textView: textView as! LWTextView)
         if text == "\n"{
             textFormatter.addNewLine()
             return false

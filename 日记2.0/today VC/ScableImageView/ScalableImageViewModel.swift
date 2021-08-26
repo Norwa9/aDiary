@@ -89,11 +89,4 @@ class ScalableImageViewModel: NSObject {
         return model
     }
     
-    
-    func generateSubviewAttchmetn()->SubviewTextAttachment{
-        let view = ScalableImageView(viewModel: self)
-        let subViewAttchment = SubviewTextAttachment(view: view, size: bounds.size)
-        return subViewAttchment
-    }
-    
 }

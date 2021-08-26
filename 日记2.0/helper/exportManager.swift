@@ -16,7 +16,7 @@ class exportManager{
         let W = min(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
         let H = max(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
         indicatorViewManager.shared.start(type: .progress)
-        let textView = UITextView(frame: CGRect(x: 0, y: 0, width: W, height: H))
+        let textView = LWTextView(frame: CGRect(x: 0, y: 0, width: W, height: H))
         let textViewBounds = textView.bounds
         let textContainer = textView.textContainer
         let formatter = TextFormatter(textView: textView)
