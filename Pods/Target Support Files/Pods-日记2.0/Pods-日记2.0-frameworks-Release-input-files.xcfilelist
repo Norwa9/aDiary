@@ -16,3 +16,4 @@ ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
 ${BUILT_PRODUCTS_DIR}/SubviewAttachingTextView/SubviewAttachingTextView.framework
 ${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework
 ${BUILT_PRODUCTS_DIR}/WhatsNewKit/WhatsNewKit.framework
+${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework

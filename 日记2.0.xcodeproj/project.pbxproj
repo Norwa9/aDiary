@@ -442,8 +442,8 @@
 		EA2235E326D6920A001FAD1D /* ScableImageView */ = {
 			isa = PBXGroup;
 			children = (
-				EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */,
 				EA2235F926D692B0001FAD1D /* scalableImageView.swift */,
+				EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */,
 				EA2235FB26D692B0001FAD1D /* ScalableImageViewModel.swift */,
 				EA22360026D692CF001FAD1D /* helper */,
 				EA22360126D692DB001FAD1D /* extension */,

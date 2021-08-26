@@ -10,8 +10,9 @@ import UIKit
 import SubviewAttachingTextView
 
 class ScalableImageViewModel: NSObject {
+    var image:UIImage?//image不是必须的
+    
     var location:Int
-    var image:UIImage
     var bounds:CGRect
     var paraStyle:NSMutableParagraphStyle
     var contentMode:UIView.ContentMode = .scaleAspectFill
@@ -27,13 +28,6 @@ class ScalableImageViewModel: NSObject {
     
     init(model:ScalableImageModel){
         self.location = model.location
-        var image:UIImage
-        if let imageData = model.imageData{
-            image = UIImage(data: imageData) ?? UIImage(named: "imageplaceholder")!
-        }else{
-            image = UIImage(named: "imageplaceholder")!
-        }
-        self.image = image
         self.bounds = CGRect.init(string: model.bounds) ?? .zero
         var paraStyle:NSMutableParagraphStyle
         switch model.paraStyle{
@@ -83,8 +77,7 @@ class ScalableImageViewModel: NSObject {
             paraStyle = .right
         }
         
-        let boundsSring = "\(bounds.origin.x),\(bounds.origin.y),\(bounds.size.width),\(bounds.size.height)"
-        let model = ScalableImageModel(location: location, imageData: image.pngData()!, bounds: boundsSring, paraStyle: paraStyle.rawValue,contentMode: contentMode.rawValue)
+        let model = ScalableImageModel(location: location, bounds: bounds, paraStyle: paraStyle.rawValue,contentMode: contentMode.rawValue)
         return model
     }
     

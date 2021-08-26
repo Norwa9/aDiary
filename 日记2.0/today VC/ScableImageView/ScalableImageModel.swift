@@ -8,20 +8,24 @@
 import Foundation
 import UIKit
 import SubviewAttachingTextView
-import RealmSwift
+import YYModel
 
-class ScalableImageModel:NSObject,Codable {
+class ScalableImageModel:NSObject,YYModel {
     @objc dynamic var location:Int = -1
-    @objc dynamic var imageData:Data? = nil
     @objc dynamic var bounds:String = ""
+    @objc dynamic var imageScale:CGFloat = 0//高宽比
     @objc dynamic var paraStyle:Int = -1
     @objc dynamic var contentMode:Int = -1
     
-    init(location:Int,imageData:Data,bounds:String,paraStyle:Int,contentMode:Int) {
+    
+    init(location:Int,bounds:CGRect,paraStyle:Int,contentMode:Int) {
         self.location = location
-//        self.imageData = imageData
-        self.imageData = "123".data(using: .utf16)!
-        self.bounds = bounds
+        
+        let boundsSring = "\(bounds.origin.x),\(bounds.origin.y),\(bounds.size.width),\(bounds.size.height)"
+        self.bounds = boundsSring
+        
+        self.imageScale = bounds.width / globalConstantsManager.shared.kScreenWidth
+        
         self.paraStyle = paraStyle
         self.contentMode = contentMode
         super.init()

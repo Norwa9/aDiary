@@ -21,6 +21,7 @@ PODS:
   - SubviewAttachingTextView (1.5.0)
   - TagListView (1.4.1)
   - WhatsNewKit (1.3.7)
+  - YYModel (1.0.4)
 
 DEPENDENCIES:
   - AttributedString
@@ -39,6 +40,7 @@ DEPENDENCIES:
   - SubviewAttachingTextView
   - TagListView
   - WhatsNewKit
+  - YYModel
 
 SPEC REPOS:
   trunk:
@@ -59,6 +61,7 @@ SPEC REPOS:
     - SubviewAttachingTextView
     - TagListView
     - WhatsNewKit
+    - YYModel
 
 SPEC CHECKSUMS:
   AttributedString: 386c1af029cc3186288d9feb84fbbb097928843f
@@ -78,7 +81,8 @@ SPEC CHECKSUMS:
   SubviewAttachingTextView: 4b6e2d07bc4200f1d030887ead5c705200d105d1
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   WhatsNewKit: c87028c4059dccd113495422801914cc53f6aab0
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 9816fb8aed29aea14faa79f75e6258e4cdc4f9db
+PODFILE CHECKSUM: f96c99fb7be4039591187eb67bde8df21a8faee1
 
 COCOAPODS: 1.10.1

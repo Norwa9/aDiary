@@ -21,5 +21,6 @@ pod 'JXPagingView/Paging'
 pod 'JXSegmentedView'
 pod 'SubviewAttachingTextView'
 pod 'NewPopMenu', '~> 2.0'
+pod 'YYModel'
 
 end
