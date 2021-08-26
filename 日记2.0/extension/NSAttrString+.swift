@@ -30,27 +30,23 @@ extension NSAttributedString{
             let location = range.location
             
             //1.image
-            if let imageAttrValue = attrText.attribute(.image, at: location, effectiveRange: nil) as? Int{
-                print("存储时扫描到imgae")
+            if let subViewAttchemnt = object as? SubviewTextAttachment,let view = subViewAttchemnt.view as? ScalableImageView{
+                print("扫描到subViewAttchemnt，下标:\(location)")
+                let viewModel = view.viewModel
+                viewModel.location = location//更新viewModel的location为保存时刻的location
+                let model = viewModel.generateModel()
+                scalableImageModels.append(model)
+                print("添加model:\(scalableImageModels.count)")
                 
-                //1.记录图片附件的位置下标
-                imageAttrTuples.append((location,imageAttrValue))
-                
-                //2.从view中解析model并记录
-                if let subViewAttchemnt = object as? SubviewTextAttachment,let view = subViewAttchemnt.view as? ScalableImageView{
-                    let viewModel = view.viewModel
-                    viewModel.location = location//更新viewModel的location为保存时刻的location
-                    let model = viewModel.generateModel()
-                    scalableImageModels.append(model)
-                    print("添加model:\(scalableImageModels.count)")
-                    
-                    //3.将view重新替换成imageAttchment
-                    let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"))
-                    attrText.replaceAttchment(attchemnt, attchmentAt: location,with: centerParagraphStyle)
-                }
-                
+                //3.将view重新替换成imageAttchment
+                let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"),size: CGSize(width: 200, height: 200))
+                attrText.replaceAttchment(attchemnt, attchmentAt: location,with: centerParagraphStyle)
                 
                 containsImage = true
+                
+                imageAttrTuples.append((location,1))
+                
+                return
             }
             
             
@@ -73,6 +69,9 @@ extension NSAttributedString{
         })
         
         let cleanText = attrText.string
+        
+        print("attrText的长度:\(attrText.length)")
+        print("imageAttrTuples:\(imageAttrTuples)")
         
         //print("存储images:\(imageAttrTuples)")
         //print("存储todos:\(todoAttrTuples)")

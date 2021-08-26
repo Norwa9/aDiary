@@ -632,9 +632,11 @@ extension TextFormatter{
         view.delegate = textView
         let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
         //插入
-        textView.textStorage.insertAttachment(subViewAttchment, at: location, with: centerParagraphStyle)
+        textView.textStorage.insert(NSAttributedString(string: "\n"), at: location)
+        textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: centerParagraphStyle)
+        print("插入subViewAttchemnt，下标:\(location)")
         //别忘了添加.image key
-        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location, length: 1))
+        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))
     }
 }
 
@@ -807,6 +809,7 @@ extension TextFormatter{
         for tuple in imageAttrTuples{
             let location = tuple.0//attribute location
             let value = tuple.1//attribute value
+            print("恢复image，下标:\(location),aString的长度：\(attrText.length)")
             if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
                 if let model = imageModels.filter({$0.location == location}).first{
