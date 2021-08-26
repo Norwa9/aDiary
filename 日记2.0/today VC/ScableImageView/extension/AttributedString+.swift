@@ -74,13 +74,8 @@ public extension NSMutableAttributedString {
         if let paragraphStyle = paragraphStyle {
             let attachmentString = plainAttachmentString
                 .addingAttributes([ .paragraphStyle : paragraphStyle ])
-            let separatorString = NSAttributedString(string: .paragraphSeparator)
-
-            // Surround the attachment string with paragraph separators, so that the paragraph style is only applied to it
             let insertion = NSMutableAttributedString()
-            //insertion.append(separatorString)
             insertion.append(attachmentString)
-            //insertion.append(separatorString)
 
             let range = NSRange(location: index, length: insertion.length)
             self.replaceCharacters(in: range, with: insertion)

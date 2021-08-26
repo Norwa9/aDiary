@@ -626,12 +626,15 @@ extension TextFormatter{
     }
     
     func insertScalableImageView(image:UIImage){
-        let defaultViewModel = ScalableImageViewModel(location: selectedRange.location, image: image)
+        let location = selectedRange.location
+        let defaultViewModel = ScalableImageViewModel(location: location, image: image)
         let view = ScalableImageView(viewModel: defaultViewModel)
-        guard let lwtextView = textView as? ScalableImageViewDelegate else{return}
-        view.delegate = lwtextView
+        view.delegate = textView
         let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
-        textView.textStorage.insertAttachment(subViewAttchment, at: defaultViewModel.location, with: centerParagraphStyle)
+        //插入
+        textView.textStorage.insertAttachment(subViewAttchment, at: location, with: centerParagraphStyle)
+        //别忘了添加.image key
+        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location, length: 1))
     }
 }
 
@@ -710,12 +713,13 @@ extension TextFormatter{
         let attributedText = textView.attributedText!
         let result = attributedText.parseAttribuedText()
         let imageAttrTuples = result.0
+        let imageModels = result.7
+        let recoveredAttributedText = result.8
         let todoAttrTuples = result.1
         let text = result.2
         let containsImage = result.3
         let incompletedTodos = result.4
         let allTodos = result.6
-        
         
         let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
         
@@ -725,9 +729,10 @@ extension TextFormatter{
             diary.modTime = Date()
             diary.content = plainText
             diary.todos = incompletedTodos
-            diary.rtfd = attributedText.data()
+            diary.rtfd = recoveredAttributedText.data()
             diary.containsImage = containsImage
             diary.imageAttributesTuples = imageAttrTuples
+            diary.scalableImageModels = imageModels
             diary.todoAttributesTuples = todoAttrTuples
         })
         

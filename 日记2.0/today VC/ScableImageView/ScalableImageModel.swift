@@ -17,6 +17,9 @@ class ScalableImageModel:NSObject, Codable, YYModel {
     @objc dynamic var paraStyle:Int = 0//center
     @objc dynamic var contentMode:Int = 2//aspectFill
     
+    override init() {
+        super.init()
+    }
     
     init(location:Int,bounds:CGRect,paraStyle:Int,contentMode:Int) {
         self.location = location

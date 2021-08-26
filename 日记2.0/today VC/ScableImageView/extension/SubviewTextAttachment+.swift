@@ -10,6 +10,7 @@ import UIKit
 import SubviewAttachingTextView
 
 extension SubviewTextAttachment{
+    ///直接获取其上的视图
     var view:UIView{
         get{
             return self.viewProvider.instantiateView(for: self, in: SubviewAttachingTextViewBehavior.init())

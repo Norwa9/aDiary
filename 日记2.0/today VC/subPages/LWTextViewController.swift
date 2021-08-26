@@ -157,11 +157,7 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
     
     func fmImageEditorViewController(_ editor: FMImageEditorViewController, didFinishEdittingPhotoWith photo: UIImage) {
         let textFormatter = TextFormatter(textView: self.textView)
-        #if targetEnvironment(simulator)
         textFormatter.insertScalableImageView(image: photo)
-        #else
-        textFormatter.insertPictureToTextView(image: photo)
-        #endif
         editor.dismiss(animated: true, completion: nil)
         picker.dismiss(animated: true, completion: nil)
     }

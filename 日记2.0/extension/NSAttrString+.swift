@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SubviewAttachingTextView
 
 extension NSAttributedString{
     
@@ -15,10 +16,11 @@ extension NSAttributedString{
     /*返回值：
      (imageAttrTuples, todoAttrTuples, incompletedTodos, completedTodos, allTodos, cleanText, containsImage)
      */
-    func parseAttribuedText()->([(Int,Int)],[(Int,Int)],cleanText:String,containImage:Bool,[String],[String],[String]){
+    func parseAttribuedText()->([(Int,Int)],[(Int,Int)],cleanText:String,containImage:Bool,[String],[String],[String],[ScalableImageModel],NSAttributedString){
         let attrText = NSMutableAttributedString(attributedString: self)
         var containsImage:Bool = false
         var imageAttrTuples = [(Int,Int)]()
+        var scalableImageModels = [ScalableImageModel]()
         var todoAttrTuples = [(Int,Int)]()
         var incompletedTodos = [String]()
         var completedTodos = [String]()
@@ -29,15 +31,29 @@ extension NSAttributedString{
             
             //1.image
             if let imageAttrValue = attrText.attribute(.image, at: location, effectiveRange: nil) as? Int{
-                //print("存储时扫描到imgae:\(range)")
-                //1.记录
+                print("存储时扫描到imgae")
+                
+                //1.记录图片附件的位置下标
                 imageAttrTuples.append((location,imageAttrValue))
                 
-                //2.为了正则表达式匹配，将图片替换成占位符"P"。
-                attrText.replaceCharacters(in: range, with: "P")
+                //2.从view中解析model并记录
+                if let subViewAttchemnt = object as? SubviewTextAttachment,let view = subViewAttchemnt.view as? ScalableImageView{
+                    let viewModel = view.viewModel
+                    viewModel.location = location//更新viewModel的location为保存时刻的location
+                    let model = viewModel.generateModel()
+                    scalableImageModels.append(model)
+                    print("添加model:\(scalableImageModels.count)")
+                    
+                    //3.将view重新替换成imageAttchment
+                    let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"))
+                    attrText.replaceAttchment(attchemnt, attchmentAt: location,with: centerParagraphStyle)
+                }
+                
                 
                 containsImage = true
             }
+            
+            
             
             //2.todo
             if let todoAttrValue = attrText.attribute(.todo, at: location, effectiveRange: nil) as? Int{
@@ -60,7 +76,7 @@ extension NSAttributedString{
         
         //print("存储images:\(imageAttrTuples)")
         //print("存储todos:\(todoAttrTuples)")
-        return (imageAttrTuples, todoAttrTuples, cleanText, containsImage, incompletedTodos, completedTodos, allTodos)
+        return (imageAttrTuples, todoAttrTuples, cleanText, containsImage, incompletedTodos, completedTodos, allTodos,scalableImageModels,attrText)
         
     }
     

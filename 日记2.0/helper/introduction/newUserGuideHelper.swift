@@ -39,6 +39,7 @@ class NewUserGuideHelper{
             let containsImage = parseRes.3
             let incompletedTodos = parseRes.4
             let allTodos = parseRes.6
+            let imageModels = parseRes.7
             let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
             page1.content = plainText
             page1.rtfd = attributedText.data()
@@ -46,6 +47,7 @@ class NewUserGuideHelper{
             page1.imageAttributesTuples = imageAttrTuples
             page1.containsImage = containsImage
             page1.todos = incompletedTodos
+            page1.scalableImageModels = imageModels
             page1.emojis.append("👏🏻")
             page1.emojis.append("😘")
             page1.tags.append("你好新用户")
