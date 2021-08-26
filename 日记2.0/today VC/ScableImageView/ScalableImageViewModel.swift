@@ -18,15 +18,23 @@ class ScalableImageViewModel: NSObject {
     var contentMode:UIView.ContentMode = .scaleAspectFill
     var isEditing:Bool = false
     
-    init(location:Int,image:UIImage,bounds:CGRect,paraStyle:NSMutableParagraphStyle = centerParagraphStyle) {
+    
+    ///构造默认view的viewModel
+    init(location:Int,image:UIImage) {
         self.location = location
         self.image = image
-        self.bounds = bounds
-        self.paraStyle = paraStyle
+        
+        let imageAspectRation = image.size.height / image.size.width
+        let viewWidth = (globalConstantsManager.shared.kScreenWidth - 2 * 15) / userDefaultManager.imageScalingFactor
+        let viewHeight = (viewWidth / imageAspectRation)
+        self.bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+        
+        self.paraStyle = centerParagraphStyle
         super.init()
     }
     
-    init(model:ScalableImageModel){
+    init(model:ScalableImageModel,image:UIImage){
+        self.image = image
         self.location = model.location
         self.bounds = CGRect.init(string: model.bounds) ?? .zero
         var paraStyle:NSMutableParagraphStyle
@@ -79,6 +87,13 @@ class ScalableImageViewModel: NSObject {
         
         let model = ScalableImageModel(location: location, bounds: bounds, paraStyle: paraStyle.rawValue,contentMode: contentMode.rawValue)
         return model
+    }
+    
+    
+    func generateSubviewAttchmetn()->SubviewTextAttachment{
+        let view = ScalableImageView(viewModel: self)
+        let subViewAttchment = SubviewTextAttachment(view: view, size: bounds.size)
+        return subViewAttchment
     }
     
 }

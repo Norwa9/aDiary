@@ -11,11 +11,11 @@ import SubviewAttachingTextView
 import YYModel
 
 class ScalableImageModel:NSObject, Codable, YYModel {
-    @objc dynamic var location:Int = -1
-    @objc dynamic var bounds:String = ""
-    @objc dynamic var imageScale:CGFloat = 0//高宽比
-    @objc dynamic var paraStyle:Int = -1
-    @objc dynamic var contentMode:Int = -1
+    @objc dynamic var location:Int = -1//ScalableImageModel在attributedText的下标
+    @objc dynamic var bounds:String = ""//ScalableImageView的bounds
+    @objc dynamic var viewScale:CGFloat = 0//imageView宽度与屏幕宽度比例
+    @objc dynamic var paraStyle:Int = 0//center
+    @objc dynamic var contentMode:Int = 2//aspectFill
     
     
     init(location:Int,bounds:CGRect,paraStyle:Int,contentMode:Int) {
@@ -24,7 +24,7 @@ class ScalableImageModel:NSObject, Codable, YYModel {
         let boundsSring = "\(bounds.origin.x),\(bounds.origin.y),\(bounds.size.width),\(bounds.size.height)"
         self.bounds = boundsSring
         
-        self.imageScale = bounds.width / globalConstantsManager.shared.kScreenWidth
+        self.viewScale = bounds.width / globalConstantsManager.shared.kScreenWidth
         
         self.paraStyle = paraStyle
         self.contentMode = contentMode

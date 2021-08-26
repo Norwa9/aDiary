@@ -626,12 +626,12 @@ extension TextFormatter{
     }
     
     func insertScalableImageView(image:UIImage){
-        let viewModel = ScalableImageViewModel(location: selectedRange.location, image: image, bounds: CGRect(origin: .zero, size: CGSize(width: 200, height: 200)))
-        let view = ScalableImageView(viewModel: viewModel)
+        let defaultViewModel = ScalableImageViewModel(location: selectedRange.location, image: image)
+        let view = ScalableImageView(viewModel: defaultViewModel)
         guard let lwtextView = textView as? ScalableImageViewDelegate else{return}
         view.delegate = lwtextView
-        let subViewAttchment = SubviewTextAttachment(view: view, size: viewModel.bounds.size)
-        textView.textStorage.insertAttachment(subViewAttchment, at: viewModel.location, with: centerParagraphStyle)
+        let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
+        textView.textStorage.insertAttachment(subViewAttchment, at: defaultViewModel.location, with: centerParagraphStyle)
     }
 }
 
@@ -773,6 +773,7 @@ extension TextFormatter{
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
+        let imageModels = diary.scalableImageModels
         let todoAttrTuples = diary.todoAttributesTuples
         //print("读取到的images:\(imageAttrTuples)")
         //print("读取到的todos:\(todoAttrTuples)")
@@ -780,7 +781,7 @@ extension TextFormatter{
         DispatchQueue.global(qos: .default).async {
             let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
             //TODO:当用cleanContent替代rtfd时，遍历attribute有可能崩溃
-            let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+            let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples,imageModels: imageModels)
             DispatchQueue.main.async {
                 self.textView.attributedText = correctedAString
             }
@@ -790,7 +791,7 @@ extension TextFormatter{
     ///读取富文本，并为图片附件设置正确的大小、方向
     ///textViewScreenshot
     ///loadTextViewContent(with:)
-    func processAttrString(aString:NSAttributedString,bounds:CGRect,container:NSTextContainer,imageAttrTuples:[(Int,Int)],todoAttrTuples:[(Int,Int)])->NSMutableAttributedString{
+    func processAttrString(aString:NSAttributedString, bounds:CGRect, container:NSTextContainer, imageAttrTuples:[(Int,Int)], todoAttrTuples:[(Int,Int)], imageModels:[ScalableImageModel] = [])->NSMutableAttributedString{
         
         let mutableText = NSMutableAttributedString(attributedString: aString)
         
@@ -798,6 +799,22 @@ extension TextFormatter{
         let attrText = mutableText.addUserDefaultAttributes()
         
         //2.恢复.image格式
+        let fullRange = NSRange(location: 0, length: attrText.length)
+        attrText.enumerateAttribute(.attachment, in: fullRange, options: []) { objcet, range, stop in
+            if let attchemnt = objcet as? NSTextAttachment,let image = attchemnt.image{
+                let location = range.location
+                if let model = imageModels.filter({$0.location == location}).first{
+                    let viewModel = ScalableImageViewModel(model: model,image: image)
+                    attrText.replaceAttchment(viewModel.generateSubviewAttchmetn(), attchmentAt: viewModel.location, with: viewModel.paraStyle)
+                }else{
+                    print("\(location)对应的图片model没有找到！提供默认viewModel")
+                    let defaultViewModel = ScalableImageViewModel(location: location, image: image)
+                    attrText.replaceAttchment(defaultViewModel.generateSubviewAttchmetn(), attchmentAt: defaultViewModel.location, with: defaultViewModel.paraStyle)
+                }
+            }
+        }
+        
+        
         for tuple in imageAttrTuples{
             let location = tuple.0//attribute location
             let value = tuple.1//attribute value
