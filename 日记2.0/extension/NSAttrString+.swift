@@ -103,8 +103,10 @@ extension NSAttributedString{
 
 //MARK:-NSAttributedString转Data
 extension NSAttributedString {
-    func data()->Data?{
-        return try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
+    func toRTFD()->Data?{
+        let rtfd = try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
+        rtfd?.printSize()
+        return rtfd
     }
 }
 

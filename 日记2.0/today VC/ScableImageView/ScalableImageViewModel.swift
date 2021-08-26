@@ -22,7 +22,6 @@ class ScalableImageViewModel: NSObject {
     ///构造默认view的viewModel
     init(location:Int,image:UIImage?) {
         self.location = location
-        self.image = image
         
         var imageAspectRation:CGFloat
         if let image = image{
@@ -33,6 +32,13 @@ class ScalableImageViewModel: NSObject {
         let viewWidth = (globalConstantsManager.shared.kScreenWidth - 2 * 15) / userDefaultManager.imageScalingFactor
         let viewHeight = (viewWidth * imageAspectRation)
         self.bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
+        
+        print("压缩前大小")//例如原图21MB
+        image?.printImageDataSize()
+        let compressedImage = image?.compressPic(toSize: CGSize(width: viewWidth * 2, height: viewHeight * 2))
+        print("压缩后大小")//压缩后4MB
+        compressedImage?.printImageDataSize()
+        self.image = compressedImage
         
         self.paraStyle = centerParagraphStyle
         super.init()

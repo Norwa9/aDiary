@@ -625,9 +625,10 @@ extension TextFormatter{
         textView.insertText(time)
     }
     
+    ///插入可变大小图片
     func insertScalableImageView(image:UIImage){
         let location = selectedRange.location
-        let defaultViewModel = ScalableImageViewModel(location: location, image: image.compress(qualty: 0.8))
+        let defaultViewModel = ScalableImageViewModel(location: location, image: image)
         let view = ScalableImageView(viewModel: defaultViewModel)
         view.delegate = textView
         let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
@@ -731,7 +732,7 @@ extension TextFormatter{
             diary.modTime = Date()
             diary.content = plainText
             diary.todos = incompletedTodos
-            diary.rtfd = recoveredAttributedText.data()
+            diary.rtfd = recoveredAttributedText.toRTFD()
             diary.containsImage = containsImage
             diary.imageAttributesTuples = imageAttrTuples
             diary.scalableImageModels = imageModels

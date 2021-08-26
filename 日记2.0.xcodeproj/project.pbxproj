@@ -60,6 +60,7 @@
 		EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC2263582B000C2E9EE /* UITextView+.swift */; };
 		EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC626359C4300C2E9EE /* shareScrollView.swift */; };
 		EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537CDD266273D800C2E9EE /* photoCell.swift */; };
+		EA55A36A26D7EEA200FC9006 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA55A36926D7EEA200FC9006 /* Data+.swift */; };
 		EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */; };
 		EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFFA926749057008E06FA /* layoutParasManager.swift */; };
 		EA63BABB26C6C57B004E64E5 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */; };
@@ -233,6 +234,7 @@
 		EA537BC2263582B000C2E9EE /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		EA537BC626359C4300C2E9EE /* shareScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareScrollView.swift; sourceTree = "<group>"; };
 		EA537CDD266273D800C2E9EE /* photoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoCell.swift; sourceTree = "<group>"; };
+		EA55A36926D7EEA200FC9006 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterFallLayout.swift; sourceTree = "<group>"; };
 		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
 		EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MainWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -728,6 +730,7 @@
 		EACB1719267A1B63007BF160 /* extension */ = {
 			isa = PBXGroup;
 			children = (
+				EA55A36926D7EEA200FC9006 /* Data+.swift */,
 				EACB1713267790BA007BF160 /* String+.swift */,
 				EAA29E9D25C832F900AA6971 /* extension.swift */,
 				EADA85DE26248B14007D1134 /* NSAttrString+.swift */,
@@ -991,6 +994,7 @@
 				EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */,
 				EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */,
 				EA22360826D692F6001FAD1D /* LWTextAligment.swift in Sources */,
+				EA55A36A26D7EEA200FC9006 /* Data+.swift in Sources */,
 				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,

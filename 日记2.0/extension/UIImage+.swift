@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 
 extension UIImage{
+    func printImageDataSize(){
+        let data = self.pngData()
+        data?.printSize()
+    }
     //MARK:-压缩image到特定尺寸
     func compressPic(toSize:CGSize) -> UIImage{
         let toW = toSize.width
@@ -106,6 +110,7 @@ extension UIImage{
             return nil
         }
         if let compressedData = self.jpegData(compressionQuality: qualty){
+            print("return compressed image")
             return UIImage(data: compressedData)
         }
         return nil

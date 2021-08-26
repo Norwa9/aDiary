@@ -42,7 +42,7 @@ class NewUserGuideHelper{
             let imageModels = parseRes.7
             let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
             page1.content = plainText
-            page1.rtfd = attributedText.data()
+            page1.rtfd = attributedText.toRTFD()
             page1.todoAttributesTuples = todoAttrTuples
             page1.imageAttributesTuples = imageAttrTuples
             page1.containsImage = containsImage
