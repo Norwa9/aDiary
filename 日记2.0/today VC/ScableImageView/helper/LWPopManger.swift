@@ -23,18 +23,9 @@ class LWPopManager: NSObject {
                 let attachmentFrame = textView.layoutManager.boundingRect(forGlyphRange: NSRange(location: view.viewModel.location, length: 1), in: textView.textContainer)
                 //图片浏览器数据源
                 //将黑色背景替换为玻璃模糊
-                for view in browser.view.subviews{
-                    if view.backgroundColor == .black{
-                        view.backgroundColor = .clear
-                        let effect = UIBlurEffect(style: .dark)
-                        let blurView = UIVisualEffectView(effect: effect)
-                        view.addSubview(blurView)
-                        blurView.snp.makeConstraints { make in
-                            make.edges.equalToSuperview()
-                        }
-                        break
-                    }
-                }
+                let effect = UIBlurEffect(style: .dark)
+                let blurView = UIVisualEffectView(effect: effect)
+                browser.maskView = blurView
                 
                 browser.numberOfItems = { 1 }
                 browser.reloadCellAtIndex = { context in
