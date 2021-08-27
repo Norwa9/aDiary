@@ -10,16 +10,13 @@ import Foundation
 import UIKit
 import PopMenu
 
-protocol ScalableImageViewDelegate : NSObject {
-    func reloadScableImage(endView:ScalableImageView)
-}
-
 class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     private var imageView:UIImageView!
     private var dot: UIView?
     private var doneView:UIImageView?
     var startFrame:CGRect!
-    weak var delegate:ScalableImageViewDelegate?
+    weak var delegate:LWTextView?
+    let popManager = LWPopManager()
     
     var viewModel:ScalableImageViewModel
     
@@ -161,7 +158,7 @@ extension ScalableImageView{
         print("tapped")
         if let view = sender.view as? ScalableImageView{
             if view == self{
-                LWPopManager.PresentPopMenu(sourceView: view)
+                popManager.PresentPopMenu(sourceView: view)
             }
         }
     }

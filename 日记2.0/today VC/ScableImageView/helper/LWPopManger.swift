@@ -11,14 +11,17 @@ import PopMenu
 import JXPhotoBrowser
 
 class LWPopManager: NSObject {
-    static func PresentPopMenu(sourceView view:ScalableImageView){
-        let popManager = PopMenuManager.default
+    let popManager = PopMenuManager.default
+    
+    func PresentPopMenu(sourceView view:ScalableImageView){
+        popManager.popMenuShouldDismissOnSelection = false
         popManager.actions = [
             PopMenuDefaultAction(title: "查看图片",didSelect: { action in
-                let img = view.viewModel.image
-                let imgFrame = view.delegate?
-                //图片浏览器数据源
+                guard let textView = view.delegate else {return}
                 let browser = JXPhotoBrowser()
+                let img = view.viewModel.image
+                let attachmentFrame = textView.layoutManager.boundingRect(forGlyphRange: NSRange(location: view.viewModel.location, length: 1), in: textView.textContainer)
+                //图片浏览器数据源
                 //将黑色背景替换为玻璃模糊
                 for view in browser.view.subviews{
                     if view.backgroundColor == .black{
@@ -48,7 +51,7 @@ class LWPopManager: NSObject {
                     fromView.clipsToBounds = true
                     //y + 8 是为了解决奇怪的偏移量bug
                     let fromFrame = CGRect(x: attachmentFrame.origin.x, y: attachmentFrame.origin.y + 8, width: attachmentFrame.size.width, height: attachmentFrame.size.height)
-                    let thumbnailFrame = self.textView.convert(fromFrame, to: toView)
+                    let thumbnailFrame = textView.convert(fromFrame, to: toView)
                     return (fromView,thumbnailFrame)
                 })
                 browser.show()
@@ -61,28 +64,41 @@ class LWPopManager: NSObject {
                 }else{
                     view.doneEditing()
                 }
+                self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "填充模式",didSelect: { action in
                 view.viewModel.contentMode = .scaleAspectFill
                 view.delegate?.reloadScableImage(endView: view)
+                self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "适应模式",didSelect: { action in
                 view.viewModel.contentMode = .scaleAspectFit
                 view.delegate?.reloadScableImage(endView: view)
+                self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居中",didSelect: { action in
                 view.viewModel.paraStyle = centerParagraphStyle
                 view.delegate?.reloadScableImage(endView: view)
+                self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居左",didSelect: { action in
                 view.viewModel.paraStyle = leftParagraphStyle
                 view.delegate?.reloadScableImage(endView: view)
+                self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居右",didSelect: { action in
                 view.viewModel.paraStyle = rightParagraphStyle
                 view.delegate?.reloadScableImage(endView: view)
+                self.dismissPopMenu()
             }),
         ]
-        popManager.present(sourceView: self, on: nil, animated: true, completion: nil)
+        popManager.present(sourceView: view, on: nil, animated: true, completion: nil)
+    }
+    
+    ///手动dismiss popMenu
+    func dismissPopMenu(){
+        if let topVC = UIApplication.getTopViewController() as? PopMenuViewController{
+            topVC.dismiss(animated: true, completion: nil)
+        }
     }
 }

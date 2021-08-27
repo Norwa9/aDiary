@@ -138,9 +138,10 @@ class LWTextView: SubviewAttachingTextView {
 
 }
 
-//MARK:-scalableImageViewDelegate
-extension LWTextView : ScalableImageViewDelegate{
+//MARK:-scalableImageView
+extension LWTextView{
     func reloadScableImage(endView: ScalableImageView) {
+        print("reloadScableImage")
         let newViewModel = endView.viewModel
         newViewModel.bounds = endView.frame
         newViewModel.getNewestLocation(attributedString: self.attributedText){
