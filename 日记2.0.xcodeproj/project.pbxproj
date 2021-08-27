@@ -61,6 +61,7 @@
 		EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537BC626359C4300C2E9EE /* shareScrollView.swift */; };
 		EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537CDD266273D800C2E9EE /* photoCell.swift */; };
 		EA55A36A26D7EEA200FC9006 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA55A36926D7EEA200FC9006 /* Data+.swift */; };
+		EA55A3A026D9436900FC9006 /* LWPopManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA55A39F26D9436900FC9006 /* LWPopManger.swift */; };
 		EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */; };
 		EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFFA926749057008E06FA /* layoutParasManager.swift */; };
 		EA63BABB26C6C57B004E64E5 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */; };
@@ -235,6 +236,7 @@
 		EA537BC626359C4300C2E9EE /* shareScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shareScrollView.swift; sourceTree = "<group>"; };
 		EA537CDD266273D800C2E9EE /* photoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoCell.swift; sourceTree = "<group>"; };
 		EA55A36926D7EEA200FC9006 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		EA55A39F26D9436900FC9006 /* LWPopManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPopManger.swift; sourceTree = "<group>"; };
 		EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterFallLayout.swift; sourceTree = "<group>"; };
 		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
 		EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MainWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -457,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				EA22360726D692F6001FAD1D /* LWTextAligment.swift */,
+				EA55A39F26D9436900FC9006 /* LWPopManger.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -1025,6 +1028,7 @@
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
+				EA55A3A026D9436900FC9006 /* LWPopManger.swift in Sources */,
 				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
 				EA67915C26D1F35D00B44ECA /* diary+subPages.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,

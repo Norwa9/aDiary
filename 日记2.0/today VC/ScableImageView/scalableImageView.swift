@@ -161,41 +161,7 @@ extension ScalableImageView{
         print("tapped")
         if let view = sender.view as? ScalableImageView{
             if view == self{
-                
-                let popManager = PopMenuManager.default
-                popManager.actions = [
-                    PopMenuDefaultAction(title: "编辑",didSelect: { action in
-                        view.viewModel.isEditing.toggle()
-                        let isEditing = view.viewModel.isEditing
-                        if isEditing{
-                            self.addEditingView()
-                        }else{
-                            self.doneEditing()
-                        }
-                    }),
-                    PopMenuDefaultAction(title: "布满模式",didSelect: { action in
-                        view.viewModel.contentMode = .scaleAspectFill
-                        self.delegate?.reloadScableImage(endView: view)
-                    }),
-                    PopMenuDefaultAction(title: "裁剪模式",didSelect: { action in
-                        view.viewModel.contentMode = .scaleAspectFit
-                        self.delegate?.reloadScableImage(endView: view)
-                    }),
-                    PopMenuDefaultAction(title: "居中",didSelect: { action in
-                        view.viewModel.paraStyle = centerParagraphStyle
-                        self.delegate?.reloadScableImage(endView: view)
-                    }),
-                    PopMenuDefaultAction(title: "居左",didSelect: { action in
-                        view.viewModel.paraStyle = leftParagraphStyle
-                        self.delegate?.reloadScableImage(endView: view)
-                    }),
-                    PopMenuDefaultAction(title: "居右",didSelect: { action in
-                        view.viewModel.paraStyle = rightParagraphStyle
-                        self.delegate?.reloadScableImage(endView: view)
-                    }),
-                ]
-                popManager.present(sourceView: self, on: nil, animated: true, completion: nil)
-                
+                LWPopManager.PresentPopMenu(sourceView: view)
             }
         }
     }
