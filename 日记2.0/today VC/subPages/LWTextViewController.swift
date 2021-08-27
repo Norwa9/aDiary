@@ -236,7 +236,11 @@ extension LWTextViewController : JXPagingViewListViewDelegate{
     }
     
     func listScrollView() -> UIScrollView {
-        self.textView
+        if let textView = self.textView{
+            return textView
+        }else{
+            return LWTextView(frame: .zero)//如果左右滑动过快，self.textView尚未实例化，会返回nil奔溃
+        }
     }
     
     func listViewDidScrollCallback(callback: @escaping (UIScrollView) -> ()) {
