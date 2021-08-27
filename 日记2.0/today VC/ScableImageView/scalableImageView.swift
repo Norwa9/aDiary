@@ -47,25 +47,21 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         
         //2.dotView
         if viewModel.isEditing{
-             addDotView()
+             addEditingView()
         }
         
         //3.tap gesture
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(handle(_:)))
         self.addGestureRecognizer(tapGes)
         
-        //4.图片边框
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 5
-        self.layer.borderColor = UIColor.gray.cgColor
-        
         //
         startFrame = self.frame
     }
     
-    func addDotView(){
+    func addEditingView(){
         weak var wlabel = self
         
+        //1.添加dot view
         dot = newDotView()
         if viewModel.paraStyle == rightParagraphStyle{
             dot?.center = CGPoint(x: 0, y: self.height)
@@ -117,8 +113,8 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
                     self.doneEditing(){
                         self.delegate?.reloadScableImage(endView: self)
                     }
-                    self.viewModel.shouldShowDoneView = false
                 }else{
+                    //继续编辑
                     self.viewModel.shouldShowDoneView = true
                     self.delegate?.reloadScableImage(endView: self)
                 }
@@ -126,6 +122,9 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         }
         gesture.delegate = self
         dot?.addGestureRecognizer(gesture)
+        
+        //2.添加view的边框
+        self.addBorder()
     }
     
     private func newDotView() -> UIView? {
@@ -141,6 +140,16 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         view.addSubview(dot)
         
         return view
+    }
+    
+    private func addBorder(){
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 5
+        self.layer.borderColor = UIColor.gray.cgColor
+    }
+    
+    private func removeBorder(){
+        self.layer.borderWidth = 1
     }
     
     
@@ -159,7 +168,7 @@ extension ScalableImageView{
                         view.viewModel.isEditing.toggle()
                         let isEditing = view.viewModel.isEditing
                         if isEditing{
-                            self.addDotView()
+                            self.addEditingView()
                         }else{
                             self.doneEditing()
                         }
@@ -204,9 +213,11 @@ extension ScalableImageView{
     ///结束大小编辑
     func doneEditing(completion:(()->())? = nil){
         print("done editing")
+        viewModel.shouldShowDoneView = false
         viewModel.isEditing = false
         UIView.animate(withDuration: 0.2) {
             self.dot?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            self.removeBorder()
         } completion: { (_) in
             self.dot?.removeFromSuperview()
             completion?()
