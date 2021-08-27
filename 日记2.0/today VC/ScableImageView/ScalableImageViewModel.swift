@@ -18,6 +18,7 @@ class ScalableImageViewModel: NSObject {
     var paraStyle:NSMutableParagraphStyle
     var contentMode:UIView.ContentMode = .scaleAspectFill
     var isEditing:Bool = false
+    var shouldShowDoneView:Bool = false
     
     
     ///构造默认view的viewModel

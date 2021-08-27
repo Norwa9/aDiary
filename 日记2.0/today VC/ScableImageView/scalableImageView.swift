@@ -17,6 +17,7 @@ protocol ScalableImageViewDelegate : NSObject {
 class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     private var imageView:UIImageView!
     private var dot: UIView?
+    private var doneView:UIImageView?
     var startFrame:CGRect!
     weak var delegate:ScalableImageViewDelegate?
     
@@ -73,12 +74,19 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         }
         dot?.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
         if let dot = dot {
-            let doneView = UIImageView(image: #imageLiteral(resourceName: "tagSelected"))
-            dot.addSubview(doneView)
-            doneView.snp.makeConstraints { make in
+            doneView = UIImageView(image: #imageLiteral(resourceName: "tagSelected"))
+            dot.addSubview(doneView!)
+            doneView!.snp.makeConstraints { make in
                 make.edges.equalTo(dot)
             }
             self.addSubview(dot)
+            
+            if viewModel.shouldShowDoneView{
+                print("should show")
+                showDoneView()
+            }else{
+                doneView?.alpha = 0
+            }
         }
         
         
@@ -106,17 +114,18 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
                 print("state == .ended")
                 if gesture!.startPoint.equalTo(gesture!.currentPoint){
                     //完成编辑
-                    self.doneEditing()
+                    self.doneEditing(){
+                        self.delegate?.reloadScableImage(endView: self)
+                    }
+                    self.viewModel.shouldShowDoneView = false
+                }else{
+                    self.viewModel.shouldShowDoneView = true
+                    self.delegate?.reloadScableImage(endView: self)
                 }
-                self.delegate?.reloadScableImage(endView: self)
             }
         }
         gesture.delegate = self
         dot?.addGestureRecognizer(gesture)
-    }
-    
-    func removeDotView(){
-        dot?.removeFromSuperview()
     }
     
     private func newDotView() -> UIView? {
@@ -152,7 +161,7 @@ extension ScalableImageView{
                         if isEditing{
                             self.addDotView()
                         }else{
-                            self.removeDotView()
+                            self.doneEditing()
                         }
                     }),
                     PopMenuDefaultAction(title: "布满模式",didSelect: { action in
@@ -182,11 +191,26 @@ extension ScalableImageView{
         }
     }
     
+    func showDoneView(){
+        self.doneView?.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIView.animate(withDuration: 0.2) {
+            self.doneView?.transform = .identity
+        } completion: { (_) in
+            
+        }
+
+    }
+    
     ///结束大小编辑
-    func doneEditing(){
+    func doneEditing(completion:(()->())? = nil){
         print("done editing")
-        self.viewModel.isEditing = false
-        self.removeDotView()
+        viewModel.isEditing = false
+        UIView.animate(withDuration: 0.2) {
+            self.dot?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        } completion: { (_) in
+            self.dot?.removeFromSuperview()
+            completion?()
+        }
     }
     
     
