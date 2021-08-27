@@ -65,6 +65,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     
     func addDotView(){
         weak var wlabel = self
+        
         dot = newDotView()
         if viewModel.paraStyle == rightParagraphStyle{
             dot?.center = CGPoint(x: 0, y: self.height)
@@ -73,8 +74,17 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         }
         dot?.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
         if let dot = dot {
+            let doneButton = UIButton()
+            doneButton.setImage(#imageLiteral(resourceName: "tagSelected"), for: .normal)
+            doneButton.addTarget(self, action: #selector(doneEditing(_:)), for: .touchUpInside)
+            dot.addSubview(doneButton)
+            doneButton.snp.makeConstraints { make in
+                make.edges.equalTo(dot)
+            }
             self.addSubview(dot)
         }
+        
+        
         let gesture = BSGestureRecognizer()
         gesture.targetView = self
         gesture.action = { [self] gesture, state in
@@ -123,6 +133,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     
 }
 
+//MARK:-action target
 extension ScalableImageView{
     @objc func handle(_ sender: UIGestureRecognizer!) {
         print("tapped")
@@ -165,6 +176,11 @@ extension ScalableImageView{
                 
             }
         }
+    }
+    
+    @objc func doneEditing(_ sender:UIButton){
+        self.viewModel.isEditing = false
+        self.delegate?.reloadScableImage(endView: self)
     }
     
     
