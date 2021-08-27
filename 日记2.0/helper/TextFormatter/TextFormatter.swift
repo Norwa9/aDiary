@@ -574,47 +574,7 @@ extension TextFormatter{
 
 //MARK:-插入图片、时间戳
 extension TextFormatter{
-    func insertPictureToTextView(image:UIImage){
-        //创建附件
-        let attachment = NSTextAttachment()
-        let imageAspectRatio = image.size.height / image.size.width
-        let pedding:CGFloat = 15
-        let imageWidth = (textView.frame.width - 2 * pedding)
-        let imageHeight = (imageWidth * imageAspectRatio)
-        let compressedImage = image.compressPic(toSize: CGSize(width: imageWidth * 2, height: imageHeight * 2))//修改尺寸，防止从存储中读取富文本时图片方向错位
-        attachment.image = compressedImage.createRoundedRectImage(size: compressedImage.size, radius: compressedImage.size.width / 25)
-        attachment.bounds = CGRect(x: 0, y: 0,
-                                   width: imageWidth / userDefaultManager.imageScalingFactor,
-                                   height: imageHeight / userDefaultManager.imageScalingFactor)
-        let imageAttr = NSAttributedString(attachment: attachment)
-        let imageAlignmentStyle = NSMutableParagraphStyle()
-        imageAlignmentStyle.alignment = .center
-        imageAlignmentStyle.lineSpacing = userDefaultManager.lineSpacing
-        let attributes:[NSAttributedString.Key:Any] = [
-            .paragraphStyle:imageAlignmentStyle,
-        ]
-        let mutableStr = NSMutableAttributedString(attributedString: textView.attributedText)
-        let selectedRange = textView.selectedRange
-        
-        //换行，然后居中插入图片
-        mutableStr.insert(NSAttributedString(string: "\n"), at: selectedRange.location)
-        let insertLoaction = selectedRange.location + 1
-        mutableStr.insert(imageAttr, at: insertLoaction)
-        
-        mutableStr.addAttribute(.image, value: 1, range: NSRange(location: insertLoaction, length: 1))
-        
-        mutableStr.addAttributes(attributes, range: NSRange(location: insertLoaction, length: 1))
-        //另起一行
-        mutableStr.insert(NSAttributedString(string: "\n"), at: insertLoaction + 1)
-        
-        mutableStr.addAttribute(NSAttributedString.Key.font, value: userDefaultManager.font, range: NSMakeRange(0,mutableStr.length))
-        textView.attributedText = mutableStr
-        //从插入图片的下一行继续编辑：居左
-        textView.selectedRange = NSRange(location: insertLoaction + 2, length: 0)
-        textView.scrollRangeToVisible(textView.selectedRange)
-        setLeftTypingAttributes()
-    }
-    
+    ///插入时间戳
     func insertTimeTag(){
         setLeftTypingAttributes()
         //获取当前时间，格式：-H:mm-
@@ -628,16 +588,24 @@ extension TextFormatter{
     ///插入可变大小图片
     func insertScalableImageView(image:UIImage){
         let location = selectedRange.location
+        //插入换行
+        textView.textStorage.insert(NSAttributedString(string: "\n"), at: location)
+        
+        //插入图片
         let defaultViewModel = ScalableImageViewModel(location: location, image: image)
         let view = ScalableImageView(viewModel: defaultViewModel)
         view.delegate = textView
         let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
-        //插入
-        textView.textStorage.insert(NSAttributedString(string: "\n"), at: location)
         textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: centerParagraphStyle)
-        print("插入subViewAttchemnt，下标:\(location)")
-        //别忘了添加.image key
-        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))
+        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))//别忘了添加.image key
+        
+        //插入换行
+        textView.textStorage.insert(NSAttributedString(string: "\n"), at: location + 2)
+        
+        //更新焦点
+        textView.selectedRange = NSRange(location: location + 3, length: 0)
+        textView.scrollRangeToVisible(textView.selectedRange)
+        setLeftTypingAttributes()
     }
 }
 
