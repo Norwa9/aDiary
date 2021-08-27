@@ -79,8 +79,7 @@ class LWTextViewController: UIViewController {
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.delegate = self
         view.layoutIfNeeded()
-        keyBoardToolsBar.alpha = 0
-        self.view.addSubview(keyBoardToolsBar)
+        textView.inputAccessoryView = keyBoardToolsBar
         
     }
     
@@ -119,22 +118,18 @@ extension LWTextViewController{
         if notification.name == UIResponder.keyboardWillHideNotification {
             print("keyboardWillHideNotification")
             //1.键盘隐藏
-            let x = keyBoardToolsBarFrame.origin.x
-            let y = keyBoardToolsBarFrame.origin.y
-            keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)//自带动画效果
-            keyBoardToolsBar.alpha = 0
             textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
         } else{
             print("keyboardWillChangeFrameNotification")
             //2.键盘出现
-            let convertedTextViewFrame = view.convert(textView.frame, from: view.window)
-            let topInset = abs(convertedTextViewFrame.origin.y)
-            let x = keyBoardToolsBarFrame.origin.x
-            let y = keyboardScreenEndFrame.origin.y - keyBoardToolsBarFrame.size.height - topInset
-            //print("show point :\(CGPoint(x: x, y: y))")
-            keyBoardToolsBar.frame.origin = CGPoint(x: x, y: y)
-            keyBoardToolsBar.alpha = 1
-            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + keyBoardToolsBar.frame.height, right: 0)
+            let bottomInset:CGFloat
+            if textView.contentSize.height < globalConstantsManager.shared.kScreenHeight{
+                bottomInset = keyboardViewEndFrame.height
+            }else{
+                bottomInset = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
+            }
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+            
         }
         textView.scrollRangeToVisible(textView.selectedRange)
     }
