@@ -15,7 +15,6 @@ protocol ScalableImageViewDelegate : NSObject {
 }
 
 class ScalableImageView:UIView, UIGestureRecognizerDelegate{
-    private var dotView:UIView!
     private var imageView:UIImageView!
     private var dot: UIView?
     var startFrame:CGRect!
@@ -74,11 +73,9 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         }
         dot?.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
         if let dot = dot {
-            let doneButton = UIButton()
-            doneButton.setImage(#imageLiteral(resourceName: "tagSelected"), for: .normal)
-            doneButton.addTarget(self, action: #selector(doneEditing(_:)), for: .touchUpInside)
-            dot.addSubview(doneButton)
-            doneButton.snp.makeConstraints { make in
+            let doneView = UIImageView(image: #imageLiteral(resourceName: "tagSelected"))
+            dot.addSubview(doneView)
+            doneView.snp.makeConstraints { make in
                 make.edges.equalTo(dot)
             }
             self.addSubview(dot)
@@ -88,7 +85,9 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         let gesture = BSGestureRecognizer()
         gesture.targetView = self
         gesture.action = { [self] gesture, state in
-            if state == BSGestureRecognizerState.moved {
+            if state == .began{
+                print(" state == .began")
+            }else if state == BSGestureRecognizerState.moved {
                 let x = gesture!.currentPoint.x
                 let y = gesture!.currentPoint.y
                 var newWidth:CGFloat
@@ -104,6 +103,11 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
                 wlabel?.width = width < 30 ? 30 : width
                 wlabel?.height = height < 30 ? 30 : height
             }else if state == .ended{
+                print("state == .ended")
+                if gesture!.startPoint.equalTo(gesture!.currentPoint){
+                    //完成编辑
+                    self.doneEditing()
+                }
                 self.delegate?.reloadScableImage(endView: self)
             }
         }
@@ -121,7 +125,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         
         let dot = UIView()
         dot.size = CGSize(width: 30, height: 30)
-        dot.backgroundColor = UIColor(red: 0.000, green: 0.463, blue: 1.000, alpha: 1.000)
+        dot.backgroundColor = .systemGray5
         dot.clipsToBounds = true
         dot.layer.cornerRadius = dot.height / 2
         dot.center = CGPoint(x: view.width / 2, y: view.height / 2)
@@ -178,9 +182,11 @@ extension ScalableImageView{
         }
     }
     
-    @objc func doneEditing(_ sender:UIButton){
+    ///结束大小编辑
+    func doneEditing(){
+        print("done editing")
         self.viewModel.isEditing = false
-        self.delegate?.reloadScableImage(endView: self)
+        self.removeDotView()
     }
     
     
@@ -196,6 +202,7 @@ extension ScalableImageView{
         }
         let resultView  = super.hitTest(point, with: event)
         if resultView != nil {
+            //print("type(of: resultView):\(type(of: resultView))")
             return resultView
         } else {
             for subView in self.subviews.reversed() {
