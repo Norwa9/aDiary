@@ -610,67 +610,16 @@ extension TextFormatter{
 }
 
 
-//MARK:-查看图片
+//MARK:-shouldInteractWith textAttachment
 extension TextFormatter{
     func interactAttchment(with characterRange: NSRange,diary:diaryInfo)
     ->NSAttributedString.Key?{
-        let bounds = self.textView.bounds
-        let range = characterRange
-        let layoutManager = textView.layoutManager
-        let container = textView.textContainer
         let location = characterRange.location
         
-        //1.如果点击的是.todo文本属性
+        //如果点击的是.todo文本属性
         if let todoAttrValue = storage.attribute(.todo, at: location, effectiveRange: nil) as? Int{
             self.toggleTodo(location: location, todoAttr: todoAttrValue)
             return .todo
-        }
-        
-        
-        //2.如果点击的是.image文本属性，提取其attachment
-        if let isImage = storage.attribute(.image, at: location, effectiveRange: nil) as? Int,isImage == 1{
-            if let imageAttachment = storage.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment, let img = imageAttachment.image(forBounds: bounds, textContainer: container, characterIndex: location){
-                
-                let attachmentFrame = layoutManager.boundingRect(forGlyphRange: range, in: container)
-                textView.resignFirstResponder()
-                
-                //图片浏览器数据源
-                let browser = JXPhotoBrowser()
-                //将黑色背景替换为玻璃模糊
-                for view in browser.view.subviews{
-                    if view.backgroundColor == .black{
-                        view.backgroundColor = .clear
-                        let effect = UIBlurEffect(style: .dark)
-                        let blurView = UIVisualEffectView(effect: effect)
-                        view.addSubview(blurView)
-                        blurView.snp.makeConstraints { make in
-                            make.edges.equalToSuperview()
-                        }
-                        break
-                    }
-                }
-                
-                browser.numberOfItems = { 1 }
-                browser.reloadCellAtIndex = { context in
-                    let browserCell = context.cell as? JXPhotoBrowserImageCell
-                    browserCell?.imageView.image = img
-                }
-                
-                //显示图片与收回图片的转场动画
-                browser.transitionAnimator = JXPhotoBrowserSmoothZoomAnimator(transitionViewAndFrame: { (index, toView) -> JXPhotoBrowserSmoothZoomAnimator.TransitionViewAndFrame? in
-                    //toView:大图的imageView
-                    //fromView:textView里的图片附件view
-                    let fromView = UIImageView(image: img)
-                    fromView.contentMode = .scaleAspectFit
-                    fromView.clipsToBounds = true
-                    //y + 8 是为了解决奇怪的偏移量bug
-                    let fromFrame = CGRect(x: attachmentFrame.origin.x, y: attachmentFrame.origin.y + 8, width: attachmentFrame.size.width, height: attachmentFrame.size.height)
-                    let thumbnailFrame = self.textView.convert(fromFrame, to: toView)
-                    return (fromView,thumbnailFrame)
-                })
-                browser.show()
-                return .image
-            }
         }
         
         return nil

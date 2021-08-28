@@ -205,8 +205,10 @@ extension LWTextViewController : UITextViewDelegate{
         let res = formatter.interactAttchment(with: characterRange,diary:model)
         if let type = res,type == .todo{
             self.save()
+            return true
+        }else{
+            return false
         }
-        return true
     }
 
 }
