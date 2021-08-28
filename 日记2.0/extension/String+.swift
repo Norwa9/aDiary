@@ -139,3 +139,98 @@ extension String{
         return attributedString
     }
 }
+
+//MARK:-常用方法扩展
+extension String {
+    // 获得字符串的长度，其实就是swift的count方法，只不过我习惯了Java里的length方法
+    var length: Int {
+        get {
+            return self.count
+        }
+    }
+
+    /**
+     下标用法 这样用:str[1...3] str[1..< 4]
+    */
+    subscript(_ range: CountableRange<Int>) -> String {
+        let start = index(startIndex, offsetBy: max(0, range.lowerBound))
+        let end = index(start, offsetBy: min(self.count - range.lowerBound,
+            range.upperBound - range.lowerBound))
+        return String(self[start..<end])
+    }
+
+    subscript(_ range: CountablePartialRangeFrom<Int>) -> String {
+        let start = index(startIndex, offsetBy: max(0, range.lowerBound))
+        return String(self[start...])
+    }
+
+    subscript (_ r: CountableClosedRange<Int>) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
+        let endIndex = self.index(startIndex, offsetBy: r.upperBound - r.lowerBound)
+        return String(self[startIndex...endIndex])
+    }
+
+    // 返回某个字符在字符串中出现的位置，返回-1表示没有出现
+    func indexOf(_ string: String) -> Int {
+        guard let index = range(of: string) else { return -1 }
+        return self.distance(from: self.startIndex, to: index.lowerBound)
+    }
+
+    // 从startIndex开始查找，返回某个字符在字符串中出现的位置，返回-1表示没有出现
+    func indexOf(target: String, startIndex: Int) -> Int {
+        let substring = self.substring(startIndex)
+        let idx = substring.indexOf(target)
+        if idx == -1 {
+            return -1
+        }
+        return idx + startIndex
+    }
+
+    // 返回某个字符在字符串中出现的位置(从末尾开始检查)，返回-1表示没有出现
+    func lastIndexOf(_ string: String) -> Int {
+        guard let index = range(of: string, options: .backwards) else { return -1 }
+        return self.distance(from: self.startIndex, to: index.lowerBound)
+    }
+
+    // 返回从from开始的子字符串
+    func substring(_ from: Int) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: from)
+        return String(self[startIndex..<self.endIndex])
+    }
+
+    // 返回从from开始，到to结束的子字符串
+    func substring(from: Int, to: Int) -> String {
+        let startIndex = self.index(self.startIndex, offsetBy: from)
+        let endIndex = self.index(self.startIndex, offsetBy: to)
+        return String(self[startIndex..<endIndex])
+    }
+
+    // 检查本字符串是否全是数字
+    var containsOnlyDigits: Bool {
+        let notDigits = NSCharacterSet.decimalDigits.inverted
+        return rangeOfCharacter(from: notDigits, options: String.CompareOptions.literal, range: nil) == nil
+    }
+    
+    // 检查本字符串是否全是字母
+    var containsOnlyLetters: Bool {
+        let notLetters = NSCharacterSet.letters.inverted
+        return rangeOfCharacter(from: notLetters, options: String.CompareOptions.literal, range: nil) == nil
+    }
+
+    // 替换字符串中含有target的替换为withString
+    func replace(target: String, withString: String) -> String {
+        return self.replacingOccurrences(of: target, with: withString, options: .literal, range: nil)
+    }
+    
+    ///替换指定下标的[一个]字符
+    mutating func replace(at index: Int, withCharacter character: String){
+        if character.count > 1{
+            return
+        }
+        let string = self
+        let replaceStart = string.index(string.startIndex, offsetBy: index)
+        let replaceEnd = string.index(string.startIndex, offsetBy: index + 1)
+        self.replaceSubrange(replaceStart..<replaceEnd, with: character)
+    }
+
+}

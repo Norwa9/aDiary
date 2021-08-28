@@ -18,6 +18,7 @@ extension NSAttributedString{
      */
     func parseAttribuedText()->([(Int,Int)],[(Int,Int)],cleanText:String,containImage:Bool,[String],[String],[String],[ScalableImageModel],NSAttributedString){
         let attrText = NSMutableAttributedString(attributedString: self)
+        var stringText = attrText.string
         var containsImage:Bool = false
         var imageAttrTuples = [(Int,Int)]()
         var scalableImageModels = [ScalableImageModel]()
@@ -42,6 +43,8 @@ extension NSAttributedString{
                 //bounds也要设置好来，否者重新塞入属性文本后，image的方向不对.
                 let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"),size: viewModel.bounds.size)
                 attrText.replaceAttchment(attchemnt, attchmentAt: location,with: centerParagraphStyle)
+                
+                stringText.replace(at: location, withCharacter: "P")
                 
                 containsImage = true
                 
@@ -69,14 +72,12 @@ extension NSAttributedString{
             }
         })
         
-        let cleanText = attrText.string
-        
         print("attrText的长度:\(attrText.length)")
         print("imageAttrTuples:\(imageAttrTuples)")
         
         //print("存储images:\(imageAttrTuples)")
         //print("存储todos:\(todoAttrTuples)")
-        return (imageAttrTuples, todoAttrTuples, cleanText, containsImage, incompletedTodos, completedTodos, allTodos,scalableImageModels,attrText)
+        return (imageAttrTuples, todoAttrTuples, stringText, containsImage, incompletedTodos, completedTodos, allTodos,scalableImageModels,attrText)
         
     }
     
