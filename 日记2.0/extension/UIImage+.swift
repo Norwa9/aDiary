@@ -10,8 +10,12 @@ import UIKit
 
 extension UIImage{
     func printImageDataSize(){
-        let data = self.pngData()
-        data?.printSize()
+        let data = self.pngData()!
+        let bcf = ByteCountFormatter()
+        bcf.allowedUnits = [.useMB] // optional: restricts the units to MB only
+        bcf.countStyle = .file
+        let string = bcf.string(fromByteCount: Int64(data.count))
+        print("图片大小: \(string)")
     }
     //MARK:-压缩image到特定尺寸
     func compressPic(toSize:CGSize) -> UIImage{

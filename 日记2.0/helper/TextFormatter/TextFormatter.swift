@@ -585,8 +585,21 @@ extension TextFormatter{
         textView.insertText(time)
     }
     
+    func calculateDocumentSize(_ completion:(_ available:Bool)->()){
+        let allRange = NSRange(location: 0, length: textView.attributedText.length)
+        var roughlySize:Int = 0
+        self.textView.attributedText.enumerateAttribute(.attachment, in: allRange, options: []) { object, range, stop in
+            if let attchment = object as? SubviewTextAttachment,let view = attchment.view as? ScalableImageView{
+                if let imageData = view.viewModel.image?.jpegData(compressionQuality: 1){
+                    roughlySize += imageData.count
+                }
+            }
+        }
+        print("插入图片前，所有图片的大小：\(roughlySize)")
+    }
+    
     ///插入可变大小图片
-    func insertScalableImageView(image:UIImage){
+    func insertScalableImageView(image:UIImage){        
         let location = selectedRange.location
         //插入换行
         textView.textStorage.insert(NSAttributedString(string: "\n"), at: location)
@@ -727,7 +740,7 @@ extension TextFormatter{
         for tuple in imageAttrTuples{
             let location = tuple.0//attribute location
             let value = tuple.1//attribute value
-            print("恢复image，下标:\(location),aString的长度：\(attrText.length)")
+            //print("恢复image，下标:\(location),aString的长度：\(attrText.length)")
             if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
                 
                 if let model = imageModels.filter({$0.location == location}).first{

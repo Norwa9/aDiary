@@ -32,12 +32,12 @@ extension NSAttributedString{
             
             //1.image
             if let subViewAttchemnt = object as? SubviewTextAttachment,let view = subViewAttchemnt.view as? ScalableImageView{
-                print("扫描到subViewAttchemnt，下标:\(location)")
+                //print("扫描到subViewAttchemnt，下标:\(location)")
                 let viewModel = view.viewModel
                 viewModel.location = location//更新viewModel的location为保存时刻的location
                 let model = viewModel.generateModel()
                 scalableImageModels.append(model)
-                print("添加model:\(scalableImageModels.count)")
+                //print("添加model:\(scalableImageModels.count)")
                 
                 //3.将view重新替换成imageAttchmen
                 //bounds也要设置好来，否者重新塞入属性文本后，image的方向不对.
@@ -72,8 +72,8 @@ extension NSAttributedString{
             }
         })
         
-        print("attrText的长度:\(attrText.length)")
-        print("imageAttrTuples:\(imageAttrTuples)")
+        //print("attrText的长度:\(attrText.length)")
+        //print("imageAttrTuples:\(imageAttrTuples)")
         
         //print("存储images:\(imageAttrTuples)")
         //print("存储todos:\(todoAttrTuples)")

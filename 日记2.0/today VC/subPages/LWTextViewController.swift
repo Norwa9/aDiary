@@ -114,13 +114,13 @@ extension LWTextViewController{
         
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
-        print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
+        //print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
         if notification.name == UIResponder.keyboardWillHideNotification {
-            print("keyboardWillHideNotification")
+            //print("keyboardWillHideNotification")
             //1.键盘隐藏
             textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
         } else{
-            print("keyboardWillChangeFrameNotification")
+            //print("keyboardWillChangeFrameNotification")
             //2.键盘出现
             let bottomInset:CGFloat
             if textView.contentSize.height < globalConstantsManager.shared.kScreenHeight{

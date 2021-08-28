@@ -29,7 +29,7 @@ class imageManager{
             var images:[UIImage] = []
             for imageTuple in imageAttrTuples{
                 let location = imageTuple.0
-                print("imageTuple location :\(location)")
+                //print("imageTuple location :\(location)")
                 if location < aString.length, let attachment = aString.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: location){
                     let photoHeight = layoutParasManager.shared.albumViewItemHeight
                     let ratio = img.size.height / photoHeight
