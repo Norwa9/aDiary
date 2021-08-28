@@ -90,7 +90,6 @@
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
 		EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor+.swift */; };
 		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
-		EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7C52610790900D44221 /* settingViewController.swift */; };
 		EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4D9267E109400D77908 /* icon-1024.png */; };
 		EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4DF267E10E200D77908 /* icon-120.png */; };
 		EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */; };
@@ -261,7 +260,6 @@
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		EA9AE75D26076B6900D44221 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
-		EA9AE7C52610790900D44221 /* settingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingViewController.swift; sourceTree = "<group>"; };
 		EA9AF4D9267E109400D77908 /* icon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-1024.png"; sourceTree = "<group>"; };
 		EA9AF4DF267E10E200D77908 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_roundCornor.png; sourceTree = "<group>"; };
@@ -592,7 +590,6 @@
 			isa = PBXGroup;
 			children = (
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
-				EA9AE7C52610790900D44221 /* settingViewController.swift */,
 				1B3AEB5926CA105500C057A4 /* LWSettingViewController.swift */,
 			);
 			path = "setting VC";
@@ -1065,7 +1062,6 @@
 				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoListView.swift in Sources */,
 				EA22360426D692E4001FAD1D /* CGRect+.swift in Sources */,
-				EA9AE7C62610790900D44221 /* settingViewController.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
 				EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */,
