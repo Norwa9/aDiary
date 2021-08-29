@@ -53,6 +53,29 @@ class WhatsNewHelper{
         )
         arr.append(whatsNew251)
         
+        //MARK:-2.6
+        let version260 = WhatsNew.Version(major: 2, minor: 6, patch: 0)
+        let whatsNew260 = WhatsNew(
+            // The Version
+            version: version260,
+            // The Title
+            title: "2.6新特性",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "新增图片编辑功能",
+                    subtitle: "可以修改图片的大小和排版了",
+                    image: UIImage(named: "editphoto")
+                ),
+                WhatsNew.Item(
+                    title: "修复了一些影响使用的错误",
+                    subtitle: "欢迎反馈bug",
+                    image: UIImage(named: "bug")
+                ),
+            ]
+        )
+        arr.append(whatsNew260)
+        
         
         return arr
     }
