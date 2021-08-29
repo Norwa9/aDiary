@@ -52,7 +52,7 @@ class TopView: UIView {
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
         dateLable.text = "\(month)月\(day)日 \(weekDay)"
-        
+        dateLable.font = userDefaultManager.customFont(withSize: 22)
         //更新约束
         updateCons()
         
@@ -64,7 +64,7 @@ class TopView: UIView {
     private func initUI(){
         //日期
         dateLable = UILabel()
-        dateLable.font = UIFont(name: "DIN Alternate", size: 22)
+        dateLable.font = userDefaultManager.customFont(withSize: 22)
         
         //心情
         emojiView = LWEmojiView()

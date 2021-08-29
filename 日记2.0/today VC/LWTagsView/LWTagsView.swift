@@ -32,6 +32,8 @@ class LWTagsView: UIView {
     }
     
     private func updateUI(){
+        tagsLabel.textFont = userDefaultManager.customFont(withSize: 14)
+        
         tagsLabel.removeAllTags()
         
         for tag in model.tags{
@@ -48,7 +50,7 @@ class LWTagsView: UIView {
         
         //UI
         tagsLabel = TagListView()
-        tagsLabel.textFont = UIFont(name: "DIN Alternate", size: 14)!
+        tagsLabel.textFont = userDefaultManager.customFont(withSize: 14)
         tagsLabel.alignment = .left
         tagsLabel.tagBackgroundColor = .systemGray3
         tagsLabel.textColor = .white
