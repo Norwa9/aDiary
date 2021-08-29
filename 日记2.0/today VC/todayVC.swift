@@ -113,17 +113,10 @@ class todayVC: UIViewController{
 extension todayVC{
     ///显示/隐藏表情盘
     func toggleTopView(){
-        print("toggleTopView")
-        //return
         isShowingTopView.toggle()
-        let inset = topView.bounds.height - topView.dateLable.bounds.height
-        subpagesView.snp.updateConstraints { (update) in
-            if isShowingTopView{
-                update.top.equalTo(topView.snp.bottom).offset(5)
-            }else{
-                update.top.equalTo(topView.snp.bottom).offset(-inset + 2)
-            }
-        }
+        
+        topView.updateTopView(isShowing: isShowingTopView)
+        
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             self.view.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
             self.subpagesView.segmentedView.backgroundColor = self.isShowingTopView ? .systemGray6 : .systemBackground
@@ -134,22 +127,7 @@ extension todayVC{
 
         }
     }
-    
-    func updateTopViewHeight(){
-        if isShowingTopView{
-            self.view.layoutIfNeeded()//平滑过渡tags的高度变化
-        }else{
-            //如果希望隐藏topView，左右切换需要计算topView的高度
-            let curInset = topView.bounds.height - topView.dateLable.bounds.height
-            subpagesView.snp.updateConstraints { (update) in
-                update.top.equalTo(topView.snp.bottom).offset(-curInset + 2)
-            }
-            subpagesView.pagingView.layoutSubviews()//不加的话textView底部会有空白条，不知道为啥
-            UIView.animate(withDuration: 0) {
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
+
 }
 
 

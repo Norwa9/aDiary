@@ -109,7 +109,8 @@ class TopView: UIView {
         tagsView.snp.makeConstraints { (make) in
             make.leading.right.equalToSuperview()
             make.top.equalTo(emojiView.snp.bottom).offset(2)
-            make.height.greaterThanOrEqualTo(25)
+            make.height.greaterThanOrEqualTo(0)
+            make.height.lessThanOrEqualTo(100)
             make.bottom.equalToSuperview()
         }
         
@@ -157,6 +158,16 @@ class TopView: UIView {
         let image = UIImage(named: imageName)!
         fullScreenBtn.bounceAnimation(usingSpringWithDamping: 0.7)
         fullScreenBtn.setImage(image, for: .normal)
+    }
+    
+    func updateTopView(isShowing:Bool){
+        self.emojiView.snp.updateConstraints { (update) in
+            update.height.equalTo(isShowing ? 25 : 0)
+        }
+        self.tagsView.snp.updateConstraints { (update) in
+            update.height.lessThanOrEqualTo(isShowing ? 100 : 0)
+        }
+        
     }
 }
 
