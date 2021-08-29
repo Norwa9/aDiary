@@ -70,6 +70,7 @@ class LWTextViewController: UIViewController {
         //textView
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
         textView.delegate = self
+        textView.textViewController = self
         self.view.addSubview(textView)
         
         

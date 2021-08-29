@@ -10,6 +10,7 @@ import MobileCoreServices
 import SubviewAttachingTextView
 
 class LWTextView: SubviewAttachingTextView {
+    weak var textViewController:LWTextViewController?
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         self.backgroundColor = .systemBackground
@@ -140,7 +141,7 @@ class LWTextView: SubviewAttachingTextView {
 
 //MARK:-scalableImageView
 extension LWTextView{
-    func reloadScableImage(endView: ScalableImageView) {
+    func reloadScableImage(endView: ScalableImageView,shouldAddDoneView:Bool = false) {
         print("reloadScableImage")
         let newViewModel = endView.viewModel
         newViewModel.bounds = endView.frame
@@ -150,6 +151,11 @@ extension LWTextView{
             let newView = ScalableImageView(viewModel: newViewModel)
             newView.delegate = self
             newView.backgroundColor = .clear
+            if shouldAddDoneView{
+                newView.viewModel.isEditing = true
+                newView.viewModel.shouldShowDoneView = true
+                newView.addEditingView()
+            }
             let newAttchment = SubviewTextAttachment(view: newView, size: newView.size)
             self.attributedText = self.attributedText.replacingAttchment(newAttchment, attchmentAt: newViewModel.location, with: newViewModel.paraStyle)
             self.selectedRange = NSRange(location: newViewModel.location, length: 0)

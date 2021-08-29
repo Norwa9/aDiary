@@ -112,6 +112,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
                     //完成编辑
                     self.doneEditing(){
                         self.delegate?.reloadScableImage(endView: self)
+                        self.delegate?.textViewController?.save()
                     }
                 }else{
                     //继续编辑

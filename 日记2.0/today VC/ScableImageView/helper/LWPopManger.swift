@@ -48,38 +48,38 @@ class LWPopManager: NSObject {
                 browser.show()
             }),
             PopMenuDefaultAction(title: "调整图片大小",didSelect: { action in
-                view.viewModel.isEditing.toggle()
                 let isEditing = view.viewModel.isEditing
-                if isEditing{
+                if !isEditing{
+                    view.viewModel.isEditing = true
                     view.addEditingView()
-                }else{
-                    view.doneEditing()
                 }
                 self.dismissPopMenu()
             }),
-            PopMenuDefaultAction(title: "填充模式",didSelect: { action in
+            PopMenuDefaultAction(title: "图片填充相框",didSelect: { action in
                 view.viewModel.contentMode = .scaleAspectFill
-                view.delegate?.reloadScableImage(endView: view)
+                view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
-            PopMenuDefaultAction(title: "适应模式",didSelect: { action in
+            PopMenuDefaultAction(title: "图片适应相框",didSelect: { action in
                 view.viewModel.contentMode = .scaleAspectFit
-                view.delegate?.reloadScableImage(endView: view)
+                view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居中",didSelect: { action in
                 view.viewModel.paraStyle = centerParagraphStyle
-                view.delegate?.reloadScableImage(endView: view)
+                view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居左",didSelect: { action in
+                
                 view.viewModel.paraStyle = leftParagraphStyle
-                view.delegate?.reloadScableImage(endView: view)
+                view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居右",didSelect: { action in
+
                 view.viewModel.paraStyle = rightParagraphStyle
-                view.delegate?.reloadScableImage(endView: view)
+                view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
         ]
