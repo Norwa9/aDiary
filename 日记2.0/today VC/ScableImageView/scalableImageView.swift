@@ -34,6 +34,8 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     }
     
     func initUI(){
+        self.layer.cornerRadius = 5
+        
         //1.imageView
         imageView = UIImageView()
         imageView.image = viewModel.image
@@ -147,6 +149,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     
     private func removeBorder(){
         self.layer.borderWidth = 0
+        self.layer.borderColor = UIColor.clear.cgColor
     }
     
     
@@ -180,6 +183,7 @@ extension ScalableImageView{
         viewModel.isEditing = false
         UIView.animate(withDuration: 0.2) {
             self.dot?.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            self.dot?.alpha = 0
             self.removeBorder()
         } completion: { (_) in
             self.dot?.removeFromSuperview()
