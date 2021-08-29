@@ -107,7 +107,6 @@ extension NSAttributedString{
 extension NSAttributedString {
     func toRTFD()->Data?{
         let rtfd = try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
-        rtfd?.printSize()
         return rtfd
     }
 }

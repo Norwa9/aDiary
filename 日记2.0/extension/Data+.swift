@@ -9,11 +9,11 @@ import Foundation
 
 extension Data{
     func printSize(){
-        print("There were \(self.count) bytes")
+        print("rtfd大小： \(self.count) bytes")
         let bcf = ByteCountFormatter()
         bcf.allowedUnits = [.useMB] // optional: restricts the units to MB only
         bcf.countStyle = .file
         let string = bcf.string(fromByteCount: Int64(self.count))
-        print("formatted result: \(string)")
+        print("rtfd大小（换算成MB）: \(string)")
     }
 }

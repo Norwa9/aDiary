@@ -662,7 +662,11 @@ extension TextFormatter{
             diary.modTime = Date()
             diary.content = plainText
             diary.todos = incompletedTodos
-            diary.rtfd = recoveredAttributedText.toRTFD()
+            
+            let rtfd = recoveredAttributedText.toRTFD()
+            rtfd?.printSize()
+            diary.rtfd = rtfd
+            
             diary.containsImage = containsImage
             diary.imageAttributesTuples = imageAttrTuples
             diary.scalableImageModels = imageModels
