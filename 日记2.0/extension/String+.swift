@@ -223,8 +223,11 @@ extension String {
     }
     
     ///替换指定下标的[一个]字符
+    ///如果文章存在emoji，会让导致index计算错误从而导致奔溃
     mutating func replace(at index: Int, withCharacter character: String){
+        
         return
+        
         if character.count > 1{
             return
         }
