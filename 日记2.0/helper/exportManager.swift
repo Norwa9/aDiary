@@ -24,7 +24,7 @@ class exportManager{
         let dateFomatter = DateFormatter()
         dateFomatter.dateFormat = "yyyy年M月d日"
         //print("000000000")
-        DispatchQueue.global(qos: .default).async{
+        DispatchQueue.main.async{
             let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
             let sortedAllDiary = allDiary.sorted { (m1, m2) -> Bool in
                 let d1 = m1.trueDate
@@ -66,8 +66,9 @@ class exportManager{
                     
                     //正文
                     let imageAttrTuples = diary.imageAttributesTuples
+                    let imageModels = diary.scalableImageModels
                     let todoAttrTuples = diary.todoAttributesTuples
-                    let formatteredAString = formatter.processAttrString(aString: aString, bounds: textViewBounds, container: textContainer, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+                    let formatteredAString = formatter.processAttrStringForSharingAndExport(aString: aString, bounds: textViewBounds, container: textContainer, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples,imageModels: imageModels)
                     
                     //添加一篇
                     alldiaryString.append(formatteredAString)
@@ -116,6 +117,7 @@ class exportManager{
                     let bounds = UIGraphicsGetPDFContextBounds()
                     render.drawPage(at: i - 1, in: bounds)
                     indicatorViewManager.shared.progress = progress
+                    print("PDF导出进度:\(progress * 100)%")
                 }
                 UIGraphicsEndPDFContext();
                 //--

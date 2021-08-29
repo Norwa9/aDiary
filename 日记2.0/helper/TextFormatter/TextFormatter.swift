@@ -599,7 +599,7 @@ extension TextFormatter{
     }
     
     ///插入可变大小图片
-    func insertScalableImageView(image:UIImage){        
+    func insertScalableImageView(image:UIImage){
         let location = selectedRange.location
         //插入换行
         textView.textStorage.insert(NSAttributedString(string: "\n"), at: location)
@@ -729,7 +729,7 @@ extension TextFormatter{
     ///读取富文本，并为图片附件设置正确的大小、方向
     ///textViewScreenshot
     ///loadTextViewContent(with:)
-    func processAttrString(aString:NSAttributedString, bounds:CGRect, container:NSTextContainer, imageAttrTuples:[(Int,Int)], todoAttrTuples:[(Int,Int)], imageModels:[ScalableImageModel] = [])->NSMutableAttributedString{
+    func processAttrString(aString:NSAttributedString, bounds:CGRect, container:NSTextContainer, imageAttrTuples:[(Int,Int)], todoAttrTuples:[(Int,Int)], imageModels:[ScalableImageModel])->NSMutableAttributedString{
         
         let mutableText = NSMutableAttributedString(attributedString: aString)
         
@@ -802,14 +802,16 @@ extension TextFormatter{
         return attrText
     }
     
+    
     ///屏幕旋转时，刷新textView的文本内容
     func reloadTextViewOnOrientionChange(with diary:diaryInfo){
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
+        let imageModels = diary.scalableImageModels
         let todoAttrTuples = diary.todoAttributesTuples
         let attributedText = textView.attributedText ?? NSAttributedString(string: "")
-        let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+        let correctedAString = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples,imageModels: imageModels)
         self.textView.attributedText = correctedAString
     }
     
@@ -844,7 +846,7 @@ extension TextFormatter{
     }
 }
 
-//MARK:-分享
+//MARK:-分享长图、导出PDF
 extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
         let attributedText = diary.attributedString
@@ -852,9 +854,10 @@ extension TextFormatter{
         let bounds = textView.bounds
         let container = textView.textContainer
         let imageAttrTuples = diary.imageAttributesTuples
+        let imageModels = diary.scalableImageModels
         let todoAttrTuples = diary.todoAttributesTuples
         
-        let preparedText = self.processAttrString(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples)
+        let preparedText = self.processAttrStringForSharingAndExport(aString:attributedText,bounds: bounds, container: container, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples,imageModels: imageModels)
         
         self.textView.attributedText = preparedText
         textView.layer.cornerRadius = 10
@@ -877,5 +880,76 @@ extension TextFormatter{
         return attrText
     }
     
+    ///分享、导出，时用到的NSAttributedString
+    func processAttrStringForSharingAndExport(aString:NSAttributedString, bounds:CGRect, container:NSTextContainer, imageAttrTuples:[(Int,Int)], todoAttrTuples:[(Int,Int)], imageModels:[ScalableImageModel])->NSMutableAttributedString{
+        
+        let mutableText = NSMutableAttributedString(attributedString: aString)
+        
+        //1、施加用户自定义格式
+        let attrText = mutableText.addUserDefaultAttributes()
+        
+        //2.恢复.image格式
+        for tuple in imageAttrTuples{
+            let location = tuple.0//attribute location
+            let value = tuple.1//attribute value
+            //print("恢复image，下标:\(location),aString的长度：\(attrText.length)")
+            if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: bounds, textContainer: container, characterIndex: location){
+                
+                //如果该attchment有对应的model
+                if let model = imageModels.filter({$0.location == location}).first{
+                    let viewModel = ScalableImageViewModel(model: model,image: image)
+                    print("viewModel.bounds:\(viewModel.bounds)")
+                    let view = ScalableImageView(viewModel: viewModel)
+                    let viewSnapShot = view.asImage()//将ScalableImageView截屏然后塞入attchment
+                    let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
+                    attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: viewModel.paraStyle)
+                }else{
+                    print("\(location)对应的图片model没有找到！提供默认viewModel")
+                    let defaultViewModel = ScalableImageViewModel(location: location, image: image)
+                    let view = ScalableImageView(viewModel: defaultViewModel)
+                    let viewSnapShot = view.asImage()
+                    let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: defaultViewModel.bounds.size)
+                    attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: defaultViewModel.paraStyle)
+                }
+                
+                //重新添加.image属性（用于保存时检索图片attchment）
+                attrText.addAttribute(.image, value: value, range: NSRange(location: location, length: 1))
+            }
+        }
+        
+        //TODO:3.恢复todo
+        for tuple in todoAttrTuples{
+            let location = tuple.0//attribute location
+            let value = tuple.1//attribute value
+            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
+                //print("读取时处理到到todo:\(location)")
+                //1.重新添加attribute
+                attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
+                
+                let attributedText = (value == 1) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
+
+                attrText.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
+
+                let range = NSRange(location: location, length: 0)
+                let paragraphRange = attrText.mutableString.paragraphRange(for: range)
+                
+                if value == 1 {
+                    attrText.addCheckAttribute(range: paragraphRange)
+                } else {
+                    attrText.addUncheckAttribute(range: paragraphRange)
+                }
+                
+                //2.调整bounds大小
+                let font = userDefaultManager.font
+                let size = font.pointSize + font.pointSize / 2
+                attachment.bounds = CGRect(x: CGFloat(0), y: (font.capHeight - size) / 2, width: size, height: size)
+            }
+            
+        }
+        
+        
+        
+        return attrText
+    }
 }
 
