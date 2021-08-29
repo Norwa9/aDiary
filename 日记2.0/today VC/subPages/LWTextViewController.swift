@@ -258,7 +258,8 @@ extension LWTextViewController{
         }
         
         //1.重新读取textView上的当前内容，以显示正确的图片bounds
-        textView.resizeImagesAttchement()
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.loadTextViewContent(with: model)
         
         //3.调整toolbar
         UIView.animate(withDuration: 0.5) {[self] in
