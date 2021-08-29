@@ -38,6 +38,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         imageView = UIImageView()
         imageView.image = viewModel.image
         imageView.contentMode = viewModel.contentMode
+        imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
         self.addSubview(imageView)
         imageView.frame = self.bounds
@@ -140,13 +141,12 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     }
     
     private func addBorder(){
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 5
-        self.layer.borderColor = UIColor.gray.cgColor
+        self.layer.borderWidth = 2
+        self.layer.borderColor = APP_GREEN_COLOR().cgColor
     }
     
     private func removeBorder(){
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0
     }
     
     

@@ -47,7 +47,7 @@ class LWPopManager: NSObject {
                 })
                 browser.show()
             }),
-            PopMenuDefaultAction(title: "图片大小",didSelect: { action in
+            PopMenuDefaultAction(title: "调整图片大小",didSelect: { action in
                 view.viewModel.isEditing.toggle()
                 let isEditing = view.viewModel.isEditing
                 if isEditing{
