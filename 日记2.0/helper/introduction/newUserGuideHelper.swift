@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SubviewAttachingTextView
 
 class NewUserGuideHelper{
     static let shared = NewUserGuideHelper()
@@ -29,9 +30,10 @@ class NewUserGuideHelper{
             //page1
             let page1 = diaryInfo(dateString: date)
             let attributedText = NSMutableAttributedString(string: page1Content)
-            attributedText.loadCheckboxes()
-            let iconAttchment = GetAttachment(image:UIImage(named:"icon-1024")!)
-            attributedText.insert(iconAttchment, at: attributedText.length)
+            attributedText.loadCheckboxes()//从富文本解析出todo
+            let loaction = attributedText.length
+            let imageAttchment = self.getSubviewAttchment(insertLocation: loaction)
+            attributedText.insertAttachment(imageAttchment, at: loaction)
             let parseRes = attributedText.parseAttribuedText()
             let imageAttrTuples = parseRes.0
             let todoAttrTuples = parseRes.1
@@ -40,9 +42,10 @@ class NewUserGuideHelper{
             let incompletedTodos = parseRes.4
             let allTodos = parseRes.6
             let imageModels = parseRes.7
+            let recoveredAttributedText = parseRes.8//subViewAttchment转回NSTextAttchment
             let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
             page1.content = plainText
-            page1.rtfd = attributedText.toRTFD()
+            page1.rtfd = recoveredAttributedText.toRTFD()
             page1.todoAttributesTuples = todoAttrTuples
             page1.imageAttributesTuples = imageAttrTuples
             page1.containsImage = containsImage
@@ -70,5 +73,12 @@ class NewUserGuideHelper{
             }
             
         }
+    }
+    
+    func getSubviewAttchment(insertLocation:Int) -> SubviewTextAttachment{
+        let viewModel = ScalableImageViewModel(location: insertLocation, image: UIImage(named:"icon-1024"))
+        let view = ScalableImageView(viewModel: viewModel)
+        let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+        return subViewAttchment
     }
 }

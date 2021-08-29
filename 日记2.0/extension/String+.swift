@@ -224,6 +224,7 @@ extension String {
     
     ///替换指定下标的[一个]字符
     mutating func replace(at index: Int, withCharacter character: String){
+        return
         if character.count > 1{
             return
         }
