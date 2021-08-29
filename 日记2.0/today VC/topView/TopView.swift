@@ -134,11 +134,6 @@ class TopView: UIView {
     }
     
     private func updateCons(){
-//        let emojiViewWidth = max(ceil(CGFloat(model.emojis.count) / 2) * kEmojiItemWidth, kEmojiViewWidth)
-//        emojiView.snp.updateConstraints { (update) in
-//            update.width.equalTo(emojiViewWidth)
-//        }
-        
         self.layoutIfNeeded()
     }
     
