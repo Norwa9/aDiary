@@ -26,7 +26,7 @@ class LWTextViewToolBar: UIView {
     var richTextButton:LWToolBarButton!
     var buttons:[LWToolBarButton] = []
     
-    var colorPickerIsShowing:Bool = false
+    var isShowingPopover:Bool = false
     
     let popover:Popover = {
         let options = [
@@ -166,28 +166,44 @@ extension LWTextViewToolBar{
     }
     
     @objc func UnfoldRichtextMenu(){
-        if !colorPickerIsShowing{
+        if !isShowingPopover{
             let colorPicker = ColorPicker()
             colorPicker.set(color: .white, colorSpace: .sRGB)
             colorPicker.frame = CGRect(origin: .zero, size: CGSize(width: 300, height: 200))
             colorPicker.addTarget(self, action: #selector(handleColorChange(picker:)), for: .valueChanged)
             popover.show(colorPicker, fromView: richTextButton)
-            colorPickerIsShowing = true
+            isShowingPopover = true
         }else{
             popover.dismiss()
-            colorPickerIsShowing = false
+            isShowingPopover = false
         }
+//        let textFormatter = TextFormatter(textView: textView)
+//        if !isShowingPopover{
+//            let slider = UISlider()
+//            slider.addTarget(self, action: #selector(handleFontSizeChange(picker:)), for: .valueChanged)
+//            slider.minimumValue = 5
+//            slider.maximumValue = 100
+//            slider.width = 200
+//            slider.setValue(Float(textFormatter.getSelectedFontSize()), animated: false)
+//            popover.show(slider, fromView: richTextButton)
+//            isShowingPopover = true
+//        }else{
+//            popover.dismiss()
+//            isShowingPopover = false
+//        }
         
+    }
+    
+    @objc func handleFontSizeChange(picker:UISlider){
+        let newFontSize = picker.value
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.changeFontSize(newFontSize: CGFloat(newFontSize))
     }
     
     @objc func handleColorChange(picker:ColorPicker){
         let newColor = picker.color
-        let selectedRange = textView.selectedRange
-        if selectedRange.length > 0{
-            textView.textStorage.addAttribute(.foregroundColor, value: newColor, range: selectedRange)
-        }else{
-            textView.typingAttributes[.foregroundColor] = newColor
-        }
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.changeFontColor(newColor: newColor)
     }
 }
 

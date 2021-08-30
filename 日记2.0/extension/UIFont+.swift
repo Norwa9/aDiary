@@ -115,7 +115,7 @@ extension UIFont {
             }
         }
         //复制字体大小
-        resFont.withSize(self.pointSize)
+        resFont = resFont.withSize(self.pointSize)
         
         return resFont
     }

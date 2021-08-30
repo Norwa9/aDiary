@@ -1055,6 +1055,46 @@ extension TextFormatter{
         }
     }
     
+    func changeFontColor(newColor:UIColor){
+        let selectedRange = textView.selectedRange
+        if selectedRange.length > 0{
+            storage.addAttribute(.foregroundColor, value: newColor, range: selectedRange)
+        }else{
+            textView.typingAttributes[.foregroundColor] = newColor
+        }
+    }
+    
+    
+    func getSelectedFontSize() -> CGFloat{
+        if selectedRange.length > 0{
+            if let font = textView.attributedText.attribute(.font, at: selectedRange.location, effectiveRange: nil) as? UIFont{
+                return font.pointSize
+            }
+            return userDefaultManager.fontSize
+        }else{
+            return userDefaultManager.fontSize
+        }
+    }
+    
+    func changeFontSize(newFontSize:CGFloat){
+        let selectedRange = range
+        if selectedRange.length > 0{
+            if let prevFont = storage.attribute(.font, at: selectedRange.location, effectiveRange: nil) as? UIFont{
+                let newFont = UIFont(descriptor: prevFont.fontDescriptor, size: newFontSize)
+                storage.addAttribute(.font, value: newFont, range: selectedRange)
+            }
+        }else{
+            guard storage.length > 0, range.location > 0 else { return  }
+            let i = range.location - 1
+            let upper = range.upperBound
+            let substring = textView.attributedText.attributedSubstring(from: NSRange(i..<upper))
+            if let prevFont = substring.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
+                let newFont = UIFont(descriptor: prevFont.fontDescriptor, size: newFontSize)
+                textView.typingAttributes[.font] = newFont
+            }
+        }
+    }
+    
 
     
 }
