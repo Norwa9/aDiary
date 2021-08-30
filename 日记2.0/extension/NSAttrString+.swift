@@ -95,6 +95,17 @@ extension NSAttributedString{
                 mutableAttr.addAttribute(.font, value: newFont, range: range)
             }
         }
+        
+        //恢复行间距
+        mutableAttr.enumerateAttribute(.paragraphStyle, in: allRange, options: []) { (object, range, stop) in
+            if let paraStyle = object as? NSParagraphStyle{
+                let newParaSyle = NSMutableParagraphStyle()
+                newParaSyle.alignment = paraStyle.alignment
+                newParaSyle.lineSpacing = userDefaultManager.lineSpacing
+                mutableAttr.addAttribute(.paragraphStyle, value: newParaSyle, range: range)
+            }
+        }
+        
         return mutableAttr
     }
     

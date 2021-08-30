@@ -577,7 +577,7 @@ extension TextFormatter{
 extension TextFormatter{
     ///插入时间戳
     func insertTimeTag(){
-        setLeftTypingAttributes()
+        setDefaultTypingAttributes()
         //获取当前时间，格式：-H:mm-
         let formatter = DateFormatter()
         formatter.dateFormat = "-H:mm-"
@@ -619,7 +619,7 @@ extension TextFormatter{
         //更新焦点
         textView.selectedRange = NSRange(location: location + 3, length: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
-        setLeftTypingAttributes()
+        setDefaultTypingAttributes()
     }
 }
 
@@ -710,7 +710,7 @@ extension TextFormatter{
 //MARK:-读取
 extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
-        self.setLeftTypingAttributes()//内容居左
+        self.setDefaultTypingAttributes()
         let cleanContent = diary.content
         let rtfd = diary.rtfd
         let bounds = textView.bounds
@@ -738,7 +738,7 @@ extension TextFormatter{
         
         let mutableText = NSMutableAttributedString(attributedString: aString)
         
-        //1、施加用户自定义格式
+        //1、恢复字体
         let attrText = mutableText.restoreFontStyle()
         
         //2.恢复.image格式
@@ -838,14 +838,12 @@ extension TextFormatter{
     }
     
     ///设置居左的输入模式
-    func setLeftTypingAttributes(){
+    func setDefaultTypingAttributes(){
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
         paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
         let typingAttributes:[NSAttributedString.Key:Any] = [
             .paragraphStyle: paragraphStyle,
             .font:userDefaultManager.font,
-            .foregroundColor : UIColor.label
         ]
         self.textView.typingAttributes = typingAttributes
     }
