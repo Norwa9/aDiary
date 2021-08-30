@@ -197,7 +197,7 @@ extension LWTextViewController : UITextViewDelegate{
         textFormatter.correctNum(deleteRange: range)
         
         //其余情况:设置居左输入模式
-        textFormatter.setDefaultTypingAttributes()
+        //textFormatter.setDefaultTypingAttributes()
         
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
