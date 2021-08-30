@@ -24,6 +24,13 @@ class LWTextViewToolBar: UIView {
     var todoListButton:LWToolBarButton!
     var indicator:NVActivityIndicatorView!
     var richTextButton:LWToolBarButton!
+    var boldButton:LWToolBarButton!
+    var italicButton:LWToolBarButton!
+    var underLineButton:LWToolBarButton!
+    var aligmentButton:LWToolBarButton!
+    var fontSizeButton:LWToolBarButton!
+    var fontColorButton:LWToolBarButton!
+    
     var buttons:[LWToolBarButton] = []
     
     var isShowingPopover:Bool = false
@@ -86,43 +93,96 @@ class LWTextViewToolBar: UIView {
         indicator.alpha = 0
         saveButton.addSubview(indicator)
         
-        richTextButton = LWToolBarButton(image: UIImage(named: "richText"))
-        richTextButton.addTarget(self, action: #selector(UnfoldRichtextMenu), for: .touchUpInside)
-        self.addSubview(richTextButton)
+        boldButton = LWToolBarButton(image: UIImage(named: "bold"))
+        boldButton.addTarget(self, action: #selector(setBold), for: .touchUpInside)
+        self.addSubview(boldButton)
+        
+        italicButton = LWToolBarButton(image: UIImage(named: "Italic"))
+        italicButton.addTarget(self, action: #selector(setItalic), for: .touchUpInside)
+        self.addSubview(italicButton)
+        
+        underLineButton = LWToolBarButton(image: UIImage(named: "underline"))
+        underLineButton.addTarget(self, action: #selector(setUnderLine), for: .touchUpInside)
+        self.addSubview(underLineButton)
+        
+        aligmentButton = LWToolBarButton(image: UIImage(named: "leftaligment"))
+        aligmentButton.addTarget(self, action: #selector(setAligment), for: .touchUpInside)
+        self.addSubview(aligmentButton)
+        
+        fontSizeButton = LWToolBarButton(image: UIImage(named: "title1"))
+        fontSizeButton.addTarget(self, action: #selector(setFontSize(_:)), for: .touchUpInside)
+        self.addSubview(fontSizeButton)
+        
+        fontColorButton = LWToolBarButton(image: UIImage(named: "fontcolor"))
+        fontColorButton.addTarget(self, action: #selector(setFontColor(_:)), for: .touchUpInside)
+        self.addSubview(fontColorButton)
+        
+        
         
         buttons = [insertImageButton,todoListButton,numberListButton,saveButton]
     }
     
     private func initCons(){
         insertTimeButton.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(5)
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 30, height: 30))
         }
         
         todoListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(insertTimeButton.snp.right).offset(10)
+            make.left.equalTo(insertTimeButton.snp.right).offset(5)
             make.size.equalTo(insertTimeButton)
         }
         
         numberListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(todoListButton.snp.right).offset(10)
+            make.left.equalTo(todoListButton.snp.right).offset(5)
             make.size.equalTo(insertTimeButton)
         }
         
         insertImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(numberListButton.snp.right).offset(10)
+            make.left.equalTo(numberListButton.snp.right).offset(5)
             make.size.equalTo(insertTimeButton)
         }
         
-        richTextButton.snp.makeConstraints { (make) in
+        boldButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(insertImageButton.snp.right).offset(10)
+            make.left.equalTo(insertImageButton.snp.right).offset(5)
             make.size.equalTo(insertTimeButton)
         }
+        
+        italicButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(insertTimeButton)
+            make.left.equalTo(boldButton.snp.right).offset(5)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        underLineButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(insertTimeButton)
+            make.left.equalTo(italicButton.snp.right).offset(5)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        aligmentButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(insertTimeButton)
+            make.left.equalTo(underLineButton.snp.right).offset(5)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        fontColorButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(insertTimeButton)
+            make.left.equalTo(aligmentButton.snp.right).offset(5)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        fontSizeButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(insertTimeButton)
+            make.left.equalTo(fontColorButton.snp.right).offset(5)
+            make.size.equalTo(insertTimeButton)
+        }
+
         
         saveButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-10)
@@ -167,30 +227,59 @@ extension LWTextViewToolBar{
         textFormatter.insertTodoList()
     }
     
-    @objc func UnfoldRichtextMenu(){
+    @objc func setBold(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.toggleTrait(On: .bold)
+    }
+    
+    @objc func setItalic(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.toggleTrait(On: .italic)
+    }
+    
+    @objc func setUnderLine(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.toggleUnderLine()
+    }
+    
+    @objc func setAligment(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.setParagraphAligment(aligment: .left)
+    }
+    
+    @objc func setFontColor(_ sender:LWToolBarButton){
         if !isShowingPopover{
             let colorPicker = ColorPicker()
             colorPicker.set(color: .white, colorSpace: .sRGB)
             colorPicker.frame = CGRect(origin: .zero, size: CGSize(width: 300, height: 200))
             colorPicker.addTarget(self, action: #selector(handleColorChange(picker:)), for: .valueChanged)
-            popover.show(colorPicker, fromView: richTextButton)
+            popover.show(colorPicker, fromView: sender)
         }else{
             popover.dismiss()
         }
-//        let textFormatter = TextFormatter(textView: textView)
-//        if !isShowingPopover{
-//            let slider = UISlider()
-//            slider.addTarget(self, action: #selector(handleFontSizeChange(picker:)), for: .valueChanged)
-//            slider.minimumValue = 5
-//            slider.maximumValue = 100
-//            slider.width = 200
-//            slider.setValue(Float(textFormatter.getSelectedFontSize()), animated: false)
-//            popover.show(slider, fromView: richTextButton)
-//            isShowingPopover = true
-//        }else{
-//            popover.dismiss()
-//            isShowingPopover = false
-//        }
+    }
+    
+    @objc func handleColorChange(picker:ColorPicker){
+        let newColor = picker.color
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.changeFontColor(newColor: newColor)
+    }
+    
+    @objc func setFontSize(_ sender:LWToolBarButton){
+        let textFormatter = TextFormatter(textView: textView)
+        if !isShowingPopover{
+            let slider = UISlider()
+            slider.addTarget(self, action: #selector(handleFontSizeChange(picker:)), for: .valueChanged)
+            slider.minimumValue = 5
+            slider.maximumValue = 100
+            slider.width = 200
+            slider.setValue(Float(textFormatter.getSelectedFontSize()), animated: false)
+            popover.show(slider, fromView: sender)
+            isShowingPopover = true
+        }else{
+            popover.dismiss()
+            isShowingPopover = false
+        }
         
     }
     
@@ -200,11 +289,7 @@ extension LWTextViewToolBar{
         textFormatter.changeFontSize(newFontSize: CGFloat(newFontSize))
     }
     
-    @objc func handleColorChange(picker:ColorPicker){
-        let newColor = picker.color
-        let textFormatter = TextFormatter(textView: textView)
-        textFormatter.changeFontColor(newColor: newColor)
-    }
+    
 }
 
 //MARK:-indicator
