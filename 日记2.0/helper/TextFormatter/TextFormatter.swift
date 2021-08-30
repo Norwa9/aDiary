@@ -957,3 +957,65 @@ extension TextFormatter{
     }
 }
 
+//MARK:-富文本
+extension TextFormatter{
+    enum fontTrait {
+        case bold
+        case italic
+    }
+    func toggleTrait(On trait:fontTrait){
+        let selectedRange = range
+        if selectedRange.length > 0{
+            var newFont:UIFont?
+            let subAttributedString = storage.attributedSubstring(from: selectedRange)
+            if let prevFont = subAttributedString.attribute(.font, at: 0, effectiveRange: nil) as? UIFont{
+                if trait == .bold{
+                    newFont = toggleBoldFont(font: prevFont)
+                }else{
+                    newFont = toggleItalicFont(font: prevFont)
+                }
+                if let newFont = newFont{
+                    textView.textStorage.addAttribute(.font, value: newFont, range: selectedRange)
+                }
+                
+            }
+        }else{
+            guard storage.length > 0, range.location > 0 else { return  }
+            let i = range.location - 1
+            let upper = range.upperBound
+            let substring = textView.attributedText.attributedSubstring(from: NSRange(i..<upper))
+            var newFont:UIFont?
+            if let prevFont = substring.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
+                if trait == .bold{
+                    newFont = toggleBoldFont(font: prevFont)
+                }else {
+                    newFont = toggleItalicFont(font: prevFont)
+                }
+                if let newFont = newFont{
+                    textView.typingAttributes[.font] = newFont
+                }
+            }
+        }
+    }
+    
+    private func toggleBoldFont(font: UIFont) -> UIFont? {
+        if (font.isBold) {
+            return font.unBold()
+        } else {
+            return font.bold()
+        }
+    }
+    
+    private func toggleItalicFont(font: UIFont) -> UIFont? {
+        if (font.isItalic) {
+            return font.unItalic()
+        } else {
+            return font.italic()
+        }
+    }
+    
+    func toggleUnderLine(){
+        
+        textView.textStorage.addAttribute(.underlineStyle, value: 1, range: range)
+    }
+}

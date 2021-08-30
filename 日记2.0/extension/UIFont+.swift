@@ -26,3 +26,73 @@ extension UIFont{
         return UIFont.init(name: fontName, size: fontSize)!
     }
 }
+
+//MARK:-粗体、斜体
+extension UIFont {
+    var isBold: Bool {
+        return fontDescriptor.symbolicTraits.contains(.traitBold)
+    }
+    
+    var isItalic: Bool {
+        return fontDescriptor.symbolicTraits.contains(.traitItalic)
+    }
+    
+    func bold() -> UIFont? {
+        if (isItalic) {
+            if let descriptor = fontDescriptor.withSymbolicTraits([.traitBold,.traitItalic]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        } else {
+            if let descriptor = fontDescriptor.withSymbolicTraits([.traitBold]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        }
+    
+        return nil
+    }
+    
+    func unBold() -> UIFont? {
+        if (isItalic) {
+            if let descriptor = fontDescriptor.withSymbolicTraits([.traitItalic]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        } else {
+            if let descriptor = fontDescriptor.withSymbolicTraits([]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        }
+    
+        return nil
+    }
+    
+    func italic() -> UIFont? {
+        if (isBold) {
+            print("italic() isBold")
+            if let descriptor = fontDescriptor.withSymbolicTraits([.traitBold,.traitItalic]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        } else {
+            print("italic() !isBold")
+            if let descriptor = fontDescriptor.withSymbolicTraits([.traitItalic]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        }
+    
+        return nil
+        
+    }
+    
+    func unItalic() -> UIFont? {
+        if (isBold) {
+            if let descriptor = fontDescriptor.withSymbolicTraits([.traitBold]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        } else {
+            if let descriptor = fontDescriptor.withSymbolicTraits([]){
+                return UIFont(descriptor: descriptor, size: 0)
+            }
+        }
+    
+        return nil
+    }
+}

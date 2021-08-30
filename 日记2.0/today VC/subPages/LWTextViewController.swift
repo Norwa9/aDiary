@@ -155,8 +155,16 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
 
 //MARK:-UITextView Delegate
 extension LWTextViewController : UITextViewDelegate{
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        //print("textViewDidBeginEditing")
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        print("textViewDidChangeSelection")
+        let selectedRange = textView.selectedRange
+        if selectedRange.length > 0{
+            textView.attributedText.enumerateAttributes(in: selectedRange, options: []) { (object, range, stop) in
+                print("在range:\(range)，有keys：\(object.keys)")
+            }
+        }else{
+            
+        }
         
     }
     
@@ -189,7 +197,7 @@ extension LWTextViewController : UITextViewDelegate{
         textFormatter.correctNum(deleteRange: range)
         
         //其余情况:设置居左输入模式
-        textFormatter.setLeftTypingAttributes()
+        //textFormatter.setLeftTypingAttributes()
         
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage

@@ -91,8 +91,8 @@ extension NSAttributedString{
 //        paraStyle.alignment = .left
         paraStyle.lineSpacing = lineSpacing
         let attributes: [NSAttributedString.Key:Any] = [
-            .font:userDefaultManager.font,
-            .paragraphStyle : paraStyle,
+//            .font:userDefaultManager.font,
+//            .paragraphStyle : paraStyle,
             .foregroundColor : UIColor.label,
         ]
         let mutableAttr = NSMutableAttributedString(attributedString: self)

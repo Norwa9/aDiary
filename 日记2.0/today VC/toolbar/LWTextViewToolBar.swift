@@ -21,6 +21,8 @@ class LWTextViewToolBar: UIView {
     var numberListButton:LWToolBarButton!
     var todoListButton:LWToolBarButton!
     var indicator:NVActivityIndicatorView!
+    var richTextButton:LWToolBarButton!
+    var buttons:[LWToolBarButton] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,6 +68,11 @@ class LWTextViewToolBar: UIView {
         indicator.alpha = 0
         saveButton.addSubview(indicator)
         
+        richTextButton = LWToolBarButton(image: UIImage(named: "richText"))
+        richTextButton.addTarget(self, action: #selector(UnfoldRichtextMenu), for: .touchUpInside)
+        self.addSubview(richTextButton)
+        
+        buttons = [insertImageButton,todoListButton,numberListButton,saveButton]
     }
     
     private func initCons(){
@@ -90,6 +97,12 @@ class LWTextViewToolBar: UIView {
         insertImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
             make.left.equalTo(numberListButton.snp.right).offset(10)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        richTextButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(insertTimeButton)
+            make.left.equalTo(insertImageButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
         
@@ -134,6 +147,11 @@ extension LWTextViewToolBar{
     @objc func insertTodoList(){
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.insertTodoList()
+    }
+    
+    @objc func UnfoldRichtextMenu(){
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.toggleTrait(On: .italic)
     }
 }
 
