@@ -109,10 +109,6 @@ extension LWTextViewController{
     @objc func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
-        if textView.isFirstResponder {
-            keyBoardToolsBar.keyboardType = .other
-        }
-        
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
         //print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
