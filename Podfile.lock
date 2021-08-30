@@ -1,5 +1,6 @@
 PODS:
   - AttributedString (2.2.0)
+  - Colorful (3.0.0)
   - FMPhotoPicker (1.3.0)
   - FSCalendar (2.8.2)
   - ISEmojiView (0.2.6)
@@ -26,6 +27,7 @@ PODS:
 
 DEPENDENCIES:
   - AttributedString
+  - Colorful (~> 3.0)
   - FMPhotoPicker (~> 1.3.0)
   - FSCalendar
   - ISEmojiView
@@ -47,6 +49,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AttributedString
+    - Colorful
     - FMPhotoPicker
     - FSCalendar
     - ISEmojiView
@@ -68,6 +71,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AttributedString: 386c1af029cc3186288d9feb84fbbb097928843f
+  Colorful: 9e093edacaa9fb73512ad9da157f0707b82d2542
   FMPhotoPicker: 954d3c3e72521baffecdc23422ae149fdde3cd63
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
@@ -87,6 +91,6 @@ SPEC CHECKSUMS:
   WXImageCompress: 86c7a4d028c7fc9c74181468c318a9ec688fcdac
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 16c6db523bac2090fa9253ce84b54a1eeae5506b
+PODFILE CHECKSUM: 5c3d9caa630ac56da98d62bead3bac36606864d8
 
 COCOAPODS: 1.10.1

@@ -176,6 +176,7 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AttributedString/AttributedString.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Colorful/Colorful.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FMPhotoPicker/FMPhotoPicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework"
@@ -197,6 +198,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AttributedString/AttributedString.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Colorful/Colorful.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FMPhotoPicker/FMPhotoPicker.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework"

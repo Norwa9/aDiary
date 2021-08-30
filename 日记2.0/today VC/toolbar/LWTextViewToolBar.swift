@@ -7,6 +7,8 @@
 
 import UIKit
 import NVActivityIndicatorView
+import Popover
+import Colorful
 
 protocol LWPhotoPickerDelegate : NSObject {
     func showPhotoPicker()
@@ -23,6 +25,20 @@ class LWTextViewToolBar: UIView {
     var indicator:NVActivityIndicatorView!
     var richTextButton:LWToolBarButton!
     var buttons:[LWToolBarButton] = []
+    
+    var colorPickerIsShowing:Bool = false
+    
+    let popover:Popover = {
+        let options = [
+            .type(.up),
+            .cornerRadius(10),
+          .animationIn(0.3),
+            .arrowSize(CGSize(width: 5, height: 5)),
+            .springDamping(0.7),
+          ] as [PopoverOption]
+        let popover = Popover(options: options, showHandler: nil, dismissHandler: nil)
+        return popover
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -150,9 +166,28 @@ extension LWTextViewToolBar{
     }
     
     @objc func UnfoldRichtextMenu(){
-        let textFormatter = TextFormatter(textView: textView)
-        let rand = Int.random(in: 0..<3)
-        textFormatter.setParagraphAligment(aligment: LWTextAligmentStyle.init(rawValue: rand)!)
+        if !colorPickerIsShowing{
+            let colorPicker = ColorPicker()
+            colorPicker.set(color: .white, colorSpace: .sRGB)
+            colorPicker.frame = CGRect(origin: .zero, size: CGSize(width: 300, height: 200))
+            colorPicker.addTarget(self, action: #selector(handleColorChange(picker:)), for: .valueChanged)
+            popover.show(colorPicker, fromView: richTextButton)
+            colorPickerIsShowing = true
+        }else{
+            popover.dismiss()
+            colorPickerIsShowing = false
+        }
+        
+    }
+    
+    @objc func handleColorChange(picker:ColorPicker){
+        let newColor = picker.color
+        let selectedRange = textView.selectedRange
+        if selectedRange.length > 0{
+            textView.textStorage.addAttribute(.foregroundColor, value: newColor, range: selectedRange)
+        }else{
+            textView.typingAttributes[.foregroundColor] = newColor
+        }
     }
 }
 
