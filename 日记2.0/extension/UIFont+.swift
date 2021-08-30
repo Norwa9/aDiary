@@ -104,23 +104,8 @@ extension UIFont {
         if self.isItalic{
             fontTraits.append(.traitItalic)
         }
-//        let newFont = userDefaultManager.font
-//        if fontTraits.contains(.traitBold){
-//            if let boldFontDescriptor = newFont.fontDescriptor.withSymbolicTraits(.traitBold){
-//                if fontTraits.contains(.traitItalic){
-//                    let boldAndItalicFontDescriptor = boldFontDescriptor.withSymbolicTraits(.traitItalic)
-//                    return UIFont.init(descriptor: boldAndItalicFontDescriptor!, size: userDefaultManager.fontSize)
-//                }else{
-//                    return UIFont.init(descriptor: boldFontDescriptor, size: userDefaultManager.fontSize)
-//                }
-//            }
-//        }
-//
-//        if fontTraits.contains(.traitItalic){
-//            let italicFontDescriptor = newFont.fontDescriptor.withSymbolicTraits(.traitItalic)
-//            return UIFont.init(descriptor: italicFontDescriptor!, size: userDefaultManager.fontSize)
-//        }
         
+        //复制字体的特性（加粗、斜体）
         var resDescriptor:UIFontDescriptor = userDefaultManager.font.fontDescriptor
         var resFont = userDefaultManager.font
         for trait in fontTraits{
@@ -129,6 +114,8 @@ extension UIFont {
                 resFont = UIFont(descriptor: resDescriptor, size: userDefaultManager.fontSize)
             }
         }
+        //复制字体大小
+        resFont.withSize(self.pointSize)
         
         return resFont
     }
