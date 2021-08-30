@@ -1058,9 +1058,20 @@ extension TextFormatter{
     func changeFontColor(newColor:UIColor){
         let selectedRange = textView.selectedRange
         if selectedRange.length > 0{
+            //1.改字体颜色
             storage.addAttribute(.foregroundColor, value: newColor, range: selectedRange)
+            //2.改下划线颜色
+            let subAttributedString = storage.attributedSubstring(from: selectedRange)
+            if let underLine = subAttributedString.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int{
+                if underLine == 1{
+                    storage.addAttribute(.underlineColor, value: newColor, range: selectedRange)
+                }
+            }
         }else{
             textView.typingAttributes[.foregroundColor] = newColor
+            if (textView.typingAttributes[.underlineStyle] != nil) {
+                textView.typingAttributes[.underlineColor] = newColor
+            }
         }
     }
     

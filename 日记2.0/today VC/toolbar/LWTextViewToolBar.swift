@@ -28,7 +28,7 @@ class LWTextViewToolBar: UIView {
     
     var isShowingPopover:Bool = false
     
-    let popover:Popover = {
+    lazy var popover:Popover = {
         let options = [
             .type(.up),
             .cornerRadius(10),
@@ -36,7 +36,9 @@ class LWTextViewToolBar: UIView {
             .arrowSize(CGSize(width: 5, height: 5)),
             .springDamping(0.7),
           ] as [PopoverOption]
-        let popover = Popover(options: options, showHandler: nil, dismissHandler: nil)
+        let popover = Popover(options: options,
+                              showHandler: {self.isShowingPopover = true},
+                              dismissHandler: {self.isShowingPopover = false})
         return popover
     }()
     
@@ -172,10 +174,8 @@ extension LWTextViewToolBar{
             colorPicker.frame = CGRect(origin: .zero, size: CGSize(width: 300, height: 200))
             colorPicker.addTarget(self, action: #selector(handleColorChange(picker:)), for: .valueChanged)
             popover.show(colorPicker, fromView: richTextButton)
-            isShowingPopover = true
         }else{
             popover.dismiss()
-            isShowingPopover = false
         }
 //        let textFormatter = TextFormatter(textView: textView)
 //        if !isShowingPopover{
