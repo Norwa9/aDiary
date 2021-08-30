@@ -95,4 +95,57 @@ extension UIFont {
     
         return nil
     }
+    
+    func copyFontTraitsToNewSelectedFont() -> UIFont{
+        var fontTraits:[UIFontDescriptor.SymbolicTraits.Element] = []
+        if self.isBold{
+            fontTraits.append(.traitBold)
+        }
+        if self.isItalic{
+            fontTraits.append(.traitItalic)
+        }
+//        let newFont = userDefaultManager.font
+//        if fontTraits.contains(.traitBold){
+//            if let boldFontDescriptor = newFont.fontDescriptor.withSymbolicTraits(.traitBold){
+//                if fontTraits.contains(.traitItalic){
+//                    let boldAndItalicFontDescriptor = boldFontDescriptor.withSymbolicTraits(.traitItalic)
+//                    return UIFont.init(descriptor: boldAndItalicFontDescriptor!, size: userDefaultManager.fontSize)
+//                }else{
+//                    return UIFont.init(descriptor: boldFontDescriptor, size: userDefaultManager.fontSize)
+//                }
+//            }
+//        }
+//
+//        if fontTraits.contains(.traitItalic){
+//            let italicFontDescriptor = newFont.fontDescriptor.withSymbolicTraits(.traitItalic)
+//            return UIFont.init(descriptor: italicFontDescriptor!, size: userDefaultManager.fontSize)
+//        }
+        
+        var resDescriptor:UIFontDescriptor = userDefaultManager.font.fontDescriptor
+        var resFont = userDefaultManager.font
+        for trait in fontTraits{
+            if resFont.supportTrait(trait: trait){
+                resDescriptor = resDescriptor.withSymbolicTraits([trait])!
+                resFont = UIFont(descriptor: resDescriptor, size: userDefaultManager.fontSize)
+            }
+        }
+        
+        return resFont
+    }
+    
+    func supportTrait(trait:UIFontDescriptor.SymbolicTraits.Element)->Bool{
+        if let _ = self.fontDescriptor.withSymbolicTraits([trait]){
+            return true
+        }else{
+           return false
+        }
+    }
+    
+    func supportItalicTrait()->Bool{
+        if let _ = self.fontDescriptor.withSymbolicTraits([.traitItalic]){
+            return true
+        }else{
+           return false
+        }
+    }
 }

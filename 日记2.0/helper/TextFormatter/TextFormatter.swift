@@ -738,7 +738,7 @@ extension TextFormatter{
         let mutableText = NSMutableAttributedString(attributedString: aString)
         
         //1、施加用户自定义格式
-        let attrText = mutableText.addUserDefaultAttributes()
+        let attrText = mutableText.restoreFontStyle()
         
         //2.恢复.image格式
         for tuple in imageAttrTuples{
@@ -879,7 +879,7 @@ extension TextFormatter{
      */
     func rawtextToRichtext(diary:diaryInfo)->NSAttributedString{
         self.textView.text = diary.content
-        let attrText = self.textView.attributedText.addUserDefaultAttributes()
+        let attrText = self.textView.attributedText.restoreFontStyle()
         self.textView.attributedText = attrText
         return attrText
     }
@@ -890,7 +890,7 @@ extension TextFormatter{
         let mutableText = NSMutableAttributedString(attributedString: aString)
         
         //1、施加用户自定义格式
-        let attrText = mutableText.addUserDefaultAttributes()
+        let attrText = mutableText.restoreFontStyle()
         
         //2.恢复.image格式
         for tuple in imageAttrTuples{

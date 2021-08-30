@@ -84,19 +84,17 @@ extension NSAttributedString{
     
     
     
-    //MARK:-应用用户的编辑器设定
-    ///将用户的编辑器属性施加于attrString上
-    func addUserDefaultAttributes(lineSpacing:CGFloat = userDefaultManager.lineSpacing) -> NSMutableAttributedString{
-        let paraStyle = NSMutableParagraphStyle()
-//        paraStyle.alignment = .left
-        paraStyle.lineSpacing = lineSpacing
-        let attributes: [NSAttributedString.Key:Any] = [
-//            .font:userDefaultManager.font,
-//            .paragraphStyle : paraStyle,
-            .foregroundColor : UIColor.label,
-        ]
+    //MARK:-恢复字体
+    ///重新选取字体后，需要将旧有的[粗体]和[斜体]重新赋给新字体
+    func restoreFontStyle() -> NSMutableAttributedString{
         let mutableAttr = NSMutableAttributedString(attributedString: self)
-        mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
+        let allRange = NSRange(location: 0, length: mutableAttr.length)
+        mutableAttr.enumerateAttribute(.font, in: allRange, options: []) { (objcet, range, stop) in
+            if let prevFont = objcet as? UIFont{
+                let newFont = prevFont.copyFontTraitsToNewSelectedFont()
+                mutableAttr.addAttribute(.font, value: newFont, range: range)
+            }
+        }
         return mutableAttr
     }
     
