@@ -1014,8 +1014,52 @@ extension TextFormatter{
         }
     }
     
-    func toggleUnderLine(){
+    func changeFont(){
         
-        textView.textStorage.addAttribute(.underlineStyle, value: 1, range: range)
+    }
+    
+    func toggleUnderLine(){
+        let selectedRange = range
+        if selectedRange.length > 0{
+            let subAttributedString = storage.attributedSubstring(from: selectedRange)
+//            let subRange = NSRange(0..<subAttributedString.length)
+//            if let isUnderline = subAttributedString.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int{
+//                if isUnderline == 1{
+//                    subAttributedString.removeAttribute(.underlineStyle, range: subRange)
+//                    print("removeAttribute(.underlineStyle")
+//                }else{
+//                    subAttributedString.addAttribute(.underlineStyle, value: 1, range: subRange)
+//                    print("addAttribute(.underlineStyle")
+//                }
+//
+//                storage.replaceCharacters(in: selectedRange, with: subAttributedString)
+//            }
+            if let underLine = subAttributedString.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int{
+                if underLine == 1{
+                    storage.removeAttribute(.underlineStyle, range: selectedRange)
+                }
+            }else{
+                //underLine == nil
+                storage.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: selectedRange)
+            }
+        }else{
+            guard storage.length > 0, range.location > 0 else { return  }
+            print("selectedRange.length == 0 ")
+            if (textView.typingAttributes[.underlineStyle] == nil) {
+                textView.typingAttributes[.underlineStyle] = 1
+            } else {
+                textView.typingAttributes.removeValue(forKey: .underlineStyle)
+            }
+//            let i = range.location - 1
+//            let upper = range.upperBound
+//            let substring = textView.attributedText.attributedSubstring(from: NSRange(i..<upper))
+//            if let isUnderlinePrev = substring.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int {
+//                if isUnderlinePrev == 0{
+//                    textView.typingAttributes[.underlineStyle] = 1
+//                }else{
+//                    textView.typingAttributes.removeValue(forKey: .underlineStyle)
+//                }
+//            }
+        }
     }
 }

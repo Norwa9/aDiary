@@ -151,7 +151,7 @@ extension LWTextViewToolBar{
     
     @objc func UnfoldRichtextMenu(){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.toggleTrait(On: .italic)
+        textFormatter.toggleUnderLine()
     }
 }
 
