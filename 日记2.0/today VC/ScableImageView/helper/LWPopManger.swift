@@ -66,19 +66,19 @@ class LWPopManager: NSObject {
                 self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居中",didSelect: { action in
-                view.viewModel.paraStyle = centerParagraphStyle
+                view.viewModel.paraStyle = imageCenterParagraphStyle
                 view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居左",didSelect: { action in
                 
-                view.viewModel.paraStyle = leftParagraphStyle
+                view.viewModel.paraStyle = imageLeftParagraphStyle
                 view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
             PopMenuDefaultAction(title: "居右",didSelect: { action in
 
-                view.viewModel.paraStyle = rightParagraphStyle
+                view.viewModel.paraStyle = imageRightParagraphStyle
                 view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
@@ -86,7 +86,7 @@ class LWPopManager: NSObject {
                 view.viewModel.getNewestLocation(attributedString: view.delegate!.attributedText) {
                     let deleteRange = NSRange(location: view.viewModel.location, length: 1)
                     view.delegate?.textStorage.replaceCharacters(in: deleteRange, with: " ")
-                    view.delegate?.textStorage.addAttribute(.paragraphStyle, value: leftParagraphStyle, range: deleteRange)
+                    view.delegate?.textStorage.addAttribute(.paragraphStyle, value: imageLeftParagraphStyle, range: deleteRange)
                 }
                 self.dismissPopMenu()
             }),

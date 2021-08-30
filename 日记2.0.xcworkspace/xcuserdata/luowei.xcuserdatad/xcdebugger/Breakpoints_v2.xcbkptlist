@@ -23,22 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C359C354-1B49-4460-9A7A-380CDD394227"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x65e5;&#x8bb0;2.0/helper/TextFormatter/TextFormatter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "975"
-            endingLineNumber = "975"
-            landmarkName = "toggleTrait(On:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "653A3267-B202-4E76-9E53-D90C2F2368E4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -97,22 +81,6 @@
             startingLineNumber = "92"
             endingLineNumber = "92"
             landmarkName = "unItalic()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A72D5D77-73BA-4D96-B4C1-487992DFD343"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x65e5;&#x8bb0;2.0/helper/TextFormatter/TextFormatter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1022"
-            endingLineNumber = "1022"
-            landmarkName = "toggleUnderLine()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

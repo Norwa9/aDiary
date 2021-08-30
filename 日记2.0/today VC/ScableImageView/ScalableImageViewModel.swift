@@ -41,7 +41,7 @@ class ScalableImageViewModel: NSObject {
         self.image = compressedImage
         print("压缩后大小")//压缩后4MB
         compressedImage?.printImageDataSize()
-        self.paraStyle = centerParagraphStyle
+        self.paraStyle = imageCenterParagraphStyle
         super.init()
     }
     
@@ -59,13 +59,13 @@ class ScalableImageViewModel: NSObject {
         var paraStyle:NSMutableParagraphStyle
         switch model.paraStyle{
         case 0:
-            paraStyle = centerParagraphStyle
+            paraStyle = imageCenterParagraphStyle
         case 1:
-            paraStyle = leftParagraphStyle
+            paraStyle = imageLeftParagraphStyle
         case 2:
-            paraStyle = rightParagraphStyle
+            paraStyle = imageRightParagraphStyle
         default:
-            paraStyle = centerParagraphStyle
+            paraStyle = imageCenterParagraphStyle
         }
         self.paraStyle = paraStyle
         self.contentMode = UIImageView.ContentMode.init(rawValue: model.contentMode)!
@@ -96,9 +96,9 @@ class ScalableImageViewModel: NSObject {
     ///viewModel转Model
     func generateModel() -> ScalableImageModel{
         var paraStyle:LWTextAligmentStyle
-        if self.paraStyle == centerParagraphStyle{
+        if self.paraStyle == imageCenterParagraphStyle{
             paraStyle = .center
-        }else if self.paraStyle == leftParagraphStyle{
+        }else if self.paraStyle == imageLeftParagraphStyle{
             paraStyle = .left
         }else{
             paraStyle = .right

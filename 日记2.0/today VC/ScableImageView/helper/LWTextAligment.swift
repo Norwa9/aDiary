@@ -13,7 +13,7 @@ enum LWTextAligmentStyle:Int,Codable {
     case left
     case right
 }
-var centerParagraphStyle:NSMutableParagraphStyle  = {
+var imageCenterParagraphStyle:NSMutableParagraphStyle  = {
     let paragraphStyle = NSMutableParagraphStyle()
     // Make paragraph styles for attachments
     paragraphStyle.alignment = .center
@@ -22,7 +22,7 @@ var centerParagraphStyle:NSMutableParagraphStyle  = {
     return paragraphStyle
 }()
 
-var leftParagraphStyle:NSMutableParagraphStyle  = {
+var imageLeftParagraphStyle:NSMutableParagraphStyle  = {
     let paragraphStyle = NSMutableParagraphStyle()
     // Make paragraph styles for attachments
     paragraphStyle.alignment = .left
@@ -31,11 +31,30 @@ var leftParagraphStyle:NSMutableParagraphStyle  = {
     return paragraphStyle
 }()
 
-var rightParagraphStyle:NSMutableParagraphStyle  = {
+var imageRightParagraphStyle:NSMutableParagraphStyle  = {
     let paragraphStyle = NSMutableParagraphStyle()
     // Make paragraph styles for attachments
     paragraphStyle.alignment = .right
     paragraphStyle.paragraphSpacing = 10
     paragraphStyle.paragraphSpacingBefore = 10
+    return paragraphStyle
+}()
+
+
+var textCenterParagraphStyle:NSMutableParagraphStyle  = {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .center
+    return paragraphStyle
+}()
+
+var textLeftParagraphStyle:NSMutableParagraphStyle  = {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .left
+    return paragraphStyle
+}()
+
+var textRightParagraphStyle:NSMutableParagraphStyle  = {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .right
     return paragraphStyle
 }()

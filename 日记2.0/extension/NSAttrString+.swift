@@ -42,7 +42,7 @@ extension NSAttributedString{
                 //3.将view重新替换成imageAttchmen
                 //bounds也要设置好来，否者重新塞入属性文本后，image的方向不对.
                 let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"),size: viewModel.bounds.size)
-                attrText.replaceAttchment(attchemnt, attchmentAt: location,with: centerParagraphStyle)
+                attrText.replaceAttchment(attchemnt, attchmentAt: location,with: imageCenterParagraphStyle)
                 
                 attrTextForContent.replaceCharacters(in: range, with: "P")
                 

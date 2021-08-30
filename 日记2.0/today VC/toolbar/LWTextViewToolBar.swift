@@ -151,7 +151,8 @@ extension LWTextViewToolBar{
     
     @objc func UnfoldRichtextMenu(){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.toggleUnderLine()
+        let rand = Int.random(in: 0..<3)
+        textFormatter.setParagraphAligment(aligment: LWTextAligmentStyle.init(rawValue: rand)!)
     }
 }
 

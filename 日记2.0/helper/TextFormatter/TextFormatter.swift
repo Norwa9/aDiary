@@ -609,7 +609,7 @@ extension TextFormatter{
         let view = ScalableImageView(viewModel: defaultViewModel)
         view.delegate = textView
         let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
-        textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: centerParagraphStyle)
+        textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: imageCenterParagraphStyle)
         textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))//别忘了添加.image key
         
         //插入换行
@@ -963,6 +963,7 @@ extension TextFormatter{
         case bold
         case italic
     }
+    ///粗体或斜体
     func toggleTrait(On trait:fontTrait){
         let selectedRange = range
         if selectedRange.length > 0{
@@ -1014,6 +1015,7 @@ extension TextFormatter{
         }
     }
     
+    ///下划线
     func toggleUnderLine(){
         let selectedRange = range
         if selectedRange.length > 0{
@@ -1036,4 +1038,20 @@ extension TextFormatter{
             }
         }
     }
+    
+    func setParagraphAligment(aligment:LWTextAligmentStyle){
+        if let paraRange = getCurParagraphRange(){
+            switch aligment {
+            case .center:
+                storage.addAttribute(.paragraphStyle, value: textCenterParagraphStyle, range: paraRange)
+            case .left:
+                storage.addAttribute(.paragraphStyle, value: textLeftParagraphStyle, range: paraRange)
+            case .right:
+                storage.addAttribute(.paragraphStyle, value: textRightParagraphStyle, range: paraRange)
+            default:
+                storage.addAttribute(.paragraphStyle, value: imageCenterParagraphStyle, range: paraRange)
+            }
+        }
+    }
+    
 }

@@ -63,7 +63,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         
         //1.添加dot view
         dot = newDotView()
-        if viewModel.paraStyle == rightParagraphStyle{
+        if viewModel.paraStyle == imageRightParagraphStyle{
             dot?.center = CGPoint(x: 0, y: self.height)
         }else{
             dot?.center = CGPoint(x: self.width, y: self.height)
@@ -95,7 +95,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
                 let x = gesture!.currentPoint.x
                 let y = gesture!.currentPoint.y
                 var newWidth:CGFloat
-                if viewModel.paraStyle == rightParagraphStyle{
+                if viewModel.paraStyle == imageRightParagraphStyle{
                     newWidth = startFrame.width - x
                     dot?.center.x = x
                 }else{
