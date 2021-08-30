@@ -77,19 +77,19 @@ class LWTextViewToolBar: UIView {
         
         todoListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(insertTimeButton.snp.right).offset(5)
+            make.left.equalTo(insertTimeButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
         
         numberListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(todoListButton.snp.right).offset(5)
+            make.left.equalTo(todoListButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
         
         insertImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(numberListButton.snp.right).offset(5)
+            make.left.equalTo(numberListButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
         
