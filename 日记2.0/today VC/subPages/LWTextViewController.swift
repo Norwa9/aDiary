@@ -19,8 +19,7 @@ class LWTextViewController: UIViewController {
     var model:diaryInfo!
     
     var textView:LWTextView!
-    var keyBoardToolsBar:toolsBar!
-    var keyBoardToolsBarFrame:CGRect!
+    var keyBoardToolsBar:LWTextViewToolBar!
     
     var pickerConfig:FMPhotoPickerConfig = {
         var config = FMPhotoPickerConfig()
@@ -75,8 +74,7 @@ class LWTextViewController: UIViewController {
         
         
         //工具栏
-        keyBoardToolsBar = toolsBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
-        keyBoardToolsBarFrame = keyBoardToolsBar.frame
+        keyBoardToolsBar = LWTextViewToolBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.delegate = self
         view.layoutIfNeeded()

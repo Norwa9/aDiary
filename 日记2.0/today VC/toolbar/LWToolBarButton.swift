@@ -8,14 +8,13 @@
 import UIKit
 
 class LWToolBarButton: UIButton {
-    var image:UIImage!{
-        didSet{
-            setImage(image, for: .normal)
-        }
-    }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var image:UIImage?
+    var buttonImageView:UIImageView!
+    init(image:UIImage?) {
+        self.image = image
+        super.init(frame: .zero)
         initUI()
+        initCons()
     }
     
     required init?(coder: NSCoder) {
@@ -26,5 +25,17 @@ class LWToolBarButton: UIButton {
         self.layer.cornerRadius = 10
         self.backgroundColor = .tertiarySystemBackground
         self.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
+        
+        buttonImageView = UIImageView(image: image)
+        buttonImageView.contentMode = .scaleAspectFit
+        self.addSubview(buttonImageView)
     }
+    
+    func initCons(){
+        buttonImageView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+        }
+    }
+    
+    
 }
