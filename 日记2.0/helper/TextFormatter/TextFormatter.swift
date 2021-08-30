@@ -1040,8 +1040,8 @@ extension TextFormatter{
     func getCurrentAligment() -> LWTextAligmentStyle{
         if let pRange = getCurParagraphRange(){
             print("getCurrentAligment,pRange : \(pRange)")
-            guard storage.length > 0 else{
-                //如果pRange = (0,0)，下面的遍历会奔溃
+            guard storage.length > 0, pRange.location < storage.length else{
+                //在第一段或者最后一段调用下面的遍历，会发生奔溃
                 return .left
             }
             if let paraStyle = storage.attribute(.paragraphStyle, at: pRange.location, effectiveRange: nil) as? NSParagraphStyle{
