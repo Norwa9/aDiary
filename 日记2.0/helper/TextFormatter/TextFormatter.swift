@@ -1055,29 +1055,6 @@ extension TextFormatter{
         }
     }
     
-    func getSelectedFontColor()->UIColor{
-        let selectedRange = range
-        if selectedRange.length > 0{
-            let subAttributedString = storage.attributedSubstring(from: selectedRange)
-            if let color = subAttributedString.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor{
-                return color
-            }else{
-                return .label
-            }
-        }else{
-            return .label
-        }
-    }
-    
-    @objc func handleColorChange(picker: ColorPicker){
-        let newColor = picker.color
-        print(newColor)
-        let selectedRange = range
-        if selectedRange.length > 0{
-            storage.addAttribute(.foregroundColor, value: newColor, range: selectedRange)
-        }else{
-            textView.typingAttributes[.foregroundColor] = newColor
-        }
-    }
+
     
 }
