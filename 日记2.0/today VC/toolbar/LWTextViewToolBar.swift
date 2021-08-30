@@ -244,7 +244,12 @@ extension LWTextViewToolBar{
     
     @objc func setAligment(){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.setParagraphAligment(aligment: .center)
+        let curAligment = textFormatter.getCurrentAligment()
+        var rawValue = curAligment.rawValue + 1
+        if rawValue > 2{
+            rawValue = 0
+        }
+        textFormatter.setParagraphAligment(aligment: LWTextAligmentStyle.init(rawValue: rawValue)!)
     }
     
     @objc func setFontColor(_ sender:LWToolBarButton){

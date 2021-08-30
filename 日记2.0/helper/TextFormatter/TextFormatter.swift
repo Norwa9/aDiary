@@ -1038,6 +1038,21 @@ extension TextFormatter{
         }
     }
     
+    func getCurrentAligment() -> LWTextAligmentStyle{
+        if let pRange = getCurParagraphRange(){
+            if let paraStyle = storage.attribute(.paragraphStyle, at: pRange.location, effectiveRange: nil) as? NSParagraphStyle{
+                if paraStyle.alignment == .left{
+                    return .left
+                }else if paraStyle.alignment == .right{
+                    return .right
+                }else{
+                    return .center
+                }
+            }
+        }
+        return .left
+    }
+    
     func setParagraphAligment(aligment:LWTextAligmentStyle){
         if let paraRange = getCurParagraphRange(){
             switch aligment {
