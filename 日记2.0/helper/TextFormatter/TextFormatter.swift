@@ -1028,7 +1028,6 @@ extension TextFormatter{
                 storage.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: selectedRange)
             }
         }else{
-            guard storage.length > 0, range.location > 0 else { return  }
             print("selectedRange.length == 0 ")
             if (textView.typingAttributes[.underlineStyle] == nil) {
                 textView.typingAttributes[.underlineStyle] = 1
@@ -1040,6 +1039,11 @@ extension TextFormatter{
     
     func getCurrentAligment() -> LWTextAligmentStyle{
         if let pRange = getCurParagraphRange(){
+            print("getCurrentAligment,pRange : \(pRange)")
+            guard storage.length > 0 else{
+                //如果pRange = (0,0)，下面的遍历会奔溃
+                return .left
+            }
             if let paraStyle = storage.attribute(.paragraphStyle, at: pRange.location, effectiveRange: nil) as? NSParagraphStyle{
                 if paraStyle.alignment == .left{
                     return .left

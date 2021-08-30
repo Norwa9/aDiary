@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 enum LWTextAligmentStyle:Int,Codable {
-    case center 
     case left
+    case center
     case right
 }
 var imageCenterParagraphStyle:NSMutableParagraphStyle  = {
