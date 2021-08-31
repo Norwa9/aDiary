@@ -273,13 +273,10 @@ extension LWTextViewToolBar{
     @objc func setFontSize(_ sender:LWToolBarButton){
         let textFormatter = TextFormatter(textView: textView)
         if !isShowingPopover{
-            let slider = UISlider()
-            slider.addTarget(self, action: #selector(handleFontSizeChange(picker:)), for: .valueChanged)
-            slider.minimumValue = 5
-            slider.maximumValue = 100
-            slider.width = 200
-            slider.setValue(Float(textFormatter.getSelectedFontSize()), animated: false)
-            popover.show(slider, fromView: sender)
+            let sliderView = LWFontSizeSliderView(toolbar: self)
+            sliderView.size = CGSize(width: 240, height: 30)
+            sliderView.defaultSize = textFormatter.getSelectedFontSize()
+            popover.show(sliderView, fromView: sender)
             isShowingPopover = true
         }else{
             popover.dismiss()
@@ -288,10 +285,9 @@ extension LWTextViewToolBar{
         
     }
     
-    @objc func handleFontSizeChange(picker:UISlider){
-        let newFontSize = picker.value
+    func handleFontSizeChange(newFontSize:CGFloat){
         let textFormatter = TextFormatter(textView: textView)
-        textFormatter.changeFontSize(newFontSize: CGFloat(newFontSize))
+        textFormatter.changeFontSize(newFontSize: newFontSize)
     }
     
     
