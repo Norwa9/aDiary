@@ -45,12 +45,16 @@ class LWToolBarButton: UIButton {
     
     func toggleSelectedView(){
         if isOn{
-            UIView.animate(withDuration: 0.2) {
-                self.transform = .init(scaleX: 0.8, y: 0.8)
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.95, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+                self.transform = .init(scaleX: 0.85, y: 0.85)
+            } completion: { (_) in
+                
             }
         }else{
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.95, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
                 self.transform = .identity
+            } completion: { (_) in
+                
             }
         }
     }

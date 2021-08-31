@@ -23,7 +23,7 @@ class LWTextViewToolBar: UIView {
     var numberListButton:LWToolBarButton!
     var todoListButton:LWToolBarButton!
     var indicator:NVActivityIndicatorView!
-    var richTextButton:LWToolBarButton!
+    var richTextPanelButton:LWToolBarButton!
     var boldButton:LWToolBarButton!
     var italicButton:LWToolBarButton!
     var underLineButton:LWToolBarButton!
@@ -31,8 +31,9 @@ class LWTextViewToolBar: UIView {
     var fontSizeButton:LWToolBarButton!
     var fontColorButton:LWToolBarButton!
     
-    var buttons:[LWToolBarButton] = []
+    var basicButtons:[LWToolBarButton] = []
     var richTextbuttons:[LWToolBarButton] = []
+    var isShowingRichButtonsPanel:Bool = false
     
     var isShowingPopover:Bool = false
     
@@ -52,8 +53,8 @@ class LWTextViewToolBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initUI()
-        initCons()
+        initBasicButtons()
+        initBasicButtonsCons()
     }
     
     required init?(coder: NSCoder) {
@@ -61,7 +62,7 @@ class LWTextViewToolBar: UIView {
     }
     
     //tool bar
-    private func initUI(){
+    private func initBasicButtons(){
         self.backgroundColor = .secondarySystemBackground
         
         //1 add time button
@@ -90,6 +91,12 @@ class LWTextViewToolBar: UIView {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         self.addSubview(saveButton)
         
+        
+        //6,富文本开关
+        richTextPanelButton = LWToolBarButton(image: UIImage(named: "richtext"))
+        richTextPanelButton.addTarget(self, action: #selector(showRichButtonPanel(_:)), for: .touchUpInside)
+        self.addSubview(richTextPanelButton)
+        
         indicator = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .lightGray, padding: .zero)
         indicator.alpha = 0
         saveButton.addSubview(indicator)
@@ -110,81 +117,54 @@ class LWTextViewToolBar: UIView {
         aligmentButton.addTarget(self, action: #selector(setAligment(_:)), for: .touchUpInside)
         self.addSubview(aligmentButton)
         
-        fontSizeButton = LWToolBarButton(image: UIImage(named: "fontsize"))
-        fontSizeButton.addTarget(self, action: #selector(setFontSize(_:)), for: .touchUpInside)
-        self.addSubview(fontSizeButton)
-        
         fontColorButton = LWToolBarButton(image: UIImage(named: "fontcolor"))
         fontColorButton.addTarget(self, action: #selector(setFontColor(_:)), for: .touchUpInside)
         self.addSubview(fontColorButton)
         
+        fontSizeButton = LWToolBarButton(image: UIImage(named: "fontsize"))
+        fontSizeButton.addTarget(self, action: #selector(setFontSize(_:)), for: .touchUpInside)
+        self.addSubview(fontSizeButton)
         
         
-        buttons = [insertImageButton,todoListButton,numberListButton,saveButton]
-        richTextbuttons = [boldButton,italicButton,underLineButton]
+        
+        basicButtons = [insertImageButton,todoListButton,numberListButton]
+        richTextbuttons = [boldButton,italicButton,underLineButton,aligmentButton,fontColorButton,fontSizeButton]
+        self.initRichTextButtonsCons()
+        for button in richTextbuttons{
+            button.alpha = 0
+        }
     }
     
-    private func initCons(){
-        insertTimeButton.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(5)
+    private func initBasicButtonsCons(){
+        richTextPanelButton.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(10)
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 30, height: 30))
         }
         
+        insertTimeButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(richTextPanelButton)
+            make.left.equalTo(richTextPanelButton.snp.right).offset(10)
+            make.size.equalTo(richTextPanelButton)
+        }
+        
         todoListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(insertTimeButton.snp.right).offset(5)
+            make.left.equalTo(insertTimeButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
         
         numberListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(todoListButton.snp.right).offset(5)
+            make.left.equalTo(todoListButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
         
         insertImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(numberListButton.snp.right).offset(5)
+            make.left.equalTo(numberListButton.snp.right).offset(10)
             make.size.equalTo(insertTimeButton)
         }
-        
-        boldButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(insertImageButton.snp.right).offset(5)
-            make.size.equalTo(insertTimeButton)
-        }
-        
-        italicButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(boldButton.snp.right).offset(5)
-            make.size.equalTo(insertTimeButton)
-        }
-        
-        underLineButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(italicButton.snp.right).offset(5)
-            make.size.equalTo(insertTimeButton)
-        }
-        
-        aligmentButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(underLineButton.snp.right).offset(5)
-            make.size.equalTo(insertTimeButton)
-        }
-        
-        fontColorButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(aligmentButton.snp.right).offset(5)
-            make.size.equalTo(insertTimeButton)
-        }
-        
-        fontSizeButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(fontColorButton.snp.right).offset(5)
-            make.size.equalTo(insertTimeButton)
-        }
-
         
         saveButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-10)
@@ -196,10 +176,66 @@ class LWTextViewToolBar: UIView {
             make.edges.equalToSuperview()
         }
     }
+    
+    func initRichTextButtonsCons(){
+        boldButton.snp.makeConstraints { (make) in
+            make.edges.equalTo(insertTimeButton)
+        }
+        
+        italicButton.snp.makeConstraints { (make) in
+            make.edges.equalTo(todoListButton)
+        }
+        
+        underLineButton.snp.makeConstraints { (make) in
+            make.edges.equalTo(numberListButton)
+        }
+        
+        aligmentButton.snp.makeConstraints { (make) in
+            make.edges.equalTo(insertImageButton)
+        }
+        
+        fontColorButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(aligmentButton)
+            make.left.equalTo(aligmentButton.snp.right).offset(10)
+            make.size.equalTo(aligmentButton)
+        }
+        
+        fontSizeButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(aligmentButton)
+            make.left.equalTo(fontColorButton.snp.right).offset(10)
+            make.size.equalTo(aligmentButton)
+        }
+    }
 }
 
 //MARK:-action target
 extension LWTextViewToolBar{
+    @objc func showRichButtonPanel(_ sender:LWToolBarButton){
+        isShowingRichButtonsPanel.toggle()
+        if isShowingRichButtonsPanel{
+            UIView.animate(withDuration: 0.2) {
+                sender.buttonImageView.image = UIImage(named: "back")
+                for button in self.richTextbuttons{
+                    button.alpha = 1
+                }
+                for button in self.basicButtons{
+                    button.alpha = 0
+                }
+            }
+            
+        }else{
+            UIView.animate(withDuration: 0.2) {
+                sender.buttonImageView.image = UIImage(named: "richtext")
+                for button in self.richTextbuttons{
+                    button.alpha = 0
+                }
+                for button in self.basicButtons{
+                    button.alpha = 1
+                }
+            }
+            
+        }
+    }
     
     @objc func saveButtonTapped(){
         self.statAnimateIndicator()
@@ -309,10 +345,11 @@ extension LWTextViewToolBar{
     
     
     func updateToolbarButtonsState(attributes:[NSAttributedString.Key : Any]){
-        print("updateToolbarButtonsState:\(attributes)")
-        for button in richTextbuttons{
-            button.isOn = false
-        }
+        //print("updateToolbarButtonsState:\(attributes)")
+        boldButton.isOn = false
+        italicButton.isOn = false
+        underLineButton.isOn = false
+        
         for attribute in attributes{
             //1.粗体，斜体
             if let font = attribute.value as? UIFont{
