@@ -330,10 +330,8 @@ extension LWTextViewToolBar{
             sliderView.size = CGSize(width: 240, height: 30)
             sliderView.defaultSize = textFormatter.getSelectedFontSize()
             popover.show(sliderView, fromView: sender)
-            isShowingPopover = true
         }else{
             popover.dismiss()
-            isShowingPopover = false
         }
         
     }
