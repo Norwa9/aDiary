@@ -89,6 +89,7 @@ extension NSAttributedString{
     func restoreFontStyle() -> NSMutableAttributedString{
         let mutableAttr = NSMutableAttributedString(attributedString: self)
         let allRange = NSRange(location: 0, length: mutableAttr.length)
+        //1.恢复字体
         mutableAttr.enumerateAttribute(.font, in: allRange, options: []) { (objcet, range, stop) in
             if let prevFont = objcet as? UIFont{
                 let newFont = prevFont.copyFontTraitsToNewSelectedFont()
@@ -96,7 +97,27 @@ extension NSAttributedString{
             }
         }
         
-        //恢复行间距
+        //2.查找black色字体并替换成label色以适配深色模式
+        mutableAttr.enumerateAttribute(.foregroundColor, in: allRange, options: []) { (object, range, stop) in
+            if let color = object as? UIColor{
+//                print("color.cgColor:\(color.cgColor)")
+//                print("color.cgColor.colorSpace:\(color.cgColor.colorSpace)")
+                //print("color.cgColor.components:\(color.cgColor.components)")
+//                print("forgroudcolor:\(color.description), range:\(range)")
+                //黑色替换为label色
+                if let components = color.cgColor.components,components.count == 2,components[0] == 0.0,components[1] == 1.0{
+                    print("color == UIColor.black,range:\(range)")
+                    mutableAttr.addAttribute(.foregroundColor, value: UIColor.label, range: range)
+                }
+                //白色替换为label色
+                if let components = color.cgColor.components,components.count == 2,components[0] == 1.0,components[1] == 1.0{
+                    print("color == UIColor.black,range:\(range)")
+                    mutableAttr.addAttribute(.foregroundColor, value: UIColor.label, range: range)
+                }
+            }
+        }
+        
+        //3.恢复行间距
         mutableAttr.enumerateAttribute(.paragraphStyle, in: allRange, options: []) { (object, range, stop) in
             if let paraStyle = object as? NSParagraphStyle{
                 let newParaSyle = NSMutableParagraphStyle()
