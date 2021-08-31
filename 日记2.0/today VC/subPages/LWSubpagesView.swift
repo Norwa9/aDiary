@@ -65,7 +65,8 @@ class LWSubpagesView: UIView {
             segmentTitles.append("\(pageIndex + 1)页")
         }
         segmentDataSource.titles = segmentTitles
-        segmentDataSource.titleNormalFont = userDefaultManager.customFont(withSize: 12)
+        let userFont = userDefaultManager.customFont(withSize: 12)
+        segmentDataSource.titleNormalFont = userFont.bold() ?? userFont
         segmentedView.reloadData()
         pagingView.reloadData()
         segmentedView.selectItemAt(index: currentIndex)
