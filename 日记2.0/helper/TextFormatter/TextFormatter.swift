@@ -87,6 +87,7 @@ public class TextFormatter{
                     //按回车取消unchecked box
                     let selectRange = NSRange(location: currentParagraphRange.location, length: 0)
                     insertText("\n", replacementRange: currentParagraphRange, selectRange: selectRange)
+                    textView.setDefaultTypingAttributes()
                     return
                 }
             }
@@ -115,6 +116,7 @@ public class TextFormatter{
                 textView.undoManager?.beginUndoGrouping()
                 textView.replace(selectedTextRange, withText: checkbox.string)
                 textView.textStorage.replaceCharacters(in: NSRange(location: selectedRange.location, length: checkbox.length), with: checkbox)
+                textView.setDefaultTypingAttributes()
                 textView.undoManager?.endUndoGrouping()
                 return
             }
@@ -578,7 +580,7 @@ extension TextFormatter{
 extension TextFormatter{
     ///插入时间戳
     func insertTimeTag(){
-        setDefaultTypingAttributes()
+        textView.setDefaultTypingAttributes()
         //获取当前时间，格式：-H:mm-
         let formatter = DateFormatter()
         formatter.dateFormat = "-H:mm-"
@@ -620,7 +622,7 @@ extension TextFormatter{
         //更新焦点
         textView.selectedRange = NSRange(location: location + 3, length: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
-        setDefaultTypingAttributes()
+        textView.setLeftTypingAttributes()
     }
 }
 
@@ -711,7 +713,7 @@ extension TextFormatter{
 //MARK:-读取
 extension TextFormatter{
     func loadTextViewContent(with diary:diaryInfo){
-        self.setDefaultTypingAttributes()
+        textView.setDefaultTypingAttributes()
         let cleanContent = diary.content
         let rtfd = diary.rtfd
         let bounds = textView.bounds
@@ -836,17 +838,6 @@ extension TextFormatter{
         ]
         let placeHolder = "标题.."
         self.textView.attributedText = NSAttributedString(string: placeHolder, attributes: attributes)
-    }
-    
-    ///设置居左的输入模式
-    func setDefaultTypingAttributes(){
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
-        let typingAttributes:[NSAttributedString.Key:Any] = [
-            .paragraphStyle: paragraphStyle,
-            .font:userDefaultManager.font,
-        ]
-        self.textView.typingAttributes = typingAttributes
     }
 }
 

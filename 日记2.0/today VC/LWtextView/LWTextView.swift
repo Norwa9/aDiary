@@ -162,3 +162,29 @@ extension LWTextView{
         }
     }
 }
+
+//MARK:-默认输入特性
+extension LWTextView {
+    ///设置默认的文字输入模式
+    func setDefaultTypingAttributes(){
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+        let typingAttributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle: paragraphStyle,
+            .font:userDefaultManager.font,
+        ]
+        self.typingAttributes = typingAttributes
+    }
+    
+    ///插入图片后，重新设置居左的输入模式
+    func setLeftTypingAttributes(){
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = userDefaultManager.lineSpacing
+        paragraphStyle.alignment = .left
+        let typingAttributes:[NSAttributedString.Key:Any] = [
+            .paragraphStyle: paragraphStyle,
+            .font:userDefaultManager.font,
+        ]
+        self.typingAttributes = typingAttributes
+    }
+}
