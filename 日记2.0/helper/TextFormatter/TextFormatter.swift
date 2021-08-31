@@ -973,20 +973,15 @@ extension TextFormatter{
                 
             }
         }else{
-            guard storage.length > 0, range.location > 0 else { return  }
-            let i = range.location - 1
-            let upper = range.upperBound
-            let substring = textView.attributedText.attributedSubstring(from: NSRange(i..<upper))
-            var newFont:UIFont?
-            if let prevFont = substring.attribute(.font, at: 0, effectiveRange: nil) as? UIFont {
-                if trait == .bold{
-                    newFont = toggleBoldFont(font: prevFont)
-                }else {
-                    newFont = toggleItalicFont(font: prevFont)
-                }
-                if let newFont = newFont{
-                    textView.typingAttributes[.font] = newFont
-                }
+            let defaultFont =  textView.typingAttributes[.font] as! UIFont
+            let newFont:UIFont?
+            if trait == .bold{
+                newFont = toggleBoldFont(font: defaultFont)
+            }else {
+                newFont = toggleItalicFont(font: defaultFont)
+            }
+            if let newFont = newFont{
+                textView.typingAttributes[.font] = newFont
             }
         }
     }
@@ -1107,7 +1102,11 @@ extension TextFormatter{
             }
             return .label
         }else{
-            return textView.typingAttributes[.foregroundColor] as! UIColor
+            if let textColor = textView.typingAttributes[.foregroundColor] as? UIColor{
+                return textColor
+            }else{
+                return .label
+            }
         }
     }
     
@@ -1130,6 +1129,16 @@ extension TextFormatter{
         }
     }
     
+    
+    func getLocationAttributes() -> [NSAttributedString.Key : Any]{
+        guard storage.length > 0, range.location > 0 else {
+            return textView.typingAttributes
+        }
+        let i = range.location - 1
+        let upper = range.upperBound
+        let substring = textView.attributedText.attributedSubstring(from: NSRange(i..<upper))
+        return substring.attributes(at: 0, effectiveRange: nil)
+    }
 
     
 }

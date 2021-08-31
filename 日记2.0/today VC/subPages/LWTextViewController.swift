@@ -156,15 +156,17 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
 //MARK:-UITextView Delegate
 extension LWTextViewController : UITextViewDelegate{
     func textViewDidChangeSelection(_ textView: UITextView) {
-//        print("textViewDidChangeSelection")
-//        let selectedRange = textView.selectedRange
-//        if selectedRange.length > 0{
-//            textView.attributedText.enumerateAttributes(in: selectedRange, options: []) { (object, range, stop) in
-//                print("在range:\(range)，有keys：\(object.keys)")
-//            }
-//        }else{
-//
-//        }
+        print("textViewDidChangeSelection")
+        let textFormatter = TextFormatter(textView: textView as! LWTextView)
+        let selectedRange = textView.selectedRange
+        if selectedRange.length > 0{
+            let subAttributedString = textView.attributedText.attributedSubstring(from: selectedRange)
+            let attributes = subAttributedString.attributes(at: 0, effectiveRange: nil)
+            keyBoardToolsBar.updateToolbarButtonsState(attributes: attributes)
+        }else{
+            let attributes = textFormatter.getLocationAttributes()
+            keyBoardToolsBar.updateToolbarButtonsState(attributes: attributes)
+        }
         
     }
     

@@ -10,6 +10,12 @@ import UIKit
 class LWToolBarButton: UIButton {
     var image:UIImage?
     var buttonImageView:UIImageView!
+    var isOn: Bool = false{
+        didSet{
+            toggleSelectedView()
+        }
+    }
+    
     init(image:UIImage?) {
         self.image = image
         super.init(frame: .zero)
@@ -34,6 +40,18 @@ class LWToolBarButton: UIButton {
     func initCons(){
         buttonImageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+        }
+    }
+    
+    func toggleSelectedView(){
+        if isOn{
+            UIView.animate(withDuration: 0.2) {
+                self.transform = .init(scaleX: 0.8, y: 0.8)
+            }
+        }else{
+            UIView.animate(withDuration: 0.2) {
+                self.transform = .identity
+            }
         }
     }
     

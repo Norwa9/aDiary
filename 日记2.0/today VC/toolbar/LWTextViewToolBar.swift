@@ -32,6 +32,7 @@ class LWTextViewToolBar: UIView {
     var fontColorButton:LWToolBarButton!
     
     var buttons:[LWToolBarButton] = []
+    var richTextbuttons:[LWToolBarButton] = []
     
     var isShowingPopover:Bool = false
     
@@ -94,19 +95,19 @@ class LWTextViewToolBar: UIView {
         saveButton.addSubview(indicator)
         
         boldButton = LWToolBarButton(image: UIImage(named: "bold"))
-        boldButton.addTarget(self, action: #selector(setBold), for: .touchUpInside)
+        boldButton.addTarget(self, action: #selector(setBold(_:)), for: .touchUpInside)
         self.addSubview(boldButton)
         
         italicButton = LWToolBarButton(image: UIImage(named: "Italic"))
-        italicButton.addTarget(self, action: #selector(setItalic), for: .touchUpInside)
+        italicButton.addTarget(self, action: #selector(setItalic(_:)), for: .touchUpInside)
         self.addSubview(italicButton)
         
         underLineButton = LWToolBarButton(image: UIImage(named: "underline"))
-        underLineButton.addTarget(self, action: #selector(setUnderLine), for: .touchUpInside)
+        underLineButton.addTarget(self, action: #selector(setUnderLine(_:)), for: .touchUpInside)
         self.addSubview(underLineButton)
         
         aligmentButton = LWToolBarButton(image: UIImage(named: "leftaligment"))
-        aligmentButton.addTarget(self, action: #selector(setAligment), for: .touchUpInside)
+        aligmentButton.addTarget(self, action: #selector(setAligment(_:)), for: .touchUpInside)
         self.addSubview(aligmentButton)
         
         fontSizeButton = LWToolBarButton(image: UIImage(named: "title1"))
@@ -120,6 +121,7 @@ class LWTextViewToolBar: UIView {
         
         
         buttons = [insertImageButton,todoListButton,numberListButton,saveButton]
+        richTextbuttons = [boldButton,italicButton,underLineButton]
     }
     
     private func initCons(){
@@ -227,22 +229,25 @@ extension LWTextViewToolBar{
         textFormatter.insertTodoList()
     }
     
-    @objc func setBold(){
+    @objc func setBold(_ sender:LWToolBarButton){
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.toggleTrait(On: .bold)
+        sender.isOn.toggle()
     }
     
-    @objc func setItalic(){
+    @objc func setItalic(_ sender:LWToolBarButton){
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.toggleTrait(On: .italic)
+        sender.isOn.toggle()
     }
     
-    @objc func setUnderLine(){
+    @objc func setUnderLine(_ sender:LWToolBarButton){
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.toggleUnderLine()
+        sender.isOn.toggle()
     }
     
-    @objc func setAligment(){
+    @objc func setAligment(_ sender:LWToolBarButton){
         let textFormatter = TextFormatter(textView: textView)
         let curAligment = textFormatter.getCurrentAligment()
         var rawValue = curAligment.rawValue + 1
@@ -290,6 +295,29 @@ extension LWTextViewToolBar{
         textFormatter.changeFontSize(newFontSize: newFontSize)
     }
     
+    
+    func updateToolbarButtonsState(attributes:[NSAttributedString.Key : Any]){
+        print("updateToolbarButtonsState:\(attributes)")
+        for button in richTextbuttons{
+            button.isOn = false
+        }
+        for attribute in attributes{
+            //1.粗体，斜体
+            if let font = attribute.value as? UIFont{
+                if font.fontDescriptor.symbolicTraits.contains(.traitBold){
+                    boldButton.isOn = true
+                }
+                if font.fontDescriptor.symbolicTraits.contains(.traitItalic){
+                    italicButton.isOn = true
+                }
+            }
+            
+            //2.下划线
+            if attribute.key == .underlineStyle{
+                underLineButton.isOn = true
+            }
+        }
+    }
     
 }
 
