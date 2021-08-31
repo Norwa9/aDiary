@@ -127,7 +127,7 @@ class LWTextViewToolBar: UIView {
         
         
         
-        basicButtons = [insertImageButton,todoListButton,numberListButton]
+        basicButtons = [insertTimeButton,insertImageButton,todoListButton,numberListButton]
         richTextbuttons = [boldButton,italicButton,underLineButton,aligmentButton,fontColorButton,fontSizeButton]
         self.initRichTextButtonsCons()
         for button in richTextbuttons{
