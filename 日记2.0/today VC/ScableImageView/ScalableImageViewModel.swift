@@ -59,9 +59,9 @@ class ScalableImageViewModel: NSObject {
         var paraStyle:NSMutableParagraphStyle
         switch model.paraStyle{
         case 0:
-            paraStyle = imageCenterParagraphStyle
-        case 1:
             paraStyle = imageLeftParagraphStyle
+        case 1:
+            paraStyle = imageCenterParagraphStyle
         case 2:
             paraStyle = imageRightParagraphStyle
         default:
