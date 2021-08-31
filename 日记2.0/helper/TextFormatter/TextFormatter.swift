@@ -607,7 +607,9 @@ extension TextFormatter{
     func insertScalableImageView(image:UIImage){
         let location = selectedRange.location
         //插入换行
-        textView.textStorage.insert(NSAttributedString(string: "\n"), at: location)
+        let Linebreak = NSMutableAttributedString(string: "\n")
+        let LinebreakAttributedString = Linebreak.addingAttributes([.font : userDefaultManager.font])
+        textView.textStorage.insert(LinebreakAttributedString, at: location)
         
         //插入图片
         let defaultViewModel = ScalableImageViewModel(location: location, image: image)
@@ -618,7 +620,7 @@ extension TextFormatter{
         textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))//别忘了添加.image key
         
         //插入换行
-        textView.textStorage.insert(NSAttributedString(string: "\n"), at: location + 2)
+        textView.textStorage.insert(LinebreakAttributedString, at: location + 2)
         
         //更新焦点
         textView.selectedRange = NSRange(location: location + 3, length: 0)

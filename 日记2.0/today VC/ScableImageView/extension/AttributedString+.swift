@@ -53,7 +53,8 @@ public extension NSMutableAttributedString {
 
         if let paragraphStyle = paragraphStyle {
             let attachmentString = plainAttachmentString
-                .addingAttributes([ .paragraphStyle : paragraphStyle ])
+                .addingAttributes([ .paragraphStyle : paragraphStyle,
+                                    .font : userDefaultManager.font])
             let separatorString = NSAttributedString(string: .paragraphSeparator)
 
             // Surround the attachment string with paragraph separators, so that the paragraph style is only applied to it
