@@ -1010,6 +1010,7 @@ extension TextFormatter{
     ///下划线
     func toggleUnderLine(){
         let selectedRange = range
+        let curFontColor = getSelectedFontColor()
         if selectedRange.length > 0{
             let subAttributedString = storage.attributedSubstring(from: selectedRange)
             if let underLine = subAttributedString.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int{
@@ -1019,11 +1020,13 @@ extension TextFormatter{
             }else{
                 //underLine == nil
                 storage.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: selectedRange)
+                storage.addAttribute(.underlineColor, value: curFontColor, range: selectedRange)
             }
         }else{
             print("selectedRange.length == 0 ")
             if (textView.typingAttributes[.underlineStyle] == nil) {
                 textView.typingAttributes[.underlineStyle] = 1
+                textView.typingAttributes[.underlineColor] = curFontColor
             } else {
                 textView.typingAttributes.removeValue(forKey: .underlineStyle)
             }
@@ -1094,6 +1097,17 @@ extension TextFormatter{
             return userDefaultManager.fontSize
         }else{
             return userDefaultManager.fontSize
+        }
+    }
+    
+    func getSelectedFontColor() -> UIColor{
+        if selectedRange.length > 0{
+            if let color = textView.attributedText.attribute(.foregroundColor, at: selectedRange.location, effectiveRange: nil) as? UIColor{
+                return color
+            }
+            return .label
+        }else{
+            return textView.typingAttributes[.foregroundColor] as! UIColor
         }
     }
     
