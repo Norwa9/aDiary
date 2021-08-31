@@ -110,7 +110,7 @@ class LWTextViewToolBar: UIView {
         aligmentButton.addTarget(self, action: #selector(setAligment(_:)), for: .touchUpInside)
         self.addSubview(aligmentButton)
         
-        fontSizeButton = LWToolBarButton(image: UIImage(named: "title1"))
+        fontSizeButton = LWToolBarButton(image: UIImage(named: "fontsize"))
         fontSizeButton.addTarget(self, action: #selector(setFontSize(_:)), for: .touchUpInside)
         self.addSubview(fontSizeButton)
         
