@@ -102,7 +102,7 @@ extension NSAttributedString{
             if let color = object as? UIColor{
 //                print("color.cgColor:\(color.cgColor)")
 //                print("color.cgColor.colorSpace:\(color.cgColor.colorSpace)")
-                //print("color.cgColor.components:\(color.cgColor.components)")
+                print("color.cgColor.components:\(color.cgColor.components),range:\(range)")
 //                print("forgroudcolor:\(color.description), range:\(range)")
                 //黑色替换为label色
                 if let components = color.cgColor.components,components.count == 2,components[0] == 0.0,components[1] == 1.0{
@@ -112,6 +112,15 @@ extension NSAttributedString{
                 //白色替换为label色
                 if let components = color.cgColor.components,components.count == 2,components[0] == 1.0,components[1] == 1.0{
                     print("color == UIColor.black,range:\(range)")
+                    mutableAttr.addAttribute(.foregroundColor, value: UIColor.label, range: range)
+                }
+                //sRGB的黑色
+                if let components = color.cgColor.components,components.count == 4,components[0] == 0.0,components[1] == 0.0,components[2] == 0.0,components[3] == 1.0{
+                    print("color == RGB Black,range:\(range)")
+                    mutableAttr.addAttribute(.foregroundColor, value: UIColor.label, range: range)
+                }
+                if let components = color.cgColor.components,components.count == 4,components[0] == 1.0,components[1] == 1.0,components[2] == 1.0,components[3] == 1.0{
+                    print("color == RGB White,range:\(range)")
                     mutableAttr.addAttribute(.foregroundColor, value: UIColor.label, range: range)
                 }
             }
