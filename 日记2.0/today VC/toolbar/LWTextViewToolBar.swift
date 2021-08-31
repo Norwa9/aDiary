@@ -250,11 +250,23 @@ extension LWTextViewToolBar{
     @objc func setAligment(_ sender:LWToolBarButton){
         let textFormatter = TextFormatter(textView: textView)
         let curAligment = textFormatter.getCurrentAligment()
-        var rawValue = curAligment.rawValue + 1
-        if rawValue > 2{
-            rawValue = 0
+        var setAligmentRawValue = curAligment.rawValue + 1
+        if setAligmentRawValue > 2{
+            setAligmentRawValue = 0
         }
-        textFormatter.setParagraphAligment(aligment: LWTextAligmentStyle.init(rawValue: rawValue)!)
+        let imageName:String
+        switch setAligmentRawValue {
+        case 0:
+            imageName = "leftaligment"
+        case 1:
+            imageName = "centeraligment"
+        case 2:
+            imageName = "rightaligment"
+        default:
+            imageName = "leftaligment"
+        }
+        sender.buttonImageView.image = UIImage(named: imageName)
+        textFormatter.setParagraphAligment(aligment: LWTextAligmentStyle.init(rawValue: setAligmentRawValue)!)
     }
     
     @objc func setFontColor(_ sender:LWToolBarButton){
@@ -316,7 +328,25 @@ extension LWTextViewToolBar{
             if attribute.key == .underlineStyle{
                 underLineButton.isOn = true
             }
+            
+            //3.段落排版
+            if attribute.key == .paragraphStyle{
+                if let paraStyle = attribute.value as? NSParagraphStyle{
+                    switch paraStyle.alignment {
+                    case .left:
+                        aligmentButton.buttonImageView.image = UIImage(named: "leftaligment")
+                    case .center:
+                        aligmentButton.buttonImageView.image = UIImage(named: "centeraligment")
+                    case .right:
+                        aligmentButton.buttonImageView.image = UIImage(named: "rightaligment")
+                    default:
+                        aligmentButton.buttonImageView.image = UIImage(named: "leftaligment")
+                    }
+                }
+            }
         }
+        
+        
     }
     
 }
