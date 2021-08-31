@@ -169,8 +169,8 @@ extension TextFormatter{
         //selectedRange可能覆盖到【多个段落】
         guard let pRange = getCurParagraphRange() else{return}
         
-        //为啥叫做为了方便后续的处理，先将名为.todo文本附件替换为占位符"- []"
         let attributedString = textView.attributedText.attributedSubstring(from: pRange)
+        //为啥叫做为了方便后续的处理，先将名为.todo文本附件替换为占位符"- []"
         let mutable = NSMutableAttributedString(attributedString: attributedString).unLoadCheckboxes()
         
         //段落为空
@@ -303,6 +303,7 @@ extension TextFormatter{
         
         if paragraph.contains(location) {
             let strike = (todoAttr == 0) ? 1 : 0
+            textView.typingAttributes[.foregroundColor] = UIColor.systemGray
             textView.typingAttributes[.strikethroughStyle] = strike
         }
     }

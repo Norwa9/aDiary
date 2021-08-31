@@ -234,7 +234,7 @@ class LWSettingViewController: UIViewController {
         lineSpacingStepper.value = Double(userDefaultManager.lineSpacing)
         lineSpacingStepper.addTarget(self, action: #selector(lineSapacingChange), for: .valueChanged)
         
-        fontSizeTitle.text = "字体大小"
+        fontSizeTitle.text = "默认字号"
         fontSizeTitle.font = .systemFont(ofSize: 18, weight: .medium)
         fontSizeLabel.text = String(Int(userDefaultManager.fontSize))
         fontSizeLabel.font = .systemFont(ofSize: 18)
@@ -243,10 +243,11 @@ class LWSettingViewController: UIViewController {
         fontSizeStepper.value = Double(userDefaultManager.fontSize)
         fontSizeStepper.addTarget(self, action: #selector(fontSizeDidChange(_:)), for: .valueChanged)
         
-        fontPickerTitle.text = "字体样式"
+        fontPickerTitle.text = "默认字体"
         fontPickerTitle.font = .systemFont(ofSize: 18, weight: .medium)
-        fontPickerButton.setTitle("选取自定义字体", for: .normal)
+        fontPickerButton.setTitle("选取字体", for: .normal)
         fontPickerButton.setTitleColor(.link, for: .normal)
+        fontPickerButton.contentHorizontalAlignment = .right
         fontPickerButton.addTarget(self, action: #selector(presentFontPickerVC), for: .touchUpInside)
         
         //隐私
