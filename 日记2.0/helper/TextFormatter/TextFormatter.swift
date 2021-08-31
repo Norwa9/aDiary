@@ -228,6 +228,7 @@ extension TextFormatter{
         }
 
         let mutableResult = NSMutableAttributedString(string: result)
+        //print("mutableResult.length:\(mutableResult.length),result:\(result)")
         
         //将占位符"- []"替换为名为.todo文本附件
         mutableResult.loadCheckboxes()
