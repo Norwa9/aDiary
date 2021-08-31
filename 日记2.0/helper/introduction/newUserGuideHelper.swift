@@ -15,7 +15,7 @@ class NewUserGuideHelper{
     //MARK:-导入用户引导
     public func initUserGuideDiary(){
         //设置App的默认字体
-        userDefaultManager.fontName = "DINAlternate-Bold"
+        userDefaultManager.fontName = nil
         
         
         //生成引导文案
@@ -26,6 +26,13 @@ class NewUserGuideHelper{
         let date = GetTodayDate()
         if let page1Url = Bundle.main.url(forResource: "intro-page1", withExtension: "txt"),let page1Content = try? String(contentsOf: page1Url),
            let page2Url = Bundle.main.url(forResource: "intro-page2", withExtension: "txt"),let page2Content = try? String(contentsOf: page2Url){
+            let userFont = userDefaultManager.font
+            let userParaStyle = NSMutableParagraphStyle()
+            userParaStyle.lineSpacing = userDefaultManager.lineSpacing
+            let userAttributes : [NSAttributedString.Key : Any] = [
+                .font : userFont,
+                .paragraphStyle : userParaStyle
+            ]
             
             //page1
             let page1 = diaryInfo(dateString: date)
@@ -33,6 +40,7 @@ class NewUserGuideHelper{
             attributedText.loadCheckboxes()//从富文本解析出todo
             let loaction = attributedText.length
             let imageAttchment = self.getSubviewAttchment(insertLocation: loaction)
+            attributedText.addAttributes(userAttributes, range: NSRange(location: 0, length: attributedText.length))
             attributedText.insertAttachment(imageAttchment, at: loaction)
             let parseRes = attributedText.parseAttribuedText()
             let imageAttrTuples = parseRes.0
@@ -56,11 +64,13 @@ class NewUserGuideHelper{
             page1.tags.append("你好新用户")
             dataManager.shared.tags.append("你好新用户")
             page1.ckData = "不需要上传".data(using: .utf8)//TODO:(未测试)随便给ckData赋值，强行标记引导日记为已上传，防止第二设备下载App后今日的日记被覆盖
-            
             //page2
             let page2Date = date + "-1"
             let page2 = diaryInfo(dateString: page2Date)
+            let page2AttributedString = NSMutableAttributedString(string: page2Content)
+            page2AttributedString.addAttributes(userAttributes, range: NSRange(location: 0, length: page2AttributedString.length))
             page2.content = page2Content
+            page2.rtfd = page2AttributedString.toRTFD()
             page2.emojis.append("2️⃣")
             page2.ckData = "不需要上传".data(using: .utf8)
             

@@ -245,7 +245,7 @@ class userDefaultManager{
             if let type = shared?.object(forKey: constants.layoutType) as? Int {
                 return type
             }else{
-                return 1//默认展示1列，即列表视图
+                return 2//默认展示1列，即列表视图
             }
         }
         set{

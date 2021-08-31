@@ -76,6 +76,24 @@ class WhatsNewHelper{
         )
         arr.append(whatsNew260)
         
+        //MARK:-2.7
+        let version270 = WhatsNew.Version(major: 2, minor: 7, patch: 0)
+        let whatsNew270 = WhatsNew(
+            // The Version
+            version: version270,
+            // The Title
+            title: "2.7新特性",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "新增富文本功能",
+                    subtitle: "",
+                    image: UIImage(named: "richtext")
+                ),
+            ]
+        )
+        arr.append(whatsNew270)
+        
         
         return arr
     }
