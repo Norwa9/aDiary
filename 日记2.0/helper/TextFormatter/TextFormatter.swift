@@ -951,13 +951,12 @@ extension TextFormatter{
     }
 }
 
-//MARK:-富文本
 extension TextFormatter{
     enum fontTrait {
         case bold
         case italic
     }
-    ///粗体或斜体
+    //MARK:-粗体或斜体
     func toggleTrait(On trait:fontTrait){
         let selectedRange = range
         if selectedRange.length > 0{
@@ -1004,7 +1003,7 @@ extension TextFormatter{
         }
     }
     
-    ///下划线
+    //MARK:-下划线
     func toggleUnderLine(){
         let selectedRange = range
         let curFontColor = getSelectedFontColor()
@@ -1030,6 +1029,22 @@ extension TextFormatter{
         }
     }
     
+    //MARK:-排版
+    func setParagraphAligment(aligment:LWTextAligmentStyle){
+        if let paraRange = getCurParagraphRange(){
+            switch aligment {
+            case .center:
+                storage.addAttribute(.paragraphStyle, value: textCenterParagraphStyle, range: paraRange)
+            case .left:
+                storage.addAttribute(.paragraphStyle, value: textLeftParagraphStyle, range: paraRange)
+            case .right:
+                storage.addAttribute(.paragraphStyle, value: textRightParagraphStyle, range: paraRange)
+            default:
+                storage.addAttribute(.paragraphStyle, value: imageCenterParagraphStyle, range: paraRange)
+            }
+        }
+    }
+    
     func getCurrentAligment() -> LWTextAligmentStyle{
         if let pRange = getCurParagraphRange(){
             print("getCurrentAligment,pRange : \(pRange)")
@@ -1050,21 +1065,7 @@ extension TextFormatter{
         return .left
     }
     
-    func setParagraphAligment(aligment:LWTextAligmentStyle){
-        if let paraRange = getCurParagraphRange(){
-            switch aligment {
-            case .center:
-                storage.addAttribute(.paragraphStyle, value: textCenterParagraphStyle, range: paraRange)
-            case .left:
-                storage.addAttribute(.paragraphStyle, value: textLeftParagraphStyle, range: paraRange)
-            case .right:
-                storage.addAttribute(.paragraphStyle, value: textRightParagraphStyle, range: paraRange)
-            default:
-                storage.addAttribute(.paragraphStyle, value: imageCenterParagraphStyle, range: paraRange)
-            }
-        }
-    }
-    
+    //MARK:-字体颜色
     func changeFontColor(newColor:UIColor){
         let selectedRange = textView.selectedRange
         if selectedRange.length > 0{
@@ -1084,19 +1085,7 @@ extension TextFormatter{
             }
         }
     }
-    
-    
-    func getSelectedFontSize() -> CGFloat{
-        if selectedRange.length > 0{
-            if let font = textView.attributedText.attribute(.font, at: selectedRange.location, effectiveRange: nil) as? UIFont{
-                return font.pointSize
-            }
-            return userDefaultManager.fontSize
-        }else{
-            return userDefaultManager.fontSize
-        }
-    }
-    
+
     func getSelectedFontColor() -> UIColor{
         if selectedRange.length > 0{
             if let color = textView.attributedText.attribute(.foregroundColor, at: selectedRange.location, effectiveRange: nil) as? UIColor{
@@ -1112,6 +1101,7 @@ extension TextFormatter{
         }
     }
     
+    //MARK:-字体大小
     func changeFontSize(newFontSize:CGFloat){
         let selectedRange = range
         if selectedRange.length > 0{
@@ -1131,7 +1121,19 @@ extension TextFormatter{
         }
     }
     
+    func getSelectedFontSize() -> CGFloat{
+        if selectedRange.length > 0{
+            if let font = textView.attributedText.attribute(.font, at: selectedRange.location, effectiveRange: nil) as? UIFont{
+                return font.pointSize
+            }
+            return userDefaultManager.fontSize
+        }else{
+            return userDefaultManager.fontSize
+        }
+    }
     
+    
+    //MARK:-获取所有属性
     func getLocationAttributes() -> [NSAttributedString.Key : Any]{
         guard storage.length > 0, range.location > 0 else {
             return textView.typingAttributes
