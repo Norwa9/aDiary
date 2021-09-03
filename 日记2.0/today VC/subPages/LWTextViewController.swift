@@ -154,6 +154,14 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
 }
 
 extension LWTextViewController : UITextViewDelegate{
+    //MARK:-textViewDidBeginEditing
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        //初始输入时，设置输入字体颜色为.label，否则默认为black无法适配深色模式
+        if textView.textStorage.length == 0 {
+            textView.typingAttributes[.foregroundColor] = UIColor.label
+        }
+    }
+    
     //MARK:-textViewDidChangeSelection
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("textViewDidChangeSelection")
@@ -279,10 +287,15 @@ extension LWTextViewController{
 
 //MARK:-深色模式
 extension LWTextViewController{
-    ///切换模式后重新读取，以显示正确的todo复选框的素材
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        //切换复选框深色模式素材
         textView.reloadTodoImage()
+        
+        //切换字体颜色为.label
+        let labelColoredAttributedString = textView.attributedText!.restoreFontStyle()
+        textView.attributedText = labelColoredAttributedString
+        
     }
     
 }
