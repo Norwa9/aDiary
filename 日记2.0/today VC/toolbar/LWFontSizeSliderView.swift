@@ -8,6 +8,7 @@
 import UIKit
 
 class LWFontSizeSliderView: UIView {
+    let contentView:UIView = UIView()
     let slider = UISlider()
     let fontSizeLabel = UILabel()
     var defaultSize:CGFloat!{
@@ -29,20 +30,34 @@ class LWFontSizeSliderView: UIView {
     }
     
     func initUI(){
+        self.clipsToBounds = false
+        self.layer.cornerRadius = 10
+        
+        contentView.backgroundColor  = .secondarySystemBackground
+        contentView.layer.cornerRadius = 10
+        contentView.clipsToBounds = false
+        self.addSubview(contentView)
+        
+        slider.backgroundColor = .secondarySystemBackground
         slider.minimumValue = 5
         slider.maximumValue = 100
-        self.addSubview(slider)
+        contentView.addSubview(slider)
         slider.addTarget(self, action: #selector(handleFontSizeChange(picker:)), for: .valueChanged)
         
         
         
         fontSizeLabel.font = UIFont.init(name: "DIN Alternate", size: 20)
-        self.addSubview(fontSizeLabel)
+        fontSizeLabel.textColor = .label
+        contentView.addSubview(fontSizeLabel)
         
         
     }
     
     func initCons(){
+        contentView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        
         slider.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(5)
             make.centerY.equalToSuperview()
