@@ -94,6 +94,23 @@ class WhatsNewHelper{
         )
         arr.append(whatsNew270)
         
+        //MARK:-2.7.1
+        let version271 = WhatsNew.Version(major: 2, minor: 7, patch: 1)
+        let whatsNew271 = WhatsNew(
+            // The Version
+            version: version271,
+            // The Title
+            title: "2.7.1新特性",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "修复bug",
+                    subtitle: "如果在深色模式下文字变为黑色，选中文字并设置为白色后即可解决问题",
+                    image: UIImage(named: "bug")
+                ),
+            ]
+        )
+        arr.append(whatsNew271)
         
         return arr
     }
