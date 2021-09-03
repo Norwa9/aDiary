@@ -102,7 +102,7 @@ extension NSAttributedString{
             if let color = object as? UIColor{
 //                print("color.cgColor:\(color.cgColor)")
 //                print("color.cgColor.colorSpace:\(color.cgColor.colorSpace)")
-                //print("color.cgColor.components:\(color.cgColor.components),range:\(range)")
+                print("color.cgColor.components:\(color.cgColor.components),range:\(range)")
 //                print("forgroudcolor:\(color.description), range:\(range)")
                 //UIColor.black替换为UIColor.label
                 if let components = color.cgColor.components,components.count == 2,components[0] == 0.0,components[1] == 1.0{
