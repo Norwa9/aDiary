@@ -153,8 +153,8 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
     }
 }
 
-//MARK:-UITextView Delegate
 extension LWTextViewController : UITextViewDelegate{
+    //MARK:-textViewDidChangeSelection
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("textViewDidChangeSelection")
         let textFormatter = TextFormatter(textView: textView as! LWTextView)
@@ -170,6 +170,7 @@ extension LWTextViewController : UITextViewDelegate{
         
     }
     
+    //MARK:-textViewDidChange
     func textViewDidChange(_ textView: UITextView) {
         //print("textViewDidChange")
         //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
@@ -181,11 +182,13 @@ extension LWTextViewController : UITextViewDelegate{
         }
     }
     
+    //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
         //print("textViewDidEndEditing")
         save()
     }
     
+    //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
         //print("shouldChangeTextIn\(range)")
@@ -205,6 +208,7 @@ extension LWTextViewController : UITextViewDelegate{
         return true//若为false，键入的新字符不会递给storage
     }
     
+    //MARK:-shouldInteractWith
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let formatter = TextFormatter(textView: self.textView)
         let res = formatter.interactAttchment(with: characterRange,diary:model)
@@ -218,8 +222,8 @@ extension LWTextViewController : UITextViewDelegate{
 
 }
 
-//MARK:-UIScrollViewDelegate
 extension LWTextViewController : UIScrollViewDelegate{
+    //MARK:-scrollViewDidScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
         //print("text view content offset : \(y)")
