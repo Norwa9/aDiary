@@ -608,7 +608,10 @@ extension TextFormatter{
         let location = selectedRange.location
         //插入换行
         let Linebreak = NSMutableAttributedString(string: "\n")
-        let LinebreakAttributedString = Linebreak.addingAttributes([.font : userDefaultManager.font])
+        let LinebreakAttributedString = Linebreak.addingAttributes([
+            .font : userDefaultManager.font,
+            .foregroundColor : UIColor.label
+        ])
         textView.textStorage.insert(LinebreakAttributedString, at: location)
         
         //插入图片

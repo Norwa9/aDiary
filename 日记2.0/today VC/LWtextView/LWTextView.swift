@@ -184,6 +184,7 @@ extension LWTextView {
         let typingAttributes:[NSAttributedString.Key:Any] = [
             .paragraphStyle: paragraphStyle,
             .font:userDefaultManager.font,
+            .foregroundColor : UIColor.label
         ]
         self.typingAttributes = typingAttributes
     }
