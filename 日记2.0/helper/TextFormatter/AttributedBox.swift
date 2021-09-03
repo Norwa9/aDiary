@@ -13,7 +13,10 @@ class AttributedBox {
     public static func getChecked() -> NSMutableAttributedString? {
         let checkboxText = getCleanChecked()
         checkboxText.append(NSAttributedString(string: " "))
-
+        
+        checkboxText.addAttribute(.foregroundColor, value: UIColor.label, range: NSRange(0..<2))
+        checkboxText.addAttribute(.font, value: userDefaultManager.font, range: NSRange(0..<2))
+        
         return checkboxText
     }
 
@@ -21,6 +24,10 @@ class AttributedBox {
     public static func getUnChecked() -> NSMutableAttributedString? {
         let checkboxText = getCleanUnchecked()
         checkboxText.append(NSAttributedString(string: " "))
+        
+        checkboxText.addAttribute(.foregroundColor, value: UIColor.label, range: NSRange(0..<2))
+        checkboxText.addAttribute(.font, value: userDefaultManager.font, range: NSRange(0..<2))
+        
         return checkboxText
     }
 
