@@ -31,7 +31,8 @@ class NewUserGuideHelper{
             userParaStyle.lineSpacing = userDefaultManager.lineSpacing
             let userAttributes : [NSAttributedString.Key : Any] = [
                 .font : userFont,
-                .paragraphStyle : userParaStyle
+                .paragraphStyle : userParaStyle,
+                .foregroundColor : UIColor.label
             ]
             
             //page1

@@ -77,7 +77,11 @@ public extension NSMutableAttributedString {
 
         if let paragraphStyle = paragraphStyle {
             let attachmentString = plainAttachmentString
-                .addingAttributes([ .paragraphStyle : paragraphStyle ])
+                .addingAttributes([
+                    .paragraphStyle : paragraphStyle,
+                    .font : userDefaultManager.font,
+                    .foregroundColor : UIColor.label
+                ])
             let insertion = NSMutableAttributedString()
             insertion.append(attachmentString)
 
