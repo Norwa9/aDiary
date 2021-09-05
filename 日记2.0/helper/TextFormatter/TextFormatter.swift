@@ -112,6 +112,10 @@ public class TextFormatter{
                 let selectedTextRange = textView.selectedTextRange!
                 let checkbox = NSMutableAttributedString(string: "\n" + prefix)
                 checkbox.append(unchecked!)
+                checkbox.addAttributes([
+                    .font : userDefaultManager.font,
+                    .foregroundColor : UIColor.label,
+                ])
 
                 textView.undoManager?.beginUndoGrouping()
                 textView.replace(selectedTextRange, withText: checkbox.string)
@@ -132,7 +136,7 @@ public class TextFormatter{
         }
         
         //不符合上面的条件，简单地换行即可
-        self.textView.insertText("\n")
+        insertText("\n")
     }
     
     //当清空某一行后，对其后所有的数字序号更新
