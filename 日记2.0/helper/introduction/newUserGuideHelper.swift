@@ -41,7 +41,7 @@ class NewUserGuideHelper{
             let loaction = attributedText.length
             let imageAttchment = self.getSubviewAttchment(insertLocation: loaction)
             attributedText.addAttributes(userAttributes, range: NSRange(location: 0, length: attributedText.length))
-            attributedText.insertAttachment(imageAttchment, at: loaction)
+            attributedText.insertAttachment(imageAttchment, at: loaction,with: imageCenterParagraphStyle)
             let parseRes = attributedText.parseAttribuedText()
             let imageAttrTuples = parseRes.0
             let todoAttrTuples = parseRes.1

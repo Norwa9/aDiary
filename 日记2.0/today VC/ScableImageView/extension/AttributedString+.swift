@@ -56,6 +56,7 @@ public extension NSMutableAttributedString {
                 .addingAttributes([
                     .paragraphStyle : paragraphStyle,
                     .font : userDefaultManager.font,
+                    .foregroundColor : UIColor.label
                 ])
             let separatorString = NSAttributedString(string: .paragraphSeparator)
 
