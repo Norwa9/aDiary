@@ -104,8 +104,8 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "修复bug",
-                    subtitle: "如果在深色模式下文字变为黑色，选中文字并设置为白色后即可解决问题",
+                    title: "修复深色模式的适配bug",
+                    subtitle: "",
                     image: UIImage(named: "bug")
                 ),
             ]
