@@ -28,6 +28,7 @@
 		1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964A26A95D810009472F /* LWEmojiView.swift */; };
 		1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964E26A970040009472F /* LWEmojiCell.swift */; };
 		1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */; };
+		A9FBA1BD7486ADEEE35B30F0 /* Pods___2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A687CEED3D52C935FCBE15D5 /* Pods___2_0.framework */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */; };
 		EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235F926D692B0001FAD1D /* scalableImageView.swift */; };
@@ -203,6 +204,7 @@
 		1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+emoji.swift"; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
+		A687CEED3D52C935FCBE15D5 /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods___2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diary+ScalableImageView.swift"; sourceTree = "<group>"; };
 		EA2235F926D692B0001FAD1D /* scalableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scalableImageView.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
 				EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */,
+				A9FBA1BD7486ADEEE35B30F0 /* Pods___2_0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +434,7 @@
 				EA9AF51626821E5F00D77908 /* CloudKit.framework */,
 				1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */,
 				1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */,
+				A687CEED3D52C935FCBE15D5 /* Pods___2_0.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
