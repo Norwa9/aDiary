@@ -70,6 +70,10 @@ class LWSubpagesView: UIView {
         segmentedView.reloadData()
         pagingView.reloadData()
         segmentedView.selectItemAt(index: currentIndex)
+        
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = 0
+        }
     }
     
     private func initUI(){

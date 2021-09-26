@@ -28,7 +28,6 @@
 		1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964A26A95D810009472F /* LWEmojiView.swift */; };
 		1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964E26A970040009472F /* LWEmojiCell.swift */; };
 		1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */; };
-		A9FBA1BD7486ADEEE35B30F0 /* Pods___2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A687CEED3D52C935FCBE15D5 /* Pods___2_0.framework */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
 		EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */; };
 		EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235F926D692B0001FAD1D /* scalableImageView.swift */; };
@@ -67,7 +66,6 @@
 		EA63BABC26C6C57B004E64E5 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */; };
 		EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BABE26C6C57B004E64E5 /* MainWidget.swift */; };
 		EA63BAC226C6C57D004E64E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA63BAC126C6C57D004E64E5 /* Assets.xcassets */; };
-		EA63BAC826C6C57D004E64E5 /* MainWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
 		EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
 		EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
@@ -86,6 +84,7 @@
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
 		EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */; };
+		EA96001327007EF80008DC8A /* globalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96001227007EF80008DC8A /* globalConfig.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
 		EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor+.swift */; };
 		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
@@ -142,28 +141,7 @@
 		EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		EA63BAC626C6C57D004E64E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EAA29E2125C5768200AA6971 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EA63BAB926C6C57B004E64E5;
-			remoteInfo = MainWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
-		1B3AEB4B26C65C3700C057A4 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				EA63BAC826C6C57D004E64E5 /* MainWidgetExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EA66AAD326C939DB001D3D24 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -204,7 +182,6 @@
 		1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+emoji.swift"; sourceTree = "<group>"; };
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
-		A687CEED3D52C935FCBE15D5 /* Pods___2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods___2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
 		EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diary+ScalableImageView.swift"; sourceTree = "<group>"; };
 		EA2235F926D692B0001FAD1D /* scalableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scalableImageView.swift; sourceTree = "<group>"; };
@@ -258,6 +235,7 @@
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
 		EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCloudKitConstants.swift; sourceTree = "<group>"; };
+		EA96001227007EF80008DC8A /* globalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConfig.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		EA9AE75D26076B6900D44221 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
@@ -333,7 +311,6 @@
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
 				EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */,
-				A9FBA1BD7486ADEEE35B30F0 /* Pods___2_0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +344,7 @@
 		1B3AEB1126C4F78800C057A4 /* LWIndicator */ = {
 			isa = PBXGroup;
 			children = (
+				EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */,
 				1B2A566D269D81280090D411 /* indicatorViewManager.swift */,
 				1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */,
 				1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */,
@@ -434,7 +412,6 @@
 				EA9AF51626821E5F00D77908 /* CloudKit.framework */,
 				1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */,
 				1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */,
-				A687CEED3D52C935FCBE15D5 /* Pods___2_0.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -689,7 +666,7 @@
 				EA537B9C2632FD9500C2E9EE /* imageManager.swift */,
 				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
 				1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */,
-				EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */,
+				EA96001227007EF80008DC8A /* globalConfig.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -857,12 +834,10 @@
 				EAA29E2625C5768200AA6971 /* Frameworks */,
 				EAA29E2725C5768200AA6971 /* Resources */,
 				408329124B639892E9F20F53 /* [CP] Embed Pods Frameworks */,
-				1B3AEB4B26C65C3700C057A4 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				EA63BAC726C6C57D004E64E5 /* PBXTargetDependency */,
 			);
 			name = "日记2.0";
 			productName = "日记2.0";
@@ -1086,6 +1061,7 @@
 				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
+				EA96001327007EF80008DC8A /* globalConfig.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
@@ -1107,14 +1083,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		EA63BAC726C6C57D004E64E5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EA63BAB926C6C57B004E64E5 /* MainWidgetExtension */;
-			targetProxy = EA63BAC626C6C57D004E64E5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */ = {
@@ -1315,7 +1283,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
@@ -1331,6 +1298,7 @@
 				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1340,7 +1308,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
@@ -1356,6 +1323,7 @@
 				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
