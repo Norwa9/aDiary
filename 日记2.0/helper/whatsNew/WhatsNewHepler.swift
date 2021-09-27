@@ -12,88 +12,6 @@ class WhatsNewHelper{
     ///每次更新前，只要创建对应版本号的whatsNew结构体，就可以对不同版本的用户显示不同的更新提示！
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
-        //MARK:-2.5
-        let version250 = WhatsNew.Version(major: 2, minor: 5, patch: 0)
-        let whatsNew250 = WhatsNew(
-            // The Version
-            version: version250,
-            // The Title
-            title: "新特性",
-            // The features you want to showcase
-            items: [
-                WhatsNew.Item(
-                    title: "新增多页日记功能",
-                    subtitle: "入口在编辑页的右上角",
-                    image: UIImage(named: "multipages")
-                ),
-            ]
-        )
-        arr.append(whatsNew250)
-        
-        //MARK:-2.5.1
-        let version251 = WhatsNew.Version(major: 2, minor: 5, patch: 1)
-        let whatsNew251 = WhatsNew(
-            // The Version
-            version: version251,
-            // The Title
-            title: "2.5.1新特性",
-            // The features you want to showcase
-            items: [
-                WhatsNew.Item(
-                    title: "新增多页日记功能",
-                    subtitle: "入口在编辑页的右上角",
-                    image: UIImage(named: "multipages")
-                ),
-                WhatsNew.Item(
-                    title: "修复了一些bug",
-                    subtitle: "",
-                    image: UIImage(named: "bug")
-                ),
-            ]
-        )
-        arr.append(whatsNew251)
-        
-        //MARK:-2.6
-        let version260 = WhatsNew.Version(major: 2, minor: 6, patch: 0)
-        let whatsNew260 = WhatsNew(
-            // The Version
-            version: version260,
-            // The Title
-            title: "2.6新特性",
-            // The features you want to showcase
-            items: [
-                WhatsNew.Item(
-                    title: "新增图片编辑功能",
-                    subtitle: "可以修改图片的大小和排版了",
-                    image: UIImage(named: "editphoto")
-                ),
-                WhatsNew.Item(
-                    title: "修复了一些影响使用的错误",
-                    subtitle: "欢迎反馈bug",
-                    image: UIImage(named: "bug")
-                ),
-            ]
-        )
-        arr.append(whatsNew260)
-        
-        //MARK:-2.7
-        let version270 = WhatsNew.Version(major: 2, minor: 7, patch: 0)
-        let whatsNew270 = WhatsNew(
-            // The Version
-            version: version270,
-            // The Title
-            title: "2.7新特性",
-            // The features you want to showcase
-            items: [
-                WhatsNew.Item(
-                    title: "新增富文本功能",
-                    subtitle: "",
-                    image: UIImage(named: "richtext")
-                ),
-            ]
-        )
-        arr.append(whatsNew270)
-        
         //MARK:-2.7.1
         let version271 = WhatsNew.Version(major: 2, minor: 7, patch: 1)
         let whatsNew271 = WhatsNew(
@@ -111,6 +29,28 @@ class WhatsNewHelper{
             ]
         )
         arr.append(whatsNew271)
+        //MARK:-2.8
+        let version280 = WhatsNew.Version(major: 2, minor: 8, patch: 0)
+        let whatsNew280 = WhatsNew(
+            // The Version
+            version: version280,
+            // The Title
+            title: "2.8.0",
+            // The features you want to showcase
+            items: [
+                WhatsNew.Item(
+                    title: "适配IOS 15",
+                    subtitle: "",
+                    image: UIImage(named: "update")
+                ),
+                WhatsNew.Item(
+                    title: "添加自动创建日记开关",
+                    subtitle: "",
+                    image: UIImage(named: "switch")
+                ),
+            ]
+        )
+        arr.append(whatsNew280)
         
         return arr
     }
