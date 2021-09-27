@@ -33,6 +33,7 @@ class userDefaultManager{
         static let iCloudEnable = "iCloudEnable"
         static let appearanceMode = "appearanceMode"
         static let deleteBufferIDs = "deleteBufferIDs"
+        static let autoCreate = "autoCreate"
         
         
         
@@ -369,6 +370,20 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.appearanceMode)
+        }
+    }
+    
+    //自动创建日记
+    static var autoCreate:Bool{
+        get{
+            if let mode = shared?.object(forKey: constants.autoCreate) as? Bool {
+                return mode
+            }else{
+                return true
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.autoCreate)
         }
     }
     

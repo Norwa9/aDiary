@@ -57,6 +57,8 @@ class LWSettingViewController: UIViewController {
     var exportPDFButton:UIButton!
     var iCloudTitle:UILabel!
     var iCloudSwitch:UISwitch!
+    var autoCreateTitle:UILabel!
+    var autoCreateTitleSwitch:UISwitch!
     
     //其它
     var otherContainer:UIView!
@@ -185,6 +187,11 @@ class LWSettingViewController: UIViewController {
         otherContainer.addSubview(dailyRemindSwitch)
         otherContainer.addSubview(dailyRemindDatePicker)
         
+        autoCreateTitle = UILabel()
+        autoCreateTitleSwitch = UISwitch()
+        otherContainer.addSubview(autoCreateTitle)
+        otherContainer.addSubview(autoCreateTitleSwitch)
+        
         requestReviewLabel = UILabel()
         requestReviewButton = UIButton()
         otherContainer.addSubview(requestReviewLabel)
@@ -293,6 +300,7 @@ class LWSettingViewController: UIViewController {
         darkModeLabel.font = .systemFont(ofSize: 18, weight: .medium)
         darkModeSegment.selectedSegmentIndex = userDefaultManager.appearanceMode
         darkModeSegment.addTarget(self, action: #selector(appearanceModeDidChange(_:)), for: .valueChanged)
+        
         dailyRemindLabel.text = "每日提醒"
         dailyRemindLabel.font = .systemFont(ofSize: 18, weight: .medium)
         dailyRemindSwitch.isOn = userDefaultManager.dailyRemindEnable
@@ -301,6 +309,12 @@ class LWSettingViewController: UIViewController {
         dailyRemindDatePicker.locale = Locale(identifier: "zh_CN")
         dailyRemindDatePicker.setDate(userDefaultManager.dailyRemindTimeDate, animated: true)
         dailyRemindDatePicker.addTarget(self, action: #selector(dateDidChange(_:)), for: .valueChanged)
+        
+        autoCreateTitle.text = "自动创建空日记"
+        autoCreateTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        autoCreateTitleSwitch.isOn = userDefaultManager.autoCreate
+        autoCreateTitleSwitch.addTarget(self, action: #selector(autoCreateDiary(_:)), for: .valueChanged)
+        
         requestReviewButton.setTitle("好评鼓励", for: .normal)
         requestReviewButton.setTitleColor(.link, for: .normal)
         requestReviewButton.contentHorizontalAlignment = .leading
@@ -513,12 +527,21 @@ class LWSettingViewController: UIViewController {
         
         dailyRemindSwitch.snp.makeConstraints { make in
             make.centerY.equalTo(dailyRemindLabel)
-            make.right.equalTo(dailyRemindDatePicker.snp.left).offset(-10)
+            make.right.equalTo(darkModeSegment)
         }
         
         dailyRemindDatePicker.snp.makeConstraints { make in
             make.centerY.equalTo(dailyRemindLabel)
-            make.right.equalTo(darkModeSegment)
+            make.right.equalTo(dailyRemindSwitch.snp.left).offset(-10)
+        }
+        
+        autoCreateTitle.snp.makeConstraints { make in
+            make.top.equalTo(dailyRemindLabel.snp.bottom).offset(20)
+        }
+        
+        autoCreateTitleSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(autoCreateTitle)
+            make.right.equalTo(dailyRemindSwitch)
         }
         
         requestReviewButton.snp.makeConstraints { make in
@@ -757,6 +780,10 @@ class LWSettingViewController: UIViewController {
         }
         
         userDefaultManager.dailyRemindEnable = sender.isOn
+    }
+    
+    @objc func autoCreateDiary(_ sender:UISwitch){
+        userDefaultManager.autoCreate = sender.isOn
     }
     
     @objc func dateDidChange(_ picker:UIDatePicker){
