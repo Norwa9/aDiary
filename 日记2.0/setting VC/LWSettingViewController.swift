@@ -375,7 +375,7 @@ class LWSettingViewController: UIViewController {
         }
         
         fontContainerView.snp.makeConstraints { make in
-            make.top.equalTo(fontContainerTitle.snp.bottom)
+            make.top.equalTo(fontContainerTitle.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-10)
         }
@@ -444,7 +444,7 @@ class LWSettingViewController: UIViewController {
         }
         
         privacyContainer.snp.makeConstraints { make in
-            make.top.equalTo(privacyContainerTitle.snp.bottom)
+            make.top.equalTo(privacyContainerTitle.snp.bottom).offset(5)
             make.left.right.equalTo(fontContainerView)
         }
         
@@ -477,7 +477,7 @@ class LWSettingViewController: UIViewController {
         }
         
         backupContainer.snp.makeConstraints { make in
-            make.top.equalTo(backupContainerTitle.snp.bottom)
+            make.top.equalTo(backupContainerTitle.snp.bottom).offset(5)
             make.left.right.equalTo(fontContainerView)
         }
         
@@ -505,7 +505,7 @@ class LWSettingViewController: UIViewController {
         }
         
         otherContainer.snp.makeConstraints { make in
-            make.top.equalTo(otherContainerTitle.snp.bottom)
+            make.top.equalTo(otherContainerTitle.snp.bottom).offset(5)
             make.left.right.equalTo(fontContainerView)
         }
         
@@ -536,6 +536,7 @@ class LWSettingViewController: UIViewController {
         }
         
         autoCreateTitle.snp.makeConstraints { make in
+            make.left.equalTo(dailyRemindLabel)
             make.top.equalTo(dailyRemindLabel.snp.bottom).offset(20)
         }
         
@@ -545,7 +546,7 @@ class LWSettingViewController: UIViewController {
         }
         
         requestReviewButton.snp.makeConstraints { make in
-            make.top.equalTo(dailyRemindLabel.snp.bottom).offset(20)
+            make.top.equalTo(autoCreateTitle.snp.bottom).offset(20)
             make.left.equalTo(darkModeLabel)
             make.bottom.equalToSuperview().offset(-20)
             make.width.equalTo(100)
@@ -838,6 +839,7 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
                 userDefaultManager.requestReviewTimes += 1
             }
         }
+        viewController.dismiss(animated: true)
     }
 }
 
