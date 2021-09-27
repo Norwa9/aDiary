@@ -125,6 +125,7 @@ extension AppDelegate{
     
     ///生成今日日记
     private func createTodayDiary(){
+        guard userDefaultManager.autoCreate else {return}
         let date = GetTodayDate()
         let predicate = NSPredicate(format: "date = %@", date)
         let res = LWRealmManager.shared.query(predicate: predicate)

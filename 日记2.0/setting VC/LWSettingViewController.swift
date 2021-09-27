@@ -310,7 +310,7 @@ class LWSettingViewController: UIViewController {
         dailyRemindDatePicker.setDate(userDefaultManager.dailyRemindTimeDate, animated: true)
         dailyRemindDatePicker.addTarget(self, action: #selector(dateDidChange(_:)), for: .valueChanged)
         
-        autoCreateTitle.text = "自动创建空日记"
+        autoCreateTitle.text = "自动创建新日记"
         autoCreateTitle.font = .systemFont(ofSize: 18, weight: .medium)
         autoCreateTitleSwitch.isOn = userDefaultManager.autoCreate
         autoCreateTitleSwitch.addTarget(self, action: #selector(autoCreateDiary(_:)), for: .valueChanged)
