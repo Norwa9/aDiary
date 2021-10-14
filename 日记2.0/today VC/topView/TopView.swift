@@ -32,6 +32,8 @@ class TopView: UIView {
     
     var fullScreenBtn:UIButton!
     
+    let scale = globalConstantsManager.shared.zoomModelScale
+    
     init() {
         super.init(frame: .zero)
         initUI()
@@ -52,7 +54,7 @@ class TopView: UIView {
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
         dateLable.text = "\(month)月\(day)日 \(weekDay)"
-        dateLable.font = userDefaultManager.customFont(withSize: 22).bold() ??  userDefaultManager.customFont(withSize: 22)
+        dateLable.font = userDefaultManager.customFont(withSize: floor(scale * 22)).bold() ??  userDefaultManager.customFont(withSize: floor(scale * 22))
         //更新约束
         updateCons()
         
@@ -94,6 +96,8 @@ class TopView: UIView {
     }
     
     private func setConstriants(){
+        let pedding = 10 * scale
+        
         dateLable.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -116,19 +120,19 @@ class TopView: UIView {
         
         dismissBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(dateLable)
-            make.right.equalToSuperview().offset(-10)
-            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.right.equalToSuperview().offset(-pedding)
+            make.size.equalTo(CGSize(width: 30 * scale, height: 30 * scale))
         }
         
         multiPagesBtn.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: 35, height: 35))
-            make.right.equalTo(dismissBtn.snp.left).offset(-10)
+            make.size.equalTo(CGSize(width: 35 * scale, height: 35 * scale))
+            make.right.equalTo(dismissBtn.snp.left).offset(-pedding)
             make.centerY.equalTo(dismissBtn)
         }
         
         fullScreenBtn.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: 35, height: 35))
-            make.right.equalTo(multiPagesBtn.snp.left).offset(-10)
+            make.size.equalTo(CGSize(width: 35 * scale, height: 35 * scale))
+            make.right.equalTo(multiPagesBtn.snp.left).offset(-pedding)
             make.centerY.equalTo(dismissBtn)
         }
         

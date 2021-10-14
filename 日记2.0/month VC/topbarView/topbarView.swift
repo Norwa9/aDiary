@@ -144,7 +144,8 @@ class topbarView: UIView {
             make.size.equalTo(CGSize(width: 159, height: 25))
         }
         
-        let buttonSize = CGSize(width: 40, height: 40)
+        let buttonSize = CGSize(width: 40 * globalConstantsManager.shared.zoomModelScale, height: 40 * globalConstantsManager.shared.zoomModelScale)
+        print("top bar button size : \(40 * globalConstantsManager.shared.zoomModelScale)")
         
         button3.snp.makeConstraints { make in
             make.top.equalTo(dataLable1)
