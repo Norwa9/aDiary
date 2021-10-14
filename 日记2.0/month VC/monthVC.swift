@@ -25,7 +25,7 @@ class monthVC: UIViewController {
     //MARK:-UIComponents
     var isShowingBackButton = false
     var isCurrentMonth:Bool = true
-    var backToCurMonthButton:UIButton!
+    var floatButton:UIButton!
     //topbar
     var topbar:topbarView!
     //topView
@@ -126,12 +126,12 @@ class monthVC: UIViewController {
             updateMonthBtns()
             
             //更新返回按钮
-            updateBackToCurrentMonthButton()
+            updateFloatButton()
             return
         }
         
         //更新返回本月按钮
-        updateBackToCurrentMonthButton()
+        updateFloatButton()
         
         
     }
@@ -210,18 +210,18 @@ class monthVC: UIViewController {
         filterButton.addTarget(self, action: #selector(filterButtonDidTapped(sender:)), for: .touchUpInside)
         
         //back to cur month button
-        backToCurMonthButton = UIButton()
-        backToCurMonthButton.backgroundColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
-        backToCurMonthButton.layer.cornerRadius = 20
+        floatButton = UIButton()
+        floatButton.backgroundColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
+        floatButton.layer.cornerRadius = 20
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
             .font: UIFont.boldSystemFont(ofSize: 13)
         ]
         let string = "返回本月"
         let attributedString = NSAttributedString(string: string, attributes: attributes)
-        backToCurMonthButton.setAttributedTitle(attributedString, for: .normal)
-        backToCurMonthButton.addTarget(self, action: #selector(backToCurMonthButtonTapped), for: .touchUpInside)
-        backToCurMonthButton.setupShadow()
+        floatButton.setAttributedTitle(attributedString, for: .normal)
+        floatButton.addTarget(self, action: #selector(floatButtonDidTapped), for: .touchUpInside)
+        floatButton.setupShadow()
         
         
         
@@ -232,7 +232,7 @@ class monthVC: UIViewController {
         self.topView.addSubview(searchBar)
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
-        self.view.addSubview(backToCurMonthButton)
+        self.view.addSubview(floatButton)
         //bottom gradient view
         layoutBottomGradientView()
         
@@ -307,7 +307,7 @@ class monthVC: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        backToCurMonthButton.snp.makeConstraints { (make) in
+        floatButton.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: 100, height: 40))
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(100)
@@ -361,7 +361,7 @@ class monthVC: UIViewController {
     }
     
     ///返回本月按钮
-    @objc func backToCurMonthButtonTapped(){
+    @objc func floatButtonDidTapped(){
         //刷新DataSource
         formatter.dateFormat = "yyyy"
         let year = Int(formatter.string(from: curDate))!
@@ -375,23 +375,23 @@ class monthVC: UIViewController {
     }
     
     ///返回按钮的显示与否
-    func updateBackToCurrentMonthButton(){
+    func updateFloatButton(){
         if selectedMonth != curMonth || selectedYear != curYear{
             if !isShowingBackButton{
-                showBackButton(toShow: true)
+                switchFloatButton(isCurrentMonth: true)
             }else if isShowingBackButton && isFilterMode{
-                showBackButton(toShow: false)
+                switchFloatButton(isCurrentMonth: false)
             }
         }else{
-            showBackButton(toShow: false)
+            switchFloatButton(isCurrentMonth: false)
         }
     }
     
-    private func showBackButton(toShow:Bool){
+    private func switchFloatButton(isCurrentMonth:Bool){
         self.isShowingBackButton.toggle()
         
-        backToCurMonthButton.snp.updateConstraints { (update) in
-            if toShow{
+        floatButton.snp.updateConstraints { (update) in
+            if isCurrentMonth{
                 update.bottom.equalToSuperview().offset(-kBlurEffectViewHeight)
             }else{
                 update.bottom.equalToSuperview().offset(100)
@@ -617,7 +617,7 @@ extension monthVC:UISearchBarDelegate{
             toggleCalendar()
         }
         //隐藏或显示backButton
-        updateBackToCurrentMonthButton()
+        updateFloatButton()
         
         //searh图标是临时添加到button3上面的
         if isFilterMode{//进入搜索模式
