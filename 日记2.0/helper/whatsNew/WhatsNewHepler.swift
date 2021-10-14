@@ -12,45 +12,29 @@ class WhatsNewHelper{
     ///每次更新前，只要创建对应版本号的whatsNew结构体，就可以对不同版本的用户显示不同的更新提示！
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
-        //MARK:-2.7.1
-        let version271 = WhatsNew.Version(major: 2, minor: 7, patch: 1)
-        let whatsNew271 = WhatsNew(
+        
+        //MARK:-2.8.1
+        let version281 = WhatsNew.Version(major: 2, minor: 8, patch: 1)
+        let whatsNew281 = WhatsNew(
             // The Version
-            version: version271,
+            version: version281,
             // The Title
-            title: "2.7.1新特性",
+            title: "近期更新",
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "修复深色模式的适配bug",
+                    title: "首页新增创建日记按钮",
+                    subtitle: "",
+                    image: UIImage(named: "entry")
+                ),
+                WhatsNew.Item(
+                    title: "修复了一些bug",
                     subtitle: "",
                     image: UIImage(named: "bug")
                 ),
             ]
         )
-        arr.append(whatsNew271)
-        //MARK:-2.8
-        let version280 = WhatsNew.Version(major: 2, minor: 8, patch: 0)
-        let whatsNew280 = WhatsNew(
-            // The Version
-            version: version280,
-            // The Title
-            title: "2.8.0",
-            // The features you want to showcase
-            items: [
-                WhatsNew.Item(
-                    title: "适配IOS 15",
-                    subtitle: "",
-                    image: UIImage(named: "update")
-                ),
-                WhatsNew.Item(
-                    title: "添加自动创建日记开关",
-                    subtitle: "",
-                    image: UIImage(named: "switch")
-                ),
-            ]
-        )
-        arr.append(whatsNew280)
+        arr.append(whatsNew281)
         
         return arr
     }
