@@ -114,6 +114,31 @@ extension diaryInfo {
         return newerModel
         
     }
+    
+    ///从云端获取日记时，甄别空日记
+    ///因为空日记可能是未同步的日记，若同步到本设备会覆盖原有内容！！！
+    static func resolveEmptyDiary(serverModel: diaryInfo) -> diaryInfo?{
+        var resolvedDiary:diaryInfo?
+        
+        let date = serverModel.date
+        let predicate = NSPredicate(format: "date == %@",date)
+        if let _ = LWRealmManager.shared.query(predicate: predicate).first{
+            //如果本地有该日期的日记
+            if let rtfd = serverModel.rtfd, rtfd.count < 300{
+                //且如果云端日记是空日记(观察到<235bytes是空日记)，则云端日记不能覆盖本地，即不处理。
+                return nil
+            }else{
+                //不是空日记，则覆盖本地日记
+                resolvedDiary =  serverModel
+            }
+        }else{
+            //如果本地该日期没有日记，则直接覆盖
+            resolvedDiary = serverModel
+        }
+        
+        return resolvedDiary
+        
+    }
 }
 
 //MARK:-CKAsset+
