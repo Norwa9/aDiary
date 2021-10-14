@@ -23,7 +23,7 @@ class monthVC: UIViewController {
     var selectedMonth:Int!
     
     //MARK:-UIComponents
-    var isShowingBackButton = false
+    var isShowingBackButton = true
     var isCurrentMonth:Bool = true
     var floatButton:UIButton!
     //topbar
@@ -213,15 +213,8 @@ class monthVC: UIViewController {
         floatButton = UIButton()
         floatButton.backgroundColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
         floatButton.layer.cornerRadius = 20
-        let attributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.white,
-            .font: UIFont.boldSystemFont(ofSize: 13)
-        ]
-        let string = "返回本月"
-        let attributedString = NSAttributedString(string: string, attributes: attributes)
-        floatButton.setAttributedTitle(attributedString, for: .normal)
-        floatButton.addTarget(self, action: #selector(floatButtonDidTapped), for: .touchUpInside)
         floatButton.setupShadow()
+        floatButton.addTarget(self, action: #selector(floatButtonDidTapped), for: .touchUpInside)
         
         
         
@@ -310,7 +303,7 @@ class monthVC: UIViewController {
         floatButton.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: 100, height: 40))
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(100)
+            make.bottom.equalToSuperview().offset(-100)
         }
         
         //使用frame 布局monthButtons
@@ -362,37 +355,69 @@ class monthVC: UIViewController {
     
     ///返回本月按钮
     @objc func floatButtonDidTapped(){
-        //刷新DataSource
-        formatter.dateFormat = "yyyy"
-        let year = Int(formatter.string(from: curDate))!
-        formatter.dateFormat = "MM"
-        let month = Int(formatter.string(from: curDate))!
-        selectedYear = year
-        selectedMonth = month
-        updateUI()
-        //跳转日历
-        lwCalendar?.setCurrentPage(curDate, animated: false)
+        if isCurrentMonth{
+            formatter.dateFormat = "yyyy年M月d日"
+            let todayDateString = GetTodayDate()
+            let predicate = NSPredicate(format: "date = %@", todayDateString)
+            if let selectedDiary = LWRealmManager.shared.query(predicate: predicate).first{
+                presentEditorVC(withViewModel: selectedDiary)
+            }else{
+                let newDiary = diaryInfo(dateString: todayDateString)
+                LWRealmManager.shared.add(newDiary)
+                self.configureDataSource(year: selectedYear, month: selectedMonth)
+                presentEditorVC(withViewModel: newDiary)
+            }
+        }else{
+            //刷新DataSource
+            formatter.dateFormat = "yyyy"
+            let year = Int(formatter.string(from: curDate))!
+            formatter.dateFormat = "MM"
+            let month = Int(formatter.string(from: curDate))!
+            selectedYear = year
+            selectedMonth = month
+            updateUI()
+            //跳转日历
+            lwCalendar?.setCurrentPage(curDate, animated: false)
+        }
+        
     }
     
     ///返回按钮的显示与否
     func updateFloatButton(){
+        switchFloatButton(toShow: !isFilterMode)
+        
+        
+        var title:String
+        var colors:(UIColor,UIColor) // 背景、字体颜色
         if selectedMonth != curMonth || selectedYear != curYear{
-            if !isShowingBackButton{
-                switchFloatButton(isCurrentMonth: true)
-            }else if isShowingBackButton && isFilterMode{
-                switchFloatButton(isCurrentMonth: false)
-            }
+            isCurrentMonth = false
+            title = "返回本月"
+            colors.0 = .white
+            colors.1 = .black
         }else{
-            switchFloatButton(isCurrentMonth: false)
+            isCurrentMonth = true
+            title = "进入今日"
+            colors.0 = APP_GREEN_COLOR()
+            colors.1 = .white
         }
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: colors.1,
+            .font: UIFont.boldSystemFont(ofSize: 14)
+        ]
+        let attributedString = NSAttributedString(string: title, attributes: titleAttributes)
+        UIView.animate(withDuration: 0.3) {
+            self.floatButton.backgroundColor = colors.0
+            self.floatButton.setAttributedTitle(attributedString, for: .normal)
+        }
+        
+        
     }
     
-    private func switchFloatButton(isCurrentMonth:Bool){
-        self.isShowingBackButton.toggle()
-        
+    ///显示或隐藏浮动按钮
+    private func switchFloatButton(toShow:Bool){
         floatButton.snp.updateConstraints { (update) in
-            if isCurrentMonth{
-                update.bottom.equalToSuperview().offset(-kBlurEffectViewHeight)
+            if toShow{
+                update.bottom.equalToSuperview().offset(-100)
             }else{
                 update.bottom.equalToSuperview().offset(100)
             }
@@ -400,7 +425,6 @@ class monthVC: UIViewController {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         } completion: { (_) in}
-        
     }
     
     ///-popover
