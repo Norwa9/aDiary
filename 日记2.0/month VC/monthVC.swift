@@ -776,8 +776,9 @@ extension monthVC{
 }
 
 //MARK:-屏幕旋转
+
+
 extension monthVC{
-    
     @objc private func onDeviceDirectionChange(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
             return
@@ -786,7 +787,14 @@ extension monthVC{
         guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
             return
         }
-        print("onDeviceDirectionChange:\(UIDevice.current.orientation.rawValue)")
+        //方向变化时才响应
+        //因为，发现，即使方向没有改变（rawValue没改变）也会出触发onDeviceDirectionChange()
+        guard globalConstantsManager.shared.currentDeviceOriention != UIDevice.current.orientation.rawValue else{
+            print("新的设备方向和旧设备方向一致，不响应")
+            return
+        }
+        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
+        print("monthVC onDeviceDirectionChange:\(UIDevice.current.orientation.rawValue)")
         //1.更新month Buttons
         let kButtonDiameter:CGFloat = 25
         let insetY:CGFloat = (kTopViewHeight - 25) / 2

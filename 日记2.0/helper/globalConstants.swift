@@ -13,6 +13,8 @@ class globalConstantsManager{
     private let screenH = UIScreen.main.bounds.height
     private let screenW = UIScreen.main.bounds.width
     
+    var currentDeviceOriention:Int = 0
+    
     var zoomModelScale = UIScreen.main.scale / UIScreen.main.nativeScale
     
     var interfaceOrientation:UIDeviceOrientation{

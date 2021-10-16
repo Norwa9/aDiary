@@ -53,7 +53,8 @@ class LWTextViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("textVC viewWillAppear")
+        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
+        print("textVC viewWillAppear,当前设备方向：\(globalConstantsManager.shared.currentDeviceOriention )")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -180,7 +181,7 @@ extension LWTextViewController : UITextViewDelegate{
     
     //MARK:-textViewDidChange
     func textViewDidChange(_ textView: UITextView) {
-        //print("textViewDidChange")
+        print("textViewDidChange")
         //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
         let textFormatter = TextFormatter(textView: textView as! LWTextView)
         if let curParaString = textFormatter.getCurParaString(){
@@ -199,7 +200,7 @@ extension LWTextViewController : UITextViewDelegate{
     //MARK:-shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
-        //print("shouldChangeTextIn\(range)")
+        print("shouldChangeTextIn\(range)")
         let textFormatter = TextFormatter(textView: textView as! LWTextView)
         if text == "\n"{
             textFormatter.addNewLine()
@@ -262,7 +263,7 @@ extension LWTextViewController : JXPagingViewListViewDelegate{
     }
 }
 
-//MARK:-旋转屏幕
+//MARK:-旋转屏幕时，需要重新调整页面UI
 extension LWTextViewController{
     @objc private func onDeviceDirectionChange(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
@@ -272,7 +273,14 @@ extension LWTextViewController{
         guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
             return
         }
-        
+        //方向变化时才响应
+        //因为，发现，即使方向没有改变（rawValue没改变）也会出触发onDeviceDirectionChange()
+        guard globalConstantsManager.shared.currentDeviceOriention != UIDevice.current.orientation.rawValue else{
+            print("新的设备方向和旧设备方向一致，不响应")
+            return
+        }
+        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
+        print("LWTextViewController onDeviceDirectionChange")
         //1.重新读取textView上的当前内容，以显示正确的图片bounds
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.loadTextViewContent(with: model)
