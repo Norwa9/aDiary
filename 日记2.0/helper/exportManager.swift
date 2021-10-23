@@ -69,6 +69,11 @@ class exportManager{
                     let imageModels = diary.scalableImageModels
                     let todoAttrTuples = diary.todoAttributesTuples
                     let formatteredAString = formatter.processAttrStringForSharingAndExport(aString: aString, bounds: textViewBounds, container: textContainer, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples,imageModels: imageModels)
+                    var emojis = diary.emojis.joined()
+                    if emojis.length != 0{
+                        emojis += "\n"
+                    }
+                    formatteredAString.insert(NSAttributedString(string: emojis), at: 0)
                     
                     //添加一篇
                     alldiaryString.append(formatteredAString)
