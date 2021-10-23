@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class editorAnimator:NSObject,UIViewControllerAnimatedTransitioning{
-    var duration = 0.5
+    var duration = 0.7
     var animationType:AnimationType!
     var toFrame:CGRect?
     var fromFrame:CGRect?
@@ -39,9 +39,9 @@ class editorAnimator:NSObject,UIViewControllerAnimatedTransitioning{
         }
         containerView.addSubview(toVC.view)
         toVC.view.frame.origin.y = 1500
-        toVC.view.transform = CGAffineTransform(scaleX: 0.5, y: 1)
+        toVC.view.transform = CGAffineTransform(scaleX: 0.95, y: 1)
         //3.change original size to final size with animation
-        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+        UIView.animate(withDuration: duration - 0.1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             toVC.view.frame.origin.y = 0
             toVC.view.transform = .identity
         } completion: { (completed) in

@@ -23,7 +23,8 @@ class editorBlurPresentVC: UIPresentationController {
         
         presentingViewController.beginAppearanceTransition(false, animated: false)
         presentedViewController.transitionCoordinator!.animate(alongsideTransition: { (ctx) in
-            self.blurView.effect = UIBlurEffect(style: .light)
+            let currentMode = UITraitCollection.current.userInterfaceStyle
+            self.blurView.effect = (currentMode == .dark) ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
             self.blurView.alpha = 1
         }) { (ctx) in }
     }
