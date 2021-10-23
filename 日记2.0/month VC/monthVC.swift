@@ -63,6 +63,7 @@ class monthVC: UIViewController {
     var footer:MJRefreshAutoNormalFooter!
     //编辑器
     var editorVC:todayVC!
+    var selectedCell:monthCell!
     
     //MARK:-生命周期
     override func viewDidLoad() {
@@ -92,7 +93,8 @@ class monthVC: UIViewController {
         //预加载todayVC
         editorVC = storyboard?.instantiateViewController(identifier: "todayVC")
         let _ = editorVC.view
-        editorVC.modalPresentationStyle = .fullScreen
+        editorVC.modalPresentationStyle = .custom
+        editorVC.transitioningDelegate = self
         
         //设置基础数据
         self.curYear = getDateComponent(for: Date(), for: .year)
@@ -555,6 +557,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let row = indexPath.row
         let selectedDiary = filteredDiaries[row]
         let cell = collectionView.cellForItem(at: indexPath) as! monthCell
+        selectedCell = collectionView.cellForItem(at: indexPath) as? monthCell
         
         //点击动画
         cell.bounceAnimation(usingSpringWithDamping: 0.8)
@@ -726,7 +729,7 @@ extension monthVC {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
             //
-            let shareAction = UIAction(title: NSLocalizedString("分享", comment: ""),
+            let shareAction = UIAction(title: NSLocalizedString("保存为图片", comment: ""),
                                          image: UIImage(named: "share")) { action in
                                     self.performShare(indexPath)
                                 }
@@ -823,3 +826,21 @@ extension monthVC{
     }
 }
 
+//MARK: -动画
+extension monthVC:UIViewControllerTransitioningDelegate{
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = editorAnimator()
+        animator.animationType = .present
+        return animator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = editorAnimator()
+        animator.animationType = .dismiss
+        return animator
+    }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return editorBlurPresentVC(presentedViewController: presented, presenting: presenting)
+    }
+}

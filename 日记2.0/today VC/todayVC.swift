@@ -27,7 +27,7 @@ class todayVC: UIViewController{
     //下滑手势
     var draggingDownToDismiss = false
     var dismissPanGesture:UIPanGestureRecognizer!
-    var interactStartPoint:CGPoint?
+    var interactiveStartingPoint:CGPoint?
     
     //MARK:-生命周期
     override func viewDidLoad() {
@@ -73,6 +73,7 @@ class todayVC: UIViewController{
     
     private func initUI(){
         self.view.backgroundColor = .systemGray6
+        self.view.clipsToBounds = true
         
         //topView
         topView = TopView()
@@ -86,7 +87,7 @@ class todayVC: UIViewController{
         dismissPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         dismissPanGesture.maximumNumberOfTouches = 1
         dismissPanGesture.delegate = self
-        //view.addGestureRecognizer(dismissPanGesture)
+        view.addGestureRecognizer(dismissPanGesture)
         
         self.view.addSubview(topView)
         self.view.addSubview(subpagesView)
@@ -134,16 +135,23 @@ extension todayVC{
 //MARK:-UIGestureRecognizerDelegate
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
-        if draggingDownToDismiss == false && subpagesView.mainTableView.contentSize.height > view.bounds.height{
-            return
+        if draggingDownToDismiss == false{
+            if let textVC = subpagesView.curTextVC {
+                if textVC.textView.contentSize.height > globalConstantsManager.shared.kScreenHeight{
+                    return
+                }
+            }else{
+                return
+            }
         }
+        
         //初始触摸点
         let startingPoint: CGPoint
-        if let p = interactStartPoint{
+        if let p = interactiveStartingPoint{
             startingPoint = p
         }else{
             startingPoint = gesture.location(in: nil)
-            interactStartPoint = startingPoint
+            interactiveStartingPoint = startingPoint
         }
         
         //当前触摸点
@@ -151,16 +159,42 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         
         
         //触摸进度
-        let progress = (currentLocation.y - startingPoint.y) / 100
-        print("PanGesture progress:\(progress)")
+        var progress = (currentLocation.y - startingPoint.y) / 100
+//        print("PanGesture progress:\(progress)")
+        
+        //prevent viewController bigger when scrolling up
+        if currentLocation.y <= startingPoint.y {
+            progress = 0
+        }
         
         if progress >= 1.0{
-            interactStartPoint = nil
+            interactiveStartingPoint = nil
             draggingDownToDismiss = false
             self.dismiss(animated: true, completion: nil)
         }
         
+        let targetShrinkScale: CGFloat = 0.86
+        let currentScale: CGFloat = 1 - (1 - targetShrinkScale) * progress
         
+        switch gesture.state {
+        case .began,.changed:
+            gesture.view?.transform = CGAffineTransform(scaleX: currentScale, y: currentScale)
+            gesture.view?.layer.cornerRadius = 10 * (1 + progress)
+        case .cancelled,.ended:
+            stopDismissPanGesture(gesture)
+        default:
+            break
+        }
+        
+    }
+    
+    private func stopDismissPanGesture(_ gesture: UIPanGestureRecognizer) {
+        draggingDownToDismiss = false
+        interactiveStartingPoint = nil
+        
+        UIView.animate(withDuration: 0.2) {
+            gesture.view?.transform = CGAffineTransform.identity
+        }
     }
     
     //解决下拉dismiss和scrollview的冲突
@@ -171,7 +205,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     //下拉dismiss
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-//        print(y)
+        //print(y) 
         
         if subpagesView.mainTableView.isFirstResponder {return}
         
@@ -184,7 +218,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     
 }
 
-//MARK:-旋转屏幕
+//MARK: -旋转屏幕
 extension todayVC{
     @objc private func onDeviceDirectionChange(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{

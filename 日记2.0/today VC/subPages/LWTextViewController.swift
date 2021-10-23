@@ -235,11 +235,12 @@ extension LWTextViewController : UIScrollViewDelegate{
     //MARK:-scrollViewDidScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        //print("text view content offset : \(y)")
+        print("text view content offset : \(y)")
         
         //禁止下拉
         if y < 0{
             textView.contentOffset = .zero
+            UIApplication.getTodayVC()?.draggingDownToDismiss = true
         }
     }
 }

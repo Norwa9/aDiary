@@ -85,6 +85,8 @@
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
 		EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */; };
 		EA96001327007EF80008DC8A /* globalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96001227007EF80008DC8A /* globalConfig.swift */; };
+		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
+		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
 		EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE75D26076B6900D44221 /* UIColor+.swift */; };
 		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
@@ -236,6 +238,8 @@
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
 		EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCloudKitConstants.swift; sourceTree = "<group>"; };
 		EA96001227007EF80008DC8A /* globalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConfig.swift; sourceTree = "<group>"; };
+		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
+		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		EA9AE75D26076B6900D44221 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
@@ -570,6 +574,15 @@
 			path = CloudKitHelper;
 			sourceTree = "<group>";
 		};
+		EA98C891272448CE00DD60EA /* animation */ = {
+			isa = PBXGroup;
+			children = (
+				EA98C8922724491300DD60EA /* editorAnimator.swift */,
+				EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */,
+			);
+			path = animation;
+			sourceTree = "<group>";
+		};
 		EA9AE7C4261078ED00D44221 /* setting VC */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,6 +688,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				EA98C891272448CE00DD60EA /* animation */,
 				EA2235E326D6920A001FAD1D /* ScableImageView */,
 				EA67913826D11D4600B44ECA /* subPages */,
 				EADBC2EF26B446F5004D1A52 /* topView */,
@@ -1013,6 +1027,7 @@
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
 				EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */,
+				EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
 				1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */,
@@ -1057,6 +1072,7 @@
 				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
 				1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */,
+				EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
@@ -1120,7 +1136,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = MainWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1129,7 +1145,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.MainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1145,7 +1161,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = MainWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
@@ -1154,7 +1170,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.MainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1287,7 +1303,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1295,7 +1311,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ENABLE_BATCH_MODE = NO;
@@ -1312,7 +1328,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1320,7 +1336,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.1;
+				MARKETING_VERSION = 2.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ENABLE_BATCH_MODE = NO;
