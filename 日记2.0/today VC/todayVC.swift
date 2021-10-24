@@ -202,7 +202,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         interactiveStartingPoint = nil
         view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.35) {
             gesture.view?.layer.cornerRadius = 0
             self.subpagesView.layer.cornerRadius = 0
             gesture.view?.transform = CGAffineTransform.identity
