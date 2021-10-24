@@ -135,14 +135,21 @@ extension todayVC{
 //MARK:-UIGestureRecognizerDelegate
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
+        //print("subpagesView.mainTableView.contentOffset:\(subpagesView.mainTableView.contentOffset)")
         if draggingDownToDismiss == false{
             if let textVC = subpagesView.curTextVC {
                 if textVC.textView.contentSize.height > globalConstantsManager.shared.kScreenHeight{
+                    stopDismissPanGesture(gesture)
                     return
                 }
             }else{
+                stopDismissPanGesture(gesture)
                 return
             }
+        }
+        if subpagesView.isDragging{
+            stopDismissPanGesture(gesture)
+            return
         }
         
         //初始触摸点
@@ -193,11 +200,11 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     private func stopDismissPanGesture(_ gesture: UIPanGestureRecognizer) {
         draggingDownToDismiss = false
         interactiveStartingPoint = nil
-        gesture.view?.layer.cornerRadius = 0
-        subpagesView.layer.cornerRadius = 0
         view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
         
         UIView.animate(withDuration: 0.2) {
+            gesture.view?.layer.cornerRadius = 0
+            self.subpagesView.layer.cornerRadius = 0
             gesture.view?.transform = CGAffineTransform.identity
         }
     }

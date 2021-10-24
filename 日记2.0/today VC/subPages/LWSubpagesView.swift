@@ -20,9 +20,8 @@ class LWSubpagesView: UIView {
     var segmentDataSource = JXSegmentedTitleDataSource()
     var segmentTitles = [String]()
     
-    var textVCArray:[LWTextViewController] = []
     var curTextVC:LWTextViewController?
-    
+    var isDragging = false
     var popover:Popover!
     
     var models:[diaryInfo] = []{
@@ -62,7 +61,6 @@ class LWSubpagesView: UIView {
     ///currentIndex表示：进入页面后section的初始index
     func updateUI(currentIndex:Int){
         segmentTitles.removeAll()
-        textVCArray.removeAll()
         for model in models{
 //            segmentTitles.append(model.date)
             let pageIndex = model.date.parseDateSuffix()
@@ -131,7 +129,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     
     func pagingView(_ pagingView: JXPagingView, mainTableViewDidScroll scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        print("mainTableView y : \(y)")
+        //print("mainTableView contentOffset : \(scrollView.contentOffset)")
         //print("mainTableView content height : \(scrollView.contentSize.height)")
         if y < 0{
             scrollView.contentOffset = .zero
@@ -159,7 +157,6 @@ extension LWSubpagesView : JXPagingViewDelegate{
         print("initListAtIndex, index:\(index)")
         let vc = LWTextViewController()
         vc.model = models[index]
-        textVCArray.append(vc)
         return vc
     }
     
@@ -172,11 +169,17 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         guard index < self.models.count else {return}
         
+        isDragging = false
+        
         let model = models[index]
         todayVC.topView.model = model
-        curTextVC = textVCArray[index]
+        curTextVC = pagingView.validListDict[index] as? LWTextViewController
+        
     }
     
+    func segmentedView(_ segmentedView: JXSegmentedView, scrollingFrom leftIndex: Int, to rightIndex: Int, percent: CGFloat) {
+        isDragging = true
+    }
 }
 
 extension JXPagingListContainerView: JXSegmentedViewListContainer {}
