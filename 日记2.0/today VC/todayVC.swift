@@ -73,7 +73,7 @@ class todayVC: UIViewController{
     
     private func initUI(){
         self.view.backgroundColor = .systemGray6
-        self.view.clipsToBounds = true
+        self.view.layer.masksToBounds = false
         
         //topView
         topView = TopView()
@@ -160,7 +160,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         
         //触摸进度
         var progress = (currentLocation.y - startingPoint.y) / 100
-//        print("PanGesture progress:\(progress)")
+        print("PanGesture progress:\(progress)")
         
         //prevent viewController bigger when scrolling up
         if currentLocation.y <= startingPoint.y {
@@ -180,6 +180,8 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         case .began,.changed:
             gesture.view?.transform = CGAffineTransform(scaleX: currentScale, y: currentScale)
             gesture.view?.layer.cornerRadius = 10 * (1 + progress)
+            subpagesView.layer.cornerRadius = 10 * (1 + progress)
+            view.setupShadow(opacity: Float(progress * 0.7), radius: 2, offset: .zero, color: .black)
         case .cancelled,.ended:
             stopDismissPanGesture(gesture)
         default:
@@ -191,6 +193,9 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     private func stopDismissPanGesture(_ gesture: UIPanGestureRecognizer) {
         draggingDownToDismiss = false
         interactiveStartingPoint = nil
+        gesture.view?.layer.cornerRadius = 0
+        subpagesView.layer.cornerRadius = 0
+        view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
         
         UIView.animate(withDuration: 0.2) {
             gesture.view?.transform = CGAffineTransform.identity

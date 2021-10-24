@@ -81,6 +81,8 @@ class LWSubpagesView: UIView {
     }
     
     private func initUI(){
+        self.layer.masksToBounds = true
+        
         //segmentedView
         segmentedView.delegate = self
         segmentDataSource.titleSelectedColor = APP_GREEN_COLOR()
