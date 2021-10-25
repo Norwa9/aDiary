@@ -138,9 +138,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         //print("subpagesView.mainTableView.contentOffset:\(subpagesView.mainTableView.contentOffset)")
         if draggingDownToDismiss == false{
             if let textVC = subpagesView.curTextVC {
-                let subPageViewH = globalConstantsManager.shared.kScreenHeight - topView.bounds.height
-                if textVC.textView.contentSize.height > subPageViewH{
-                    print("subPageViewH：\(subPageViewH)")
+                if textVC.textView.contentSize.height > textVC.textView.bounds.height{
                     stopDismissPanGesture(gesture)
                     return
                 }
@@ -182,7 +180,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
             self.dismiss(animated: true, completion: nil)
         }
         
-        let targetShrinkScale: CGFloat = 0.86
+        let targetShrinkScale: CGFloat = 0.80
         let currentScale: CGFloat = 1 - (1 - targetShrinkScale) * progress
         
         switch gesture.state {
