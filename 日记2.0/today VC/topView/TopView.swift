@@ -26,6 +26,9 @@ class TopView: UIView {
     ///心情托盘
     var emojiView:LWEmojiView!
     
+    // 右上角按钮数组
+    var toolButtons:[UIButton] = []
+    
     var dismissBtn:UIButton!
     
     var multiPagesBtn:UIButton!
@@ -87,6 +90,7 @@ class TopView: UIView {
         fullScreenBtn.setImage(#imageLiteral(resourceName: "fullscreenOn"), for: .normal)
         fullScreenBtn.addTarget(self, action: #selector(toggleFullScreen(_:)), for: .touchUpInside)
         
+        toolButtons = [dismissBtn,multiPagesBtn,fullScreenBtn]
         self.addSubview(dateLable)
         self.addSubview(tagsView)
         self.addSubview(emojiView)

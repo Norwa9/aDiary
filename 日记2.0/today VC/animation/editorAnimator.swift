@@ -39,23 +39,20 @@ class editorAnimator:NSObject,UIViewControllerAnimatedTransitioning{
         }
         containerView.addSubview(toVC.view)
         toVC.view.frame.origin.y = 1500
-        toVC.view.transform = CGAffineTransform(scaleX: 0.95, y: 1)
+        toVC.view.transform = CGAffineTransform(scaleX: 0.90, y: 1)
+        toVC.view.layer.cornerRadius = 20
+        toVC.subpagesView.layer.cornerRadius = 20
+        toVC.view.setupShadow(opacity: 0.7, radius: 2, offset: .zero, color: .black)
         //3.change original size to final size with animation
-        UIView.animate(withDuration: duration - 0.1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+        UIView.animate(withDuration: duration + 0.1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             toVC.view.frame.origin.y = 0
             toVC.view.transform = .identity
+            toVC.subpagesView.layer.cornerRadius = 0
+            toVC.view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
         } completion: { (completed) in
             print(toVC.view.frame)
             transitionContext.completeTransition(completed)
         }
-        
-//        UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
-//            toVC.view.frame.origin.y = 0
-//            toVC.view.transform = .identity
-//        } completion: { (completed) in
-//            print(toVC.view.frame)
-//            transitionContext.completeTransition(completed)
-//        }
     }
     
     //二、回收
@@ -70,13 +67,6 @@ class editorAnimator:NSObject,UIViewControllerAnimatedTransitioning{
             fromVC.view.frame.origin.y = 0
             transitionContext.completeTransition(completed)
         }
-
-//        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
-//            fromVC.view.frame.origin.y = globalConstantsManager.shared.kScreenHeight + 100
-//        } completion: { (completed) in
-//            fromVC.view.frame.origin.y = 0
-//            transitionContext.completeTransition(completed)
-//        }
         
     }
 }

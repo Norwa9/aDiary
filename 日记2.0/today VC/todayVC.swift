@@ -188,6 +188,9 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
             gesture.view?.transform = CGAffineTransform(scaleX: currentScale, y: currentScale)
             gesture.view?.layer.cornerRadius = 10 * (1 + progress)
             subpagesView.layer.cornerRadius = 10 * (1 + progress)
+            topView.toolButtons.forEach { b in
+                b.alpha = 1 - progress
+            }
             view.setupShadow(opacity: Float(progress * 0.7), radius: 2, offset: .zero, color: .black)
         case .cancelled,.ended:
             stopDismissPanGesture(gesture)
@@ -203,6 +206,9 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
         
         UIView.animate(withDuration: 0.35) {
+            self.topView.toolButtons.forEach { b in
+                b.alpha = 1
+            }
             gesture.view?.layer.cornerRadius = 0
             self.subpagesView.layer.cornerRadius = 0
             gesture.view?.transform = CGAffineTransform.identity
