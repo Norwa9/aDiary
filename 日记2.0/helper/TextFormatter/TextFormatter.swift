@@ -581,7 +581,7 @@ extension TextFormatter{
     
 }
 
-//MARK:-插入图片、时间戳
+//MARK: -插入图片、时间戳
 extension TextFormatter{
     ///插入时间戳
     func insertTimeTag(){
@@ -650,10 +650,11 @@ extension TextFormatter{
     @objc func undoImage(_ object: Any){
         guard let undo = object as? Undo else { return }
 
-        textView.textStorage.replaceCharacters(in: NSRange(location: range.location + 1, length: 1), with: " ")
-
-        let range = NSRange(location: undo.range.location, length: 3)
-        let redo = Undo(range: range, attchment: undo.attchment)
+        textView.textStorage.deleteCharacters(in: undo.range)
+        textView.selectedRange = NSRange(location: undo.range.location, length: 0)
+        textView.setLeftTypingAttributes()
+        
+        let redo = Undo(range: undo.range, attchment: undo.attchment)
 
         self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
             self.redoImage(redo)
@@ -663,14 +664,20 @@ extension TextFormatter{
     @objc func redoImage(_ object: Any){
         guard let redo = object as? Undo else { return }
         
+        let Linebreak = NSMutableAttributedString(string: "\n")
+        let LinebreakAttributedString = Linebreak.addingAttributes([
+            .font : userDefaultManager.font,
+            .foregroundColor : UIColor.label
+        ])
+        textView.textStorage.insert(LinebreakAttributedString, at: redo.range.location)
         textView.textStorage.insertAttachment(redo.attchment, at: redo.range.location + 1, with: imageCenterParagraphStyle)
-        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: redo.range.location, length: 1))//添加.image key
+        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: redo.range.location + 1, length: 1))//添加.image key
+        textView.textStorage.insert(LinebreakAttributedString, at: redo.range.location + 2)
         textView.selectedRange = NSRange(location: redo.range.location + 3, length: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
         textView.setLeftTypingAttributes()
 
-        let range = NSRange(location: redo.range.location, length: 3)
-        let undo = Undo(range: range, attchment: redo.attchment)
+        let undo = Undo(range: redo.range, attchment: redo.attchment)
 
         self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
             self.undoImage(undo)
@@ -1023,6 +1030,9 @@ extension TextFormatter{
                     textView.textStorage.addAttribute(.font, value: newFont, range: selectedRange)
                 }
                 
+//                self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+//                    self.textView.textStorage.addAttribute(.font, value: prevFont, range: selectedRange)
+//                })
             }
         }else{
             let defaultFont =  textView.typingAttributes[.font] as! UIFont
