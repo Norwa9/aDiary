@@ -633,7 +633,51 @@ extension TextFormatter{
         textView.selectedRange = NSRange(location: location + 3, length: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
         textView.setLeftTypingAttributes()
+        
+        
+        let undo = Undo(range: NSRange(location: location, length: 3), attchment: subViewAttchment)
+        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+            self.undoImage(undo)
+        })
     }
+    
+    struct Undo {
+        var range: NSRange
+        var attchment: SubviewTextAttachment
+    }
+    
+    // 插入图片后撤回
+    @objc func undoImage(_ object: Any){
+        guard let undo = object as? Undo else { return }
+
+        textView.textStorage.replaceCharacters(in: NSRange(location: range.location + 1, length: 1), with: " ")
+
+        let range = NSRange(location: undo.range.location, length: 3)
+        let redo = Undo(range: range, attchment: undo.attchment)
+
+        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+            self.redoImage(redo)
+        })
+    }
+    
+    @objc func redoImage(_ object: Any){
+        guard let redo = object as? Undo else { return }
+        
+        textView.textStorage.insertAttachment(redo.attchment, at: redo.range.location + 1, with: imageCenterParagraphStyle)
+        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: redo.range.location, length: 1))//添加.image key
+        textView.selectedRange = NSRange(location: redo.range.location + 3, length: 0)
+        textView.scrollRangeToVisible(textView.selectedRange)
+        textView.setLeftTypingAttributes()
+
+        let range = NSRange(location: redo.range.location, length: 3)
+        let undo = Undo(range: range, attchment: redo.attchment)
+
+        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+            self.undoImage(undo)
+        })
+    }
+    
+    
 }
 
 

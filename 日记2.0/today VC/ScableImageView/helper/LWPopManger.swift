@@ -87,6 +87,7 @@ class LWPopManager: NSObject {
                     let deleteRange = NSRange(location: view.viewModel.location, length: 1)
                     view.delegate?.textStorage.replaceCharacters(in: deleteRange, with: " ")
                     view.delegate?.textStorage.addAttribute(.paragraphStyle, value: imageLeftParagraphStyle, range: deleteRange)
+                    
                 }
                 self.dismissPopMenu()
             }),

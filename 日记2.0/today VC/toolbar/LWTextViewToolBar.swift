@@ -17,12 +17,8 @@ protocol LWPhotoPickerDelegate : NSObject {
 class LWTextViewToolBar: UIView {
     weak var delegate:LWPhotoPickerDelegate?
     weak var textView:LWTextView!
-    var saveButton:LWToolBarButton!
-    var insertTimeButton:LWToolBarButton!
-    var insertImageButton:LWToolBarButton!
-    var numberListButton:LWToolBarButton!
-    var todoListButton:LWToolBarButton!
-    var indicator:NVActivityIndicatorView!
+    
+    // 富文本
     var richTextPanelButton:LWToolBarButton!
     var boldButton:LWToolBarButton!
     var italicButton:LWToolBarButton!
@@ -31,6 +27,22 @@ class LWTextViewToolBar: UIView {
     var fontSizeButton:LWToolBarButton!
     var fontColorButton:LWToolBarButton!
     
+    // 普通按钮
+    var insertTimeButton:LWToolBarButton!
+    var insertImageButton:LWToolBarButton!
+    var numberListButton:LWToolBarButton!
+    var todoListButton:LWToolBarButton!
+    var indicator:NVActivityIndicatorView!
+    
+    // undo/redo按钮
+    var undoButton:LWToolBarButton!
+    var redoButton:LWToolBarButton!
+    
+    // 保存按钮
+    var saveButton:LWToolBarButton!
+    
+    
+    // 按钮组合
     var basicButtons:[LWToolBarButton] = []
     var richTextbuttons:[LWToolBarButton] = []
     var isShowingRichButtonsPanel:Bool = false
@@ -86,6 +98,16 @@ class LWTextViewToolBar: UIView {
         self.addSubview(insertImageButton)
        
         
+        // undo
+        undoButton = LWToolBarButton(image: UIImage(named: "undo"))
+        undoButton.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
+        self.addSubview(undoButton)
+        
+        // redo
+        redoButton = LWToolBarButton(image: UIImage(named: "redo"))
+        redoButton.addTarget(self, action: #selector(redoButtonTapped), for: .touchUpInside)
+        self.addSubview(redoButton)
+        
         //5 save
         saveButton = LWToolBarButton(image: UIImage(named: "done"))
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
@@ -127,7 +149,7 @@ class LWTextViewToolBar: UIView {
         
         
         
-        basicButtons = [insertTimeButton,insertImageButton,todoListButton,numberListButton]
+        basicButtons = [insertTimeButton,insertImageButton,todoListButton,numberListButton,undoButton,redoButton]
         richTextbuttons = [boldButton,italicButton,underLineButton,aligmentButton,fontColorButton,fontSizeButton]
         self.initRichTextButtonsCons()
         for button in richTextbuttons{
@@ -163,6 +185,18 @@ class LWTextViewToolBar: UIView {
         insertImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
             make.left.equalTo(numberListButton.snp.right).offset(10)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        undoButton.snp.makeConstraints { make in
+            make.centerY.equalTo(saveButton)
+            make.right.equalTo(redoButton.snp.left).offset(-10)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        redoButton.snp.makeConstraints { make in
+            make.centerY.equalTo(saveButton)
+            make.right.equalTo(saveButton.snp.left).offset(-10)
             make.size.equalTo(insertTimeButton)
         }
         
@@ -235,6 +269,18 @@ extension LWTextViewToolBar{
             }
             
         }
+    }
+    
+    @objc func undoButtonTapped(){
+        guard let textView = textView, let undoManager = textView.undoManager else{return}
+    
+        undoManager.undo()
+    }
+    
+    @objc func redoButtonTapped(){
+        guard let textView = textView, let undoManager = textView.undoManager else{return}
+        
+        undoManager.redo()
     }
     
     @objc func saveButtonTapped(){
