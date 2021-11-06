@@ -40,6 +40,10 @@ extension UIApplication{
     }
     
     static func getTopWindow() -> UIWindow{
-        return UIApplication.shared.windows.filter {$0.isKeyWindow}.first!
+        return UIApplication
+            .shared
+            .connectedScenes
+            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+            .first { $0.isKeyWindow } as! UIWindow
     }
 }
