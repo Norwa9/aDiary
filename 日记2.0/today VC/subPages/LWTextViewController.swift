@@ -135,6 +135,7 @@ extension LWTextViewController{
 extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate,FMImageEditorViewControllerDelegate,LWPhotoPickerDelegate{
     func showPhotoPicker(){
         picker.delegate = self
+        picker.undoManager?.disableUndoRegistration()
         self.present(picker, animated: true, completion: nil)
     }
     
@@ -142,6 +143,7 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
         if let image = info[.originalImage] as? UIImage{
             let editor = FMImageEditorViewController(config: pickerConfig, sourceImage: image)
             editor.delegate = self
+            editor.undoManager?.disableUndoRegistration()
             picker.present(editor, animated: true, completion: nil)
         }
     }

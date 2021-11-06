@@ -275,7 +275,6 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
     
     @objc func undoButtonTapped(){
         guard let textView = textView, let undoManager = textView.undoManager else{return}
-    
         undoManager.undo()
     }
     
@@ -361,6 +360,7 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
                 let textFormatter = TextFormatter(textView: textView)
                 let curFontColor = textFormatter.getSelectedFontColor()
                 colorPickerVC.selectedColor = curFontColor
+                colorPickerVC.undoManager?.disableUndoRegistration()
                 UIApplication.getTodayVC()?.present(colorPickerVC, animated: true, completion: nil)
             } else {
                 let colorPicker = ColorPicker()
