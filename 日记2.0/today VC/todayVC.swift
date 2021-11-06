@@ -26,6 +26,7 @@ class todayVC: UIViewController{
 
     //下滑手势
     var draggingDownToDismiss = false
+    var isAdjustScalableImageView = false
     var dismissPanGesture:UIPanGestureRecognizer!
     var interactiveStartingPoint:CGPoint?
     
@@ -135,7 +136,9 @@ extension todayVC{
 //MARK:-UIGestureRecognizerDelegate
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
-        //print("subpagesView.mainTableView.contentOffset:\(subpagesView.mainTableView.contentOffset)")
+        if isAdjustScalableImageView{
+            return
+        }
         if draggingDownToDismiss == false{
             if let textVC = subpagesView.curTextVC {
                 if textVC.textView.contentSize.height > textVC.textView.bounds.height{

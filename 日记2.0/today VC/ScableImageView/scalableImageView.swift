@@ -92,6 +92,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
             if state == .began{
                 print(" state == .began")
             }else if state == BSGestureRecognizerState.moved {
+                UIApplication.getTodayVC()?.isAdjustScalableImageView = true
                 let x = gesture!.currentPoint.x
                 let y = gesture!.currentPoint.y
                 var newWidth:CGFloat
@@ -107,6 +108,8 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
                 wlabel?.width = width < 30 ? 30 : width
                 wlabel?.height = height < 30 ? 30 : height
             }else if state == .ended{
+                UIApplication.getTodayVC()?.isAdjustScalableImageView = false
+                
                 print("state == .ended")
                 if gesture!.startPoint.equalTo(gesture!.currentPoint){
                     //完成编辑
