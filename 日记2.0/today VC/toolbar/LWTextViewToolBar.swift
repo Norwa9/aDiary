@@ -243,7 +243,7 @@ class LWTextViewToolBar: UIView {
 }
 
 //MARK:-action target
-extension LWTextViewToolBar{
+extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
     @objc func showRichButtonPanel(_ sender:LWToolBarButton){
         updateToolbarButtonsState(textView: textView)
         
@@ -355,14 +355,35 @@ extension LWTextViewToolBar{
     
     @objc func setFontColor(_ sender:LWToolBarButton){
         if !isShowingPopover{
-            let colorPicker = ColorPicker()
-            colorPicker.set(color: .white, colorSpace: .sRGB)
-            colorPicker.frame = CGRect(origin: .zero, size: CGSize(width: 300, height: 200))
-            colorPicker.addTarget(self, action: #selector(handleColorChange(picker:)), for: .valueChanged)
-            popover.show(colorPicker, fromView: sender)
+            if #available(iOS 14.0, *) {
+                let colorPickerVC = UIColorPickerViewController()
+                colorPickerVC.delegate = self
+                let textFormatter = TextFormatter(textView: textView)
+                let curFontColor = textFormatter.getSelectedFontColor()
+                colorPickerVC.selectedColor = curFontColor
+                UIApplication.getTodayVC()?.present(colorPickerVC, animated: true, completion: nil)
+            } else {
+                let colorPicker = ColorPicker()
+                colorPicker.set(color: .white, colorSpace: .sRGB)
+                colorPicker.frame = CGRect(origin: .zero, size: CGSize(width: 300, height: 200))
+                colorPicker.addTarget(self, action: #selector(handleColorChange(picker:)), for: .valueChanged)
+                popover.show(colorPicker, fromView: sender)
+            }
+            
         }else{
             popover.dismiss()
         }
+    }
+    
+    @available(iOS 14.0, *)
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
+    
+    @available(iOS 14.0, *)
+    func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.changeFontColor(newColor: color)
     }
     
     @objc func handleColorChange(picker:ColorPicker){
