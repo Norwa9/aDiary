@@ -245,6 +245,8 @@ class LWTextViewToolBar: UIView {
 //MARK:-action target
 extension LWTextViewToolBar{
     @objc func showRichButtonPanel(_ sender:LWToolBarButton){
+        updateToolbarButtonsState(textView: textView)
+        
         isShowingRichButtonsPanel.toggle()
         if isShowingRichButtonsPanel{
             UIView.animate(withDuration: 0.2) {
@@ -388,8 +390,18 @@ extension LWTextViewToolBar{
     }
     
     
-    func updateToolbarButtonsState(attributes:[NSAttributedString.Key : Any]){
-        //print("updateToolbarButtonsState:\(attributes)")
+    func updateToolbarButtonsState(textView:LWTextView){
+        var attributes:[NSAttributedString.Key : Any]
+        let textFormatter = TextFormatter(textView: textView )
+        let selectedRange = textView.selectedRange
+        if selectedRange.length > 0{
+            let subAttributedString = textView.attributedText.attributedSubstring(from: selectedRange)
+            attributes = subAttributedString.attributes(at: 0, effectiveRange: nil)
+        }else{
+            attributes = textFormatter.getLocationAttributes()
+        }
+        
+        
         boldButton.isOn = false
         italicButton.isOn = false
         underLineButton.isOn = false
