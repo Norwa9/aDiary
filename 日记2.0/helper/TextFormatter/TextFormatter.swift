@@ -1028,11 +1028,11 @@ extension TextFormatter{
                 }
                 if let newFont = newFont{
                     textView.textStorage.addAttribute(.font, value: newFont, range: selectedRange)
+                    
+                    self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                        self.undoAttribute(key: .font, value1: prevFont, value2: newFont, applyRange: selectedRange)
+                    })
                 }
-                
-//                self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
-//                    self.textView.textStorage.addAttribute(.font, value: prevFont, range: selectedRange)
-//                })
             }
         }else{
             let defaultFont =  textView.typingAttributes[.font] as! UIFont
@@ -1042,8 +1042,12 @@ extension TextFormatter{
             }else {
                 newFont = toggleItalicFont(font: defaultFont)
             }
-            if let newFont = newFont{
+            if let newFont = newFont,let prevFont = textView.typingAttributes[.font]{
                 textView.typingAttributes[.font] = newFont
+                
+                self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                    self.undoAttribute(key: .font, value1: prevFont, value2: newFont, applyRange: NSRange(location: 0, length: 0))
+                })
             }
         }
     }
@@ -1074,10 +1078,16 @@ extension TextFormatter{
                 if underLine == 1{
                     storage.removeAttribute(.underlineStyle, range: selectedRange)
                 }
+                self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                    self.undoAttribute(key: .underlineStyle, value1: 1, value2: curFontColor, applyRange: selectedRange)
+                })
             }else{
                 //underLine == nil
                 storage.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: selectedRange)
                 storage.addAttribute(.underlineColor, value: curFontColor, range: selectedRange)
+                self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                    self.undoAttribute(key: .underlineStyle, value1: 0, value2: curFontColor, applyRange: selectedRange)
+                })
             }
         }else{
             print("selectedRange.length == 0 ")
@@ -1093,16 +1103,39 @@ extension TextFormatter{
     //MARK:-排版
     func setParagraphAligment(aligment:LWTextAligmentStyle){
         if let paraRange = getCurParagraphRange(){
+            // 旧的排版
+            let curAligment = getCurrentAligment()
+            var prevStyle:NSMutableParagraphStyle
+            switch curAligment {
+            case .center:
+                prevStyle = textCenterParagraphStyle
+            case .left:
+                prevStyle = textLeftParagraphStyle
+            case .right:
+                prevStyle = textRightParagraphStyle
+            default:
+                prevStyle = imageCenterParagraphStyle
+            }
+            
+            // 新的排版
+            var newStyle:NSMutableParagraphStyle
             switch aligment {
             case .center:
-                storage.addAttribute(.paragraphStyle, value: textCenterParagraphStyle, range: paraRange)
+                newStyle = textCenterParagraphStyle
             case .left:
-                storage.addAttribute(.paragraphStyle, value: textLeftParagraphStyle, range: paraRange)
+                newStyle = textLeftParagraphStyle
             case .right:
-                storage.addAttribute(.paragraphStyle, value: textRightParagraphStyle, range: paraRange)
+                newStyle = textRightParagraphStyle
             default:
-                storage.addAttribute(.paragraphStyle, value: imageCenterParagraphStyle, range: paraRange)
+                newStyle = imageCenterParagraphStyle
             }
+            storage.addAttribute(.paragraphStyle, value: newStyle, range: paraRange)
+            
+            
+            
+            self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                self.undoAttribute(key: .paragraphStyle, value1: prevStyle, value2: newStyle, applyRange: paraRange)
+            })
         }
     }
     
@@ -1129,22 +1162,33 @@ extension TextFormatter{
     //MARK:-字体颜色
     func changeFontColor(newColor:UIColor){
         let selectedRange = textView.selectedRange
+        let curFontColor = getSelectedFontColor()
         if selectedRange.length > 0{
             //1.改字体颜色
             storage.addAttribute(.foregroundColor, value: newColor, range: selectedRange)
             //2.改下划线颜色
-            let subAttributedString = storage.attributedSubstring(from: selectedRange)
-            if let underLine = subAttributedString.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int{
-                if underLine == 1{
-                    storage.addAttribute(.underlineColor, value: newColor, range: selectedRange)
-                }
+            if hasUnderLine(range: selectedRange){
+                storage.addAttribute(.underlineColor, value: newColor, range: selectedRange)
             }
+            self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                self.undoAttribute(key: .foregroundColor, value1: curFontColor, value2: newColor, applyRange: selectedRange)
+            })
         }else{
             textView.typingAttributes[.foregroundColor] = newColor
             if (textView.typingAttributes[.underlineStyle] != nil) {
                 textView.typingAttributes[.underlineColor] = newColor
             }
         }
+    }
+    
+    func hasUnderLine(range:NSRange)->Bool{
+        let subAttributedString = storage.attributedSubstring(from: range)
+        if let underLine = subAttributedString.attribute(.underlineStyle, at: 0, effectiveRange: nil) as? Int{
+            if underLine == 1{
+                return true
+            }
+        }
+        return false
     }
 
     func getSelectedFontColor() -> UIColor{
@@ -1169,6 +1213,10 @@ extension TextFormatter{
             if let prevFont = storage.attribute(.font, at: selectedRange.location, effectiveRange: nil) as? UIFont{
                 let newFont = UIFont(descriptor: prevFont.fontDescriptor, size: newFontSize)
                 storage.addAttribute(.font, value: newFont, range: selectedRange)
+                
+                self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                    self.undoAttribute(key: .font, value1: prevFont, value2: newFont, applyRange: selectedRange)
+                })
             }
         }else{
             guard storage.length > 0, range.location > 0 else { return  }
@@ -1203,6 +1251,73 @@ extension TextFormatter{
         let upper = range.upperBound
         let substring = textView.attributedText.attributedSubstring(from: NSRange(i..<upper))
         return substring.attributes(at: 0, effectiveRange: nil)
+    }
+    
+    
+    func undoAttribute(key:NSAttributedString.Key ,value1: Any, value2: Any, applyRange: NSRange){
+        // typingAttribute
+        if applyRange.length != 0{
+            if let old = value1 as? UIFont{
+                textView.textStorage.addAttribute(.font, value: old, range: applyRange)
+            }
+            if let old = value1 as? Int,let curFontColor = value2 as? UIColor{
+                if old == 0{
+                    textView.textStorage.removeAttribute(.underlineStyle, range: applyRange)
+                }else{
+                    textView.textStorage.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: applyRange)
+                    textView.textStorage.addAttribute(.underlineColor, value: curFontColor, range: applyRange)
+                }
+            }
+            if let old = value1 as? NSMutableParagraphStyle{
+                textView.textStorage.addAttribute(.paragraphStyle, value: old, range: applyRange)
+            }
+            if let old = value1 as? UIColor{
+                textView.textStorage.addAttribute(.foregroundColor, value: old, range: applyRange)
+                if hasUnderLine(range: applyRange){
+                    textView.textStorage.addAttribute(.underlineColor, value: old, range: applyRange)
+                }
+            }
+        }else{
+            
+        }
+        
+        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+            self.redoAttribute(key: key, value1: value1, value2: value2, applyRange: applyRange)
+        })
+    }
+    
+    func redoAttribute(key:NSAttributedString.Key ,value1: Any, value2: Any, applyRange: NSRange = NSRange(location: 0, length: 0)){
+        // typingAttribute
+        if applyRange.length != 0{
+            if let new = value2 as? UIFont{
+                textView.textStorage.addAttribute(.font, value: new, range: applyRange)
+            }
+            if let new = value1 as? Int,let curFontColor = value2 as? UIColor{
+                if new == 1{
+                    textView.textStorage.removeAttribute(.underlineStyle, range: applyRange)
+                }else{
+                    textView.textStorage.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: applyRange)
+                    textView.textStorage.addAttribute(.underlineColor, value: curFontColor, range: applyRange)
+                }
+            }
+            if let new = value2 as? NSMutableParagraphStyle{
+                textView.textStorage.addAttribute(.paragraphStyle, value: new, range: applyRange)
+            }
+            if let new = value2 as? UIColor{
+                textView.textStorage.addAttribute(.foregroundColor, value: new, range: applyRange)
+                if hasUnderLine(range: applyRange){
+                    textView.textStorage.addAttribute(.underlineColor, value: new, range: applyRange)
+                }
+            }
+        }else{
+            
+        }
+        
+        
+        
+        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+            self.undoAttribute(key: .font, value1: value1, value2: value2,applyRange: applyRange)
+        })
     }
 
     
