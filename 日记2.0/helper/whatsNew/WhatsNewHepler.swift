@@ -13,19 +13,19 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        //MARK:-2.9.1
-        let version291 = WhatsNew.Version(major: 2, minor: 9, patch: 1)
-        let whatsNew291 = WhatsNew(
+        //MARK:-3.0
+        let version300 = WhatsNew.Version(major: 3, minor: 0, patch: 0)
+        let whatsNew300 = WhatsNew(
             // The Version
-            version: version291,
+            version: version300,
             // The Title
-            title: "近期更新",
+            title: "近期更新11.07",
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "编辑页面新增下拉退出",
+                    title: "新增：撤回/重做按钮",
                     subtitle: "",
-                    image: UIImage(named: "dropdown")
+                    image: UIImage(named: "undo")
                 ),
                 WhatsNew.Item(
                     title: "修复了一些bug",
@@ -34,7 +34,7 @@ class WhatsNewHelper{
                 ),
             ]
         )
-        arr.append(whatsNew291)
+        arr.append(whatsNew300)
         
         return arr
     }
