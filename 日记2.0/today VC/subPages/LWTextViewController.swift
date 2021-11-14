@@ -49,14 +49,14 @@ class LWTextViewController: UIViewController {
         //键盘出现、隐藏、旋转···
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         //设备方向
-        notificationCenter.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(onContainerSizeChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
-        print("textVC viewWillAppear,当前设备方向：\(globalConstantsManager.shared.currentDeviceOriention )")
+//        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
+//        print("textVC viewWillAppear,当前设备方向：\(globalConstantsManager.shared.currentDeviceOriention )")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,7 +77,7 @@ class LWTextViewController: UIViewController {
         
         
         //工具栏
-        keyBoardToolsBar = LWTextViewToolBar(frame: CGRect(x: 0, y: 900, width: UIScreen.main.bounds.width, height: 40))
+        keyBoardToolsBar = LWTextViewToolBar(frame: CGRect(x: 0, y: 900, width: globalConstantsManager.shared.kScreenWidth, height: 40))
         keyBoardToolsBar.textView = textView
         keyBoardToolsBar.delegate = self
         view.layoutIfNeeded()
@@ -266,23 +266,13 @@ extension LWTextViewController : JXPagingViewListViewDelegate{
 
 //MARK:-旋转屏幕时，需要重新调整页面UI
 extension LWTextViewController{
-    @objc private func onDeviceDirectionChange(){
+    @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
             return
         }
-        //只响应横竖的变化
-        guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
-            return
-        }
-        //方向变化时才响应
-        //因为，发现，即使方向没有改变（rawValue没改变）也会出触发onDeviceDirectionChange()
-        guard globalConstantsManager.shared.currentDeviceOriention != UIDevice.current.orientation.rawValue else{
-            print("新的设备方向和旧设备方向一致，不响应")
-            return
-        }
-        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
-        print("LWTextViewController onDeviceDirectionChange")
-        //1.重新读取textView上的当前内容，以显示正确的图片bounds
+        
+        //1.重新读取textView上的当前内容，目的是显示正确的图片bounds
+        textView.resignFirstResponder() // 保存
         let textFormatter = TextFormatter(textView: textView)
         textFormatter.loadTextViewContent(with: model)
         
@@ -290,8 +280,16 @@ extension LWTextViewController{
         UIView.animate(withDuration: 0.5) {[self] in
             keyBoardToolsBar.frame.size.width = globalConstantsManager.shared.kScreenWidth
         }
-        
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        print("LWTextViewController viewWillTransition")
+        
+        //globalConstantsManager.shared.appSize = size// 这里不需要修改appSize了，在monthVC中已经修改
+        self.onContainerSizeChanged()
+    }
+    
 }
 
 //MARK:-深色模式

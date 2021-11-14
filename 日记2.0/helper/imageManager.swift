@@ -23,6 +23,7 @@ class imageManager{
         //解决办法，创建临时变量
         let rtfd = diary.rtfd
         let imageAttrTuples = diary.imageAttributesTuples
+        let photoHeight = layoutParasManager.shared.albumViewItemHeight
         DispatchQueue.global(qos: .default).async {[self] in
             //获取富文本attributedString
             guard let aString = LoadRTFD(rtfd: rtfd) else{return}
@@ -31,7 +32,6 @@ class imageManager{
                 let location = imageTuple.0
                 //print("imageTuple location :\(location)")
                 if location < aString.length, let attachment = aString.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let img = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: location){
-                    let photoHeight = layoutParasManager.shared.albumViewItemHeight
                     let ratio = img.size.height / photoHeight
                     let size = CGSize(width: img.size.width / ratio, height: photoHeight)
                     let compressedImage = img.compressPic(toSize: size)

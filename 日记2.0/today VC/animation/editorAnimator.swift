@@ -38,6 +38,7 @@ class editorAnimator:NSObject,UIViewControllerAnimatedTransitioning{
             return
         }
         containerView.addSubview(toVC.view)
+        toVC.view.frame = CGRect(origin: .zero, size: globalConstantsManager.shared.appSize)
         toVC.view.frame.origin.y = 1500
         toVC.view.transform = CGAffineTransform(scaleX: 0.90, y: 1)
         toVC.view.layer.cornerRadius = 20

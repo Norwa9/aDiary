@@ -141,7 +141,7 @@ class monthVC: UIViewController {
     ///添加通知
     private func addObservers(){
         //屏幕旋转通知
-        NotificationCenter.default.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(onContainerSizeChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     //更新monthButtons的点亮状态
@@ -160,6 +160,11 @@ class monthVC: UIViewController {
     
     //MARK:-初始化UI
     private func initUI(){
+        // 初始化appSize
+        // 当在iPad上App以分屏方式启动时，初始的大小不能取自UIScreen.main，那样是整个设备屏幕大小。
+        // 通过autolayout获取正确的初始大小。
+        globalConstantsManager.shared.appSize = self.view.bounds.size
+        
         self.view.backgroundColor = .systemBackground
         //topBar
         topbar = topbarView(frame: .zero)
@@ -187,6 +192,16 @@ class monthVC: UIViewController {
         monthBtnStackView.layer.cornerRadius = 10
         monthBtnStackView.backgroundColor = monthBtnStackViewDynamicColor
         monthBtnStackView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        
+        for i in 0..<12{
+            let button = monthButton(frame: .zero)
+            button.monthVC = self
+            button.monthLabel.text = "\(i+1)"
+            button.tag = i+1
+            button.addTarget(self, action: #selector(monthDidTap(sender:)), for: .touchUpInside)
+            monthButtons.append(button)
+            monthBtnStackView.addSubview(button)
+        }
         
         //calendar
         lwCalendar = LWCalendar(frame: .zero)
@@ -249,7 +264,6 @@ class monthVC: UIViewController {
             y:globalConstantsManager.shared.kScreenHeight - kBlurEffectViewHeight,
             width: globalConstantsManager.shared.kScreenWidth,
             height: kBlurEffectViewHeight);
-        print("kScreenHeight:\(globalConstantsManager.shared.kScreenHeight),kScreenWidth:\(globalConstantsManager.shared.kScreenWidth)")
         let gradientLayer = CAGradientLayer()//底部创建渐变层
         gradientLayer.colors = [UIColor.clear.cgColor,
                                 UIColor.label.cgColor]
@@ -308,22 +322,32 @@ class monthVC: UIViewController {
             make.bottom.equalToSuperview().offset(-100)
         }
         
-        //使用frame 布局monthButtons
-        self.view.layoutIfNeeded()//获取到真实的frame
-        let kButtonDiameter:CGFloat = 25
-        let insetY:CGFloat = (kTopViewHeight - 25) / 2
-        let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * kButtonDiameter) / 13.0
-        for i in 0..<12{
-            let x = kButtonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
-            let y = insetY
-            let button = monthButton(frame: CGRect(x: x, y: y, width: kButtonDiameter, height: kButtonDiameter))
-            button.monthVC = self
-            button.monthLabel.text = "\(i+1)"
-            button.tag = i+1
-            button.addTarget(self, action: #selector(monthDidTap(sender:)), for: .touchUpInside)
-            monthButtons.append(button)
-            monthBtnStackView.addSubview(button)
+        
+        let kButtonDiameter = monthButton.monthButtonDiameter // 按钮的高度
+        let insetY:CGFloat = (kTopViewHeight - kButtonDiameter) / 2
+        if UIDevice.current.userInterfaceIdiom == .phone{
+            // iPhone上使用frame 布局monthButtons
+            self.view.layoutIfNeeded()//获取到真实的frame
+            let padding:CGFloat = (monthBtnStackView.frame.width - 12.0 * kButtonDiameter) / 13.0
+            for i in 0..<12{
+                let x = kButtonDiameter * CGFloat(i) + padding * CGFloat(i+1)
+                let y = insetY
+                monthButtons[i].frame = CGRect(x: x, y: y, width: kButtonDiameter, height: kButtonDiameter)
+            }
+        }else{
+            // iPad上使用autoLayout
+            let padding:CGFloat = (globalConstantsManager.shared.kScreenWidth - 12 * kButtonDiameter) / 13
+            for i in 0..<12{
+                let button = monthButtons[i]
+                let offset:CGFloat = (CGFloat(i) - 5.5) * kButtonDiameter + (CGFloat(i) - 5.5) * padding
+                button.snp.makeConstraints { make in
+                    make.top.equalToSuperview().offset(insetY)
+                    make.size.equalTo(CGSize(width: kButtonDiameter, height: kButtonDiameter))
+                    make.centerX.equalTo(monthBtnStackView.snp.centerX).offset(offset)
+                }
+            }
         }
+        
     }
 
     //MARK:-action target
@@ -724,7 +748,7 @@ extension monthVC:UISearchBarDelegate{
 
 }
 
-//MARK:-context Menu
+//MARK: -context Menu
 extension monthVC {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
@@ -765,7 +789,7 @@ extension monthVC {
         self.present(ac, animated: true, completion: nil)
     }
 }
-//MARK:-切换深色模式监听事件
+//MARK: -切换深色模式监听事件
 extension monthVC{
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -778,36 +802,22 @@ extension monthVC{
 
 }
 
-//MARK:-屏幕旋转
-
-
+//MARK: -屏幕旋转
 extension monthVC{
-    @objc private func onDeviceDirectionChange(){
+    @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
+            print("!= ipad")
             return
         }
-        //只响应横竖的变化
-        guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
-            return
-        }
-        //方向变化时才响应
-        //因为，发现，即使方向没有改变（rawValue没改变）也会出触发onDeviceDirectionChange()
-        guard globalConstantsManager.shared.currentDeviceOriention != UIDevice.current.orientation.rawValue else{
-            print("新的设备方向和旧设备方向一致，不响应")
-            return
-        }
-        globalConstantsManager.shared.currentDeviceOriention = UIDevice.current.orientation.rawValue
-        print("monthVC onDeviceDirectionChange:\(UIDevice.current.orientation.rawValue)")
+
         //1.更新month Buttons
-        let kButtonDiameter:CGFloat = 25
-        let insetY:CGFloat = (kTopViewHeight - 25) / 2
-        let pedding:CGFloat = (monthBtnStackView.frame.width - 12.0 * kButtonDiameter) / 13.0
-        UIView.animate(withDuration: 0.2) {
-            for i in 0..<12{
-                let x = kButtonDiameter * CGFloat(i) + pedding * CGFloat(i+1)
-                let y = insetY
-                let button = self.monthButtons[i]
-                button.frame.origin = CGPoint(x: x, y: y)
+        let kButtonDiameter = monthButton.monthButtonDiameter
+        let padding:CGFloat = (globalConstantsManager.shared.kScreenWidth - 12 * kButtonDiameter) / 13
+        for i in 0..<12{
+            let button = monthButtons[i]
+            let offset:CGFloat = (CGFloat(i) - 5.5) * kButtonDiameter + (CGFloat(i) - 5.5) * padding
+            button.snp.updateConstraints { make in
+                make.centerX.equalTo(monthBtnStackView.snp.centerX).offset(offset)
             }
         }
         
@@ -823,7 +833,38 @@ extension monthVC{
         if isFilterMode{
             popover.dismiss()
         }
+        
+        //5.更新日历视图：需要重新创建lwCalendar实例，否则日期cell布局错乱
+        lwCalendar.removeFromSuperview()
+        lwCalendar = LWCalendar(frame: .zero)
+        lwCalendar.dataSource = self
+        lwCalendar.delegate = self
+        self.monthBtnStackView.addSubview(lwCalendar)
+        lwCalendar.alpha = isShowingCalendar ? 1 : 0
+        lwCalendar.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(kTopViewHeight)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(kCalendarHeight)
+        }
     }
+}
+
+//MARK: -ipad分屏
+extension monthVC{
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        globalConstantsManager.shared.currentTraitCollection = newCollection
+        //2:regular,1:compact
+        print("newCollection.verticalSizeClass:\(newCollection.verticalSizeClass.rawValue),newCollection.horizontalSizeClass:\(newCollection.horizontalSizeClass.rawValue)")
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        print("monthVC viewWillTransition")
+        globalConstantsManager.shared.appSize = size
+        self.onContainerSizeChanged()
+    }
+
 }
 
 //MARK: -动画

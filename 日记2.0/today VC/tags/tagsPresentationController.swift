@@ -25,7 +25,7 @@ class tagsPresentationController: UIPresentationController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.blurEffectView.isUserInteractionEnabled = true
         self.blurEffectView.addGestureRecognizer(tapGestureRecognizer)
-        NotificationCenter.default.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onContainerSizeChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
@@ -74,7 +74,7 @@ class tagsPresentationController: UIPresentationController {
 
 //MARK:-旋转屏幕
 extension tagsPresentationController{
-    @objc private func onDeviceDirectionChange(){
+    @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
             return
         }
@@ -82,7 +82,7 @@ extension tagsPresentationController{
         guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
             return
         }
-        print("tagsPresentationController onDeviceDirectionChange")
+        print("tagsPresentationController onContainerSizeChanged")
         print("presentedView?.frame.size:\(presentedView?.frame.size)")
         //presentedViewController:tagsView
         //presentingViewController:monthVC

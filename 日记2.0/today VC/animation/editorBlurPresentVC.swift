@@ -30,7 +30,8 @@ class editorBlurPresentVC: UIPresentationController {
     }
     
     override var frameOfPresentedViewInContainerView: CGRect{
-        return UIScreen.main.bounds
+        print("frameOfPresentedViewInContainerView todayVC:\(globalConstantsManager.shared.appSize)")
+        return CGRect(origin: .zero, size: globalConstantsManager.shared.appSize)
     }
     
     override func presentationTransitionDidEnd(_ completed: Bool) {

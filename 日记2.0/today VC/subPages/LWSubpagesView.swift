@@ -15,7 +15,7 @@ class LWSubpagesView: UIView {
     var todayVC:todayVC!
     lazy var pagingView: JXPagingView = JXPagingView(delegate: self)
     
-    lazy var segmentedView: JXSegmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(kSegmentedViewHeight)))
+    lazy var segmentedView: JXSegmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth, height: CGFloat(kSegmentedViewHeight)))
     let kSegmentedViewHeight = 30
     var segmentDataSource = JXSegmentedTitleDataSource()
     var segmentTitles = [String]()

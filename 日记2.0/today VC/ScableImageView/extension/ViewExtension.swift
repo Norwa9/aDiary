@@ -175,9 +175,9 @@ extension UIView {
 class Screen: NSObject {
     
     /// Screen Height With Portrait
-    @objc static let height = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+    @objc static let height = globalConstantsManager.shared.kScreenHeight
     /// Screen Width With Portrait
-    @objc static let width = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+    @objc static let width = globalConstantsManager.shared.kScreenWidth
     /// Screen Size With Portrait
     @objc static let size = CGSize(width: width, height: height)
 }

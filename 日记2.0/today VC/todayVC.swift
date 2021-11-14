@@ -34,9 +34,9 @@ class todayVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let notificationCenter = NotificationCenter.default
+//        let notificationCenter = NotificationCenter.default
         //设备方向
-        notificationCenter.addObserver(self, selector: #selector(onDeviceDirectionChange), name: UIDevice.orientationDidChangeNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(onContainerSizeChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
         
         self.initUI()
         self.setupConstraints()
@@ -249,7 +249,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
 
 //MARK: -旋转屏幕
 extension todayVC{
-    @objc private func onDeviceDirectionChange(){
+    @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
             return
         }
@@ -261,6 +261,12 @@ extension todayVC{
         //2.关闭表情盘（如果存在的话）
         topView.emojiView.popover.dismiss()
         
+    }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        print("todayVC viewWillTransition")
+        // globalConstantsManager.shared.appSize = size
+        self.onContainerSizeChanged()
     }
 }
 

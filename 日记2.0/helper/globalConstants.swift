@@ -10,21 +10,37 @@ import UIKit
 
 class globalConstantsManager{
     static let shared = globalConstantsManager()
-    private let screenH = UIScreen.main.bounds.height
-    private let screenW = UIScreen.main.bounds.width
+    var appSize:CGSize = UIScreen.main.bounds.size
+    var currentTraitCollection:UITraitCollection?
+    private var screenH:CGFloat{
+        get{
+            return appSize.height
+        }
+    }
+    private var screenW:CGFloat{
+        get{
+            return appSize.width
+        }
+    }
     
     var currentDeviceOriention:Int = 0
     
     var zoomModelScale:CGFloat{
         get{
             let zoomScale = UIScreen.main.scale / UIScreen.main.nativeScale // 系统开启放大显示模式后
-            let deviceScale = UIScreen.main.bounds.width / 414  // 以414为基准，如果比414大，图标放大，反之缩小。
+            let deviceScale = kScreenWidth / 414  // 以414为基准，如果比414大，图标放大，反之缩小。
             print("zoomScale:\(zoomScale),deviceScale:\(deviceScale)")
-            if zoomScale < 1 {
-                return deviceScale
-            }else{
-                return zoomScale * deviceScale
+            if UIDevice.current.userInterfaceIdiom == .pad{
+                return zoomScale
             }
+            else{
+                if zoomScale < 1 {
+                    return deviceScale
+                }else{
+                    return zoomScale * deviceScale
+                }
+            }
+            
             
         }
     }
@@ -56,28 +72,41 @@ class globalConstantsManager{
     
     var kScreenHeight:CGFloat{
         get{
-            //竖向的三种情况
-            if deviceOriention.isPortrait || deviceOriention == .faceUp{
-                return max(screenH, screenW)
-            }else{
-                return min(screenH, screenW)
-            }
+//            if let trait = currentTraitCollection{
+//                if trait.horizontalSizeClass.rawValue == 1{
+//                    // 横向布局为compact时，大的为高，小的为宽
+//                    return max(screenH, screenW)
+//                }else{
+//                    return min(screenH, screenW)
+//                }
+//            }else{
+//                return max(screenH, screenW)
+//            }
+            return screenH
         }
     }
     
     var kScreenWidth:CGFloat{
         get{
-            if deviceOriention.isLandscape || deviceOriention == .faceUp{
-                return max(screenH, screenW)
-            }else{
-                return min(screenH, screenW)
-            }
+//            if let trait = currentTraitCollection{
+//                if trait.horizontalSizeClass.rawValue == 1{
+//                    // 横向布局为compact时，大的为高，小的为宽
+//                    print("trait.h = 1,kScreenWidth:\(min(screenH, screenW))")
+//                    return min(screenH, screenW)
+//                }else{
+//                    print("trait.h = 2,kScreenWidth:\(max(screenH, screenW))")
+//                    return max(screenH, screenW)
+//                }
+//            }else{
+//                return min(screenH, screenW)
+//            }
+            return screenW
         }
     }
     
     var tagsVCWidth:CGFloat{
         get{
-            return min(kScreenWidth,kScreenHeight) - 20
+            return kScreenWidth - 20
         }
     }
     

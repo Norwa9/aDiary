@@ -8,6 +8,7 @@
 import UIKit
 
 class monthButton: UIButton {
+    static let monthButtonDiameter:CGFloat = 25
     var hasSelected:Bool = false
     var monthLabel:UILabel = UILabel()
     var containView:UIView = UIView()
@@ -25,7 +26,7 @@ class monthButton: UIButton {
         //containView
         self.addSubview(containView)
         containView.fillSuperview()
-        containView.layer.cornerRadius = self.frame.width/2
+        containView.layer.cornerRadius = monthButton.monthButtonDiameter / 2.0
         containView.isUserInteractionEnabled = false
         containView.backgroundColor = .tertiarySystemBackground
         

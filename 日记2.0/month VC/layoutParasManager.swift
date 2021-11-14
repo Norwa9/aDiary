@@ -30,7 +30,7 @@ class layoutParasManager: NSObject {
     ///collectionview的宽度
     private var contentWidth:CGFloat{
         get{
-            return UIScreen.main.bounds.width - collectionEdgesInset.left - collectionEdgesInset.right
+            return globalConstantsManager.shared.kScreenWidth - collectionEdgesInset.left - collectionEdgesInset.right
         }
     }
     
