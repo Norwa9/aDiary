@@ -139,9 +139,17 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         if isAdjustScalableImageView{
             return
         }
+        
+        if let textVC = subpagesView.curTextVC {
+            // 正在编辑，禁止下拉
+            if textVC.isTextViewEditing{
+                return
+            }
+        }
         if draggingDownToDismiss == false{
             if let textVC = subpagesView.curTextVC {
                 if textVC.textView.contentSize.height > textVC.textView.bounds.height{
+                    // 防止手势冲突
                     stopDismissPanGesture(gesture)
                     return
                 }

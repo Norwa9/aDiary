@@ -34,6 +34,8 @@ class LWTextViewController: UIViewController {
     
     var listViewDidScrollCallback: ((UIScrollView) -> ())?
     
+    var isTextViewEditing = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -163,6 +165,7 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
 extension LWTextViewController : UITextViewDelegate{
     //MARK:-textViewDidBeginEditing
     func textViewDidBeginEditing(_ textView: UITextView) {
+        isTextViewEditing = true
         //初始输入时，设置输入字体颜色为.label，否则默认为black无法适配深色模式
         if textView.textStorage.length == 0 {
             textView.typingAttributes[.foregroundColor] = UIColor.label
@@ -190,6 +193,7 @@ extension LWTextViewController : UITextViewDelegate{
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
         //print("textViewDidEndEditing")
+        isTextViewEditing = false
         save()
     }
     
