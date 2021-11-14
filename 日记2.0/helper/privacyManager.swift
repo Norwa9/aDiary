@@ -13,7 +13,7 @@ extension SceneDelegate{
     ///添加高斯模糊遮罩
     func addPrivacyMaskView(){
         self.visualEffectView.alpha = 1
-        UIApplication.getTopWindow().addSubview(visualEffectView)
+        UIApplication.getTopWindow()?.addSubview(visualEffectView)
         visualEffectView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }

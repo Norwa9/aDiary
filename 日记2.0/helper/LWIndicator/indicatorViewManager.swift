@@ -13,12 +13,13 @@ import NVActivityIndicatorView
 class indicatorViewManager{
     static let shared = indicatorViewManager()
     
-    var topWindow:UIWindow{
+    var topWindow:UIWindow?{
         get{
             return UIApplication.getTopWindow()
         }
     }
-    var indicatorView:LWCustomIndicatorView!
+    var indicatorView:LWCustomIndicatorView?
+    var isShowingIndicator = false
     
     ///进度
     var progress:Float = 0{
@@ -35,20 +36,21 @@ class indicatorViewManager{
             return
         }
         DispatchQueue.main.async { [self] in
-            topWindow.isUserInteractionEnabled = false
-            for subView in topWindow.subviews{
-                if ((subView as? LWCustomIndicatorView) != nil){
-                    return
-                }
+            if isShowingIndicator {
+                print("isShowingIndicator")
+                return
             }
+            topWindow?.isUserInteractionEnabled = false
+            
             indicatorView = indicatorFactory(type: type)
-            topWindow.addSubview(indicatorView)
-            indicatorView.snp.makeConstraints { make in
+            topWindow?.addSubview(indicatorView!)
+            indicatorView!.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
             
             //开始转
-            indicatorView.present()
+            indicatorView!.present()
+            isShowingIndicator = true
         }
         
     }
@@ -59,18 +61,19 @@ class indicatorViewManager{
             return
         }
         DispatchQueue.main.async {[self] in
-            topWindow.isUserInteractionEnabled = true
+            topWindow?.isUserInteractionEnabled = true
             
                 //错误结束转动
-            if let text = withText{
+            if let text = withText,let indicatorView = indicatorView{
                 indicatorView.setLabel(text)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     indicatorView.dismiss()
                 }
             }else{
                 //正常结束转动
-                indicatorView.dismiss()
+                indicatorView?.dismiss()
             }
+            isShowingIndicator = false
         }
     }
     

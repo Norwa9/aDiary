@@ -170,7 +170,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
         
         //触摸进度
         var progress = (currentLocation.y - startingPoint.y) / 100
-        print("PanGesture progress:\(progress)")
+        //print("PanGesture progress:\(progress)")
         
         //prevent viewController bigger when scrolling up
         if currentLocation.y <= startingPoint.y {

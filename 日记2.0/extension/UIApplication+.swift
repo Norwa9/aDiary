@@ -39,11 +39,11 @@ extension UIApplication{
         return base
     }
     
-    static func getTopWindow() -> UIWindow{
+    static func getTopWindow() -> UIWindow?{
         return UIApplication
             .shared
             .connectedScenes
             .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
-            .first { $0.isKeyWindow } as! UIWindow
+            .first { $0.isKeyWindow } as? UIWindow
     }
 }
