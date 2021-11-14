@@ -15,7 +15,19 @@ class globalConstantsManager{
     
     var currentDeviceOriention:Int = 0
     
-    var zoomModelScale = UIScreen.main.scale / UIScreen.main.nativeScale
+    var zoomModelScale:CGFloat{
+        get{
+            let zoomScale = UIScreen.main.scale / UIScreen.main.nativeScale // 系统开启放大显示模式后
+            let deviceScale = UIScreen.main.bounds.width / 414  // 以414为基准，如果比414大，图标放大，反之缩小。
+            print("zoomScale:\(zoomScale),deviceScale:\(deviceScale)")
+            if zoomScale < 1 {
+                return deviceScale
+            }else{
+                return zoomScale * deviceScale
+            }
+            
+        }
+    }
     
     var interfaceOrientation:UIDeviceOrientation{
         get{
