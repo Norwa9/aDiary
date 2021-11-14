@@ -291,26 +291,30 @@ extension TextFormatter{
     }
     
     ///反转todo属性
-    public func toggleTodo(location:Int,todoAttr:Int) {
+    public func todoTapped(location:Int,todoAttr:Int) {
         let attributedText = (todoAttr == 0) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
 
         self.textView.undoManager?.beginUndoGrouping()
         self.storage.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
         self.textView.undoManager?.endUndoGrouping()
 
-        guard let paragraph = getParagraphRange(for: location) else { return }
+        // todo所在的段落
+        guard let todoParagraph = getParagraphRange(for: location) else { return }
         
         if todoAttr == 0 {
-            self.storage.addAttribute(.strikethroughStyle, value: 1, range: paragraph)
-            self.storage.addAttribute(.foregroundColor, value: UIColor.systemGray, range: paragraph)
+            self.storage.addAttribute(.strikethroughStyle, value: 1, range: todoParagraph)
+            self.storage.addAttribute(.foregroundColor, value: UIColor.systemGray, range: todoParagraph)
         } else {
-            self.storage.removeAttribute(.strikethroughStyle, range: paragraph)
-            self.storage.addAttribute(.foregroundColor, value: UIColor.label, range: paragraph)
+            self.storage.removeAttribute(.strikethroughStyle, range: todoParagraph)
+            self.storage.addAttribute(.foregroundColor, value: UIColor.label, range: todoParagraph)
         }
         
-        if paragraph.contains(location) {
+        guard let curParagraph = getParagraphRange(for: self.textView.selectedRange.location) else{ return }
+        if curParagraph.contains(location) {
+            print("paragraph.contains(location):\(location)")
             let strike = (todoAttr == 0) ? 1 : 0
-            textView.typingAttributes[.foregroundColor] = UIColor.systemGray
+            let color = (todoAttr == 0) ? UIColor.systemGray : UIColor.label
+            textView.typingAttributes[.foregroundColor] = color
             textView.typingAttributes[.strikethroughStyle] = strike
         }
     }
@@ -696,7 +700,7 @@ extension TextFormatter{
         
         //如果点击的是.todo文本属性
         if let todoAttrValue = storage.attribute(.todo, at: location, effectiveRange: nil) as? Int{
-            self.toggleTodo(location: location, todoAttr: todoAttrValue)
+            self.todoTapped(location: location, todoAttr: todoAttrValue)
             return .todo
         }
         
