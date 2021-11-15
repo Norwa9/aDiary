@@ -94,8 +94,8 @@
             filePath = "&#x65e5;&#x8bb0;2.0/setting VC/LWSettingViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "829"
-            endingLineNumber = "829"
+            startingLineNumber = "848"
+            endingLineNumber = "848"
             landmarkName = "fontPickerViewControllerDidPickFont(_:)"
             landmarkType = "7">
          </BreakpointContent>

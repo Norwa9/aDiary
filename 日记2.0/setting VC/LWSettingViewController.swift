@@ -76,6 +76,9 @@ class LWSettingViewController: UIViewController {
     var darkModeLabel:UILabel!
     var darkModeSegment:UISegmentedControl!
     
+    // 联系我
+    var contactMeWeiboCell:LWSettingCell!
+    
     //其它信息
     var infoLabel:UILabel!
     
@@ -196,6 +199,11 @@ class LWSettingViewController: UIViewController {
         requestReviewButton = UIButton()
         otherContainer.addSubview(requestReviewLabel)
         otherContainer.addSubview(requestReviewButton)
+        
+        // MARK: - 联系我
+        contactMeWeiboCell = LWSettingCell(text: "关注作者微博", accessoryImage: nil, actionSelector: #selector(jumpToWeibo), accessoryActionSelector: nil)
+        contactMeWeiboCell.delegate = self
+        otherContainer.addSubview(contactMeWeiboCell)
         
         //-其它
         infoLabel = UILabel()
@@ -321,6 +329,10 @@ class LWSettingViewController: UIViewController {
         requestReviewButton.addTarget(self, action: #selector(requestReview), for: .touchUpInside)
         requestReviewLabel.text = "支持开发者🍗"
         requestReviewLabel.font = .systemFont(ofSize: 10)
+        
+        
+        
+        
         
         infoLabel.numberOfLines = 0
         let info: ASAttributedString =
@@ -548,7 +560,6 @@ class LWSettingViewController: UIViewController {
         requestReviewButton.snp.makeConstraints { make in
             make.top.equalTo(autoCreateTitle.snp.bottom).offset(20)
             make.left.equalTo(darkModeLabel)
-            make.bottom.equalToSuperview().offset(-20)
             make.width.equalTo(100)
         }
         
@@ -556,6 +567,14 @@ class LWSettingViewController: UIViewController {
             make.top.equalTo(requestReviewButton.snp.bottom).offset(-5)
             make.left.equalTo(requestReviewButton)
         }
+        
+        contactMeWeiboCell.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(requestReviewButton.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        
+        // MARK: - layout:联系我
         
         infoLabel.snp.makeConstraints { make in
             make.top.equalTo(otherContainer.snp.bottom).offset(50)
@@ -889,5 +908,23 @@ extension LWSettingViewController{
         let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
         textView.attributedText = mutableAttr
+    }
+}
+
+// MARK: - 联系我
+
+extension LWSettingViewController{
+    @objc func jumpToWeibo(){
+        let weiboUrl = URL(string: "sinaweibo://userinfo?uid=6394154593")
+        if let url = weiboUrl, UIApplication.shared.canOpenURL(url){
+            // 微博客户端
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }else if let weiboInternalUrl = URL(string: "weibointernational://userinfo?uid=6394154593"),UIApplication.shared.canOpenURL(weiboInternalUrl){
+            // 微博国际版客户端
+            UIApplication.shared.open(weiboInternalUrl, options: [:], completionHandler: nil)
+        }else if let website = URL(string: "https://weibo.com/u/6394154593"),UIApplication.shared.canOpenURL(website){
+            // 都没有安装则打开网页
+            UIApplication.shared.open(website, options: [:], completionHandler: nil)
+        }
     }
 }

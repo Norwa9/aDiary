@@ -29,6 +29,7 @@
 		1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6964E26A970040009472F /* LWEmojiCell.swift */; };
 		1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6965026A9794B0009472F /* diaryInfo+emoji.swift */; };
 		EA015EC3269898B400C3375D /* Results+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA015EC2269898B400C3375D /* Results+.swift */; };
+		EA11A955274215A20058A7A8 /* LWSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA11A954274215A20058A7A8 /* LWSettingCell.swift */; };
 		EA2235DE26D68F7D001FAD1D /* diary+ScalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */; };
 		EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235F926D692B0001FAD1D /* scalableImageView.swift */; };
 		EA2235FD26D692B0001FAD1D /* ScalableImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */; };
@@ -185,6 +186,7 @@
 		641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.release.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.release.xcconfig"; sourceTree = "<group>"; };
 		86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-日记2.0.debug.xcconfig"; path = "Target Support Files/Pods-日记2.0/Pods-日记2.0.debug.xcconfig"; sourceTree = "<group>"; };
 		EA015EC2269898B400C3375D /* Results+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Results+.swift"; sourceTree = "<group>"; };
+		EA11A954274215A20058A7A8 /* LWSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSettingCell.swift; sourceTree = "<group>"; };
 		EA2235DD26D68F7D001FAD1D /* diary+ScalableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diary+ScalableImageView.swift"; sourceTree = "<group>"; };
 		EA2235F926D692B0001FAD1D /* scalableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scalableImageView.swift; sourceTree = "<group>"; };
 		EA2235FA26D692B0001FAD1D /* ScalableImageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalableImageModel.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 			children = (
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
 				1B3AEB5926CA105500C057A4 /* LWSettingViewController.swift */,
+				EA11A954274215A20058A7A8 /* LWSettingCell.swift */,
 			);
 			path = "setting VC";
 			sourceTree = "<group>";
@@ -997,6 +1000,7 @@
 				EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */,
 				EA22360E26D6931A001FAD1D /* BSGestureRecognizer.swift in Sources */,
 				EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */,
+				EA11A955274215A20058A7A8 /* LWSettingCell.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
 				1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */,
