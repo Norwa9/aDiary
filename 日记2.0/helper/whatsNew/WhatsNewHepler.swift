@@ -13,28 +13,28 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        //MARK:-3.0
-        let version300 = WhatsNew.Version(major: 3, minor: 0, patch: 0)
-        let whatsNew300 = WhatsNew(
+        //MARK:-3.1
+        let version310 = WhatsNew.Version(major: 3, minor: 1, patch: 0)
+        let whatsNew310 = WhatsNew(
             // The Version
-            version: version300,
+            version: version310,
             // The Title
-            title: "近期更新11.07",
+            title: "近期更新11.17",
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "新增：撤回/重做按钮",
+                    title: "iPad版本支持分屏",
                     subtitle: "",
-                    image: UIImage(named: "undo")
+                    image: UIImage(named: "multiScreen")
                 ),
                 WhatsNew.Item(
-                    title: "修复了一些bug",
-                    subtitle: "",
-                    image: UIImage(named: "bug")
+                    title: "更新了开发者的联系方式",
+                    subtitle: "设置->反馈，取得联系",
+                    image: UIImage(named: "contactMe")
                 ),
             ]
         )
-        arr.append(whatsNew300)
+        arr.append(whatsNew310)
         
         return arr
     }

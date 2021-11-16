@@ -35,6 +35,11 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.lifestyle</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>weibointernational</string>
+		<string>sinaweibo</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
@@ -88,11 +93,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>weibointernational</string>
-		<string>sinaweibo</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

@@ -77,7 +77,12 @@ class LWSettingViewController: UIViewController {
     var darkModeSegment:UISegmentedControl!
     
     // 联系我
+    var contactWaysContainer:UIView!
+    var contactWaysContainerTitle:UILabel!
     var contactMeWeiboCell:LWSettingCell!
+    var contactMeMailCell:LWSettingCell!
+    var contactMeWeChat:LWSettingCell!
+    
     
     //其它信息
     var infoLabel:UILabel!
@@ -200,10 +205,28 @@ class LWSettingViewController: UIViewController {
         otherContainer.addSubview(requestReviewLabel)
         otherContainer.addSubview(requestReviewButton)
         
+        
+        
         // MARK: - 联系我
-        contactMeWeiboCell = LWSettingCell(text: "关注作者微博", accessoryImage: nil, actionSelector: #selector(jumpToWeibo), accessoryActionSelector: nil)
+        contactWaysContainer = UIView()
+        contactWaysContainerTitle = UILabel()
+        contactWaysContainerTitle.text = "反馈"
+        contactWaysContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
+        contactWaysContainer.backgroundColor = settingContainerDynamicColor
+        contactWaysContainer.setupShadow()
+        contactWaysContainer.layer.cornerRadius = 10
+        
+        contactMeMailCell = LWSettingCell(text: "邮件联系", accessoryImage: nil, actionSelector: #selector(openMail), accessoryActionSelector: nil)
+        contactMeWeChat = LWSettingCell(text: "加入微信交流群", accessoryImage: nil, actionSelector: #selector(contactWeChat), accessoryActionSelector: nil)
+        contactMeWeiboCell = LWSettingCell(text: "关注开发者微博", accessoryImage: nil, actionSelector: #selector(jumpToWeibo), accessoryActionSelector: nil)
+        contactMeMailCell.delegate = self
         contactMeWeiboCell.delegate = self
-        otherContainer.addSubview(contactMeWeiboCell)
+        contactMeWeChat.delegate = self
+        contactWaysContainer.addSubview(contactMeMailCell)
+        contactWaysContainer.addSubview(contactMeWeiboCell)
+        contactWaysContainer.addSubview(contactMeWeChat)
+        containerView.addSubview(contactWaysContainerTitle)
+        containerView.addSubview(contactWaysContainer)
         
         //-其它
         infoLabel = UILabel()
@@ -323,7 +346,7 @@ class LWSettingViewController: UIViewController {
         autoCreateTitleSwitch.isOn = userDefaultManager.autoCreate
         autoCreateTitleSwitch.addTarget(self, action: #selector(autoCreateDiary(_:)), for: .valueChanged)
         
-        requestReviewButton.setTitle("好评鼓励", for: .normal)
+        requestReviewButton.setTitle("App Store撰写好评", for: .normal)
         requestReviewButton.setTitleColor(.link, for: .normal)
         requestReviewButton.contentHorizontalAlignment = .leading
         requestReviewButton.addTarget(self, action: #selector(requestReview), for: .touchUpInside)
@@ -380,7 +403,7 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(50)
         }
         
-        //字体
+        // MARK: - layout:字体
         fontContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(settingTitle.snp.bottom).offset(40)
             make.left.equalToSuperview().offset(15)
@@ -449,7 +472,7 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(150)
         }
         
-        //隐私
+        // MARK: - layout:隐私
         privacyContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(fontContainerView.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -482,7 +505,7 @@ class LWSettingViewController: UIViewController {
         }
         
         
-        //备份
+        // MARK: - layout:备份
         backupContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(privacyContainer.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -510,7 +533,7 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(200)
         }
         
-        //其它
+        // MARK: - layout:其他
         otherContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(backupContainer.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -560,7 +583,8 @@ class LWSettingViewController: UIViewController {
         requestReviewButton.snp.makeConstraints { make in
             make.top.equalTo(autoCreateTitle.snp.bottom).offset(20)
             make.left.equalTo(darkModeLabel)
-            make.width.equalTo(100)
+            make.bottom.equalToSuperview().offset(-20)
+            make.width.equalTo(200)
         }
         
         requestReviewLabel.snp.makeConstraints { make in
@@ -568,18 +592,37 @@ class LWSettingViewController: UIViewController {
             make.left.equalTo(requestReviewButton)
         }
         
+        // MARK: - layout:联系我
+        contactWaysContainerTitle.snp.makeConstraints { make in
+            make.top.equalTo(otherContainer.snp.bottom).offset(20)
+            make.left.equalTo(fontContainerTitle)
+        }
+        
+        contactWaysContainer.snp.makeConstraints { make in
+            make.top.equalTo(contactWaysContainerTitle.snp.bottom).offset(5)
+            make.left.right.equalTo(fontContainerView)
+        }
+        
+        contactMeMailCell.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(20)
+        }
+        
         contactMeWeiboCell.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(requestReviewButton.snp.bottom).offset(20)
+            make.top.equalTo(contactMeMailCell.snp.bottom).offset(20)
+        }
+        
+        contactMeWeChat.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(contactMeWeiboCell.snp.bottom).offset(20)
             make.bottom.equalToSuperview().offset(-20)
         }
         
-        // MARK: - layout:联系我
-        
         infoLabel.snp.makeConstraints { make in
-            make.top.equalTo(otherContainer.snp.bottom).offset(50)
+            make.top.equalTo(contactWaysContainer.snp.bottom).offset(50)
             make.left.right.equalTo(otherContainer)
-            make.height.equalTo(100)
+            make.height.equalTo(0)
             make.bottom.equalToSuperview().offset(-20)
         }
         
@@ -926,5 +969,17 @@ extension LWSettingViewController{
             // 都没有安装则打开网页
             UIApplication.shared.open(website, options: [:], completionHandler: nil)
         }
+    }
+    
+    @objc func openMail(){
+        let email = "norwa99@163.com"
+        if let url = URL(string: "mailto:\(email)"),UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @objc func contactWeChat(){
+        let vc = weChatViewController()
+        self.present(vc, animated: true, completion: nil)
     }
 }
