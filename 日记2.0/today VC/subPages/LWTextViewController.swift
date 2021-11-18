@@ -192,7 +192,7 @@ extension LWTextViewController : UITextViewDelegate{
     
     //MARK:-textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
-        //print("textViewDidEndEditing")
+        print("textViewDidEndEditing")
         isTextViewEditing = false
         save()
     }

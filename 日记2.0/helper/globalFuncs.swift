@@ -159,3 +159,24 @@ func LoadRTFD(rtfd:Data?) -> NSAttributedString?{
     }
     return aString
 }
+
+// MARK: - 创建引导、每日
+func loadIntroductionIfNeed(){
+    if !userDefaultManager.hasInitialized{
+        NewUserGuideHelper.shared.initUserGuideDiary()
+        userDefaultManager.hasInitialized = true
+        print("引导日志创建成功")
+    }
+}
+
+///生成今日日记
+func createTodayDiary(){
+    guard userDefaultManager.autoCreate else {return}
+    let date = GetTodayDate()
+    let predicate = NSPredicate(format: "date = %@", date)
+    let res = LWRealmManager.shared.query(predicate: predicate)
+    if res.isEmpty{
+        LWRealmManager.shared.add(diaryInfo(dateString: date))
+        print("今日日记创建成功")
+    }
+}

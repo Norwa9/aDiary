@@ -84,8 +84,7 @@ extension AppDelegate{
         
         //1.初始化realm:读取本地数据库，填充数据源
         _ = LWRealmManager.shared
-        loadIntroductionIfNeed()
-        createTodayDiary()
+        
         //2.初始化DiaryStore,云同步开始工作
         let store = DiaryStore.shared
         store.startEngine()
@@ -112,26 +111,6 @@ extension AppDelegate{
                 /* 处理打开 Realm 时所发生的错误 */
                 print("Realm 数据库配置失败：\(error.localizedDescription)")
             }
-        }
-    }
-    
-    private func loadIntroductionIfNeed(){
-        if !userDefaultManager.hasInitialized{
-            NewUserGuideHelper.shared.initUserGuideDiary()
-            userDefaultManager.hasInitialized = true
-            print("引导日志创建成功")
-        }
-    }
-    
-    ///生成今日日记
-    private func createTodayDiary(){
-        guard userDefaultManager.autoCreate else {return}
-        let date = GetTodayDate()
-        let predicate = NSPredicate(format: "date = %@", date)
-        let res = LWRealmManager.shared.query(predicate: predicate)
-        if res.isEmpty{
-            LWRealmManager.shared.add(diaryInfo(dateString: date))
-            print("今日日记创建成功")
         }
     }
 }
