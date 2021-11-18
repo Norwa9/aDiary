@@ -5109,6 +5109,7 @@
 			baseConfigurationReference = FF021F8CFEC5C6DC27D6003D7284EE4F /* ISEmojiView.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ISEmojiView";
+				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				IBSC_MODULE = ISEmojiView;
 				INFOPLIST_FILE = "Target Support Files/ISEmojiView/ResourceBundle-ISEmojiView-ISEmojiView-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -5503,6 +5504,7 @@
 			baseConfigurationReference = 533C7F0FAFA78FB499C3226EF984DDB6 /* ISEmojiView.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ISEmojiView";
+				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				IBSC_MODULE = ISEmojiView;
 				INFOPLIST_FILE = "Target Support Files/ISEmojiView/ResourceBundle-ISEmojiView-ISEmojiView-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
