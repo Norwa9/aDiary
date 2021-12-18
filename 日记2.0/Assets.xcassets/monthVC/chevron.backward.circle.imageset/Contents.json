@@ -29,7 +29,7 @@
       "scale" : "2x"
     },
     {
-      "filename" : "yk_fanhui.png",
+      "filename" : "按钮_箭头向左.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
@@ -40,7 +40,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "yk_fanhui-2.png",
+      "filename" : "按钮_箭头向左_dark.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
