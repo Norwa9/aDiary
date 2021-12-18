@@ -44,6 +44,8 @@
 		EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */; };
 		EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189AE26934ED5001B9042 /* globalFuncs.swift */; };
 		EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3189B426934F6F001B9042 /* diaryInfo.swift */; };
+		EA369A66276E39DB0051643F /* settingVCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA369A65276E39DB0051643F /* settingVCConfig.swift */; };
+		EA369A68276E3C710051643F /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA369A67276E3C710051643F /* wechat_group_code.jpg */; };
 		EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA38493E262EBAA3001B693F /* filterHelper.swift */; };
 		EA384942262ED17A001B693F /* intro-page1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* intro-page1.txt */; };
 		EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */; };
@@ -86,7 +88,6 @@
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
 		EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */; };
 		EA96001327007EF80008DC8A /* globalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96001227007EF80008DC8A /* globalConfig.swift */; };
-		EA982E3D275679BC0033F409 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA982E3C275679BC0033F409 /* wechat_group_code.jpg */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
@@ -205,6 +206,8 @@
 		EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+CloudKit.swift"; sourceTree = "<group>"; };
 		EA3189AE26934ED5001B9042 /* globalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalFuncs.swift; sourceTree = "<group>"; };
 		EA3189B426934F6F001B9042 /* diaryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryInfo.swift; sourceTree = "<group>"; };
+		EA369A65276E39DB0051643F /* settingVCConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingVCConfig.swift; sourceTree = "<group>"; };
+		EA369A67276E3C710051643F /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EA38493E262EBAA3001B693F /* filterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterHelper.swift; sourceTree = "<group>"; };
 		EA384941262ED17A001B693F /* intro-page1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "intro-page1.txt"; sourceTree = "<group>"; };
 		EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewLayout.swift; sourceTree = "<group>"; };
@@ -244,7 +247,6 @@
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
 		EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCloudKitConstants.swift; sourceTree = "<group>"; };
 		EA96001227007EF80008DC8A /* globalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConfig.swift; sourceTree = "<group>"; };
-		EA982E3C275679BC0033F409 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -491,7 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
-				EA982E3C275679BC0033F409 /* wechat_group_code.jpg */,
+				EA369A67276E3C710051643F /* wechat_group_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
 				EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */,
 				EA9AF4DF267E10E200D77908 /* icon-120.png */,
@@ -599,6 +601,7 @@
 			isa = PBXGroup;
 			children = (
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
+				EA369A65276E39DB0051643F /* settingVCConfig.swift */,
 				1B3AEB5926CA105500C057A4 /* LWSettingViewController.swift */,
 				EA11A954274215A20058A7A8 /* LWSettingCell.swift */,
 				EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */,
@@ -925,7 +928,6 @@
 				EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
-				EA982E3D275679BC0033F409 /* wechat_group_code.jpg in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
@@ -939,6 +941,7 @@
 				EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */,
 				EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */,
 				EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */,
+				EA369A68276E3C710051643F /* wechat_group_code.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,6 +1116,7 @@
 				EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */,
 				EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */,
 				EA2235FE26D692B0001FAD1D /* ScalableImageViewModel.swift in Sources */,
+				EA369A66276E39DB0051643F /* settingVCConfig.swift in Sources */,
 				EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */,
 				1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */,
 			);

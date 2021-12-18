@@ -241,14 +241,13 @@ class LWSettingViewController: UIViewController {
         scrollView.backgroundColor = .systemBackground
         
         settingTitle.text = "设置"
-        settingTitle.font = .systemFont(ofSize: 20, weight: .bold)
+        settingTitle.font = .systemFont(ofSize: 24, weight: .bold)
         
-        saveButton.setTitle("保存", for: .normal)
-        saveButton.setTitleColor(APP_GREEN_COLOR(), for: .normal)
+        saveButton.setAttributedTitle(settingVCConfig.buttonAttributedTitle(title: "保存", color: APP_GREEN_COLOR()), for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+        
+        dismissButton.setAttributedTitle(settingVCConfig.buttonAttributedTitle(title: "返回"), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
-        dismissButton.setTitle("返回", for: .normal)
-        dismissButton.setTitleColor(.label, for: .normal)
         
         //字体
         fontContainerTitle.text = "字体"
@@ -394,13 +393,13 @@ class LWSettingViewController: UIViewController {
         saveButton.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-10)
             make.centerY.equalTo(settingTitle)
-            make.width.equalTo(50)
+            make.width.equalTo(40)
         }
         
         dismissButton.snp.makeConstraints { make in
             make.right.equalTo(saveButton.snp.left).offset(-5)
             make.centerY.equalTo(saveButton)
-            make.width.equalTo(50)
+            make.width.equalTo(40)
         }
         
         // MARK: - layout:字体

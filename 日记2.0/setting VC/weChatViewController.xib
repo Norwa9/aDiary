@@ -20,31 +20,23 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_group_code.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-Mz-dfI">
-                    <rect key="frame" x="90" y="66" width="234" height="323"/>
+                    <rect key="frame" x="90" y="287" width="234" height="323"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="323" id="jaQ-xM-YAo"/>
                     </constraints>
-                </imageView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_code.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="lae-iu-DmH">
-                    <rect key="frame" x="90" y="440" width="234" height="323"/>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="wzN-Mz-dfI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2CE-fH-GkI"/>
-                <constraint firstItem="wzN-Mz-dfI" firstAttribute="leading" secondItem="lae-iu-DmH" secondAttribute="leading" id="Igj-K5-ti4"/>
-                <constraint firstItem="wzN-Mz-dfI" firstAttribute="trailing" secondItem="lae-iu-DmH" secondAttribute="trailing" id="aSj-I4-YPb"/>
-                <constraint firstItem="wzN-Mz-dfI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="22" id="eo2-QP-NIc"/>
-                <constraint firstItem="lae-iu-DmH" firstAttribute="top" secondItem="wzN-Mz-dfI" secondAttribute="bottom" constant="51" id="rfH-Oa-Eku"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="lae-iu-DmH" secondAttribute="bottom" constant="99" id="tdg-JS-raY"/>
+                <constraint firstItem="wzN-Mz-dfI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="243" id="eo2-QP-NIc"/>
                 <constraint firstItem="wzN-Mz-dfI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="90" id="vNw-qc-cYD"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="81.696428571428569"/>
         </view>
     </objects>
     <resources>
-        <image name="wechat_code.jpg" width="1056" height="1371"/>
         <image name="wechat_group_code.jpg" width="1056" height="1329"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
