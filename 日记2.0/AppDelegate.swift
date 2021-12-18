@@ -84,6 +84,8 @@ extension AppDelegate{
         
         //1.初始化realm:读取本地数据库，填充数据源
         _ = LWRealmManager.shared
+        loadIntroductionIfNeed()
+        createTodayDiary()
         
         //2.初始化DiaryStore,云同步开始工作
         let store = DiaryStore.shared

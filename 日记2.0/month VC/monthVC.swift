@@ -90,10 +90,6 @@ class monthVC: UIViewController {
     }
     
     func loadData(){
-        // 加载数据
-        loadIntroductionIfNeed()
-        createTodayDiary()
-        
         //预加载todayVC
         editorVC = storyboard?.instantiateViewController(identifier: "todayVC")
         let _ = editorVC.view
