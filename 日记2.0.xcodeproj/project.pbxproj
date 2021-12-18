@@ -86,6 +86,7 @@
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
 		EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */; };
 		EA96001327007EF80008DC8A /* globalConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96001227007EF80008DC8A /* globalConfig.swift */; };
+		EA982E3D275679BC0033F409 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA982E3C275679BC0033F409 /* wechat_group_code.jpg */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
@@ -145,7 +146,6 @@
 		EAFF2FE227440FFA00D37BA1 /* weChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */; };
 		EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */; };
 		EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */; };
-		EAFF2FEB274411B600D37BA1 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FEA274411B600D37BA1 /* wechat_group_code.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -244,6 +244,7 @@
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
 		EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCloudKitConstants.swift; sourceTree = "<group>"; };
 		EA96001227007EF80008DC8A /* globalConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globalConfig.swift; sourceTree = "<group>"; };
+		EA982E3C275679BC0033F409 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -306,7 +307,6 @@
 		EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weChatViewController.swift; sourceTree = "<group>"; };
 		EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = weChatViewController.xib; sourceTree = "<group>"; };
 		EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_code.jpg; sourceTree = "<group>"; };
-		EAFF2FEA274411B600D37BA1 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -491,7 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
-				EAFF2FEA274411B600D37BA1 /* wechat_group_code.jpg */,
+				EA982E3C275679BC0033F409 /* wechat_group_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
 				EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */,
 				EA9AF4DF267E10E200D77908 /* icon-120.png */,
@@ -925,6 +925,7 @@
 				EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
+				EA982E3D275679BC0033F409 /* wechat_group_code.jpg in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
@@ -937,7 +938,6 @@
 				EAA29E3625C5768600AA6971 /* Assets.xcassets in Resources */,
 				EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */,
 				EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */,
-				EAFF2FEB274411B600D37BA1 /* wechat_group_code.jpg in Resources */,
 				EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

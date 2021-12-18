@@ -23,6 +23,15 @@ class globalConstantsManager{
         }
     }
     
+    func isCatalyst() -> Bool {
+        #if targetEnvironment(macCatalyst)
+            return true
+        #else
+            return false
+        #endif
+    }
+    
+    
     var currentDeviceOriention:Int = 0
     
     var zoomModelScale:CGFloat{

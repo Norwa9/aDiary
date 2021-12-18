@@ -44,7 +44,7 @@ class indicatorViewManager{
             
             indicatorView = indicatorFactory(type: type)
             topWindow?.addSubview(indicatorView!)
-            indicatorView!.snp.makeConstraints { make in
+            indicatorView?.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
             
