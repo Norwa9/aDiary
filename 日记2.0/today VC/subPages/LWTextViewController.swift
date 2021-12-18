@@ -87,7 +87,7 @@ class LWTextViewController: UIViewController {
     
     private func setupConstraints(){
         textView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5))
         }
     }
     
