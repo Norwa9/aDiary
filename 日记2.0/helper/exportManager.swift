@@ -161,6 +161,19 @@ class exportManager{
         
     }
     
+    func exportText(){
+        let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
+        var text = ""
+        for diary in allDiary{
+            if diary.year == 2020{
+                text += diary.content + "\n"
+            }
+        }
+        let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        let topVC = UIApplication.getTopViewController()!
+        topVC.present(activityVC, animated: true, completion: nil)
+        
+    }
     
 
 }

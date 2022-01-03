@@ -51,7 +51,7 @@ class topbarView: UIView {
         
         //datalabe1
         dataLable1 = UILabel()
-        dataLable1.font = appDefaultFonts.dateLable1Font
+        dataLable1.font = appDefault.dateLable1Font
         dataLable1.text = "\(curYear)年"
         dataLable1.sizeToFit()
         dataLable1.textColor = .label
@@ -74,7 +74,7 @@ class topbarView: UIView {
         //dataLable2
         dataLable2 = UILabel()
         dataLable2.text = "\(curMonth)月"
-        dataLable2.font = appDefaultFonts.dateLable2Font
+        dataLable2.font = appDefault.dateLable2Font
         dataLable2.textColor = .label
         self.addSubview(dataLable2)
         

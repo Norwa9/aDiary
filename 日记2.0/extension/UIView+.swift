@@ -128,10 +128,10 @@ extension UIView{
 extension UIView{
     ///cell点击后的弹跳动画
     func bounceAnimation(usingSpringWithDamping:CGFloat,scaleFactor:CGFloat = 0.98){
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+        UIView.animate(withDuration: 0.1, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             self.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
         } completion: { (_) in
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
+            UIView.animate(withDuration: 0.1, delay: 0, usingSpringWithDamping: usingSpringWithDamping, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
                 self.transform = .identity
             } completion: { (_) in
                 

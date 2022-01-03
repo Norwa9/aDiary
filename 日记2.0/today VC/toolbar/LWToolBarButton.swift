@@ -16,11 +16,11 @@ class LWToolBarButton: UIButton {
         }
     }
     
-    init(image:UIImage?) {
+    init(image:UIImage?,inset:UIEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)) {
         self.image = image
         super.init(frame: .zero)
         initUI()
-        initCons()
+        initCons(imageInset: inset)
     }
     
     required init?(coder: NSCoder) {
@@ -37,9 +37,9 @@ class LWToolBarButton: UIButton {
         self.addSubview(buttonImageView)
     }
     
-    func initCons(){
+    func initCons(imageInset inset: UIEdgeInsets){
         buttonImageView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+            make.edges.equalToSuperview().inset(inset)
         }
     }
     

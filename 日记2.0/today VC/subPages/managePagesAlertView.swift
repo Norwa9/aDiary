@@ -30,7 +30,7 @@ class ManagePagesAlertView: UIView {
     }
     
     func configureUI(){
-        self.backgroundColor = .white
+        self.backgroundColor = .white // 无法适配夜间模式.systemBackground
         
         //标题
         title.frame = CGRect(x: 0, y: 12, width: 150, height: 24)

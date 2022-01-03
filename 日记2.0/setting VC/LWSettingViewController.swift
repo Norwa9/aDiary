@@ -753,8 +753,9 @@ class LWSettingViewController: UIViewController {
     //MARK:-导出
     @objc func exportAll(){
         exportManager.shared.exportAll(){
-            
+
         }
+//        exportManager.shared.exportText()
     }
     
     //MARK:-请求好评

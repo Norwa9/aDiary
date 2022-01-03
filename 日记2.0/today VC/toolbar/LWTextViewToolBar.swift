@@ -99,17 +99,17 @@ class LWTextViewToolBar: UIView {
        
         
         // undo
-        undoButton = LWToolBarButton(image: UIImage(named: "undo"))
+        undoButton = LWToolBarButton(image: UIImage(named: "undo"),inset: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         undoButton.addTarget(self, action: #selector(undoButtonTapped), for: .touchUpInside)
         self.addSubview(undoButton)
         
         // redo
-        redoButton = LWToolBarButton(image: UIImage(named: "redo"))
+        redoButton = LWToolBarButton(image: UIImage(named: "redo"),inset: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         redoButton.addTarget(self, action: #selector(redoButtonTapped), for: .touchUpInside)
         self.addSubview(redoButton)
         
         //5 save
-        saveButton = LWToolBarButton(image: UIImage(named: "done"))
+        saveButton = LWToolBarButton(image: UIImage(named: "done"),inset: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         self.addSubview(saveButton)
         
@@ -120,6 +120,7 @@ class LWTextViewToolBar: UIView {
         self.addSubview(richTextPanelButton)
         
         indicator = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .lightGray, padding: .zero)
+        indicator.color = APP_GREEN_COLOR()
         indicator.alpha = 0
         saveButton.addSubview(indicator)
         
@@ -207,7 +208,7 @@ class LWTextViewToolBar: UIView {
         }
         
         indicator.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
         }
     }
     

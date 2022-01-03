@@ -24,6 +24,7 @@ class userDefaultManager{
         static let usePasswordKey = "usePassword"
         static let appPasswordKey = "password"
         static let lineSpacingKey = "lineSpacing"
+        static let textInset = "textInset"
         static let layoutType = "layoutType"
         static let requestReviewTimes = "requestReviewTimes"
         static let dailyRemindEnable = "dailyRemindEnable"
@@ -37,9 +38,10 @@ class userDefaultManager{
         
         
         
+        
     }
     
-    //MARK:-字体
+    //MARK: -字体
     static var fontName:String?{
         get{
             if let returnFontName = shared?.object(forKey: constants.fontNameKey) as? String{
@@ -160,7 +162,21 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-密码
+    // 页内边距
+    static var textInset: CGFloat {
+        get {
+            if let result = shared?.object(forKey: constants.textInset) as? CGFloat {
+                return result
+            }
+            
+            return 2.0 // 默认页内边距
+        }
+        set {
+            shared?.set(newValue, forKey: constants.textInset)
+        }
+    }
+    
+    //MARK: -密码
     static var useBiometrics:Bool{
         get{
             if let returnBiometrics = shared?.object(forKey: constants.useBiometricsKey) as? Bool{
@@ -202,7 +218,7 @@ class userDefaultManager{
     
     
     
-    //MARK:-图片
+    //MARK: -图片
     static var imageSizeStyle:Int{
         get {
             if let style = shared?.object(forKey: constants.imageSizeStyle) as? Int {
@@ -222,7 +238,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-初始化
+    //MARK: -初始化
     static var hasInitialized:Bool{
         get{
             if let initlized = shared?.object(forKey: constants.hasInitialized) as? Bool {
@@ -236,7 +252,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-首页布局
+    //MARK: -首页布局
     /*
      list = 1 // 列表
      waterFall = 2 //瀑布流
@@ -254,7 +270,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-store kit
+    //MARK: -store kit
     ///打分的请求次数
     static var requestReviewTimes:Int{
         get{
@@ -269,7 +285,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-每日提醒
+    //MARK: -每日提醒
     static var dailyRemindEnable:Bool{
         get{
             if let enable = shared?.object(forKey: constants.dailyRemindEnable) as? Bool {
@@ -332,7 +348,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-iCloud
+    //MARK: -iCloud
     static var iCloudEnable:Bool{
         get{
             if let enable = shared?.object(forKey: constants.iCloudEnable) as? Bool {
@@ -359,7 +375,7 @@ class userDefaultManager{
         }
     }
     
-    //MARK:-外观模式（深色）
+    //MARK: -外观模式（深色）
     static var appearanceMode:Int{
         get{
             if let mode = shared?.object(forKey: constants.appearanceMode) as? Int {

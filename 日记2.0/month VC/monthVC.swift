@@ -428,7 +428,7 @@ class monthVC: UIViewController {
         }
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: colors.1,
-            .font: UIFont.boldSystemFont(ofSize: 14)
+            .font: appDefault.defaultFont(size: 14)
         ]
         let attributedString = NSAttributedString(string: title, attributes: titleAttributes)
         UIView.animate(withDuration: 0.3) {
@@ -465,7 +465,7 @@ class monthVC: UIViewController {
         popover.show(filterView, fromView: filterButton)
     }
     
-    ///topbar按钮触发事件
+    //MARK: topbar按钮触发事件
     func topToolButtonTapped(button: topbarButton){
         switch button.tag {
         case 0:

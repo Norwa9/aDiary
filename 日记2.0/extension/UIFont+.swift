@@ -8,11 +8,15 @@
 import Foundation
 import UIKit
 
-class appDefaultFonts {
+class appDefault {
     //topbar年份字体
     static var dateLable1Font:UIFont = UIFont.init(name: "DIN Alternate", size: 24)!
     //topbar月份字体
-    static var dateLable2Font:UIFont = UIFont.init(name: "DIN Alternate", size: 18)!
+    static var   dateLable2Font:UIFont = UIFont.init(name: "DIN Alternate", size: 18)!
+    
+    static func defaultFont(size:CGFloat) -> UIFont{
+        return UIFont(name: "DIN Alternate", size: size)!
+    }
 }
 
 extension UIFont{

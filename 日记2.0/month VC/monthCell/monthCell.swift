@@ -356,14 +356,16 @@ extension monthCell{
             update.width.equalTo(layoutParasManager.shared.monthCellWidth)
         }
         switch layoutParasManager.shared.collectioncolumnNumber {
-        case 1:
+        case 1:// 单列
             self.contentLabel.snp.updateConstraints { update in
                 update.height.lessThanOrEqualTo(200)//恢复内容高度
             }
-        case 2:
+            self.contentLabel.alpha = 1
+        case 2: // 双列
             self.contentLabel.snp.updateConstraints { update in
                 update.height.lessThanOrEqualTo(0)//内容高度=0
             }
+            self.contentLabel.alpha = 0
         default:
             return
         }
