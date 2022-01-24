@@ -749,6 +749,14 @@ final class LWSyncEngine{
         os_log("获取到[删除]：%d个日记删除，%d个图片删除。将这些变动同步到本地数据库...", log: log, type: .info, diaryInfoIDs.count, siIDs.count)
         DiaryStore.shared.updateAfterDelete(diaryInfoIDs)
         ImageTool.shared.updateAfterDelete(siIDs)
+        
+        // 统一地更新UI：以上4个函数导致的UI变化在这里更新
+        // 也仅运行到这里时，菊花转才停下。
+        DispatchQueue.main.async {
+            indicatorViewManager.shared.stop()
+            UIApplication.getMonthVC()?.reloadMonthVC()
+            
+        }
 
     }
     

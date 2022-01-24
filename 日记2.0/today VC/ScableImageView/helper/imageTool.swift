@@ -220,18 +220,11 @@ class ImageTool{
     func updateAfterSync(_ images:[scalableImage]){
         if images.isEmpty{
             //云端没有更新
-            indicatorViewManager.shared.stop()
             return
         }
         //1.将云端变动保存到本地数据库
         images.forEach { updatedImage in
             self.addToRealm(si: updatedImage)
-        }
-        DispatchQueue.main.async {
-            //2.更新UI
-            indicatorViewManager.shared.stop()
-//            UIApplication.getMonthVC().reloadMonthVC()
-//            UIApplication.getTodayVC()?.updateUI()
         }
     }
     
@@ -239,7 +232,6 @@ class ImageTool{
     func updateAfterDelete(_ deletedIDs:[String]){
         if deletedIDs.isEmpty{
             //云端通知没有删除事件
-            indicatorViewManager.shared.stop()
             return
         }
         
@@ -253,13 +245,6 @@ class ImageTool{
             if let index = userDefaultManager.imageDeleteQueue.firstIndex(of: uuid){
                 userDefaultManager.imageDeleteQueue.remove(at: index)
             }
-        }
-        
-        //2.更新UI
-        DispatchQueue.main.async {
-            indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC()?.reloadMonthVC()
-            
         }
     }
     

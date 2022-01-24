@@ -154,7 +154,6 @@ public final class DiaryStore: ObservableObject {
     func updateAfterSync(_ diaries:[diaryInfo]){
         if diaries.isEmpty{
             //云端没有更新
-            indicatorViewManager.shared.stop()
             return
         }
         os_log("[日记]将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
@@ -169,20 +168,12 @@ public final class DiaryStore: ObservableObject {
         
         
         os_log("[日记]云端更新已应用到本地数据库!", log: log, type: .debug)
-        DispatchQueue.main.async {
-            //2.更新UI
-            indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC()?.reloadMonthVC()
-            UIApplication.getTodayVC()?.updateUI()
-        }
-        
     }
     
     /// 应用云端的删除到本地
     func updateAfterDelete(_ deletedIDs:[String]){
         if deletedIDs.isEmpty{
             //云端通知没有删除事件
-            indicatorViewManager.shared.stop()
             return
         }
         
@@ -202,12 +193,6 @@ public final class DiaryStore: ObservableObject {
         }
         
         os_log("[日记]云端的删除已应用到本地数据库!", log: log, type: .debug)
-        //2.更新UI
-        DispatchQueue.main.async {
-            indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC()?.reloadMonthVC()
-            
-        }
     }
     
     //MARK: :-处理CloudKit发来的更新通知
