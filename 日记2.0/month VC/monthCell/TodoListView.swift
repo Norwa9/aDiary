@@ -143,7 +143,6 @@ extension TodoListView:todoListDelegate{
         //2.
         //更新monthVC的collection view的布局，涉及到其他cell的位置改变
         //不能只更新单个cell
-        let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//更新全部cell
+        UIApplication.getMonthVC()?.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//更新全部cell
     }
 }

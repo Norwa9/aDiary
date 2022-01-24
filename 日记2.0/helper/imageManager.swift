@@ -27,6 +27,7 @@ class imageManager{
         var images:[UIImage] = []
         for model in models {
             let uuid = model.uuid
+            // print("读取日记插图：\(uuid)")
             // print("uuid:\(uuid)")
             if let img = ImageTool.shared.loadImage(uuid: uuid){
                 images.append(img.resizeToFitCell())

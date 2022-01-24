@@ -636,8 +636,7 @@ class LWSettingViewController: UIViewController {
         userDefaultManager.lineSpacing = tempLineSpacing
         userDefaultManager.imageSizeStyle = tempImageSizeStyle
         
-        let monthVC = UIApplication.getMonthVC()
-        monthVC.reloadCollectionViewData()
+        UIApplication.getMonthVC()?.reloadCollectionViewData()
         
         dismiss(animated: true, completion: nil)
     }

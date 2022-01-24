@@ -20,8 +20,12 @@ extension UIApplication{
         }
     }
     
-    static func getMonthVC() -> monthVC {
-        return UIApplication.shared.windows[0].rootViewController as! monthVC
+    static func getMonthVC() -> monthVC? {
+        if let monthVC = UIApplication.shared.windows.first?.rootViewController as? monthVC{
+            return monthVC
+        }else{
+            return nil
+        }
     }
     
     //返回最上层的ViewController

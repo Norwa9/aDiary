@@ -258,7 +258,7 @@ class ImageTool{
         //2.更新UI
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC().reloadMonthVC()
+            UIApplication.getMonthVC()?.reloadMonthVC()
             
         }
     }

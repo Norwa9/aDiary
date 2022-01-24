@@ -65,6 +65,9 @@ class customAlertView: UIView {
     @objc func createDiary() {
         
         if let createDate = dateString{
+            guard let monthVC = monthVC else {
+                return
+            }
             //补日记
             let createdDiary = diaryInfo(dateString: createDate)
             LWRealmManager.shared.add(createdDiary)
@@ -76,7 +79,7 @@ class customAlertView: UIView {
              */
             let dismissQueue = DispatchQueue(label: "串行")
             dismissQueue.sync {
-                self.monthVC.popover.dismiss()
+                self.monthVC?.popover.dismiss()
             }
             dismissQueue.sync {
                 //TODO:打开todayVC
@@ -88,7 +91,7 @@ class customAlertView: UIView {
     }
     
     @objc func cancel() {
-        monthVC.popover.dismiss()
+        monthVC?.popover.dismiss()
     }
     
     

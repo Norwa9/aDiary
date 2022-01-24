@@ -44,13 +44,15 @@ class indicatorViewManager{
             
             indicatorView = indicatorFactory(type: type)
             topWindow?.addSubview(indicatorView!)
-            indicatorView?.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+            if let indicatorView = indicatorView {
+                indicatorView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                //开始转
+                indicatorView.present()
+                isShowingIndicator = true
             }
             
-            //开始转
-            indicatorView!.present()
-            isShowingIndicator = true
         }
         
     }

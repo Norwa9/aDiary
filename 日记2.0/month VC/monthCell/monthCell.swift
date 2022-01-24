@@ -13,7 +13,7 @@ class monthCell: UICollectionViewCell {
     //static let KphotoHeight:CGFloat = 150
     var isFilterMode:Bool{
         get{
-            UIApplication.getMonthVC().isFilterMode
+            UIApplication.getMonthVC()?.isFilterMode ?? false
         }
     }
     
@@ -417,7 +417,7 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let monthVC = UIApplication.getMonthVC()
-        monthVC.presentEditorVC(withViewModel: diary)
+        monthVC?.presentEditorVC(withViewModel: diary)
     }
     
     
@@ -428,10 +428,13 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
 extension monthCell{
     @objc func albumViewTapped(){
         let monthVC = UIApplication.getMonthVC()
-        monthVC.presentEditorVC(withViewModel: diary)
+        monthVC?.presentEditorVC(withViewModel: diary)
     }
     
     @objc func pagesSegmentDidSelected(_ sender:UISegmentedControl){
+        guard let monthVC = UIApplication.getMonthVC() else {
+            return
+        }
         let index = sender.selectedSegmentIndex
         guard let selectedDiary = LWRealmManager.shared.queryPage(ofDate: diary.date, pageIndex: index) else{
             return
@@ -440,8 +443,7 @@ extension monthCell{
         self.diary = selectedDiary
         self.updateUI()
         
-        //平滑更新collectionView的布局
-        let monthVC = UIApplication.getMonthVC()
+        //平滑更新collectionView的布局C =
         monthVC.filteredDiaries[cellRow] = selectedDiary//替换之后，cell
         monthVC.flowLayout.dateSource = monthVC.filteredDiaries//这样才能更新布局
         monthVC.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//平滑更新布局

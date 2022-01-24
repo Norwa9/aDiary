@@ -94,7 +94,7 @@ public final class DiaryStore: ObservableObject {
         let predicate = NSPredicate(format: "id == %@", id)
         LWRealmManager.shared.delete(predicate: predicate)
         
-        UIApplication.getMonthVC().reloadMonthVC()
+        UIApplication.getMonthVC()?.reloadMonthVC()
     }
     
     ///删除一个日期的主页面和所有子页面
@@ -172,7 +172,7 @@ public final class DiaryStore: ObservableObject {
         DispatchQueue.main.async {
             //2.更新UI
             indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC().reloadMonthVC()
+            UIApplication.getMonthVC()?.reloadMonthVC()
             UIApplication.getTodayVC()?.updateUI()
         }
         
@@ -205,7 +205,7 @@ public final class DiaryStore: ObservableObject {
         //2.更新UI
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC().reloadMonthVC()
+            UIApplication.getMonthVC()?.reloadMonthVC()
             
         }
     }

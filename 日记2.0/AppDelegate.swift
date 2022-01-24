@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let monthVC = UIApplication.getMonthVC()
         let res = LWRealmManager.shared.queryFor(dateCN: url)
         if !res.isEmpty{
-            monthVC.presentEditorVC(withViewModel: res.first!)
+            monthVC?.presentEditorVC(withViewModel: res.first!)
         }
         
         return true

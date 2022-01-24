@@ -25,29 +25,43 @@ class LWDBUpdater{
     private func upgradeDB32(){
         var count = 0
         let allCount = LWRealmManager.shared.localDatabase.count
-        if allCount == 0{
-            print("新用户不更新3.2DB")
-            return // 新用户不用更新、已经标记过更新的不用再更新
-        }
+        
+        /*
+         1. 旧用户(<3.2版本)正常更新
+         2. 旧用户(<3.2版本)卸载重装（忽略）
+         3. 新用户正常安装
+         3. 新用户卸载后重装
+         */
         if userDefaultManager.hasUpdated32{
-            print("已经3.2DB更新过了")
+            print("已被标记为已升级，跳过升级3.2DB")
             return
         }
         for diary in LWRealmManager.shared.localDatabase{
-            guard let rtfd = diary.rtfd,let attrText:NSAttributedString = LoadRTFD(rtfd: rtfd) else {
+            guard
+                let rtfd = diary.rtfd,
+                let attrText:NSAttributedString = LoadRTFD(rtfd: rtfd)
+            else {
                 print("\(diary.date)没有富文本，跳过该循环")
                 continue
             }
+            
             let imageAttrTuples = diary.imageAttributesTuples
+            if imageAttrTuples.isEmpty{
+                continue // 本篇日记没有图片，跳过
+            }
+            
+            let muAttrText:NSMutableAttributedString =  NSMutableAttributedString(attributedString: attrText)
             let imageModels = diary.scalableImageModels
             var newImageModels = [ScalableImageModel]()
             for tuple in imageAttrTuples{
                 let location = tuple.0
                 if location >= attrText.length - 1{
-                    print("跳过处理，防止：attribute at 的 Out of bounds")
-                    continue
+                    // 处理最后一个字符的图片时，attribute at 会out of bounds
+                    // 为了能够迁移这种图片，这里的解决办法是直接给日记再在末尾添加一个空格" "，以防止out of bounds报错。
+                    muAttrText.append(NSAttributedString(string: " "))
                 }
-                if let attchment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: .zero, textContainer: NSTextContainer(), characterIndex: location){
+                if let attchment = muAttrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: .zero, textContainer: NSTextContainer(), characterIndex: location){
+                    print("处理\(location)的图片")
                     
                     if let model = imageModels.filter({$0.location == location}).first{
                         if model.uuid == ""{
@@ -75,7 +89,6 @@ class LWDBUpdater{
                 diary.scalableImageModels = newImageModels
                 diary.editedButNotUploaded = true
             }// 暂不上传，等到startEngine再上传
-             // DiaryStore.shared.addOrUpdate(diary)
             count += 1
             print("3.2版本数据库更新进度进度：已处理\(count)篇")
         }
