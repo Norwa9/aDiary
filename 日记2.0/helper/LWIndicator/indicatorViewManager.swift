@@ -43,8 +43,10 @@ class indicatorViewManager{
             topWindow?.isUserInteractionEnabled = false
             
             indicatorView = indicatorFactory(type: type)
-            topWindow?.addSubview(indicatorView!)
-            if let indicatorView = indicatorView {
+            if let topWindow = topWindow,
+               let indicatorView = indicatorView
+            {
+                topWindow.addSubview(indicatorView)
                 indicatorView.snp.makeConstraints { make in
                     make.edges.equalToSuperview()
                 }
