@@ -17,8 +17,6 @@ class exportManager{
         let H = max(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
         indicatorViewManager.shared.start(type: .progress)
         let textView = LWTextView(frame: CGRect(x: 0, y: 0, width: W, height: H))
-        let textViewBounds = textView.bounds
-        let textContainer = textView.textContainer
         let formatter = TextFormatter(textView: textView)
         
         let dateFomatter = DateFormatter()
@@ -65,10 +63,14 @@ class exportManager{
                     alldiaryString.insert(NSAttributedString(string: "\n"), at: alldiaryString.length)
                     
                     //正文
-                    let imageAttrTuples = diary.imageAttributesTuples
                     let imageModels = diary.scalableImageModels
                     let todoAttrTuples = diary.todoAttributesTuples
-                    let formatteredAString = formatter.processAttrStringForSharingAndExport(aString: aString, bounds: textViewBounds, container: textContainer, imageAttrTuples: imageAttrTuples, todoAttrTuples: todoAttrTuples,imageModels: imageModels)
+                    let formatteredAString = formatter.processAttrString(
+                        aString: aString,
+                        todoAttrTuples: todoAttrTuples,
+                        imageModels: imageModels,
+                        isSharingMode: true
+                    )
                     var emojis = diary.emojis.joined()
                     if emojis.length != 0{
                         emojis += "\n"

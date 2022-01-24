@@ -35,6 +35,9 @@ class userDefaultManager{
         static let appearanceMode = "appearanceMode"
         static let deleteBufferIDs = "deleteBufferIDs"
         static let autoCreate = "autoCreate"
+        static let imageUploadQueue = "imageUploadQueue"
+        static let imageDeleteQueue = "imageDeleteQueue"
+        static let hasUpdated32 = "updated32"
         
         
         
@@ -375,6 +378,34 @@ class userDefaultManager{
         }
     }
     
+    /// 图片待上传队列
+    static var imageUploadQueue:[String]{
+        get{
+            if let uuids = shared?.object(forKey: constants.imageUploadQueue) as? [String] {
+                return uuids
+            }else{
+                return []
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.imageUploadQueue)
+        }
+    }
+    
+    /// 图片待删除队列
+    static var imageDeleteQueue:[String]{
+        get{
+            if let uuids = shared?.object(forKey: constants.imageDeleteQueue) as? [String] {
+                return uuids
+            }else{
+                return []
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.imageDeleteQueue)
+        }
+    }
+    
     //MARK: -外观模式（深色）
     static var appearanceMode:Int{
         get{
@@ -403,8 +434,21 @@ class userDefaultManager{
         }
     }
     
+    //MARK: 版本更新
     
-    
+    //是否已经更新3.2的数据库版本
+    static var hasUpdated32:Bool{
+        get{
+            if let state = shared?.object(forKey: constants.hasUpdated32) as? Bool {
+                return state
+            }else{
+                return false
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.hasUpdated32)
+        }
+    }
 }
 
 

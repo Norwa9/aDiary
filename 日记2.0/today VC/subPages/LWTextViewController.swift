@@ -236,7 +236,7 @@ extension LWTextViewController : UIScrollViewDelegate{
     //MARK:-scrollViewDidScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        print("text view content offset : \(y)")
+        // sprint("text view content offset : \(y)")
         
         //禁止下拉
         if y < 0{
@@ -274,8 +274,9 @@ extension LWTextViewController{
         
         //1.重新读取textView上的当前内容，目的是显示正确的图片bounds
         textView.resignFirstResponder() // 保存
-        let textFormatter = TextFormatter(textView: textView)
-        textFormatter.loadTextViewContent(with: model)
+        // let textFormatter = TextFormatter(textView: textView)
+        // textFormatter.loadTextViewContent(with: model)
+        self.load()
         
         //3.调整toolbar
         UIView.animate(withDuration: 0.5) {[self] in

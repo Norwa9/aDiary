@@ -23,7 +23,7 @@ class diaryInfo:Object,Codable{
     @objc dynamic var day:Int = 0
     @objc dynamic var content:String = ""
     @objc dynamic var islike:Bool = false
-    @objc dynamic var mood:String = ""
+    @objc dynamic var mood:String = "" // mood被用来存储序列化的ScalableImageModel了
     @objc dynamic var containsImage:Bool = false
     @objc dynamic var rtfd:Data? = nil
     @objc dynamic var modTime:Date? = nil

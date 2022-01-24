@@ -7,16 +7,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4E78157B-27A9-43CD-BD52-B379A374F46A"
+            uuid = "7A1DACDD-521D-4198-B237-338B24A4EAE4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x65e5;&#x8bb0;2.0/today VC/toolbar/LWTextViewToolBar.swift"
+            filePath = "&#x65e5;&#x8bb0;2.0/today VC/ScableImageView/helper/imageTool.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "colorPickerViewController(_:didSelect:continuously:)"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "loadImage(uuid:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7A1DACDD-521D-4198-B237-338B24A4EAE4 - eb607984d1300c7a"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "&#x65e5;&#x8bb0;2_0.ImageTool.loadImage(uuid: Swift.String) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "&#x65e5;&#x8bb0;2.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luowei/Desktop/App/aDiary/%E6%97%A5%E8%AE%B02.0/today%20VC/ScableImageView/helper/imageTool.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "336">
+               </Location>
+               <Location
+                  uuid = "7A1DACDD-521D-4198-B237-338B24A4EAE4 - eb607984d1300c7a"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "&#x65e5;&#x8bb0;2_0.ImageTool.loadImage(uuid: Swift.String) -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "&#x65e5;&#x8bb0;2.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luowei/Desktop/App/aDiary/%E6%97%A5%E8%AE%B02.0/today%20VC/ScableImageView/helper/imageTool.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "392">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9045644A-3BBC-47EB-997B-78A8963DA2D3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x65e5;&#x8bb0;2.0/extension/NSAttrString+.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "parseAttribuedText(diary:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

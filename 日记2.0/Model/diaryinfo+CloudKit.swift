@@ -20,7 +20,7 @@ extension diaryInfo{
     
 }
 
-enum RecordKey: String {
+enum diaryInfoRecordKey: String {
     case date
     case year
     case month
@@ -67,25 +67,12 @@ extension diaryInfo {
     struct  RecordError:LocalizedError {
         var localizedDescription:String
         
-        static func missingKey(_ key: RecordKey) -> RecordError {
+        static func missingKey(_ key: diaryInfoRecordKey) -> RecordError {
             RecordError(localizedDescription: "Missing required key: \(key.rawValue)")
         }
     }
     
-    ///解决冲突的方案：保留最新的record
-    static func resolveConflict(clientRecord: CKRecord, serverRecord: CKRecord) -> CKRecord? {
-        // Most recent record wins. This might not be the best solution but YOLO.
-
-        guard let clientDate = clientRecord.modificationDate, let serverDate = serverRecord.modificationDate else {
-            return clientRecord
-        }
-
-        if clientDate > serverDate {
-            return clientRecord
-        } else {
-            return serverRecord
-        }
-    }
+    
     
     ///解决冲突：离线修改的数据是新的，云端的数据是旧的。不能直接让云端覆盖本地
     //////而是保留二者中最新者。
@@ -162,7 +149,7 @@ extension CKRecord {
 
 }
 extension CKRecord {
-    subscript(key: RecordKey) -> Any? {
+    subscript(key: diaryInfoRecordKey) -> Any? {
         get {
             return self[key.rawValue]
         }

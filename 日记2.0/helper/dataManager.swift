@@ -94,7 +94,7 @@ class dataManager {
         
         self.tags = Array(tagsSet)
         
-        print("所有tag的并集为\(tagsSet),遍历所有的tag的处理时间:\(d2.timeIntervalSince(d1))")
+        // print("所有tag的并集为\(tagsSet),遍历所有的tag的处理时间:\(d2.timeIntervalSince(d1))")
     }
     
     

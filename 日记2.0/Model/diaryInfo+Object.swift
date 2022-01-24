@@ -36,6 +36,7 @@ extension diaryInfo{
 
 extension diaryInfo{
     ///元组数组：存储所有.image属性的下标以及对应的值
+    ///>3.1版本开始弃用（2022.1.22）
     var imageAttributesTuples:[(Int,Int)]{
         get{
             return realmImageAttrTuples.map { realmTuple in

@@ -84,12 +84,21 @@ extension AppDelegate{
         
         //1.初始化realm:读取本地数据库，填充数据源
         _ = LWRealmManager.shared
+        
+        // 2. 检查本地数据库是否要更新
+        LWDBUpdater.shared.checkDBUpdate()
+        
+        // 3.
         loadIntroductionIfNeed()
         createTodayDiary()
         
-        //2.初始化DiaryStore,云同步开始工作
+        // 4.初始化DiaryStore，[日记]云同步开始工作
         let store = DiaryStore.shared
         store.startEngine()
+        
+        // 5.初始化imageTool，[图片]云同步开始工作
+        let imageTool = ImageTool.shared
+        imageTool.startEngine()
     }
     
     ///配置数据库，用于数据库的迭代更新

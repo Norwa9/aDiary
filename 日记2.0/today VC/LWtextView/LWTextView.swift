@@ -139,7 +139,7 @@ class LWTextView: SubviewAttachingTextView {
 
 }
 
-//MARK:-scalableImageView
+//MARK: -scalableImageView
 extension LWTextView{
     func reloadScableImage(endView: ScalableImageView,shouldAddDoneView:Bool = false) {
         print("reloadScableImage")
@@ -163,7 +163,7 @@ extension LWTextView{
     }
 }
 
-//MARK:-默认输入特性
+//MARK: -默认输入特性
 extension LWTextView {
     ///设置默认的文字输入模式
     func setDefaultTypingAttributes(){

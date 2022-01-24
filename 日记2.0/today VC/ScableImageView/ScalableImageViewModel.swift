@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SubviewAttachingTextView
 import WXImageCompress
+import AttributedString
 
 class ScalableImageViewModel: NSObject {
     var image:UIImage?//image不是必须的
@@ -19,12 +20,15 @@ class ScalableImageViewModel: NSObject {
     var contentMode:UIView.ContentMode = .scaleAspectFill
     var isEditing:Bool = false
     var shouldShowDoneView:Bool = false
+    var uuid:String = ""
     
     
-    ///构造默认view的viewModel
+    // 添加图片时，创建viewModel
     init(location:Int,image:UIImage?) {
+        // location
         self.location = location
         
+        // image
         var imageAspectRation:CGFloat
         if let image = image{
             imageAspectRation = image.size.height / image.size.width
@@ -34,23 +38,29 @@ class ScalableImageViewModel: NSObject {
         let viewWidth = (globalConstantsManager.shared.kScreenWidth - 2 * 15) / userDefaultManager.imageScalingFactor
         let viewHeight = (viewWidth * imageAspectRation)
         self.bounds = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
-        
-        print("压缩前大小")//例如原图21MB
-        image?.printImageDataSize()
         let compressedImage = image?.wxCompress()
         self.image = compressedImage
-        print("压缩后大小")//压缩后4MB
-        compressedImage?.printImageDataSize()
+        let uuid = UUID().uuidString // 插入图片时使用随机产生的uuid
+        self.uuid = uuid
+        let si = scalableImage(image: compressedImage, uuid: uuid)
+        ImageTool.shared.addImages(SIs: [si]) // 创建viewModel的同时，创建它的si
+        
+        // paraStyle
         self.paraStyle = imageCenterParagraphStyle
+        
+        
         super.init()
     }
     
-    init(model:ScalableImageModel,image:UIImage){
-        self.image = image
+    // 读取model时创建viewModel
+    init(model:ScalableImageModel){
+        self.uuid = model.uuid
+        self.image = ImageTool.shared.loadImage(uuid: self.uuid) // 新版本(>3.1)，从Realm读取图片
         self.location = model.location
         
         //恢复imageView的bounds，这个需要根据设备来适应
-        let bounds = CGRect.init(string: model.bounds) ?? .zero
+        let bounds = CGRect.init(string: model.bounds)
+        ?? CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth * 0.8, height: globalConstantsManager.shared.kScreenHeight * 0.8)
         let deviceAdaptatedWidth = globalConstantsManager.shared.kScreenWidth * model.viewScale
         let imageViewAspectRatio = bounds.height / bounds.width
         let deviceAdaptatedHeight = deviceAdaptatedWidth * imageViewAspectRatio
@@ -104,7 +114,7 @@ class ScalableImageViewModel: NSObject {
             paraStyle = .right
         }
         
-        let model = ScalableImageModel(location: location, bounds: bounds, paraStyle: paraStyle.rawValue,contentMode: contentMode.rawValue)
+        let model = ScalableImageModel(location: location, bounds: bounds, paraStyle: paraStyle.rawValue,contentMode: contentMode.rawValue, uuid: uuid)
         return model
     }
     

@@ -67,13 +67,7 @@ final class LWSyncEngine{
             defaults.set(newValue, forKey: createdPrivateSubscriptionKey)
         }
     }
-    
-    ///获取云端最新数据后调用，用来更新本地数据
-    var didUpdateModels:([diaryInfo]) -> Void = { _ in }
-    
-    ///删除云端数据后调用，用来更新本地数据
-    var didDeleteModels: ([String]) -> Void = { _ in }
-    
+
     init(defaults:UserDefaults) {
         self.defaults = defaults
         
@@ -82,7 +76,7 @@ final class LWSyncEngine{
     
     
     
-    //MARK:-初始化
+    //MARK: -初始化
     public func start(){
         print("开启LWSyncEngine")
         //0.最开始检查用户状态
@@ -105,7 +99,7 @@ final class LWSyncEngine{
         })
     }
     
-    //MARK:-检查iCloud账户可用性
+    //MARK:  -检查iCloud账户可用性
     typealias didReceiveStatusBlock = (_ status:CKAccountStatus) ->Void
     ///检查账户的可用性
     func checkAccountStatus(_ completion:@escaping didReceiveStatusBlock){
@@ -164,7 +158,7 @@ final class LWSyncEngine{
     
     
     
-    //MARK:-检查&创建自定义zone
+    //MARK: -检查&创建自定义zone
     ///创建自定义Zone
     private func createCustomZoneIfNeed(){
         guard !createdCustomZone else{
@@ -231,7 +225,7 @@ final class LWSyncEngine{
         cloudOperationQueue.addOperation(operation)
     }
     
-    //MARK:-检查&创建数据库的订阅
+    //MARK: -检查&创建数据库的订阅
     ///创建私有数据库的订阅
     private func createPrivateSubscriptionsIfNeeded(){
         guard !createdPrivateSubscription else {
@@ -309,7 +303,7 @@ final class LWSyncEngine{
         cloudOperationQueue.addOperation(operation)
     }
     
-    //MARK:-上传
+    //MARK: -上传
     ///上传未上传的Model
     func uploadLocalDataNotUploadedYet(){
         os_log("检查本地未上传的日记...",log:log,type:.debug)
@@ -332,20 +326,26 @@ final class LWSyncEngine{
         let recordsNeedsUpload = needsUpload.map({ $0.record })
         
         uploadRecords(recordsNeedsUpload)
-        deleteRecords(needsDeleteIDs)
+        deleteRecords(needsDeleteIDs,recordType: .diaryInfo)
     }
     
-    ///上传指定Model
-    func upload(_ diray: diaryInfo) {
-        
-        uploadRecords([diray.record])
+    ///统一接口：上传指定Recored
+    public func upload(_ records: [CKRecord]) {
+        if userDefaultManager.iCloudEnable == false{
+            return
+        }
+        if records.isEmpty{
+            return
+        }
+        print("开始上传\(records.count)个项目,类型是\(records.first?.recordType ?? " ")")
+        uploadRecords(records)
     }
     
     ///上传指定的记录
     private func uploadRecords(_ records: [CKRecord]) {
         guard !records.isEmpty else { return }
 
-        os_log("开始上传 %d 个修改(或新增)的记录...", log: log, type: .debug,records.count)
+        // os_log("开始上传 %d 个修改(或新增)的记录...", log: log, type: .debug,records.count)
 
         let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)
 
@@ -357,7 +357,7 @@ final class LWSyncEngine{
 
             os_log("CloudKit conflict with record of type %{public}@", log: self.log, type: .error, record.recordType)
 
-            guard let resolvedRecord = error.resolveConflict(with: diaryInfo.resolveConflict) else {
+            guard let resolvedRecord = error.resolveConflict(with: CKRecord.resolveConflict) else {
                 os_log(
                     "Resolving conflict with record of type %{public}@ returned a nil record. Giving up.",
                     log: self.log,
@@ -382,7 +382,7 @@ final class LWSyncEngine{
                     self.handleUploadError(error, records: records)
                 }
             } else {
-                os_log("成功上传%d个记录！", log: self.log, type: .info, records.count)
+                // os_log("成功上传%d个记录!", log: self.log, type: .info, records.count)
 
                 DispatchQueue.main.async {
                     guard let serverRecords = serverRecords else { return }
@@ -420,47 +420,55 @@ final class LWSyncEngine{
         }
     }
     
-    ///更新本地数据库
-    ///主要功能：将上传成功的Model打上标记
+    /// 上传云端成功后，本地需要完成的事情
+    /// 主要功能：将上传成功的Model打上"已上传"的标记
+    /// 以后如果新增recordType，需要新增这里的逻辑
     private func updateLocalModelsAfterUpload(with records: [CKRecord]) {
-        os_log("将buffer内的本地记录标记为[已上传]，并清空buffer", log: self.log, type: .error)
-        let db = LWRealmManager.shared.localDatabase
-        for r in records{
-            guard let model = db.first(where: { $0.id == r.recordID.recordName }) else {
-                //print("continue")
-                continue
-                
-            }
-            //*赋值ckData，表示该日记已经在云端有副本
-            LWRealmManager.shared.update {
-                model.editedButNotUploaded = false
-                model.ckData = r.encodedSystemFields
-            }
+        print("cloudOperationQueue完成比例：:\(self.cloudOperationQueue.progress.fractionCompleted)")
+        guard let recordType = records.first?.recordType else {return}
+        if recordType == .diaryInfo{
+            DiaryStore.shared.setUploaded(records: records)
         }
-
+        else if recordType == .scalableImage{
+            ImageTool.shared.setUploaded(records: records)
+        }
+        
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
         }
-    }
-    
-    //MARK:-手动删除
-    ///删除指定Model
-    func delete(_ id: String) {
-        if !userDefaultManager.deleteBufferIDs.contains(id){
-            userDefaultManager.deleteBufferIDs.append(id)
-        }
-        print("[delete]当前的deleteBuffer大小:\(userDefaultManager.deleteBufferIDs.count)")
-        deleteRecords([id])
         
     }
     
-    private func deleteRecords(_ ids:[String]){
+    //MARK: -手动删除
+    ///外界的唯一删除接口
+    ///删除指定id的record
+    public func delete(_ ids: [String],recordType:CKRecord.RecordType) {
+        if userDefaultManager.iCloudEnable == false{
+            return
+        }
+        if ids.isEmpty{
+            return
+        }
+        
+        var nonEmptyIDs = [String]()
+        for id in ids {
+            if id != ""{
+                nonEmptyIDs.append(id)
+            }
+        }
+        print("开始删除\(ids.count)个项目,类型是\(recordType)")
+        deleteRecords(nonEmptyIDs,recordType: recordType)
+        
+    }
+    
+    
+    private func deleteRecords(_ ids:[String],recordType:CKRecord.RecordType){
         guard !ids.isEmpty else{
             indicatorViewManager.shared.stop()
             return
         }
         
-        os_log("正在删除%d个记录...", log: log, type: .debug,ids.count)
+        // os_log("正在删除%d个记录...", log: log, type: .debug,ids.count)
         
         let recordIDs = ids.map { (id) -> CKRecord.ID in
             return CKRecord.ID(recordName: id,zoneID: SyncConstants.customZoneID)
@@ -476,7 +484,7 @@ final class LWSyncEngine{
 
             os_log("CloudKit conflict with record of type %{public}@", log: self.log, type: .error, record.recordType)
 
-            guard let resolvedRecord = error.resolveConflict(with: diaryInfo.resolveConflict) else {
+            guard let resolvedRecord = error.resolveConflict(with: CKRecord.resolveConflict) else {
                 os_log(
                     "Resolving conflict with record of type %{public}@ returned a nil record. Giving up.",
                     log: self.log,
@@ -489,7 +497,7 @@ final class LWSyncEngine{
 
             os_log("Conflict resolved, will retry delete", log: self.log, type: .info)
 
-            self.deleteRecords([resolvedRecord.recordID.recordName])
+            self.deleteRecords([resolvedRecord.recordID.recordName], recordType:recordType)
         }
 
         operation.modifyRecordsCompletionBlock = { [weak self] _, recordIDs, error in
@@ -499,7 +507,7 @@ final class LWSyncEngine{
                 os_log("删除记录失败: %{public}@", log: self.log, type: .error, String(describing: error))
 
                 DispatchQueue.main.async {
-                    self.handleDeleteError(error, recordIDs: ids)
+                    self.handleDeleteError(error, recordIDs: ids,recordType: recordType)
                 }
             } else {
                 os_log("成功删除云端上的%d个记录！", log: self.log, type: .info, ids.count)
@@ -507,14 +515,8 @@ final class LWSyncEngine{
                 DispatchQueue.main.async {
                     //本地数据已删除、云端数据也已删除，结束指示器
                     indicatorViewManager.shared.stop()
-                    if let ids = recordIDs{
-                        for id in ids{
-                            if let index = userDefaultManager.deleteBufferIDs.firstIndex(of: id.recordName){
-                                userDefaultManager.deleteBufferIDs.remove(at: index)
-                                print("[complete]成功删除云端数据，移除出数组。现在deleteBuffer的大小为：\(userDefaultManager.deleteBufferIDs.count)")
-                            }
-                        }
-                    }
+                    
+                    self.updateLocalModelsAfterDelete(with: recordIDs, recordType: recordType)
                 }
             }
         }
@@ -527,7 +529,7 @@ final class LWSyncEngine{
     }
     
     ///处理删除错误
-    private func handleDeleteError(_ error: Error, recordIDs: [String]) {
+    private func handleDeleteError(_ error: Error, recordIDs: [String],recordType:CKRecord.RecordType) {
         guard let ckError = error as? CKError else {
             os_log("Error was not a CKError, giving up: %{public}@", log: self.log, type: .fault, String(describing: error))
             indicatorViewManager.shared.stop()
@@ -539,7 +541,7 @@ final class LWSyncEngine{
             
             fatalError("Not implemented: batch deletes. Here we should divide the records in chunks and delete in batches instead of trying everything at once.")
         } else {
-            let result = error.retryCloudKitOperationIfPossible(self.log) { self.deleteRecords(recordIDs) }
+            let result = error.retryCloudKitOperationIfPossible(self.log) { self.deleteRecords(recordIDs,recordType: recordType) }
 
             if !result {
                 os_log("Error is not recoverable: %{public}@", log: self.log, type: .error, String(describing: error))
@@ -547,10 +549,22 @@ final class LWSyncEngine{
         }
     }
     
+    /// 云端删除成功后，本地需要完成的事情
+    /// 以后如果新增recordType，需要新增这里的逻辑
+    private func updateLocalModelsAfterDelete(with recordIDs: [CKRecord.ID]?,recordType:CKRecord.RecordType) {
+        if recordType == .diaryInfo{
+            DiaryStore.shared.setDeleted(recordIDs: recordIDs)
+        }
+        else if recordType == .scalableImage{
+            ImageTool.shared.setDeleted(recordIDs: recordIDs)
+        }
+        
+    }
     
     
     
-    //MARK:-获取云端数据库的变化
+    
+    //MARK: -获取云端数据库的变化
     private lazy var privateChangeTokenKey: String = {
         return "TOKEN-\(SyncConstants.customZoneID.zoneName)"
     }()
@@ -590,10 +604,11 @@ final class LWSyncEngine{
     
     ///获取云端的变动
     ///目前在两个场合中使用：1、App启动时；2、接收到远程通知时
+    ///能够拉取1.changed、2.deleted的records
     func fetchRemoteChanges() {
         
         var changedRecords: [CKRecord] = []
-        var deletedRecordIDs: [CKRecord.ID] = []
+        var deletedRecords: [(CKRecord.ID,CKRecord.RecordType)] = []
 
         let operation = CKFetchRecordZoneChangesOperation()
         operation.name = "fetchRemoteChanges"
@@ -626,10 +641,10 @@ final class LWSyncEngine{
         //当发现有改动数据需要同步
         operation.recordChangedBlock = { changedRecords.append($0) }
         //当发现有删除数据需要同步
-        operation.recordWithIDWasDeletedBlock = { recordID, _ in
+        operation.recordWithIDWasDeletedBlock = { recordID, recordType in
             // In the future we may need to use the second arg to this closure and map
             // between record types and deleted record IDs (when we need to sync more types)
-            deletedRecordIDs.append(recordID)
+            deletedRecords.append((recordID,recordType))
         }
         
         //完成所有的变动获取后执行
@@ -669,7 +684,7 @@ final class LWSyncEngine{
                 os_log("zone内所有变动情况(新增/修改/删除))获取完毕！", log: self.log, type: .info)
 
                 DispatchQueue.main.async {
-                    self.commitServerChangesToDatabase(with: changedRecords, deletedRecordIDs: deletedRecordIDs)
+                    self.commitServerChangesToDatabase(with: changedRecords, deletedRecords: deletedRecords)
                 }
             }
         }
@@ -681,17 +696,26 @@ final class LWSyncEngine{
     }
     
     ///获取云端的变化，更新本地数据库
-    private func commitServerChangesToDatabase(with changedRecords: [CKRecord], deletedRecordIDs: [CKRecord.ID]) {
-        guard !changedRecords.isEmpty || !deletedRecordIDs.isEmpty else {
+    private func commitServerChangesToDatabase(with changedRecords: [CKRecord], deletedRecords: [(CKRecord.ID,CKRecord.RecordType)]) {
+        guard !changedRecords.isEmpty || !deletedRecords.isEmpty else {
             os_log("云端没有发生任何变动(新增/修改/删除)", log: log, type: .info)
-            didUpdateModels([])
+            indicatorViewManager.shared.stop()
             return
         }
-
-        os_log("云端有%d个记录发生了新增/修改，%d个记录被删除。将这些变动同步到本地数据库...", log: log, type: .info, changedRecords.count, deletedRecordIDs.count)
-
-        //Record解码Model
-        let changedModels: [diaryInfo] = changedRecords.compactMap { record in
+        
+        var diaryRecords:[CKRecord] = []
+        var imgRecords:[CKRecord] = []
+        for record in changedRecords {
+            if record.recordType == .diaryInfo{
+                diaryRecords.append(record)
+            }
+            else if record.recordType == .scalableImage{
+                imgRecords.append(record)
+            }
+        }
+        os_log("获取到[修改]：%d个日记修改，%d个图片修改。将这些变动同步到本地数据库...", log: log, type: .info, diaryRecords.count, imgRecords.count)
+        
+        let changedDiaryInfoModels:[diaryInfo] = diaryRecords.compactMap { record in
             do {
                 return try diaryInfo(record: record)
             } catch {
@@ -699,11 +723,33 @@ final class LWSyncEngine{
                 return nil
             }
         }
+        DiaryStore.shared.updateAfterSync(changedDiaryInfoModels)
+        
+        let changedSiModels:[scalableImage] = imgRecords.compactMap { record in
+            do {
+                return try scalableImage(record: record)
+            } catch {
+                os_log("Error decoding scalableImage from record: %{public}@", log: self.log, type: .error, String(describing: error))
+                return nil
+            }
+        }
+        ImageTool.shared.updateAfterSync(changedSiModels)
+        
+        
+        // deleted records
+        var diaryInfoIDs:[String] = []
+        var siIDs:[String] = []
+        for (deleteID,recordType) in deletedRecords{
+            if recordType == .diaryInfo{
+                diaryInfoIDs.append(deleteID.recordName)
+            }else if recordType == .scalableImage{
+                siIDs.append(deleteID.recordName)
+            }
+        }
+        os_log("获取到[删除]：%d个日记删除，%d个图片删除。将这些变动同步到本地数据库...", log: log, type: .info, diaryInfoIDs.count, siIDs.count)
+        DiaryStore.shared.updateAfterDelete(diaryInfoIDs)
+        ImageTool.shared.updateAfterDelete(siIDs)
 
-        let deletedIdentifiers = deletedRecordIDs.map { $0.recordName }
-
-        didUpdateModels(changedModels)
-        didDeleteModels(deletedIdentifiers)
     }
     
 }

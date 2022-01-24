@@ -32,6 +32,10 @@ class LWRealmManager{
        return realm.objects(diaryInfo.self)
     }()
     
+    lazy var localImageDatabase:Results<scalableImage> = {
+       return realm.objects(scalableImage.self)
+    }()
+    
     ///在调用该函数的线程中重新创建Realm实例，然后用这个实例查询
     ///Realm实例属于当前线程，其他线程不能访问。
     ///例如：Main Thread创建的实例不能再Background Thread中访问！
@@ -40,7 +44,7 @@ class LWRealmManager{
         return realm.objects(diaryInfo.self)
     }
     
-    //MARK:-增加
+    //MARK: -增加
     func add(_ diary:diaryInfo){
         do{
             try realm.write(){
@@ -63,7 +67,7 @@ class LWRealmManager{
         return page
     }
     
-    //MARK:-删除
+    //MARK: -删除
     ///删除方法1：指定model删除
     func delete(_ diaries:[diaryInfo]){
         do{
@@ -88,7 +92,7 @@ class LWRealmManager{
     }
 }
 
-//MARK:-查询
+//MARK: -查询
 extension LWRealmManager{
     ///查询
     func query(predicate:NSPredicate)->Results<diaryInfo>{
@@ -165,7 +169,7 @@ extension LWRealmManager{
     }
 }
 
-//MARK:-修改
+//MARK: -修改
 extension LWRealmManager{
     typealias updateBlock = ()->(Void)
     func update(updateBlock:updateBlock){

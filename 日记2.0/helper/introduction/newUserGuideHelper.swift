@@ -39,24 +39,26 @@ class NewUserGuideHelper{
             let page1 = diaryInfo(dateString: date)
             let attributedText = NSMutableAttributedString(string: page1Content)
             attributedText.loadCheckboxes()//从富文本解析出todo
-            let loaction = attributedText.length
-            let imageAttchment = self.getSubviewAttchment(insertLocation: loaction)
+            let loaction = attributedText.length - 1 // 不知道为什么，如果插入在最后一个位置，读取这篇引导日记时会out of bounds
+            
+            let viewModel = ScalableImageViewModel(location: loaction, image: UIImage(named:"icon-1024"))
+            let view = ScalableImageView(viewModel: viewModel)
+            let imageAttchment = SubviewTextAttachment(view: view, size: view.size)
+            
             attributedText.addAttributes(userAttributes, range: NSRange(location: 0, length: attributedText.length))
             attributedText.insertAttachment(imageAttchment, at: loaction,with: imageCenterParagraphStyle)
-            let parseRes = attributedText.parseAttribuedText()
-            let imageAttrTuples = parseRes.0
-            let todoAttrTuples = parseRes.1
-            let text = parseRes.2
-            let containsImage = parseRes.3
-            let incompletedTodos = parseRes.4
-            let allTodos = parseRes.6
-            let imageModels = parseRes.7
-            let recoveredAttributedText = parseRes.8//subViewAttchment转回NSTextAttchment
+            let parseRes = attributedText.parseAttribuedText(diary: page1)
+            let todoAttrTuples = parseRes.0
+            let text = parseRes.1
+            let containsImage = parseRes.2
+            let incompletedTodos = parseRes.3
+            let allTodos = parseRes.5
+            let imageModels = parseRes.6
+            let recoveredAttributedText = parseRes.7//subViewAttchment转回NSTextAttchment
             let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
             page1.content = plainText
             page1.rtfd = recoveredAttributedText.toRTFD()
             page1.todoAttributesTuples = todoAttrTuples
-            page1.imageAttributesTuples = imageAttrTuples
             page1.containsImage = containsImage
             page1.todos = incompletedTodos
             page1.scalableImageModels = imageModels
@@ -84,12 +86,5 @@ class NewUserGuideHelper{
             }
             
         }
-    }
-    
-    func getSubviewAttchment(insertLocation:Int) -> SubviewTextAttachment{
-        let viewModel = ScalableImageViewModel(location: insertLocation, image: UIImage(named:"icon-1024"))
-        let view = ScalableImageView(viewModel: viewModel)
-        let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
-        return subViewAttchment
     }
 }

@@ -12,7 +12,7 @@ import RealmSwift
 
 
 extension diaryInfo{
-    ///从json字符串里解析出模型数组
+    ///从json字符串里解析出ScalableImageModel数组
     var scalableImageModels:[ScalableImageModel]{
         get{
             let jsonString = mood

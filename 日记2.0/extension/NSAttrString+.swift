@@ -11,17 +11,23 @@ import SubviewAttachingTextView
 
 extension NSAttributedString{
     
-    //MARK:解析
-    ///存储时解析attribuedText中的image属性和todo属性
-    /*返回值：
-     (imageAttrTuples, todoAttrTuples, incompletedTodos, completedTodos, allTodos, cleanText, containsImage)
-     */
-    func parseAttribuedText()->([(Int,Int)],[(Int,Int)],cleanText:String,containImage:Bool,[String],[String],[String],[ScalableImageModel],NSAttributedString){
+    //MARK: 保存
+    ///保存日记：需要解析attribuedText中的image属性和todo属性
+    func parseAttribuedText(diary:diaryInfo)->(
+        [(Int,Int)], // todoAttrTuples
+        cleanText:String, // cleanText
+        containImage:Bool, // containsImage
+        [String], // incompletedTodos
+        [String], // completedTodos
+        [String], // allTodos
+        [ScalableImageModel], // models
+        NSAttributedString // attrText
+    ){
         let attrText = NSMutableAttributedString(attributedString: self)
-        var attrTextForContent = NSMutableAttributedString(attributedString: self)
+        let attrTextForContent = NSMutableAttributedString(attributedString: self)
         var containsImage:Bool = false
-        var imageAttrTuples = [(Int,Int)]()
-        var scalableImageModels = [ScalableImageModel]()
+        let oldImgModels = diary.scalableImageModels
+        var newImgModels = [ScalableImageModel]()
         var todoAttrTuples = [(Int,Int)]()
         var incompletedTodos = [String]()
         var completedTodos = [String]()
@@ -31,29 +37,25 @@ extension NSAttributedString{
             let location = range.location
             
             //1.image
-            if let subViewAttchemnt = object as? SubviewTextAttachment,let view = subViewAttchemnt.view as? ScalableImageView{
-                //print("扫描到subViewAttchemnt，下标:\(location)")
-                let viewModel = view.viewModel
-                viewModel.location = location//更新viewModel的location为保存时刻的location
-                let model = viewModel.generateModel()
-                scalableImageModels.append(model)
-                //print("添加model:\(scalableImageModels.count)")
-                
-                //3.将view重新替换成imageAttchmen
-                //bounds也要设置好来，否者重新塞入属性文本后，image的方向不对.
-                let attchemnt = NSTextAttachment(image: viewModel.image ?? #imageLiteral(resourceName: "imageplaceholder"),size: viewModel.bounds.size)
-                attrText.replaceAttchment(attchemnt, attchmentAt: location,with: imageCenterParagraphStyle)
-                
-                attrTextForContent.replaceCharacters(in: range, with: "P")
+            if let subViewAttchemnt = object as? SubviewTextAttachment,
+               let view = subViewAttchemnt.view as? ScalableImageView{
                 
                 containsImage = true
                 
-                imageAttrTuples.append((location,1))
+                let viewModel = view.viewModel
+                viewModel.location = location // 更新viewModel的location为保存时刻的location
+                let model = viewModel.generateModel()
+                newImgModels.append(model)
+                
+                // 保存时，用默认图像占位，以表示这个location有NSTextAttachment。
+                // 这是必要的，否者attrText的长度会不正常
+                let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!)
+                attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
+                
+                attrTextForContent.replaceCharacters(in: range, with: "P")
                 
                 return
             }
-            
-            
             
             //2.todo
             if let todoAttrValue = attrText.attribute(.todo, at: location, effectiveRange: nil) as? Int{
@@ -71,20 +73,47 @@ extension NSAttributedString{
                 todoAttrTuples.append((location,todoAttrValue))
             }
         })
-        
-        //print("attrText的长度:\(attrText.length)")
-        //print("imageAttrTuples:\(imageAttrTuples)")
-        
-        //print("存储images:\(imageAttrTuples)")
-        //print("存储todos:\(todoAttrTuples)")
+
+        // 编辑日记时，图片只增不减
+        // 保存日记时，可以统一地处理图片的删除
+        let delUUIDs = arraySub(a1: oldImgModels, a2: newImgModels)
+        ImageTool.shared.deleteImages(uuidsToDel: delUUIDs)
+ 
         let cleanText =  attrTextForContent.string
-        return (imageAttrTuples, todoAttrTuples, cleanText, containsImage, incompletedTodos, completedTodos, allTodos,scalableImageModels,attrText)
         
+        return (todoAttrTuples,
+                cleanText,
+                containsImage,
+                incompletedTodos,
+                completedTodos,
+                allTodos,
+                newImgModels,
+                attrText
+        )
+    }
+    
+    /// 计算两个数组之差：a1-a2
+    /// 旧数组-新数组 = 需要删除的元素
+    /// 新数组-旧数组 = 需要新增的元素
+    func arraySub(a1:[ScalableImageModel],a2:[ScalableImageModel]) -> [String]{
+        let uuids2:[String] = a2.map { model in
+            return model.uuid
+        }
+        var res = [ScalableImageModel]()
+        for model in a1{
+            if !uuids2.contains(model.uuid){
+                res.append(model)
+            }
+        }
+        return res.map { m in
+            m.uuid
+        }
     }
     
     
     
-    //MARK:-恢复字体
+    
+    //MARK: -恢复字体
     ///重新选取字体后，需要将旧有的[粗体]和[斜体]重新赋给新字体
     func restoreFontStyle() -> NSMutableAttributedString{
         let mutableAttr = NSMutableAttributedString(attributedString: self)
@@ -143,7 +172,7 @@ extension NSAttributedString{
     
 }
 
-//MARK:-NSAttributedString转Data
+//MARK: -NSAttributedString转Data
 extension NSAttributedString {
     func toRTFD()->Data?{
         let rtfd = try? self.data(from: NSMakeRange(0, self.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8])
@@ -152,7 +181,7 @@ extension NSAttributedString {
 }
 
 
-//MARK:-NSAttributedString + todo
+//MARK: -NSAttributedString + todo
 extension NSAttributedString {
     ///段落内是否有.todo这类型的属性
     public func hasTodoAttribute() -> Bool {

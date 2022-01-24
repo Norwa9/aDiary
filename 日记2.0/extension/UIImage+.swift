@@ -30,6 +30,21 @@ extension UIImage{
         return img
     }
     
+    func resizeToFitCell() -> UIImage{
+        let photoHeight = layoutParasManager.shared.albumViewItemHeight
+        let ratio = self.size.height / photoHeight
+        let toSize = CGSize(width: self.size.width / ratio, height: photoHeight)
+        let toW = toSize.width
+        let toH = toSize.height
+        let renderRect = CGRect(origin: .zero, size: CGSize(width: toW, height: toH))
+        let renderer = UIGraphicsImageRenderer(size: renderRect.size)
+        
+        let img = renderer.image { ctx in
+            self.draw(in: renderRect)
+        }
+        return img
+    }
+    
     //MARK:-生成空的图片
     public static func emptyImage(with size: CGSize) -> UIImage? {
         let renderer = UIGraphicsImageRenderer(size: size)
