@@ -78,7 +78,6 @@ public final class DiaryStore: ObservableObject {
             os_log("diary not found with id %@ for deletion.", log: self.log, type: .error, id)
             return
         }
-        indicatorViewManager.shared.start(type: .delete)
         // 1. 加入待删除列表
         if !userDefaultManager.deleteBufferIDs.contains(id){
             userDefaultManager.deleteBufferIDs.append(id)
@@ -156,7 +155,7 @@ public final class DiaryStore: ObservableObject {
             //云端没有更新
             return
         }
-        os_log("[日记]将云端获取的改变（新增/修改）到本地数据库...", log: log, type: .debug)
+        print("[日记]将云端获取的改变（新增/修改）到本地数据库...")
         //1.将云端变动保存到本地数据库
         diaries.forEach { updatedDiary in
             if let resolvedDiary = diaryInfo.resolveEmptyDiary(serverModel: updatedDiary){
@@ -167,7 +166,7 @@ public final class DiaryStore: ObservableObject {
         dataManager.shared.updateTags()
         
         
-        os_log("[日记]云端更新已应用到本地数据库!", log: log, type: .debug)
+        print("[日记]云端更新已应用到本地数据库!")
     }
     
     /// 应用云端的删除到本地
@@ -192,7 +191,7 @@ public final class DiaryStore: ObservableObject {
             }
         }
         
-        os_log("[日记]云端的删除已应用到本地数据库!", log: log, type: .debug)
+        print("[日记]云端的删除已应用到本地数据库!")
     }
     
     //MARK: :-处理CloudKit发来的更新通知

@@ -306,7 +306,7 @@ final class LWSyncEngine{
     //MARK: -上传
     ///上传未上传的Model
     func uploadLocalDataNotUploadedYet(){
-        os_log("检查本地未上传的日记...",log:log,type:.debug)
+        print("检查本地未上传的日记...")
         
         //检查[当前的]本地数据库中：新建的但未上传、离线修改的但未上传 的数据
         let db = LWRealmManager.shared.localDatabase.toArray()
@@ -317,11 +317,11 @@ final class LWSyncEngine{
         let needsDeleteIDs = userDefaultManager.deleteBufferIDs
         
         if needsUpload.isEmpty && needsDeleteIDs.isEmpty{
-            os_log("本地没有需要上传的日记...",log:log,type:.debug)
+            print("本地没有需要上传的日记...")
             return
         }
         
-        os_log("发现 %d 篇本地日记未上传, %d 篇日记在云端未删除", log: self.log, type: .debug, needsUpload.count,needsDeleteIDs.count)
+        print("发现\(needsUpload.count)篇本地日记未上传, \(needsDeleteIDs.count)篇日记在云端未删除")
         
         let recordsNeedsUpload = needsUpload.map({ $0.record })
         
@@ -344,8 +344,6 @@ final class LWSyncEngine{
     ///上传指定的记录
     private func uploadRecords(_ records: [CKRecord]) {
         guard !records.isEmpty else { return }
-
-        // os_log("开始上传 %d 个修改(或新增)的记录...", log: log, type: .debug,records.count)
 
         let operation = CKModifyRecordsOperation(recordsToSave: records, recordIDsToDelete: nil)
 
@@ -382,8 +380,6 @@ final class LWSyncEngine{
                     self.handleUploadError(error, records: records)
                 }
             } else {
-                // os_log("成功上传%d个记录!", log: self.log, type: .info, records.count)
-
                 DispatchQueue.main.async {
                     guard let serverRecords = serverRecords else { return }
                     //运行到这里，已经确定的是serverRecords都已经上传成功
@@ -432,11 +428,6 @@ final class LWSyncEngine{
         else if recordType == .scalableImage{
             ImageTool.shared.setUploaded(records: records)
         }
-        
-        DispatchQueue.main.async {
-            indicatorViewManager.shared.stop()
-        }
-        
     }
     
     //MARK: -手动删除
@@ -446,9 +437,6 @@ final class LWSyncEngine{
         if userDefaultManager.iCloudEnable == false{
             return
         }
-        if ids.isEmpty{
-            return
-        }
         
         var nonEmptyIDs = [String]()
         for id in ids {
@@ -456,6 +444,10 @@ final class LWSyncEngine{
                 nonEmptyIDs.append(id)
             }
         }
+        if nonEmptyIDs.isEmpty{
+            return
+        }
+        indicatorViewManager.shared.start(type: .delete)
         print("开始删除\(ids.count)个项目,类型是\(recordType)")
         deleteRecords(nonEmptyIDs,recordType: recordType)
         
@@ -464,11 +456,9 @@ final class LWSyncEngine{
     
     private func deleteRecords(_ ids:[String],recordType:CKRecord.RecordType){
         guard !ids.isEmpty else{
-            indicatorViewManager.shared.stop()
             return
         }
         
-        // os_log("正在删除%d个记录...", log: log, type: .debug,ids.count)
         
         let recordIDs = ids.map { (id) -> CKRecord.ID in
             return CKRecord.ID(recordName: id,zoneID: SyncConstants.customZoneID)
@@ -510,12 +500,7 @@ final class LWSyncEngine{
                     self.handleDeleteError(error, recordIDs: ids,recordType: recordType)
                 }
             } else {
-                os_log("成功删除云端上的%d个记录！", log: self.log, type: .info, ids.count)
-
                 DispatchQueue.main.async {
-                    //本地数据已删除、云端数据也已删除，结束指示器
-                    indicatorViewManager.shared.stop()
-                    
                     self.updateLocalModelsAfterDelete(with: recordIDs, recordType: recordType)
                 }
             }
@@ -558,6 +543,8 @@ final class LWSyncEngine{
         else if recordType == .scalableImage{
             ImageTool.shared.setDeleted(recordIDs: recordIDs)
         }
+        
+        indicatorViewManager.shared.stop()
         
     }
     
@@ -629,9 +616,8 @@ final class LWSyncEngine{
         ///？这个方法并没有回调
         ///In my tests, it is only called every 200 or so records that changed.
         operation.recordZoneChangeTokensUpdatedBlock = { [weak self] _, changeToken, _ in
-            print("recordZoneChangeTokensUpdatedBlock")
             guard let self = self else { return }
-            os_log("云端的更改令牌发生变动，获取并更新本地的更改令牌到最新！",log: self.log,type: .debug)
+            print("云端的更改令牌发生变动，获取并更新本地的更改令牌到最新！")
             guard let changeToken = changeToken else { return }
             
             //存储changeToken以便在后续的提取中使用
@@ -713,7 +699,7 @@ final class LWSyncEngine{
                 imgRecords.append(record)
             }
         }
-        os_log("获取到[修改]：%d个日记修改，%d个图片修改。将这些变动同步到本地数据库...", log: log, type: .info, diaryRecords.count, imgRecords.count)
+        print("获取到[修改]：\(diaryRecords.count)个日记修改，\(imgRecords.count)个图片修改。将这些变动同步到本地数据库...")
         
         let changedDiaryInfoModels:[diaryInfo] = diaryRecords.compactMap { record in
             do {
@@ -746,7 +732,7 @@ final class LWSyncEngine{
                 siIDs.append(deleteID.recordName)
             }
         }
-        os_log("获取到[删除]：%d个日记删除，%d个图片删除。将这些变动同步到本地数据库...", log: log, type: .info, diaryInfoIDs.count, siIDs.count)
+        print("获取到[删除]：\(diaryInfoIDs.count)个日记删除，\(siIDs.count)个图片删除。将这些变动同步到本地数据库...")
         DiaryStore.shared.updateAfterDelete(diaryInfoIDs)
         ImageTool.shared.updateAfterDelete(siIDs)
         
