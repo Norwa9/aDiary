@@ -83,7 +83,7 @@ class LWSubpagesView: UIView {
         
         //segmentedView
         segmentedView.delegate = self
-        segmentDataSource.titleSelectedColor = APP_GREEN_COLOR()
+        segmentDataSource.titleSelectedColor = .label
         segmentDataSource.titleNormalColor = .label
         segmentDataSource.titleNormalFont = userDefaultManager.customFont(withSize: 12)
         segmentDataSource.isTitleZoomEnabled = true
