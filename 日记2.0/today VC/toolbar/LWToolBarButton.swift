@@ -30,7 +30,7 @@ class LWToolBarButton: UIButton {
     func initUI(){
         self.layer.cornerRadius = 10
         self.backgroundColor = .tertiarySystemBackground
-        self.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
+        self.setupShadow(opacity: 0.5, radius: 1, offset:.zero, color: UIColor.black.withAlphaComponent(0.35))
         
         buttonImageView = UIImageView(image: image)
         buttonImageView.contentMode = .scaleAspectFit

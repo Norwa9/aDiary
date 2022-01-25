@@ -64,7 +64,7 @@ class monthCell: UICollectionViewCell {
         //contentView
         self.backgroundColor = UIColor.systemBackground
         self.clipsToBounds = false
-        self.setupShadow(opacity: 1, radius: 2, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
+        self.setupShadow(opacity: 0.7, radius: 2, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = false
         
@@ -157,23 +157,23 @@ class monthCell: UICollectionViewCell {
         }
         
         dateLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(containerView).offset(2)
+            make.top.equalTo(containerView).offset(15)
             make.centerX.equalToSuperview()
         }
         
         pageSegmentControl.snp.makeConstraints { (make) in
-            make.top.equalTo(dateLabel.snp.bottom).offset(2)
+            make.top.equalTo(dateLabel.snp.bottom).offset(4)
             make.height.equalTo(25)
             make.centerX.equalTo(dateLabel)
         }
         
         emojisLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(pageSegmentControl.snp.bottom).offset(2)
+            make.top.equalTo(pageSegmentControl.snp.bottom).offset(4)
             make.left.right.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(emojisLabel.snp.bottom).offset(2)
+            make.top.equalTo(emojisLabel.snp.bottom).offset(4)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
         }
@@ -182,7 +182,7 @@ class monthCell: UICollectionViewCell {
         contentLabel.snp.makeConstraints { (make) in
             make.left.equalTo(titleLabel)
             make.right.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.height.lessThanOrEqualTo(150)
         }
         
@@ -204,7 +204,7 @@ class monthCell: UICollectionViewCell {
             make.top.greaterThanOrEqualTo(todoListView.snp.bottom).offset(5)
             make.left.equalTo(containerView).offset(15)
             make.right.equalTo(containerView).offset(-15)
-            make.bottom.equalTo(containerView.snp.bottom).offset(-5)
+            make.bottom.equalTo(containerView.snp.bottom).offset(-15)
         }
    
     }
@@ -314,8 +314,8 @@ class monthCell: UICollectionViewCell {
     //MARK:-设置今日提示
     private func setTodayPropmtEdge(){
         if diary.trueDate == GetTodayDate(){
-            self.containerView.layer.borderWidth = 2;
-            self.containerView.layer.borderColor = APP_GREEN_COLOR().cgColor
+            self.containerView.layer.borderWidth = 1.5;
+            self.containerView.layer.borderColor = UIColor.label.cgColor
         }else{
             self.containerView.layer.borderWidth = 0;
         }

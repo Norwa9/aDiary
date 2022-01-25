@@ -120,7 +120,7 @@ class LWTextViewToolBar: UIView {
         self.addSubview(richTextPanelButton)
         
         indicator = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .lightGray, padding: .zero)
-        indicator.color = APP_GREEN_COLOR()
+        indicator.color = UIColor.gray
         indicator.alpha = 0
         saveButton.addSubview(indicator)
         

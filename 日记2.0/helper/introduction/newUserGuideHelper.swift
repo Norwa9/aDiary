@@ -15,7 +15,8 @@ class NewUserGuideHelper{
     //MARK:-导入用户引导
     public func initUserGuideDiary(){
         //设置App的默认字体
-        userDefaultManager.fontName = "DINAlternate-Bold"
+        // userDefaultManager.fontName = "DINAlternate-Bold"
+        userDefaultManager.fontName = nil // 使用苹果默认字体
         
         
         //生成引导文案
@@ -39,6 +40,7 @@ class NewUserGuideHelper{
             let page1 = diaryInfo(dateString: date)
             let attributedText = NSMutableAttributedString(string: page1Content)
             attributedText.loadCheckboxes()//从富文本解析出todo
+            attributedText.append(NSAttributedString(string: "\n"))
             let loaction = attributedText.length - 1 // 不知道为什么，如果插入在最后一个位置，读取这篇引导日记时会out of bounds
             
             let viewModel = ScalableImageViewModel(location: loaction, image: UIImage(named:"icon-1024"))

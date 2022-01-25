@@ -35,7 +35,7 @@ class topbarButton: UIButton {
         holderView.isUserInteractionEnabled = false//为什么不设置为false按钮不能响应点击？
         holderView.backgroundColor = .secondarySystemGroupedBackground
         holderView.layer.cornerRadius = 10
-        holderView.setupShadow(opacity: 0.35, radius: 2, offset:.zero, color: .black)
+        holderView.setupShadow(opacity: 0.5, radius: 2, offset:.zero, color: UIColor.black.withAlphaComponent(0.35))
         addSubview(holderView)
         
         //button image view

@@ -191,7 +191,7 @@ class monthVC: UIViewController {
         monthBtnStackView = UIView()
         monthBtnStackView.layer.cornerRadius = 10
         monthBtnStackView.backgroundColor = monthBtnStackViewDynamicColor
-        monthBtnStackView.setupShadow(opacity: 1, radius: 4, offset: CGSize(width: 1, height: 1), color: UIColor.black.withAlphaComponent(0.35))
+        monthBtnStackView.setupShadow(opacity: 0.5, radius: 3, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
         
         for i in 0..<12{
             let button = monthButton(frame: .zero)
@@ -423,8 +423,8 @@ class monthVC: UIViewController {
         }else{
             isCurrentMonth = true
             title = "进入今日"
-            colors.0 = APP_GREEN_COLOR()
-            colors.1 = .white
+            colors.0 = UIColor.label
+            colors.1 = UIColor.systemBackground
         }
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: colors.1,

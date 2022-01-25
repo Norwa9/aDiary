@@ -12,8 +12,8 @@ class userDefaultManager{
     public static var shared:UserDefaults? = UserDefaults(suiteName: "user.default")
     
     ///默认字体大小
-    static let DefaultFontSize:CGFloat = 18.0
-    static let defaultEditorLineSpacing:CGFloat = 3
+    static let DefaultFontSize:CGFloat = 16.0
+    static let defaultEditorLineSpacing:CGFloat = 5
     
     private struct constants {
         static let hasInitialized = "hasInitialized"

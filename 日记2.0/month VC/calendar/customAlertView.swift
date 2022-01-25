@@ -51,7 +51,7 @@ class customAlertView: UIView {
         cancelButton.frame = CGRect(x: 16, y: 44, width: 30, height: 30)
         let cancelButtonAttributes:[NSAttributedString.Key:Any] = [
             .font:UIFont.init(name: "DIN Alternate", size: 15)!,
-            .foregroundColor : UIColor.black,
+            .foregroundColor : UIColor.gray,
         ]
         let attr2 = NSAttributedString(string: "取消", attributes: cancelButtonAttributes)
         cancelButton.setAttributedTitle(attr2, for: .normal)

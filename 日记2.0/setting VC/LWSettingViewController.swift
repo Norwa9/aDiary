@@ -243,10 +243,10 @@ class LWSettingViewController: UIViewController {
         settingTitle.text = "设置"
         settingTitle.font = .systemFont(ofSize: 24, weight: .bold)
         
-        saveButton.setAttributedTitle(settingVCConfig.buttonAttributedTitle(title: "保存", color: APP_GREEN_COLOR()), for: .normal)
+        saveButton.setAttributedTitle(settingVCConfig.saveButtonAttributedTitle(title: "保存", color: .label), for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
         
-        dismissButton.setAttributedTitle(settingVCConfig.buttonAttributedTitle(title: "返回"), for: .normal)
+        dismissButton.setAttributedTitle(settingVCConfig.cancelButtonAttributedTitle(title: "返回",color: .secondaryLabel), for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
         //字体
@@ -314,8 +314,7 @@ class LWSettingViewController: UIViewController {
         iCloudTitle.font = .systemFont(ofSize: 18, weight: .medium)
         iCloudSwitch.isOn = userDefaultManager.iCloudEnable
         iCloudSwitch.addTarget(self, action: #selector(iCloudDidChange), for: .touchUpInside)
-        exportPDFButton.setTitle("导出所有日记为PDF", for: .normal)
-        exportPDFButton.setTitleColor(.link, for: .normal)
+        exportPDFButton.setAttributedTitle(settingVCConfig.exportPDFButtonAttributedTitle(title: "导出所有日记为PDF",color: .link), for: .normal)
         exportPDFButton.contentHorizontalAlignment = .leading
         exportPDFButton.addTarget(self, action: #selector(exportAll), for: .touchUpInside)
         
@@ -344,9 +343,7 @@ class LWSettingViewController: UIViewController {
         autoCreateTitle.font = .systemFont(ofSize: 18, weight: .medium)
         autoCreateTitleSwitch.isOn = userDefaultManager.autoCreate
         autoCreateTitleSwitch.addTarget(self, action: #selector(autoCreateDiary(_:)), for: .valueChanged)
-        
-        requestReviewButton.setTitle("App Store撰写好评", for: .normal)
-        requestReviewButton.setTitleColor(.link, for: .normal)
+        requestReviewButton.setAttributedTitle(settingVCConfig.reviewButtonAttributedTitle(title: "App Store撰写好评",color: .link), for: .normal)
         requestReviewButton.contentHorizontalAlignment = .leading
         requestReviewButton.addTarget(self, action: #selector(requestReview), for: .touchUpInside)
         requestReviewLabel.text = "支持开发者🍗"
@@ -409,7 +406,7 @@ class LWSettingViewController: UIViewController {
         }
         
         fontContainerView.snp.makeConstraints { make in
-            make.top.equalTo(fontContainerTitle.snp.bottom).offset(5)
+            make.top.equalTo(fontContainerTitle.snp.bottom).offset(10)
             make.left.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-10)
         }
@@ -462,7 +459,7 @@ class LWSettingViewController: UIViewController {
         fontPickerTitle.snp.makeConstraints { make in
             make.left.equalTo(imageSizeTitle)
             make.top.equalTo(fontSizeTitle.snp.bottom).offset(20)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
         }
         
         fontPickerButton.snp.makeConstraints { make in
@@ -478,12 +475,12 @@ class LWSettingViewController: UIViewController {
         }
         
         privacyContainer.snp.makeConstraints { make in
-            make.top.equalTo(privacyContainerTitle.snp.bottom).offset(5)
+            make.top.equalTo(privacyContainerTitle.snp.bottom).offset(10)
             make.left.right.equalTo(fontContainerView)
         }
         
         passwordLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
         }
         
@@ -495,7 +492,7 @@ class LWSettingViewController: UIViewController {
         biometricsLabel.snp.makeConstraints { make in
             make.top.equalTo(passwordLabel.snp.bottom).offset(20)
             make.left.equalTo(passwordLabel)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
         }
         
         biometricsSwitch.snp.makeConstraints { make in
@@ -511,12 +508,12 @@ class LWSettingViewController: UIViewController {
         }
         
         backupContainer.snp.makeConstraints { make in
-            make.top.equalTo(backupContainerTitle.snp.bottom).offset(5)
+            make.top.equalTo(backupContainerTitle.snp.bottom).offset(10)
             make.left.right.equalTo(fontContainerView)
         }
         
         iCloudTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
         }
 
@@ -526,9 +523,9 @@ class LWSettingViewController: UIViewController {
         }
 
         exportPDFButton.snp.makeConstraints { make in
-            make.top.equalTo(iCloudTitle.snp.bottom).offset(20)
+            make.top.equalTo(iCloudTitle.snp.bottom).offset(15)
             make.left.equalTo(iCloudTitle)
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
             make.width.equalTo(200)
         }
         
@@ -539,12 +536,12 @@ class LWSettingViewController: UIViewController {
         }
         
         otherContainer.snp.makeConstraints { make in
-            make.top.equalTo(otherContainerTitle.snp.bottom).offset(5)
+            make.top.equalTo(otherContainerTitle.snp.bottom).offset(10)
             make.left.right.equalTo(fontContainerView)
         }
         
         darkModeLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(10)
             make.left.equalToSuperview().offset(10)
         }
         
@@ -580,14 +577,14 @@ class LWSettingViewController: UIViewController {
         }
         
         requestReviewButton.snp.makeConstraints { make in
-            make.top.equalTo(autoCreateTitle.snp.bottom).offset(20)
+            make.top.equalTo(autoCreateTitle.snp.bottom).offset(15) // 20 -> 15 ，button比label高一些
             make.left.equalTo(darkModeLabel)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
             make.width.equalTo(200)
         }
         
         requestReviewLabel.snp.makeConstraints { make in
-            make.top.equalTo(requestReviewButton.snp.bottom).offset(-5)
+            make.top.equalTo(requestReviewButton.snp.bottom).offset(-8)
             make.left.equalTo(requestReviewButton)
         }
         
@@ -598,13 +595,13 @@ class LWSettingViewController: UIViewController {
         }
         
         contactWaysContainer.snp.makeConstraints { make in
-            make.top.equalTo(contactWaysContainerTitle.snp.bottom).offset(5)
+            make.top.equalTo(contactWaysContainerTitle.snp.bottom).offset(10)
             make.left.right.equalTo(fontContainerView)
         }
         
         contactMeMailCell.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(10)
         }
         
         contactMeWeiboCell.snp.makeConstraints { make in
@@ -615,7 +612,7 @@ class LWSettingViewController: UIViewController {
         contactMeWeChat.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(contactMeWeiboCell.snp.bottom).offset(20)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
         }
         
         infoLabel.snp.makeConstraints { make in

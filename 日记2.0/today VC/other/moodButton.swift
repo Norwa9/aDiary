@@ -36,7 +36,7 @@ class moodButton: UIButton {
         holderView.isUserInteractionEnabled = false//为什么不设置为false按钮不能响应点击？
         holderView.backgroundColor = .white
         holderView.layer.cornerRadius = 15
-        holderView.setupShadow(opacity: 0.35, radius: 1, offset:.zero, color: .black)
+        holderView.setupShadow(opacity: 0.2, radius: 1, offset:.zero, color: .black)
         addSubview(holderView)
         
         //button

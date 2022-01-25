@@ -58,7 +58,7 @@ class DIYCalendarCell: FSCalendarCell {
         
         //给今日cell加上绿色边框
         if DateToCNString(date: date) == GetTodayDate(){
-            self.backgroundView?.layer.borderWidth = 2;
+            self.backgroundView?.layer.borderWidth = 1.5;
             self.backgroundView?.layer.borderColor = APP_GREEN_COLOR().cgColor
         }else{
             self.backgroundView?.layer.borderWidth = 0;

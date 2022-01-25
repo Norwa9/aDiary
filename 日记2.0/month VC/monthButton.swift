@@ -21,7 +21,7 @@ class monthButton: UIButton {
     }
     func configureUI(){
         //圆形
-        self.setupShadow(opacity: 1, radius: 1, offset: CGSize(width: 1, height: 0), color: UIColor.black.withAlphaComponent(0.35))
+        self.setupShadow(opacity: 0.7, radius: 1, offset: CGSize(width: 0, height: 0), color: UIColor.black.withAlphaComponent(0.35))
         
         //containView
         self.addSubview(containView)
@@ -42,7 +42,7 @@ class monthButton: UIButton {
         if !hasSelected{
             hasSelected = true
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseIn) {
-                self.containView.backgroundColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
+                self.containView.backgroundColor = APP_GREEN_COLOR()
                 self.monthLabel.textColor = .white
             } completion: { (_) in
                 
