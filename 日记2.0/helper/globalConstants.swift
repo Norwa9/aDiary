@@ -125,6 +125,14 @@ class globalConstantsManager{
         }
     }
     
+    var defaultTodoBounds:CGRect{
+        get{
+            let KtodoViewWidth = globalConstantsManager.shared.kScreenWidth * 0.95
+            let defaultTodoViewHeight = userDefaultManager.font.lineHeight // 默认的todo cell 高度
+            return CGRect(x: 0, y: 0, width: KtodoViewWidth, height: defaultTodoViewHeight)
+        }
+    }
+    
     var deviceCenterPoint:CGPoint{
         get{
             return CGPoint(x: kScreenWidth / 2, y: kScreenHeight / 2)

@@ -131,11 +131,7 @@ class LWTodoSettingViewController:UIViewController{
     
     private func loadDatePicker(){
         if viewModel.needRemind{
-            if let date = viewModel.remindDate{
-                datePicker.date = date
-            }else{
-                datePicker.date = Date()
-            }
+            datePicker.date = viewModel.remindDate
             print("datePicker.alpha = 1")
             datePicker.alpha = 1
             noRemindPromptLabel.alpha = 0

@@ -11,6 +11,7 @@ import UIKit
 extension Date{
     func toYYMMDD_CN()->NSAttributedString{
         let formatter = DateFormatter()
+        formatter.timeZone = .current
         formatter.dateFormat = "yyyy/M/d"
         let ymd = formatter.string(from: self)
         formatter.dateFormat = "hh:mm"

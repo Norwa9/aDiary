@@ -734,22 +734,19 @@ extension TextFormatter{
     func save(with diary:diaryInfo){
         let attributedText = textView.attributedText!
         let result = attributedText.parseAttribuedText(diary: diary)
-        let todoAttrTuples = result.0
-        let text = result.1
-        let containsImage = result.2
-        let incompletedTodos = result.3
-        let allTodos = result.5
-        let imageModels = result.6
-        let recoveredAttributedText = result.7
+        let text = result.0
+        let containsImage = result.1
+        let todoModels = result.2
+        let imageModels = result.3
+        let recoveredAttributedText = result.4
         
-        let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos)
+         //let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos) // 去掉todo的内容
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
             diary.editedButNotUploaded = true
             diary.modTime = Date()
-            diary.content = plainText
-            diary.todos = incompletedTodos
+            diary.content = text
             
             let rtfd = recoveredAttributedText.toRTFD()
             rtfd?.printSize()
@@ -757,7 +754,7 @@ extension TextFormatter{
             
             diary.containsImage = containsImage
             diary.scalableImageModels = imageModels
-            diary.todoAttributesTuples = todoAttrTuples
+            diary.lwTodoModels = todoModels
         })
         
         //2.上传到云端
@@ -802,14 +799,14 @@ extension TextFormatter{
         let cleanContent = diary.content
         let rtfd = diary.rtfd
         let imageModels = diary.scalableImageModels
-        let todoAttrTuples = diary.todoAttributesTuples
+        let todoModels = diary.lwTodoModels
         
         DispatchQueue.global(qos: .default).async {
             let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
             //TODO:当用cleanContent替代rtfd时，遍历attribute有可能崩溃
             let correctedAString = self.processAttrString(
                 aString:attributedText,
-                todoAttrTuples: todoAttrTuples,
+                todoModels: todoModels,
                 imageModels: imageModels
             )
             DispatchQueue.main.async {
@@ -822,7 +819,7 @@ extension TextFormatter{
     ///textViewScreenshot
     ///loadTextViewContent(with:)
     func processAttrString(aString:NSAttributedString,
-                           todoAttrTuples:[(Int,Int)],
+                           todoModels:[LWTodoModel],
                            imageModels:[ScalableImageModel],
                            isSharingMode:Bool =  false
     )->NSMutableAttributedString{
@@ -832,6 +829,12 @@ extension TextFormatter{
         let attrText = mutableText.restoreFontStyle()
         
         //2.恢复.image格式
+        /*
+         备忘：不同版本的图片管理方式。
+         1.旧版本(2.6~3.1)，图片是存放在attributedText里的，同时借助imageAttrTuples和imageModels来恢复图片
+         2.旧版本(<2.6)，图片直接存放在attributedText，只有imageAttrTuples来定位哪个NSAttchment是图片还是todo，此时还没有图片ViewModel的概念，如果在新版本访问到2.6版本之前保存的日记，需要根据imageAttrTuples手动遍历出NSAttchment，然后给它创建一个viewModel来管理它的尺寸、排版等（>3.1放弃了对它们的处理2022.1.21，待填坑）
+         3.新版本(>3.1)里，图片存放在Realm，通过uuid索引
+         */
         for model in imageModels{
             let location = model.location
             if isSharingMode{
@@ -849,49 +852,59 @@ extension TextFormatter{
                     view.delegate = self.textView
                     let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
                     attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: viewModel.paraStyle)
-                    //重新添加.image属性（用于保存时检索图片attchment）
-                    attrText.addAttribute(.image, value: 1, range: NSRange(location: location, length: 1))
                 }
             }
-            
-            
-            /*
-             备忘：不同版本的图片管理方式。
-             1.旧版本(2.6~3.1)，图片是存放在attributedText里的，同时借助imageAttrTuples和imageModels来恢复图片
-             2.旧版本(<2.6)，图片直接存放在attributedText，只有imageAttrTuples来定位哪个NSAttchment是图片还是todo，此时还没有图片ViewModel的概念，如果在新版本访问到2.6版本之前保存的日记，需要根据imageAttrTuples手动遍历出NSAttchment，然后给它创建一个viewModel来管理它的尺寸、排版等（>3.1放弃了对它们的处理2022.1.21，待填坑）
-             3.新版本(>3.1)里，图片存放在Realm，通过uuid索引
-             */
         }
         
-        //TODO:3.恢复todo
-        for tuple in todoAttrTuples{
-            let location = tuple.0//attribute location
-            let value = tuple.1//attribute value
-            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
-                //print("读取时处理到到todo:\(location)")
-                //1.重新添加attribute
-                attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
-                
-                let attributedText = (value == 1) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
-
-                attrText.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
-
-                let range = NSRange(location: location, length: 0)
-                let paragraphRange = attrText.mutableString.paragraphRange(for: range)
-                
-                if value == 1 {
-                    attrText.addCheckAttribute(range: paragraphRange)
-                } else {
-                    attrText.addUncheckAttribute(range: paragraphRange)
+        //TODO:3.恢复todo，完全按照上面写
+        print("读取日记，共有\(todoModels.count)个todo")
+        for model in todoModels{
+            print("读取todo:\(model.content),位置:\(model.location)")
+            let location = model.location
+            if isSharingMode{
+                let viewModel = LWTodoViewModel(model: model)
+                let view = LWTodoView(viewModel: viewModel)
+                let viewSnapShot = view.asImage()
+                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
+                attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: textLeftParagraphStyle)
+            }else{
+                DispatchQueue.main.async {
+                    let viewModel = LWTodoViewModel(model: model)
+                    let view = LWTodoView(viewModel: viewModel)
+                    viewModel.lwTextView = self.textView
+                    let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+                    attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: textLeftParagraphStyle)
                 }
-                
-                //2.调整bounds大小
-                let font = userDefaultManager.font
-                let size = font.pointSize + font.pointSize / 2
-                attachment.bounds = CGRect(x: CGFloat(0), y: (font.capHeight - size) / 2, width: size, height: size)
             }
-            
         }
+//        for tuple in todoAttrTuples{
+//            let location = tuple.0//attribute location
+//            let value = tuple.1//attribute value
+//            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
+//                //print("读取时处理到到todo:\(location)")
+//                //1.重新添加attribute
+//                attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
+//
+//                let attributedText = (value == 1) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
+//
+//                attrText.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
+//
+//                let range = NSRange(location: location, length: 0)
+//                let paragraphRange = attrText.mutableString.paragraphRange(for: range)
+//
+//                if value == 1 {
+//                    attrText.addCheckAttribute(range: paragraphRange)
+//                } else {
+//                    attrText.addUncheckAttribute(range: paragraphRange)
+//                }
+//
+//                //2.调整bounds大小
+//                let font = userDefaultManager.font
+//                let size = font.pointSize + font.pointSize / 2
+//                attachment.bounds = CGRect(x: CGFloat(0), y: (font.capHeight - size) / 2, width: size, height: size)
+//            }
+//
+//        }
         
         return attrText
     }
@@ -900,11 +913,11 @@ extension TextFormatter{
     ///屏幕旋转时，刷新textView的文本内容
     func reloadTextViewOnOrientionChange(with diary:diaryInfo){
         let imageModels = diary.scalableImageModels
-        let todoAttrTuples = diary.todoAttributesTuples
+        let todoModels = diary.lwTodoModels
         let attributedText = textView.attributedText ?? NSAttributedString(string: "")
         let correctedAString = self.processAttrString(
             aString:attributedText,
-            todoAttrTuples: todoAttrTuples,
+            todoModels: todoModels,
             imageModels: imageModels
         )
         self.textView.attributedText = correctedAString
@@ -933,12 +946,12 @@ extension TextFormatter{
     func textViewScreenshot(diary:diaryInfo) -> UIImage{
         let attributedText = diary.attributedString
         let imageModels = diary.scalableImageModels
-        let todoAttrTuples = diary.todoAttributesTuples
+        let todoModels = diary.lwTodoModels
         
         
         let preparedText = self.processAttrString(
             aString:attributedText,
-            todoAttrTuples: todoAttrTuples,
+            todoModels: todoModels,
             imageModels: imageModels,
             isSharingMode: true
         )

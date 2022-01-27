@@ -52,6 +52,7 @@ extension diaryInfo{
     }
     
     ///元组数组：存储所有.todo属性的下标以及对应的值
+    //////>3.1版本开始弃用（2022.1.27）
     //value=1表示checked
     //value=0表示unchecked
     var todoAttributesTuples:[(Int,Int)]{

@@ -14,13 +14,10 @@ extension NSAttributedString{
     //MARK: 保存
     ///保存日记：需要解析attribuedText中的image属性和todo属性
     func parseAttribuedText(diary:diaryInfo)->(
-        [(Int,Int)], // todoAttrTuples
         cleanText:String, // cleanText
         containImage:Bool, // containsImage
-        [String], // incompletedTodos
-        [String], // completedTodos
-        [String], // allTodos
-        [ScalableImageModel], // models
+        [LWTodoModel], // todoModels
+        [ScalableImageModel], // imageModels
         NSAttributedString // attrText
     ){
         let attrText = NSMutableAttributedString(attributedString: self)
@@ -28,10 +25,7 @@ extension NSAttributedString{
         var containsImage:Bool = false
         let oldImgModels = diary.scalableImageModels
         var newImgModels = [ScalableImageModel]()
-        var todoAttrTuples = [(Int,Int)]()
-        var incompletedTodos = [String]()
-        var completedTodos = [String]()
-        var allTodos = [String]()
+        var todoModels = [LWTodoModel]()
         
         attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
             let location = range.location
@@ -39,7 +33,7 @@ extension NSAttributedString{
             //1.image
             if let subViewAttchemnt = object as? SubviewTextAttachment,
                let view = subViewAttchemnt.view as? ScalableImageView{
-                print("保存\(location)处的图片model")
+                print("遍历到\(location)处的图片model")
                 containsImage = true
                 
                 let viewModel = view.viewModel
@@ -54,24 +48,34 @@ extension NSAttributedString{
                 
                 attrTextForContent.replaceCharacters(in: range, with: "P")
                 
-                return
+                // return
+            }else if
+                let subViewAttchemnt = object as? SubviewTextAttachment,
+                let view = subViewAttchemnt.view as? LWTodoView{
+                print("遍历到位置\(location)有一个todo model")
+                let viewModel = view.viewModel
+                viewModel.location = location // 更新viewModel的location为保存时刻的location
+                let model = viewModel.generateModel()
+                todoModels.append(model)
+                let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!) // 占位
+                attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
             }
             
             //2.todo
-            if let todoAttrValue = attrText.attribute(.todo, at: location, effectiveRange: nil) as? Int{
-                let checked = (todoAttrValue == 1)
-                let lineRange = attrText.mutableString.paragraphRange(for: range)
-                let todo = attrText.attributedSubstring(from: lineRange).string
-                if(checked){
-                    completedTodos.append(todo)
-                }else{
-                    incompletedTodos.append(todo)
-                }
-                allTodos.append(todo)
-                
-                //print("存储时扫描到todo:\(range),\(checked)")
-                todoAttrTuples.append((location,todoAttrValue))
-            }
+//            if let todoAttrValue = attrText.attribute(.todo, at: location, effectiveRange: nil) as? Int{
+//                let checked = (todoAttrValue == 1)
+//                let lineRange = attrText.mutableString.paragraphRange(for: range)
+//                let todo = attrText.attributedSubstring(from: lineRange).string
+//                if(checked){
+//                    completedTodos.append(todo)
+//                }else{
+//                    incompletedTodos.append(todo)
+//                }
+//                allTodos.append(todo)
+//
+//                //print("存储时扫描到todo:\(range),\(checked)")
+//                todoAttrTuples.append((location,todoAttrValue))
+//            }
         })
 
         // 编辑日记时，图片只增不减
@@ -80,16 +84,14 @@ extension NSAttributedString{
         ImageTool.shared.deleteImages(uuidsToDel: delUUIDs)
  
         let cleanText =  attrTextForContent.string
-        
-        return (todoAttrTuples,
+        print("保存时共解析到\(todoModels.count)个todo Models")
+        return (
                 cleanText,
                 containsImage,
-                incompletedTodos,
-                completedTodos,
-                allTodos,
+                todoModels,
                 newImgModels,
                 attrText
-        )
+                )
     }
     
     /// 计算两个数组之差：a1-a2

@@ -36,6 +36,7 @@ enum diaryInfoRecordKey: String {
     case todoAttributesTuples
     case todos
     case emojis
+    case todoModelsJSON
     
 }
 //MARK:diaryInfo+CloudKit
@@ -50,13 +51,14 @@ extension diaryInfo {
         r[.content] = content
         r[.islike] = islike
         r[.tags] = self.tags
-        r[.mood] = mood
+        r[.mood] = mood // imageModelsJSON
         r[.containsImage] = containsImage
         r[.rtfd] = rtfdAsset
         r[.imageAttributesTuples] = tuples2dictString(imageAttributesTuples)
         r[.todoAttributesTuples] = tuples2dictString(todoAttributesTuples)
         r[.todos] = todos
         r[.emojis] = emojis
+        r[.todoModelsJSON] = todoModelsJSON
         return r
     }
     

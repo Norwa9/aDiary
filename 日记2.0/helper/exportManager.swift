@@ -64,10 +64,10 @@ class exportManager{
                     
                     //正文
                     let imageModels = diary.scalableImageModels
-                    let todoAttrTuples = diary.todoAttributesTuples
+                    let todoModels = diary.lwTodoModels
                     let formatteredAString = formatter.processAttrString(
                         aString: aString,
-                        todoAttrTuples: todoAttrTuples,
+                        todoModels: todoModels,
                         imageModels: imageModels,
                         isSharingMode: true
                     )

@@ -103,7 +103,8 @@ extension AppDelegate{
     
     ///配置数据库，用于数据库的迭代更新
     private func configureRealm(){
-        let schemaVersion: UInt64 = 0
+        // schemaVersion = 1：版本3.2，diaryinfo新增了todoModelsJSON属性
+        let schemaVersion: UInt64 = 1
         LWRealmManager.schemaVersion = schemaVersion
         let config = Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: { migration, oldSchemaVersion in
             //oldSchemaVersion从0开始

@@ -28,12 +28,13 @@ class diaryInfo:Object,Codable{
     @objc dynamic var rtfd:Data? = nil
     @objc dynamic var modTime:Date? = nil
     @objc dynamic var editedButNotUploaded:Bool = false ///引入的目的是解决离线修改的同步问题(不必上传到云端)
+    @objc dynamic var todoModelsJSON = ""
     
-    var realmTodos:List<RealmString> = List<RealmString>()
+    var realmTodos:List<RealmString> = List<RealmString>() // 3.2版本后弃用
     var realmTags:List<RealmString> = List<RealmString>()
     var realmEmojis:List<RealmString> = List<RealmString>()
-    var realmImageAttrTuples = List<RealmTuple>()
-    var realmTodoAttrTuples = List<RealmTuple>()
+    var realmImageAttrTuples = List<RealmTuple>() // 3.2版本后弃用
+    var realmTodoAttrTuples = List<RealmTuple>() // 3.2版本后弃用
     
     
     // 如果需要增加属性的话，只需要在 appdelegate 的版本号加 1 即可自动升级
@@ -64,6 +65,10 @@ class diaryInfo:Object,Codable{
         guard let containsImage = record[.containsImage] as? Int else {
             throw RecordError.missingKey(.containsImage)
         }
+        guard let todoModelsJSON = record[.todoModelsJSON] as? String else {
+            throw RecordError.missingKey(.todoModelsJSON)
+        }
+        
         
         /*
          随着App的更新，新版本中可能会加入新的字段。
@@ -111,6 +116,8 @@ class diaryInfo:Object,Codable{
         self.realmTags.append(objectsIn: tags.map({ RealmString(value: [$0]) }))
         self.realmTodos.append(objectsIn: todos.map({ RealmString(value: [$0]) }))
         self.realmEmojis.append(objectsIn: emojis.map({ RealmString(value: [$0]) }))
+        
+        self.todoModelsJSON = todoModelsJSON
     }
     
     

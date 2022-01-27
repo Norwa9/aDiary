@@ -43,7 +43,7 @@ class LWTodoView:UIView{
 //        containerView.layer.borderWidth = 1
         containerView.layer.borderColor = UIColor.systemGray5.cgColor
         containerView.layer.cornerRadius = 5
-        containerView.setupShadow(opacity: 0.2, radius: 1, offset: .zero, color: .black)
+        containerView.setupShadow(opacity: 0.1, radius: 0.5, offset: .zero, color: .black)
         
         // stateButton
         stateButton = UIButton()
@@ -152,9 +152,13 @@ class LWTodoView:UIView{
             viewModel.state = 0
         }
         
-        // reload view
+        // 先保存当前内容
+        viewModel.content = self.contentTextView.text
+        // 再reload view
         loadStateButton()
         loadContentTextField()
+        viewModel.saveTodo()
+        
     }
     
     @objc func moreButtonTapped(_ sender:UIButton){

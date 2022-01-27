@@ -7,28 +7,33 @@
 
 import Foundation
 import YYModel
-class LWTodoModel:NSObject, YYModel{
+import AttributedString
+
+class LWTodoModel:NSObject,Codable,YYModel{ // YYModel 必须加 @objc dynamic修饰，否则无法被解码
     /// 创建时间
-    var createdDate:Date
+    @objc dynamic var createdDate:Date = Date()
     /// 开启提醒
-    var needRemind:Bool = false
+    @objc dynamic var needRemind:Bool = false
     /// 提醒时间
-    var remindDate:Date?
+    @objc dynamic var remindDate:Date = Date()
     /// 内容
-    var content:String = ""
+    @objc dynamic var content:String = ""
     /// 备忘
-    var note:String = ""
+    @objc dynamic var note:String = ""
     /// 在富文本中的位置
-    var location:Int = -1
+    @objc dynamic var location:Int = -1
     /// 完成状态
-    var state:Int = 0 //0未完成，1已完成
+    @objc dynamic var state:Int = 0 //0未完成，1已完成
     /// view的大小
-    var bounds:String = ""
+    @objc dynamic var bounds:String = ""
     /// uuid，用于注册通知
-    var uuid:String
+    @objc dynamic var uuid:String = ""
     
+    override init() {
+        super.init()
+    }
     
-    init(location:Int,bounds:CGRect,state:Int,remindDate:Date?,content:String,note:String,needRemind:Bool,uuid:String) {
+    init(location:Int,bounds:CGRect,state:Int,remindDate:Date,content:String,note:String,needRemind:Bool,uuid:String) {
         self.createdDate = Date()
         self.needRemind = needRemind
         self.remindDate = remindDate
@@ -40,5 +45,21 @@ class LWTodoModel:NSObject, YYModel{
         self.bounds = boundsSring
         self.uuid = uuid
         super.init()
+    }
+    
+    func modelCustomTransform(from dic: [AnyHashable : Any]) -> Bool {
+        // 将model保存的时间戳转换为Date
+        if let remindDateTimeStamp = dic["remindDate"] as? NSNumber,
+           let createdDateTimeStamp = dic["createdDate"] as? NSNumber
+        {
+            
+            
+            self.remindDate = Date.init(timeIntervalSinceReferenceDate: TimeInterval(remindDateTimeStamp.floatValue)) 
+            self.createdDate = Date.init(timeIntervalSinceReferenceDate: TimeInterval(createdDateTimeStamp.floatValue))
+            print("转换时间戳到Date，remindDate：\(remindDate),createdDate：\(createdDate)")
+            return true
+        }
+        
+        return false
     }
 }

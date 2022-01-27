@@ -16,7 +16,7 @@ class LWTodoViewModel:NSObject{
     var content:String = ""
     var note:String = ""
     var needRemind:Bool = false
-    var remindDate:Date?
+    var remindDate:Date = Date()
     var uuid:String
     
     weak var lwTextView:LWTextView?
@@ -38,9 +38,11 @@ class LWTodoViewModel:NSObject{
     
     //MARK: init
     /// 读取日记时，创建viewModel
-    init(model:LWTodoViewModel){
+    init(model:LWTodoModel){
         self.location = model.location
-        self.bounds = model.bounds
+        let bounds = CGRect.init(string: model.bounds)
+        ?? globalConstantsManager.shared.defaultTodoBounds
+        self.bounds = bounds
         self.state = model.state
         self.content = model.content
         self.note = model.note
@@ -52,10 +54,7 @@ class LWTodoViewModel:NSObject{
     /// 插入todo时，创建viewModel
     init(location:Int){
         self.location = location
-        let KtodoViewWidth = globalConstantsManager.shared.kScreenWidth * 0.95
-        let defaultTodoViewHeight = userDefaultManager.font.lineHeight // 默认的todo cell 高度
-        print("创建todo的viewModel，默认todoView的高度：\(defaultTodoViewHeight)")
-        self.bounds = CGRect(x: 0, y: 0, width: KtodoViewWidth, height: defaultTodoViewHeight)
+        self.bounds = globalConstantsManager.shared.defaultTodoBounds
         self.uuid = UUID().uuidString
     }
     
@@ -137,10 +136,9 @@ class LWTodoViewModel:NSObject{
         }
         let extroInfoMuAttrText = NSMutableAttributedString()
         if needRemind{
-            if let date = remindDate{
-                let dateAttrString = date.toYYMMDD_CN()
-                extroInfoMuAttrText.append(dateAttrString)
-            }
+            let dateAttrString = remindDate.toYYMMDD_CN()
+            print("toYYMMDD_CN:\(dateAttrString.string)")
+            extroInfoMuAttrText.append(dateAttrString)
         }
         if note != ""{
             let hasNoteAttrStringAttributes:[NSAttributedString.Key : Any] = [
@@ -183,10 +181,15 @@ class LWTodoViewModel:NSObject{
         }
     }
     
+    func saveTodo(){
+        lwTextView?.textViewController?.save()
+    }
+    
     /// 刷新todoView
     func reloadTodoView(todoView:LWTodoView){
         bounds = todoView.calToDoViewBounds()
         lwTextView?.reloadTodoView(endView: todoView)
+        self.saveTodo()
     }
     
     
@@ -197,6 +200,7 @@ class LWTodoViewModel:NSObject{
                 lwTextView.textStorage.deleteCharacters(in: NSRange(location: location, length: 1))
                 let location = location
                 lwTextView.selectedRange = NSRange(location: location, length: 0)
+                self.saveTodo()
             }
         }
     }
