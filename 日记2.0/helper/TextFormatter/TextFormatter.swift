@@ -172,6 +172,39 @@ public class TextFormatter{
 //MARK:  -todo复选框
 extension TextFormatter{
     public func insertTodoList(){
+        let location = selectedRange.location
+        //插入换行
+        let Linebreak = NSMutableAttributedString(string: "\n")
+        let LinebreakAttributedString = Linebreak.addingAttributes([
+            .font : userDefaultManager.font,
+            .foregroundColor : UIColor.label
+        ])
+        
+        // 插入todo
+        let defaultTodoViewModel = LWTodoViewModel(location: location)
+        let todoView = LWTodoView(viewModel: defaultTodoViewModel)
+        defaultTodoViewModel.lwTextView = textView
+        let subViewAttchment = SubviewTextAttachment(view: todoView, size: defaultTodoViewModel.bounds.size)
+        textView.textStorage.insertAttachment(subViewAttchment, at: location, with: textLeftParagraphStyle)
+        
+        //插入换行
+        textView.textStorage.insert(LinebreakAttributedString, at: location + 1)
+        textView.setLeftTypingAttributes()
+        
+        todoView.contentTextView.becomeFirstResponder()
+        print("todoView.contentTextView.becomeFirstResponder()")
+        
+        
+        
+        
+        let undo = Undo(range: NSRange(location: location, length: 3), attchment: subViewAttchment)
+        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+            self.undoImage(undo)
+        })
+        return
+        
+    
+        
         //selectedRange可能覆盖到【多个段落】
         guard let pRange = getCurParagraphRange() else{return}
         
@@ -596,19 +629,6 @@ extension TextFormatter{
         let time = formatter.string(from: Date())
         
         textView.insertText(time)
-    }
-    
-    func calculateDocumentSize(_ completion:(_ available:Bool)->()){
-        let allRange = NSRange(location: 0, length: textView.attributedText.length)
-        var roughlySize:Int = 0
-        self.textView.attributedText.enumerateAttribute(.attachment, in: allRange, options: []) { object, range, stop in
-            if let attchment = object as? SubviewTextAttachment,let view = attchment.view as? ScalableImageView{
-                if let imageData = view.viewModel.image?.jpegData(compressionQuality: 1){
-                    roughlySize += imageData.count
-                }
-            }
-        }
-        print("插入图片前，所有图片的大小：\(roughlySize)")
     }
     
     ///插入可变大小图片

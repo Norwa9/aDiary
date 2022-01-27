@@ -39,7 +39,7 @@ extension NSAttributedString{
             //1.image
             if let subViewAttchemnt = object as? SubviewTextAttachment,
                let view = subViewAttchemnt.view as? ScalableImageView{
-                
+                print("保存\(location)处的图片model")
                 containsImage = true
                 
                 let viewModel = view.viewModel

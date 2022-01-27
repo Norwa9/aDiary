@@ -111,13 +111,26 @@ extension LWTextViewController{
     @objc func adjustForKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
+        if textView.isFirstResponder{
+            print("textView.isFirstResponder")
+            keyBoardToolsBar.reloadTextViewToolBar(type: 0)
+        }else{
+            // todo是焦点
+            print("todoView.isFirstResponder")
+            keyBoardToolsBar.reloadTextViewToolBar(type: 1)
+            return
+            
+        }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
         //print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
         if notification.name == UIResponder.keyboardWillHideNotification {
-            //print("keyboardWillHideNotification")
-            //1.键盘隐藏
-            textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
+            if textView.isFirstResponder{
+                textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
+            }
+            // 如果todoView.isFirstResponder
+            // 则不需要重新设置contentInset为零，因为如果换行新建todo时，会先resignFirstResponder再becomeFirstResponder，导致抖动
+            
         } else{
             //print("keyboardWillChangeFrameNotification")
             //2.键盘出现
@@ -128,8 +141,10 @@ extension LWTextViewController{
                 bottomInset = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
             }
             textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+            globalConstantsManager.shared.bottomInset = bottomInset
             
         }
+        print("textView.scrollRangeToVisible(textView.selectedRange)")
         textView.scrollRangeToVisible(textView.selectedRange)
     }
 }

@@ -447,7 +447,9 @@ final class LWSyncEngine{
         if nonEmptyIDs.isEmpty{
             return
         }
-        indicatorViewManager.shared.start(type: .delete)
+        if recordType == .diaryInfo{
+            indicatorViewManager.shared.start(type: .delete) // 删除图片时无需提示
+        }
         print("开始删除\(ids.count)个项目,类型是\(recordType)")
         deleteRecords(nonEmptyIDs,recordType: recordType)
         

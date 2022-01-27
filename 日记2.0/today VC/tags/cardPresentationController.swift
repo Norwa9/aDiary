@@ -7,7 +7,7 @@
 
 import UIKit
 
-class tagsPresentationController: UIPresentationController {
+class cardPresentationController: UIPresentationController {
     let blurEffectView: UIVisualEffectView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     let viewHeight:CGFloat = 400
@@ -73,7 +73,7 @@ class tagsPresentationController: UIPresentationController {
 }
 
 //MARK:-旋转屏幕
-extension tagsPresentationController{
+extension cardPresentationController{
     @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
             return
@@ -82,8 +82,8 @@ extension tagsPresentationController{
         guard UIDevice.current.orientation.isPortrait || UIDevice.current.orientation.isLandscape else{
             return
         }
-        print("tagsPresentationController onContainerSizeChanged")
-        print("presentedView?.frame.size:\(presentedView?.frame.size)")
+        //print("tagsPresentationController onContainerSizeChanged")
+        //print("presentedView?.frame.size:\(presentedView?.frame.size)")
         //presentedViewController:tagsView
         //presentingViewController:monthVC
         //self.presentedView?.layoutIfNeeded()

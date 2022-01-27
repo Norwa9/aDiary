@@ -30,7 +30,7 @@ class todayVC: UIViewController{
     var dismissPanGesture:UIPanGestureRecognizer!
     var interactiveStartingPoint:CGPoint?
     
-    //MARK:-生命周期
+    //MARK:  -生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,7 +55,7 @@ class todayVC: UIViewController{
         }
     }
     
-    //MARK:-setModel
+    //MARK: -setModel
     func setModel(){
         updateUI()
     }
@@ -95,7 +95,7 @@ class todayVC: UIViewController{
         
     }
     
-    //MARK:-auto layout
+    //MARK: -auto layout
     private func setupConstraints(){
         topView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -111,7 +111,7 @@ class todayVC: UIViewController{
     }
 }
 
-//MARK:-emojiView
+//MARK: -emojiView
 extension todayVC{
     ///显示/隐藏表情盘
     func toggleTopView(){
@@ -133,7 +133,7 @@ extension todayVC{
 }
 
 
-//MARK:-UIGestureRecognizerDelegate
+//MARK: -手势
 extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     @objc func handlePanGesture(_ gesture:UIPanGestureRecognizer){
         if isAdjustScalableImageView{
@@ -247,7 +247,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     
 }
 
-//MARK: -旋转屏幕
+//MARK:   -旋转屏幕
 extension todayVC{
     @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{

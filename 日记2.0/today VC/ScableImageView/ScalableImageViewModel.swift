@@ -92,7 +92,7 @@ class ScalableImageViewModel: NSObject {
                     if view.viewModel == self{
                         let newestLocation = range.location
                         self.location = newestLocation
-                        print("newest location : \(newestLocation)")
+                        print("newest img location : \(newestLocation)")
                         completion()
                         stop.pointee = true
                         return

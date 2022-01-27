@@ -124,5 +124,14 @@ class globalConstantsManager{
             return CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight).insetBy(dx: 20, dy: 70)
         }
     }
+    
+    var deviceCenterPoint:CGPoint{
+        get{
+            return CGPoint(x: kScreenWidth / 2, y: kScreenHeight / 2)
+        }
+    }
+    
+    /// 显示键盘时，textView的底部需要的inset
+    var bottomInset:CGFloat?
 }
 

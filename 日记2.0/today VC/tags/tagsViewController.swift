@@ -256,7 +256,7 @@ extension tagsViewController:tagsCellEditProtocol{
 
 extension tagsViewController:UIViewControllerTransitioningDelegate{
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return tagsPresentationController(presentedViewController: presented, presenting: presenting)
+        return cardPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 

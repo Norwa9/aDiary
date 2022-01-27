@@ -139,8 +139,9 @@ class LWTextView: SubviewAttachingTextView {
 
 }
 
-//MARK: -scalableImageView
+//MARK: reload插件
 extension LWTextView{
+    /// 图片改变后，刷新textView里的图片
     func reloadScableImage(endView: ScalableImageView,shouldAddDoneView:Bool = false) {
         print("reloadScableImage")
         let newViewModel = endView.viewModel
@@ -161,6 +162,23 @@ extension LWTextView{
             self.selectedRange = NSRange(location: newViewModel.location, length: 0)
         }
     }
+    
+    /// todo改变后，刷新textView里的todo视图
+    func reloadTodoView(endView: LWTodoView) {
+        print("reloadTodoView")
+        // 此时viewModel已经获取到了新的todoView bounds
+        let newViewModel = endView.viewModel
+        newViewModel.getNewestLocation(attributedString: self.attributedText){
+            print("newtTodoView.model.location : \(newViewModel.location)")
+            
+            let newView = LWTodoView(viewModel: newViewModel)
+            let newAttchment = SubviewTextAttachment(view: newView, size: newView.size)
+            self.attributedText = self.attributedText.replacingAttchment(newAttchment, attchmentAt: newViewModel.location, with: textLeftParagraphStyle)
+            self.selectedRange = NSRange(location: newViewModel.location, length: 0)
+        }
+    }
+    
+    
 }
 
 //MARK: -默认输入特性

@@ -110,7 +110,7 @@
 		EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7825C59AD000AA6971 /* UIView+.swift */; };
 		EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E7D25C59E4700AA6971 /* topbarButton.swift */; };
 		EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8125C5A75F00AA6971 /* todayVC.swift */; };
-		EAA29E8D25C8248C00AA6971 /* tagsPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */; };
+		EAA29E8D25C8248C00AA6971 /* cardPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E8C25C8248C00AA6971 /* cardPresentationController.swift */; };
 		EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9725C8277A00AA6971 /* tagsViewController.swift */; };
 		EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E9825C8277A00AA6971 /* tagsViewController.xib */; };
 		EAA29E9E25C832F900AA6971 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
@@ -128,6 +128,8 @@
 		EAAFDDCB279EE427008286EB /* LWTodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDCA279EE427008286EB /* LWTodoModel.swift */; };
 		EAAFDDCD279EE435008286EB /* LWTodoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDCC279EE434008286EB /* LWTodoViewModel.swift */; };
 		EAAFDDCF279EE467008286EB /* LWTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDCE279EE467008286EB /* LWTodoView.swift */; };
+		EAAFDDF127A11080008286EB /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF027A11080008286EB /* Date+.swift */; };
+		EAAFDDF327A12182008286EB /* LWTodoSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -280,7 +282,7 @@
 		EAA29E7825C59AD000AA6971 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		EAA29E7D25C59E4700AA6971 /* topbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = topbarButton.swift; sourceTree = "<group>"; };
 		EAA29E8125C5A75F00AA6971 /* todayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todayVC.swift; sourceTree = "<group>"; };
-		EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsPresentationController.swift; sourceTree = "<group>"; };
+		EAA29E8C25C8248C00AA6971 /* cardPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cardPresentationController.swift; sourceTree = "<group>"; };
 		EAA29E9725C8277A00AA6971 /* tagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsViewController.swift; sourceTree = "<group>"; };
 		EAA29E9825C8277A00AA6971 /* tagsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsViewController.xib; sourceTree = "<group>"; };
 		EAA29E9D25C832F900AA6971 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
@@ -298,6 +300,8 @@
 		EAAFDDCA279EE427008286EB /* LWTodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoModel.swift; sourceTree = "<group>"; };
 		EAAFDDCC279EE434008286EB /* LWTodoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoViewModel.swift; sourceTree = "<group>"; };
 		EAAFDDCE279EE467008286EB /* LWTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoView.swift; sourceTree = "<group>"; };
+		EAAFDDF027A11080008286EB /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoSettingViewController.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -725,8 +729,8 @@
 		EAA29E8425C5A79100AA6971 /* today VC */ = {
 			isa = PBXGroup;
 			children = (
-				EAAFDDC9279EE414008286EB /* LWTodo */,
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				EAAFDDC9279EE414008286EB /* LWTodo */,
 				EA98C891272448CE00DD60EA /* animation */,
 				EA2235E326D6920A001FAD1D /* ScableImageView */,
 				EA67913826D11D4600B44ECA /* subPages */,
@@ -755,7 +759,7 @@
 		EAA29EA825C836E200AA6971 /* tags */ = {
 			isa = PBXGroup;
 			children = (
-				EAA29E8C25C8248C00AA6971 /* tagsPresentationController.swift */,
+				EAA29E8C25C8248C00AA6971 /* cardPresentationController.swift */,
 				EAA29E9725C8277A00AA6971 /* tagsViewController.swift */,
 				EAA29E9825C8277A00AA6971 /* tagsViewController.xib */,
 				EAA29EA925C8370600AA6971 /* tagsCell.swift */,
@@ -770,6 +774,7 @@
 				EAAFDDCA279EE427008286EB /* LWTodoModel.swift */,
 				EAAFDDCC279EE434008286EB /* LWTodoViewModel.swift */,
 				EAAFDDCE279EE467008286EB /* LWTodoView.swift */,
+				EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */,
 			);
 			path = LWTodo;
 			sourceTree = "<group>";
@@ -794,6 +799,7 @@
 				EAD20D9C26A071840014B8B5 /* NSMutableAttributedString+.swift */,
 				EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */,
 				EA96554027969FF8000B827B /* CKRecord+.swift */,
+				EAAFDDF027A11080008286EB /* Date+.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -1081,6 +1087,7 @@
 				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
 				EA55A3A026D9436900FC9006 /* LWPopManger.swift in Sources */,
+				EAAFDDF327A12182008286EB /* LWTodoSettingViewController.swift in Sources */,
 				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
 				EA67915C26D1F35D00B44ECA /* diary+subPages.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
@@ -1091,7 +1098,7 @@
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
 				1BB6963F26A6CFE00009472F /* LWTextView.swift in Sources */,
-				EAA29E8D25C8248C00AA6971 /* tagsPresentationController.swift in Sources */,
+				EAA29E8D25C8248C00AA6971 /* cardPresentationController.swift in Sources */,
 				EA537BB926357FBF00C2E9EE /* shareVC.swift in Sources */,
 				EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
@@ -1127,6 +1134,7 @@
 				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
 				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
+				EAAFDDF127A11080008286EB /* Date+.swift in Sources */,
 				EA2235FD26D692B0001FAD1D /* ScalableImageModel.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
 				EA51D1F725D7FCE10007BDFA /* dataManager.swift in Sources */,

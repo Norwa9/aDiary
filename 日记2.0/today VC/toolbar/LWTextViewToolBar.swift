@@ -73,6 +73,18 @@ class LWTextViewToolBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func reloadTextViewToolBar(type:Int){
+//        UIView.animate(withDuration: 0.2) {
+//
+//        }
+        if type == 0{ // textView
+            self.alpha = 1
+        }else if type == 1{ // todo
+            self.alpha = 0
+        }
+    }
+        
+    
     //tool bar
     private func initBasicButtons(){
         self.backgroundColor = .secondarySystemBackground
@@ -212,7 +224,7 @@ class LWTextViewToolBar: UIView {
         }
     }
     
-    func initRichTextButtonsCons(){
+    private func initRichTextButtonsCons(){
         boldButton.snp.makeConstraints { (make) in
             make.edges.equalTo(insertTimeButton)
         }
