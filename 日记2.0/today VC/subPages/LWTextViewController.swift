@@ -112,6 +112,16 @@ extension LWTextViewController{
     @objc func adjustForKeyboardWillShow(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
+        let bottomInset:CGFloat
+        if textView.contentSize.height < globalConstantsManager.shared.kScreenHeight{
+            bottomInset = keyboardViewEndFrame.height
+        }else{
+            bottomInset = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
+        }
+        globalConstantsManager.shared.bottomInset = bottomInset
+        
         if textView.isFirstResponder{
             print("textView.isFirstResponder")
         }else{
@@ -119,18 +129,7 @@ extension LWTextViewController{
             print("todoView.isFirstResponder")
             return // 返回，交给todoView去调整inset
         }
-        let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
-        //print("keyboardWillChangeFrameNotification")
-        //2.键盘出现
-        let bottomInset:CGFloat
-        if textView.contentSize.height < globalConstantsManager.shared.kScreenHeight{
-            bottomInset = keyboardViewEndFrame.height
-        }else{
-            bottomInset = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
-        }
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
-        globalConstantsManager.shared.bottomInset = bottomInset
         textView.scrollRangeToVisible(textView.selectedRange)
     }
     

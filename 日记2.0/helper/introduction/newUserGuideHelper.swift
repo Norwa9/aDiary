@@ -15,9 +15,9 @@ class NewUserGuideHelper{
     
     //MARK:-导入用户引导
     public func initUserGuideDiary(){
-//        if userDefaultManager.hasInitialized{
-//            return
-//        }
+        if userDefaultManager.hasInitialized{
+            return
+        }
         
         // 1.设置App的默认字体
         // userDefaultManager.fontName = "DINAlternate-Bold"
