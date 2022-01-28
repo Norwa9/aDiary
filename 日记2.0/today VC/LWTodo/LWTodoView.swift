@@ -198,6 +198,7 @@ class LWTodoView:UIView{
 extension LWTodoView:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         viewModel.lwTextView?.textViewController?.isTextViewEditing = true // 防止退出手势冲突
+        viewModel.lwTextView?.textViewController?.keyBoardToolsBar.reloadTextViewToolBar(type: 1)
         viewModel.adjustTextViewInset()
     }
     

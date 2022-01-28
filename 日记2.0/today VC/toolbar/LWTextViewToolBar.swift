@@ -74,14 +74,14 @@ class LWTextViewToolBar: UIView {
     }
     
     public func reloadTextViewToolBar(type:Int){
-//        UIView.animate(withDuration: 0.2) {
-//
-//        }
-        if type == 0{ // textView
-            self.alpha = 1
-        }else if type == 1{ // todo
-            self.alpha = 0
+        UIView.animate(withDuration: 0.2) {
+            if type == 0{ // textView
+                self.alpha = 1
+            }else if type == 1{ // todo
+                self.alpha = 0
+            }
         }
+       
     }
         
     

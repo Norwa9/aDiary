@@ -45,9 +45,9 @@ class LWTextViewController: UIViewController {
         
         //键盘出现
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         //键盘出现、隐藏、旋转···
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         //设备方向
 //        notificationCenter.addObserver(self, selector: #selector(onContainerSizeChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
         
@@ -92,13 +92,13 @@ class LWTextViewController: UIViewController {
         }
     }
     
-    //MARK:-读取
+    //MARK: -读取
     func load(){
         let textFormatter = TextFormatter(textView: self.textView)
         textFormatter.loadTextViewContent(with: model)
     }
     
-    //MARK:-保存
+    //MARK: -保存
     func save(){
         //保存数据
         let textFormatter = TextFormatter(textView: textView)
@@ -106,50 +106,48 @@ class LWTextViewController: UIViewController {
     }
 }
 
-//MARK:-键盘delegate
+//MARK: -键盘delegate
 extension LWTextViewController{
-    @objc func adjustForKeyboard(notification: Notification) {
+    /// 显示
+    @objc func adjustForKeyboardWillShow(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         
         if textView.isFirstResponder{
             print("textView.isFirstResponder")
-            keyBoardToolsBar.reloadTextViewToolBar(type: 0)
         }else{
             // todo是焦点
             print("todoView.isFirstResponder")
-            keyBoardToolsBar.reloadTextViewToolBar(type: 1)
-            return
-            
+            return // 返回，交给todoView去调整inset
         }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)//从screen坐标系转换为当前view坐标系
-        //print("out keyboardViewEndFrame:\(keyboardViewEndFrame)")
-        if notification.name == UIResponder.keyboardWillHideNotification {
-            if textView.isFirstResponder{
-                textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
-            }
-            // 如果todoView.isFirstResponder
-            // 则不需要重新设置contentInset为零，因为如果换行新建todo时，会先resignFirstResponder再becomeFirstResponder，导致抖动
-            
-        } else{
-            //print("keyboardWillChangeFrameNotification")
-            //2.键盘出现
-            let bottomInset:CGFloat
-            if textView.contentSize.height < globalConstantsManager.shared.kScreenHeight{
-                bottomInset = keyboardViewEndFrame.height
-            }else{
-                bottomInset = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
-            }
-            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
-            globalConstantsManager.shared.bottomInset = bottomInset
-            
+        //print("keyboardWillChangeFrameNotification")
+        //2.键盘出现
+        let bottomInset:CGFloat
+        if textView.contentSize.height < globalConstantsManager.shared.kScreenHeight{
+            bottomInset = keyboardViewEndFrame.height
+        }else{
+            bottomInset = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
         }
-        print("textView.scrollRangeToVisible(textView.selectedRange)")
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        globalConstantsManager.shared.bottomInset = bottomInset
         textView.scrollRangeToVisible(textView.selectedRange)
     }
+    
+    /// 隐藏
+    @objc func adjustForKeyboardWillHide(notification: Notification) {
+        if textView.isFirstResponder{
+            textView.contentInset = .zero//键盘消失，文本框视图的缩进为0，与当前view的大小一致
+        }
+        // 如果todoView.isFirstResponder
+        // 则不需要重新设置contentInset为零，因为如果换行新建todo时，会先resignFirstResponder再becomeFirstResponder，导致抖动
+        textView.scrollRangeToVisible(textView.selectedRange)
+        
+    }
+    
 }
 
-//MARK:-插入图片
+//MARK: -插入图片
 extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate,FMImageEditorViewControllerDelegate,LWPhotoPickerDelegate{
     func showPhotoPicker(){
         picker.delegate = self
@@ -179,22 +177,23 @@ extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationContr
 }
 
 extension LWTextViewController : UITextViewDelegate{
-    //MARK:-textViewDidBeginEditing
+    //MARK: -textViewDidBeginEditing
     func textViewDidBeginEditing(_ textView: UITextView) {
         isTextViewEditing = true
+        keyBoardToolsBar.reloadTextViewToolBar(type: 0)
         //初始输入时，设置输入字体颜色为.label，否则默认为black无法适配深色模式
         if textView.textStorage.length == 0 {
             textView.typingAttributes[.foregroundColor] = UIColor.label
         }
     }
     
-    //MARK:-textViewDidChangeSelection
+    //MARK: -textViewDidChangeSelection
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("textViewDidChangeSelection")
         keyBoardToolsBar.updateToolbarButtonsState(textView: textView as! LWTextView)
     }
     
-    //MARK:-textViewDidChange
+    //MARK: -textViewDidChange
     func textViewDidChange(_ textView: UITextView) {
         print("textViewDidChange")
         //处理数字序号的更新(当某一段从有内容变成一个空行时调用correctNum方法)
@@ -206,14 +205,14 @@ extension LWTextViewController : UITextViewDelegate{
         }
     }
     
-    //MARK:-textViewDidEndEditing
+    //MARK: -textViewDidEndEditing
     func textViewDidEndEditing(_ textView: UITextView) {
         print("textViewDidEndEditing")
         isTextViewEditing = false
         save()
     }
     
-    //MARK:-shouldChangeTextIn
+    //MARK: -shouldChangeTextIn
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         //当换行时，调用addNewLine()来处理递增数字列表的任务
         print("shouldChangeTextIn\(range)")
@@ -233,7 +232,7 @@ extension LWTextViewController : UITextViewDelegate{
         return true//若为false，键入的新字符不会递给storage
     }
     
-    //MARK:-shouldInteractWith
+    //MARK: -shouldInteractWith
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         let formatter = TextFormatter(textView: self.textView)
         let res = formatter.interactAttchment(with: characterRange,diary:model)
@@ -248,7 +247,7 @@ extension LWTextViewController : UITextViewDelegate{
 }
 
 extension LWTextViewController : UIScrollViewDelegate{
-    //MARK:-scrollViewDidScroll
+    //MARK: -scrollViewDidScroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
         // sprint("text view content offset : \(y)")
@@ -261,7 +260,7 @@ extension LWTextViewController : UIScrollViewDelegate{
     }
 }
 
-//MARK:-JXPagingViewListViewDelegate
+//MARK: -JXPagingViewListViewDelegate
 extension LWTextViewController : JXPagingViewListViewDelegate{
     func listView() -> UIView {
         self.view
@@ -280,7 +279,7 @@ extension LWTextViewController : JXPagingViewListViewDelegate{
     }
 }
 
-//MARK:-旋转屏幕时，需要重新调整页面UI
+//MARK: -旋转屏幕时，需要重新调整页面UI
 extension LWTextViewController{
     @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
@@ -309,7 +308,7 @@ extension LWTextViewController{
     
 }
 
-//MARK:-深色模式
+//MARK: -深色模式
 extension LWTextViewController{
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

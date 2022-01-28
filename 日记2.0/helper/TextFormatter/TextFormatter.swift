@@ -655,6 +655,10 @@ extension TextFormatter{
         
         //更新焦点
         textView.selectedRange = NSRange(location: location + 3, length: 0)
+        if let bottomInset:CGFloat = globalConstantsManager.shared.bottomInset{
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        }
+        textView.textViewController?.keyBoardToolsBar.reloadTextViewToolBar(type: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
         textView.setLeftTypingAttributes()
         
