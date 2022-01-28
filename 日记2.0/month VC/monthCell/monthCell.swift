@@ -55,7 +55,7 @@ class monthCell: UICollectionViewCell {
     }
     
     
-    //MARK:-UI界面搭建
+    //MARK: -UI界面搭建
     private func initUI(){
         contentView.addSubview(containerView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -146,7 +146,7 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    //MARK:-Auto layout
+    //MARK: -Auto layout
     private func setupConstraints() {
         containerView.snp.makeConstraints { (make) in
             make.left.equalTo(contentView)
@@ -209,7 +209,7 @@ class monthCell: UICollectionViewCell {
    
     }
     
-    //MARK:-model setter
+    //MARK: -model setter
     func setViewModel(_ diary:diaryInfo){
         self.diary = diary
         self.setupSegmentControl()
@@ -239,7 +239,7 @@ class monthCell: UICollectionViewCell {
         updateCons()//更新约束
     }
     
-    //MARK:-setupSegmentControl
+    //MARK: -setupSegmentControl
     private func setupSegmentControl(){
         //如果是搜索模式，不显示页码选择器
         if isFilterMode{
@@ -271,7 +271,7 @@ class monthCell: UICollectionViewCell {
         
     }
     
-    //MARK:-images
+    //MARK: -images
     private func fillImages(diary:diaryInfo){
         let iM = imageManager(diary: diary)
         let contains = diary.containsImage
@@ -311,7 +311,7 @@ class monthCell: UICollectionViewCell {
         }
     }
     
-    //MARK:-设置今日提示
+    //MARK: -设置今日提示
     private func setTodayPropmtEdge(){
         if diary.trueDate == GetTodayDate(){
             self.containerView.layer.borderWidth = 1.5;
@@ -321,7 +321,7 @@ class monthCell: UICollectionViewCell {
         }
     }
 }
-//MARK:-reuse
+//MARK: -reuse
 extension monthCell{
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -331,7 +331,7 @@ extension monthCell{
     }
 }
 
-//MARK:-更新约束
+//MARK: -更新约束
 extension monthCell{
     ///更新约束
     func updateCons(){
@@ -377,7 +377,7 @@ extension monthCell{
     
 }
 
-//MARK:-选中状态
+//MARK: -选中状态
 extension monthCell{
     func showSelectionPrompt(){
         UIView.animate(withDuration: 0.2) {
@@ -390,7 +390,7 @@ extension monthCell{
     }
 }
 
-//MARK:-内嵌的albumView
+//MARK: -内嵌的albumView
 extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -417,7 +417,7 @@ extension monthCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
 }
 
 
-//MARK:-action targets
+//MARK: -action targets
 extension monthCell{
     @objc func albumViewTapped(){
         let monthVC = UIApplication.getMonthVC()

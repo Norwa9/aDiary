@@ -131,6 +131,8 @@
 		EAAFDDF127A11080008286EB /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF027A11080008286EB /* Date+.swift */; };
 		EAAFDDF327A12182008286EB /* LWTodoSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */; };
 		EAAFDDF627A2CFBC008286EB /* todoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF527A2CFBC008286EB /* todoListViewModel.swift */; };
+		EAAFDDF927A3F749008286EB /* deBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF727A3F748008286EB /* deBugViewController.swift */; };
+		EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAFDDF827A3F748008286EB /* deBugViewController.xib */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -304,6 +306,8 @@
 		EAAFDDF027A11080008286EB /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoSettingViewController.swift; sourceTree = "<group>"; };
 		EAAFDDF527A2CFBC008286EB /* todoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoListViewModel.swift; sourceTree = "<group>"; };
+		EAAFDDF727A3F748008286EB /* deBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deBugViewController.swift; sourceTree = "<group>"; };
+		EAAFDDF827A3F748008286EB /* deBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deBugViewController.xib; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -705,6 +709,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EAAFDDFB27A3F751008286EB /* debug */,
 				1B1ED87C26D372AC008D88FC /* introduction */,
 				EA67911126D109D800B44ECA /* DataBase */,
 				EADBC35526C01349004D1A52 /* whatsNew */,
@@ -788,6 +793,15 @@
 				EAAFDDF527A2CFBC008286EB /* todoListViewModel.swift */,
 			);
 			path = todoListView;
+			sourceTree = "<group>";
+		};
+		EAAFDDFB27A3F751008286EB /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				EAAFDDF727A3F748008286EB /* deBugViewController.swift */,
+				EAAFDDF827A3F748008286EB /* deBugViewController.xib */,
+			);
+			path = debug;
 			sourceTree = "<group>";
 		};
 		EACB1719267A1B63007BF160 /* extension */ = {
@@ -985,6 +999,7 @@
 				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
 				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
+				EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
 				EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */,
 				EAA29E3625C5768600AA6971 /* Assets.xcassets in Resources */,
@@ -1118,6 +1133,7 @@
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
 				EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */,
+				EAAFDDF927A3F749008286EB /* deBugViewController.swift in Sources */,
 				EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */,
 				1B3AEB1726C50FC600C057A4 /* LWProgressView.swift in Sources */,
 				1B2A56D326A5836A0090D411 /* TodoListLayout.swift in Sources */,

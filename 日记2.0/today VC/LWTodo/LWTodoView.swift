@@ -37,7 +37,7 @@ class LWTodoView:UIView{
     }
     
     // MARK: UI
-    private func initUI(){
+    func initUI(){
         // containerView
         containerView = UIView()
         containerView.backgroundColor = .systemBackground
@@ -80,6 +80,7 @@ class LWTodoView:UIView{
         containerView.addSubview(moreButton)
         
         self.setCons()
+        layoutIfNeeded() // 立即更新布局。否则LWTodoView.asImage()不能产生图像，这是因为UIView在被添加到视图层级之时，才会进行布局。
     }
     
     //MARK: Constraint

@@ -810,40 +810,34 @@ extension TextFormatter{
          2.旧版本(<2.6)，图片直接存放在attributedText，只有imageAttrTuples来定位哪个NSAttchment是图片还是todo，此时还没有图片ViewModel的概念，如果在新版本访问到2.6版本之前保存的日记，需要根据imageAttrTuples手动遍历出NSAttchment，然后给它创建一个viewModel来管理它的尺寸、排版等（>3.1放弃了对它们的处理2022.1.21，待填坑）
          3.新版本(>3.1)里，图片存放在Realm，通过uuid索引
          */
-        for model in imageModels{
-            let location = model.location
-            if isSharingMode{
-                // 分享or导出时，需要与调用方在同一个线程，不能被main.async包裹。
-                // 否者，replaceAttchment还未完成，就会先执行return attrText
+        
+        if isSharingMode{
+            for model in imageModels{
+                let location = model.location
                 let viewModel = ScalableImageViewModel(model: model)
                 let view = ScalableImageView(viewModel: viewModel)
                 let viewSnapShot = view.asImage() // 将ScalableImageView截屏然后塞入attchment
                 let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
                 attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: viewModel.paraStyle)
-            }else{
-                DispatchQueue.main.async {
+            }
+            for model in todoModels{
+                let location = model.location
+                let viewModel = LWTodoViewModel(model: model)
+                let view = LWTodoView(viewModel: viewModel)
+                let viewSnapShot = view.asImage()
+                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
+                attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: textLeftParagraphStyle)
+            }
+        }else{
+            DispatchQueue.main.async {
+                for model in imageModels{
                     let viewModel = ScalableImageViewModel(model: model)
                     let view = ScalableImageView(viewModel: viewModel)
                     view.delegate = self.textView
                     let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
                     attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: viewModel.paraStyle)
                 }
-            }
-        }
-        
-        //TODO:3.恢复todo，完全按照上面写
-        print("读取日记，共有\(todoModels.count)个todo")
-        for model in todoModels{
-            print("读取todo:\(model.content),位置:\(model.location)")
-            let location = model.location
-            if isSharingMode{
-                let viewModel = LWTodoViewModel(model: model)
-                let view = LWTodoView(viewModel: viewModel)
-                let viewSnapShot = view.asImage()
-                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
-                attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: textLeftParagraphStyle)
-            }else{
-                DispatchQueue.main.async {
+                for model in todoModels{
                     let viewModel = LWTodoViewModel(model: model)
                     let view = LWTodoView(viewModel: viewModel)
                     viewModel.lwTextView = self.textView
@@ -852,34 +846,6 @@ extension TextFormatter{
                 }
             }
         }
-//        for tuple in todoAttrTuples{
-//            let location = tuple.0//attribute location
-//            let value = tuple.1//attribute value
-//            if let attachment = attrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment{
-//                //print("读取时处理到到todo:\(location)")
-//                //1.重新添加attribute
-//                attrText.addAttribute(.todo, value: value, range: NSRange(location: location, length: 1))
-//
-//                let attributedText = (value == 1) ? AttributedBox.getChecked() : AttributedBox.getUnChecked()
-//
-//                attrText.replaceCharacters(in: NSRange(location: location, length: 1), with: (attributedText?.attributedSubstring(from: NSRange(0..<1)))!)
-//
-//                let range = NSRange(location: location, length: 0)
-//                let paragraphRange = attrText.mutableString.paragraphRange(for: range)
-//
-//                if value == 1 {
-//                    attrText.addCheckAttribute(range: paragraphRange)
-//                } else {
-//                    attrText.addUncheckAttribute(range: paragraphRange)
-//                }
-//
-//                //2.调整bounds大小
-//                let font = userDefaultManager.font
-//                let size = font.pointSize + font.pointSize / 2
-//                attachment.bounds = CGRect(x: CGFloat(0), y: (font.capHeight - size) / 2, width: size, height: size)
-//            }
-//
-//        }
         
         return attrText
     }

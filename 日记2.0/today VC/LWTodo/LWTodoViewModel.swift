@@ -35,7 +35,7 @@ class LWTodoViewModel:NSObject{
     var todoFont:UIFont {
         get{
             if todoViewStyle == 1{
-                return userDefaultManager.monthCellContentFont
+                return userDefaultManager.monthCellTitleFont
             }
             return userDefaultManager.font
             
