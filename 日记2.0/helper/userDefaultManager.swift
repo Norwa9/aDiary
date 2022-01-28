@@ -38,6 +38,7 @@ class userDefaultManager{
         static let imageUploadQueue = "imageUploadQueue"
         static let imageDeleteQueue = "imageDeleteQueue"
         static let hasUpdated32 = "updated32"
+        static let todoListViewStyle = "todoListViewStyle"
         
         
         
@@ -447,6 +448,22 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.hasUpdated32)
+        }
+    }
+    
+    //MARK: todo
+    
+    /// 0默认、1完成后消失、2完成后置底
+    static var todoListViewStyle:Int{
+        get{
+            if let style = shared?.object(forKey: constants.todoListViewStyle) as? Int {
+                return style
+            }else{
+                return 1
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.todoListViewStyle)
         }
     }
 }

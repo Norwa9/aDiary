@@ -21,6 +21,9 @@ class LWTodoViewModel:NSObject{
     
     weak var lwTextView:LWTextView?
     
+    var todoViewStyle:Int = 0//0表示在textView中显示、1表示在todoListView中显示
+    weak var todoListView:TodoListView?
+    
     //MARK: getter
     var hasExtroInfo:Bool{
         get{
@@ -28,10 +31,25 @@ class LWTodoViewModel:NSObject{
         }
     }
     
+    /// 返回todo文本的属性文本
+    var todoFont:UIFont {
+        get{
+            if todoViewStyle == 1{
+                return userDefaultManager.monthCellContentFont
+            }
+            return userDefaultManager.font
+            
+        }
+    }
+    
     /// 返回附属信息属性文本
     var extroInfoLabelFont:UIFont {
         get{
-            userDefaultManager.customFont(withSize: userDefaultManager.fontSize * 0.6)
+            if todoViewStyle == 1{
+                return UIFont(name: "DIN Alternate", size: 10)!
+            }
+            return userDefaultManager.customFont(withSize: userDefaultManager.fontSize * 0.6)
+            
         }
     }
     
@@ -96,7 +114,7 @@ class LWTodoViewModel:NSObject{
             let doneAttributes:[NSAttributedString.Key : Any] = [
                 .strikethroughStyle : 1,
                 .strikethroughColor : UIColor.systemGray,
-                .font : userDefaultManager.font,
+                .font : todoFont,
                 .foregroundColor : UIColor.systemGray
             ]
             let doneContentAttrString = NSAttributedString(string: content,attributes: doneAttributes)
@@ -104,7 +122,7 @@ class LWTodoViewModel:NSObject{
         }else{
             let notdoneAttributes:[NSAttributedString.Key : Any] = [
                 .foregroundColor : UIColor.label,
-                .font : userDefaultManager.font,
+                .font : todoFont,
             ]
             return NSAttributedString(string: content,attributes: notdoneAttributes)
         }
@@ -112,7 +130,7 @@ class LWTodoViewModel:NSObject{
     
     func getAttributedPlaceHolder()->NSAttributedString{
         let placeHolderAttributes:[NSAttributedString.Key : Any] = [
-            .font : userDefaultManager.font,
+            .font : todoFont,
             .foregroundColor : UIColor.systemGray
         ]
         return NSAttributedString(string: "添加待办事项",attributes: placeHolderAttributes)
@@ -129,14 +147,14 @@ class LWTodoViewModel:NSObject{
         return stateImg
     }
     
-    
+    /// 返回提醒时间
     func getExtroInfoText()->NSAttributedString?{
         if !hasExtroInfo{
             return nil
         }
         let extroInfoMuAttrText = NSMutableAttributedString()
         if needRemind{
-            let dateAttrString = remindDate.toYYMMDD_CN()
+            let dateAttrString = remindDate.toYYMMDD_CN(font: extroInfoLabelFont)
             print("toYYMMDD_CN:\(dateAttrString.string)")
             extroInfoMuAttrText.append(dateAttrString)
         }
@@ -216,4 +234,39 @@ class LWTodoViewModel:NSObject{
         }
     }
     
+    
+    /// 在todoListView显示时，计算单行的高度
+    func calSingleRowTodoViewHeihgt()->CGFloat{
+        var height = 0.0
+        height = todoFont.lineHeight +  2.0 * 2.0 + 2.0
+        if hasExtroInfo{
+            height += extroInfoLabelFont.lineHeight
+        }
+        return height
+    }
+    
+    /// 保存viewModel的变动到diaryinfo，然后刷新monthCell的todoListView
+    func saveAndupdateTodoListView(){
+        if todoViewStyle == 1{
+            let newestModel = generateModel()
+            if let diary = todoListView?.diary{
+                // 更新数组中的该元素
+                var todoModels = diary.lwTodoModels
+                guard let changedIndex = todoModels.firstIndex(where: { model in
+                    model.uuid == newestModel.uuid
+                })else{
+                    return
+                }
+                todoModels[changedIndex] = newestModel
+                LWRealmManager.shared.update {
+                    diary.lwTodoModels = todoModels
+                }
+                DiaryStore.shared.addOrUpdate(diary)
+                
+                todoListView?.updateViewHeightAndReloadData(newestDiary: diary,specifiedTodoUUID: newestModel.uuid)
+                
+                
+            }
+        }
+    }
 }

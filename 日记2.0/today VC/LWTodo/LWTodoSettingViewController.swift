@@ -48,8 +48,6 @@ class LWTodoSettingViewController:UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.settingViewY = self.view.frame.origin.y
-        let width = globalConstantsManager.shared.kScreenWidth * 0.9
-        let height = width / 1.3
         initUI()
     }
     
@@ -76,6 +74,8 @@ class LWTodoSettingViewController:UIViewController{
             // Fallback on earlier versions
         }
         datePicker.timeZone = .current
+        datePicker.layer.cornerRadius = 5
+        datePicker.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         
         noRemindPromptLabel = UILabel()
         noRemindPromptLabel.text = "暂未设置提醒时间"

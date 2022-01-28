@@ -129,7 +129,7 @@ class monthCell: UICollectionViewCell {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         //todo-list
-        todoListView = TodoListView(frame: .zero)
+        todoListView = TodoListView()
         
         //emojisLabel
         emojisLabel.font = UIFont(name: "Apple color emoji", size: 20)
@@ -234,7 +234,7 @@ class monthCell: UICollectionViewCell {
         
         self.fillImages(diary: diary)
         
-        self.todoListView.setViewModel(diary)//触发updateUI
+        self.todoListView.setDiary(diary)// todoListView实例化时无法传递model，此时传递model并触发updateUI
         
         updateCons()//更新约束
     }
@@ -325,7 +325,7 @@ class monthCell: UICollectionViewCell {
 extension monthCell{
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.todoListView.todos = []
+        self.todoListView.todoViewModels = []
         self.emojisLabel.text = ""
         self.pageSegmentControl.removeAllSegments()
     }
@@ -336,15 +336,8 @@ extension monthCell{
     ///更新约束
     func updateCons(){
         if let diary = self.diary{
-            //取得todoListView的高度
-            self.todoListView.snp.updateConstraints { (make) in
-                make.height.equalTo(diary.calculateTodosContentHeihgt())
-            }
+            todoListView.updateViewHeightAndReloadData(newestDiary: diary)
         }
-        //切换布局模式时，刷新todoListCell的宽度
-        self.todoListView.collectionView.performBatchUpdates({
-            self.todoListView.collectionView.reloadData()//使用performBatchUpdates可以防止刷新时“闪一下”
-        }, completion: nil)
         
         let contains = diary.containsImage
         self.albumView.snp.updateConstraints { (make) in

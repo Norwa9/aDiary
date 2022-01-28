@@ -96,15 +96,4 @@ extension diaryInfo{
         }
         return todos
     }
-    
-    func calculateTodosContentHeihgt()->CGFloat{
-        let todos = self.todos
-        let count = todos.count
-        if count > 0{
-            let todoListContentHeight:CGFloat = CGFloat(todos.count) * (layoutParasManager.shared.todoListItemHeight + layoutParasManager.shared.todoListLineSpacing) + layoutParasManager.shared.todoListLineSpacing
-            return todoListContentHeight
-        }else{
-            return 0
-        }
-    }
 }

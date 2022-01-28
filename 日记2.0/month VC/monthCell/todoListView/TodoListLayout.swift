@@ -8,17 +8,25 @@
 import UIKit
 
 class TodoListLayout: UICollectionViewLayout {
-    var dataSource:[String]!
+    var dataSource:[LWTodoViewModel]!
     
     var insetX:CGFloat = layoutParasManager.shared.todoListCellInset.left
-    var totalHeight:CGFloat!
+    var totalHeight:CGFloat = 0
     var itemWidth:CGFloat{
         get{
             return layoutParasManager.shared.todoListItemWidth
         }
     }
     private var lineSpacing:CGFloat = layoutParasManager.shared.todoListLineSpacing
-    private var itemHeight:CGFloat = layoutParasManager.shared.todoListItemHeight
+    private var itemHeights:[CGFloat]{
+        get{
+            // itemHeights 必须设置成getter计算属性
+            // 否者itemHeights会跟不上dataSource的更新速度，造成数组溢出崩溃
+            return dataSource.map { viewModel in
+                viewModel.calSingleRowTodoViewHeihgt()
+            }
+        }
+    }
     private var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
     
     override func prepare() {
@@ -26,7 +34,11 @@ class TodoListLayout: UICollectionViewLayout {
         layoutAttributesArray = []
         let itemNum = dataSource.count
         if itemNum>0{
-            totalHeight = (itemHeight + lineSpacing) * CGFloat(itemNum) + lineSpacing
+            totalHeight = 0
+            for h in itemHeights{
+                totalHeight += h
+            }
+            totalHeight += (lineSpacing) * CGFloat(itemNum) + lineSpacing
         }else{
             totalHeight = 0
         }
@@ -38,10 +50,14 @@ class TodoListLayout: UICollectionViewLayout {
         var layoutAttributesArray:[UICollectionViewLayoutAttributes] = []
         for index in 0..<itemNum{
             let layoutAttribute = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: index, section: 0))
+            var YofIndex = 0.0
+            for i in 0..<index{
+                YofIndex += itemHeights[i]
+            }
             layoutAttribute.frame = CGRect(x: self.insetX,
-                                           y: (self.lineSpacing + self.itemHeight) * CGFloat(index) + self.lineSpacing,
+                                           y: self.lineSpacing * CGFloat(index) + YofIndex + self.lineSpacing,
                                            width: self.itemWidth,
-                                           height: self.itemHeight)
+                                           height: self.itemHeights[index])
             layoutAttributesArray.append(layoutAttribute)
         }
         return layoutAttributesArray

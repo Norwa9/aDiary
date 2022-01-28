@@ -24,6 +24,7 @@ class LWTodoView:UIView{
     var extroInfoLabel:UILabel!
     
     var viewModel:LWTodoViewModel
+
     
     init(viewModel:LWTodoViewModel) {
         self.viewModel = viewModel
@@ -57,7 +58,10 @@ class LWTodoView:UIView{
         contentTextView.textContainer.lineFragmentPadding = 0 //内容缩进为0（去除左右内边距）
         contentTextView.textContainerInset = .zero //文本边距设为0（去除上下内边距）
         // contentTextView.setDebugBorder()
-        contentTextView.font = userDefaultManager.font // 使用用户自定义字体
+        contentTextView.font = viewModel.todoFont // 使用用户自定义字体
+        if viewModel.todoViewStyle == 1{
+            contentTextView.isEditable = false
+        }
         self.loadContentTextField()
         
         // extroInfoLabel
@@ -81,8 +85,12 @@ class LWTodoView:UIView{
     //MARK: Constraint
     private func setCons(){
         self.snp.makeConstraints { make in
-            make.width.equalTo(viewModel.bounds.width)
-            make.height.equalTo(viewModel.bounds.height)
+            if viewModel.todoViewStyle == 1{
+                // 这里不设置，由TodoListCell设置LWTodoView的约束
+            }else if viewModel.todoViewStyle == 0{
+                make.width.equalTo(viewModel.bounds.width)
+                make.height.equalTo(viewModel.bounds.height)
+            }
         }
         
         self.containerView.snp.makeConstraints { make in
@@ -92,15 +100,21 @@ class LWTodoView:UIView{
         self.stateButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(0)
             make.centerY.equalToSuperview()
-            let fontHeight = userDefaultManager.font.lineHeight * 1.4
+            let fontHeight = viewModel.todoFont.lineHeight * 1.4
             make.size.equalTo(CGSize(width: fontHeight, height: fontHeight))
         }
         
         self.moreButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(0)
             make.centerY.equalToSuperview()
-            let fontHeight = userDefaultManager.font.lineHeight
-            make.size.equalTo(CGSize(width: fontHeight, height: fontHeight))
+            if viewModel.todoViewStyle == 0{
+                make.right.equalToSuperview().offset(0)
+                let fontHeight = viewModel.todoFont.lineHeight
+                make.size.equalTo(CGSize(width: fontHeight, height: fontHeight))
+            }else if viewModel.todoViewStyle == 1{
+                make.width.equalTo(0)
+                make.right.equalToSuperview().offset(-2)
+            }
+            
         }
         
         self.contentTextView.snp.makeConstraints { make in
@@ -146,6 +160,8 @@ class LWTodoView:UIView{
     
     //MARK: button
     @objc func stateButtonTapped(_ sender:UIButton){
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         if viewModel.state == 0{
             viewModel.state = 1
         }else{
@@ -157,6 +173,10 @@ class LWTodoView:UIView{
         // 再reload view
         loadStateButton()
         loadContentTextField()
+        if viewModel.todoViewStyle == 1{
+            // 保存在monthCell上施加的变动到diaryinfo，然后刷新monthCell就可以更新视图
+            viewModel.saveAndupdateTodoListView()
+        }
         viewModel.saveTodo()
         
     }
@@ -214,10 +234,10 @@ extension LWTodoView:UITextViewDelegate{
     func calToDoViewBounds() -> CGRect{
         let newHeight:CGFloat
         if viewModel.hasExtroInfo{
-            newHeight = max(userDefaultManager.font.lineHeight, contentTextView.contentSize.height) + viewModel.extroInfoLabelFont.lineHeight + 2 * 2 // padding : 2x2
+            newHeight = max(viewModel.todoFont.lineHeight, contentTextView.contentSize.height) + viewModel.extroInfoLabelFont.lineHeight + 2 * 2 // padding : 2x2
             print("hasExtroInfo, newHeight:\(newHeight)")
         }else{
-            newHeight = max(userDefaultManager.font.lineHeight, contentTextView.contentSize.height)
+            newHeight = max(viewModel.todoFont.lineHeight, contentTextView.contentSize.height)
         }
         print("newHeight:\(newHeight)")
         let newBounds = CGRect(x: 0, y: 0, width: self.bounds.width, height: newHeight)

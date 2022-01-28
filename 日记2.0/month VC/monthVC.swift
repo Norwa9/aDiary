@@ -496,15 +496,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     //读取某年某月的日记，或读取全部日记
     func configureDataSource(year:Int,month:Int){
         //print("configureDataSource")
-        DispatchQueue.main.async { [self] in
-            let dataSource = diariesForMonth(forYear: year, forMonth: month)
-            filteredDiaries.removeAll()
-            filteredDiaries = dataSource
-            flowLayout.dateSource = filteredDiaries
-            DispatchQueue.main.async {
-                reloadCollectionViewData()
-            }
-        }
+        let dataSource = diariesForMonth(forYear: year, forMonth: month)
+        filteredDiaries.removeAll()
+        filteredDiaries = dataSource
+        flowLayout.dateSource = filteredDiaries
+        reloadCollectionViewData()
     }
     
     ///更新UI

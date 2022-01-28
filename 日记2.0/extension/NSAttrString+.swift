@@ -33,7 +33,7 @@ extension NSAttributedString{
             //1.image
             if let subViewAttchemnt = object as? SubviewTextAttachment,
                let view = subViewAttchemnt.view as? ScalableImageView{
-                print("遍历到\(location)处的图片model")
+                // print("遍历到\(location)处的图片model")
                 containsImage = true
                 
                 let viewModel = view.viewModel
@@ -52,7 +52,7 @@ extension NSAttributedString{
             }else if
                 let subViewAttchemnt = object as? SubviewTextAttachment,
                 let view = subViewAttchemnt.view as? LWTodoView{
-                print("遍历到位置\(location)有一个todo model")
+                // print("遍历到位置\(location)有一个todo model")
                 let viewModel = view.viewModel
                 viewModel.location = location // 更新viewModel的location为保存时刻的location
                 let model = viewModel.generateModel()
@@ -60,22 +60,6 @@ extension NSAttributedString{
                 let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!) // 占位
                 attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
             }
-            
-            //2.todo
-//            if let todoAttrValue = attrText.attribute(.todo, at: location, effectiveRange: nil) as? Int{
-//                let checked = (todoAttrValue == 1)
-//                let lineRange = attrText.mutableString.paragraphRange(for: range)
-//                let todo = attrText.attributedSubstring(from: lineRange).string
-//                if(checked){
-//                    completedTodos.append(todo)
-//                }else{
-//                    incompletedTodos.append(todo)
-//                }
-//                allTodos.append(todo)
-//
-//                //print("存储时扫描到todo:\(range),\(checked)")
-//                todoAttrTuples.append((location,todoAttrValue))
-//            }
         })
 
         // 编辑日记时，图片只增不减
