@@ -124,6 +124,22 @@ extension String{
         }
         return mString
     }
+    
+    /*
+     1.替换图片的占位符"P"
+     2.删除头部和尾部多余的空格
+     */
+    ///处理纯文本
+    func parsePlainText()->String{
+        let text = self
+        var res:String
+        //替换图片的占位符"P"
+        res = text.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        //最后删除头部和尾部多余的空格
+        res = res.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return res
+    }
 }
 
 //MARK:-String + UILabel

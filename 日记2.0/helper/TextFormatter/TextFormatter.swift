@@ -740,13 +740,11 @@ extension TextFormatter{
         let imageModels = result.3
         let recoveredAttributedText = result.4
         
-         //let plainText = TextFormatter.parsePlainText(text: text,allTodos: allTodos) // 去掉todo的内容
-        
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
             diary.editedButNotUploaded = true
             diary.modTime = Date()
-            diary.content = text
+            diary.content = text.parsePlainText()
             
             let rtfd = recoveredAttributedText.toRTFD()
             rtfd?.printSize()
@@ -762,34 +760,7 @@ extension TextFormatter{
         
         
     }
-    
-    
-    /*
-     1.替换图片的占位符"P"
-     2.删除头部和尾部多余的空格
-     3.去除所有todo条目
-     */
-    ///处理纯文本
-    static func parsePlainText(text:String,allTodos:[String])->String{
-        var res:String
-        //替换图片的占位符"P"
-        res = text.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
-        //去除所有todo条目
-        for todo in allTodos{
-            let todoWithoutLineBreak = todo.trimmingCharacters(in: .whitespacesAndNewlines)
-            let todoWithLineBreak = todoWithoutLineBreak + "\n"
-            if todo == allTodos.last{
-                res = res.replacingOccurrences(of: todoWithoutLineBreak, with: "")
-            }else{
-                res = res.replacingOccurrences(of: todoWithLineBreak, with: "")
-            }
-        }
-        //最后删除头部和尾部多余的空格
-        res = res.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        return res
-    }
-    
+
 }
 
 //MARK: -读取

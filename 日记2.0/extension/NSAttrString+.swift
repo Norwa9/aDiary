@@ -59,6 +59,8 @@ extension NSAttributedString{
                 todoModels.append(model)
                 let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!) // 占位
                 attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
+                
+                attrTextForContent.replaceCharacters(in: range, with: " ")
             }
         })
 
@@ -67,8 +69,16 @@ extension NSAttributedString{
         let delUUIDs = arraySub(a1: oldImgModels, a2: newImgModels)
         ImageTool.shared.deleteImages(uuidsToDel: delUUIDs)
  
-        let cleanText =  attrTextForContent.string
-        print("保存时共解析到\(todoModels.count)个todo Models")
+        // 处理纯文本
+        var cleanText = ""
+        for para in attrTextForContent.mutableString.components(separatedBy: "\n"){
+            print("para:\(para)")
+            if para != " " && para != ""{
+                cleanText.append(para)
+                cleanText.append("\n")
+            }
+        }
+            
         return (
                 cleanText,
                 containsImage,
