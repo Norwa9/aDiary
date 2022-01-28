@@ -15,9 +15,9 @@ class NewUserGuideHelper{
     
     //MARK:-导入用户引导
     public func initUserGuideDiary(){
-        if userDefaultManager.hasInitialized{
-            return
-        }
+//        if userDefaultManager.hasInitialized{
+//            return
+//        }
         
         // 1.设置App的默认字体
         // userDefaultManager.fontName = "DINAlternate-Bold"
@@ -41,24 +41,10 @@ class NewUserGuideHelper{
             //page1
             let page1 = diaryInfo(dateString: date)
             // add image
-            var imagesLocations:[Int] = []
-            if let range = page1Content.range(of: "$"){
-                let firstIndex = page1Content.distance(from: page1Content.startIndex, to: range.lowerBound)
-//                imagesLocations.append(firstIndex)
-                imagesLocations = [441]
-                page1.scalableImageModels = self.generateExampleImageModels(imagesLocations: imagesLocations)
-            }
+            page1.scalableImageModels = self.generateExampleImageModels(imagesLocations: [441])
             
             // add todos
-            var todoLocations:[Int] = []
-            if let range = page1Content.range(of: "*"){
-                let firstIndex = page1Content.distance(from: page1Content.startIndex, to: range.lowerBound)
-//                todoLocations.append(firstIndex)
-//                todoLocations.append(firstIndex + 2)
-//                todoLocations.append(firstIndex + 4)
-                 todoLocations = [69,71,73]
-                page1.lwTodoModels = self.generateExampleTodoModels(todoLocations: todoLocations)
-            }
+            page1.lwTodoModels = self.generateExampleTodoModels(todoLocations: [69,71,73])
             
             // rtfd
             let userFont = userDefaultManager.font
@@ -72,7 +58,7 @@ class NewUserGuideHelper{
             let attributedText = NSAttributedString(string: page1Content).addingAttributes(userAttributes)
             
             // 其他
-            page1.content = page1Content
+            page1.content = page1Content.parsePlainText()
             page1.rtfd = attributedText.toRTFD()
             page1.containsImage = true
             page1.emojis.append("👏🏻")
@@ -87,7 +73,7 @@ class NewUserGuideHelper{
             let page2 = diaryInfo(dateString: page2Date)
             let page2AttributedString = NSMutableAttributedString(string: page2Content)
             page2AttributedString.addAttributes(userAttributes, range: NSRange(location: 0, length: page2AttributedString.length))
-            page2.content = page2Content
+            page2.content = page2Content.parsePlainText()
             page2.rtfd = page2AttributedString.toRTFD()
             page2.emojis.append("2️⃣")
             page2.ckData = "不需要上传".data(using: .utf8)
@@ -126,7 +112,7 @@ class NewUserGuideHelper{
             todoViewModel1.needRemind = true
             todoViewModel1.remindDate = tonightDate
         }
-        todoViewModel1.note = "每日日记"
+        todoViewModel1.note = "总结一下今天"
         let h = todoViewModel1.calSingleRowTodoViewHeihgt()
         todoViewModel1.bounds = CGRect(origin: .zero, size: CGSize(width: todoViewModel1.bounds.width, height: h))
         todoModels.append(todoViewModel1.generateModel())

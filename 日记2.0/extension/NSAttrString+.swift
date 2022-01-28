@@ -69,16 +69,8 @@ extension NSAttributedString{
         let delUUIDs = arraySub(a1: oldImgModels, a2: newImgModels)
         ImageTool.shared.deleteImages(uuidsToDel: delUUIDs)
  
-        // 处理纯文本
-        var cleanText = ""
-        for para in attrTextForContent.mutableString.components(separatedBy: "\n"){
-            print("para:\(para)")
-            if para != " " && para != ""{
-                cleanText.append(para)
-                cleanText.append("\n")
-            }
-        }
-            
+        let cleanText = attrTextForContent.string
+        
         return (
                 cleanText,
                 containsImage,

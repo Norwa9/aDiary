@@ -138,7 +138,16 @@ extension String{
         //最后删除头部和尾部多余的空格
         res = res.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        return res
+        // 处理纯文本
+        var cleanText = ""
+        for para in res.components(separatedBy: "\n"){
+            if para != " " && para != ""{
+                cleanText.append(para)
+                cleanText.append("\n")
+            }
+        }
+        
+        return cleanText
     }
 }
 

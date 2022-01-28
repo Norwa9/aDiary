@@ -93,6 +93,7 @@ class LWTodoSettingViewController:UIViewController{
         noteTextView.backgroundColor = .secondarySystemBackground
         noteTextView.layer.cornerRadius = 10
         noteTextView.text = viewModel.note
+        noteTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         
         deleteButton = UIButton()
         let attrDeleteTitle = NSAttributedString(string: "删除").addingAttributes([
