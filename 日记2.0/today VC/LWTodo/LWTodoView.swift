@@ -60,6 +60,7 @@ class LWTodoView:UIView{
         // contentTextView.setDebugBorder()
         contentTextView.font = viewModel.todoFont // 使用用户自定义字体
         if viewModel.todoViewStyle == 1{
+            contentTextView.textContainer.maximumNumberOfLines = 1
             contentTextView.isEditable = false
         }
         self.loadContentTextField()

@@ -89,7 +89,7 @@ extension AppDelegate{
         LWDBUpdater.shared.checkDBUpdate()
         
         // 3.
-        loadIntroductionIfNeed()
+        NewUserGuideHelper.shared.initUserGuideDiary()
         createTodayDiary()
         
         // 4.初始化DiaryStore，[日记]云同步开始工作

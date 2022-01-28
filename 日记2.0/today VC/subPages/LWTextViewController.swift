@@ -189,7 +189,7 @@ extension LWTextViewController : UITextViewDelegate{
     
     //MARK: -textViewDidChangeSelection
     func textViewDidChangeSelection(_ textView: UITextView) {
-        print("textViewDidChangeSelection")
+        print("textViewDidChangeSelection:\(textView.selectedRange)")
         keyBoardToolsBar.updateToolbarButtonsState(textView: textView as! LWTextView)
     }
     

@@ -33,7 +33,7 @@ extension Date{
         let ms = formatter.string(from: self)
         formatter.dateFormat = "EE"
         let ee = formatter.string(from: self)
-        let dateString =  "\(ymd) \(ee)  \(ms)"
+        let dateString =  "⏰\(ymd) \(ee)  \(ms)"
         let dateAttrStringAttributes:[NSAttributedString.Key : Any] = [
             .font : font,
             .foregroundColor : UIColor.secondaryLabel
