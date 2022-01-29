@@ -211,7 +211,7 @@ class LWTodoViewModel:NSObject{
     func reloadTodoView(todoView:LWTodoView){
         bounds = todoView.calToDoViewBounds()
         todoView.contentTextView.resignFirstResponder() // 结束编辑，否者刷新视图时contentTextView若处于编辑状态会报错
-        lwTextView?.reloadTodoView(endView: todoView)
+        lwTextView?.reloadTodoView(endView: todoView) // 更新bounds后更新todoView
         self.saveTodo()
     }
     

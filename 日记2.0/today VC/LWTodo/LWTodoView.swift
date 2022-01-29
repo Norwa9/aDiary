@@ -82,6 +82,7 @@ class LWTodoView:UIView{
         
         self.setCons()
         layoutIfNeeded() // 立即更新布局。否则LWTodoView.asImage()不能产生图像，这是因为UIView在被添加到视图层级之时，才会进行布局。
+        self.bounds = calToDoViewBounds() // 装填内容后，计算正确高度
     }
     
     //MARK: Constraint
@@ -243,14 +244,19 @@ extension LWTodoView:UITextViewDelegate{
     
     /// 计算正确的bounds，以便刷新todoView
     func calToDoViewBounds() -> CGRect{
+        //定义一个constrainSize值用于计算textview的
+        let constrainSize=CGSize(width:frame.size.width,height:CGFloat(MAXFLOAT))
+        let textViewSize = contentTextView.sizeThatFits(constrainSize)
+        let extroInfoLabelSize = extroInfoLabel.sizeThatFits(constrainSize)
+        
         let newHeight:CGFloat
         if viewModel.hasExtroInfo{
-            newHeight = max(viewModel.todoFont.lineHeight, contentTextView.contentSize.height) + viewModel.extroInfoLabelFont.lineHeight + 2 * 2 // padding : 2x2
-            print("hasExtroInfo, newHeight:\(newHeight)")
+//            newHeight = max(viewModel.todoFont.lineHeight, contentTextView.contentSize.height) + viewModel.extroInfoLabelFont.lineHeight + 2 * 2 // padding : 2x2
+            newHeight = contentTextView.contentSize.height + extroInfoLabelSize.height + 2 * 2
         }else{
-            newHeight = max(viewModel.todoFont.lineHeight, contentTextView.contentSize.height)
+            newHeight = textViewSize.height
         }
-        print("newHeight:\(newHeight)")
+        print("newHeight:\(newHeight),textViewHeight:\(textViewSize.height),extroInfoLabelHeight:\(extroInfoLabelSize.height)")
         let newBounds = CGRect(x: 0, y: 0, width: self.bounds.width, height: newHeight)
         return newBounds
     }
