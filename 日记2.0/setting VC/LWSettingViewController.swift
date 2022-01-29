@@ -793,49 +793,25 @@ class LWSettingViewController: UIViewController {
     @objc func dailyReminderDidChange(_ sender: UISwitch){
         //一、开启每日提醒功能
         if sender.isOn{
-            //需要先检查App的本地通知权限是否被用户关闭了
-            LWNotificationHelper.shared.enableDailyRemind {
-                DispatchQueue.main.async(execute: { () -> Void in
-                    //1.恢复开关
-                    sender.setOn(false, animated: true)
-                    
-                    //2.弹出警告框
-                    let alertController = UIAlertController(title: "消息推送权限已被关闭",
-                                                message: "想要App发送提醒。点击“设置”，开启通知。",
-                                                preferredStyle: .alert)
-                     
-                    let cancelAction = UIAlertAction(title:"取消", style: .cancel, handler:nil)
-                     
-                    let settingsAction = UIAlertAction(title:"设置", style: .default, handler: {
-                        (action) -> Void in
-                        let url = URL(string: UIApplication.openSettingsURLString)
-                        if let url = url, UIApplication.shared.canOpenURL(url) {
-                            if #available(iOS 10, *) {
-                                UIApplication.shared.open(url, options: [:],
-                                                          completionHandler: {
-                                                            (success) in
-                                })
-                            } else {
-                                UIApplication.shared.openURL(url)
-                            }
-                        }
-                    })
-                    alertController.addAction(cancelAction)
-                    alertController.addAction(settingsAction)
-                    self.present(alertController, animated: true, completion: nil)
-                })
-            } requestFailureCompletion: {
-                //1.恢复开关
+            LWNotificationHelper.shared.checkNotificationAuthorization {
+                // requestdeniedAction
+                // 关掉开关
                 DispatchQueue.main.async {
                     sender.setOn(false, animated: true)
                 }
+            } requestGrantedAction: {
+                // requestGrantedAction
+                let dict = LWNotificationHelper.generateDailyRemindInfoDict()
+                LWNotificationHelper.shared.registerNotification(from: dict)
+                userDefaultManager.dailyRemindEnable = true
             }
         }
         
         
         //二、关闭每日提醒功能
         if sender.isOn == false{
-            LWNotificationHelper.shared.disableDailyRemind()
+            LWNotificationHelper.shared.unregisterNotification(uuids: [userDefaultManager.TodoNotificationCategoryName])
+            userDefaultManager.dailyRemindEnable = false
         }
         
         userDefaultManager.dailyRemindEnable = sender.isOn
@@ -849,7 +825,8 @@ class LWSettingViewController: UIViewController {
         userDefaultManager.dailyRemindTimeDate = picker.date
         if dailyRemindSwitch.isOn{
             //重新注册新的时间通知提醒
-            LWNotificationHelper.shared.register()
+            let dict = LWNotificationHelper.generateDailyRemindInfoDict()
+            LWNotificationHelper.shared.registerNotification(from: dict)
         }
     }
     

@@ -35,7 +35,7 @@ class LWTodoViewModel:NSObject{
     var todoFont:UIFont {
         get{
             if todoViewStyle == 1{
-                return userDefaultManager.monthCellTitleFont
+                return userDefaultManager.monthCellContentFont
             }
             return userDefaultManager.font
             
@@ -268,5 +268,20 @@ class LWTodoViewModel:NSObject{
                 
             }
         }
+    }
+    
+    func addNotification(){
+        if !needRemind{
+            return
+        }
+        let model = generateModel()
+        let dict = LWNotificationHelper.generateTodoInfoDict(model: model)
+        LWNotificationHelper.shared.registerNotification(from: dict)
+        needRemind = true
+    }
+    
+    func removeNotification(){
+        LWNotificationHelper.shared.unregisterNotification(uuids: [uuid])
+        needRemind = false
     }
 }

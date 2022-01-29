@@ -165,8 +165,10 @@ class LWTodoView:UIView{
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         if viewModel.state == 0{
+            viewModel.removeNotification()
             viewModel.state = 1
         }else{
+            viewModel.addNotification()
             viewModel.state = 0
         }
         
@@ -180,6 +182,7 @@ class LWTodoView:UIView{
             viewModel.saveAndupdateTodoListView()
         }
         viewModel.saveTodo()
+        viewModel.reloadTodoView(todoView: self)
         
     }
     

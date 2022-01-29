@@ -29,6 +29,8 @@ enum dateInfo {
     case month
     case year
     case weekDay
+    case hour
+    case mintue
 }
 
 
@@ -45,6 +47,10 @@ func getDateComponent(for date:Date,for key:dateInfo) -> Int{
         return dateComponents.year!
     case .weekDay:
         return dateComponents.weekday! - 1
+    case .hour:
+        return dateComponents.hour!
+    case .mintue:
+        return dateComponents.minute!
     }
 }
 

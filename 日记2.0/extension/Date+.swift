@@ -28,16 +28,46 @@ extension Date{
             // "M/d  mm:ss，EE"
             formatter.dateFormat = "M/d"
         }
-        let ymd = formatter.string(from: self)
+        var ymd = formatter.string(from: self)
         formatter.dateFormat = "hh:mm"
         let ms = formatter.string(from: self)
         formatter.dateFormat = "EE"
         let ee = formatter.string(from: self)
-        let dateString =  "⏰\(ymd) \(ee)  \(ms)"
+        
+        if self.isXDaysBeforeOrAfterToday(daysOffset: -1){
+            ymd = "昨天"
+        }else if self.isXDaysBeforeOrAfterToday(daysOffset: 0){
+            ymd = "今天"
+        }else if self.isXDaysBeforeOrAfterToday(daysOffset: 1){
+            ymd = "明天"
+        }else if self.isXDaysBeforeOrAfterToday(daysOffset: -2){
+            ymd = "前天"
+        }else if self.isXDaysBeforeOrAfterToday(daysOffset: 2){
+            ymd = "后天"
+        }
+        
+        let dateString =  "⏰\(ymd) \(ms) \(ee)"
         let dateAttrStringAttributes:[NSAttributedString.Key : Any] = [
             .font : font,
             .foregroundColor : UIColor.secondaryLabel
         ]
         return NSAttributedString(string: dateString,attributes: dateAttrStringAttributes)
+    }
+    
+    
+    /// self是今天的x天前/后吗?
+    func isXDaysBeforeOrAfterToday(daysOffset:Int) -> Bool {
+        let remindDate = self
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        
+        
+        
+        let xTime: TimeInterval =  Double(daysOffset) * 24*60*60 // x天
+        let xDate = Date().addingTimeInterval(xTime)
+        let xDay = dateFormatter.string(from: xDate)
+        let remindDay = dateFormatter.string(from: remindDate)
+        return xDay == remindDay
     }
 }

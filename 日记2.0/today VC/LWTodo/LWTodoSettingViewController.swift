@@ -199,8 +199,25 @@ class LWTodoSettingViewController:UIViewController{
         
     }
     @objc func remindSwitchChanged(_ sender:UISwitch){
-        viewModel.needRemind = sender.isOn
-        loadDatePicker()
+        if sender.isOn{
+            LWNotificationHelper.shared.checkNotificationAuthorization {
+                // requestdeniedAction
+                // 关掉开关
+                DispatchQueue.main.async {
+                    sender.setOn(false, animated: true)
+                    self.viewModel.needRemind = false
+                    self.loadDatePicker()
+                }
+            } requestGrantedAction: {
+                // requestGrantedAction
+                // 打开开关
+                DispatchQueue.main.async {
+                    self.viewModel.needRemind = true
+                    self.loadDatePicker()
+                }
+                
+            }
+        }
     }
     
     @objc func deleteButtonTapped(_ sender:UIButton){
@@ -209,7 +226,6 @@ class LWTodoSettingViewController:UIViewController{
     }
     
     @objc func doneButtonTapped(_ sender:UIButton){
-        saveAndReloadView()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -224,6 +240,9 @@ class LWTodoSettingViewController:UIViewController{
         viewModel.note = noteTextView.text
         if remindSwitch.isOn{
             viewModel.remindDate = datePicker.date
+            viewModel.addNotification()
+        }else{
+            viewModel.removeNotification()
         }
         viewModel.reloadTodoView(todoView: todoView)
     }

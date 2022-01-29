@@ -466,6 +466,9 @@ class userDefaultManager{
             shared?.set(newValue, forKey: constants.todoListViewStyle)
         }
     }
+    
+    /// 作为注册每日提醒通知时的uuid，因为只有一个，所以uuid用常量
+    static let TodoNotificationCategoryName = "todoNotificationCategoryName"
 }
 
 
