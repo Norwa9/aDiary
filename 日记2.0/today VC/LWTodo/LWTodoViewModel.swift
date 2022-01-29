@@ -60,7 +60,11 @@ class LWTodoViewModel:NSObject{
         self.location = model.location
         let bounds = CGRect.init(string: model.bounds)
         ?? globalConstantsManager.shared.defaultTodoBounds
-        self.bounds = bounds
+        // iPad和iPhone上，每次读取todo时，宽度都为屏幕的0.95
+        let adaptedBounds = CGRect(origin: .zero,
+                                   size: CGSize(width: globalConstantsManager.shared.defaultTodoBounds.width, height: bounds.height))
+        
+        self.bounds = adaptedBounds
         self.state = model.state
         self.content = model.content
         self.note = model.note
@@ -155,7 +159,7 @@ class LWTodoViewModel:NSObject{
         let extroInfoMuAttrText = NSMutableAttributedString()
         if needRemind{
             let dateAttrString = remindDate.toYYMMDD_CN(font: extroInfoLabelFont)
-            print("toYYMMDD_CN:\(dateAttrString.string)")
+            // print("toYYMMDD_CN:\(dateAttrString.string)")
             extroInfoMuAttrText.append(dateAttrString)
         }
         if note != ""{
@@ -206,6 +210,7 @@ class LWTodoViewModel:NSObject{
     /// 刷新todoView
     func reloadTodoView(todoView:LWTodoView){
         bounds = todoView.calToDoViewBounds()
+        todoView.contentTextView.resignFirstResponder() // 结束编辑，否者刷新视图时contentTextView若处于编辑状态会报错
         lwTextView?.reloadTodoView(endView: todoView)
         self.saveTodo()
     }
@@ -271,17 +276,12 @@ class LWTodoViewModel:NSObject{
     }
     
     func addNotification(){
-        if !needRemind{
-            return
-        }
         let model = generateModel()
         let dict = LWNotificationHelper.generateTodoInfoDict(model: model)
         LWNotificationHelper.shared.registerNotification(from: dict)
-        needRemind = true
     }
     
     func removeNotification(){
         LWNotificationHelper.shared.unregisterNotification(uuids: [uuid])
-        needRemind = false
     }
 }

@@ -54,9 +54,9 @@ class LWTodoModel:NSObject,Codable,YYModel{ // YYModel 必须加 @objc dynamic�
         {
             
             
-            self.remindDate = Date.init(timeIntervalSinceReferenceDate: TimeInterval(remindDateTimeStamp.floatValue)) 
+            self.remindDate = Date.init(timeIntervalSinceReferenceDate: TimeInterval(remindDateTimeStamp.floatValue))
             self.createdDate = Date.init(timeIntervalSinceReferenceDate: TimeInterval(createdDateTimeStamp.floatValue))
-            print("转换时间戳到Date，remindDate：\(remindDate),createdDate：\(createdDate)")
+            // print("转换时间戳到Date，remindDate：\(remindDate),createdDate：\(createdDate)")
             return true
         }
         

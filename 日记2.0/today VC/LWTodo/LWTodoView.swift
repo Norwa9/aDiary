@@ -162,25 +162,30 @@ class LWTodoView:UIView{
     
     //MARK: button
     @objc func stateButtonTapped(_ sender:UIButton){
+        // 1. 震动
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
-        if viewModel.state == 0{
-            viewModel.removeNotification()
+        
+        // 2. 刷新todo按钮
+        if viewModel.state == 0{ // 变成完成
             viewModel.state = 1
         }else{
-            viewModel.addNotification()
             viewModel.state = 0
         }
-        
-        // 先保存当前内容
-        viewModel.content = self.contentTextView.text
-        // 再reload view
         loadStateButton()
+        
+        // 3. 刷新todo内容颜色和完成划线
+        viewModel.content = self.contentTextView.text
         loadContentTextField()
+        
+        // 4. 刷新附加信息
+        loadExtroInfoLabel()
+        
         if viewModel.todoViewStyle == 1{
             // 保存在monthCell上施加的变动到diaryinfo，然后刷新monthCell就可以更新视图
             viewModel.saveAndupdateTodoListView()
         }
+        
         viewModel.saveTodo()
         viewModel.reloadTodoView(todoView: self)
         

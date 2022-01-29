@@ -459,7 +459,7 @@ class userDefaultManager{
             if let style = shared?.object(forKey: constants.todoListViewStyle) as? Int {
                 return style
             }else{
-                return 1
+                return 0
             }
         }
         set{

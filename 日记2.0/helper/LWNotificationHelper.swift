@@ -196,7 +196,7 @@ class LWNotificationHelper:NSObject{
     
     static func generateTodoInfoDict(model:LWTodoModel)->NSDictionary{
         let dict = NSMutableDictionary()
-        dict["title"] = model.content
+        dict["title"] = "提醒：" + model.content
         dict["body"] = model.note
         var userInfo:[AnyHashable : Any] = [:]
         dict["userInfo"] = userInfo
