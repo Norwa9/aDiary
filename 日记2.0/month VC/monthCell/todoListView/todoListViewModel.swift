@@ -65,9 +65,9 @@ class todoListViewModel{
             }
         }
         
-        for model in filteredModels {
-            print("model.content:\(model.content)")
-        }
+//        for model in filteredModels {
+//            print("model.content:\(model.content)")
+//        }
         
         let viewModels:[LWTodoViewModel] = orderedModels.map { model in
             let viewModel = LWTodoViewModel(model: model)

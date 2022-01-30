@@ -58,14 +58,14 @@ class LWCustomIndicatorView:UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //MARK:-public
+    //MARK: -public
     
     public func setLabel(_ text:String){
         label.text = text
         layoutIfNeeded()
     }
     
-    //MARK:-protected
+    //MARK: -protected
     func present(){
         
     }
@@ -83,13 +83,13 @@ class LWCustomIndicatorView:UIView{
         label.numberOfLines = 0
         
         //模糊视图
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .regular)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         
         //指示器+模糊视图的容器视图
         containerView = UIView()
         containerView.backgroundColor = .systemBackground
-        containerView.layer.cornerRadius = 7
+        containerView.layer.cornerRadius = 10
         containerView.layer.masksToBounds = true
         
         containerView.addSubview(blurEffectView)

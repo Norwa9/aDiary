@@ -19,7 +19,11 @@ class indicatorViewManager{
         }
     }
     var indicatorView:LWCustomIndicatorView?
-    var isShowingIndicator = false
+    var isShowingIndicator = false{
+        didSet{
+            topWindow?.isUserInteractionEnabled = !isShowingIndicator
+        }
+    }
     
     ///进度
     var progress:Float = 0{
@@ -40,8 +44,6 @@ class indicatorViewManager{
                 print("isShowingIndicator")
                 return
             }
-            topWindow?.isUserInteractionEnabled = false
-            
             indicatorView = indicatorFactory(type: type)
             if let topWindow = topWindow,
                let indicatorView = indicatorView
@@ -65,8 +67,6 @@ class indicatorViewManager{
             return
         }
         DispatchQueue.main.async {[self] in
-            topWindow?.isUserInteractionEnabled = true
-            
                 //错误结束转动
             if let text = withText,let indicatorView = indicatorView{
                 indicatorView.setLabel(text)
