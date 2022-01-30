@@ -593,6 +593,8 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     }
     
     func presentEditorVC(withViewModel viewModel:diaryInfo){
+        guard self.presentedViewController == nil else { return }
+        guard editorVC.isBeingPresented == false else { return }
         editorVC.model = viewModel
         self.present(editorVC, animated: true, completion: nil)
     }

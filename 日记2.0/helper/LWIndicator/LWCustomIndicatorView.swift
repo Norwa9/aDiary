@@ -80,7 +80,7 @@ class LWCustomIndicatorView:UIView{
         containerView.layer.cornerRadius = 10
         containerView.setupShadow()
         // containerView.layer.borderColor = UIColor.gray.cgColor
-        containerView.layer.masksToBounds = true
+        containerView.layer.masksToBounds = false
         
         
         //提示lable

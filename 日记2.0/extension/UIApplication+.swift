@@ -30,6 +30,7 @@ extension UIApplication{
         if let monthVC = UIApplication.shared.windows.first?.rootViewController as? monthVC{
             return monthVC
         }else{
+            print("getMonthVC 失败")
             return nil
         }
     }
