@@ -20,6 +20,12 @@ extension UIApplication{
         }
     }
     
+    /// 如果在编辑页，可以获取到当前的日记
+    static func getCurDiaryModel() ->diaryInfo?{
+        let todayVC = UIApplication.getTodayVC()
+        return todayVC?.model
+    }
+    
     static func getMonthVC() -> monthVC? {
         if let monthVC = UIApplication.shared.windows.first?.rootViewController as? monthVC{
             return monthVC
@@ -29,7 +35,7 @@ extension UIApplication{
     }
     
     //返回最上层的ViewController
-    class func getTopViewController(base: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first!.rootViewController) -> UIViewController? {
+    class func getTopViewController(base: UIViewController? = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController) -> UIViewController? {
 
         if let nav = base as? UINavigationController {
             return getTopViewController(base: nav.visibleViewController)

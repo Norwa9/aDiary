@@ -10,6 +10,8 @@ import YYModel
 import AttributedString
 
 class LWTodoModel:NSObject,Codable,YYModel{ // YYModel 必须加 @objc dynamic修饰，否则无法被解码
+    /// 属于的日记
+    @objc dynamic var dateBelongs:String = ""
     /// 创建时间
     @objc dynamic var createdDate:Date = Date()
     /// 开启提醒
@@ -33,7 +35,8 @@ class LWTodoModel:NSObject,Codable,YYModel{ // YYModel 必须加 @objc dynamic�
         super.init()
     }
     
-    init(location:Int,bounds:CGRect,state:Int,remindDate:Date,content:String,note:String,needRemind:Bool,uuid:String) {
+    init(dateBelongs:String,location:Int,bounds:CGRect,state:Int,remindDate:Date,content:String,note:String,needRemind:Bool,uuid:String) {
+        self.dateBelongs = dateBelongs
         self.createdDate = Date()
         self.needRemind = needRemind
         self.remindDate = remindDate

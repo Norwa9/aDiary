@@ -210,6 +210,9 @@ extension LWTodoView:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         viewModel.lwTextView?.textViewController?.isTextViewEditing = true // 防止退出手势冲突
         viewModel.lwTextView?.textViewController?.keyBoardToolsBar.reloadTextViewToolBar(type: 1)
+        UIView.animate(withDuration: 0.2) {
+            self.containerView.layer.borderWidth = 1
+        }
         viewModel.adjustTextViewInset()
     }
     
@@ -234,12 +237,17 @@ extension LWTodoView:UITextViewDelegate{
         if let todoText = self.contentTextView.text{
             viewModel.content = todoText
         }
-        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.containerView.layer.borderWidth = 0
+        }, completion: { _ in
+            
+        })
         // 3.更新textView视图
-        viewModel.reloadTodoView(todoView: self)
+        self.viewModel.reloadTodoView(todoView: self)
         
         // 4.更新selectRange
-        viewModel.lwTextView?.resignFirstResponder()
+        self.viewModel.lwTextView?.resignFirstResponder()
+
     }
     
     /// 计算正确的bounds，以便刷新todoView

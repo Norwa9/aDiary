@@ -10,6 +10,7 @@ import UIKit
 import SubviewAttachingTextView
 
 class LWTodoViewModel:NSObject{
+    var dateBelongs:String = "" // 所属的日记的日期(也就是日记的uuid)
     var location:Int
     var bounds:CGRect
     var state:Int = 0
@@ -57,6 +58,7 @@ class LWTodoViewModel:NSObject{
     //MARK: init
     /// 读取日记时，创建viewModel
     init(model:LWTodoModel){
+        self.dateBelongs = model.dateBelongs
         self.location = model.location
         let bounds = CGRect.init(string: model.bounds)
         ?? globalConstantsManager.shared.defaultTodoBounds
@@ -75,13 +77,18 @@ class LWTodoViewModel:NSObject{
     
     /// 插入todo时，创建viewModel
     init(location:Int){
+        if let diary = UIApplication.getCurDiaryModel(){
+            // 如果在todayVC外，就无法获取到当前的日记，此时需要手动地给dateBelongs赋值
+            self.dateBelongs = diary.date
+            print("创建todo，其所属的日期是：\(dateBelongs)")
+        }
         self.location = location
         self.bounds = globalConstantsManager.shared.defaultTodoBounds
         self.uuid = UUID().uuidString
     }
     
     func generateModel() -> LWTodoModel{
-        let model = LWTodoModel(location: location, bounds: bounds, state: state, remindDate: remindDate, content: content, note: note, needRemind: needRemind,uuid: uuid)
+        let model = LWTodoModel(dateBelongs:dateBelongs, location: location, bounds: bounds, state: state, remindDate: remindDate, content: content, note: note, needRemind: needRemind,uuid: uuid)
         return model
     }
     

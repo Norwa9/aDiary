@@ -119,6 +119,7 @@ class LWDBUpdater{
                     let todoViewModel = LWTodoViewModel(location: location)
                     todoViewModel.content = content
                     todoViewModel.state = state
+                    todoViewModel.dateBelongs = diary.date
                     let todoModel = todoViewModel.generateModel()
                     
                     // (3)将旧的todo内容用空格覆盖

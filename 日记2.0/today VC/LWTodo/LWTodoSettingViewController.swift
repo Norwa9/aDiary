@@ -219,7 +219,7 @@ class LWTodoSettingViewController:UIViewController{
             }
         }else{
             self.viewModel.needRemind = false
-            self.loadDatePicker()a
+            self.loadDatePicker()
         }
     }
     

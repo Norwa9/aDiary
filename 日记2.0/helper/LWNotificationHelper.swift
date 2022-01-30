@@ -14,10 +14,19 @@ class LWNotificationHelper:NSObject{
     
     let center = UNUserNotificationCenter.current()
     
-    enum notificationCategories:String {
+    /// 通知类别
+    enum LWNotificationCategories:String {
         case dailyRemind // 每日提醒
         case todo // 待办
     }
+    
+    /// 通知的更多操作
+    enum LWNotificationActionIdentifier:String{
+        case writeTodayDiary
+        case loopUp
+        case done
+    }
+    
     typealias callBack = () -> Void
     
     //MARK: - 接口相关
@@ -36,7 +45,6 @@ class LWNotificationHelper:NSObject{
                         requestRejectedAction: requestRejectedAction
                     )
                 case .authorized: // 已获得通知权限，配置
-                    self.registerCategories()
                     requestGrantedAction()
                 case .denied: // 已被拒绝过，重新申请开启权限
                     // 步骤1.失败后的UI更新
@@ -60,7 +68,6 @@ class LWNotificationHelper:NSObject{
     ){
         center.requestAuthorization(options: [.alert,.badge,.sound]) { granted, error in
             if granted{
-                self.registerCategories()
                 requestGrantedAction()
             }else if let error = error{
                 print("索要通知权限错误，错误信息：\(error.localizedDescription)")
@@ -100,23 +107,23 @@ class LWNotificationHelper:NSObject{
     }
     
     /// 定义可接收的通知的类型
-    private func registerCategories(){
+    func registerCategories(){
         center.delegate = self
-        
+        print("registerCategories sucessfully!")
         //按钮1：写日记
-        let writeAction = UNNotificationAction(identifier: "writeAction", title: "开始写日记", options: .foreground)
+        let writeAction = UNNotificationAction(identifier: LWNotificationActionIdentifier.writeTodayDiary.rawValue, title: "开始写日记", options: .foreground)
         let dailyRemindCategory = UNNotificationCategory(
-            identifier: notificationCategories.dailyRemind.rawValue,
-            actions: [writeAction],
+            identifier: LWNotificationCategories.dailyRemind.rawValue,
+            actions: [],
             intentIdentifiers: [], options: []
         )
         
         //按钮2：todo
-        let lookUpAction = UNNotificationAction(identifier: "lookUpAction", title: "查看", options: .foreground)
-        let doneAction = UNNotificationAction(identifier: "doneAction", title: "完成", options: .foreground)
+        let lookUpAction = UNNotificationAction(identifier: LWNotificationActionIdentifier.loopUp.rawValue, title: "查看", options: .foreground)
+        let doneAction = UNNotificationAction(identifier: LWNotificationActionIdentifier.done.rawValue, title: "完成", options: .foreground)
         let todoCategory = UNNotificationCategory(
-            identifier: notificationCategories.todo.rawValue,
-            actions: [lookUpAction,doneAction],
+            identifier: LWNotificationCategories.todo.rawValue,
+            actions: [],
             intentIdentifiers: [], options: []
         )
         
@@ -181,7 +188,7 @@ class LWNotificationHelper:NSObject{
         var userInfo:[AnyHashable : Any] = [:]
         dict["userInfo"] = userInfo
         dict["sound"] = "default"
-        dict["categoryIdentifier"] = notificationCategories.dailyRemind.rawValue
+        dict["categoryIdentifier"] = LWNotificationCategories.dailyRemind.rawValue
         
         var dateComponents = DateComponents()
         dateComponents.hour = userDefaultManager.dailyRemindAtHour
@@ -199,9 +206,10 @@ class LWNotificationHelper:NSObject{
         dict["title"] = "提醒：" + model.content
         dict["body"] = model.note
         var userInfo:[AnyHashable : Any] = [:]
+        userInfo["dateBelongs"] = model.dateBelongs
         dict["userInfo"] = userInfo
         dict["sound"] = "default"
-        dict["categoryIdentifier"] = notificationCategories.todo.rawValue
+        dict["categoryIdentifier"] = LWNotificationCategories.todo.rawValue
         
         let remindDate = model.remindDate
         var dateComponents = DateComponents()
@@ -215,61 +223,43 @@ class LWNotificationHelper:NSObject{
         return dict
     }
     
-    
-    
-    
-
-    ///配置通知的内容
-    private func configureNotifications(){
-        let content = UNMutableNotificationContent()
-        //1.title
-        let title = "每日记录提醒"
-        content.title = title
-        
-        //2.body
-        content.body = "记录一下今天发生了什么吧~"
-        content.targetContentIdentifier
-        //3.
-        content.categoryIdentifier = notificationCategories.dailyRemind.rawValue
-        content.userInfo = ["customData" : "testing"]
-        content.sound = .default
-        
-        var dateComponents = DateComponents()
-        dateComponents.hour = userDefaultManager.dailyRemindAtHour
-        dateComponents.minute = userDefaultManager.dailyRemindAtMinute
-        print("设置每日提醒：时间为\(dateComponents.hour!):\(dateComponents.minute!)")
-        center.removeAllPendingNotificationRequests()
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 61, repeats: true)//测试，请退出APP到后台测试，在App内部不会显示通知！！
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        
-        // 挂起一个通知request，当系统时间到达request的trigger时，系统将会deliver这个request
-        center.add(request, withCompletionHandler: nil) // Schedules a local notification for delivery.
-        
-    }
 }
 
 extension LWNotificationHelper:UNUserNotificationCenterDelegate{
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("didReceive userNotification！")
+        let categoryIdentifier = response.notification.request.content.categoryIdentifier
         let userInfo = response.notification.request.content.userInfo
-        
-        if let customData = userInfo["customData"] as? String{
-            print("接收到customData:\(customData)")
-            
-            switch response.actionIdentifier {
-            case UNNotificationDefaultActionIdentifier:
-                //右滑解锁通知
-                print("Default identifier")
-            case notificationCategories.dailyRemind.rawValue:
-                print("notifActions.writtingRemind")
-            default:
+        // 按通知分类来处理（提醒记日记或者打开todo对应的日记）
+        if let category = LWNotificationCategories(rawValue: categoryIdentifier) {
+            switch category {
+            case .dailyRemind:
+                print("响应提醒日记通知，打开App")
                 break
+            case .todo:
+                if let dateBelongs = userInfo["dateBelongs"] as? String,
+                   let diary = LWRealmManager.shared.queryFor(dateCN: dateBelongs).first
+                {
+                    print("todo所属的日期:\(dateBelongs)")
+                    switch response.actionIdentifier {
+                    case UNNotificationDefaultActionIdentifier:
+                        // 默认
+                        print("响应todo通知（点击或右划）的默认处理操作：打开todo所属日记")
+                        UIApplication.getMonthVC()?.presentEditorVC(withViewModel: diary)
+                    case LWNotificationActionIdentifier.loopUp.rawValue:
+                        print("响应todo通知的查看操作：打开todo所属日记")
+                        UIApplication.getMonthVC()?.presentEditorVC(withViewModel: diary)
+                        break
+                    case LWNotificationActionIdentifier.done.rawValue:
+                        print("响应todo通知的完成操作：打开todo所属日记")
+                        break
+                    default:
+                        break
+                    }
+                }
             }
+            
         }
-        
-        
         completionHandler()//必须在最后调用这个闭包
     }
     

@@ -881,3 +881,8 @@ extension monthVC:UIViewControllerTransitioningDelegate{
         return editorBlurPresentVC(presentedViewController: presented, presenting: presenting)
     }
 }
+
+// MARK: 响应通知
+extension monthVC{
+    
+}
