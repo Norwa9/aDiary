@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
 
 ///指示器的样式
 enum indicatorType:Int{
@@ -34,17 +35,14 @@ enum indicatorType:Int{
 }
 
 class LWCustomIndicatorView:UIView{
-    var topWindow:UIWindow {
-        get{
-            return UIApplication.shared.windows.filter {$0.isKeyWindow}.first!
-        }
-    }
+    ///菊花指示器图层
+    var indicatorView:NVActivityIndicatorView!
+    
+    ///进度条
+    var progressView:UIProgressView!
     
     ///加载时的提示语句
     var label:UILabel!
-    
-    ///高斯模糊图层
-    var blurEffectView:UIVisualEffectView!
     
     ///指示器的容器图层
     var containerView:UIView!
@@ -75,6 +73,16 @@ class LWCustomIndicatorView:UIView{
     }
     ///初始化UI
     func initUI() {
+        
+        //指示器+模糊视图的容器视图
+        containerView = UIView()
+        containerView.backgroundColor = .systemBackground
+        containerView.layer.cornerRadius = 10
+        containerView.setupShadow()
+        // containerView.layer.borderColor = UIColor.gray.cgColor
+        containerView.layer.masksToBounds = true
+        
+        
         //提示lable
         label = UILabel()
         label.textAlignment = .center
@@ -82,36 +90,47 @@ class LWCustomIndicatorView:UIView{
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
         
-        //模糊视图
-        let blurEffect = UIBlurEffect(style: .regular)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //菊花条视图
+        indicatorView = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .label, padding: .zero)
         
-        //指示器+模糊视图的容器视图
-        containerView = UIView()
-        containerView.backgroundColor = .systemBackground
-        containerView.layer.cornerRadius = 10
-        containerView.layer.masksToBounds = true
+        //进度条
+        progressView = UIProgressView(progressViewStyle: .default)
+        progressView.progress = 0
         
-        containerView.addSubview(blurEffectView)
         containerView.addSubview(label)
+        containerView.addSubview(indicatorView)
+        containerView.addSubview(progressView)
         self.addSubview(containerView)
     }
     
     ///设置约束
     func setBaseConstrains(){
         containerView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.top.equalToSuperview().offset(50)
+            make.centerX.equalToSuperview()
         }
         
-        blurEffectView.snp.makeConstraints { make in
-            make.edges.equalTo(containerView)
+        indicatorView.snp.makeConstraints { make in
+            make.left.greaterThanOrEqualToSuperview().offset(10)
+            make.height.equalTo(label.snp.height)
+            make.width.equalTo(label.snp.height)
+            make.centerY.equalTo(label)
+        }
+        
+        progressView.snp.makeConstraints { make in
+            make.width.equalTo(200)
+            make.height.equalTo(0)
+            make.top.equalToSuperview().offset(0)
+            make.centerX.equalToSuperview()
+            make.left.greaterThanOrEqualTo(containerView).offset(10)
+            make.right.lessThanOrEqualTo(containerView).offset(-10)
+            make.bottom.equalTo(label.snp.top).offset(-10)
         }
         
         label.snp.makeConstraints { make in
-            make.height.lessThanOrEqualTo(60)
-            make.bottom.equalToSuperview().offset(-5)
-            make.left.greaterThanOrEqualTo(containerView).offset(10)
-            make.right.lessThanOrEqualTo(containerView).offset(-10)
+            make.bottom.equalToSuperview().offset(-10)
+            make.left.equalTo(indicatorView.snp.right).offset(2)
+            make.right.lessThanOrEqualToSuperview().offset(-10)
             make.centerX.equalToSuperview()
         }
         

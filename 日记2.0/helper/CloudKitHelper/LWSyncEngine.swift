@@ -71,7 +71,7 @@ final class LWSyncEngine{
     init(defaults:UserDefaults) {
         self.defaults = defaults
         
-        // indicatorViewManager.shared.start(type: .checkRemoteChange)
+        indicatorViewManager.shared.start(type: .checkRemoteChange)
     }
     
     

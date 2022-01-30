@@ -8,8 +8,7 @@
 import UIKit
 
 class LWProgressView: LWCustomIndicatorView {
-    ///进度条
-    var progressView:UIProgressView!
+    
     
     override init() {
         super.init()
@@ -17,10 +16,7 @@ class LWProgressView: LWCustomIndicatorView {
     
     override func initUI() {
         super.initUI()
-        //进度条
-        progressView = UIProgressView(progressViewStyle: .default)
-        progressView.progress = 0
-        containerView.addSubview(progressView)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -35,35 +31,37 @@ class LWProgressView: LWCustomIndicatorView {
     override func setBaseConstrains() {
         super.setBaseConstrains()
         
-        progressView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 200, height: 10))
+//        indicatorView.snp.makeConstraints { make in
+//            make.width.equalTo(label).multipliedBy(0)
+//        }
+        
+        progressView.snp.updateConstraints { make in
             make.top.equalToSuperview().offset(10)
-            make.centerX.equalToSuperview()
-            make.left.greaterThanOrEqualTo(containerView).offset(10)
-            make.right.lessThanOrEqualTo(containerView).offset(-10)
-            make.bottom.equalTo(label.snp.top)
+            make.height.equalTo(10)
         }
     }
     
     override func present() {
-        self.containerView.alpha = 0
-        self.progressView.transform = .init(scaleX: 0.01, y: 0.01)
+        containerView.alpha = 0
+        containerView.transform = .init(translationX: 0, y: -100)
+        containerView.layer.borderWidth = 0
         self.backgroundColor = .clear
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
             self.containerView.alpha = 1
-            self.progressView.transform = .identity
-            self.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+            self.containerView.transform = .identity
+            self.containerView.layer.borderWidth = 1
+            self.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         } completion: { (_) in}
     }
     
     override func dismiss() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
             self.containerView.alpha = 0
-            self.progressView.transform = .init(scaleX: 0.01, y: 0.01)
+            self.containerView.transform = .init(translationX: 0, y: -100)
+            self.containerView.layer.borderWidth = 0
             self.backgroundColor = .clear
+            self.layer.borderWidth = 0
         } completion: { (_) in
-            self.containerView.alpha = 1
-            self.progressView.transform = .identity
             self.removeFromSuperview()
         }
     }

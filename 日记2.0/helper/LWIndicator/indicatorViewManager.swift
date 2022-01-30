@@ -21,7 +21,7 @@ class indicatorViewManager{
     var indicatorView:LWCustomIndicatorView?
     var isShowingIndicator = false{
         didSet{
-            topWindow?.isUserInteractionEnabled = !isShowingIndicator
+            // topWindow?.isUserInteractionEnabled = !isShowingIndicator
         }
     }
     
@@ -91,16 +91,16 @@ class indicatorViewManager{
             indicatorView.setLabel("正在导出...")
         case .checkRemoteChange:
             indicatorView =  LWDefaultIndicatorView()
-            indicatorView.setLabel("正在获取云端数据变动\n(如果网络状况不佳，可重启App重试)")
+            indicatorView.setLabel("正在同步...")
         case .fetchRemoteChange:
             indicatorView =  LWDefaultIndicatorView()
-            indicatorView.setLabel("检测到其它设备的修改，正在同步...")
+            indicatorView.setLabel("检测到修改...")
         case .delete:
             indicatorView =  LWDefaultIndicatorView()
-            indicatorView.setLabel("正在删除云端上对应的日记...")
+            indicatorView.setLabel("正在删除...")
         case .recover:
             indicatorView =  LWDefaultIndicatorView()
-            indicatorView.setLabel("请稍后...\n正在上传本地数据和恢复云端数据")
+            indicatorView.setLabel("正在同步...")
         default:
             indicatorView =  LWDefaultIndicatorView()
         }
