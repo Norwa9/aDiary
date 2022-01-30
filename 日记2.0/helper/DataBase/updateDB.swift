@@ -34,10 +34,10 @@ class LWDBUpdater{
          */
         if userDefaultManager.hasUpdated32{
             print("已被标记为已升级，跳过升级3.2DB")
-             return
+              return
         }
-//        for diary in LWRealmManager.shared.localDatabase{
-        for diary in diariesForMonth(forYear: 2022, forMonth: 3){
+        for diary in LWRealmManager.shared.localDatabase{
+//        for diary in diariesForMonth(forYear: 2022, forMonth: 3){
             guard
                 let rtfd = diary.rtfd,
                 let attrText:NSAttributedString = LoadRTFD(rtfd: rtfd)
@@ -119,7 +119,7 @@ class LWDBUpdater{
                     let todoViewModel = LWTodoViewModel(location: location)
                     todoViewModel.content = content
                     todoViewModel.state = state
-                    todoViewModel.dateBelongs = diary.date
+                    todoViewModel.dateBelongs = diary.date // 设置该todo所属于的日记id
                     let todoModel = todoViewModel.generateModel()
                     
                     // (3)将旧的todo内容用空格覆盖
