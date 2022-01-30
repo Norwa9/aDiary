@@ -31,7 +31,7 @@ class LWDBUpdater{
          */
         if userDefaultManager.hasUpdated32{
             print("已被标记为已升级，跳过升级3.2DB")
-//              return
+            return
         }
         for diary in LWRealmManager.shared.localDatabase{
 //        for diary in diariesForMonth(forYear: 2022, forMonth: 3){
