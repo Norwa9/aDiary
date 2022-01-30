@@ -133,6 +133,7 @@
 		EAAFDDF627A2CFBC008286EB /* todoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF527A2CFBC008286EB /* todoListViewModel.swift */; };
 		EAAFDDF927A3F749008286EB /* deBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDF727A3F748008286EB /* deBugViewController.swift */; };
 		EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAFDDF827A3F748008286EB /* deBugViewController.xib */; };
+		EAAFDDFD27A6BF0F008286EB /* LWSegSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -308,6 +309,7 @@
 		EAAFDDF527A2CFBC008286EB /* todoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoListViewModel.swift; sourceTree = "<group>"; };
 		EAAFDDF727A3F748008286EB /* deBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deBugViewController.swift; sourceTree = "<group>"; };
 		EAAFDDF827A3F748008286EB /* deBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deBugViewController.xib; sourceTree = "<group>"; };
+		EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSegSettingCell.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 				EA11A954274215A20058A7A8 /* LWSettingCell.swift */,
 				EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */,
 				EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */,
+				EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */,
 			);
 			path = "setting VC";
 			sourceTree = "<group>";
@@ -1161,6 +1164,7 @@
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
+				EAAFDDFD27A6BF0F008286EB /* LWSegSettingCell.swift in Sources */,
 				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
 				EAAFDDF127A11080008286EB /* Date+.swift in Sources */,
 				EA2235FD26D692B0001FAD1D /* ScalableImageModel.swift in Sources */,

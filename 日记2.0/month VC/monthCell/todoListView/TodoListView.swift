@@ -75,6 +75,7 @@ class TodoListView: UIView {
         
         // 取得最新的todoListView的高度
         let todoListViewModel = todoListViewModel(diaryModel: diary, todoListView: self)
+        let oldTodoViewModels = self.todoViewModels
         let newestTodoViewModels = todoListViewModel.getDataSource()
         self.snp.updateConstraints { (make) in
             make.height.equalTo(self.calTodoListViewHeihgt(newestTodoViewModels: newestTodoViewModels))
@@ -83,10 +84,13 @@ class TodoListView: UIView {
         //切换布局模式时，刷新todoListCell的宽度
         self.layout.dataSource = newestTodoViewModels
         self.todoViewModels = newestTodoViewModels
-        reloadTodoView(specifiedRow: row)
+        reloadTodoListView(specifiedRow: row,newViewModels: newestTodoViewModels,oldViewModels: oldTodoViewModels)
     }
     
-    private func reloadTodoView(specifiedRow row:Int?){
+    private func reloadTodoListView(
+        specifiedRow row:Int?,
+        newViewModels:[LWTodoViewModel],oldViewModels:[LWTodoViewModel]
+    ){
         if let row = row {
             //1.刷新collection view
             switch userDefaultManager.todoListViewStyle{
@@ -99,7 +103,21 @@ class TodoListView: UIView {
                     
                 }
             case 2: // 完成后置底
-                break
+                // 为了展现cell的移动动画，需要使用moveItem()，reloadData没有动画效果
+                self.collectionView.performBatchUpdates {
+                    for (oldIndex,oldViewModel) in oldViewModels.enumerated(){
+                        for (newIndex,newViewModel) in newViewModels.enumerated() {
+                            if newViewModel.uuid == oldViewModel.uuid{
+                                collectionView.moveItem(at: IndexPath(row: oldIndex, section: 0), to: IndexPath(row: newIndex, section: 0))
+                                break
+                            }
+                        }
+                    }
+                } completion: { _ in
+                    
+                }
+                self.collectionView.reloadData()
+                return
             default:
                 break
             }

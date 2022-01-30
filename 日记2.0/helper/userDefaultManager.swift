@@ -457,7 +457,7 @@ class userDefaultManager{
             if let style = shared?.object(forKey: constants.todoListViewStyle) as? Int {
                 return style
             }else{
-                return 0
+                return 2 // 默认样式为置底
             }
         }
         set{

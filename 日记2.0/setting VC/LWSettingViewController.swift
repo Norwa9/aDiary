@@ -67,6 +67,7 @@ class LWSettingViewController: UIViewController {
     var dailyRemindLabel:UILabel!
     var dailyRemindSwitch:UISwitch!
     var dailyRemindDatePicker:UIDatePicker!
+    var todoListStyleCell:LWSegSettingCell!
     
     //评价
     var requestReviewLabel:UILabel!
@@ -102,7 +103,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
-    //MARK:-实例化UI
+    //MARK: -实例化UI
     private func initUI(){
         scrollView = UIScrollView()
         view.addSubview(scrollView)
@@ -188,6 +189,16 @@ class LWSettingViewController: UIViewController {
         otherContainer.addSubview(darkModeLabel)
         otherContainer.addSubview(darkModeSegment)
         
+        todoListStyleCell = LWSegSettingCell(
+            delegate:self,
+            title: "主页待办列表样式",
+            icon: nil,
+            controlItems: ["默认","消失","置底"],
+            selectedSegmentIndex: userDefaultManager.todoListViewStyle,
+            selector: #selector(todoListStyleDidChange(_:))
+        )
+        otherContainer.addSubview(todoListStyleCell)
+        
         dailyRemindLabel = UILabel()
         dailyRemindSwitch = UISwitch()
         dailyRemindDatePicker = UIDatePicker()
@@ -207,7 +218,7 @@ class LWSettingViewController: UIViewController {
         
         
         
-        // MARK: - 联系我
+        // MARK:  - 联系我
         contactWaysContainer = UIView()
         contactWaysContainerTitle = UILabel()
         contactWaysContainerTitle.text = "反馈"
@@ -236,7 +247,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
-    //MARK:-填充UI
+    //MARK: -填充UI
     private func setupUI(){
         scrollView.backgroundColor = .systemBackground
         
@@ -371,7 +382,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
-    //MARK:-约束
+    //MARK: -约束
     private func setupConstraints(){
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -399,7 +410,7 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(40)
         }
         
-        // MARK: - layout:字体
+        // MARK:  - layout:字体
         fontContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(settingTitle.snp.bottom).offset(40)
             make.left.equalToSuperview().offset(15)
@@ -468,7 +479,7 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(150)
         }
         
-        // MARK: - layout:隐私
+        // MARK:  - layout:隐私
         privacyContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(fontContainerView.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -501,7 +512,7 @@ class LWSettingViewController: UIViewController {
         }
         
         
-        // MARK: - layout:备份
+        // MARK:  - layout:备份
         backupContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(privacyContainer.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -529,7 +540,7 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(200)
         }
         
-        // MARK: - layout:其他
+        // MARK:  - layout:其他
         otherContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(backupContainer.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -551,14 +562,19 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(150)
         }
         
+        todoListStyleCell.snp.makeConstraints { make in
+            make.top.equalTo(darkModeLabel.snp.bottom).offset(10) // 10 + 10(内)
+            make.left.right.equalToSuperview()
+        }
+        
         dailyRemindLabel.snp.makeConstraints { make in
-            make.top.equalTo(darkModeLabel.snp.bottom).offset(20)
+            make.top.equalTo(todoListStyleCell.snp.bottom).offset(10)
             make.left.equalTo(darkModeLabel)
         }
         
         dailyRemindSwitch.snp.makeConstraints { make in
             make.centerY.equalTo(dailyRemindLabel)
-            make.right.equalTo(darkModeSegment)
+            make.right.equalTo(todoListStyleCell).offset(-10)
         }
         
         dailyRemindDatePicker.snp.makeConstraints { make in
@@ -588,7 +604,7 @@ class LWSettingViewController: UIViewController {
             make.left.equalTo(requestReviewButton)
         }
         
-        // MARK: - layout:联系我
+        // MARK:  - layout:联系我
         contactWaysContainerTitle.snp.makeConstraints { make in
             make.top.equalTo(otherContainer.snp.bottom).offset(20)
             make.left.equalTo(fontContainerTitle)
@@ -625,7 +641,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
-    //MARK:-字体
+    //MARK: -字体
     @objc func save(){
         //保存设置
         userDefaultManager.fontSize = tempFontSize
@@ -661,7 +677,7 @@ class LWSettingViewController: UIViewController {
         updateExampleTextView(withFontSize:tempFontSize,withFontStyle: tempFontName,withLineSpacing: tempLineSpacing)
     }
     
-    //MARK:-密码
+    //MARK: -密码
     ///生物识别
     @objc func useBiometricsSwitchDidChange(_ sender: UISwitch) {
         //如果已经设定了密码，此时可以自由开启关闭生物识别
@@ -736,7 +752,7 @@ class LWSettingViewController: UIViewController {
         }
     }
     
-    //MARK:-iCloud
+    //MARK: -iCloud
     @objc func iCloudDidChange(_ sender:UISwitch){
         userDefaultManager.iCloudEnable = sender.isOn
         if sender.isOn == true{
@@ -746,7 +762,7 @@ class LWSettingViewController: UIViewController {
         }
     }
     
-    //MARK:-导出
+    //MARK: -导出
     @objc func exportAll(){
         exportManager.shared.exportAll(){
 
@@ -754,14 +770,14 @@ class LWSettingViewController: UIViewController {
 //        exportManager.shared.exportText()
     }
     
-    //MARK:-请求好评
+    //MARK: -请求好评
     @objc func requestReview(){
         if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
-    //MARK:-切换显示模式
+    //MARK: -切换显示暗黑模式
     @objc func appearanceModeDidChange(_ sender:UISegmentedControl){
         // 实际项目中，如果是iOS应用这么写没问题，但是对于iPadOS应用还需要判断scene的状态是否激活
         #if os(iOS)
@@ -781,7 +797,12 @@ class LWSettingViewController: UIViewController {
         #endif
     }
     
-    //MARK:-订阅
+    //MARK: - 主页todo列表样式
+    @objc func todoListStyleDidChange(_ sender:UISegmentedControl){
+        userDefaultManager.todoListViewStyle = sender.selectedSegmentIndex
+    }
+    
+    //MARK: -订阅
     @objc func showIAPViewController(){
 
         let vc = IAPViewController()
@@ -789,7 +810,7 @@ class LWSettingViewController: UIViewController {
         
     }
     
-    //MARK:-每日提醒
+    //MARK: -每日提醒
     @objc func dailyReminderDidChange(_ sender: UISwitch){
         //一、开启每日提醒功能
         if sender.isOn{
@@ -848,7 +869,7 @@ class LWSettingViewController: UIViewController {
     }
 }
 
-//MARK:-选取字体
+//MARK: -选取字体
 extension LWSettingViewController:UIFontPickerViewControllerDelegate{
     @objc func presentFontPickerVC(){
         let fontConfig = UIFontPickerViewController.Configuration()
@@ -880,7 +901,7 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
 
 
 
-//MARK:-示例textView
+//MARK: -示例textView
 extension LWSettingViewController{
     private func setupExampleTextView(imageScalingFactor:CGFloat){
         self.view.layoutIfNeeded()
@@ -927,7 +948,7 @@ extension LWSettingViewController{
     }
 }
 
-// MARK: - 联系我
+// MARK:  - 联系我
 
 extension LWSettingViewController{
     @objc func jumpToWeibo(){
