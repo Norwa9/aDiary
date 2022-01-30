@@ -165,6 +165,12 @@ class monthVC: UIViewController {
         // 通过autolayout获取正确的初始大小。
         globalConstantsManager.shared.appSize = self.view.bounds.size
         
+        //设置深色模式
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+            let interfaceStyle = UIUserInterfaceStyle(rawValue: userDefaultManager.appearanceMode){
+            scene.window?.overrideUserInterfaceStyle = interfaceStyle
+        }
+        
         self.view.backgroundColor = .systemBackground
         //topBar
         topbar = topbarView(frame: .zero)

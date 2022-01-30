@@ -777,7 +777,7 @@ class LWSettingViewController: UIViewController {
         }
     }
     
-    //MARK: -切换显示暗黑模式
+    //MARK: -切换深色模式
     @objc func appearanceModeDidChange(_ sender:UISegmentedControl){
         // 实际项目中，如果是iOS应用这么写没问题，但是对于iPadOS应用还需要判断scene的状态是否激活
         #if os(iOS)

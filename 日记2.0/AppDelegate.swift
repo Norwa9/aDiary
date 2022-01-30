@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //5.注册通知
         LWNotificationHelper.shared.registerCategories() // 注册通知类别，但是暂不索取通知权限
         
+        
         return true
     }
     

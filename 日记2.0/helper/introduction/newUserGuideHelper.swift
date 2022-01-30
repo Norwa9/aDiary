@@ -103,12 +103,12 @@ class NewUserGuideHelper{
     private func generateExampleTodoModels(todoLocations:[Int])->[LWTodoModel]{
         var todoModels:[LWTodoModel] = []
         let todoViewModel0 = LWTodoViewModel(location: todoLocations[0])
-        todoViewModel0.content = "试试点击这个待办事项"
+        todoViewModel0.content = "试试完成这个待办事项"
         todoViewModel0.dateBelongs = GetTodayDate()
         todoModels.append(todoViewModel0.generateModel())
         
         let todoViewModel1 = LWTodoViewModel(location: todoLocations[1])
-        todoViewModel1.content = "待办具有高级选项：提醒时间和备注"
+        todoViewModel1.content = "待办可设置高级选项：提醒时间和备注"
         todoViewModel1.dateBelongs = GetTodayDate()
         if let tonightDate = self.getTonightDate(){
             todoViewModel1.needRemind = false // 为了触发通知权限，给用户手动去开启通知
@@ -120,7 +120,7 @@ class NewUserGuideHelper{
         todoModels.append(todoViewModel1.generateModel())
         
         let todoViewModel2 = LWTodoViewModel(location: todoLocations[2])
-        todoViewModel2.content = "未完成的待办会显示在主页中"
+        todoViewModel2.content = "日记中写下的待办会在主页显示"
         todoViewModel2.dateBelongs = GetTodayDate()
         todoModels.append(todoViewModel2.generateModel())
         return todoModels
