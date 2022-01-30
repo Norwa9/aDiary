@@ -122,16 +122,12 @@ extension monthVC:FSCalendarDelegateAppearance{
     
     //event dot数量
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        if let model = LWRealmManager.shared.queryFor(date: date).first{
-            if model.todos.isEmpty{
-                return 0
-            }else{
-                /*
-                 TODO:发现最大dot数=3，需要自己写一个view来显示更多的dot
-                 */
-                return model.todos.count
+        if let diary = LWRealmManager.shared.queryFor(date: date).first{
+            let todoModels = diary.lwTodoModels
+            let uncheckedTodoModels = todoModels.filter { model in
+                model.state == 0
             }
-            
+            return uncheckedTodoModels.count
         }else{
             return 0
         }
