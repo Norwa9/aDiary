@@ -15,9 +15,6 @@ class LWDBUpdater{
     func checkDBUpdate(){
         // 1. 版本3.2进行了数据库的更新[2022.1.23]
         upgradeDB32()
-        
-        // 未来的数据库更新...
-        
     }
     
     // MARK: -3.2
@@ -34,17 +31,17 @@ class LWDBUpdater{
          */
         if userDefaultManager.hasUpdated32{
             print("已被标记为已升级，跳过升级3.2DB")
-              return
+//              return
         }
         for diary in LWRealmManager.shared.localDatabase{
 //        for diary in diariesForMonth(forYear: 2022, forMonth: 3){
             guard
                 let rtfd = diary.rtfd,
-                let attrText:NSAttributedString = LoadRTFD(rtfd: rtfd)
+                let attrText:NSAttributedString = LoadRTFD(rtfd: rtfd),
+                diary.date != ""
             else {
                 print("\(diary.date)没有富文本，跳过该循环")
-                return
-                //continue
+                continue
             }
             let muAttrText:NSMutableAttributedString =  NSMutableAttributedString(attributedString: attrText)
             
@@ -67,10 +64,14 @@ class LWDBUpdater{
                     }
                 }
                 let location = tuple.0
-                if location >= attrText.length - 1{
+                if location >= muAttrText.length - 1{
                     // 处理最后一个字符的图片时，attribute at 会out of bounds
-                    // 为了能够迁移这种图片，这里的解决办法是直接给日记再在末尾添加一个空格" "，以防止out of bounds报错。
-                    muAttrText.append(NSAttributedString(string: " "))
+                    // 为了能够迁移这种图片，这里的解决办法是直接给日记再在末尾添加很多个空格" "，以防止out of bounds报错。
+                    print("location >= muAttrText.length - 1，旧日记长度:\(muAttrText.length)")
+                    for _ in 0...location{
+                        muAttrText.append(NSAttributedString(string: " "))
+                    }
+                    print("新日记长度:\(muAttrText.length)")
                 }
                 if let attchment = muAttrText.attribute(.attachment, at: location, effectiveRange: nil) as? NSTextAttachment,let image = attchment.image(forBounds: .zero, textContainer: NSTextContainer(), characterIndex: location){
                     print("处理到\(diary.date),\(location)处的图片")
