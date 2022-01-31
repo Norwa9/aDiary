@@ -15,6 +15,6 @@ extension SKProduct{
         formatter.numberStyle = .currency
         formatter.locale = self.priceLocale
         return formatter.string(from: self.price)
-        //https://link.medium.com/wQrhCVUIwib
+        // https://link.medium.com/wQrhCVUIwib
     }
 }

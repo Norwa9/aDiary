@@ -40,7 +40,7 @@ class LWSegSettingCell: UIView {
         
         titleLabel = UILabel()
         titleLabel.text = title
-        titleLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        titleLabel.font = LWSettingViewController.contentFont
         
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = selectedSegmentIndex

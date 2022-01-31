@@ -10,6 +10,8 @@ import StoreKit
 import AttributedString
 
 class LWSettingViewController: UIViewController {
+    static let titleFont:UIFont = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static let contentFont:UIFont = UIFont.systemFont(ofSize: 18, weight: .regular)
     var scrollView:UIScrollView!
     var containerView:UIView!
     
@@ -19,6 +21,9 @@ class LWSettingViewController: UIViewController {
     //按钮
     var saveButton:UIButton!
     var dismissButton:UIButton!
+    
+    //付费
+    var iapSettingCell:LWIAPSettingCell!
     
     //字体设置
     var fontContainerTitle:UILabel!
@@ -118,6 +123,11 @@ class LWSettingViewController: UIViewController {
         dismissButton = UIButton()
         containerView.addSubview(saveButton)
         containerView.addSubview(dismissButton)
+        
+        // 内购
+        iapSettingCell = LWIAPSettingCell(delegate: self, selector: #selector(showIAPViewController))
+        containerView.addSubview(iapSettingCell)
+        
         
         //-字体
         fontContainerView = UIView()
@@ -222,7 +232,7 @@ class LWSettingViewController: UIViewController {
         contactWaysContainer = UIView()
         contactWaysContainerTitle = UILabel()
         contactWaysContainerTitle.text = "反馈"
-        contactWaysContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
+        contactWaysContainerTitle.font = LWSettingViewController.titleFont
         contactWaysContainer.backgroundColor = settingContainerDynamicColor
         contactWaysContainer.setupShadow()
         contactWaysContainer.layer.cornerRadius = 10
@@ -262,7 +272,7 @@ class LWSettingViewController: UIViewController {
         
         //字体
         fontContainerTitle.text = "字体"
-        fontContainerTitle.font = .systemFont(ofSize: 22, weight: .medium)
+        fontContainerTitle.font = LWSettingViewController.titleFont
         fontContainerView.backgroundColor = settingContainerDynamicColor
         fontContainerView.setupShadow()
         fontContainerView.layer.cornerRadius = 10
@@ -270,12 +280,12 @@ class LWSettingViewController: UIViewController {
         textView.backgroundColor = .clear
         
         imageSizeTitle.text = "图片大小"
-        imageSizeTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        imageSizeTitle.font = LWSettingViewController.contentFont
         imageSizeSegment.selectedSegmentIndex = userDefaultManager.imageSizeStyle
         imageSizeSegment.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
         
         lineSpacingTitle.text = "行间距"
-        lineSpacingTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        lineSpacingTitle.font = LWSettingViewController.contentFont
         lineSpacingStepper.stepValue = 1
         lineSpacingStepper.minimumValue = 0
         lineSpacingStepper.maximumValue = 10
@@ -283,16 +293,16 @@ class LWSettingViewController: UIViewController {
         lineSpacingStepper.addTarget(self, action: #selector(lineSapacingChange), for: .valueChanged)
         
         fontSizeTitle.text = "默认字号"
-        fontSizeTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        fontSizeTitle.font = LWSettingViewController.contentFont
         fontSizeLabel.text = String(Int(userDefaultManager.fontSize))
-        fontSizeLabel.font = .systemFont(ofSize: 18)
+        fontSizeLabel.font = LWSettingViewController.contentFont
         fontSizeStepper.minimumValue = 10
         fontSizeStepper.maximumValue = 40
         fontSizeStepper.value = Double(userDefaultManager.fontSize)
         fontSizeStepper.addTarget(self, action: #selector(fontSizeDidChange(_:)), for: .valueChanged)
         
         fontPickerTitle.text = "默认字体"
-        fontPickerTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        fontPickerTitle.font = LWSettingViewController.contentFont
         fontPickerButton.setTitle("选取字体", for: .normal)
         fontPickerButton.setTitleColor(.link, for: .normal)
         fontPickerButton.contentHorizontalAlignment = .right
@@ -300,29 +310,29 @@ class LWSettingViewController: UIViewController {
         
         //隐私
         privacyContainerTitle.text = "隐私"
-        privacyContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
+        privacyContainerTitle.font = LWSettingViewController.titleFont
         privacyContainer.backgroundColor = settingContainerDynamicColor
         privacyContainer.setupShadow()
         privacyContainer.layer.cornerRadius = 10
         
         passwordLabel.text = "使用App密码"
-        passwordLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        passwordLabel.font = LWSettingViewController.contentFont
         passwordSwitch.isOn = userDefaultManager.usePassword
         passwordSwitch.addTarget(self, action: #selector(usePasswordSwitchDidChange(_:)), for: .valueChanged)
         biometricsLabel.text = "使用FaceID/TouchID"
-        biometricsLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        biometricsLabel.font = LWSettingViewController.contentFont
         biometricsSwitch.isOn = userDefaultManager.useBiometrics
         biometricsSwitch.addTarget(self, action: #selector(useBiometricsSwitchDidChange(_:)), for: .valueChanged)
         
         //备份
         backupContainerTitle.text = "备份"
-        backupContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
+        backupContainerTitle.font = LWSettingViewController.titleFont
         backupContainer.backgroundColor = settingContainerDynamicColor
         backupContainer.setupShadow()
         backupContainer.layer.cornerRadius = 10
         
         iCloudTitle.text = "iCloud备份"
-        iCloudTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        iCloudTitle.font = LWSettingViewController.contentFont
         iCloudSwitch.isOn = userDefaultManager.iCloudEnable
         iCloudSwitch.addTarget(self, action: #selector(iCloudDidChange), for: .touchUpInside)
         exportPDFButton.setAttributedTitle(settingVCConfig.exportPDFButtonAttributedTitle(title: "导出所有日记为PDF",color: .link), for: .normal)
@@ -331,18 +341,18 @@ class LWSettingViewController: UIViewController {
         
         //其它
         otherContainerTitle.text = "其它"
-        otherContainerTitle.font = .systemFont(ofSize: 20, weight: .medium)
+        otherContainerTitle.font = LWSettingViewController.titleFont
         otherContainer.backgroundColor = settingContainerDynamicColor
         otherContainer.setupShadow()
         otherContainer.layer.cornerRadius = 10
         
         darkModeLabel.text = "外观模式"
-        darkModeLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        darkModeLabel.font = LWSettingViewController.contentFont
         darkModeSegment.selectedSegmentIndex = userDefaultManager.appearanceMode
         darkModeSegment.addTarget(self, action: #selector(appearanceModeDidChange(_:)), for: .valueChanged)
         
         dailyRemindLabel.text = "每日提醒"
-        dailyRemindLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        dailyRemindLabel.font = LWSettingViewController.contentFont
         dailyRemindSwitch.isOn = userDefaultManager.dailyRemindEnable
         dailyRemindSwitch.addTarget(self, action: #selector(dailyReminderDidChange(_:)), for: .valueChanged)
         dailyRemindDatePicker.datePickerMode = .time
@@ -351,7 +361,7 @@ class LWSettingViewController: UIViewController {
         dailyRemindDatePicker.addTarget(self, action: #selector(dateDidChange(_:)), for: .valueChanged)
         
         autoCreateTitle.text = "自动创建新日记"
-        autoCreateTitle.font = .systemFont(ofSize: 18, weight: .medium)
+        autoCreateTitle.font = LWSettingViewController.contentFont
         autoCreateTitleSwitch.isOn = userDefaultManager.autoCreate
         autoCreateTitleSwitch.addTarget(self, action: #selector(autoCreateDiary(_:)), for: .valueChanged)
         requestReviewButton.setAttributedTitle(settingVCConfig.reviewButtonAttributedTitle(title: "App Store撰写好评",color: .link), for: .normal)
@@ -410,9 +420,16 @@ class LWSettingViewController: UIViewController {
             make.width.equalTo(40)
         }
         
+        //MARK: layout：付费
+        iapSettingCell.snp.makeConstraints { make in
+            make.top.equalTo(settingTitle.snp.bottom).offset(40)
+            make.left.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-10)
+        }
+        
         // MARK:  - layout:字体
         fontContainerTitle.snp.makeConstraints { make in
-            make.top.equalTo(settingTitle.snp.bottom).offset(40)
+            make.top.equalTo(iapSettingCell.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(15)
         }
         
@@ -481,7 +498,7 @@ class LWSettingViewController: UIViewController {
         
         // MARK:  - layout:隐私
         privacyContainerTitle.snp.makeConstraints { make in
-            make.top.equalTo(fontContainerView.snp.bottom).offset(20)
+            make.top.equalTo(fontContainerView.snp.bottom).offset(40)
             make.left.equalTo(fontContainerTitle)
         }
         
@@ -514,7 +531,7 @@ class LWSettingViewController: UIViewController {
         
         // MARK:  - layout:备份
         backupContainerTitle.snp.makeConstraints { make in
-            make.top.equalTo(privacyContainer.snp.bottom).offset(20)
+            make.top.equalTo(privacyContainer.snp.bottom).offset(40)
             make.left.equalTo(fontContainerTitle)
         }
         
@@ -542,7 +559,7 @@ class LWSettingViewController: UIViewController {
         
         // MARK:  - layout:其他
         otherContainerTitle.snp.makeConstraints { make in
-            make.top.equalTo(backupContainer.snp.bottom).offset(20)
+            make.top.equalTo(backupContainer.snp.bottom).offset(40)
             make.left.equalTo(fontContainerTitle)
         }
         
@@ -606,7 +623,7 @@ class LWSettingViewController: UIViewController {
         
         // MARK:  - layout:联系我
         contactWaysContainerTitle.snp.makeConstraints { make in
-            make.top.equalTo(otherContainer.snp.bottom).offset(20)
+            make.top.equalTo(otherContainer.snp.bottom).offset(40)
             make.left.equalTo(fontContainerTitle)
         }
         
@@ -640,6 +657,14 @@ class LWSettingViewController: UIViewController {
         
         
     }
+    
+    //MARK: action内购
+    @objc func showIAPViewController(){
+        let vc = IAPViewController()
+        self.present(vc, animated: true, completion: nil)
+        
+    }
+    
     
     //MARK: -字体
     @objc func save(){
@@ -802,13 +827,6 @@ class LWSettingViewController: UIViewController {
         userDefaultManager.todoListViewStyle = sender.selectedSegmentIndex
     }
     
-    //MARK: -订阅
-    @objc func showIAPViewController(){
-
-        let vc = IAPViewController()
-        self.present(vc, animated: true, completion: nil)
-        
-    }
     
     //MARK: -每日提醒
     @objc func dailyReminderDidChange(_ sender: UISwitch){

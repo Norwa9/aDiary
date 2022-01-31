@@ -44,7 +44,7 @@ class LWSettingCell:UIView{
             titleView = UIButton()
             if let titleButton = titleView as? UIButton{
                 let attributes:[NSAttributedString.Key : Any] = [
-                    .font : UIFont.systemFont(ofSize: 18, weight: .medium),
+                    .font : LWSettingViewController.contentFont,
                     .foregroundColor : UIColor.label
                 ]
                 let attributedTitle = NSMutableAttributedString(string: self.text,attributes: attributes)

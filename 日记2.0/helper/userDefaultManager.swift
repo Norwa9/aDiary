@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AttributedString
 
 class userDefaultManager{
     public static var shared:UserDefaults? = UserDefaults(suiteName: "user.default")
@@ -39,6 +40,8 @@ class userDefaultManager{
         static let imageDeleteQueue = "imageDeleteQueue"
         static let hasUpdated32 = "updated32"
         static let todoListViewStyle = "todoListViewStyle"
+        static let purchaseEdition = "purchaseEdition"
+        static let downloadDate = "downloadDate"
         
         
     }
@@ -469,7 +472,37 @@ class userDefaultManager{
     /// 作为注册每日提醒通知时的uuid，因为只有一个，所以uuid用常量
     static let TodoNotificationCategoryName = "todoNotificationCategoryName"
     
+    // MARK: 内购
+    /// 购买版本
+    /// 0：试用
+    /// 1：未购买
+    /// 2：永久版
+    static var purchaseEdition:Int{
+        get{
+            if let edition = shared?.object(forKey: constants.purchaseEdition) as? Int {
+                return edition
+            }else{
+                return 0 // 默认是试用版本
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.purchaseEdition)
+        }
+    }
     
+    /// 下载日期。用来计算试用期
+    static var downloadDate:Date{
+        get{
+            if let date = shared?.object(forKey: constants.downloadDate) as? Date {
+                return date
+            }else{
+                return Date() // 默认是试用版本
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.downloadDate)
+        }
+    }
 }
 
 
