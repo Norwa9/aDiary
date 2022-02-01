@@ -125,10 +125,15 @@ class globalConstantsManager{
         }
     }
     
+    /// todoView中，文本和属性文本的上下缩进
+    let todoViewInternalPadding:CGFloat = 4.0
+    
+    /// 创建一个todoView时默认的大小
     var defaultTodoBounds:CGRect{
         get{
             let KtodoViewWidth = globalConstantsManager.shared.kScreenWidth * 0.95
-            let defaultTodoViewHeight = userDefaultManager.font.lineHeight // 默认的todo cell 高度
+            // 默认的todo cell 高度
+            let defaultTodoViewHeight = userDefaultManager.font.lineHeight + todoViewInternalPadding * 2
             return CGRect(x: 0, y: 0, width: KtodoViewWidth, height: defaultTodoViewHeight)
         }
     }

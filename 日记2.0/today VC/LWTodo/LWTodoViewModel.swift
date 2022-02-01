@@ -250,9 +250,10 @@ class LWTodoViewModel:NSObject{
     /// 在todoListView显示时，计算单行的高度
     func calSingleRowTodoViewHeihgt()->CGFloat{
         var height = 0.0
-        height = todoFont.lineHeight +  2.0 * 2.0 + 2.0
+        let padding = globalConstantsManager.shared.todoViewInternalPadding
+        height = todoFont.lineHeight +  2 * padding
         if hasExtroInfo{
-            height += extroInfoLabelFont.lineHeight
+            height += extroInfoLabelFont.lineHeight + padding
         }
         return height
     }

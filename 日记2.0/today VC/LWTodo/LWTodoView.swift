@@ -123,21 +123,23 @@ class LWTodoView:UIView{
         self.contentTextView.snp.makeConstraints { make in
             make.left.equalTo(self.stateButton.snp.right)
             make.right.equalTo(self.moreButton.snp.left)
+            let padding = globalConstantsManager.shared.todoViewInternalPadding
             if viewModel.hasExtroInfo{ // has extro
-                make.top.equalToSuperview()
+                make.top.equalToSuperview().offset(padding)
             }else{ // no extro label
-                make.top.equalToSuperview()
-                make.bottom.equalToSuperview()
+                make.top.equalToSuperview().offset(padding)
+                make.bottom.equalToSuperview().offset(-padding)
                 make.centerY.equalToSuperview()
             }
         }
         
         self.extroInfoLabel.snp.makeConstraints { make in
+            let padding = globalConstantsManager.shared.todoViewInternalPadding
             if viewModel.hasExtroInfo{
                 print(viewModel.hasExtroInfo)
-                make.top.equalTo(self.contentTextView.snp.bottom).offset(2)
+                make.top.equalTo(self.contentTextView.snp.bottom).offset(padding)
                 make.left.right.equalTo(self.contentTextView)
-                make.bottom.equalToSuperview().offset(-2)
+                make.bottom.equalToSuperview().offset(-padding)
             }
         }
         
@@ -256,13 +258,14 @@ extension LWTodoView:UITextViewDelegate{
         let constrainSize=CGSize(width:frame.size.width,height:CGFloat(MAXFLOAT))
         let textViewSize = contentTextView.sizeThatFits(constrainSize)
         let extroInfoLabelSize = extroInfoLabel.sizeThatFits(constrainSize)
+        let padding = globalConstantsManager.shared.todoViewInternalPadding
         
         let newHeight:CGFloat
         if viewModel.hasExtroInfo{
 //            newHeight = max(viewModel.todoFont.lineHeight, contentTextView.contentSize.height) + viewModel.extroInfoLabelFont.lineHeight + 2 * 2 // padding : 2x2
-            newHeight = contentTextView.contentSize.height + extroInfoLabelSize.height + 2 * 2
+            newHeight = contentTextView.contentSize.height + extroInfoLabelSize.height + 3 * padding
         }else{
-            newHeight = textViewSize.height
+            newHeight = textViewSize.height + 2 * padding
         }
          print("newHeight:\(newHeight),textViewHeight:\(textViewSize.height),extroInfoLabelHeight:\(extroInfoLabelSize.height)")
         let newBounds = CGRect(x: 0, y: 0, width: self.bounds.width, height: newHeight)
