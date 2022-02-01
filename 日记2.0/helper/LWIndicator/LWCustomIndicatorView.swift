@@ -118,7 +118,7 @@ class LWCustomIndicatorView:UIView{
         }
         
         progressView.snp.makeConstraints { make in
-            make.width.equalTo(200)
+            make.width.equalTo(0)
             make.height.equalTo(0)
             make.top.equalToSuperview().offset(0)
             make.centerX.equalToSuperview()
@@ -131,7 +131,7 @@ class LWCustomIndicatorView:UIView{
             make.bottom.equalToSuperview().offset(-10)
             make.left.equalTo(indicatorView.snp.right).offset(2)
             make.right.lessThanOrEqualToSuperview().offset(-10)
-            make.centerX.equalToSuperview()
+            //make.centerX.equalToSuperview()
         }
         
     }

@@ -101,6 +101,9 @@ class indicatorViewManager{
         case .recover:
             indicatorView =  LWDefaultIndicatorView()
             indicatorView.setLabel("正在同步...")
+        case .iap:
+            indicatorView =  LWDefaultIndicatorView()
+            indicatorView.setLabel("正在请求...")
         default:
             indicatorView =  LWDefaultIndicatorView()
         }

@@ -103,11 +103,6 @@ class LWSettingViewController: UIViewController {
         setupExampleTextView(imageScalingFactor: (CGFloat(userDefaultManager.imageSizeStyle + 1)))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
     //MARK: -实例化UI
     private func initUI(){
         scrollView = UIScrollView()

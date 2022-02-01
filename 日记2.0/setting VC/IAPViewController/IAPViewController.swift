@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import StoreKit
 
 class IAPViewController: UIViewController {
+    static let iapVCTitleFont = UIFont.boldSystemFont(ofSize: 30)
+    static let iapVCContentFont = UIFont.systemFont(ofSize: 16)
+    
     var IAPHelper:LWIAPHelper!
     
     private var iconImageView:UIImageView!
@@ -46,11 +50,9 @@ class IAPViewController: UIViewController {
     
     private var purchaseBtn:LWPurchaseButton!
     private var freeTrialStateLabel:UILabel!
-    
     private var restoreBtn:UIButton!
     
-    static let iapVCTitleFont = UIFont.boldSystemFont(ofSize: 30)
-    static let iapVCContentFont = UIFont.systemFont(ofSize: 16)
+    var products:[SKProduct] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,23 +64,54 @@ class IAPViewController: UIViewController {
         initIAPHelper()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let settingVC = self.presentingViewController as? LWSettingViewController{
+            // 退出时更新 iap cell的升级按钮的文案
+            settingVC.iapSettingCell.updatePurchasedButton()
+        }
+    }
+    
     private func initIAPHelper(){
         IAPHelper = LWIAPHelper.shared
         
-        self.purchaseBtn.startSpin()
-        IAPHelper.fetchProductsCompletionBlock = { (products) in
-            self.purchaseBtn.stopSpin(price: "6元")
-            if products.count >= 2{
-                
+        // 购买完成的回调
+        IAPHelper.purchaseCompletionBlock = {
+            userDefaultManager.purchaseEdition = .purchased
+            self.purchaseBtn.updateButtonState()
+            DispatchQueue.main.async {
+                indicatorViewManager.shared.stop()
             }
         }
         
+        // 恢复购买的回调
         IAPHelper.restoreCompletionBlock = {
-            
+            userDefaultManager.purchaseEdition = .purchased
+            self.purchaseBtn.updateButtonState()
+            DispatchQueue.main.async {
+                indicatorViewManager.shared.stop()
+            }
         }
         
+        // 取回内购项目的回调
+        IAPHelper.fetchProductsCompletionBlock = { (products) in
+            print("products.count:\(products.count)")
+            // 已调取到可购买项目
+            // （3.2版本引入内购后，暂时仅有永久版，所以返回的products应该是一个元素）
+            if let product = products.first, // 永久版
+               product.productIdentifier == LWProductIdentifier.permanent.rawValue,
+               let price = product.regularPrice
+            {
+                self.products = products
+                self.purchaseBtn.stopSpin(returnPrice: price)
+            }
+        }
         
-        IAPHelper.requestProducts()//开始工作
+        // 如果没有购买，则请求内购项目，刷新购买按钮内容
+        if userDefaultManager.purchaseEdition != .purchased{
+            IAPHelper.requestProducts() // 请求调取可内购项目
+            self.purchaseBtn.startSpin()
+        }
     }
     
     private func initUI(){
@@ -123,7 +156,7 @@ class IAPViewController: UIViewController {
         proEditionFeaturesCollectionView.dataSource = self
         proEditionFeaturesCollectionView.register(LWAppFeatureLabel.self, forCellWithReuseIdentifier: "iapCell")
         
-        purchaseBtn = LWPurchaseButton(selector: #selector(purchaseAction), delegate: self)
+        purchaseBtn = LWPurchaseButton(selector: #selector(purchasePermanentEdition), delegate: self)
         
         freeTrialStateLabel = UILabel()
         freeTrialStateLabel.font = .systemFont(ofSize: 14)
@@ -234,24 +267,31 @@ class IAPViewController: UIViewController {
     }
 }
 
-//MARK:-actions
+//MARK:  -actions
 extension IAPViewController{
     @objc func close(){
         self.dismiss(animated: true, completion: nil)
     }
     
-    ///
-    @objc func purchaseAction(){
-//        if let product = productView1.product{
-//            indicatorViewManager.shared.start(type: .iap)
-//            IAPHelper.buy(product: product)
-//        }
+    /// 购买永久版
+    @objc func purchasePermanentEdition(){
+        if let product = products.first{
+            indicatorViewManager.shared.start(type: .iap)
+            IAPHelper.buy(product: product)
+        }else{
+            
+        }
     }
     
     ///恢复所有订阅
     @objc func restoreBtnAction(){
-        indicatorViewManager.shared.start(type: .iap)
-        IAPHelper.restore()
+        if userDefaultManager.purchaseEdition == .purchased{
+            LWIAPHelper.shared.generatePurchasedAC()
+        }else{
+            indicatorViewManager.shared.start(type: .iap)
+            IAPHelper.restore()
+        }
+        
     }
 }
 

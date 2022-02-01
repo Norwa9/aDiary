@@ -20,6 +20,10 @@ class LWPurchaseButton: UIView {
         self.purchaseSelector = selector
         self.delegate = delegate
         super.init(frame: .zero)
+        
+        let tapGes = UITapGestureRecognizer(target: delegate, action: selector)
+        self.addGestureRecognizer(tapGes)
+        
         initUI()
         initCons()
     }
@@ -29,36 +33,54 @@ class LWPurchaseButton: UIView {
     }
     
     public func startSpin(){
+        self.priceLabel.alpha = 0
+        self.isUserInteractionEnabled = false
         self.spinner.startAnimating()
         
     }
     
-    public func stopSpin(price:String){
+    public func stopSpin(returnPrice:String){
         UIView.animate(withDuration: 0.5) {
             self.priceLabel.alpha = 1
-            self.priceLabel.text = price
+            self.priceLabel.text = returnPrice
             self.spinner.stopAnimating()
+            self.isUserInteractionEnabled = true
         }
         
     }
     
+    public func updateButtonState(){
+        if userDefaultManager.purchaseEdition == .purchased{
+            purchaseTitle.text = "已解锁永久版"
+            priceLabel.text = "✅"
+            self.isUserInteractionEnabled = false
+        }else{
+            purchaseTitle.text = "解锁永久版"
+            self.isUserInteractionEnabled = true
+        }
+    }
+    
     private func initUI(){
         self.setupShadow()
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = settingContainerDynamicColor
         self.layer.cornerRadius = 10
         self.clipsToBounds = false
         
         containerView = UIView()
-        containerView.backgroundColor = .systemBackground
+        containerView.backgroundColor = settingContainerDynamicColor
         containerView.layer.cornerRadius = 10
         
         purchaseTitle = UILabel()
         purchaseTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        purchaseTitle.text = "解锁永久版"
+        purchaseTitle.adjustsFontSizeToFitWidth = true
         
         priceLabel = UILabel()
         priceLabel.font = UIFont.boldSystemFont(ofSize: 30)
-        priceLabel.alpha = 0
+        priceLabel.adjustsFontSizeToFitWidth = true
+        priceLabel.textAlignment = .center
+        
+        
+        updateButtonState() // 根据是否解锁显示不同标题
         
         spinner = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .label, padding: nil)
         
@@ -66,7 +88,6 @@ class LWPurchaseButton: UIView {
         containerView.addSubview(purchaseTitle)
         containerView.addSubview(priceLabel)
         containerView.addSubview(spinner)
-        
     }
     
     private func initCons(){

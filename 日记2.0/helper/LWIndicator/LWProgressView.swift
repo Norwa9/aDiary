@@ -37,7 +37,12 @@ class LWProgressView: LWCustomIndicatorView {
         
         progressView.snp.updateConstraints { make in
             make.top.equalToSuperview().offset(10)
+            make.width.equalTo(200)
             make.height.equalTo(10)
+        }
+        
+        label.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
         }
     }
     

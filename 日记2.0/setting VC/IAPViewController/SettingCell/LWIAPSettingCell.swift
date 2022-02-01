@@ -30,27 +30,16 @@ class LWIAPSettingCell: UIView {
     
     private func initUI(){
         self.setupShadow()
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = settingContainerDynamicColor
         self.layer.cornerRadius = 10
         self.clipsToBounds = false
         
         containerView = UIView()
-        containerView.backgroundColor = .systemBackground
+        containerView.backgroundColor = settingContainerDynamicColor
         containerView.layer.cornerRadius = 10
         
         button = UIButton()
-        var upgradeText:String
-        let edition = userDefaultManager.purchaseEdition
-        if edition == .freeTrial || edition == .notPurchased{ // 如果是试用或未购买
-            upgradeText = "升级"
-        }else{
-            upgradeText = "Pro"
-        }
-        let upgradeAttrText = NSAttributedString(string: upgradeText).addingAttributes([
-            .font : LWSettingViewController.titleFont,
-            .foregroundColor : UIColor.colorWithHex(hexColor: 0xFFD700)
-        ])
-        button.setAttributedTitle(upgradeAttrText, for: .normal)
+        updatePurchasedButton()
         button.contentHorizontalAlignment = .center
         button.backgroundColor = UIColor.colorWithHex(hexColor: 0xFFD700).withAlphaComponent(0.1)
         button.layer.borderColor = UIColor.colorWithHex(hexColor: 0xFFD700).cgColor
@@ -67,6 +56,21 @@ class LWIAPSettingCell: UIView {
         self.addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(button)
+    }
+    
+    public func updatePurchasedButton(){
+        var upgradeText:String
+        let edition = userDefaultManager.purchaseEdition
+        if edition == .freeTrial || edition == .notPurchased{ // 如果是试用或未购买
+            upgradeText = "升级"
+        }else{
+            upgradeText = "Pro"
+        }
+        let upgradeAttrText = NSAttributedString(string: upgradeText).addingAttributes([
+            .font : LWSettingViewController.titleFont,
+            .foregroundColor : UIColor.colorWithHex(hexColor: 0xFFD700)
+        ])
+        button.setAttributedTitle(upgradeAttrText, for: .normal)
     }
     
     
