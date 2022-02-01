@@ -70,4 +70,13 @@ extension Date{
         let remindDay = dateFormatter.string(from: remindDate)
         return xDay == remindDay
     }
+    
+    func plusOneDay()->String{
+        let nextDay = self.addingTimeInterval(60 * 60 * 24)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/M/d hh:mm"
+        let newDayDateString = formatter.string(from: nextDay)
+        return newDayDateString
+         
+    }
 }

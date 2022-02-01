@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          Unfinished transactions stay in the payment queue. StoreKit calls the app’s persistent observer’s paymentQueue(_:updatedTransactions:) every time upon launching or resuming from the background until the app finishes these transactions.
          */
         SKPaymentQueue.default().add(LWIAPHelper.shared)
+        LWIAPHelper.shared.initFreeTrial()
         
         //4.Widget
         LWWidgetProvider.shared.setRoamData()

@@ -491,12 +491,12 @@ class userDefaultManager{
     }
     
     /// 下载日期。用来计算试用期
-    static var downloadDate:Date{
+    static var downloadDate:Date?{
         get{
             if let date = shared?.object(forKey: constants.downloadDate) as? Date {
                 return date
             }else{
-                return Date() // 默认是试用版本
+                return nil // 默认是试用版本
             }
         }
         set{

@@ -12,6 +12,7 @@ enum LWProducts:String,CaseIterable{
     case monthly = "com.LuoWei.aDiary.monthly"
     case quarterly = "com.LuoWei.aDiary.quarterly"
     case yearly = "com.LuoWei.aDiary.yearly"
+    case permanent = "com.LuoWei.aDiary.permanent"
 }
 
 typealias didReceiveRequestBlock = ([SKProduct])->Void
@@ -39,6 +40,32 @@ class LWIAPHelper:NSObject{
         productsRequest = SKProductsRequest(productIdentifiers: productIdsSet)
         productsRequest.delegate = self
         productsRequest.start()
+    }
+    
+    ///使用
+    public func initFreeTrial(){
+        // 
+        
+        //  计算是否试用
+        if let downloadDate = userDefaultManager.downloadDate{
+            // 计算使用时间
+            let freeTrialEndDate = downloadDate.addingTimeInterval(60 * 60 * 24)
+            let nowDate = Date()
+            if  nowDate.compare(freeTrialEndDate) == .orderedAscending{
+                // 仍处于试用、购买、未购买
+                // 状态不变
+                
+            }else{
+                if userDefaultManager.purchaseEdition == 0 {
+                    // 状态改变：试用0->未购买1
+                    userDefaultManager.purchaseEdition = 1
+                }
+                
+            }
+        }else{
+            // 记录下载时间
+            userDefaultManager.downloadDate = Date()
+        }
     }
 }
 

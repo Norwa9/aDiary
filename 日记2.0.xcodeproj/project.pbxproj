@@ -135,6 +135,8 @@
 		EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAFDDF827A3F748008286EB /* deBugViewController.xib */; };
 		EAAFDDFD27A6BF0F008286EB /* LWSegSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */; };
 		EAAFDE0027A82C5A008286EB /* LWIAPSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */; };
+		EAAFDE0227A83B56008286EB /* LWAppFeatureLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */; };
+		EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -312,6 +314,8 @@
 		EAAFDDF827A3F748008286EB /* deBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deBugViewController.xib; sourceTree = "<group>"; };
 		EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSegSettingCell.swift; sourceTree = "<group>"; };
 		EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWIAPSettingCell.swift; sourceTree = "<group>"; };
+		EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWAppFeatureLabel.swift; sourceTree = "<group>"; };
+		EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPurchaseButton.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -900,7 +904,9 @@
 			children = (
 				EADBC34526BE9FA7004D1A52 /* IAPViewController.swift */,
 				EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */,
+				EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */,
 				EAAFDDFE27A82C23008286EB /* SettingCell */,
+				EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */,
 			);
 			path = IAPViewController;
 			sourceTree = "<group>";
@@ -1113,6 +1119,7 @@
 				EA22360526D692E4001FAD1D /* SubviewTextAttachment+.swift in Sources */,
 				EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */,
 				EADBC34726BE9FA7004D1A52 /* IAPViewController.swift in Sources */,
+				EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */,
 				1B3AEB5A26CA105500C057A4 /* LWSettingViewController.swift in Sources */,
 				EAAFDDCD279EE435008286EB /* LWTodoViewModel.swift in Sources */,
 				EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */,
@@ -1120,6 +1127,7 @@
 				EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */,
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
 				1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */,
+				EAAFDE0227A83B56008286EB /* LWAppFeatureLabel.swift in Sources */,
 				EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */,
 				EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */,
 				EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */,
