@@ -44,7 +44,7 @@ class layoutParasManager: NSObject {
     
     
     //MARK:-todo list paras
-    let todoListLineSpacing:CGFloat = 2
+    let todoListLineSpacing:CGFloat = 1
     
     ///todo list CollectionView的宽度
     private var todoListViewWidth:CGFloat{
