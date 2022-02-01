@@ -128,7 +128,7 @@ class IAPViewController: UIViewController {
         freeTrialStateLabel = UILabel()
         freeTrialStateLabel.font = .systemFont(ofSize: 14)
         freeTrialStateLabel.textColor = UIColor.secondaryLabel
-        if userDefaultManager.purchaseEdition == 0{
+        if userDefaultManager.purchaseEdition == .freeTrial{
             if let endDate = userDefaultManager.downloadDate?.plusOneDay(){
                 freeTrialStateLabel.text = "状态：试用中（至\(endDate)）"
             }

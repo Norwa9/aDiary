@@ -41,7 +41,7 @@ class LWIAPSettingCell: UIView {
         button = UIButton()
         var upgradeText:String
         let edition = userDefaultManager.purchaseEdition
-        if edition == 1 || edition == 0{ // 如果是试用或未购买
+        if edition == .freeTrial || edition == .notPurchased{ // 如果是试用或未购买
             upgradeText = "升级"
         }else{
             upgradeText = "Pro"

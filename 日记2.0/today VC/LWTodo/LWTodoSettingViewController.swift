@@ -200,6 +200,23 @@ class LWTodoSettingViewController:UIViewController{
     }
     @objc func remindSwitchChanged(_ sender:UISwitch){
         if sender.isOn{
+            // 0.检查订阅情况
+            let purchased = proEditionMaskHelper.shared.checkPurchaseAndPrompt {
+                // 未订阅后的动作
+                DispatchQueue.main.async {
+                    sender.setOn(false, animated: true)
+                    self.viewModel.needRemind = false
+                    self.loadDatePicker()
+                }
+            }
+            // 1. 未订阅，提醒+关闭开关
+            if !purchased{
+                print("未订阅，return")
+                return
+            }
+            
+            print("已订阅，继续下一步检查通知权限")
+            // 2. 已订阅，检查通知是否开启
             LWNotificationHelper.shared.checkNotificationAuthorization {
                 // requestdeniedAction
                 // 关掉开关

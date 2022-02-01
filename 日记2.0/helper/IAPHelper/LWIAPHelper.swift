@@ -44,21 +44,23 @@ class LWIAPHelper:NSObject{
     
     ///使用
     public func initFreeTrial(){
-        // 
+        // 测试(初始化为未订阅)
+        print("当前订阅版本：\(userDefaultManager.purchaseEdition)")
+        //userDefaultManager.purchaseEdition = .freeTrial
         
         //  计算是否试用
         if let downloadDate = userDefaultManager.downloadDate{
             // 计算使用时间
-            let freeTrialEndDate = downloadDate.addingTimeInterval(60 * 60 * 24)
+            let freeTrialEndDate = downloadDate.addingTimeInterval(60 * 60 * 24) // 60 * 60 * 24
             let nowDate = Date()
             if  nowDate.compare(freeTrialEndDate) == .orderedAscending{
                 // 仍处于试用、购买、未购买
                 // 状态不变
                 
             }else{
-                if userDefaultManager.purchaseEdition == 0 {
+                if userDefaultManager.purchaseEdition == .freeTrial {
                     // 状态改变：试用0->未购买1
-                    userDefaultManager.purchaseEdition = 1
+                    userDefaultManager.purchaseEdition = .notPurchased
                 }
                 
             }

@@ -137,6 +137,7 @@
 		EAAFDE0027A82C5A008286EB /* LWIAPSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */; };
 		EAAFDE0227A83B56008286EB /* LWAppFeatureLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */; };
 		EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */; };
+		EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -316,6 +317,7 @@
 		EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWIAPSettingCell.swift; sourceTree = "<group>"; };
 		EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWAppFeatureLabel.swift; sourceTree = "<group>"; };
 		EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPurchaseButton.swift; sourceTree = "<group>"; };
+		EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proEditionMaskHelper.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -787,6 +789,7 @@
 				EAAFDDCC279EE434008286EB /* LWTodoViewModel.swift */,
 				EAAFDDCE279EE467008286EB /* LWTodoView.swift */,
 				EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */,
+				EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */,
 			);
 			path = LWTodo;
 			sourceTree = "<group>";
@@ -1218,6 +1221,7 @@
 				EA369A66276E39DB0051643F /* settingVCConfig.swift in Sources */,
 				EAAFDDCB279EE427008286EB /* LWTodoModel.swift in Sources */,
 				EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */,
+				EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */,
 				1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

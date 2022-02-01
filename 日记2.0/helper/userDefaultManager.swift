@@ -474,19 +474,28 @@ class userDefaultManager{
     
     // MARK: 内购
     /// 购买版本
-    /// 0：试用
-    /// 1：未购买
-    /// 2：永久版
-    static var purchaseEdition:Int{
+    
+    
+    enum purchaseEditionEnum:Int{
+        /// 0：试用
+        case freeTrial
+        /// 1：未购买
+        case notPurchased
+        /// 2：永久版
+        case purchased
+    }
+    static var purchaseEdition:purchaseEditionEnum{
         get{
-            if let edition = shared?.object(forKey: constants.purchaseEdition) as? Int {
+            if let editionInt = shared?.object(forKey: constants.purchaseEdition) as? Int,
+               let edition = purchaseEditionEnum(rawValue: editionInt)
+            {
                 return edition
             }else{
-                return 0 // 默认是试用版本
+                return .freeTrial // 默认是试用版本
             }
         }
         set{
-            shared?.set(newValue, forKey: constants.purchaseEdition)
+            shared?.set(newValue.rawValue, forKey: constants.purchaseEdition)
         }
     }
     
