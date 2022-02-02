@@ -13,28 +13,38 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        //MARK:-3.1
-        let version310 = WhatsNew.Version(major: 3, minor: 1, patch: 0)
-        let whatsNew310 = WhatsNew(
+        //MARK:-3.2
+        let version320 = WhatsNew.Version(major: 3, minor: 2, patch: 0)
+        let whatsNew320 = WhatsNew(
             // The Version
-            version: version310,
+            version: version320,
             // The Title
-            title: "近期更新11.17",
+            title: "近期更新",
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "iPad版本支持分屏",
-                    subtitle: "",
-                    image: UIImage(named: "multiScreen")
+                    title: "推出了aDiary Pro计划 ",
+                    subtitle: "在免费版的基础上探索更多体验",
+                    image: UIImage(named: "pro")
                 ),
                 WhatsNew.Item(
-                    title: "更新了开发者的联系方式",
+                    title: "新版待办功能",
+                    subtitle: "可添加时间提醒与备注（Pro）",
+                    image: UIImage(named: "checkbox")
+                ),
+                WhatsNew.Item(
+                    title: "修改UI以及优化App稳定性",
+                    subtitle: "不定期收集Bug,更新App",
+                    image: UIImage(named: "update")
+                ),
+                WhatsNew.Item(
+                    title: "如有任何问题，欢迎和开发者联系",
                     subtitle: "设置->反馈，取得联系",
                     image: UIImage(named: "contactMe")
                 ),
             ]
         )
-        arr.append(whatsNew310)
+        arr.append(whatsNew320)
         
         return arr
     }
@@ -51,12 +61,19 @@ class WhatsNewHelper{
         configuration.completionButton = WhatsNewViewController.CompletionButton(
             title:"知道了"
         )
+//        configuration.detailButton = WhatsNewViewController.DetailButton(
+//            title: "好评鼓励👏",
+//            action:.custom(action: { _ in
+//                if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
+//                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//                }
+//            })
+//        )
         configuration.detailButton = WhatsNewViewController.DetailButton(
-            title: "好评鼓励👏",
+            title: "了解aDiary Pro",
             action:.custom(action: { _ in
-                if let url = URL(string: "itms-apps://itunes.apple.com/app/id1564045149?action=write-review"){
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+                let iapVC = IAPViewController()
+                UIApplication.getTopViewController()?.present(iapVC, animated: true, completion: nil)
             })
         )
         // And many more configuration properties...
