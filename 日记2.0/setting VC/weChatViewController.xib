@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,24 +19,62 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_group_code.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-Mz-dfI">
-                    <rect key="frame" x="90" y="287" width="234" height="323"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiq-cf-jpd">
+                    <rect key="frame" x="251" y="543" width="96" height="31"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="filled" title="保存到相册"/>
+                    <connections>
+                        <action selector="groupCode:" destination="-1" eventType="touchUpInside" id="Zk5-9b-Wbk"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQQ-P7-uiz">
+                    <rect key="frame" x="57" y="543" width="96" height="31"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="filled" title="保存到相册"/>
+                    <connections>
+                        <action selector="myCode:" destination="-1" eventType="touchUpInside" id="Hd4-eL-EsW"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信群" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgR-qh-LYr">
+                    <rect key="frame" x="30" y="74" width="91" height="36"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_code.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="e31-lj-adX">
+                    <rect key="frame" x="20" y="253" width="170" height="270"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="323" id="jaQ-xM-YAo"/>
+                        <constraint firstAttribute="width" constant="170" id="L2a-vJ-0Q8"/>
+                        <constraint firstAttribute="height" constant="270" id="ho1-C9-obe"/>
+                    </constraints>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wechat_group_code.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-Mz-dfI">
+                    <rect key="frame" x="214" y="253" width="170" height="270"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="170" id="68g-il-Nrb"/>
+                        <constraint firstAttribute="height" constant="270" id="hDm-Cq-PF0"/>
                     </constraints>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="wzN-Mz-dfI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2CE-fH-GkI"/>
-                <constraint firstItem="wzN-Mz-dfI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="243" id="eo2-QP-NIc"/>
-                <constraint firstItem="wzN-Mz-dfI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="90" id="vNw-qc-cYD"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="wzN-Mz-dfI" secondAttribute="trailing" constant="30" id="0XD-kJ-m6O"/>
+                <constraint firstItem="kiq-cf-jpd" firstAttribute="top" secondItem="wzN-Mz-dfI" secondAttribute="bottom" constant="20" id="2CC-Z8-993"/>
+                <constraint firstItem="e31-lj-adX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="4i5-dk-irZ"/>
+                <constraint firstItem="qgR-qh-LYr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="5Dc-ld-rcG"/>
+                <constraint firstItem="kiq-cf-jpd" firstAttribute="centerX" secondItem="wzN-Mz-dfI" secondAttribute="centerX" id="KVL-EA-jW2"/>
+                <constraint firstItem="JQQ-P7-uiz" firstAttribute="centerX" secondItem="e31-lj-adX" secondAttribute="centerX" id="Nz6-qK-EEE"/>
+                <constraint firstItem="qgR-qh-LYr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="QUJ-hJ-h14"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="JQQ-P7-uiz" secondAttribute="bottom" constant="288" id="kMm-jA-QGI"/>
+                <constraint firstItem="JQQ-P7-uiz" firstAttribute="top" secondItem="e31-lj-adX" secondAttribute="bottom" constant="20" id="o6t-Rp-fgC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kiq-cf-jpd" secondAttribute="bottom" constant="288" id="sUn-aU-A6O"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="81.696428571428569"/>
         </view>
     </objects>
     <resources>
+        <image name="wechat_code.jpg" width="1056" height="1371"/>
         <image name="wechat_group_code.jpg" width="1056" height="1329"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

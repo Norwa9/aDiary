@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class weChatViewController: UIViewController {
 
@@ -15,15 +16,37 @@ class weChatViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func myCode(_ sender: Any) {
+        if let myCodeImage = UIImage(named: "wechat_code.jpg"){
+            saveImage(image: myCodeImage)
+        }
     }
-    */
-
+    
+    @IBAction func groupCode(_ sender: Any) {
+        if let groupCode = UIImage(named: "wechat_group_code.jpg"){
+            saveImage(image: groupCode)
+        }
+    }
+    
+    private func saveImage(image: UIImage) {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }, completionHandler: { [weak self](isSuccess, error) in
+            
+            DispatchQueue.main.async {
+                
+                if isSuccess {// 成功
+                    self?.presentSucessAC()
+                }
+            }
+        })
+    }
+    
+    private func presentSucessAC(){
+        let ac = UIAlertController(title: "保存成功", message: "", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "确定", style: .cancel, handler: { (_) in
+        }))
+        self.present(ac, animated: true, completion: nil)
+    }
+    
 }
