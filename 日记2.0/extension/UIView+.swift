@@ -198,8 +198,8 @@ extension UIView{
 
 //MARK:-UIView截图
 extension UIView{
-    func asImage() -> UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+    func asImage(inset:CGFloat = 0) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds.insetBy(dx: inset, dy: inset))
         return renderer.image { rendererContext in
             layer.render(in: rendererContext.cgContext)
         }

@@ -757,9 +757,13 @@ extension monthVC {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
             //
-            let shareAction = UIAction(title: NSLocalizedString("保存为图片", comment: ""),
+            let shareDiaryAction = UIAction(title: NSLocalizedString("保存日记为图片", comment: ""),
                                          image: UIImage(named: "share")) { action in
-                                    self.performShare(indexPath)
+                                    self.performDiaryShare(indexPath)
+                                }
+            let shareSummaryAction = UIAction(title: NSLocalizedString("保存摘要为图片", comment: ""),
+                                         image: UIImage(named: "share")) { action in
+                                    self.performSummaryShare(indexPath)
                                 }
             
             //
@@ -768,17 +772,23 @@ extension monthVC {
                          attributes: .destructive) { action in
                         self.performDelete(indexPath)
                         }
-            return UIMenu(title: "", children: [shareAction, deleteAction])
+            return UIMenu(title: "", children: [shareDiaryAction, shareSummaryAction,deleteAction])
         }
         
         
         return config
     }
     
-    func performShare(_ indexPath:IndexPath){
+    func performDiaryShare(_ indexPath:IndexPath){
         let cell = collectionView.cellForItem(at: indexPath) as! monthCell
         let share = shareVC(monthCell: cell)
         self.present(share, animated: true, completion: nil)
+    }
+    
+    func performSummaryShare(_ indexPath:IndexPath){
+        let cell = collectionView.cellForItem(at: indexPath) as! monthCell
+        let summaryImage = cell.asImage(inset: -5) // -5是为了截到cell周围的阴影
+        LWImageSaver.shared.saveImage(image: summaryImage)
     }
     
     

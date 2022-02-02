@@ -298,6 +298,9 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
     }
     
     @objc func saveButtonTapped(){
+        // 震动
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         self.statAnimateIndicator()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.stopAnimatreIndicator()

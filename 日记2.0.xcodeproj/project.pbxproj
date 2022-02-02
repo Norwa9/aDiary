@@ -138,6 +138,7 @@
 		EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */; };
 		EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */; };
 		EAAFDE0827AA4981008286EB /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAAFDE0727AA4980008286EB /* wechat_group_code.jpg */; };
+		EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0927AA523A008286EB /* LWImageSaver.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -318,6 +319,7 @@
 		EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPurchaseButton.swift; sourceTree = "<group>"; };
 		EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proEditionMaskHelper.swift; sourceTree = "<group>"; };
 		EAAFDE0727AA4980008286EB /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
+		EAAFDE0927AA523A008286EB /* LWImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWImageSaver.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -736,6 +738,7 @@
 				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
 				1B3AEB0F26C3A4B200C057A4 /* LWNotificationHelper.swift */,
 				EA96001227007EF80008DC8A /* globalConfig.swift */,
+				EAAFDE0927AA523A008286EB /* LWImageSaver.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -1183,6 +1186,7 @@
 				EA22360426D692E4001FAD1D /* CGRect+.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
+				EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */,
 				EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
