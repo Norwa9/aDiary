@@ -313,12 +313,12 @@ class monthCell: UICollectionViewCell {
     
     //MARK: -设置今日提示
     private func setTodayPropmtEdge(){
-        if diary.trueDate == GetTodayDate(){
-            self.containerView.layer.borderWidth = 1.5;
-            self.containerView.layer.borderColor = UIColor.label.cgColor
-        }else{
-            self.containerView.layer.borderWidth = 0;
-        }
+//        if diary.trueDate == GetTodayDate(){
+//            self.containerView.layer.borderWidth = 1.5;
+//            self.containerView.layer.borderColor = UIColor.label.cgColor
+//        }else{
+//            self.containerView.layer.borderWidth = 0;
+//        }
     }
 }
 //MARK: -reuse
