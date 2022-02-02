@@ -11,6 +11,11 @@ import StoreKit
 class IAPViewController: UIViewController {
     static let iapVCTitleFont = UIFont.boldSystemFont(ofSize: 30)
     static let iapVCContentFont = UIFont.systemFont(ofSize: 16)
+    private var collectionViewWidth:CGFloat{
+        get{
+            return self.view.width
+        }
+    }
     
     var IAPHelper:LWIAPHelper!
     
@@ -20,12 +25,13 @@ class IAPViewController: UIViewController {
     private var freeEditionTitleLabel:UILabel!
     private var freeEditionContentLabel:UILabel!
     let freeEditionFeaturesModels:[(String,String)] = [
-        ("1","iCloud云同步"),
+        ("1","iCloud双端同步"),
         ("2","PDF导出备份"),
         ("3","无限插图"),
         ("4","无限标签"),
         ("···","")
     ]
+    private var layout1:UICollectionViewFlowLayout!
     private var freeEditionFeaturesCollectionView:UICollectionView!
     private var FreeEditionFeaturesCollectionViewHeight:CGFloat{
         get{
@@ -39,8 +45,9 @@ class IAPViewController: UIViewController {
     private var proEditionContentLabel:UILabel!
     let proEditionFeaturesModels:[(String,String)] = [
         ("1","为todo设置提醒时间与备注"),
-        ("2","计划Pro功能:日记模板，个性化标签等"),
+        ("2","未来持续更新的Pro功能"),
     ]
+    private var layout2:UICollectionViewFlowLayout!
     private var proEditionFeaturesCollectionView:UICollectionView!
     private var proEditionFeaturesCollectionViewHeight:CGFloat{
         get{
@@ -62,6 +69,12 @@ class IAPViewController: UIViewController {
         
         //IAPHelper
         initIAPHelper()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layout1.itemSize = CGSize(width: collectionViewWidth - 30 * 2, height: LWAppFeatureLabel.cellHeight) // 30是collectionView左边的offset
+        layout2.itemSize = CGSize(width: collectionViewWidth - 30 * 2, height: LWAppFeatureLabel.cellHeight) // 30是collectionView左边的offset
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -129,8 +142,7 @@ class IAPViewController: UIViewController {
         freeEditionContentLabel.textColor = UIColor.secondaryLabel
         freeEditionContentLabel.font = IAPViewController.iapVCContentFont
         freeEditionContentLabel.text = "提供包括但将不限于以下的免费功能："
-        let layout1 = UICollectionViewFlowLayout()
-        layout1.itemSize = CGSize(width: globalConstantsManager.shared.kScreenWidth - 30 * 2, height: LWAppFeatureLabel.cellHeight) // 30是collectionView左边的offset
+        layout1 = UICollectionViewFlowLayout()
         layout1.minimumLineSpacing = 0
         layout1.sectionInset = .zero
         freeEditionFeaturesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout1)
@@ -146,8 +158,7 @@ class IAPViewController: UIViewController {
         proEditionContentLabel.textColor = UIColor.secondaryLabel
         proEditionContentLabel.font = IAPViewController.iapVCContentFont
         proEditionContentLabel.text = "支持开发者未来的工作，以及获取更完整体验："
-        let layout2 = UICollectionViewFlowLayout()
-        layout2.itemSize = CGSize(width: globalConstantsManager.shared.kScreenWidth - 30 * 2, height: LWAppFeatureLabel.cellHeight)
+        layout2 = UICollectionViewFlowLayout()
         layout2.minimumLineSpacing = 0
         layout2.sectionInset = .zero
         proEditionFeaturesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout2)

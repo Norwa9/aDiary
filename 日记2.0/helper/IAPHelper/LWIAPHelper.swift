@@ -145,6 +145,8 @@ extension LWIAPHelper: SKPaymentTransactionObserver {
             case.deferred:
                 transcationDeferred(transaction)
             @unknown default:
+                print("updatedTransactions： default")
+                indicatorViewManager.shared.stop()
                 break
             }
         }
@@ -215,8 +217,8 @@ extension LWIAPHelper: SKPaymentTransactionObserver {
     
     /// 交易延期的回调
     fileprivate func transcationDeferred(_ transcation: SKPaymentTransaction) {
-        
         print("交易延期...")
+        indicatorViewManager.shared.stop()
     }
     
     /**
