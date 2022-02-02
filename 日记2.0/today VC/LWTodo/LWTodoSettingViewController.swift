@@ -272,6 +272,15 @@ class LWTodoSettingViewController:UIViewController{
 }
 extension LWTodoSettingViewController:UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
+        let purchased = proEditionMaskHelper.shared.checkPurchaseAndPrompt {
+            // 未订阅后动作
+            DispatchQueue.main.async {
+                textView.resignFirstResponder()
+            }
+        }
+        if !purchased{
+            return
+        }
         // 调整inset
         adjustTodoSettingView()
         
