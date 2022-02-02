@@ -57,12 +57,6 @@ class LWDBUpdater{
             
             // 1. 升级图片
             for tuple in imageAttrTuples{
-                if let uuid = imageModels.first?.uuid{
-                    if uuid != ""{
-                        print("处理到\(diary.date)的日记，该日记图片已升级")
-                        break
-                    }
-                }
                 let location = tuple.0
                 if location >= muAttrText.length - 1{
                     // 处理最后一个字符的图片时，attribute at 会out of bounds
@@ -90,6 +84,7 @@ class LWDBUpdater{
                             newImageModels.append(model)
                         }
                     }else{
+                        // 适配：版本2.6 ~ 版本3.1
                         print("日期：\(diary.date),\(location)对应的图片model没有找到！提供默认model")
                         let defaultModel = self.generateSIModelAndUploadSI(location: location, image: image, dateCN: diary.date)
                         newImageModels.append(defaultModel)
