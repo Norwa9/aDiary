@@ -13,13 +13,13 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        //MARK:-3.2
-        let version320 = WhatsNew.Version(major: 3, minor: 2, patch: 0)
-        let whatsNew320 = WhatsNew(
+        //MARK:-3.2.1
+        let version = WhatsNew.Version(major: 3, minor: 2, patch: 1)
+        let whatsNew = WhatsNew(
             // The Version
-            version: version320,
+            version: version,
             // The Title
-            title: "近期更新",
+            title: "近期更新3.2.1",
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
@@ -44,7 +44,7 @@ class WhatsNewHelper{
                 ),
             ]
         )
-        arr.append(whatsNew320)
+        arr.append(whatsNew)
         
         return arr
     }

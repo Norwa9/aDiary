@@ -119,13 +119,13 @@ class LWDBUpdater{
                     let todoModel = todoViewModel.generateModel()
                     
                     // (3)将旧的todo内容用空格覆盖
-                    let oldContentRange = NSRange(location: pRange.location + 1, length: pRange.length - 1)
-                    var replacingBlankString = ""
-                    for _ in 0..<oldContentRange.length - 1{
-                        replacingBlankString += " "
-                    }
-                    replacingBlankString.append("\n")
-                    muAttrText.replaceCharacters(in: oldContentRange, with: replacingBlankString)
+//                    let oldContentRange = NSRange(location: pRange.location + 1, length: pRange.length - 1)
+//                    var replacingBlankString = ""
+//                    for _ in 0..<oldContentRange.length - 1{
+//                        replacingBlankString += " "
+//                    }
+//                    replacingBlankString.append("\n")
+//                    muAttrText.replaceCharacters(in: oldContentRange, with: replacingBlankString)
                     
                     newTodoModels.append(todoModel)
                     print("处理到\(diary.date),\(location)处的todo，内容为\(content)")
