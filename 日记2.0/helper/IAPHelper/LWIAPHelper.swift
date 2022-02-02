@@ -49,7 +49,7 @@ class LWIAPHelper:NSObject{
     public func initFreeTrial(){
         // 测试(初始化为未订阅)
         print("当前订阅版本：\(userDefaultManager.purchaseEdition)")
-        userDefaultManager.purchaseEdition = .notPurchased
+        // userDefaultManager.purchaseEdition = .notPurchased
         
         //  计算是否试用
         if let downloadDate = userDefaultManager.downloadDate{

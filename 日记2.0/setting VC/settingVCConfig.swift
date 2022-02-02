@@ -33,7 +33,7 @@ class settingVCConfig{
     // 导出pdf
     static func exportPDFButtonAttributedTitle(title:String,color:UIColor = .label) -> NSAttributedString{
         let attributes:[NSAttributedString.Key : Any] = [
-            .font : UIFont.systemFont(ofSize: 18, weight: .medium),
+            .font : UIFont.systemFont(ofSize: 18, weight: .regular),
             .foregroundColor : color,
         ]
         let attrString = NSAttributedString(string: title, attributes: attributes)
@@ -43,7 +43,7 @@ class settingVCConfig{
     // 导出pdf
     static func reviewButtonAttributedTitle(title:String,color:UIColor = .label) -> NSAttributedString{
         let attributes:[NSAttributedString.Key : Any] = [
-            .font : UIFont.systemFont(ofSize: 18, weight: .medium),
+            .font : UIFont.systemFont(ofSize: 18, weight: .regular),
             .foregroundColor : color,
         ]
         let attrString = NSAttributedString(string: title, attributes: attributes)

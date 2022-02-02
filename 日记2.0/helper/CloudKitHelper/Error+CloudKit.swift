@@ -77,7 +77,7 @@ extension Error{
             os_log("此错误不是可恢复错误", log:effectiveLog,type:.error)
             DispatchQueue.main.async {
                 //indicatorViewManager.shared.stop(withText: "⚠️无法连接iCloud，请检查网络状态⚠️\n\(effectiveError.localizedDescription)")
-                indicatorViewManager.shared.stop(withText: "\(effectiveError.localizedDescription)")
+                // indicatorViewManager.shared.stop(withText: "\(effectiveError.localizedDescription)")
 //                indicatorViewManager.shared.stop()
             }
             return false
