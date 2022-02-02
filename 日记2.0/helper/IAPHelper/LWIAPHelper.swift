@@ -193,9 +193,7 @@ extension LWIAPHelper: SKPaymentTransactionObserver {
         }
         
         finishTranscation(transcation)
-        DispatchQueue.main.async {
-            indicatorViewManager.shared.stop()
-        }
+        indicatorViewManager.shared.stop()
         
     }
     
