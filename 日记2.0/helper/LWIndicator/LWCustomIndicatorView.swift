@@ -73,6 +73,7 @@ class LWCustomIndicatorView:UIView{
     }
     ///初始化UI
     func initUI() {
+        // self.isUserInteractionEnabled = false 可让操作穿透该图层
         
         //指示器+模糊视图的容器视图
         containerView = UIView()

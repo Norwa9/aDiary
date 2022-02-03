@@ -49,7 +49,7 @@ class LWProgressView: LWCustomIndicatorView {
     override func present() {
         containerView.alpha = 0
         containerView.transform = .init(translationX: 0, y: -100)
-        self.backgroundColor = .clear
+        self.backgroundColor = .clear // indicator的容器view为透明的
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
             self.containerView.alpha = 1
             self.containerView.transform = .identity
