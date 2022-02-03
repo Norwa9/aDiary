@@ -19,6 +19,9 @@ class IAPViewController: UIViewController {
     
     var IAPHelper:LWIAPHelper!
     
+    private var scrollView:UIScrollView!
+    private var containerView:UIView!
+    
     private var iconImageView:UIImageView!
     private var closBtn:UIButton!
     
@@ -134,6 +137,8 @@ class IAPViewController: UIViewController {
         closBtn.setImage(#imageLiteral(resourceName: "close"), for: .normal)
         closBtn.addTarget(self, action: #selector(close), for: .touchUpInside)
         
+        scrollView = UIScrollView()
+        containerView = UIView()
         
         freeEditionTitleLabel = UILabel()
         freeEditionTitleLabel.font = IAPViewController.iapVCTitleFont
@@ -190,23 +195,36 @@ class IAPViewController: UIViewController {
         restoreBtn.setAttributedTitle(resoreTile, for: .normal)
         restoreBtn.addTarget(self, action: #selector(restoreBtnAction), for: .touchUpInside)
         
-        view.addSubview(iconImageView)
-        view.addSubview(closBtn)
+        view.addSubview(scrollView)
+        scrollView.addSubview(containerView)
         
-        view.addSubview(freeEditionTitleLabel)
-        view.addSubview(freeEditionContentLabel)
-        view.addSubview(freeEditionFeaturesCollectionView)
+        containerView.addSubview(iconImageView)
+        containerView.addSubview(closBtn)
         
-        view.addSubview(proEditionTitleLabel)
-        view.addSubview(proEditionContentLabel)
-        view.addSubview(proEditionFeaturesCollectionView)
+        containerView.addSubview(freeEditionTitleLabel)
+        containerView.addSubview(freeEditionContentLabel)
+        containerView.addSubview(freeEditionFeaturesCollectionView)
         
-        view.addSubview(purchaseBtn)
-        view.addSubview(freeTrialStateLabel)
-        view.addSubview(restoreBtn)
+        containerView.addSubview(proEditionTitleLabel)
+        containerView.addSubview(proEditionContentLabel)
+        containerView.addSubview(proEditionFeaturesCollectionView)
+        
+        containerView.addSubview(purchaseBtn)
+        containerView.addSubview(freeTrialStateLabel)
+        containerView.addSubview(restoreBtn)
     }
     
     private func setupCons(){
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        containerView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+        }
+        
+        
         // free
         iconImageView.snp.makeConstraints { make in
             make.left.top.equalToSuperview().offset(30)
@@ -256,23 +274,24 @@ class IAPViewController: UIViewController {
             make.height.equalTo(proEditionFeaturesCollectionViewHeight)
         }
         
-        // 恢复
-        restoreBtn.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview().offset(-50)
+        // 购买
+        purchaseBtn.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: 200, height: 60))
             make.centerX.equalToSuperview()
+            make.top.equalTo(proEditionFeaturesCollectionView.snp.bottom).offset(30)
         }
         
         // 试用
         freeTrialStateLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(restoreBtn.snp.top).offset(-30)
+            make.top.equalTo(purchaseBtn.snp.bottom).offset(6)
         }
         
-        // 购买
-        purchaseBtn.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: 200, height: 60))
+        // 恢复
+        restoreBtn.snp.makeConstraints { (make) in
+            make.top.equalTo(freeTrialStateLabel.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(freeTrialStateLabel.snp.top).offset(-6)
+            make.bottom.equalToSuperview().offset(-50)
         }
         
     }
