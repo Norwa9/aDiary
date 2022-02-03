@@ -177,7 +177,7 @@ class LWNotificationHelper:NSObject{
         
         // 挂起一个通知request，当系统时间到达request的trigger时，系统将会deliver这个request
         center.add(request, withCompletionHandler: nil) // Schedules a local notification for delivery.
-        print("添加通知成功，内容：\(title),时间：\(dateComponents)，uuid：\(uuid)")
+        print("注册通知成功，内容：\(title),时间：\(dateComponents)，uuid：\(uuid)")
     }
     
     // MARK: 每日通知

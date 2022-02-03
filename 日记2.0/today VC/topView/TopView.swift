@@ -67,6 +67,8 @@ class TopView: UIView {
     }
     
     private func initUI(){
+        // self.setDebugBorder()
+        
         //日期
         dateLable = UILabel()
         dateLable.font = userDefaultManager.customFont(withSize: 22)
@@ -103,7 +105,7 @@ class TopView: UIView {
         let pedding = 10 * scale
         
         dateLable.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().offset(5)
             make.centerX.equalToSuperview()
         }
         
@@ -124,7 +126,7 @@ class TopView: UIView {
         
         dismissBtn.snp.makeConstraints { (make) in
             make.centerY.equalTo(dateLable)
-            make.right.equalToSuperview().offset(-pedding)
+            make.right.equalToSuperview().offset(-10)
             make.size.equalTo(CGSize(width: 30 * scale, height: 30 * scale))
         }
         
