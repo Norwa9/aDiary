@@ -159,20 +159,12 @@ public final class DiaryStore: ObservableObject {
         //1.将云端变动保存到本地数据库
         diaries.forEach { updatedDiary in
             if let resolvedDiary = diaryInfo.resolveEmptyDiary(serverModel: updatedDiary){
-                // (1)
+                // (1) 更新本地todo的通知池（需要添加/需要移除）
+                LWNotificationHelper.shared.updateLocalNotificationsAfterSync(oldDiaryID: updatedDiary.date, newDiary: updatedDiary)
+                
+                // (2)
                 LWRealmManager.shared.add(resolvedDiary)
                 
-                // (2) 添加本地通知
-                var unregisters:[String] = []
-                for todoModel in resolvedDiary.lwTodoModels{
-                    if todoModel.needRemind == false{
-                        unregisters.append(todoModel.uuid)
-                    }else{
-                        let dict = LWNotificationHelper.generateTodoInfoDict(model: todoModel)
-                        LWNotificationHelper.shared.registerNotification(from: dict)
-                    }
-                }
-                LWNotificationHelper.shared.unregisterNotification(uuids: unregisters)
             }
         }
         //2.

@@ -23,14 +23,18 @@ extension NSAttributedString{
         let attrText = NSMutableAttributedString(attributedString: self)
         let attrTextForContent = NSMutableAttributedString(attributedString: self)
         var containsImage:Bool = false
+        // images
         let oldImgModels = diary.scalableImageModels
         var newImgModels = [ScalableImageModel]()
-        var todoModels = [LWTodoModel]()
+        
+        // todo
+        let oldTodoModels = diary.lwTodoModels
+        var newTodoModels = [LWTodoModel]()
         
         attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
             let location = range.location
             
-            //1.image
+            //1. 持久化image信息
             if let subViewAttchemnt = object as? SubviewTextAttachment,
                let view = subViewAttchemnt.view as? ScalableImageView{
                 // print("遍历到\(location)处的图片model")
@@ -50,13 +54,14 @@ extension NSAttributedString{
                 
                 // return
             }else if
+            // 2. 持久化todo信息
                 let subViewAttchemnt = object as? SubviewTextAttachment,
                 let view = subViewAttchemnt.view as? LWTodoView{
                 // print("遍历到位置\(location)有一个todo model")
                 let viewModel = view.viewModel
                 viewModel.location = location // 更新viewModel的location为保存时刻的location
                 let model = viewModel.generateModel()
-                todoModels.append(model)
+                newTodoModels.append(model)
                 let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!) // 占位
                 attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
                 
@@ -64,17 +69,21 @@ extension NSAttributedString{
             }
         })
 
-        // 编辑日记时，图片只增不减
-        // 保存日记时，可以统一地处理图片的删除
-        let delUUIDs = arraySub(a1: oldImgModels, a2: newImgModels)
-        ImageTool.shared.deleteImages(uuidsToDel: delUUIDs)
+        // 3. 处理image的删除：编辑日记时，图片只增不减，因此保存日记时，可以统一地处理图片的删除
+        let delImageUUIDs = arraySub(a1: oldImgModels, a2: newImgModels)
+        ImageTool.shared.deleteImages(uuidsToDel: delImageUUIDs)
+        
+        // 4. 处理todo通知的注销：比对删除掉的todo的uuid，注销它们的通知
+        //    todo的注册发生在TodoSettingViewController，因为用户可能在不修改日记的情况下就给todo设置时间
+        //    因此保存日记时才处理todo的注册是不妥的。
+        self.unregisterRemovedTodo(oldTodoModels: oldTodoModels, newTodoModels: newTodoModels)
  
         let cleanText = attrTextForContent.string
         
         return (
                 cleanText,
                 containsImage,
-                todoModels,
+                newTodoModels,
                 newImgModels,
                 attrText
                 )
@@ -83,7 +92,7 @@ extension NSAttributedString{
     /// 计算两个数组之差：a1-a2
     /// 旧数组-新数组 = 需要删除的元素
     /// 新数组-旧数组 = 需要新增的元素
-    func arraySub(a1:[ScalableImageModel],a2:[ScalableImageModel]) -> [String]{
+    private func arraySub(a1:[ScalableImageModel],a2:[ScalableImageModel]) -> [String]{
         let uuids2:[String] = a2.map { model in
             return model.uuid
         }
@@ -96,6 +105,17 @@ extension NSAttributedString{
         return res.map { m in
             m.uuid
         }
+    }
+    
+    private func unregisterRemovedTodo(oldTodoModels:[LWTodoModel],newTodoModels:[LWTodoModel]){
+        let old = oldTodoModels.map { todoModel in
+            return todoModel.uuid
+        }
+        let new = newTodoModels.map { todoModel in
+            return todoModel.uuid
+        }
+        let deletedUUIDs = Set(old).subtracting(Set(new))
+        LWNotificationHelper.shared.unregisterNotification(uuids: Array(deletedUUIDs))
     }
     
     

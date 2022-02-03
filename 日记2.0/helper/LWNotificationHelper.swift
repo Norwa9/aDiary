@@ -131,7 +131,7 @@ class LWNotificationHelper:NSObject{
     }
     
    
-    /// API:注册通知
+    // MARK: API:注册通知
     public func registerNotification(from infoDict:NSDictionary){
         // 0 每日日记
         // 1 待办提醒
@@ -139,7 +139,7 @@ class LWNotificationHelper:NSObject{
         self.addNotificationRequest(from: infoDict)
     }
     
-    /// API:注销通知
+    // MARK: API:注销通知
     public func unregisterNotification(uuids:[String]){
         // 0 每日日记
         // 1 待办提醒
@@ -268,5 +268,30 @@ extension LWNotificationHelper:UNUserNotificationCenterDelegate{
 
 // MARK: 待办通知相关
 extension LWNotificationHelper{
-    
+    /// 接受云端更新后，更新本地通知池
+    /// 1. 有些todo取消了通知、2.有些todo添加了通知（或添加了带有通知的新的todo）、3.有些todo被删除
+    public func updateLocalNotificationsAfterSync(oldDiaryID:String,newDiary:diaryInfo){
+        if let oldDiary = LWRealmManager.shared.queryFor(dateCN: oldDiaryID).first{
+            let oldTodoModels = oldDiary.lwTodoModels
+            let newTodoModels = newDiary.lwTodoModels
+            self.updateLocalNotifications(oldTodoModels: oldTodoModels, newTodoModels: newTodoModels)
+        }
+    }
+    private func updateLocalNotifications(oldTodoModels:[LWTodoModel],newTodoModels:[LWTodoModel]){
+        // 1.先删除日记所有todo的通知
+        let oldUUIDs = oldTodoModels.map { model in
+            return model.uuid
+        }
+        LWNotificationHelper.shared.unregisterNotification(uuids: oldUUIDs)
+        
+        // 2.再添加新日记所有需要通知的todo
+        for newTodoModel in newTodoModels {
+            if newTodoModel.needRemind{
+                let dict = LWNotificationHelper.generateTodoInfoDict(model: newTodoModel)
+                LWNotificationHelper.shared.registerNotification(from: dict)
+            }
+        }
+        
+        
+    }
 }
