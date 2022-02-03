@@ -278,7 +278,7 @@ class IAPViewController: UIViewController {
         purchaseBtn.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: 200, height: 60))
             make.centerX.equalToSuperview()
-            make.top.equalTo(proEditionFeaturesCollectionView.snp.bottom).offset(30)
+            make.top.equalTo(proEditionFeaturesCollectionView.snp.bottom).offset(50)
         }
         
         // 试用
@@ -289,9 +289,9 @@ class IAPViewController: UIViewController {
         
         // 恢复
         restoreBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(freeTrialStateLabel.snp.bottom).offset(50)
+            make.top.equalTo(freeTrialStateLabel.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-50)
+            make.bottom.equalToSuperview().offset(-30)
         }
         
     }
