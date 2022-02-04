@@ -25,12 +25,15 @@ class LWTextViewController: UIViewController {
         var config = FMPhotoPickerConfig()
         config.availableFilters = nil
         config.mediaTypes = [.image]
-        config.selectMode = .single
+        config.selectMode = .multiple
+        config.maxImage = 9
         config.useCropFirst = true
         config.strings = KFMPhotoPickerCustomLanguageDict
         return config
     }()
-    var picker = UIImagePickerController()
+//    lazy var picker:FMPhotoPickerViewController = {
+//        return FMPhotoPickerViewController(config: pickerConfig)
+//    }()
     
     var listViewDidScrollCallback: ((UIScrollView) -> ())?
     
@@ -147,31 +150,31 @@ extension LWTextViewController{
 }
 
 //MARK: -插入图片
-extension LWTextViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate,FMImageEditorViewControllerDelegate,LWPhotoPickerDelegate{
+extension LWTextViewController:LWPhotoPickerDelegate,FMPhotoPickerViewControllerDelegate,FMImageEditorViewControllerDelegate{
+    
     func showPhotoPicker(){
+        let picker = FMPhotoPickerViewController(config: pickerConfig)
         picker.delegate = self
         picker.undoManager?.disableUndoRegistration()
         self.present(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage{
-            let editor = FMImageEditorViewController(config: pickerConfig, sourceImage: image)
-            editor.delegate = self
-            editor.undoManager?.disableUndoRegistration()
-            picker.present(editor, animated: true, completion: nil)
-        }
+    /// 多选图片
+    func fmPhotoPickerController(_ picker: FMPhotoPickerViewController, didFinishPickingPhotoWith photos: [UIImage]) {
+        print(" didFinishPickingPhotoWith ")
+    
+        // 多选
+        let textFormatter = TextFormatter(textView: self.textView)
+        textFormatter.insertScalableImageView(images: photos)
+        self.save()
+        
+        
+        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
     
     func fmImageEditorViewController(_ editor: FMImageEditorViewController, didFinishEdittingPhotoWith photo: UIImage) {
-        let textFormatter = TextFormatter(textView: self.textView)
-        
-        
-        textFormatter.insertScalableImageView(image: photo)
-        
-        
-        editor.dismiss(animated: true, completion: nil)
-        picker.dismiss(animated: true, completion: nil)
+        print(" didFinishEdittingPhotoWith ")
     }
 }
 

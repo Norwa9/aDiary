@@ -632,41 +632,46 @@ extension TextFormatter{
     }
     
     ///插入可变大小图片
-    func insertScalableImageView(image:UIImage){
-        let location = selectedRange.location
-        //插入换行
-        let Linebreak = NSMutableAttributedString(string: "\n")
-        let LinebreakAttributedString = Linebreak.addingAttributes([
-            .font : userDefaultManager.font,
-            .foregroundColor : UIColor.label
-        ])
-        textView.textStorage.insert(LinebreakAttributedString, at: location)
+    func insertScalableImageView(images:[UIImage]){
+        var location = selectedRange.location
         
-        //插入图片
-        let defaultViewModel = ScalableImageViewModel(location: location, image: image)
-        let view = ScalableImageView(viewModel: defaultViewModel)
-        view.delegate = textView
-        let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
-        textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: imageCenterParagraphStyle)
-        textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))//别忘了添加.image key
+        for (index,image) in images.enumerated() {
+            print("index:\(index),location:\(location),textStorage length:\(textView.textStorage.length)")
+            //插入换行
+            let Linebreak = NSMutableAttributedString(string: "\n").addingAttributes([
+                .font : userDefaultManager.font,
+                .foregroundColor : UIColor.label
+            ])
+            textView.textStorage.insert(Linebreak, at: location)
+            
+            //插入图片
+            let defaultViewModel = ScalableImageViewModel(location: location + 1, image: image)
+            let view = ScalableImageView(viewModel: defaultViewModel)
+            view.delegate = textView
+            let subViewAttchment = SubviewTextAttachment(view: view, size: defaultViewModel.bounds.size)
+            textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: imageCenterParagraphStyle)
+            textView.textStorage.addAttribute(.image, value: 1, range: NSRange(location: location + 1, length: 1))//别忘了添加.image key
+            
+            //插入换行
+            textView.textStorage.insert(Linebreak, at: location + 2)
+            
+            let undo = Undo(range: NSRange(location: location, length: 3), attchment: subViewAttchment)
+            self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
+                self.undoImage(undo)
+            })
+            
+            location += 3
+        }
         
-        //插入换行
-        textView.textStorage.insert(LinebreakAttributedString, at: location + 2)
         
         //更新焦点
-        textView.selectedRange = NSRange(location: location + 3, length: 0)
+        textView.selectedRange = NSRange(location: location + images.count * 3, length: 0)
         if let bottomInset:CGFloat = globalConstantsManager.shared.bottomInset{
             textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         }
         textView.textViewController?.keyBoardToolsBar.reloadTextViewToolBar(type: 0)
         textView.scrollRangeToVisible(textView.selectedRange)
         textView.setLeftTypingAttributes()
-        
-        
-        let undo = Undo(range: NSRange(location: location, length: 3), attchment: subViewAttchment)
-        self.textView.undoManager?.registerUndo(withTarget: textView, handler: { (targetTextView) in
-            self.undoImage(undo)
-        })
     }
     
     struct Undo {
