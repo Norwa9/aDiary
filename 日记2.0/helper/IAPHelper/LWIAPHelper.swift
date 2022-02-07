@@ -26,13 +26,13 @@ class LWIAPHelper:NSObject{
     fileprivate var productsRequest:SKProductsRequest!
     
     ///从apple connect获取到所有商品后的回调
-    var fetchProductsCompletionBlock:didReceiveRequestBlock!
+    var fetchProductsCompletionBlock:didReceiveRequestBlock?
     
     /// 购买成功回到
-    var purchaseCompletionBlock:completionBlock!
+    var purchaseCompletionBlock:completionBlock?
     
     ///成功恢复后的回调
-    var restoreCompletionBlock:completionBlock!
+    var restoreCompletionBlock:completionBlock?
     
     ///获取定义好的商品
     public func requestProducts() {
@@ -113,7 +113,7 @@ extension LWIAPHelper:SKProductsRequestDelegate{
         let invalidProductsIds = response.invalidProductIdentifiers//app store不能识别的商品id
         //主线回调，刷新UI
         DispatchQueue.main.async {
-            self.fetchProductsCompletionBlock(responsProducts)
+            self.fetchProductsCompletionBlock?(responsProducts)
         }
         
         responsProducts.forEach { (product) in
@@ -178,7 +178,7 @@ extension LWIAPHelper: SKPaymentTransactionObserver {
 //        }
         print("交易成功")
         DispatchQueue.main.async {
-            self.purchaseCompletionBlock()
+            self.purchaseCompletionBlock?() // App第一次下载时，不知道为啥会调用这个。
         }
         finishTranscation(transcation)
     }
@@ -205,7 +205,7 @@ extension LWIAPHelper: SKPaymentTransactionObserver {
         print("已经购买该商品，恢复中...")
         
         DispatchQueue.main.async {
-            self.restoreCompletionBlock()
+            self.restoreCompletionBlock?()
         }
         finishTranscation(transcation)
     }
