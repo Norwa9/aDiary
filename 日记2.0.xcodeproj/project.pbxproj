@@ -254,7 +254,6 @@
 		EA55A39F26D9436900FC9006 /* LWPopManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPopManger.swift; sourceTree = "<group>"; };
 		EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterFallLayout.swift; sourceTree = "<group>"; };
 		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
-		EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MainWidgetExtension.entitlements; sourceTree = "<group>"; };
 		EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidgetProvider.swift; sourceTree = "<group>"; };
 		EA67914226D1216200B44ECA /* LWSubpagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSubpagesView.swift; sourceTree = "<group>"; };
 		EA67914526D1218400B44ECA /* LWTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewController.swift; sourceTree = "<group>"; };
@@ -610,7 +609,6 @@
 			isa = PBXGroup;
 			children = (
 				EAA4E90627B16D1D005F93BD /* LWWidgetExtension.entitlements */,
-				EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */,
 				EAA29E2B25C5768200AA6971 /* 日记2.0 */,
 				EAA4E8EC27B15B12005F93BD /* LWWidget */,
 				EAA29E2A25C5768200AA6971 /* Products */,
