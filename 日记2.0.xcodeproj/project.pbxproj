@@ -64,18 +64,7 @@
 		EA55A3A026D9436900FC9006 /* LWPopManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA55A39F26D9436900FC9006 /* LWPopManger.swift */; };
 		EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */; };
 		EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFFA926749057008E06FA /* layoutParasManager.swift */; };
-		EA63BABB26C6C57B004E64E5 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */; };
-		EA63BABC26C6C57B004E64E5 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */; };
-		EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BABE26C6C57B004E64E5 /* MainWidget.swift */; };
-		EA63BAC226C6C57D004E64E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA63BAC126C6C57D004E64E5 /* Assets.xcassets */; };
-		EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */; };
-		EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB5126C65E0E00C057A4 /* roamView.swift */; };
-		EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
-		EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3AEB4F26C65DF700C057A4 /* roamData.swift */; };
 		EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */; };
-		EA66AAD926C94B63001D3D24 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
-		EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
-		EA66AAE026C961B9001D3D24 /* MainWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */; };
 		EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914226D1216200B44ECA /* LWSubpagesView.swift */; };
 		EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914526D1218400B44ECA /* LWTextViewController.swift */; };
 		EA67915C26D1F35D00B44ECA /* diaryinfo+subPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67915B26D1F35C00B44ECA /* diaryinfo+subPages.swift */; };
@@ -119,6 +108,17 @@
 		EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EB125C864ED00AA6971 /* UIImage+.swift */; };
 		EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC425C9840F00AA6971 /* monthCell.swift */; };
 		EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC725C9925B00AA6971 /* monthButton.swift */; };
+		EAA4E8EA27B15B12005F93BD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */; };
+		EAA4E8EB27B15B12005F93BD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */; };
+		EAA4E8EE27B15B12005F93BD /* LWWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8ED27B15B12005F93BD /* LWWidget.swift */; };
+		EAA4E8F127B15B16005F93BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA4E8F027B15B16005F93BD /* Assets.xcassets */; };
+		EAA4E8F327B15B16005F93BD /* LWWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */; };
+		EAA4E8F427B15B16005F93BD /* LWWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */; };
+		EAA4E8F727B15B16005F93BD /* LWWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAA4E8E927B15B12005F93BD /* LWWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EAA4E8FE27B15FC4005F93BD /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FD27B15FC4005F93BD /* roamData.swift */; };
+		EAA4E90027B15FDF005F93BD /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FF27B15FDF005F93BD /* roamView.swift */; };
+		EAA4E90227B16007005F93BD /* mainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E90127B16007005F93BD /* mainWidget.swift */; };
+		EAA4E90327B1604E005F93BD /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FD27B15FC4005F93BD /* roamData.swift */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -168,15 +168,26 @@
 		EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		EAA4E8F527B15B16005F93BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAA29E2125C5768200AA6971 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAA4E8E827B15B12005F93BD;
+			remoteInfo = LWWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		EA66AAD326C939DB001D3D24 /* Embed Frameworks */ = {
+		EAA4E8FB27B15B16005F93BD /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolderSpec = 13;
 			files = (
+				EAA4E8F727B15B16005F93BD /* LWWidgetExtension.appex in Embed App Extensions */,
 			);
-			name = "Embed Frameworks";
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -198,8 +209,6 @@
 		1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWProgressView.swift; sourceTree = "<group>"; };
 		1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		1B3AEB4F26C65DF700C057A4 /* roamData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamData.swift; sourceTree = "<group>"; };
-		1B3AEB5126C65E0E00C057A4 /* roamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamView.swift; sourceTree = "<group>"; };
 		1B3AEB5926CA105500C057A4 /* LWSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSettingViewController.swift; sourceTree = "<group>"; };
 		1BB6963E26A6CFE00009472F /* LWTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextView.swift; sourceTree = "<group>"; };
 		1BB6964526A820980009472F /* diaryInfo+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Todo.swift"; sourceTree = "<group>"; };
@@ -245,15 +254,8 @@
 		EA55A39F26D9436900FC9006 /* LWPopManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPopManger.swift; sourceTree = "<group>"; };
 		EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterFallLayout.swift; sourceTree = "<group>"; };
 		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
-		EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MainWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA63BABE26C6C57B004E64E5 /* MainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWidget.swift; sourceTree = "<group>"; };
-		EA63BAC126C6C57D004E64E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EA63BAC326C6C57D004E64E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoamWidget.swift; sourceTree = "<group>"; };
 		EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MainWidgetExtension.entitlements; sourceTree = "<group>"; };
 		EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidgetProvider.swift; sourceTree = "<group>"; };
-		EA66AAE126C961B9001D3D24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/MainWidget.intentdefinition; sourceTree = "<group>"; };
-		EA66AAE526C961BE001D3D24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainWidget.strings; sourceTree = "<group>"; };
 		EA67914226D1216200B44ECA /* LWSubpagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSubpagesView.swift; sourceTree = "<group>"; };
 		EA67914526D1218400B44ECA /* LWTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewController.swift; sourceTree = "<group>"; };
 		EA67915B26D1F35C00B44ECA /* diaryinfo+subPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+subPages.swift"; sourceTree = "<group>"; };
@@ -300,6 +302,15 @@
 		EAA29EB125C864ED00AA6971 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		EAA29EC425C9840F00AA6971 /* monthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthCell.swift; sourceTree = "<group>"; };
 		EAA29EC725C9925B00AA6971 /* monthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthButton.swift; sourceTree = "<group>"; };
+		EAA4E8E927B15B12005F93BD /* LWWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LWWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAA4E8ED27B15B12005F93BD /* LWWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidget.swift; sourceTree = "<group>"; };
+		EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = LWWidget.intentdefinition; sourceTree = "<group>"; };
+		EAA4E8F027B15B16005F93BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EAA4E8F227B15B16005F93BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAA4E8FD27B15FC4005F93BD /* roamData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamData.swift; sourceTree = "<group>"; };
+		EAA4E8FF27B15FDF005F93BD /* roamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamView.swift; sourceTree = "<group>"; };
+		EAA4E90127B16007005F93BD /* mainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainWidget.swift; sourceTree = "<group>"; };
+		EAA4E90627B16D1D005F93BD /* LWWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LWWidgetExtension.entitlements; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -350,21 +361,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		EA63BAB726C6C57B004E64E5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EA63BABC26C6C57B004E64E5 /* SwiftUI.framework in Frameworks */,
-				EA63BABB26C6C57B004E64E5 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EAA29E2625C5768200AA6971 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */,
 				EADBC33C26BE9279004D1A52 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAA4E8E627B15B12005F93BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA4E8EB27B15B12005F93BD /* SwiftUI.framework in Frameworks */,
+				EAA4E8EA27B15B12005F93BD /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,31 +414,6 @@
 				1B3AEB1626C50FC600C057A4 /* LWProgressView.swift */,
 			);
 			path = LWIndicator;
-			sourceTree = "<group>";
-		};
-		1B3AEB4C26C65D9700C057A4 /* LWWidgetHelper */ = {
-			isa = PBXGroup;
-			children = (
-				1B3AEB4D26C65DC900C057A4 /* Data */,
-				1B3AEB4E26C65DCF00C057A4 /* View */,
-			);
-			path = LWWidgetHelper;
-			sourceTree = "<group>";
-		};
-		1B3AEB4D26C65DC900C057A4 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				1B3AEB4F26C65DF700C057A4 /* roamData.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		1B3AEB4E26C65DCF00C057A4 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				1B3AEB5126C65E0E00C057A4 /* roamView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		1BB6963C26A6CF8F0009472F /* toolbar */ = {
@@ -561,35 +547,6 @@
 			path = share;
 			sourceTree = "<group>";
 		};
-		EA63BABD26C6C57B004E64E5 /* MainWidget */ = {
-			isa = PBXGroup;
-			children = (
-				EA63BABE26C6C57B004E64E5 /* MainWidget.swift */,
-				1B3AEB4C26C65D9700C057A4 /* LWWidgetHelper */,
-				EA63BAD026C6C5CE004E64E5 /* Widget */,
-				EA63BAD126C6C5E8004E64E5 /* intent */,
-				EA63BAC126C6C57D004E64E5 /* Assets.xcassets */,
-				EA63BAC326C6C57D004E64E5 /* Info.plist */,
-			);
-			path = MainWidget;
-			sourceTree = "<group>";
-		};
-		EA63BAD026C6C5CE004E64E5 /* Widget */ = {
-			isa = PBXGroup;
-			children = (
-				EA63BAD226C6C5FF004E64E5 /* RoamWidget.swift */,
-			);
-			path = Widget;
-			sourceTree = "<group>";
-		};
-		EA63BAD126C6C5E8004E64E5 /* intent */ = {
-			isa = PBXGroup;
-			children = (
-				EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */,
-			);
-			path = intent;
-			sourceTree = "<group>";
-		};
 		EA63BAFB26C82197004E64E5 /* protocal */ = {
 			isa = PBXGroup;
 			children = (
@@ -652,9 +609,10 @@
 		EAA29E2025C5768200AA6971 = {
 			isa = PBXGroup;
 			children = (
+				EAA4E90627B16D1D005F93BD /* LWWidgetExtension.entitlements */,
 				EA66AA9F26C92C84001D3D24 /* MainWidgetExtension.entitlements */,
 				EAA29E2B25C5768200AA6971 /* 日记2.0 */,
-				EA63BABD26C6C57B004E64E5 /* MainWidget */,
+				EAA4E8EC27B15B12005F93BD /* LWWidget */,
 				EAA29E2A25C5768200AA6971 /* Products */,
 				A94BAB4002626E25F81338D3 /* Pods */,
 				893AAD9C6A217E8210A0AB91 /* Frameworks */,
@@ -665,7 +623,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E2925C5768200AA6971 /* 日记2.0.app */,
-				EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */,
+				EAA4E8E927B15B12005F93BD /* LWWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -783,6 +741,28 @@
 				EAA29EAA25C8370600AA6971 /* tagsCell.xib */,
 			);
 			path = tags;
+			sourceTree = "<group>";
+		};
+		EAA4E8EC27B15B12005F93BD /* LWWidget */ = {
+			isa = PBXGroup;
+			children = (
+				EAA4E90427B16966005F93BD /* roamMemory */,
+				EAA4E8ED27B15B12005F93BD /* LWWidget.swift */,
+				EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */,
+				EAA4E8F027B15B16005F93BD /* Assets.xcassets */,
+				EAA4E8F227B15B16005F93BD /* Info.plist */,
+			);
+			path = LWWidget;
+			sourceTree = "<group>";
+		};
+		EAA4E90427B16966005F93BD /* roamMemory */ = {
+			isa = PBXGroup;
+			children = (
+				EAA4E8FD27B15FC4005F93BD /* roamData.swift */,
+				EAA4E8FF27B15FDF005F93BD /* roamView.swift */,
+				EAA4E90127B16007005F93BD /* mainWidget.swift */,
+			);
+			path = roamMemory;
 			sourceTree = "<group>";
 		};
 		EAAFDDC9279EE414008286EB /* LWTodo */ = {
@@ -928,24 +908,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EA63BAB926C6C57B004E64E5 /* MainWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EA63BAC926C6C57D004E64E5 /* Build configuration list for PBXNativeTarget "MainWidgetExtension" */;
-			buildPhases = (
-				EA63BAB626C6C57B004E64E5 /* Sources */,
-				EA63BAB726C6C57B004E64E5 /* Frameworks */,
-				EA63BAB826C6C57B004E64E5 /* Resources */,
-				EA66AAD326C939DB001D3D24 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MainWidgetExtension;
-			productName = MainWidgetExtension;
-			productReference = EA63BABA26C6C57B004E64E5 /* MainWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		EAA29E2825C5768200AA6971 /* 日记2.0 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAA29E3D25C5768600AA6971 /* Build configuration list for PBXNativeTarget "日记2.0" */;
@@ -955,15 +917,34 @@
 				EAA29E2625C5768200AA6971 /* Frameworks */,
 				EAA29E2725C5768200AA6971 /* Resources */,
 				408329124B639892E9F20F53 /* [CP] Embed Pods Frameworks */,
+				EAA4E8FB27B15B16005F93BD /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EAA4E8F627B15B16005F93BD /* PBXTargetDependency */,
 			);
 			name = "日记2.0";
 			productName = "日记2.0";
 			productReference = EAA29E2925C5768200AA6971 /* 日记2.0.app */;
 			productType = "com.apple.product-type.application";
+		};
+		EAA4E8E827B15B12005F93BD /* LWWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAA4E8F827B15B16005F93BD /* Build configuration list for PBXNativeTarget "LWWidgetExtension" */;
+			buildPhases = (
+				EAA4E8E527B15B12005F93BD /* Sources */,
+				EAA4E8E627B15B12005F93BD /* Frameworks */,
+				EAA4E8E727B15B12005F93BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LWWidgetExtension;
+			productName = LWWidgetExtension;
+			productReference = EAA4E8E927B15B12005F93BD /* LWWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -971,14 +952,14 @@
 		EAA29E2125C5768200AA6971 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					EA63BAB926C6C57B004E64E5 = {
-						CreatedOnToolsVersion = 12.4;
-					};
 					EAA29E2825C5768200AA6971 = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					EAA4E8E827B15B12005F93BD = {
+						CreatedOnToolsVersion = 13.2.1;
 					};
 				};
 			};
@@ -996,20 +977,12 @@
 			projectRoot = "";
 			targets = (
 				EAA29E2825C5768200AA6971 /* 日记2.0 */,
-				EA63BAB926C6C57B004E64E5 /* MainWidgetExtension */,
+				EAA4E8E827B15B12005F93BD /* LWWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		EA63BAB826C6C57B004E64E5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EA63BAC226C6C57D004E64E5 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EAA29E2725C5768200AA6971 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1033,6 +1006,14 @@
 				EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */,
 				EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */,
 				EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAA4E8E727B15B12005F93BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA4E8F127B15B16005F93BD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,19 +1062,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		EA63BAB626C6C57B004E64E5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EA63BADA26C6C64E004E64E5 /* RoamWidget.swift in Sources */,
-				EA63BABF26C6C57B004E64E5 /* MainWidget.swift in Sources */,
-				EA63BAF826C6CDED004E64E5 /* roamView.swift in Sources */,
-				EA66AAD926C94B63001D3D24 /* extension.swift in Sources */,
-				EA66AAE026C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
-				EA66AAA226C92D10001D3D24 /* roamData.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		EAA29E2525C5768200AA6971 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1128,6 +1096,7 @@
 				EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */,
 				1B3AEB5A26CA105500C057A4 /* LWSettingViewController.swift in Sources */,
 				EAAFDDCD279EE435008286EB /* LWTodoViewModel.swift in Sources */,
+				EAA4E90327B1604E005F93BD /* roamData.swift in Sources */,
 				EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */,
@@ -1149,7 +1118,6 @@
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
-				EA63BB0426C91C9A004E64E5 /* roamData.swift in Sources */,
 				EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
 				EAA29EC525C9840F00AA6971 /* monthCell.swift in Sources */,
@@ -1179,6 +1147,7 @@
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
+				EAA4E8F427B15B16005F93BD /* LWWidget.intentdefinition in Sources */,
 				1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */,
 				1B1ED87E26D372E4008D88FC /* newUserGuideHelper.swift in Sources */,
 				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
@@ -1189,7 +1158,6 @@
 				EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */,
 				EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
-				EA66AADF26C961B9001D3D24 /* MainWidget.intentdefinition in Sources */,
 				EAD20DA526A072DC0014B8B5 /* AttributedBox.swift in Sources */,
 				EAAFDDFD27A6BF0F008286EB /* LWSegSettingCell.swift in Sources */,
 				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
@@ -1230,18 +1198,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAA4E8E527B15B12005F93BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAA4E90227B16007005F93BD /* mainWidget.swift in Sources */,
+				EAA4E8FE27B15FC4005F93BD /* roamData.swift in Sources */,
+				EAA4E8EE27B15B12005F93BD /* LWWidget.swift in Sources */,
+				EAA4E8F327B15B16005F93BD /* LWWidget.intentdefinition in Sources */,
+				EAA4E90027B15FDF005F93BD /* roamView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		EA66AAE226C961B9001D3D24 /* MainWidget.intentdefinition */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EA66AAE126C961B9001D3D24 /* Base */,
-				EA66AAE526C961BE001D3D24 /* en */,
-			);
-			name = MainWidget.intentdefinition;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		EAA4E8F627B15B16005F93BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAA4E8E827B15B12005F93BD /* LWWidgetExtension */;
+			targetProxy = EAA4E8F527B15B16005F93BD /* PBXContainerItemProxy */;
 		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
 		EAA29E3225C5768200AA6971 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1261,58 +1240,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		EA63BACA26C6C57D004E64E5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
-				INFOPLIST_FILE = MainWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 3.2.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.MainWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		EA63BACB26C6C57D004E64E5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = MainWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
-				INFOPLIST_FILE = MainWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 3.2.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.MainWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		EAA29E3B25C5768600AA6971 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1433,6 +1360,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 86FC5159688D9EC87D21C95F /* Pods-日记2.0.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
@@ -1459,6 +1387,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 641C74A45BB542713BA0DC55 /* Pods-日记2.0.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
@@ -1481,18 +1410,69 @@
 			};
 			name = Release;
 		};
+		EAA4E8F927B15B16005F93BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = LWWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LWWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LWWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.LWWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EAA4E8FA27B15B16005F93BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = LWWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LWWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LWWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.LWWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EA63BAC926C6C57D004E64E5 /* Build configuration list for PBXNativeTarget "MainWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EA63BACA26C6C57D004E64E5 /* Debug */,
-				EA63BACB26C6C57D004E64E5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		EAA29E2425C5768200AA6971 /* Build configuration list for PBXProject "日记2.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1507,6 +1487,15 @@
 			buildConfigurations = (
 				EAA29E3E25C5768600AA6971 /* Debug */,
 				EAA29E3F25C5768600AA6971 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAA4E8F827B15B16005F93BD /* Build configuration list for PBXNativeTarget "LWWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAA4E8F927B15B16005F93BD /* Debug */,
+				EAA4E8FA27B15B16005F93BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

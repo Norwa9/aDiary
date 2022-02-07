@@ -7,8 +7,10 @@
 
 import Foundation
 import RealmSwift
+
 class LWWidgetProvider{
     static let shared = LWWidgetProvider()
+    
     private var defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content")!
     
     func setRoamData(){
@@ -25,6 +27,7 @@ class LWWidgetProvider{
             let jsonEncoder = JSONEncoder()
             if let storedData = try? jsonEncoder.encode(roamData) {
                 defaults.set(storedData, forKey: WidgetKindKeys.RoamWidget)
+                print("设置\(diary.date)的日记以展示")
             } else {
                 print("Failed to save roamData")
             }

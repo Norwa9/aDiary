@@ -1,8 +1,8 @@
 //
 //  roamView.swift
-//  日记2.0
+//  LWWidgetExtension
 //
-//  Created by yy on 2021/8/13.
+//  Created by 罗威 on 2022/2/7.
 //
 
 import Foundation
@@ -23,4 +23,3 @@ struct RoamView: View {
         }
     }
 }
-

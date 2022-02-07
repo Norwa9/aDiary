@@ -1,8 +1,8 @@
 //
 //  roamData.swift
-//  日记2.0
+//  LWWidgetExtension
 //
-//  Created by yy on 2021/8/13.
+//  Created by 罗威 on 2022/2/7.
 //
 
 import Foundation
@@ -18,7 +18,12 @@ struct RoamData:Codable{
 
 struct RoamDataLoader {
     static func load(completion: @escaping (Result<RoamData, Error>) -> Void){
-        let defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content")!
+        guard let defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content") else{
+            // 使用之前先给extension的target添加app groups 的capability
+            // 且suiteName必须是group id
+            return
+        }
+        
         let error = NSError(domain: "widget", code: 0, userInfo: nil   )
         
         if let savedRoamData = defaults.object(forKey: WidgetKindKeys.RoamWidget) as? Data {
@@ -28,11 +33,11 @@ struct RoamDataLoader {
                 completion(.success(roamData))
             } catch {
                 completion(.failure(error))
-                print("Failed to decode roamData")
+                print("Failed to decode json")
             }
         }else{
             completion(.failure(error))
-            print("Failed to load savedRoamData")
+            print("Failed to load userDefaults")
         }
     }
 }
