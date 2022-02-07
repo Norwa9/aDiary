@@ -95,14 +95,10 @@ class WhatsNewHelper{
         }
         
         if versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 0)) ||
-            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 1)){
-            // 如果展示过3.2.0或3.2.1的欢迎页，则不需要再展示
-            if versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 0)){
-                print("展示过3.2.0")
-            }
-            if versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 1)){
-                print("展示过3.2.1")
-            }
+            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 1)) ||
+            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 2))
+        {
+            // 如果展示过3.2的欢迎页，则不需要再展示
             return nil
         }
         
