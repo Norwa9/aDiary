@@ -142,8 +142,8 @@
             filePath = "&#x65e5;&#x8bb0;2.0/today VC/ScableImageView/extension/AttributedString+.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "replaceAttchment(_:attchmentAt:with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "&#x65e5;&#x8bb0;2.0/today VC/ScableImageView/extension/AttributedString+.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "replaceAttchment(_:attchmentAt:with:)"
             landmarkType = "7">
          </BreakpointContent>

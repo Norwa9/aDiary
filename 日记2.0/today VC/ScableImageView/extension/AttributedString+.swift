@@ -88,6 +88,7 @@ public extension NSMutableAttributedString {
             let range = NSRange(location: index, length: insertion.length)
             if range.upperBound > self.length{
                 // 防止out of bounds溢出
+                // TODO: 将超出的长度用空格来填补，然后再replaceCharacters
                 return
             }
             self.replaceCharacters(in: range, with: insertion)
