@@ -42,6 +42,7 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         imageView.contentMode = viewModel.contentMode
         imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
+        imageView.addBorder(width: 1, color: .systemGray4)
         self.addSubview(imageView)
         imageView.frame = self.bounds
         

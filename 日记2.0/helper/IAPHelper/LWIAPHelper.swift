@@ -50,6 +50,9 @@ class LWIAPHelper:NSObject{
         // 测试(初始化为未订阅)
         print("当前订阅版本：\(userDefaultManager.purchaseEdition)")
         // userDefaultManager.purchaseEdition = .notPurchased
+        #if targetEnvironment(simulator)
+        // userDefaultManager.purchaseEdition = .purchased
+        #endif
         
         //  计算是否试用
         if let downloadDate = userDefaultManager.downloadDate{

@@ -205,3 +205,11 @@ extension UIView{
         }
     }
 }
+
+// MARK: 添加边框
+extension UIView{
+    func addBorder(width:CGFloat,color:UIColor){
+        self.layer.borderWidth = width
+        self.layer.borderColor = color.cgColor
+    }
+}

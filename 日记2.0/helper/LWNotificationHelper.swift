@@ -168,6 +168,11 @@ class LWNotificationHelper:NSObject{
         content.sound = .default
 //        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 61, repeats: true)//测试，请退出APP到后台测试，在App内部不会显示通知！！
         
+        print("注册(\(body)前，待发送的通知有：")
+        center.getPendingNotificationRequests { request in
+            print("PendingRequest:\(request)")
+        }
+        
         // 添加该通知请求之前，先把旧有的该通知删除
         center.removeDeliveredNotifications(withIdentifiers: [uuid])
         center.removePendingNotificationRequests(withIdentifiers: [uuid])
