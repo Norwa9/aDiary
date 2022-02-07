@@ -74,12 +74,6 @@ public extension NSMutableAttributedString {
     
     func replaceAttchment(_ attachment: NSTextAttachment, attchmentAt index: Int, with paragraphStyle: NSParagraphStyle? = nil) {
         let plainAttachmentString = NSAttributedString(attachment: attachment)
-        
-        if index + 1 > self.length{
-            // 防止 replaceCharacters 溢出
-            print("return , 防止 replaceCharacters 溢出")
-            return
-        }
 
         if let paragraphStyle = paragraphStyle {
             let attachmentString = plainAttachmentString
@@ -92,9 +86,16 @@ public extension NSMutableAttributedString {
             insertion.append(attachmentString)
 
             let range = NSRange(location: index, length: insertion.length)
+            if range.upperBound > self.length{
+                // 防止out of bounds溢出
+                return
+            }
             self.replaceCharacters(in: range, with: insertion)
         } else {
             let range = NSRange(location: index, length: 1)
+            if range.upperBound > self.length{
+                return
+            }
             self.replaceCharacters(in: range, with: plainAttachmentString)
         }
     }
