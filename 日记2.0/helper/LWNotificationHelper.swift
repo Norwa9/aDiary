@@ -218,6 +218,8 @@ class LWNotificationHelper:NSObject{
         
         let remindDate = model.remindDate
         var dateComponents = DateComponents()
+        dateComponents.year = getDateComponent(for: remindDate, for: .year)
+        dateComponents.month = getDateComponent(for: remindDate, for: .month)
         dateComponents.hour = getDateComponent(for: remindDate, for: .hour)
         dateComponents.minute = getDateComponent(for: remindDate, for: .mintue)
         dict["dateComponents"] = dateComponents

@@ -19,6 +19,7 @@ struct RoamData:Codable{
 struct RoamDataLoader {
     static func load(completion: @escaping (Result<RoamData, Error>) -> Void){
         guard let defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content") else{
+            print("Failed to init defaults ")
             // 使用之前先给extension的target添加app groups 的capability
             // 且suiteName必须是group id
             return
