@@ -58,6 +58,7 @@ class TopView: UIView {
         let weekDay = model.date.dateComponent(for: .weekday)
         dateLable.text = "\(month)月\(day)日 \(weekDay)"
         dateLable.font = userDefaultManager.customFont(withSize: floor(scale * 22)).bold() ??  userDefaultManager.customFont(withSize: floor(scale * 22))
+        dateLable.adjustsFontSizeToFitWidth = true
         //更新约束
         updateCons()
         
@@ -107,6 +108,7 @@ class TopView: UIView {
         dateLable.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(5)
             make.centerX.equalToSuperview()
+            make.right.lessThanOrEqualTo(fullScreenBtn.snp.left)
         }
         
         emojiView.snp.makeConstraints { (make) in
