@@ -41,15 +41,15 @@ class editorAnimator:NSObject,UIViewControllerAnimatedTransitioning{
         toVC.view.frame = CGRect(origin: .zero, size: globalConstantsManager.shared.appSize)
         toVC.view.frame.origin.y = 1500
         toVC.view.transform = CGAffineTransform(scaleX: 0.90, y: 1)
-        toVC.view.layer.cornerRadius = 20
-        toVC.subpagesView.layer.cornerRadius = 20
-        toVC.view.setupShadow(opacity: 0.7, radius: 2, offset: .zero, color: .black)
+        //toVC.view.layer.cornerRadius = 20
+        //toVC.subpagesView.layer.cornerRadius = 20
+        //toVC.view.setupShadow(opacity: 0.7, radius: 2, offset: .zero, color: .black)
         //3.change original size to final size with animation
         UIView.animate(withDuration: duration + 0.1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.curveEaseInOut,.allowUserInteraction]) {
             toVC.view.frame.origin.y = 0
             toVC.view.transform = .identity
-            toVC.subpagesView.layer.cornerRadius = 0
-            toVC.view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
+            //toVC.subpagesView.layer.cornerRadius = 0
+            //w gatoVC.view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
         } completion: { (completed) in
             print(toVC.view.frame)
             transitionContext.completeTransition(completed)
