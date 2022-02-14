@@ -189,19 +189,4 @@ extension NSAttributedString {
 }
 
 
-//MARK: -NSAttributedString + todo
-extension NSAttributedString {
-    ///段落内是否有.todo这类型的属性
-    public func hasTodoAttribute() -> Bool {
-        var found = false
-        enumerateAttribute(.todo, in: NSRange(0..<length), options: .init()) { _, _, stop in
-            found = true
-            stop.pointee = true
-        }
-        return found
-    }
-    
-}
-
-
 

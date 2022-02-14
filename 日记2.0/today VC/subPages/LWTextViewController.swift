@@ -233,18 +233,6 @@ extension LWTextViewController : UITextViewDelegate{
         //除了换行符，其他的字符无需处理，正常输出即可
         return true//若为false，键入的新字符不会递给storage
     }
-    
-    //MARK: -shouldInteractWith
-    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        let formatter = TextFormatter(textView: self.textView)
-        let res = formatter.interactAttchment(with: characterRange,diary:model)
-        if let type = res,type == .todo{
-            self.save()
-            return true
-        }else{
-            return false
-        }
-    }
 
 }
 
@@ -314,8 +302,6 @@ extension LWTextViewController{
 extension LWTextViewController{
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        //切换复选框深色模式素材
-        textView.reloadTodoImage()
         
         //切换字体颜色为.label
         let labelColoredAttributedString = textView.attributedText!.restoreFontStyle()

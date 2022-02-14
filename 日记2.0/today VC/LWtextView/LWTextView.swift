@@ -28,7 +28,7 @@ class LWTextView: SubviewAttachingTextView {
     }
     
     override func copy(_ sender: Any?) {
-        let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange)).unLoadCheckboxes()
+        let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange))
         
         if self.textStorage.length >= self.selectedRange.upperBound {
             if let rtfd = try? attributedString.data(from: NSMakeRange(0, attributedString.length), documentAttributes: [NSAttributedString.DocumentAttributeKey.documentType:NSAttributedString.DocumentType.rtfd]) {
@@ -47,7 +47,7 @@ class LWTextView: SubviewAttachingTextView {
     }
     
     override func cut(_ sender: Any?) {
-        let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange)).unLoadCheckboxes()
+        let attributedString = NSMutableAttributedString(attributedString: self.textStorage.attributedSubstring(from: self.selectedRange))
 
         if self.textStorage.length >= self.selectedRange.upperBound {
             if let rtfd = try? attributedString.data(
@@ -78,37 +78,6 @@ class LWTextView: SubviewAttachingTextView {
         for item in UIPasteboard.general.items {
             if let rtfd = item["UIPasteboard.attributed.text"] as? Data {
                 if let attributedString = try? NSAttributedString(data: rtfd, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.rtfd], documentAttributes: nil) {
-
-                    let attributedString = NSMutableAttributedString(attributedString: attributedString)
-                    attributedString.loadCheckboxes()
-                    
-                    
-                    let pasteAStringRange = NSRange(location: 0, length: attributedString.length)
-                    attributedString.enumerateAttribute(.attachment, in: pasteAStringRange, options: [], using: { [] (object, range, pointer) in
-                        let location = range.location
-                        //如果扫描到todo，就跳过
-                        if let _ = attributedString.attribute(.todo, at: location, effectiveRange: nil) as? Int {
-                            return
-                        }else{
-                            if let attchment = object as? NSTextAttachment,let image = attchment.image(forBounds: self.bounds, textContainer: self.textContainer, characterIndex: location){
-                                print("paste")
-                                //1.重新添加attribute
-                                attributedString.addAttribute(.image, value: 1, range: NSRange(location: location, length: 1))
-
-                                //2.调整图片bounds
-                                let aspect = image.size.width / image.size.height
-                                let pedding:CGFloat = 15
-                                let newWidth = (bounds.width - 2 * pedding) / userDefaultManager.imageScalingFactor
-                                let newHeight = (newWidth / aspect)
-                                let para = NSMutableParagraphStyle()
-                                para.alignment = .center
-                                attributedString.addAttribute(.paragraphStyle, value: para, range: NSRange(location: location, length: 1))
-                                attchment.bounds = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-                            }
-                        }
-
-                    })
-                    
                     
                     let newRange = NSRange(location: selectedRange.location, length: attributedString.length)
                     if let selTextRange = selectedTextRange, let undoManager = undoManager {
