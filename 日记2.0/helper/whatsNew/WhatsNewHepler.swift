@@ -13,13 +13,13 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        //MARK:-3.2.2
-        let version = WhatsNew.Version(major: 3, minor: 2, patch: 2)
+        //MARK:-3.2.4
+        let version = WhatsNew.Version(major: 3, minor: 2, patch: 4)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
             // The Title
-            title: "近期更新 3.2.2",
+            title: "近期更新",
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
@@ -96,7 +96,8 @@ class WhatsNewHelper{
         
         if versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 0)) ||
             versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 1)) ||
-            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 2))
+            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 2)) ||
+            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 3))
         {
             // 如果展示过3.2的欢迎页，则不需要再展示
             return nil

@@ -119,6 +119,7 @@
 		EAA4E90027B15FDF005F93BD /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FF27B15FDF005F93BD /* roamView.swift */; };
 		EAA4E90227B16007005F93BD /* mainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E90127B16007005F93BD /* mainWidget.swift */; };
 		EAA4E90327B1604E005F93BD /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FD27B15FC4005F93BD /* roamData.swift */; };
+		EAA4E92827BAA659005F93BD /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -137,7 +138,6 @@
 		EAAFDE0227A83B56008286EB /* LWAppFeatureLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */; };
 		EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */; };
 		EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */; };
-		EAAFDE0827AA4981008286EB /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAAFDE0727AA4980008286EB /* wechat_group_code.jpg */; };
 		EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0927AA523A008286EB /* LWImageSaver.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
@@ -309,6 +309,7 @@
 		EAA4E8FF27B15FDF005F93BD /* roamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamView.swift; sourceTree = "<group>"; };
 		EAA4E90127B16007005F93BD /* mainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainWidget.swift; sourceTree = "<group>"; };
 		EAA4E90627B16D1D005F93BD /* LWWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LWWidgetExtension.entitlements; sourceTree = "<group>"; };
+		EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -327,7 +328,6 @@
 		EAAFDE0127A83B56008286EB /* LWAppFeatureLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWAppFeatureLabel.swift; sourceTree = "<group>"; };
 		EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPurchaseButton.swift; sourceTree = "<group>"; };
 		EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proEditionMaskHelper.swift; sourceTree = "<group>"; };
-		EAAFDE0727AA4980008286EB /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAAFDE0927AA523A008286EB /* LWImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWImageSaver.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 			children = (
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
-				EAAFDE0727AA4980008286EB /* wechat_group_code.jpg */,
+				EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
 				EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */,
 				EA9AF4DF267E10E200D77908 /* icon-120.png */,
@@ -989,13 +989,13 @@
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EAAFDDC8279ED5A9008286EB /* emptyImage.jpg in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
+				EAA4E92827BAA659005F93BD /* wechat_group_code.jpg in Resources */,
 				EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */,
 				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
 				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
 				EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
-				EAAFDE0827AA4981008286EB /* wechat_group_code.jpg in Resources */,
 				EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */,
 				EAA29E3625C5768600AA6971 /* Assets.xcassets in Resources */,
 				EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */,
@@ -1367,7 +1367,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.3;
+				MARKETING_VERSION = 3.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1394,7 +1394,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2.3;
+				MARKETING_VERSION = 3.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1412,7 +1412,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = LWWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LWWidget/Info.plist;
@@ -1442,7 +1442,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = LWWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LWWidget/Info.plist;
