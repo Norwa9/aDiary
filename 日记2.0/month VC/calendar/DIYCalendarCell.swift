@@ -75,16 +75,6 @@ class DIYCalendarCell: FSCalendarCell {
         switch selectionType {
         case .single:
             self.selectionLayer.isHidden = true//取消选中提示
-//            self.selectionLayer.isHidden = false
-//            //在layoutSubviews里才能获取正确的contentView.frmae
-//            let diameter: CGFloat = min(self.contentView.frame.width, self.contentView.frame.height)
-//            let square = CGRect(
-//                x: self.contentView.frame.width / 2 - diameter / 2,
-//                y: self.contentView.frame.height / 2 - diameter / 2,
-//                width: diameter,
-//                height: diameter)
-//            let cyclePath = UIBezierPath(ovalIn: square.insetBy(dx: 5, dy: 5))
-//            self.selectionLayer.path = cyclePath.cgPath
         default:
             self.selectionLayer.isHidden = true
             break

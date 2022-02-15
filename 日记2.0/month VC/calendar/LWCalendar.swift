@@ -20,26 +20,35 @@ class LWCalendar: FSCalendar {
     
     func initUI(){
         self.register(DIYCalendarCell.self, forCellReuseIdentifier: "cell")
+        self.scrollEnabled = true
+        self.layer.cornerRadius = 10
+        self.backgroundColor = .clear
+        
+        // weakday
         self.appearance.headerDateFormat = "yyyy年M月"
         self.firstWeekday = 2
         self.locale = Locale(identifier: "zh_CN")//设置周次为中文
         self.placeholderType = .none//仅显示当月日期cell
         self.appearance.caseOptions = .weekdayUsesSingleUpperCase//设置为一、二···
+        self.headerHeight = 0//移除年月份栏
+        self.appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
+        self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         
-        self.scrollEnabled = true
-        self.layer.cornerRadius = 10
-        self.backgroundColor = .clear
+        // title
         self.appearance.todayColor = .clear
         self.appearance.titleTodayColor = .label
         self.appearance.titleSelectionColor = .label
         self.appearance.titleDefaultColor = .label
-        self.headerHeight = 0//移除年月份栏
-        self.appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
         self.appearance.titleFont = UIFont.appCalendarCellTitleFont()
-        self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
-        self.appearance.eventSelectionColor = .black
+        
+        // subtitle
+        self.appearance.subtitleDefaultColor = .secondaryLabel
+        self.appearance.subtitleSelectionColor = .secondaryLabel
+        self.appearance.subtitleTodayColor = .secondaryLabel
+        
         //event dot
-        self.appearance.eventOffset = CGPoint(x: 0, y: -5)
+        self.appearance.eventSelectionColor = .black
+        self.appearance.eventOffset = CGPoint(x: 0, y: -2)
         self.appearance.selectionColor = eventDotDynamicColor
         self.appearance.eventDefaultColor = eventDotDynamicColor
         
@@ -47,7 +56,7 @@ class LWCalendar: FSCalendar {
     
     
 }
-//MARK:-DataSource
+//MARK:   -DataSource
 extension monthVC:FSCalendarDataSource{
     //使用DIY cell
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
@@ -63,7 +72,7 @@ extension monthVC:FSCalendarDataSource{
     }
 }
 
-//MARK:-Delegate
+//MARK: -Delegate
 extension monthVC:FSCalendarDelegate{
     //点击cell
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -97,7 +106,7 @@ extension monthVC:FSCalendarDelegate{
     }
 }
 
-// MARK: - FSCalendar自定义外观
+// MARK:   - FSCalendar自定义外观
 extension monthVC:FSCalendarDelegateAppearance{
     private func configureVisibleCells() {
         //参考自FSCalendar作者的demo
@@ -141,6 +150,16 @@ extension monthVC:FSCalendarDelegateAppearance{
     //事件点选取状态的颜色
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
         return nil
+    }
+    
+    // 农历
+    func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
+        if userDefaultManager.showLunar{
+            return LWLunarFormatter.shared.stringFromDate(date: date)
+        }else{
+            return nil
+        }
+        
     }
 }
 

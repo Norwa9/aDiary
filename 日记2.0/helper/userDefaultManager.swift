@@ -42,6 +42,7 @@ class userDefaultManager{
         static let todoListViewStyle = "todoListViewStyle"
         static let purchaseEdition = "purchaseEdition"
         static let downloadDate = "downloadDate"
+        static let showLunar = "showLunar"
         
         
     }
@@ -510,6 +511,20 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.downloadDate)
+        }
+    }
+    
+    /// 日历
+    static var showLunar:Bool{
+        get{
+            if let state = shared?.object(forKey: constants.showLunar) as? Bool {
+                return state
+            }else{
+                return false
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.showLunar)
         }
     }
 }

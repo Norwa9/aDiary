@@ -68,10 +68,16 @@ class LWSettingViewController: UIViewController {
     //其它
     var otherContainer:UIView!
     var otherContainerTitle:UILabel!
-    //本地通知
+    
+    // 每日提醒通知
     var dailyRemindLabel:UILabel!
     var dailyRemindSwitch:UISwitch!
     var dailyRemindDatePicker:UIDatePicker!
+    
+    // 显示农历
+    var showLunarCell:LWSwitchSettingCell!
+    
+    // todo样式
     var todoListStyleCell:LWSegSettingCell!
     
     //评价
@@ -203,6 +209,16 @@ class LWSettingViewController: UIViewController {
             selector: #selector(todoListStyleDidChange(_:))
         )
         otherContainer.addSubview(todoListStyleCell)
+        
+        // 农历
+        showLunarCell = LWSwitchSettingCell(
+            delegate: self,
+            switchState: userDefaultManager.showLunar,
+            title: "显示农历",
+            selector: #selector(showLunarDidChange(_:))
+        )
+        otherContainer.addSubview(showLunarCell)
+        
         
         dailyRemindLabel = UILabel()
         dailyRemindSwitch = UISwitch()
@@ -359,6 +375,7 @@ class LWSettingViewController: UIViewController {
         autoCreateTitle.font = LWSettingViewController.contentFont
         autoCreateTitleSwitch.isOn = userDefaultManager.autoCreate
         autoCreateTitleSwitch.addTarget(self, action: #selector(autoCreateDiary(_:)), for: .valueChanged)
+        
         requestReviewButton.setAttributedTitle(settingVCConfig.reviewButtonAttributedTitle(title: "App Store撰写好评",color: .link), for: .normal)
         requestReviewButton.contentHorizontalAlignment = .leading
         requestReviewButton.addTarget(self, action: #selector(requestReview), for: .touchUpInside)
@@ -579,8 +596,13 @@ class LWSettingViewController: UIViewController {
             make.left.right.equalToSuperview()
         }
         
-        dailyRemindLabel.snp.makeConstraints { make in
+        showLunarCell.snp.makeConstraints { make in
             make.top.equalTo(todoListStyleCell.snp.bottom).offset(10)
+            make.left.right.equalToSuperview()
+        }
+        
+        dailyRemindLabel.snp.makeConstraints { make in
+            make.top.equalTo(showLunarCell.snp.bottom).offset(10)
             make.left.equalTo(darkModeLabel)
         }
         
@@ -822,6 +844,12 @@ class LWSettingViewController: UIViewController {
         userDefaultManager.todoListViewStyle = sender.selectedSegmentIndex
     }
     
+    // MARK: -显示农历
+    @objc func showLunarDidChange(_ sender: UISwitch){
+        userDefaultManager.showLunar = sender.isOn
+        UIApplication.getMonthVC()?.lwCalendar.reloadData()
+    }
+
     
     //MARK: -每日提醒
     @objc func dailyReminderDidChange(_ sender: UISwitch){
