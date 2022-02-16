@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WidgetKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -88,6 +89,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          app进入后台后，模糊内容以达到锁定app的目的
          */
         self.lockApp()
+        
+        // 刷新小组件内容
+        if #available(iOS 14.0, *) {
+            todoDataProvider.shared.setData()
+            WidgetCenter.shared.reloadTimelines(ofKind: WidgetKindKeys.todoWidget)
+        }
     }
 
 

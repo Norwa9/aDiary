@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct WidgetKindKeys {
-    static let RoamWidget = "RoamWidget"
-}
-
 struct RoamData:Codable{
     let date : String
     let content: String

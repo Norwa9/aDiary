@@ -64,7 +64,7 @@
 		EA55A3A026D9436900FC9006 /* LWPopManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA55A39F26D9436900FC9006 /* LWPopManger.swift */; };
 		EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */; };
 		EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5CFFA926749057008E06FA /* layoutParasManager.swift */; };
-		EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */; };
+		EA66AAB526C935FD001D3D24 /* RoamDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA66AAB426C935FD001D3D24 /* RoamDataProvider.swift */; };
 		EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914226D1216200B44ECA /* LWSubpagesView.swift */; };
 		EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67914526D1218400B44ECA /* LWTextViewController.swift */; };
 		EA67915C26D1F35D00B44ECA /* diaryinfo+subPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA67915B26D1F35C00B44ECA /* diaryinfo+subPages.swift */; };
@@ -110,18 +110,26 @@
 		EAA29EC825C9925B00AA6971 /* monthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EC725C9925B00AA6971 /* monthButton.swift */; };
 		EAA4E8EA27B15B12005F93BD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3826C65C3200C057A4 /* WidgetKit.framework */; };
 		EAA4E8EB27B15B12005F93BD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3AEB3A26C65C3200C057A4 /* SwiftUI.framework */; };
-		EAA4E8EE27B15B12005F93BD /* LWWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8ED27B15B12005F93BD /* LWWidget.swift */; };
+		EAA4E8EE27B15B12005F93BD /* RoamWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8ED27B15B12005F93BD /* RoamWidget.swift */; };
 		EAA4E8F127B15B16005F93BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAA4E8F027B15B16005F93BD /* Assets.xcassets */; };
 		EAA4E8F327B15B16005F93BD /* LWWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */; };
 		EAA4E8F427B15B16005F93BD /* LWWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */; };
 		EAA4E8F727B15B16005F93BD /* LWWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAA4E8E927B15B12005F93BD /* LWWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EAA4E8FE27B15FC4005F93BD /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FD27B15FC4005F93BD /* roamData.swift */; };
-		EAA4E90027B15FDF005F93BD /* roamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FF27B15FDF005F93BD /* roamView.swift */; };
+		EAA4E90027B15FDF005F93BD /* roamWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FF27B15FDF005F93BD /* roamWidgetView.swift */; };
 		EAA4E90227B16007005F93BD /* mainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E90127B16007005F93BD /* mainWidget.swift */; };
 		EAA4E90327B1604E005F93BD /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FD27B15FC4005F93BD /* roamData.swift */; };
 		EAA4E92827BAA659005F93BD /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */; };
 		EAA4E92A27BBFBDA005F93BD /* LWLunarFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E92927BBFBDA005F93BD /* LWLunarFormatter.swift */; };
 		EAA4E92C27BC02C2005F93BD /* LWSwitchSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E92B27BC02C2005F93BD /* LWSwitchSettingCell.swift */; };
+		EAA4E92F27BCE17F005F93BD /* todoDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E92E27BCE17F005F93BD /* todoDataProvider.swift */; };
+		EAA4E93227BCE1AD005F93BD /* todoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93127BCE1AD005F93BD /* todoData.swift */; };
+		EAA4E93327BCE1AD005F93BD /* todoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93127BCE1AD005F93BD /* todoData.swift */; };
+		EAA4E93627BCE1BB005F93BD /* todoWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93427BCE1BB005F93BD /* todoWidgetView.swift */; };
+		EAA4E93927BCE20C005F93BD /* TodoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93727BCE20C005F93BD /* TodoWidget.swift */; };
+		EAA4E93D27BCE29E005F93BD /* myView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93C27BCE29E005F93BD /* myView.swift */; };
+		EAA4E93F27BCE9E5005F93BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93E27BCE9E5005F93BD /* Constants.swift */; };
+		EAA4E94027BCEA19005F93BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93E27BCE9E5005F93BD /* Constants.swift */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -255,7 +263,7 @@
 		EA55A39F26D9436900FC9006 /* LWPopManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPopManger.swift; sourceTree = "<group>"; };
 		EA5CFF9D26739AFC008E06FA /* waterFallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterFallLayout.swift; sourceTree = "<group>"; };
 		EA5CFFA926749057008E06FA /* layoutParasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layoutParasManager.swift; sourceTree = "<group>"; };
-		EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidgetProvider.swift; sourceTree = "<group>"; };
+		EA66AAB426C935FD001D3D24 /* RoamDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoamDataProvider.swift; sourceTree = "<group>"; };
 		EA67914226D1216200B44ECA /* LWSubpagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSubpagesView.swift; sourceTree = "<group>"; };
 		EA67914526D1218400B44ECA /* LWTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewController.swift; sourceTree = "<group>"; };
 		EA67915B26D1F35C00B44ECA /* diaryinfo+subPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryinfo+subPages.swift"; sourceTree = "<group>"; };
@@ -303,17 +311,23 @@
 		EAA29EC425C9840F00AA6971 /* monthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthCell.swift; sourceTree = "<group>"; };
 		EAA29EC725C9925B00AA6971 /* monthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = monthButton.swift; sourceTree = "<group>"; };
 		EAA4E8E927B15B12005F93BD /* LWWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LWWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAA4E8ED27B15B12005F93BD /* LWWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWidget.swift; sourceTree = "<group>"; };
+		EAA4E8ED27B15B12005F93BD /* RoamWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoamWidget.swift; sourceTree = "<group>"; };
 		EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = LWWidget.intentdefinition; sourceTree = "<group>"; };
 		EAA4E8F027B15B16005F93BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EAA4E8F227B15B16005F93BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAA4E8FD27B15FC4005F93BD /* roamData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamData.swift; sourceTree = "<group>"; };
-		EAA4E8FF27B15FDF005F93BD /* roamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamView.swift; sourceTree = "<group>"; };
+		EAA4E8FF27B15FDF005F93BD /* roamWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamWidgetView.swift; sourceTree = "<group>"; };
 		EAA4E90127B16007005F93BD /* mainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainWidget.swift; sourceTree = "<group>"; };
 		EAA4E90627B16D1D005F93BD /* LWWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LWWidgetExtension.entitlements; sourceTree = "<group>"; };
 		EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAA4E92927BBFBDA005F93BD /* LWLunarFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWLunarFormatter.swift; sourceTree = "<group>"; };
 		EAA4E92B27BC02C2005F93BD /* LWSwitchSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSwitchSettingCell.swift; sourceTree = "<group>"; };
+		EAA4E92E27BCE17F005F93BD /* todoDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoDataProvider.swift; sourceTree = "<group>"; };
+		EAA4E93127BCE1AD005F93BD /* todoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoData.swift; sourceTree = "<group>"; };
+		EAA4E93427BCE1BB005F93BD /* todoWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoWidgetView.swift; sourceTree = "<group>"; };
+		EAA4E93727BCE20C005F93BD /* TodoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoWidget.swift; sourceTree = "<group>"; };
+		EAA4E93C27BCE29E005F93BD /* myView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myView.swift; sourceTree = "<group>"; };
+		EAA4E93E27BCE9E5005F93BD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -408,7 +422,6 @@
 		1B3AEB1126C4F78800C057A4 /* LWIndicator */ = {
 			isa = PBXGroup;
 			children = (
-				EA66AAB426C935FD001D3D24 /* LWWidgetProvider.swift */,
 				1B2A566D269D81280090D411 /* indicatorViewManager.swift */,
 				1B3AEB1226C4F7D100C057A4 /* LWCustomIndicatorView.swift */,
 				1B3AEB1426C50E7100C057A4 /* LWDefaultIndicatorView.swift */,
@@ -747,23 +760,38 @@
 		EAA4E8EC27B15B12005F93BD /* LWWidget */ = {
 			isa = PBXGroup;
 			children = (
-				EAA4E90427B16966005F93BD /* roamMemory */,
-				EAA4E8ED27B15B12005F93BD /* LWWidget.swift */,
+				EAA4E90127B16007005F93BD /* mainWidget.swift */,
+				EAA4E92D27BCE163005F93BD /* todoWidget */,
+				EAA4E90427B16966005F93BD /* roamMemoryWidget */,
 				EAA4E8EF27B15B12005F93BD /* LWWidget.intentdefinition */,
 				EAA4E8F027B15B16005F93BD /* Assets.xcassets */,
 				EAA4E8F227B15B16005F93BD /* Info.plist */,
+				EAA4E93C27BCE29E005F93BD /* myView.swift */,
+				EAA4E93E27BCE9E5005F93BD /* Constants.swift */,
 			);
 			path = LWWidget;
 			sourceTree = "<group>";
 		};
-		EAA4E90427B16966005F93BD /* roamMemory */ = {
+		EAA4E90427B16966005F93BD /* roamMemoryWidget */ = {
 			isa = PBXGroup;
 			children = (
+				EA66AAB426C935FD001D3D24 /* RoamDataProvider.swift */,
 				EAA4E8FD27B15FC4005F93BD /* roamData.swift */,
-				EAA4E8FF27B15FDF005F93BD /* roamView.swift */,
-				EAA4E90127B16007005F93BD /* mainWidget.swift */,
+				EAA4E8FF27B15FDF005F93BD /* roamWidgetView.swift */,
+				EAA4E8ED27B15B12005F93BD /* RoamWidget.swift */,
 			);
-			path = roamMemory;
+			path = roamMemoryWidget;
+			sourceTree = "<group>";
+		};
+		EAA4E92D27BCE163005F93BD /* todoWidget */ = {
+			isa = PBXGroup;
+			children = (
+				EAA4E92E27BCE17F005F93BD /* todoDataProvider.swift */,
+				EAA4E93127BCE1AD005F93BD /* todoData.swift */,
+				EAA4E93427BCE1BB005F93BD /* todoWidgetView.swift */,
+				EAA4E93727BCE20C005F93BD /* TodoWidget.swift */,
+			);
+			path = todoWidget;
 			sourceTree = "<group>";
 		};
 		EAAFDDC9279EE414008286EB /* LWTodo */ = {
@@ -1106,6 +1134,7 @@
 				EAAFDE0227A83B56008286EB /* LWAppFeatureLabel.swift in Sources */,
 				EADA85DF26248B14007D1134 /* NSAttrString+.swift in Sources */,
 				EA8E71152694978D007189B1 /* LWCloudKitConstants.swift in Sources */,
+				EAA4E94027BCEA19005F93BD /* Constants.swift in Sources */,
 				EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
@@ -1116,6 +1145,7 @@
 				EAAFDDF327A12182008286EB /* LWTodoSettingViewController.swift in Sources */,
 				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
 				EA67915C26D1F35D00B44ECA /* diaryinfo+subPages.swift in Sources */,
+				EAA4E93227BCE1AD005F93BD /* todoData.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
@@ -1143,6 +1173,7 @@
 				EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */,
 				EA22360D26D6931A001FAD1D /* ViewExtension.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
+				EAA4E92F27BCE17F005F93BD /* todoDataProvider.swift in Sources */,
 				EADBC2FE26B4F03F004D1A52 /* migrationHelper.swift in Sources */,
 				EA2235DE26D68F7D001FAD1D /* diaryinfo+ScalableImageView.swift in Sources */,
 				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,
@@ -1188,7 +1219,7 @@
 				1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
-				EA66AAB526C935FD001D3D24 /* LWWidgetProvider.swift in Sources */,
+				EA66AAB526C935FD001D3D24 /* RoamDataProvider.swift in Sources */,
 				EA96554127969FF8000B827B /* CKRecord+.swift in Sources */,
 				EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */,
 				EA2235FE26D692B0001FAD1D /* ScalableImageViewModel.swift in Sources */,
@@ -1205,10 +1236,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA4E90227B16007005F93BD /* mainWidget.swift in Sources */,
+				EAA4E93327BCE1AD005F93BD /* todoData.swift in Sources */,
 				EAA4E8FE27B15FC4005F93BD /* roamData.swift in Sources */,
-				EAA4E8EE27B15B12005F93BD /* LWWidget.swift in Sources */,
+				EAA4E8EE27B15B12005F93BD /* RoamWidget.swift in Sources */,
 				EAA4E8F327B15B16005F93BD /* LWWidget.intentdefinition in Sources */,
-				EAA4E90027B15FDF005F93BD /* roamView.swift in Sources */,
+				EAA4E93F27BCE9E5005F93BD /* Constants.swift in Sources */,
+				EAA4E93927BCE20C005F93BD /* TodoWidget.swift in Sources */,
+				EAA4E90027B15FDF005F93BD /* roamWidgetView.swift in Sources */,
+				EAA4E93D27BCE29E005F93BD /* myView.swift in Sources */,
+				EAA4E93627BCE1BB005F93BD /* todoWidgetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

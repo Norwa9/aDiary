@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LWIAPHelper.shared.initFreeTrial()
         
         //4.Widget
-        LWWidgetProvider.shared.setRoamData()
+        RoamDataProvider.shared.setRoamData()
+        todoDataProvider.shared.setData()
         
         //5.注册通知
         LWNotificationHelper.shared.registerCategories() // 注册通知类别，但是暂不索取通知权限

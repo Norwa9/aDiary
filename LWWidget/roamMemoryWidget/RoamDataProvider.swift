@@ -1,5 +1,5 @@
 //
-//  LWWidgetProvider.swift
+//  RoamDataProvider.swift
 //  日记2.0
 //
 //  Created by 罗威 on 2021/8/15.
@@ -8,8 +8,8 @@
 import Foundation
 import RealmSwift
 
-class LWWidgetProvider{
-    static let shared = LWWidgetProvider()
+class RoamDataProvider{
+    static let shared = RoamDataProvider()
     
     private var defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content")!
     
@@ -29,7 +29,7 @@ class LWWidgetProvider{
                 defaults.set(storedData, forKey: WidgetKindKeys.RoamWidget)
                 print("设置\(diary.date)的日记以展示")
             } else {
-                print("Failed to save roamData")
+                print("roam:Failed to save roamData")
             }
         }
     }

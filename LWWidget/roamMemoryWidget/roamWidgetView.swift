@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WidgetKit
 
 struct RoamView: View {
     var roamData : RoamData
@@ -21,5 +22,12 @@ struct RoamView: View {
                 .padding(.all)
                 .widgetURL(URL(string: "\(roamData.date)"))
         }
+    }
+}
+
+struct RoamView_Previews: PreviewProvider {
+    static var previews: some View {
+        RoamView(roamData: RoamData(date: "test", content: "content"))
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
