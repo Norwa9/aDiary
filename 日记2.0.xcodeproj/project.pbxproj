@@ -130,6 +130,7 @@
 		EAA4E93D27BCE29E005F93BD /* myView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93C27BCE29E005F93BD /* myView.swift */; };
 		EAA4E93F27BCE9E5005F93BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93E27BCE9E5005F93BD /* Constants.swift */; };
 		EAA4E94027BCEA19005F93BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93E27BCE9E5005F93BD /* Constants.swift */; };
+		EAA4E94227BFE59B005F93BD /* AlamofireHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E94127BFE59A005F93BD /* AlamofireHelper.swift */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -328,6 +329,7 @@
 		EAA4E93727BCE20C005F93BD /* TodoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoWidget.swift; sourceTree = "<group>"; };
 		EAA4E93C27BCE29E005F93BD /* myView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myView.swift; sourceTree = "<group>"; };
 		EAA4E93E27BCE9E5005F93BD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EAA4E94127BFE59A005F93BD /* AlamofireHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireHelper.swift; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				EA3189AA2691EBC2001B9042 /* Error+CloudKit.swift */,
 				EA8E71142694978D007189B1 /* LWCloudKitConstants.swift */,
 				1B2A56252696D5B60090D411 /* LWSyncEngine+Notifications.swift */,
+				EAA4E94127BFE59A005F93BD /* AlamofireHelper.swift */,
 			);
 			path = CloudKitHelper;
 			sourceTree = "<group>";
@@ -1159,6 +1162,7 @@
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
 				EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */,
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
+				EAA4E94227BFE59B005F93BD /* AlamofireHelper.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
 				EADBC2EC26B303AC004D1A52 /* globalConstants.swift in Sources */,
 				EAAFDDF927A3F749008286EB /* deBugViewController.swift in Sources */,

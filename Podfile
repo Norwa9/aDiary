@@ -24,5 +24,6 @@ pod 'NewPopMenu', '~> 2.0'
 pod 'YYModel'
 pod 'WXImageCompress', '~> 0.1.1'
 pod "Colorful", "~> 3.0"
+pod 'Alamofire', '~> 5.5'
 
 end

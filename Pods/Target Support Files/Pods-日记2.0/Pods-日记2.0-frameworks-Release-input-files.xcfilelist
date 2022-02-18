@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-日记2.0/Pods-日记2.0-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/AttributedString/AttributedString.framework
 ${BUILT_PRODUCTS_DIR}/Colorful/Colorful.framework
 ${BUILT_PRODUCTS_DIR}/FMPhotoPicker/FMPhotoPicker.framework

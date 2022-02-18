@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.5.0)
   - AttributedString (2.2.2)
   - Colorful (3.0.0)
   - FMPhotoPicker (1.3.0)
@@ -26,6 +27,7 @@ PODS:
   - YYModel (1.0.4)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.5)
   - AttributedString
   - Colorful (~> 3.0)
   - FMPhotoPicker (~> 1.3.0)
@@ -48,6 +50,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AttributedString
     - Colorful
     - FMPhotoPicker
@@ -70,6 +73,7 @@ SPEC REPOS:
     - YYModel
 
 SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   AttributedString: 320bb12ef89a666cee4a2f79e3cee36748a63145
   Colorful: 9e093edacaa9fb73512ad9da157f0707b82d2542
   FMPhotoPicker: 954d3c3e72521baffecdc23422ae149fdde3cd63
@@ -91,6 +95,6 @@ SPEC CHECKSUMS:
   WXImageCompress: 86c7a4d028c7fc9c74181468c318a9ec688fcdac
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: dcb8c401cda9a5e6aa5ff8a995fb4f17490da98d
+PODFILE CHECKSUM: 7d51a6411c521642bbe0b27615f8eb03fe6fc29d
 
 COCOAPODS: 1.10.1

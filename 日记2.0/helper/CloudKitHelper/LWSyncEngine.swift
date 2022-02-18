@@ -80,8 +80,12 @@ final class LWSyncEngine{
     public func start(){
         print("开启LWSyncEngine")
         //0.最开始检查用户状态
-        checkAccountStatus( {[weak self] accoutStatus in
+        checkAccountStatus( {[weak self] accoutStatus,connected in
             guard let self = self else{return}
+            if !connected{
+                indicatorViewManager.shared.stop(withText: "网络连接不可用，暂停同步")
+                return
+            }
             switch accoutStatus{
             case .available:
                     //1.配置iCloud环境
@@ -93,14 +97,14 @@ final class LWSyncEngine{
                     self.fetchRemoteChanges()
                 }
             default:
-                indicatorViewManager.shared.stop(withText: "iCloud账户不可用，取消同步")
+                indicatorViewManager.shared.stop(withText: "iCloud账户不可用，暂停同步")
                 break
             }
         })
     }
     
     //MARK:  -检查iCloud账户可用性
-    typealias didReceiveStatusBlock = (_ status:CKAccountStatus) ->Void
+    typealias didReceiveStatusBlock = (_ status:CKAccountStatus,_ connected:Bool) ->Void
     ///检查账户的可用性
     func checkAccountStatus(_ completion:@escaping didReceiveStatusBlock){
         self.container.accountStatus { status, error in
@@ -110,8 +114,11 @@ final class LWSyncEngine{
                     self.handleStatusCheckError(error: error)
                 }
             } else {
-                self.accountStatus = status
-                completion(status)
+                // 检查网络
+                hasNetwork { connected in
+                    self.accountStatus = status
+                    completion(status,connected)
+                }
             }
             
         }
