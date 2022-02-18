@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 class exportManager{
+    let pageW = 595.2 - 50 * 2
+    let pageH = 841.8 - 50 * 2
     
     static let shared = exportManager()
     
@@ -69,7 +71,8 @@ class exportManager{
                         aString: aString,
                         todoModels: todoModels,
                         imageModels: imageModels,
-                        isSharingMode: true
+                        isSharingMode: true,
+                        isExportMode: true
                     )
                     var emojis = diary.emojis.joined()
                     if emojis.length != 0{
@@ -161,6 +164,28 @@ class exportManager{
 
         }//backgournd thread
         
+    }
+    
+    func getImageAdaptatedSize(size:CGSize,adaptScale:CGFloat)->CGSize{
+//        let w = size.width
+//        let h = size.height
+//        let windowW = min(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
+//        let windowH = max(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
+//        let scale = w / windowW
+//        let newW = w / scale
+//        let newH = h / scale
+        let imageAdaptatedWidth = self.pageW * adaptScale
+        let imageAdaptatedHeight = (size.height / size.width) * imageAdaptatedWidth
+        return CGSize(width: imageAdaptatedWidth, height: imageAdaptatedHeight)
+        
+        
+    }
+    
+    func getTodoAdaptatedSize(size:CGSize)->CGSize{
+        let scale = size.height / size.width
+        let newWidth = self.pageW * 0.95 // 0.95是默认todo宽度与屏幕宽度的比值
+        let newHeight = self.pageW * scale
+        return CGSize(width: newWidth, height: newHeight)
     }
     
     func exportText(){

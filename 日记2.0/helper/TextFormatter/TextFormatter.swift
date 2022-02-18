@@ -585,7 +585,8 @@ extension TextFormatter{
     func processAttrString(aString:NSAttributedString,
                            todoModels:[LWTodoModel],
                            imageModels:[ScalableImageModel],
-                           isSharingMode:Bool =  false
+                           isSharingMode:Bool =  false,
+                           isExportMode:Bool = false
     )->NSMutableAttributedString{
         
         let mutableText = NSMutableAttributedString(attributedString: aString)
@@ -606,7 +607,11 @@ extension TextFormatter{
                 let viewModel = ScalableImageViewModel(model: model)
                 let view = ScalableImageView(viewModel: viewModel)
                 let viewSnapShot = view.asImage() // 将ScalableImageView截屏然后塞入attchment
-                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
+                var size = viewModel.bounds.size
+                if isExportMode{
+                    size = exportManager.shared.getImageAdaptatedSize(size: size, adaptScale: model.viewScale)
+                }
+                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: size)
                 attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: viewModel.paraStyle)
             }
             for model in todoModels{
@@ -614,8 +619,13 @@ extension TextFormatter{
                 let viewModel = LWTodoViewModel(model: model)
                 let view = LWTodoView(viewModel: viewModel)
                 let viewSnapShot = view.asImage()
-                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: viewModel.bounds.size)
+                var size = viewModel.bounds.size
+                if isExportMode{
+                    size = exportManager.shared.getTodoAdaptatedSize(size: size)
+                }
+                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: size)
                 attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: textLeftParagraphStyle)
+                //TODO: 在深色模式下导出todo视图是黑色
             }
         }else{
             DispatchQueue.main.async {
