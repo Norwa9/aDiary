@@ -79,7 +79,7 @@ final class LWSyncEngine{
     //MARK: -初始化
     public func start(){
         print("开启LWSyncEngine")
-        //0.最开始检查用户状态
+        //0.最开始检查网络可用性、用户iCloud账户状态
         checkAccountStatus( {[weak self] accoutStatus,connected in
             guard let self = self else{return}
             if !connected{
