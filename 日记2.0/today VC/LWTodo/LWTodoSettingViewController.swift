@@ -241,6 +241,8 @@ class LWTodoSettingViewController:UIViewController{
     }
     
     @objc func deleteButtonTapped(_ sender:UIButton){
+        remindSwitch.setOn(false, animated: true) // 防止saveTodo中又注册通知
+        viewModel.needRemind = false // 防止saveTodo中又注册通知
         viewModel.deleteTodoView()
         self.dismiss(animated: true, completion: nil)
     }
@@ -260,9 +262,6 @@ class LWTodoSettingViewController:UIViewController{
         viewModel.note = noteTextView.text
         if remindSwitch.isOn{
             viewModel.remindDate = datePicker.date
-            viewModel.addNotification()
-        }else{
-            viewModel.removeNotification()
         }
         viewModel.reloadTodoView(todoView: todoView)
     }

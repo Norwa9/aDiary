@@ -211,6 +211,7 @@ class LWTodoViewModel:NSObject{
     }
     
     func saveTodo(){
+        updateTodoNotification()
         lwTextView?.textViewController?.save()
     }
     
@@ -283,13 +284,23 @@ class LWTodoViewModel:NSObject{
         }
     }
     
-    func addNotification(){
-        let model = generateModel()
-        let dict = LWNotificationHelper.generateTodoInfoDict(model: model)
-        LWNotificationHelper.shared.registerNotification(from: dict)
+    func toggleTodoState(){
+        if state == 0{
+            state = 1
+        }else{
+            state = 0
+        }
     }
     
-    func removeNotification(){
-        LWNotificationHelper.shared.unregisterNotification(uuids: [uuid])
+    func updateTodoNotification(){
+        if state == 0 && needRemind {
+            let model = generateModel()
+            let dict = LWNotificationHelper.generateTodoInfoDict(model: model)
+            LWNotificationHelper.shared.registerNotification(from: dict)
+        }
+        
+        if state == 1 {
+            LWNotificationHelper.shared.unregisterNotification(uuids: [uuid])
+        }
     }
 }

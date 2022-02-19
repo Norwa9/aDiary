@@ -170,11 +170,7 @@ class LWTodoView:UIView{
         generator.impactOccurred()
         
         // 2. 刷新todo按钮
-        if viewModel.state == 0{ // 变成完成
-            viewModel.state = 1
-        }else{
-            viewModel.state = 0
-        }
+        viewModel.toggleTodoState()
         loadStateButton()
         
         // 3. 刷新todo内容颜色和完成划线
@@ -184,12 +180,13 @@ class LWTodoView:UIView{
         // 4. 刷新附加信息
         loadExtroInfoLabel()
         
+        // 5. 刷新monthCell
         if viewModel.todoViewStyle == 1{
             // 保存在monthCell上施加的变动到diaryinfo，然后刷新monthCell就可以更新视图
             viewModel.saveAndupdateTodoListView()
         }
         
-        viewModel.saveTodo()
+        // 6. 持久化更改
         viewModel.reloadTodoView(todoView: self)
         
     }

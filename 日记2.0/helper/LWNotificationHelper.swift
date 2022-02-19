@@ -141,6 +141,9 @@ class LWNotificationHelper:NSObject{
     
     // MARK: API:注销通知
     public func unregisterNotification(uuids:[String]){
+        if uuids.isEmpty{
+            return
+        }
         // 0 每日日记
         // 1 待办提醒
         center.removeDeliveredNotifications(withIdentifiers: uuids)
@@ -168,7 +171,7 @@ class LWNotificationHelper:NSObject{
         content.sound = .default
 //        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 61, repeats: true)//测试，请退出APP到后台测试，在App内部不会显示通知！！
         
-        print("注册(\(body)前，待发送的通知有：")
+        print("注册\(body)前，待发送的通知有：")
         center.getPendingNotificationRequests { request in
             print("PendingRequest:\(request)")
         }
@@ -206,6 +209,7 @@ class LWNotificationHelper:NSObject{
         return dict
     }
     
+    // MARK: todo通知
     static func generateTodoInfoDict(model:LWTodoModel)->NSDictionary{
         let dict = NSMutableDictionary()
         dict["title"] = "提醒：" + model.content
@@ -220,6 +224,7 @@ class LWNotificationHelper:NSObject{
         var dateComponents = DateComponents()
         dateComponents.year = getDateComponent(for: remindDate, for: .year)
         dateComponents.month = getDateComponent(for: remindDate, for: .month)
+        dateComponents.day = getDateComponent(for: remindDate, for: .day)
         dateComponents.hour = getDateComponent(for: remindDate, for: .hour)
         dateComponents.minute = getDateComponent(for: remindDate, for: .mintue)
         dict["dateComponents"] = dateComponents
