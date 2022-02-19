@@ -346,9 +346,9 @@ class LWSettingViewController: UIViewController {
         iCloudTitle.font = LWSettingViewController.contentFont
         iCloudSwitch.isOn = userDefaultManager.iCloudEnable
         iCloudSwitch.addTarget(self, action: #selector(iCloudDidChange), for: .touchUpInside)
-        exportPDFButton.setAttributedTitle(settingVCConfig.exportPDFButtonAttributedTitle(title: "导出所有日记为PDF",color: .link), for: .normal)
+        exportPDFButton.setAttributedTitle(settingVCConfig.exportPDFButtonAttributedTitle(title: "导出日记",color: .link), for: .normal)
         exportPDFButton.contentHorizontalAlignment = .leading
-        exportPDFButton.addTarget(self, action: #selector(exportAll), for: .touchUpInside)
+        exportPDFButton.addTarget(self, action: #selector(showExportVC), for: .touchUpInside)
         
         //其它
         otherContainerTitle.text = "其它"
@@ -805,11 +805,11 @@ class LWSettingViewController: UIViewController {
     }
     
     //MARK: -导出
-    @objc func exportAll(){
-        exportManager.shared.exportAll(){
-
-        }
-//        exportManager.shared.exportText()
+    @objc func showExportVC(){
+        let vc = exportSettingViewController()
+        vc.transitioningDelegate = vc
+        vc.modalPresentationStyle = .custom//模态
+        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK: -请求好评

@@ -13,36 +13,17 @@ class exportManager{
     
     static let shared = exportManager()
     
-    ///导出PDF
-    func exportAll(completion: @escaping() -> Void){
+    //MARK: 导出PDF
+    func exportPDF(startDate:Date,endDate:Date){
+        indicatorViewManager.shared.start(type: .progress)
+        
         let W = min(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
         let H = max(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
-        indicatorViewManager.shared.start(type: .progress)
         let textView = LWTextView(frame: CGRect(x: 0, y: 0, width: W, height: H))
         let formatter = TextFormatter(textView: textView)
         
-        let dateFomatter = DateFormatter()
-        dateFomatter.dateFormat = "yyyy年M月d日"
-        //print("000000000")
         DispatchQueue.main.async{
-            let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
-            let sortedAllDiary = allDiary.sorted { (m1, m2) -> Bool in
-                let d1 = m1.trueDate
-                let d2 = m2.trueDate
-                if let date1 = dateFomatter.date(from: d1) ,let date2 = dateFomatter.date(from: d2){
-                    //如果日期不一样，日期早的排在前
-                    if date1.compare(date2) ==  .orderedAscending{
-                        return true
-                    }
-                    //如果日期一样，页面号小的排在前
-                    if date1.compare(date2) == .orderedSame{
-                        let pageIndex1 = m1.date.parseDateSuffix()
-                        let pageIndex2 = m2.date.parseDateSuffix()
-                        return pageIndex1 < pageIndex2
-                    }
-                }
-                return false
-            }
+            let sortedAllDiary = self.getFilteredDiary(startDate: startDate, endDate: endDate)
             
             //1.merge all diaries into one
             let alldiaryString = NSMutableAttributedString()
@@ -53,37 +34,49 @@ class exportManager{
             titlePara.lineSpacing = userDefaultManager.lineSpacing
             let titleAttributes : [NSAttributedString.Key:Any] = [
                 .paragraphStyle : titlePara,
-                .font : userDefaultManager.font,
-                .foregroundColor : APP_GREEN_COLOR()
+                .font : userDefaultManager.font.bold() ?? userDefaultManager.font,
             ]
+            var lastTrueDate:String? = nil
             for diary in sortedAllDiary{
                 if let rtfd = diary.rtfd,let aString = LoadRTFD(rtfd: rtfd),aString.length != 0{
-                    //日期
+                    let onePage = NSMutableAttributedString(string: "")
+                    
+                    // 1.日期
                     let date = diary.date
                     let dateTitle = NSAttributedString(string: date, attributes: titleAttributes)
-                    alldiaryString.append(dateTitle)
-                    alldiaryString.insert(NSAttributedString(string: "\n"), at: alldiaryString.length)
-                    
-                    //正文
+                    onePage.append(dateTitle)
+                    onePage.insert(NSAttributedString(string: "\n"), at: onePage.length)
+                    // 2. 正文
                     let imageModels = diary.scalableImageModels
                     let todoModels = diary.lwTodoModels
-                    let formatteredAString = formatter.processAttrString(
+                    let contentAttributedString = formatter.processAttrString(
                         aString: aString,
                         todoModels: todoModels,
                         imageModels: imageModels,
                         isSharingMode: true,
                         isExportMode: true
                     )
+                    // 3. emojis
                     var emojis = diary.emojis.joined()
                     if emojis.length != 0{
                         emojis += "\n"
                     }
-                    formatteredAString.insert(NSAttributedString(string: emojis), at: 0)
+                    onePage.insert(NSAttributedString(string: emojis), at: onePage.length)
+                    onePage.insert(contentAttributedString, at: onePage.length)
                     
-                    //添加一篇
-                    alldiaryString.append(formatteredAString)
-                    alldiaryString.insert(NSAttributedString(string: "\n"), at: alldiaryString.length)
-
+                    //添加一篇(同一天内的不同的日记间隔小)
+                    if let lastTrueDate = lastTrueDate{
+                        if lastTrueDate == diary.trueDate{
+                            alldiaryString.insert(NSAttributedString(string: "\n\n"), at: alldiaryString.length)
+                        }else{
+                            alldiaryString.insert(NSAttributedString(string: "\n\n\n\n\n\n\n\n"), at: alldiaryString.length)
+                        }
+                    }else{
+                        // 第一篇不处理
+                    }
+                    alldiaryString.append(onePage)
+                    
+                    lastTrueDate = diary.trueDate // 更新lastTrueDate
                 }
             }
 
@@ -146,7 +139,6 @@ class exportManager{
                 let filePath = (tempDocumentsPath as NSString).appendingPathComponent("\(filename).pdf")
                 let url = URL(fileURLWithPath: filePath)
 
-                completion()
                 indicatorViewManager.shared.stop()
                 let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 let topVC = UIApplication.getTopViewController()!
@@ -167,39 +159,99 @@ class exportManager{
     }
     
     func getImageAdaptatedSize(size:CGSize,adaptScale:CGFloat)->CGSize{
-//        let w = size.width
-//        let h = size.height
-//        let windowW = min(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
-//        let windowH = max(globalConstantsManager.shared.kScreenWidth, globalConstantsManager.shared.kScreenHeight)
-//        let scale = w / windowW
-//        let newW = w / scale
-//        let newH = h / scale
         let imageAdaptatedWidth = self.pageW * adaptScale
         let imageAdaptatedHeight = (size.height / size.width) * imageAdaptatedWidth
         return CGSize(width: imageAdaptatedWidth, height: imageAdaptatedHeight)
-        
-        
     }
     
     func getTodoAdaptatedSize(size:CGSize)->CGSize{
         let scale = size.height / size.width
         let newWidth = self.pageW * 0.95 // 0.95是默认todo宽度与屏幕宽度的比值
-        let newHeight = self.pageW * scale
+        let newHeight = newWidth * scale
         return CGSize(width: newWidth, height: newHeight)
     }
     
-    func exportText(){
-        let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
+    //MARK: text
+    func exportText(startDate:Date,endDate:Date){
+        indicatorViewManager.shared.start(type: .progress)
+        let allDiary = getFilteredDiary(startDate: startDate, endDate: endDate)
         var text = ""
-        for diary in allDiary{
-            if diary.year == 2020{
-                text += diary.content + "\n"
+        var lastTrueDate:String? = nil
+        for (i,diary) in allDiary.enumerated(){
+            let progress:Float = Float(i) / Float(allDiary.count)
+            indicatorViewManager.shared.progress = progress
+            
+            //1
+            let date = diary.date
+            //2
+            let emojis = " " + diary.emojis.joined() + "\n"
+            //3
+            let content = diary.content
+            
+            let oneDiary = date + emojis + content
+            
+            if let lastTrueDate = lastTrueDate{
+                if lastTrueDate == diary.trueDate{
+                    text.append("\n\n")
+                }else{
+                    text.append("\n\n\n\n")
+                }
+            }else{
+                // 第一篇不处理
             }
+            text += oneDiary
+            lastTrueDate = diary.trueDate
         }
+        indicatorViewManager.shared.stop()
         let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
-        let topVC = UIApplication.getTopViewController()!
+        guard let topVC = UIApplication.getTopViewController() else{return}
+        //ipad上要挂载到某个view上
+        let isPad = ( UIDevice.current.userInterfaceIdiom == .pad)
+        if isPad {
+            activityVC.popoverPresentationController?.sourceView = topVC.view
+            activityVC.popoverPresentationController?.sourceRect = CGRect(x: topVC.view.bounds.width / 2, y: topVC.view.bounds.height / 2, width: 0, height: 0)
+            activityVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.any
+        }
         topVC.present(activityVC, animated: true, completion: nil)
         
+    }
+    
+    
+    /// 返回在日期区间内，顺序的日记
+    private func getFilteredDiary(startDate:Date,endDate:Date) -> [diaryInfo]{
+        let dateFomatter = DateFormatter()
+        dateFomatter.dateFormat = "yyyy年M月d日"
+        let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
+        let filteredDiary = allDiary.filter { diary in
+            let dateCN = diary.trueDate
+            if let date = dateFomatter.date(from: dateCN){
+                if date.compare(startDate) == .orderedDescending && date.compare(endDate) == .orderedAscending{
+                    return true
+                }else{
+                    return false
+                }
+            }
+            return true
+        }
+        let sortedAllDiary = filteredDiary.sorted { (m1, m2) -> Bool in
+            let d1 = m1.trueDate
+            let d2 = m2.trueDate
+            if let date1 = dateFomatter.date(from: d1) ,let date2 = dateFomatter.date(from: d2){
+                //如果日期不一样，日期早的排在前
+                if date1.compare(date2) ==  .orderedAscending{
+                    return true
+                }
+                //如果日期一样，页面号小的排在前
+                if date1.compare(date2) == .orderedSame{
+                    let pageIndex1 = m1.date.parseDateSuffix()
+                    let pageIndex2 = m2.date.parseDateSuffix()
+                    return pageIndex1 < pageIndex2
+                }
+            }
+            return false
+        }
+        
+        return sortedAllDiary
     }
     
 

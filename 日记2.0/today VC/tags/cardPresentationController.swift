@@ -10,13 +10,15 @@ import UIKit
 class cardPresentationController: UIPresentationController {
     let blurEffectView: UIVisualEffectView!
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
-    let viewHeight:CGFloat = 400
+    var viewHeight:CGFloat
     var viewWidth:CGFloat{
         get{
             return globalConstantsManager.shared.tagsVCWidth
         }
     }
-    override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+    
+    init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?,viewHeight:CGFloat = 400) {
+        self.viewHeight = viewHeight
         //背景模糊视图
         let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)

@@ -131,6 +131,7 @@
 		EAA4E93F27BCE9E5005F93BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93E27BCE9E5005F93BD /* Constants.swift */; };
 		EAA4E94027BCEA19005F93BD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E93E27BCE9E5005F93BD /* Constants.swift */; };
 		EAA4E94227BFE59B005F93BD /* AlamofireHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E94127BFE59A005F93BD /* AlamofireHelper.swift */; };
+		EAA4E94727C1251B005F93BD /* exportSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E94627C1251B005F93BD /* exportSettingViewController.swift */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -330,6 +331,7 @@
 		EAA4E93C27BCE29E005F93BD /* myView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myView.swift; sourceTree = "<group>"; };
 		EAA4E93E27BCE9E5005F93BD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EAA4E94127BFE59A005F93BD /* AlamofireHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireHelper.swift; sourceTree = "<group>"; };
+		EAA4E94627C1251B005F93BD /* exportSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportSettingViewController.swift; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 		EAA29E7725C59ABB00AA6971 /* helper */ = {
 			isa = PBXGroup;
 			children = (
+				EAA4E94327C124C6005F93BD /* Export */,
 				EAAFDDFB27A3F751008286EB /* debug */,
 				1B1ED87C26D372AC008D88FC /* introduction */,
 				EA67911126D109D800B44ECA /* DataBase */,
@@ -707,7 +710,6 @@
 				EADBC2EB26B303AC004D1A52 /* globalConstants.swift */,
 				EA51D1F625D7FCE10007BDFA /* dataManager.swift */,
 				EA9AE7B3260F634200D44221 /* userDefaultManager.swift */,
-				EA6EFE8226297E84004B0FA1 /* exportManager.swift */,
 				EA6EFE892629C050004B0FA1 /* fileManager.swift */,
 				EA537B9C2632FD9500C2E9EE /* imageManager.swift */,
 				EA6EFE7926285D27004B0FA1 /* privacyManager.swift */,
@@ -795,6 +797,15 @@
 				EAA4E93727BCE20C005F93BD /* TodoWidget.swift */,
 			);
 			path = todoWidget;
+			sourceTree = "<group>";
+		};
+		EAA4E94327C124C6005F93BD /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				EA6EFE8226297E84004B0FA1 /* exportManager.swift */,
+				EAA4E94627C1251B005F93BD /* exportSettingViewController.swift */,
+			);
+			path = Export;
 			sourceTree = "<group>";
 		};
 		EAAFDDC9279EE414008286EB /* LWTodo */ = {
@@ -1193,6 +1204,7 @@
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EAA4E92C27BC02C2005F93BD /* LWSwitchSettingCell.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
+				EAA4E94727C1251B005F93BD /* exportSettingViewController.swift in Sources */,
 				EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */,
 				EA67914626D1218400B44ECA /* LWTextViewController.swift in Sources */,
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
