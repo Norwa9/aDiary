@@ -597,7 +597,7 @@ class LWSettingViewController: UIViewController {
         }
         
         showLunarCell.snp.makeConstraints { make in
-            make.top.equalTo(todoListStyleCell.snp.bottom).offset(10)
+            make.top.equalTo(todoListStyleCell.snp.bottom).offset(0) // 10(内) + 10(内) + 0 = 20
             make.left.right.equalToSuperview()
         }
         
@@ -617,8 +617,8 @@ class LWSettingViewController: UIViewController {
         }
         
         autoCreateTitle.snp.makeConstraints { make in
-            make.left.equalTo(dailyRemindLabel)
             make.top.equalTo(dailyRemindLabel.snp.bottom).offset(20)
+            make.left.equalTo(dailyRemindLabel)
         }
         
         autoCreateTitleSwitch.snp.makeConstraints { make in
