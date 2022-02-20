@@ -8,12 +8,14 @@
 import Foundation
 import UIKit
 class exportManager{
+    var completion: (() -> Void)?
     let pageW = 595.2 - 50 * 2
     let pageH = 841.8 - 50 * 2
     
     static let shared = exportManager()
     
     //MARK: 导出PDF
+    
     func exportPDF(startDate:Date,endDate:Date){
         indicatorViewManager.shared.start(type: .progress)
         
@@ -140,6 +142,7 @@ class exportManager{
                 let url = URL(fileURLWithPath: filePath)
 
                 indicatorViewManager.shared.stop()
+                self.completion?()
                 let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 let topVC = UIApplication.getTopViewController()!
                 
@@ -158,9 +161,20 @@ class exportManager{
         
     }
     
+    /// adaptScale:插图占屏幕的百分比
     func getImageAdaptatedSize(size:CGSize,adaptScale:CGFloat)->CGSize{
-        let imageAdaptatedWidth = self.pageW * adaptScale
-        let imageAdaptatedHeight = (size.height / size.width) * imageAdaptatedWidth
+        let imageRatio = size.height / size.width
+        var imageAdaptatedWidth = self.pageW * adaptScale // 适应到A4值上，图片的相对宽度
+        if imageAdaptatedWidth > self.pageW / 2{
+            // 缩放图片，防止图片太宽文字与图片比例失调
+            imageAdaptatedWidth = self.pageW / 2
+        }
+        var imageAdaptatedHeight = imageRatio * imageAdaptatedWidth
+        if imageAdaptatedHeight > self.pageH / 2{
+            // 继续放缩，防止图片太长造成裁剪
+            imageAdaptatedHeight = self.pageH / 2
+            imageAdaptatedWidth = imageAdaptatedHeight / imageRatio
+        }
         return CGSize(width: imageAdaptatedWidth, height: imageAdaptatedHeight)
     }
     
@@ -203,6 +217,7 @@ class exportManager{
             lastTrueDate = diary.trueDate
         }
         indicatorViewManager.shared.stop()
+        completion?()
         let activityVC = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         guard let topVC = UIApplication.getTopViewController() else{return}
         //ipad上要挂载到某个view上

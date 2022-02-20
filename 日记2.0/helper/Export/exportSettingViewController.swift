@@ -21,7 +21,15 @@ class exportSettingViewController: UIViewController {
     private var datePickerEnd:UIDatePicker!
     private var exportButton:UIButton!
     
+    let exportTitle = NSAttributedString(string: "导出").addingAttributes([
+        .font : UIFont.systemFont(ofSize: 18, weight: .bold),
+        .foregroundColor : UIColor.white
+    ])
     
+    let exportingTitle = NSAttributedString(string: "稍等").addingAttributes([
+        .font : UIFont.systemFont(ofSize: 18, weight: .bold),
+        .foregroundColor : UIColor.white
+    ])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,11 +74,12 @@ class exportSettingViewController: UIViewController {
         exportButton.addTarget(self, action: #selector(export), for: .touchUpInside)
         exportButton.backgroundColor = .black
         exportButton.layer.cornerRadius = 10
-        let title = NSAttributedString(string: "导出").addingAttributes([
-            .font : UIFont.systemFont(ofSize: 18, weight: .bold),
-            .foregroundColor : UIColor.white
-        ])
-        exportButton.setAttributedTitle(title, for: .normal)
+        exportButton.setAttributedTitle(exportTitle, for: .normal)
+        
+        exportManager.shared.completion = { [self] in
+            exportButton.setAttributedTitle(exportTitle, for: .normal)
+            exportButton.isEnabled = true
+        }
         
         
         self.view.addSubview(containerView)
@@ -141,6 +150,8 @@ class exportSettingViewController: UIViewController {
             exportButton.shake()
             return
         }
+        exportButton.setAttributedTitle(exportingTitle, for: .normal)
+        exportButton.isEnabled = false
         if mode == 0{
             exportManager.shared.exportPDF(startDate: startDate, endDate: endDate)
         }else if mode == 1{
