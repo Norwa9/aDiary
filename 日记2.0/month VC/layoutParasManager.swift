@@ -54,7 +54,7 @@ class layoutParasManager: NSObject {
     }
     
     ///内部cell的inset
-    var todoListCellInset = UIEdgeInsets(top: 0, left: 2.5, bottom: 0, right: 2.5)
+    var todoListCellInset = UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
     
     ///todo list cell的宽度
     var todoListItemWidth:CGFloat{
