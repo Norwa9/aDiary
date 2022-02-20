@@ -91,7 +91,7 @@ public extension NSMutableAttributedString {
                 // 防止out of bounds溢出
                 // TODO: 将超出的长度用空格来填补，然后再replaceCharacters
                 indicatorViewManager.shared.start(type: .warning)
-                let text =  "\(range.upperBound)>self.length(\(self.length))"
+                let text =  "error:upperBound(\(range.upperBound))>length(\(self.length))"
                 indicatorViewManager.shared.stop(withText: text)
                 return
             }
