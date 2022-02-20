@@ -7,14 +7,14 @@
 
 import Foundation
 import WhatsNewKit
+import UIKit
 
 class WhatsNewHelper{
     ///每次更新前，只要创建对应版本号的whatsNew结构体，就可以对不同版本的用户显示不同的更新提示！
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        //MARK:-3.2.4
-        let version = WhatsNew.Version(major: 3, minor: 2, patch: 4)
+        let version = WhatsNew.Version(major: 3, minor: 3, patch: 0)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -23,25 +23,20 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "推出了aDiary Pro计划 ",
-                    subtitle: "在免费版的基础上探索更多体验",
-                    image: UIImage(named: "pro")
+                    title: "新增按区间导出日记",
+                    subtitle: "",
+                    image: nil
                 ),
                 WhatsNew.Item(
-                    title: "新版待办功能",
-                    subtitle: "可添加时间提醒与备注（Pro）",
-                    image: UIImage(named: "checkbox")
+                    title: "新增纯文本导出选项",
+                    subtitle: "",
+                    image: nil
                 ),
                 WhatsNew.Item(
-                    title: "修改UI以及优化App稳定性",
-                    subtitle: "不定期收集Bug,更新App",
-                    image: UIImage(named: "update")
-                ),
-                WhatsNew.Item(
-                    title: "如有任何问题，欢迎和开发者联系",
-                    subtitle: "设置->反馈，取得联系",
-                    image: UIImage(named: "contactMe")
-                ),
+                    title: "新增农历",
+                    subtitle: "设置->显示农历",
+                    image: nil
+                )
             ]
         )
         arr.append(whatsNew)
@@ -94,12 +89,9 @@ class WhatsNewHelper{
             return nil
         }
         
-        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 0)) ||
-            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 1)) ||
-            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 2)) ||
-            versionStore.has(version: WhatsNew.Version(major: 3, minor: 2, patch: 3))
+        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 3, patch: 0))
         {
-            // 如果展示过3.2的欢迎页，则不需要再展示
+            // 如果展示过3.3的欢迎页，则不需要再展示
             return nil
         }
         
