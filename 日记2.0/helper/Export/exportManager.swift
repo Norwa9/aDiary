@@ -225,7 +225,10 @@ class exportManager{
         let filteredDiary = allDiary.filter { diary in
             let dateCN = diary.trueDate
             if let date = dateFomatter.date(from: dateCN){
-                if date.compare(startDate) == .orderedDescending && date.compare(endDate) == .orderedAscending{
+                if (date.compare(startDate) == .orderedDescending || date.compare(startDate) == .orderedSame)
+                    &&
+                    (date.compare(endDate) == .orderedAscending || date.compare(endDate) == .orderedSame)
+                {
                     return true
                 }else{
                     return false

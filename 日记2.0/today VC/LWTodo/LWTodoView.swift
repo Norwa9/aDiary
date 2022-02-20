@@ -264,7 +264,7 @@ extension LWTodoView:UITextViewDelegate{
         }else{
             newHeight = contentTextView.contentSize.height + 2 * padding
         }
-         print("newHeight:\(newHeight),textViewHeight:\(textViewSize.height),extroInfoLabelHeight:\(extroInfoLabelSize.height)")
+         // print("newHeight:\(newHeight),textViewHeight:\(textViewSize.height),extroInfoLabelHeight:\(extroInfoLabelSize.height)")
         let newBounds = CGRect(x: 0, y: 0, width: self.bounds.width, height: newHeight)
         return newBounds
     }

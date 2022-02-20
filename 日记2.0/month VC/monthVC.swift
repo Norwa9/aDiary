@@ -12,7 +12,7 @@ import MJRefresh
 import RealmSwift
 
 class monthVC: UIViewController {
-    //MARK:-var
+    //MARK: -var
     var monthButtons = [monthButton]()
     var curDate = Date()
     var curDay:Int!
@@ -22,7 +22,7 @@ class monthVC: UIViewController {
     var selectedYear:Int!
     var selectedMonth:Int!
     
-    //MARK:-UIComponents
+    //MARK: -UIComponents
     var isShowingBackButton = true
     var isCurrentMonth:Bool = true
     var floatButton:UIButton!
@@ -65,7 +65,7 @@ class monthVC: UIViewController {
     var editorVC:todayVC!
     var selectedCell:monthCell!
     
-    //MARK:-生命周期
+    //MARK: -生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -158,7 +158,7 @@ class monthVC: UIViewController {
     }
     
     
-    //MARK:-初始化UI
+    //MARK: -初始化UI
     private func initUI(){
         // 初始化appSize
         // 当在iPad上App以分屏方式启动时，初始的大小不能取自UIScreen.main，那样是整个设备屏幕大小。
@@ -279,7 +279,7 @@ class monthVC: UIViewController {
         self.view.addSubview(blurEffectView)
     }
     
-    //MARK:-auto layout
+    //MARK: -auto layout
     private func setupConstraint(){
         topbar.snp.makeConstraints { make in
             make.top.left.right.equalTo(view.safeAreaLayoutGuide)
@@ -356,7 +356,7 @@ class monthVC: UIViewController {
         
     }
 
-    //MARK:-action target
+    //MARK: -action target
     ///按下月份按钮
     @objc func monthDidTap(sender:monthButton){
         let tappedMonth = sender.tag
@@ -471,7 +471,7 @@ class monthVC: UIViewController {
         popover.show(filterView, fromView: filterButton)
     }
     
-    //MARK: topbar按钮触发事件
+    //MARK:  topbar按钮触发事件
     func topToolButtonTapped(button: topbarButton){
         switch button.tag {
         case 0:
@@ -483,7 +483,6 @@ class monthVC: UIViewController {
             reloadCollectionViewData(forRow: -1,animated: true)//刷新数据源，同时伴有动画效果
         case 2:
             //进入设置界面
-//            let settingVC = storyboard?.instantiateViewController(identifier: "settingViewController") as! settingViewController
             let settingVC = LWSettingViewController()
             present(settingVC, animated: true, completion: nil)
         case 3:
@@ -497,7 +496,7 @@ class monthVC: UIViewController {
     
 }
 
-//MARK:-collectionView数据源和代理
+//MARK: -collectionView数据源和代理
 extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     //读取某年某月的日记，或读取全部日记
     func configureDataSource(year:Int,month:Int){
@@ -621,7 +620,7 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
     
 }
 
-//MARK:-MJRefresh
+//MARK: -MJRefresh
 extension monthVC{
     func setupMJRefresh(isFitlerMode:Bool){
         if isFitlerMode{
@@ -659,7 +658,7 @@ extension monthVC{
 
 
 
-//MARK:-切换搜索界面
+//MARK: -切换搜索界面
 extension monthVC:UISearchBarDelegate{
     func switchToFilterView(button:topbarButton){
         isFilterMode.toggle()
@@ -752,7 +751,7 @@ extension monthVC:UISearchBarDelegate{
 
 }
 
-//MARK: -context Menu
+//MARK:  -context Menu
 extension monthVC {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
@@ -803,7 +802,7 @@ extension monthVC {
         self.present(ac, animated: true, completion: nil)
     }
 }
-//MARK: -切换深色模式监听事件
+//MARK:  -切换深色模式监听事件
 extension monthVC{
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -816,7 +815,7 @@ extension monthVC{
 
 }
 
-//MARK: -屏幕旋转
+//MARK:  -屏幕旋转
 extension monthVC{
     @objc private func onContainerSizeChanged(){
         guard UIDevice.current.userInterfaceIdiom == .pad else{
@@ -863,7 +862,7 @@ extension monthVC{
     }
 }
 
-//MARK: -ipad分屏
+//MARK:  -ipad分屏
 extension monthVC{
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
@@ -881,7 +880,7 @@ extension monthVC{
 
 }
 
-//MARK: -动画
+//MARK:  -动画
 extension monthVC:UIViewControllerTransitioningDelegate{
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animator = editorAnimator()
@@ -900,7 +899,7 @@ extension monthVC:UIViewControllerTransitioningDelegate{
     }
 }
 
-// MARK: 响应通知
+// MARK:  响应通知
 extension monthVC{
     
 }

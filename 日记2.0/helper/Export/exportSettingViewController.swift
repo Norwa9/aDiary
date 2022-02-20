@@ -131,10 +131,13 @@ class exportSettingViewController: UIViewController {
     }
     
     @objc func export(){
-        let startDate = datePickerStart.date
-        let endDate = datePickerEnd.date
+        var startDate = datePickerStart.date
+        var endDate = datePickerEnd.date
         let mode = segControl.selectedSegmentIndex
-        guard startDate.compare(endDate) == .orderedAscending else {
+        let calendar = Calendar(identifier: .chinese)
+        startDate = calendar.startOfDay(for: startDate)
+        endDate = calendar.startOfDay(for: endDate)
+        guard !(startDate.compare(endDate) == .orderedDescending) else {
             exportButton.shake()
             return
         }
