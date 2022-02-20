@@ -104,6 +104,8 @@ class indicatorViewManager{
         case .iap:
             indicatorView =  LWDefaultIndicatorView()
             indicatorView.setLabel("正在请求...")
+        case .warning:
+            indicatorView = LWWarningIndicatorView() // 警告提示，没有菊花转
         default:
             indicatorView =  LWDefaultIndicatorView()
         }

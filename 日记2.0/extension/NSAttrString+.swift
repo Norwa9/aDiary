@@ -47,23 +47,22 @@ extension NSAttributedString{
                 
                 // 保存时，用默认图像占位，以表示这个location有NSTextAttachment。
                 // 这是必要的，否者attrText的长度会不正常
-                let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!)
-                attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
+                let palceHolderRange = NSRange(location: location, length: 1)
+                attrText.replaceCharacters(in: palceHolderRange, with: "P")
                 
                 attrTextForContent.replaceCharacters(in: range, with: "P")
                 
                 // return
-            }else if
-            // 2. 持久化todo信息
-                let subViewAttchemnt = object as? SubviewTextAttachment,
-                let view = subViewAttchemnt.view as? LWTodoView{
-                // print("遍历到位置\(location)有一个todo model")
+            }else if let subViewAttchemnt = object as? SubviewTextAttachment,
+                     let view = subViewAttchemnt.view as? LWTodoView{
+                // 2. 持久化todo信息
                 let viewModel = view.viewModel
+                print("遍历到位置\(location)有一个todo model,内容:\(viewModel.content)")
                 viewModel.location = location // 更新viewModel的location为保存时刻的location
                 let model = viewModel.generateModel()
                 newTodoModels.append(model)
-                let attchemnt = NSTextAttachment(image: UIImage(named: "emptyImage.jpg")!) // 占位
-                attrText.replaceAttchment(attchemnt, attchmentAt: location, with: imageCenterParagraphStyle)
+                let palceHolderRange = NSRange(location: location, length: 1)
+                attrText.replaceCharacters(in: palceHolderRange, with: "T")
                 
                 attrTextForContent.replaceCharacters(in: range, with: " ")
             }

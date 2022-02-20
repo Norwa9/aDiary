@@ -29,6 +29,9 @@ enum indicatorType:Int{
     ///删除
     case delete
     
+    /// 提示窗口
+    case warning
+    
     ///其它情况
     ///搜索过滤
     case other

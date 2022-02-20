@@ -86,9 +86,13 @@ public extension NSMutableAttributedString {
             insertion.append(attachmentString)
 
             let range = NSRange(location: index, length: insertion.length)
+            print("range:\(range),upperBound:\(range.upperBound),attributedStiring.length:\(self.length)")
             if range.upperBound > self.length{
                 // 防止out of bounds溢出
                 // TODO: 将超出的长度用空格来填补，然后再replaceCharacters
+                indicatorViewManager.shared.start(type: .warning)
+                let text =  "\(range.upperBound)>self.length(\(self.length))"
+                indicatorViewManager.shared.stop(withText: text)
                 return
             }
             self.replaceCharacters(in: range, with: insertion)
