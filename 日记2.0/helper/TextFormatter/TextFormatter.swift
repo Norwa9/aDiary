@@ -565,18 +565,15 @@ extension TextFormatter{
         let imageModels = diary.scalableImageModels
         let todoModels = diary.lwTodoModels
         
-        DispatchQueue.global(qos: .default).async {
-            let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
-            //TODO:当用cleanContent替代rtfd时，遍历attribute有可能崩溃
-            let correctedAString = self.processAttrString(
-                aString:attributedText,
-                todoModels: todoModels,
-                imageModels: imageModels
-            )
-            DispatchQueue.main.async {
-                self.textView.attributedText = correctedAString
-            }
-        }
+        // TODO: 去掉global(qos: .default).async
+        let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
+        //TODO:当用cleanContent替代rtfd时，遍历attribute有可能崩溃
+        let correctedAString = self.processAttrString(
+            aString:attributedText,
+            todoModels: todoModels,
+            imageModels: imageModels
+        )
+        self.textView.attributedText = correctedAString
     }
     
     ///读取富文本，并为图片附件设置正确的大小、方向
@@ -628,21 +625,19 @@ extension TextFormatter{
                 //TODO: 在深色模式下导出todo视图是黑色
             }
         }else{
-            DispatchQueue.main.async {
-                for model in imageModels{
-                    let viewModel = ScalableImageViewModel(model: model)
-                    let view = ScalableImageView(viewModel: viewModel)
-                    view.delegate = self.textView
-                    let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
-                    attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: viewModel.paraStyle)
-                }
-                for model in todoModels{
-                    let viewModel = LWTodoViewModel(model: model)
-                    let view = LWTodoView(viewModel: viewModel)
-                    viewModel.lwTextView = self.textView
-                    let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
-                    attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: textLeftParagraphStyle)
-                }
+            for model in imageModels{
+                let viewModel = ScalableImageViewModel(model: model)
+                let view = ScalableImageView(viewModel: viewModel)
+                view.delegate = self.textView
+                let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+                attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: viewModel.paraStyle)
+            }
+            for model in todoModels{
+                let viewModel = LWTodoViewModel(model: model)
+                let view = LWTodoView(viewModel: viewModel)
+                viewModel.lwTextView = self.textView
+                let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+                attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: textLeftParagraphStyle)
             }
         }
         

@@ -50,6 +50,7 @@ extension NSAttributedString{
                 let palceHolderRange = NSRange(location: location, length: 1)
                 attrText.replaceCharacters(in: palceHolderRange, with: "P")
                 
+                print("range:\(range),palceHolderRange:\(palceHolderRange)")
                 attrTextForContent.replaceCharacters(in: range, with: "P")
                 
                 // return
