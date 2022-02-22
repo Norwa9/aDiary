@@ -565,7 +565,6 @@ extension TextFormatter{
         let imageModels = diary.scalableImageModels
         let todoModels = diary.lwTodoModels
         
-        // TODO: 去掉global(qos: .default).async
         let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
         //TODO:当用cleanContent替代rtfd时，遍历attribute有可能崩溃
         let correctedAString = self.processAttrString(

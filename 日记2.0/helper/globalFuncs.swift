@@ -153,7 +153,7 @@ func LoadRTFD(rtfd:Data?) -> NSAttributedString?{
             try aString =  NSAttributedString(data: rtfd, options: [.documentType:NSAttributedString.DocumentType.rtfd,.characterEncoding:String.Encoding.utf8], documentAttributes: nil)
         } catch{
             indicatorViewManager.shared.start(type: .warning)
-            indicatorViewManager.shared.stop(withText: "error:rtfd")
+            indicatorViewManager.shared.stop(withText: "warning:rtfd")
             aString = nil
         }
     }else{
