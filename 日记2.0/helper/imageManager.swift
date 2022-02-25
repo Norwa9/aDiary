@@ -30,7 +30,7 @@ class imageManager{
             // print("读取日记插图：\(uuid)")
             // print("uuid:\(uuid)")
             if let img = ImageTool.shared.loadImage(uuid: uuid){
-                images.append(img.resizeToFitCell())
+                images.append(img)
             }else{
                 print("loadImage faild")
             }

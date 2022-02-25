@@ -24,7 +24,9 @@ class LWTodoView:UIView{
     var extroInfoLabel:UILabel!
     
     var viewModel:LWTodoViewModel
-
+    
+    let editingBorderColor:CGColor = UIColor.systemGray4.cgColor
+    let normalBorderColor:CGColor = UIColor.systemGray6.withAlphaComponent(0.5).cgColor
     
     init(viewModel:LWTodoViewModel) {
         self.viewModel = viewModel
@@ -41,10 +43,11 @@ class LWTodoView:UIView{
         // containerView
         containerView = UIView()
         containerView.backgroundColor = .systemBackground
-//        containerView.layer.borderWidth = 1
-        containerView.layer.borderColor = UIColor.systemGray5.cgColor
+        if viewModel.todoViewStyle == 0{
+            containerView.layer.borderWidth = 1
+            containerView.layer.borderColor = self.normalBorderColor
+        }
         containerView.layer.cornerRadius = 5
-        containerView.setupShadow(opacity: 0.1, radius: 0.5, offset: .zero, color: .black)
         
         // stateButton
         stateButton = UIButton()
@@ -60,6 +63,7 @@ class LWTodoView:UIView{
         // contentTextView.setDebugBorder()
         contentTextView.font = viewModel.todoFont // 使用用户自定义字体
         if viewModel.todoViewStyle == 1{
+            contentTextView.isScrollEnabled = false
             contentTextView.textContainer.maximumNumberOfLines = 1
             contentTextView.isEditable = false
         }
@@ -110,7 +114,7 @@ class LWTodoView:UIView{
         self.moreButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             if viewModel.todoViewStyle == 0{
-                make.right.equalToSuperview().offset(0)
+                make.right.equalToSuperview().offset(-5)
                 let fontHeight = viewModel.todoFont.lineHeight
                 make.size.equalTo(CGSize(width: fontHeight, height: fontHeight))
             }else if viewModel.todoViewStyle == 1{
@@ -210,7 +214,7 @@ extension LWTodoView:UITextViewDelegate{
         viewModel.lwTextView?.textViewController?.isTextViewEditing = true // 防止退出手势冲突
         viewModel.lwTextView?.textViewController?.keyBoardToolsBar.reloadTextViewToolBar(type: 1)
         UIView.animate(withDuration: 0.2) {
-            self.containerView.layer.borderWidth = 1
+            self.containerView.layer.borderColor = self.editingBorderColor
         }
         viewModel.adjustTextViewInset()
     }
@@ -237,7 +241,7 @@ extension LWTodoView:UITextViewDelegate{
             viewModel.content = todoText
         }
         UIView.animate(withDuration: 0.2, animations: {
-            self.containerView.layer.borderWidth = 0
+            self.containerView.layer.borderColor = self.normalBorderColor
         }, completion: { _ in
             
         })
