@@ -65,7 +65,7 @@ class WhatsNewHelper{
 //            })
 //        )
         configuration.detailButton = WhatsNewViewController.DetailButton(
-            title: "了解aDiary Pro",
+            title: "✨了解aDiary Pro✨",
             action:.custom(action: { _ in
                 let iapVC = IAPViewController()
                 UIApplication.getTopViewController()?.present(iapVC, animated: true, completion: nil)

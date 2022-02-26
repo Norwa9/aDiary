@@ -193,7 +193,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		EAA4E8FB27B15B16005F93BD /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (

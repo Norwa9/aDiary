@@ -17,7 +17,6 @@ struct todoRow: View{
             Text(todo.content)
                 .multilineTextAlignment(.leading)
                 .font(.custom("DIN Alternate", size: 15))
-                .padding(.all)
                 .widgetURL(URL(string: "\(todo.dateBelongs)"))
             Spacer()
         }
@@ -35,6 +34,10 @@ struct todoWidgetView: View {
 }
 
 let testDatas:[todoData] = [
+    todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022"),
+    todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022"),
+    todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022"),
+    todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022"),
     todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022"),
     todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022"),
     todoData(id: "2022", state: 0, content: "测试待办", dateBelongs: "2022")
