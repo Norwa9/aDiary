@@ -17,8 +17,16 @@ struct TodoProvider: IntentTimelineProvider {
 
     /// 为了在小部件库中显示小部件，WidgetKit要求提供者提供预览快照，在组件的添加页面可以看到效果
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (TodoEntry) -> ()) {
-        let entry = TodoEntry(date: Date(), data: [])
-        completion(entry)
+        TodoDataLoader.load { (result) in
+            let todos: [todoData]
+            if case .success(let fetchedData) = result {
+                todos = fetchedData
+            } else {
+                todos = []
+            }
+            let entry = TodoEntry(date: Date(), data: todos)
+            completion(entry)
+        }
     }
 
     ///getTimeline
@@ -36,6 +44,9 @@ struct TodoProvider: IntentTimelineProvider {
                 todos = []
             }
             print("getTimeline:读取\(todos.count)个todo")
+            for todo in todos {
+                print("dataBelogns:\(todo.dateBelongs)")
+            }
             let entry = TodoEntry(date: currentDate, data: todos)
             //entries提供了下次更新的数据,policy提供了下次更新的时间。
             let timeline = Timeline(entries: [entry], policy: .never)
@@ -73,7 +84,14 @@ struct TodoEntryView : View {
 
     @ViewBuilder
     var body: some View {
-        todoWidgetView(todos: entry.data)
+        switch family {
+        case .systemMedium:
+            todoWidgetMediumView(todos: entry.data)
+        case .systemLarge:
+            todoWidgetLargeView(todos: entry.data)
+        default :
+            todoWidgetMediumView(todos: entry.data)
+        }
     }
 }
 
@@ -90,6 +108,6 @@ struct TodoWidget: Widget {
         }
         .configurationDisplayName("今日待办")
         .description("显示今天写下的待办事项")
-        .supportedFamilies([.systemSmall,.systemMedium,.systemLarge])
+        .supportedFamilies([.systemMedium,.systemLarge])
     }
 }

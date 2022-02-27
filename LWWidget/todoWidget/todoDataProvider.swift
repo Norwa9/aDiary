@@ -21,7 +21,9 @@ class todoDataProvider{
                     id: model.uuid,
                     state: model.state,
                     content: model.content,
-                    dateBelongs: model.dateBelongs
+                    dateBelongs: model.dateBelongs,
+                    remindDate: model.remindDate,
+                    needRemind: model.needRemind
                 )
                 todoDataArray.append(todoData)
             }

@@ -13,6 +13,8 @@ struct todoData:Codable,Identifiable{
     let state : Int
     let content: String
     let dateBelongs : String
+    let remindDate:Date
+    let needRemind:Bool
 }
 
 struct TodoDataLoader {
