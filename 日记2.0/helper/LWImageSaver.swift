@@ -12,7 +12,10 @@ import UIKit
 class LWImageSaver{
     static let shared = LWImageSaver()
     
-    public func saveImage(image:UIImage){
+    public func saveImage(image:UIImage?){
+        guard let image = image else {
+            return
+        }
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.creationRequestForAsset(from: image)
         }, completionHandler: { [weak self](isSuccess, error) in

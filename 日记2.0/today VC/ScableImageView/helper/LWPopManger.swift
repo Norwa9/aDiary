@@ -82,6 +82,9 @@ class LWPopManager: NSObject {
                 view.delegate?.reloadScableImage(endView: view,shouldAddDoneView: true)
                 self.dismissPopMenu()
             }),
+            PopMenuDefaultAction(title: "保存",didSelect: { action in
+                LWImageSaver.shared.saveImage(image: view.viewModel.image)
+            }),
             PopMenuDefaultAction(title: "删除",color: .red, didSelect: { action in
                 view.viewModel.getNewestLocation(attributedString: view.delegate!.attributedText) {
                     let deleteRange = NSRange(location: view.viewModel.location, length: 1)
