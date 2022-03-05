@@ -41,7 +41,7 @@ class LWSettingViewController: UIViewController {
     var lineSpacingStepper:UIStepper!
     
     var fontPickerTitle:UILabel!
-    var fontPickerButton:UIButton!
+    var fontPickerButton:LWFontPickerButton!
     
     var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
@@ -157,7 +157,7 @@ class LWSettingViewController: UIViewController {
         fontContainerView.addSubview(lineSpacingStepper)
         
         fontPickerTitle = UILabel()
-        fontPickerButton = UIButton()
+        fontPickerButton = LWFontPickerButton(delegate: self, actionSelector: #selector(presentFontPickerVC))
         fontContainerView.addSubview(fontPickerTitle)
         fontContainerView.addSubview(fontPickerButton)
         
@@ -314,10 +314,6 @@ class LWSettingViewController: UIViewController {
         
         fontPickerTitle.text = "默认字体"
         fontPickerTitle.font = LWSettingViewController.contentFont
-        fontPickerButton.setTitle("选取字体", for: .normal)
-        fontPickerButton.setTitleColor(.link, for: .normal)
-        fontPickerButton.contentHorizontalAlignment = .right
-        fontPickerButton.addTarget(self, action: #selector(presentFontPickerVC), for: .touchUpInside)
         
         //隐私
         privacyContainerTitle.text = "隐私"
@@ -397,10 +393,6 @@ class LWSettingViewController: UIViewController {
                 """
             )
         infoLabel.attributed.text = info
-        
-        
-        
-        
         
     }
     
@@ -503,9 +495,10 @@ class LWSettingViewController: UIViewController {
         }
         
         fontPickerButton.snp.makeConstraints { make in
+            make.left.greaterThanOrEqualTo(fontPickerTitle.snp.right)
             make.right.equalTo(imageSizeSegment)
             make.centerY.equalTo(fontPickerTitle)
-            make.width.equalTo(150)
+            make.height.equalTo(fontSizeStepper)
         }
         
         // MARK:  - layout:隐私
@@ -686,8 +679,6 @@ class LWSettingViewController: UIViewController {
     //MARK: -字体
     @objc func save(){
         //保存设置
-        userDefaultManager.fontSize = tempFontSize
-        userDefaultManager.fontName = tempFontName
         userDefaultManager.lineSpacing = tempLineSpacing
         userDefaultManager.imageSizeStyle = tempImageSizeStyle
         
@@ -935,8 +926,13 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
                 SKStoreReviewController.requestReview()
                 userDefaultManager.requestReviewTimes += 1
             }
+            
+            
+            userDefaultManager.fontSize = tempFontSize
+            userDefaultManager.fontName = tempFontName
         }
         viewController.dismiss(animated: true)
+        fontPickerButton.updateFontLabel()
     }
 }
 

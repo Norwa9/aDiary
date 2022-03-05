@@ -81,6 +81,7 @@
 		EA96554127969FF8000B827B /* CKRecord+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96554027969FF8000B827B /* CKRecord+.swift */; };
 		EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */; };
 		EA96BDB727D340AD00392A84 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */; };
+		EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
@@ -284,6 +285,7 @@
 		EA96554027969FF8000B827B /* CKRecord+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+.swift"; sourceTree = "<group>"; };
 		EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoManager.swift; sourceTree = "<group>"; };
 		EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
+		EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontPickerButton.swift; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -849,6 +851,7 @@
 		EAAFDDFE27A82C23008286EB /* SettingCell */ = {
 			isa = PBXGroup;
 			children = (
+				EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */,
 				EA11A954274215A20058A7A8 /* LWSettingCell.swift */,
 				EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */,
 				EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */,
@@ -1230,6 +1233,7 @@
 				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
+				EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */,
 				EA96001327007EF80008DC8A /* globalConfig.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,

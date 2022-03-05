@@ -41,4 +41,11 @@ let eventDotDynamicColor = UIColor.init { (t) -> UIColor in
     }
 }
 
+let fontPickerButtonDynamicColor = UIColor.init { (t) -> UIColor in
+    if t.userInterfaceStyle == .dark{
+        return UIColor.colorWithHex(hexColor: 0x3D3E41)
+    }else{
+        return UIColor.colorWithHex(hexColor: 0xEEEFEF)
+    }
+}
 
