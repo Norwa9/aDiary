@@ -12,7 +12,8 @@ import Intents
 struct TodoProvider: IntentTimelineProvider {
     /// 提供一个默认的视图，当网络数据请求失败或者其他一些异常的时候，用于展示
     func placeholder(in context: Context) -> TodoEntry {
-        TodoEntry(date: Date(), data: [])
+        print("todo placeholder")
+        return TodoEntry(date: Date(), data: [])
     }
 
     /// 为了在小部件库中显示小部件，WidgetKit要求提供者提供预览快照，在组件的添加页面可以看到效果
@@ -33,7 +34,12 @@ struct TodoProvider: IntentTimelineProvider {
     ///方法就是Widget在桌面显示时的刷新事件，返回的是一个Timeline实例，其中包含要显示的所有条目：预期显示的时间（条目的日期）以及时间轴“过期”的时间。
     ///因为Widget程序无法像天气应用程序那样“预测”它的未来状态，因此只能用时间轴的形式告诉它什么时间显示什么数据。
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+        // print("todo getTimeline")
+        // 午夜12点刷新
         let currentDate = Date()
+        let startOfDay = Calendar.current.startOfDay(for: currentDate)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)
+        print("todo Widget 刷新时间：\(endOfDay)")
         
         //逃逸闭包传入匿名函数 当调用completion时调用该匿名函数刷新Widget
         TodoDataLoader.load { (result) in
@@ -48,12 +54,14 @@ struct TodoProvider: IntentTimelineProvider {
                 print("dataBelogns:\(todo.dateBelongs)")
             }
             let entry = TodoEntry(date: currentDate, data: todos)
-            //entries提供了下次更新的数据,policy提供了下次更新的时间。
-            let timeline = Timeline(entries: [entry], policy: .never)
-            // policy有: .atEnd, .after, .never
-            // 当timeLine没有数据时，系统重新调用getTimeline
-            // 这里，timeLine只有一个数据，且5分钟拿出一个数据，也就是过5分钟timeLine就没数据就要调用getTimeline重新获取数据了
-            completion(timeline)// 刷新widget
+            
+            if let endOfDay = endOfDay {
+                let timeline = Timeline(entries: [entry], policy: .after(endOfDay))
+                completion(timeline)// 刷新widget
+            }else{
+                let timeline = Timeline(entries: [entry], policy: .never)
+                completion(timeline)// 刷新widget
+            }
         }
     }
 }
@@ -107,7 +115,7 @@ struct TodoWidget: Widget {
             TodoEntryView(entry: entry)
         }
         .configurationDisplayName("今日待办")
-        .description("显示今天写下的待办事项")
+        .description("显示今天写下/今天截止的待办事项")
         .supportedFamilies([.systemMedium,.systemLarge])
     }
 }

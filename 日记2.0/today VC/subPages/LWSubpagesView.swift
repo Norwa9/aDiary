@@ -32,6 +32,15 @@ class LWSubpagesView: UIView {
     
     ///初始页面
     var currentPageIndex:Int = 0
+    var currentModel:diaryInfo?{
+        get{
+            if models.count >= currentPageIndex + 1{
+                return models[currentPageIndex]
+            }else{
+                return nil
+            }
+        }
+    }
     
     ///主页面
     var mainPage:diaryInfo?{
@@ -155,6 +164,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         print("initListAtIndex, index:\(index)")
+        currentPageIndex = index
         let vc = LWTextViewController()
         vc.model = models[index]
         return vc

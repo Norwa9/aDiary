@@ -44,7 +44,7 @@ struct todoListView: View{
     var body: some View{
         VStack(spacing:5){
             ForEach(todos) { todo in
-                Link(destination: URL(string: "/test")!) {
+                Link(destination: URL(string: todo.dateBelongs)!) {
                     // URL不能有中文
                     todoRow(todo: todo)
                 }
@@ -148,12 +148,20 @@ private func getCheckedNum(todos:[todoData])->Int{
 
 private func getDateString(date:Date)->String{
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "M/dd hh:mm"
-    return dateFormatter.string(from: date)
+    var res = ""
+    if Calendar.current.isDate(date, inSameDayAs: Date()){
+        dateFormatter.dateFormat = "hh:mm"
+        let datetring = dateFormatter.string(from: date)
+        res = "今天 " + datetring
+    }else{
+        dateFormatter.dateFormat = "M/dd hh:mm"
+        res = dateFormatter.string(from: date)
+    }
+    return res
 }
 
 //private func convertToLink(dateCN:String)->String{
-//    
+//
 //}
 
 

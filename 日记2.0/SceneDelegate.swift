@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             let url = URLContexts.first!.url.absoluteString//yyyy-MM-d
-            let dateCN = DateEn2CN(dateEN: url)//yyyy年MM月d日
+            let dateCN = UrlToDateCN(pageDateUrl: url)//yyyy年MM月d日-x
             if let diary = LWRealmManager.shared.queryFor(dateCN: dateCN).first{
                 topVC.presentEditorVC(withViewModel: diary)
             }

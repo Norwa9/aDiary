@@ -23,7 +23,7 @@ extension UIApplication{
     /// 如果在编辑页，可以获取到当前的日记
     static func getCurDiaryModel() ->diaryInfo?{
         let todayVC = UIApplication.getTodayVC()
-        return todayVC?.model
+        return todayVC?.subpagesView.currentModel
     }
     
     static func getMonthVC() -> monthVC? {

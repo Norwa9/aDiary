@@ -79,6 +79,7 @@
 		EA96553B27932AAC000B827B /* imageTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96553A27932AAC000B827B /* imageTool.swift */; };
 		EA96553D279463E3000B827B /* scalableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96553C279463E3000B827B /* scalableImage.swift */; };
 		EA96554127969FF8000B827B /* CKRecord+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96554027969FF8000B827B /* CKRecord+.swift */; };
+		EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
@@ -281,6 +282,7 @@
 		EA96553A27932AAC000B827B /* imageTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageTool.swift; sourceTree = "<group>"; };
 		EA96553C279463E3000B827B /* scalableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scalableImage.swift; sourceTree = "<group>"; };
 		EA96554027969FF8000B827B /* CKRecord+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+.swift"; sourceTree = "<group>"; };
+		EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoManager.swift; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -819,6 +821,7 @@
 				EAAFDDCE279EE467008286EB /* LWTodoView.swift */,
 				EAAFDDF227A12182008286EB /* LWTodoSettingViewController.swift */,
 				EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */,
+				EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */,
 			);
 			path = LWTodo;
 			sourceTree = "<group>";
@@ -1199,6 +1202,7 @@
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
+				EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */,
 				EAA4E8F427B15B16005F93BD /* LWWidget.intentdefinition in Sources */,
 				1BB6964826A91C5B0009472F /* LWCalendar.swift in Sources */,
 				1B1ED87E26D372E4008D88FC /* newUserGuideHelper.swift in Sources */,

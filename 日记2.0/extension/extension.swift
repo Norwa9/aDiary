@@ -82,20 +82,52 @@ func DateToCNString(date:Date)->String{
     return formatter.string(from: date)
 }
 
-func DateCN2En(dateCN:String) ->String {
+/// 将日期转换为widget点击事件Link的url（不能包含中文）
+func DateCNToUrl(pageDateCN:String) ->String {
+    var dateString = ""
+    var pageNumString = ""
+    if let splitIndex = pageDateCN.firstIndex(of: "-"){
+        // 页号
+        let indexAfter = pageDateCN.index(after: splitIndex)
+        pageNumString = String(pageDateCN[indexAfter..<pageDateCN.endIndex])
+        pageNumString = "/" + pageNumString
+        // 日期
+        let indexBefore = pageDateCN.index(before: splitIndex)
+        dateString = String(pageDateCN[pageDateCN.startIndex..<indexBefore])
+    }else{
+        dateString = pageDateCN
+    }
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
-    let date = formatter.date(from: dateCN)!
+    let date = formatter.date(from: dateString)!
     formatter.dateFormat = "yyyy-M-d"
-    return formatter.string(from: date)
+    let dateUrlString = formatter.string(from: date)
+    let res = dateUrlString + pageNumString
+    return res
 }
 
-func DateEn2CN(dateEN:String) -> String{
+/// 将widget点击事件Link的url转换回日期格式
+func UrlToDateCN(pageDateUrl:String) -> String{
+    var dateUrl = ""
+    var pageNumString = ""
+    if let splitIndex = pageDateUrl.firstIndex(of: "/"){
+        // 页号
+        let indexAfter = pageDateUrl.index(after: splitIndex)
+        pageNumString = String(pageDateUrl[indexAfter..<pageDateUrl.endIndex])
+        pageNumString = "-" + pageNumString
+        // 日期
+        dateUrl = String(pageDateUrl[pageDateUrl.startIndex..<splitIndex])
+    }else{
+        dateUrl = pageDateUrl
+    }
+    
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-M-d"
-    let date = formatter.date(from: dateEN)!
+    let date = formatter.date(from: dateUrl)!
     formatter.dateFormat = "yyyy年M月d日"
-    return formatter.string(from: date)
+    let dateString = formatter.string(from: date)
+    let res = dateString + pageNumString
+    return res
 }
 
 

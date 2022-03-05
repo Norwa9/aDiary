@@ -18,7 +18,7 @@ class RoamDataProvider{
         let roamDiary = db.randomElement()
         
         if let diary = roamDiary{
-            var dateEn = DateCN2En(dateCN: diary.trueDate)//转换为yyyy-MM-d
+            var dateEn = DateCNToUrl(pageDateCN: diary.trueDate)//转换为yyyy-MM-d
             let pageNum = diary.indexOfPage
             if pageNum > 0{
                 dateEn += " page.\(pageNum + 1)"//转换为yyyy-MM-d page.X
