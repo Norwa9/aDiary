@@ -142,7 +142,9 @@ extension LWRealmManager{
     
     ///查询某日的所有页面（主页面+所有子页面）
     func queryAllPages(ofDate trueDateCN:String) -> [diaryInfo]{
-        let mainPage = queryFor(dateCN: trueDateCN).first!
+        guard let mainPage = queryFor(dateCN: trueDateCN).first else{
+            return []
+        }
         let subPages = querySubpages(ofDate: trueDateCN)
         var allPages = [mainPage]
         for subPage in subPages{
@@ -158,7 +160,11 @@ extension LWRealmManager{
         //dateCN可能是2021年9月14日，也可能是2021年9月14日-1，所以先提提取准确的日期
         let trueDate = dateCN.parsePageDate()
         if pageIndex == 0{//pageIndex表示查询主页面
-            return queryFor(dateCN: trueDate).first!
+            if let res =  queryFor(dateCN: trueDate).first{
+                return res
+            }else{
+                return nil
+            }
         }else{//查询的是子页面
             let orderedSubPages = self.querySubpages(ofDate: trueDate)
             guard pageIndex <= orderedSubPages.count,pageIndex > 0 else{
