@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 3, patch: 0)
+        let version = WhatsNew.Version(major: 3, minor: 4, patch: 0)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -63,7 +63,7 @@ class WhatsNewHelper{
             title:"知道了"
         )
 
-        if userDefaultManager.purchaseEdition != .purchased{
+        if userDefaultManager.purchaseEdition == .purchased{
             configuration.detailButton = WhatsNewViewController.DetailButton(
                 title: "好评鼓励👏",
                 action:.custom(action: { _ in
