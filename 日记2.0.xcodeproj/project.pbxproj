@@ -80,6 +80,7 @@
 		EA96553D279463E3000B827B /* scalableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96553C279463E3000B827B /* scalableImage.swift */; };
 		EA96554127969FF8000B827B /* CKRecord+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96554027969FF8000B827B /* CKRecord+.swift */; };
 		EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */; };
+		EA96BDB727D340AD00392A84 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
@@ -120,7 +121,6 @@
 		EAA4E90027B15FDF005F93BD /* roamWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FF27B15FDF005F93BD /* roamWidgetView.swift */; };
 		EAA4E90227B16007005F93BD /* mainWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E90127B16007005F93BD /* mainWidget.swift */; };
 		EAA4E90327B1604E005F93BD /* roamData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E8FD27B15FC4005F93BD /* roamData.swift */; };
-		EAA4E92827BAA659005F93BD /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */; };
 		EAA4E92A27BBFBDA005F93BD /* LWLunarFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E92927BBFBDA005F93BD /* LWLunarFormatter.swift */; };
 		EAA4E92C27BC02C2005F93BD /* LWSwitchSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E92B27BC02C2005F93BD /* LWSwitchSettingCell.swift */; };
 		EAA4E92F27BCE17F005F93BD /* todoDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E92E27BCE17F005F93BD /* todoDataProvider.swift */; };
@@ -283,6 +283,7 @@
 		EA96553C279463E3000B827B /* scalableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scalableImage.swift; sourceTree = "<group>"; };
 		EA96554027969FF8000B827B /* CKRecord+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+.swift"; sourceTree = "<group>"; };
 		EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoManager.swift; sourceTree = "<group>"; };
+		EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -324,7 +325,6 @@
 		EAA4E8FF27B15FDF005F93BD /* roamWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = roamWidgetView.swift; sourceTree = "<group>"; };
 		EAA4E90127B16007005F93BD /* mainWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainWidget.swift; sourceTree = "<group>"; };
 		EAA4E90627B16D1D005F93BD /* LWWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LWWidgetExtension.entitlements; sourceTree = "<group>"; };
-		EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAA4E92927BBFBDA005F93BD /* LWLunarFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWLunarFormatter.swift; sourceTree = "<group>"; };
 		EAA4E92B27BC02C2005F93BD /* LWSwitchSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSwitchSettingCell.swift; sourceTree = "<group>"; };
 		EAA4E92E27BCE17F005F93BD /* todoDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoDataProvider.swift; sourceTree = "<group>"; };
@@ -539,9 +539,9 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
-				EAA4E92727BAA659005F93BD /* wechat_group_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
 				EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */,
 				EA9AF4DF267E10E200D77908 /* icon-120.png */,
@@ -1038,12 +1038,12 @@
 			files = (
 				EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
+				EA96BDB727D340AD00392A84 /* wechat_group_code.jpg in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EAAFDDC8279ED5A9008286EB /* emptyImage.jpg in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
-				EAA4E92827BAA659005F93BD /* wechat_group_code.jpg in Resources */,
 				EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */,
 				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
 				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
@@ -1427,7 +1427,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1435,7 +1435,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3;
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1454,7 +1454,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1462,7 +1462,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3;
+				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1480,7 +1480,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = LWWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LWWidget/Info.plist;
@@ -1492,7 +1492,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.LWWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1510,7 +1510,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = LWWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LWWidget/Info.plist;
@@ -1522,7 +1522,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary.LWWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
