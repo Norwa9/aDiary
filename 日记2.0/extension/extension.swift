@@ -90,7 +90,7 @@ func DateCNToUrl(pageDateCN:String) ->String {
         // 页号
         let indexAfter = pageDateCN.index(after: splitIndex)
         pageNumString = String(pageDateCN[indexAfter..<pageDateCN.endIndex])
-        pageNumString = "/" + pageNumString
+        pageNumString = "-" + pageNumString
         // 日期
         let indexBefore = pageDateCN.index(before: splitIndex)
         dateString = String(pageDateCN[pageDateCN.startIndex..<indexBefore])
@@ -100,7 +100,7 @@ func DateCNToUrl(pageDateCN:String) ->String {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
     let date = formatter.date(from: dateString)!
-    formatter.dateFormat = "yyyy-M-d"
+    formatter.dateFormat = "yyyy/M/d"
     let dateUrlString = formatter.string(from: date)
     let res = dateUrlString + pageNumString
     return res
@@ -110,7 +110,7 @@ func DateCNToUrl(pageDateCN:String) ->String {
 func UrlToDateCN(pageDateUrl:String) -> String{
     var dateUrl = ""
     var pageNumString = ""
-    if let splitIndex = pageDateUrl.firstIndex(of: "/"){
+    if let splitIndex = pageDateUrl.firstIndex(of: "-"){
         // 页号
         let indexAfter = pageDateUrl.index(after: splitIndex)
         pageNumString = String(pageDateUrl[indexAfter..<pageDateUrl.endIndex])
@@ -122,7 +122,7 @@ func UrlToDateCN(pageDateUrl:String) -> String{
     }
     
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-M-d"
+    formatter.dateFormat = "yyyy/M/d"
     let date = formatter.date(from: dateUrl)!
     formatter.dateFormat = "yyyy年M月d日"
     let dateString = formatter.string(from: date)

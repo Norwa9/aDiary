@@ -17,8 +17,16 @@ struct RoamProvider: IntentTimelineProvider {
 
     /// 为了在小部件库中显示小部件，WidgetKit要求提供者提供预览快照，在组件的添加页面可以看到效果
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (RoamEntry) -> ()) {
-        let entry = RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记"))
-        completion(entry)
+        RoamDataLoader.load { (result) in
+            let roamData: RoamData
+            if case .success(let fetchedData) = result {
+                roamData = fetchedData
+            } else {
+                roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.")
+            }
+            let entry = RoamEntry(date: Date(), data: roamData)
+            completion(entry)
+        }
     }
 
     ///getTimeline
@@ -91,6 +99,6 @@ struct RoamWidget: Widget {
         }
         .configurationDisplayName("回忆")
         .description("显示一篇随机的日记(开发中...)")
-        .supportedFamilies([.systemSmall,.systemMedium,.systemLarge])
+        .supportedFamilies([.systemMedium,.systemLarge])
     }
 }
