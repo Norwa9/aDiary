@@ -91,7 +91,7 @@ class monthVC: UIViewController {
     
     func loadData(){
         //预加载todayVC
-        editorVC = storyboard?.instantiateViewController(identifier: "todayVC")
+        editorVC = todayVC()
         let _ = editorVC.view
         editorVC.modalPresentationStyle = .custom
         editorVC.transitioningDelegate = self
