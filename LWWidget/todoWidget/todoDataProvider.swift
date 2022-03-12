@@ -22,7 +22,7 @@ class todoDataProvider{
                 id: model.uuid,
                 state: model.state,
                 content: model.content,
-                dateBelongs: DateCNToUrl(pageDateCN: model.dateBelongs),
+                dateBelongs: DateCNToUrl(pageDateCN: model.dateBelongs) ?? "",
                 remindDate: model.remindDate,
                 needRemind: model.needRemind
             )
@@ -41,7 +41,7 @@ class todoDataProvider{
                     id: model.uuid,
                     state: model.state,
                     content: model.content,
-                    dateBelongs: DateCNToUrl(pageDateCN: model.dateBelongs),
+                    dateBelongs: DateCNToUrl(pageDateCN: model.dateBelongs) ?? "",
                     remindDate: model.remindDate,
                     needRemind: model.needRemind
                 )

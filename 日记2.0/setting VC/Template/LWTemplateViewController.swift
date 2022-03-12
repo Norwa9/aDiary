@@ -9,6 +9,7 @@ import UIKit
 
 class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    private var titleLabel:UILabel!
     private var collectionView:UICollectionView!
     private var templateCollectionViewLayout = UICollectionViewFlowLayout()
     private var templates:[diaryInfo] = []
@@ -27,10 +28,22 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         
         editorVC = todayVC()
         let _ = editorVC.view
-        editorVC.modalPresentationStyle = .fullScreen
+        editorVC.modalPresentationStyle = .custom
+        editorVC.transitioningDelegate = self
+    }
+    
+    private func reloadData(){
+        templates = LWTemplateHelper.shared.getTemplateFor(templateName: nil)
+        self.collectionView.reloadData()
     }
     
     private func initUI(){
+        self.view.backgroundColor = .systemBackground
+        
+        titleLabel = UILabel()
+        titleLabel.text = "模板"
+        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        
         templateCollectionViewLayout.itemSize = CGSize(
             width: globalConstantsManager.shared.kScreenWidth - 20,
             height: 50)
@@ -39,12 +52,19 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        self.view.addSubview(titleLabel)
         self.view.addSubview(collectionView)
     }
     
     private func setCons(){
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(10)
+        }
+        
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(self.titleLabel.snp.bottom).offset(10)
+            make.left.right.bottom.equalToSuperview()
         }
     }
     
@@ -55,23 +75,66 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LWTemplateCell.reuseID, for: indexPath) as! LWTemplateCell
         let row = indexPath.item
-        cell.setViewModel()
+        if row == templates.count{
+            cell.setPromptView(delegate: self)
+        }else{
+            cell.setViewModel(model:templates[row])
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-//        let template = templates[indexPath.row]
-        let name = "测试"
-        if let template = LWTemplateHelper.shared.getTemplateFor(templateName: name).first{
-            editorVC.model = template
-            self.present(editorVC, animated: true, completion: nil)
+        let row = indexPath.row
+        if row == templates.count{
             return
         }else{
-            let template = LWTemplateHelper.shared.createTemplate(name: name)
-            editorVC.model = template
-            self.present(editorVC, animated: true, completion: nil)
+            let template = templates[row]
+            self.editorVC.model = template
+            self.present(self.editorVC, animated: true, completion: nil)
         }
     }
     
+    @objc func createTemplate(){
+        let ac = UIAlertController(title: "请输入模板名称：", message: "", preferredStyle: .alert)
+        ac.addTextField()
+        ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
+            
+        }))
+        ac.addAction(UIAlertAction(title: "确认", style: .default, handler: { _ in
+            // 检查是否已存在
+            guard let textField = ac.textFields?[0], let templateName = textField.text else {return}
+            if let _ = LWTemplateHelper.shared.getTemplateFor(templateName: templateName).first{
+                ac.view.shake()
+                return
+            }else{
+                let template = LWTemplateHelper.shared.createTemplate(name: templateName)
+                self.editorVC.model = template
+                self.present(self.editorVC, animated: true, completion: nil)
+                self.reloadData()
+            }
+        }))
+        self.present(ac, animated: true, completion: nil)
+        
+    }
+    
+    
+}
+
+extension LWTemplateViewController:UIViewControllerTransitioningDelegate{
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = editorAnimator()
+        animator.animationType = .present
+        return animator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = editorAnimator()
+        animator.animationType = .dismiss
+        return animator
+    }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return editorBlurPresentVC(presentedViewController: presented, presenting: presenting)
+    }
 }

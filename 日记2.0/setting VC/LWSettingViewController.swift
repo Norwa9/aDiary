@@ -797,12 +797,12 @@ class LWSettingViewController: UIViewController {
     
     //MARK: -导出
     @objc func showExportVC(){
-        let vc = exportSettingViewController()
-        vc.transitioningDelegate = vc
-        vc.modalPresentationStyle = .custom//模态
-        self.present(vc, animated: true, completion: nil)
-//        let vc = LWTemplateViewController()
+//        let vc = exportSettingViewController()
+//        vc.transitioningDelegate = vc
+//        vc.modalPresentationStyle = .custom//模态
 //        self.present(vc, animated: true, completion: nil)
+        let vc = LWTemplateViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK: -请求好评

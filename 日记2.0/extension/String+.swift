@@ -69,17 +69,13 @@ extension String{
             return self
         }
     }
-}
-
-extension String{
-    var isContainsLetters: Bool {
-        let letters = CharacterSet.letters
-        return self.rangeOfCharacter(from: letters) != nil
+    
+    func trimPrefix(prefix:String)->String{
+        return self.replace(target: prefix, withString: "")
     }
 }
 
-
-//MARK:-解析标题和内容添加属性
+//MARK: -解析标题和内容添加属性
 extension String{
      func getAttrTitle()->NSAttributedString{
         let content = self
@@ -157,7 +153,7 @@ extension String{
     }
 }
 
-//MARK:-String + UILabel
+//MARK:  -String + UILabel
 extension String{
     func changeWorldSpace(space:CGFloat) -> NSAttributedString{
         //紧凑间隔
@@ -171,7 +167,7 @@ extension String{
     }
 }
 
-//MARK:-常用方法扩展
+//MARK: -常用方法扩展
 extension String {
     // 获得字符串的长度，其实就是swift的count方法，只不过我习惯了Java里的length方法
     var length: Int {

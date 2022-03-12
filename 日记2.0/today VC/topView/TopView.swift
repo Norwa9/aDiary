@@ -57,7 +57,7 @@ class TopView: UIView {
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
         if day == "-1"{// day == -1 表示次日记是模板，于是显示模板名称（date）
-            dateLable.text = model.date
+            dateLable.text = "模板: " + model.date.trimPrefix(prefix: LWTemplateHelper.shared.TemplateNamePrefix)
         }else{
             dateLable.text = "\(month)月\(day)日 \(weekDay)"
         }

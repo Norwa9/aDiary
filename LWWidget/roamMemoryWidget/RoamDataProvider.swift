@@ -17,17 +17,17 @@ class RoamDataProvider{
         let db = LWRealmManager.shared.localDatabase
         let roamDiary = db.randomElement()
         
-        if let diary = roamDiary{
-            var dateEn = DateCNToUrl(pageDateCN: diary.trueDate)//转换为yyyy-MM-d
+        if let diary = roamDiary,let dateEn = DateCNToUrl(pageDateCN: diary.trueDate){
+            var dateTitle = dateEn
             let pageNum = diary.indexOfPage
             if pageNum > 0{
-                dateEn += " page.\(pageNum + 1)"//转换为yyyy-MM-d page.X
+                dateTitle += " page.\(pageNum + 1)"//转换为yyyy-MM-d page.X
             }
-            let roamData = RoamData(date: dateEn, content: diary.content)
+            let roamData = RoamData(date: dateTitle, content: diary.content)
             let jsonEncoder = JSONEncoder()
             if let storedData = try? jsonEncoder.encode(roamData) {
                 defaults.set(storedData, forKey: WidgetKindKeys.RoamWidget)
-                print("设置\(diary.date)的日记以展示")
+                print("设置\(dateEn)的日记以展示")
             } else {
                 print("roam:Failed to save roamData")
             }

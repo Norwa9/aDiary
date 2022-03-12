@@ -16,7 +16,10 @@ class LWTodoManager{
         var models:[LWTodoModel] = []
         for diary in LWRealmManager.shared.localDatabase{
             for todo in diary.lwTodoModels{
-                if todo.needRemind && Calendar.current.isDate(ddlDate, inSameDayAs: todo.remindDate){
+                if todo.needRemind
+                    && Calendar.current.isDate(ddlDate, inSameDayAs: todo.remindDate)
+                    && !diary.date.hasPrefix(LWTemplateHelper.shared.TemplateNamePrefix) // 过滤掉模板中的todo
+                {
                     models.append(todo)
                 }
             }

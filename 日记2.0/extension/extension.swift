@@ -83,7 +83,7 @@ func DateToCNString(date:Date)->String{
 }
 
 /// 将日期转换为widget点击事件Link的url（不能包含中文）
-func DateCNToUrl(pageDateCN:String) ->String {
+func DateCNToUrl(pageDateCN:String) ->String? {
     var dateString = ""
     var pageNumString = ""
     if let splitIndex = pageDateCN.firstIndex(of: "-"){
@@ -99,11 +99,15 @@ func DateCNToUrl(pageDateCN:String) ->String {
     }
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy年M月d日"
-    let date = formatter.date(from: dateString)!
-    formatter.dateFormat = "yyyy/M/d"
-    let dateUrlString = formatter.string(from: date)
-    let res = dateUrlString + pageNumString
-    return res
+    if let date = formatter.date(from: dateString){
+        formatter.dateFormat = "yyyy/M/d"
+        let dateUrlString = formatter.string(from: date)
+        let res = dateUrlString + pageNumString
+        return res
+    }else{
+        return nil
+    }
+    
 }
 
 /// 将widget点击事件Link的url转换回日期格式
