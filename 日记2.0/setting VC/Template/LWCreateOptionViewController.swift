@@ -24,7 +24,7 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
     private var templateLabel:UILabel!
     private var manageTemplateButton:UIButton!
     private var noTemplatePromptLabel:UILabel!
-    
+    public var selectedDateCN:String?
     
     private let cellWidth = globalConstantsManager.shared.kScreenWidth - 100
     
@@ -181,7 +181,7 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
     @objc func createBlankDiary(){
         if mode == .newDay{ // 新一天
             if let monthVC = UIApplication.getMonthVC(){
-                let newDiary = diaryInfo(dateString: GetTodayDate())
+                let newDiary = diaryInfo(dateString: selectedDateCN ?? GetTodayDate())
                 LWRealmManager.shared.add(newDiary)
                 
                 monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
@@ -206,7 +206,7 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
         let template = templates[indexPath.row]
         
         if mode == .newDay{
-            if let newDiary = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: GetTodayDate(), pageIndex: 0, template: template),let monthVC = UIApplication.getMonthVC(){
+            if let newDiary = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: selectedDateCN ?? GetTodayDate(), pageIndex: 0, template: template),let monthVC = UIApplication.getMonthVC(){
                 monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
                 self.dismiss(animated: true) {
                     monthVC.presentEditorVC(withViewModel: newDiary)

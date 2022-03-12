@@ -69,11 +69,9 @@ class customAlertView: UIView {
                 return
             }
             //补日记
-            let createdDiary = diaryInfo(dateString: createDate)
-            LWRealmManager.shared.add(createdDiary)
-            let selectedDiary = createdDiary
-            monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
-            
+            let createOptVC = LWCreateOptionViewController(mode: .newDay)
+            createOptVC.selectedDateCN = createDate
+            monthVC.present(createOptVC, animated: true, completion: nil)
             /*
              先关闭popover，然后跳转到todayVC
              */
