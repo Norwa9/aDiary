@@ -175,7 +175,7 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
     
     // MARK: 创建模板/付费提示
     @objc func createTemplate(){
-        if templates.count >= 3 && !(userDefaultManager.purchaseEdition == .purchased){
+        if templates.count >= 2 && !(userDefaultManager.purchaseEdition == .purchased){
             let ac = UIAlertController(title: "✨创建更多模板✨", message: "请解锁完整版", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
             }))

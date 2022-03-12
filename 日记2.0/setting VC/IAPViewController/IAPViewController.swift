@@ -48,7 +48,8 @@ class IAPViewController: UIViewController {
     private var proEditionContentLabel:UILabel!
     let proEditionFeaturesModels:[(String,String)] = [
         ("1","为todo设置提醒时间与备注"),
-        ("2","未来持续更新的Pro功能"),
+        ("2","创建无限量的日记模板"),
+        ("3","未来持续更新的Pro功能"),
     ]
     private var layout2:UICollectionViewFlowLayout!
     private var proEditionFeaturesCollectionView:UICollectionView!

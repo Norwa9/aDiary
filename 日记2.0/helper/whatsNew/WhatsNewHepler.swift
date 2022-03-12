@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 4, patch: 0)
+        let version = WhatsNew.Version(major: 3, minor: 5, patch: 0)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -23,24 +23,14 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "新增小组件",
-                    subtitle: "显示当日写下的，以及截止日期为当日的待办事项",
-                    image: nil
-                ),
-                WhatsNew.Item(
-                    title: "日记图片可保存本地",
-                    subtitle: "点击图片->保存",
-                    image: nil
-                ),
-                WhatsNew.Item(
-                    title: "优化部分性能",
-                    subtitle: "改善主页待办较多情况下的滑动卡顿",
-                    image: nil
+                    title: "新增日记模板",
+                    subtitle: "",
+                    image: UIImage(systemName: "note.text.badge.plus")
                 ),
                 WhatsNew.Item(
                     title: "如有任何问题，欢迎和开发者联系",
                     subtitle: "设置->反馈，取得联系",
-                    image: nil
+                    image: UIImage(systemName: "questionmark.circle")
                 )
                 
             ]
