@@ -70,7 +70,7 @@ class LWTabBarView: UIView {
     ///布局底部渐变图层
     private func layoutBottomGradientView(){
         self.backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .dark)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.isUserInteractionEnabled = false
 //        let gradientLayer = CAGradientLayer()//底部创建渐变层
@@ -114,6 +114,8 @@ class LWTabBarView: UIView {
             todoItem.isSelected = false
         }
         
+        layoutParasManager.shared.tabbarType = 0
+        delegate.reloadCollectionViewData()
         
         
     }
@@ -130,6 +132,8 @@ class LWTabBarView: UIView {
         if diaryItem.isSelected{
             diaryItem.isSelected = false
         }
+        layoutParasManager.shared.tabbarType = 1
+        delegate.reloadCollectionViewData()
         
     }
     

@@ -37,7 +37,7 @@ class LWTabBarItem: UIView {
         //self.clipsToBounds = true
         
         selectedPromptView = UIView()
-        selectedPromptView.layer.cornerRadius = 10
+        selectedPromptView.layer.cornerRadius = 5
         selectedPromptView.addBorder(width: 1, color: UIColor.systemGray6)
         selectedPromptView.backgroundColor = fontPickerButtonDynamicColor
         selectedPromptView.alpha = 0
