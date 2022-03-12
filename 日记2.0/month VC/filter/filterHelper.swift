@@ -40,10 +40,14 @@ class filterHelper {
         let pages = allDiary
         var resultDiaries = [diaryInfo]()
         
-        //1筛选：关键字
+        //1筛选：关键字(日记与todo)
         if keywords != ""{
             resultDiaries = pages.filter { (item: diaryInfo) -> Bool in
-                let content = item.content + item.todos.joined()//正文+todo
+                let todoModels = item.lwTodoModels
+                var content = item.content
+                for model in todoModels{
+                    content += model.content + model.note
+                }
                 return content.range(of: keywords, options: .caseInsensitive, range: nil, locale: nil) != nil
             }
         }else{
