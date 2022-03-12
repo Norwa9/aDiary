@@ -56,9 +56,6 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         promptLabel.textColor = .secondaryLabel
         promptLabel.font = .systemFont(ofSize: 12)
         
-        templateCollectionViewLayout.itemSize = CGSize(
-            width: globalConstantsManager.shared.kScreenWidth - 20,
-            height: 50)
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: templateCollectionViewLayout)
         collectionView.register(LWTemplateCell.self, forCellWithReuseIdentifier: LWTemplateCell.reuseID)
         collectionView.delegate = self
@@ -67,6 +64,15 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         self.view.addSubview(promptLabel)
         self.view.addSubview(titleLabel)
         self.view.addSubview(collectionView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        // 获取正确的view.width
+        super.viewDidLayoutSubviews()
+        templateCollectionViewLayout.itemSize = CGSize(
+            width: view.width - 20,
+            height: 50)
+        self.reloadData()
     }
     
     private func setCons(){

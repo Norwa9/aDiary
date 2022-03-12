@@ -63,7 +63,7 @@ class LWTemplateSettingCell:UIView{
         
         let Label = UILabel()
         Label.text = "管理"
-        Label.font = userDefaultManager.customFont(withSize: 16)
+        Label.font = UIFont.systemFont(ofSize: 14)
         Label.adjustsFontSizeToFitWidth = true
         Label.textColor = .label
         
