@@ -80,6 +80,9 @@ class LWSettingViewController: UIViewController {
     // todo样式
     var todoListStyleCell:LWSegSettingCell!
     
+    // 模板管理
+    var templateManageCell:LWTemplateSettingCell!
+    
     //评价
     var requestReviewLabel:UILabel!
     var requestReviewButton:UIButton!//跳转App Store评分按钮
@@ -209,6 +212,14 @@ class LWSettingViewController: UIViewController {
             selector: #selector(todoListStyleDidChange(_:))
         )
         otherContainer.addSubview(todoListStyleCell)
+        
+        // 模板
+        templateManageCell = LWTemplateSettingCell(
+            delegate: self,
+            title: "日记模板",
+            selector: #selector(templateCellDidTap)
+        )
+        otherContainer.addSubview(templateManageCell)
         
         // 农历
         showLunarCell = LWSwitchSettingCell(
@@ -589,8 +600,13 @@ class LWSettingViewController: UIViewController {
             make.left.right.equalToSuperview()
         }
         
+        templateManageCell.snp.makeConstraints { make in
+            make.top.equalTo(todoListStyleCell.snp.bottom).offset(0) // 10 + 10(内)
+            make.left.right.equalToSuperview()
+        }
+        
         showLunarCell.snp.makeConstraints { make in
-            make.top.equalTo(todoListStyleCell.snp.bottom).offset(0) // 10(内) + 10(内) + 0 = 20
+            make.top.equalTo(templateManageCell.snp.bottom).offset(0) // 10(内) + 10(内) + 0 = 20
             make.left.right.equalToSuperview()
         }
         
@@ -797,11 +813,9 @@ class LWSettingViewController: UIViewController {
     
     //MARK: -导出
     @objc func showExportVC(){
-//        let vc = exportSettingViewController()
-//        vc.transitioningDelegate = vc
-//        vc.modalPresentationStyle = .custom//模态
-//        self.present(vc, animated: true, completion: nil)
-        let vc = LWTemplateViewController()
+        let vc = exportSettingViewController()
+        vc.transitioningDelegate = vc
+        vc.modalPresentationStyle = .custom//模态
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -835,6 +849,12 @@ class LWSettingViewController: UIViewController {
     //MARK: - 主页todo列表样式
     @objc func todoListStyleDidChange(_ sender:UISegmentedControl){
         userDefaultManager.todoListViewStyle = sender.selectedSegmentIndex
+    }
+    
+    //MARK: - 管理模板
+    @objc func templateCellDidTap(){
+        let vc = LWTemplateViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     // MARK: -显示农历

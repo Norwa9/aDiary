@@ -29,7 +29,7 @@ class proEditionMaskHelper{
     }
     
     private func presentAC(_ completion:@escaping callback){
-        let ac = UIAlertController(title: "此为完整版功能", message: "", preferredStyle: .alert)
+        let ac = UIAlertController(title: "✨设置待办提醒✨", message: "请解锁完整版", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
             completion()
         }))

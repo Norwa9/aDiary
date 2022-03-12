@@ -161,7 +161,13 @@ class TopView: UIView {
     
     @objc func manageMultiPages(_ sender:UIButton){
         multiPagesBtn.bounceAnimation(usingSpringWithDamping: 0.7)
-        UIApplication.getTodayVC()?.subpagesView.manageMutiPages(sender)
+        if model.date.hasPrefix(LWTemplateHelper.shared.TemplateNamePrefix){
+            let ac = UIAlertController(title: "仅能创建单页模板", message: nil, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "确定", style: .cancel, handler: nil))
+            UIApplication.getTopViewController()?.present(ac, animated: true, completion: nil)
+        }else{
+            UIApplication.getTodayVC()?.subpagesView.manageMutiPages(sender)
+        }
     }
     
     @objc func toggleFullScreen(_ sender:UIButton){

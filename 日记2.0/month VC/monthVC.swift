@@ -394,13 +394,11 @@ class monthVC: UIViewController {
             if let selectedDiary = LWRealmManager.shared.query(predicate: predicate).first{
                 presentEditorVC(withViewModel: selectedDiary)
             }else{
-                let newDiary = diaryInfo(dateString: todayDateString)
-                LWRealmManager.shared.add(newDiary)
-                self.configureDataSource(year: selectedYear, month: selectedMonth)
-                presentEditorVC(withViewModel: newDiary)
+                let createOptVC = LWCreateOptionViewController(mode: .newDay)
+                self.present(createOptVC, animated: true, completion: nil)
             }
         }else{
-            //刷新DataSource
+            //回到本月
             formatter.dateFormat = "yyyy"
             let year = Int(formatter.string(from: curDate))!
             formatter.dateFormat = "MM"

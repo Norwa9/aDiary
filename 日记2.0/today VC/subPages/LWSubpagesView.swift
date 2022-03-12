@@ -16,7 +16,7 @@ class LWSubpagesView: UIView {
     lazy var pagingView: JXPagingView = JXPagingView(delegate: self)
     
     lazy var segmentedView: JXSegmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth, height: CGFloat(kSegmentedViewHeight)))
-    let kSegmentedViewHeight = 30
+    var kSegmentedViewHeight = 30
     var segmentDataSource = JXSegmentedTitleDataSource()
     var segmentTitles = [String]()
     
@@ -207,9 +207,24 @@ extension LWSubpagesView{
         managePagesAlertView.cancelAction = {
             self.popover.dismiss()
         }
-        //定义创建页面操作
-        managePagesAlertView.createAction = { [self] in
-            let newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
+        
+        // 创建页面设置
+        let createOptVC = LWCreateOptionViewController(mode: .newPage)
+        createOptVC.createPageAction = { [self] template in
+            // template 是选定的模板
+            var newPage:diaryInfo
+            if let template = template{
+                // 有模板，表示创建模板页面
+                if let templatedNewPage = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: mainPage.date, pageIndex: models.count, template: template){
+                    newPage = templatedNewPage
+                }else{
+                    // 模板页面创建失败
+                    return
+                }
+            }else{
+                // 没有模板，表示创建空页面
+                newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
+            }
             models.append(newPage)
             if models.count > 2{
                 //请求打分
@@ -219,7 +234,16 @@ extension LWSubpagesView{
                 }
             }
             updateUI(currentIndex: models.count - 1)
+            createOptVC.dismiss(animated: true, completion: nil)
         }
+        
+        //定义创建页面操作
+        managePagesAlertView.showCreateOptVC = {
+            let todayVC = UIApplication.getTodayVC()
+            todayVC?.present(createOptVC, animated: true, completion: nil)
+        }
+        
+        
         
         //定义删除页面操作
         managePagesAlertView.deleteAction = { [self] in

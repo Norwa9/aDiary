@@ -37,7 +37,7 @@ class LWTemplateCell: UICollectionViewCell {
     private func initUI(){
         self.removeAllSubviews()
         self.clipsToBounds = true
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 10
         self.addBorder(width: 1, color: .lightGray)
         
         titleLabel = UILabel()
@@ -55,6 +55,8 @@ class LWTemplateCell: UICollectionViewCell {
     /// 创建按钮
     private func setupPromptView(){
         self.removeAllSubviews()
+        self.addBorder(width: 0, color: .lightGray)
+        
         let createButton = UIButton()
         createButton.setImage(UIImage(named: "add"), for: .normal)
         createButton.addTarget(delegate, action: #selector(delegate.createTemplate), for: .touchUpInside)

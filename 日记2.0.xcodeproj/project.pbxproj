@@ -140,6 +140,9 @@
 		EAA7347227DC85E50014C02A /* LWTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347127DC85E50014C02A /* LWTemplateViewController.swift */; };
 		EAA7347527DC860F0014C02A /* LWTemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347427DC860F0014C02A /* LWTemplateCell.swift */; };
 		EAA7347727DC86400014C02A /* LWTemplateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347627DC86400014C02A /* LWTemplateHelper.swift */; };
+		EAA7347B27DCC3330014C02A /* LWCreateOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */; };
+		EAA7347D27DCC7F70014C02A /* LWCreateBlankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */; };
+		EAA7347F27DCEC840014C02A /* LWTemplateSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -348,6 +351,9 @@
 		EAA7347127DC85E50014C02A /* LWTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateViewController.swift; sourceTree = "<group>"; };
 		EAA7347427DC860F0014C02A /* LWTemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateCell.swift; sourceTree = "<group>"; };
 		EAA7347627DC86400014C02A /* LWTemplateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateHelper.swift; sourceTree = "<group>"; };
+		EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCreateOptionViewController.swift; sourceTree = "<group>"; };
+		EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCreateBlankView.swift; sourceTree = "<group>"; };
+		EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateSettingCell.swift; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -842,6 +848,8 @@
 				EAA7347127DC85E50014C02A /* LWTemplateViewController.swift */,
 				EAA7347427DC860F0014C02A /* LWTemplateCell.swift */,
 				EAA7347627DC86400014C02A /* LWTemplateHelper.swift */,
+				EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */,
+				EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -887,6 +895,7 @@
 				EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */,
 				EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */,
 				EAA4E92B27BC02C2005F93BD /* LWSwitchSettingCell.swift */,
+				EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */,
 			);
 			path = SettingCell;
 			sourceTree = "<group>";
@@ -1152,6 +1161,7 @@
 				EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */,
 				EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */,
 				EAFF2FE227440FFA00D37BA1 /* weChatViewController.swift in Sources */,
+				EAA7347F27DCEC840014C02A /* LWTemplateSettingCell.swift in Sources */,
 				EA22360826D692F6001FAD1D /* LWTextAligment.swift in Sources */,
 				EA55A36A26D7EEA200FC9006 /* Data+.swift in Sources */,
 				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
@@ -1269,6 +1279,7 @@
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */,
+				EAA7347D27DCC7F70014C02A /* LWCreateBlankView.swift in Sources */,
 				EA96001327007EF80008DC8A /* globalConfig.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,
@@ -1282,6 +1293,7 @@
 				1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
+				EAA7347B27DCC3330014C02A /* LWCreateOptionViewController.swift in Sources */,
 				EA66AAB526C935FD001D3D24 /* RoamDataProvider.swift in Sources */,
 				EA96554127969FF8000B827B /* CKRecord+.swift in Sources */,
 				EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */,

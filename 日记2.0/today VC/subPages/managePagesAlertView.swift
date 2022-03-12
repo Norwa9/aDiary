@@ -14,7 +14,7 @@ class ManagePagesAlertView: UIView {
     let cancelButton = UIButton()
     let createDiaryButton = UIButton()
     
-    var createAction:(() -> ()) = {}
+    var showCreateOptVC:(() -> ()) = {}
     var deleteAction:(() -> ()) = {}
     var cancelAction:(() -> ()) = {}
     
@@ -22,7 +22,7 @@ class ManagePagesAlertView: UIView {
         super.init(frame: frame)
         configureUI()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(cancel), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissPopover), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -67,32 +67,24 @@ class ManagePagesAlertView: UIView {
     
     
     @objc func createSubpage() {
-        let ac = UIAlertController(title: "添加新的一页", message: nil, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
-            self.cancelAction()
-        }))
-        ac.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
-            self.createAction()
-            self.cancel()
-        }))
-        let todayVC = UIApplication.getTodayVC()
-        todayVC?.present(ac, animated: true, completion: nil)
+        self.showCreateOptVC()
+        self.dismissPopover()
     }
     
     @objc func deleteSubpage() {
         let ac = UIAlertController(title: "将会删除最后一页", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
-            self.cancelAction()
+            self.dismissPopover()
         }))
         ac.addAction(UIAlertAction(title: "确定", style: .destructive, handler: { (_) in
             self.deleteAction()
-            self.cancel()
+            self.dismissPopover()
         }))
         let todayVC = UIApplication.getTodayVC()
         todayVC?.present(ac, animated: true, completion: nil)
     }
     
-    @objc func cancel(){
+    @objc func dismissPopover(){
         cancelAction()
     }
     
