@@ -73,11 +73,18 @@ class todayVC: UIViewController{
         topView.model = model
         topView.layoutIfNeeded()
         
-        //引入多页的概念后，传来的model可能是pages的主页面，也可能是子页面
+        // 读取多页
         let trueDate = model.trueDate//表示查询当日所有页面
         let models = LWRealmManager.shared.queryAllPages(ofDate: trueDate)
-        subpagesView.currentPageIndex = model.indexOfPage
-        subpagesView.models = models
+        if models.count != 0 {
+            subpagesView.currentPageIndex = model.indexOfPage
+            subpagesView.models = models
+        }else{
+            // 读取模板
+            subpagesView.currentPageIndex = 0
+            subpagesView.models = [model]
+        }
+        
     }
     
     private func initUI(){

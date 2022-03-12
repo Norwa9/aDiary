@@ -36,6 +36,20 @@ class ScalableImageModel:NSObject, Codable, YYModel {
         super.init()
     }
     
+    /// 复制一份imageModel，同时复制一份其对应的image
+    func copy()->ScalableImageModel{
+        let newuuid = UUID().uuidString
+        let bounds = CGRect.init(string: self.bounds)
+        ?? CGRect(x: 0, y: 0, width: globalConstantsManager.shared.kScreenWidth * 0.8, height: globalConstantsManager.shared.kScreenHeight * 0.8)
+        let model = ScalableImageModel(location: self.location, bounds: bounds, paraStyle: self.paraStyle, contentMode: self.contentMode, uuid: newuuid)
+        
+        if let image = ImageTool.shared.loadImage(uuid: uuid){
+            let si = scalableImage(image: image, uuid: newuuid)
+            ImageTool.shared.addImages(SIs: [si]) // 创建viewModel的同时，创建它的si
+        }
+        
+        return model
+    }
     
     
     

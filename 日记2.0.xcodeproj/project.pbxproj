@@ -137,6 +137,9 @@
 		EAA4E94927C24383005F93BD /* LWWarningIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA4E94827C24383005F93BD /* LWWarningIndicatorView.swift */; };
 		EAA7346D27DB9ACA0014C02A /* LWTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7346C27DB9ACA0014C02A /* LWTabBarView.swift */; };
 		EAA7346F27DB9BBA0014C02A /* LWTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7346E27DB9BBA0014C02A /* LWTabBarItem.swift */; };
+		EAA7347227DC85E50014C02A /* LWTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347127DC85E50014C02A /* LWTemplateViewController.swift */; };
+		EAA7347527DC860F0014C02A /* LWTemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347427DC860F0014C02A /* LWTemplateCell.swift */; };
+		EAA7347727DC86400014C02A /* LWTemplateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347627DC86400014C02A /* LWTemplateHelper.swift */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -342,6 +345,9 @@
 		EAA4E94827C24383005F93BD /* LWWarningIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWarningIndicatorView.swift; sourceTree = "<group>"; };
 		EAA7346C27DB9ACA0014C02A /* LWTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTabBarView.swift; sourceTree = "<group>"; };
 		EAA7346E27DB9BBA0014C02A /* LWTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTabBarItem.swift; sourceTree = "<group>"; };
+		EAA7347127DC85E50014C02A /* LWTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateViewController.swift; sourceTree = "<group>"; };
+		EAA7347427DC860F0014C02A /* LWTemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateCell.swift; sourceTree = "<group>"; };
+		EAA7347627DC86400014C02A /* LWTemplateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateHelper.swift; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -627,6 +633,7 @@
 		EA9AE7C4261078ED00D44221 /* setting VC */ = {
 			isa = PBXGroup;
 			children = (
+				EAA7347027DC85CC0014C02A /* Template */,
 				EAAFDDFE27A82C23008286EB /* SettingCell */,
 				EA369A65276E39DB0051643F /* settingVCConfig.swift */,
 				1B3AEB5926CA105500C057A4 /* LWSettingViewController.swift */,
@@ -827,6 +834,16 @@
 				EAA7346E27DB9BBA0014C02A /* LWTabBarItem.swift */,
 			);
 			path = TodoView;
+			sourceTree = "<group>";
+		};
+		EAA7347027DC85CC0014C02A /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				EAA7347127DC85E50014C02A /* LWTemplateViewController.swift */,
+				EAA7347427DC860F0014C02A /* LWTemplateCell.swift */,
+				EAA7347627DC86400014C02A /* LWTemplateHelper.swift */,
+			);
+			path = Template;
 			sourceTree = "<group>";
 		};
 		EAAFDDC9279EE414008286EB /* LWTodo */ = {
@@ -1168,6 +1185,7 @@
 				EAA4E94927C24383005F93BD /* LWWarningIndicatorView.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
 				EA38493F262EBAA3001B693F /* filterHelper.swift in Sources */,
+				EAA7347227DC85E50014C02A /* LWTemplateViewController.swift in Sources */,
 				EAA29E9E25C832F900AA6971 /* extension.swift in Sources */,
 				1B3AEB1326C4F7D100C057A4 /* LWCustomIndicatorView.swift in Sources */,
 				EAAFDE0227A83B56008286EB /* LWAppFeatureLabel.swift in Sources */,
@@ -1187,6 +1205,7 @@
 				EAA4E93227BCE1AD005F93BD /* todoData.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
+				EAA7347527DC860F0014C02A /* LWTemplateCell.swift in Sources */,
 				EAA29E5025C5784300AA6971 /* monthVC.swift in Sources */,
 				EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */,
 				EAA29E8225C5A75F00AA6971 /* todayVC.swift in Sources */,
@@ -1211,6 +1230,7 @@
 				EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */,
 				EADBC33226BD671F004D1A52 /* UIColor+DarkMode.swift in Sources */,
 				EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */,
+				EAA7347727DC86400014C02A /* LWTemplateHelper.swift in Sources */,
 				EA22360D26D6931A001FAD1D /* ViewExtension.swift in Sources */,
 				EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */,
 				EAA4E92F27BCE17F005F93BD /* todoDataProvider.swift in Sources */,

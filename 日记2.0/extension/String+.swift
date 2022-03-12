@@ -38,9 +38,13 @@ extension String{
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy年M月d日"
-        let rawDate = formatter.date(from: dateCN)!
-        formatter.dateFormat = dayComponent.rawValue
-        return formatter.string(from: rawDate)
+        if let rawDate = formatter.date(from: dateCN){
+            formatter.dateFormat = dayComponent.rawValue
+            return formatter.string(from: rawDate)
+        }else{
+            return "-1" // -1 表示这这个diaryinfo实例没有日期信息，不是一篇日记（模板或者其他）
+        }
+        
     }
     
     ///提取日期中的猴后缀信息：例如2021年9月14日-1 > 1
@@ -49,7 +53,9 @@ extension String{
         if let splitIndex = self.firstIndex(of: "-"){
             let index2 = self.index(after: splitIndex)
             let indexString = String(self[index2..<endIndex])
-            return Int(indexString)!
+            if let index =  Int(indexString){
+                return index
+            }
         }
         return 0
     }

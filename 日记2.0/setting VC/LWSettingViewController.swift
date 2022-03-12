@@ -801,6 +801,8 @@ class LWSettingViewController: UIViewController {
         vc.transitioningDelegate = vc
         vc.modalPresentationStyle = .custom//模态
         self.present(vc, animated: true, completion: nil)
+//        let vc = LWTemplateViewController()
+//        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK: -请求好评

@@ -126,7 +126,7 @@ class diaryInfo:Object,Codable{
         
         self.id = UUID().uuidString
         self.date = dateString
-        self.year = Int(date.dateComponent(for: .year))!
+        self.year = Int(date.dateComponent(for: .year))! 
         self.month = Int(date.dateComponent(for: .month))!
         self.day = Int(date.dateComponent(for: .day))!
         self.content = ""

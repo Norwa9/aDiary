@@ -56,7 +56,11 @@ class TopView: UIView {
         let day = model.date.dateComponent(for: .day)
         let month = model.date.dateComponent(for: .month)
         let weekDay = model.date.dateComponent(for: .weekday)
-        dateLable.text = "\(month)月\(day)日 \(weekDay)"
+        if day == "-1"{// day == -1 表示次日记是模板，于是显示模板名称（date）
+            dateLable.text = model.date
+        }else{
+            dateLable.text = "\(month)月\(day)日 \(weekDay)"
+        }
         dateLable.font = userDefaultManager.customFont(withSize: floor(scale * 22)).bold() ??  userDefaultManager.customFont(withSize: floor(scale * 22))
         dateLable.adjustsFontSizeToFitWidth = true
         //更新约束

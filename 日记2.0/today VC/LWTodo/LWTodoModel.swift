@@ -65,4 +65,14 @@ class LWTodoModel:NSObject,Codable,YYModel{ // YYModel 必须加 @objc dynamic�
         
         return false
     }
+    
+    func copy()->LWTodoModel{
+        let newuuid = UUID().uuidString
+        let bounds = CGRect.init(string: self.bounds)
+        ?? globalConstantsManager.shared.defaultTodoBounds
+        
+        let model = LWTodoModel(dateBelongs: self.dateBelongs, location: self.location, bounds: bounds, state: self.state, remindDate: self.remindDate, content: self.content, note: self.note, needRemind: self.needRemind, uuid: newuuid)
+        
+        return model
+    }
 }

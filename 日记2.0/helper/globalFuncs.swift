@@ -75,12 +75,14 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
         unsortedResult = tempResults
     }else{
         //2，返回指定年/月日记
+        //TODO: 只查询主页面
         let predicate = NSPredicate(format: "year == %d AND month == %d", forYear,forMonth)
         let filteredResults = LWRealmManager.shared.query(predicate: predicate)
         unsortedResult = filteredResults
     }
     
     //过滤掉子页面
+    //TODO: 去掉这一步骤
     let mainPage = unsortedResult.filter { (d) -> Bool in
         if let _ = d.date.firstIndex(of: "-"){
             return false
