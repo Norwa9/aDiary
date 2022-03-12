@@ -55,6 +55,11 @@ class indicatorViewManager{
                 //开始转
                 indicatorView.present()
                 isShowingIndicator = true
+                
+                // 一定时间后需要停止
+                DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
+                    self.stop(withText: "网络不佳")
+                }
             }
             
         }
