@@ -105,6 +105,19 @@ func diariesForMonth(forYear:Int,forMonth:Int)->[diaryInfo]{
     
 }
 
+func todosForMonth(diaryOfMonth:[diaryInfo]) -> [[LWTodoModel]]{
+    var monthTodos:[[LWTodoModel]] = []
+    for diary in diaryOfMonth{
+        let pages = LWRealmManager.shared.queryAllPages(ofDate: diary.trueDate)
+        var dayTodos:[LWTodoModel] = []
+        for page in pages {
+            dayTodos.append(contentsOf: page.lwTodoModels)
+        }
+        monthTodos.append(dayTodos)
+    }
+    return monthTodos
+}
+
 
 
 //MARK:-一个集合是否包含另外一个集合

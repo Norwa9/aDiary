@@ -55,8 +55,6 @@ class monthVC: UIViewController {
     //collection view
     var collectionView:UICollectionView!
     var flowLayout:waterFallLayout!///瀑布流布局
-    var blurEffectView:UIVisualEffectView!
-    let kBlurEffectViewHeight:CGFloat = 120
     //data source
     var filteredDiaries = [diaryInfo]()
     var resultDiaries = [diaryInfo]()
@@ -64,6 +62,9 @@ class monthVC: UIViewController {
     //编辑器
     var editorVC:todayVC!
     var selectedCell:monthCell!
+    // tabbar
+    var tabbar:LWTabBarView!
+    
     
     //MARK: -生命周期
     override func viewDidLoad() {
@@ -239,7 +240,8 @@ class monthVC: UIViewController {
         floatButton.setupShadow()
         floatButton.addTarget(self, action: #selector(floatButtonDidTapped), for: .touchUpInside)
         
-        
+        // tabbar
+        tabbar = LWTabBarView(delegate: self)
         
         self.view.addSubview(topbar)
         self.view.addSubview(topView)
@@ -249,34 +251,8 @@ class monthVC: UIViewController {
         self.topView.addSubview(filterButton)
         self.view.addSubview(collectionView)
         self.view.addSubview(floatButton)
-        //bottom gradient view
-        layoutBottomGradientView()
+        self.view.addSubview(tabbar)
         
-    }
-    
-    ///布局底部渐变图层
-    private func layoutBottomGradientView(){
-        let blurEffect = UIBlurEffect(style: .light)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.isUserInteractionEnabled = false
-        if UITraitCollection.current.userInterfaceStyle == .dark{
-            blurEffectView.alpha = 0
-        }else{
-            blurEffectView.alpha = 1
-        }
-        
-        blurEffectView.frame = CGRect(
-            x:0,
-            y:globalConstantsManager.shared.kScreenHeight - kBlurEffectViewHeight,
-            width: globalConstantsManager.shared.kScreenWidth,
-            height: kBlurEffectViewHeight);
-        let gradientLayer = CAGradientLayer()//底部创建渐变层
-        gradientLayer.colors = [UIColor.clear.cgColor,
-                                UIColor.label.cgColor]
-        gradientLayer.frame = blurEffectView.bounds
-        gradientLayer.locations = [0,0.9,1]
-        blurEffectView.layer.mask = gradientLayer
-        self.view.addSubview(blurEffectView)
     }
     
     //MARK: -auto layout
@@ -324,11 +300,18 @@ class monthVC: UIViewController {
         
         floatButton.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: 100, height: 40))
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-100)
+            make.left.equalToSuperview().offset(40)
+            make.bottom.equalToSuperview().offset(-20)
+        }
+        
+        tabbar.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 100, height: 40))
+            make.right.equalToSuperview().offset(-40)
+            make.centerY.equalTo(floatButton)
         }
         
         
+        // 月份按钮的约束
         let kButtonDiameter = monthButton.monthButtonDiameter // 按钮的高度
         let insetY:CGFloat = (kTopViewHeight - kButtonDiameter) / 2
         if UIDevice.current.userInterfaceIdiom == .phone{
@@ -416,9 +399,6 @@ class monthVC: UIViewController {
     
     ///返回按钮的显示与否
     func updateFloatButton(){
-        switchFloatButton(toShow: !isFilterMode)
-        
-        
         var title:String
         var colors:(UIColor,UIColor) // 背景、字体颜色
         if selectedMonth != curMonth || selectedYear != curYear{
@@ -443,20 +423,6 @@ class monthVC: UIViewController {
         }
         
         
-    }
-    
-    ///显示或隐藏浮动按钮
-    private func switchFloatButton(toShow:Bool){
-        floatButton.snp.updateConstraints { (update) in
-            if toShow{
-                update.bottom.equalToSuperview().offset(-100)
-            }else{
-                update.bottom.equalToSuperview().offset(100)
-            }
-        }
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.4, options: .curveEaseInOut) {
-            self.view.layoutIfNeeded()
-        } completion: { (_) in}
     }
     
     ///-popover
@@ -802,18 +768,6 @@ extension monthVC {
         self.present(ac, animated: true, completion: nil)
     }
 }
-//MARK:  -切换深色模式监听事件
-extension monthVC{
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if UITraitCollection.current.userInterfaceStyle == .dark{
-            blurEffectView.alpha = 0
-        }else{
-            blurEffectView.alpha = 1
-        }
-    }
-
-}
 
 //MARK:  -屏幕旋转
 extension monthVC{
@@ -833,11 +787,6 @@ extension monthVC{
                 make.centerX.equalTo(monthBtnStackView.snp.centerX).offset(offset)
             }
         }
-        
-        //2.更新底部阴影
-        print("更新底部阴影")
-        blurEffectView.removeFromSuperview()
-        layoutBottomGradientView()
         
         //3.刷新flowlayout
         reloadCollectionViewData(forRow: -1, animated: true)

@@ -239,6 +239,48 @@ class monthCell: UICollectionViewCell {
         updateCons()//更新约束
     }
     
+    ///更新约束
+    func updateCons(){
+        if let diary = self.diary{
+            todoListView.updateViewHeightAndReloadData(newestDiary: diary)
+        }
+        
+        let contains = diary.containsImage
+        self.albumView.snp.updateConstraints { (make) in
+            make.height.equalTo(contains ? layoutParasManager.shared.albumViewHeight : 0)
+        }
+        
+        //瀑布流切换时
+        self.containerView.snp.updateConstraints { (update) in
+            update.width.equalTo(layoutParasManager.shared.monthCellWidth)
+        }
+        switch layoutParasManager.shared.collectioncolumnNumber {
+        case 1:// 单列
+            self.contentLabel.snp.updateConstraints { update in
+                update.height.lessThanOrEqualTo(200)//恢复内容高度
+            }
+            self.contentLabel.alpha = 1
+        case 2: // 双列
+            self.contentLabel.snp.updateConstraints { update in
+                update.height.lessThanOrEqualTo(0)//内容高度=0
+            }
+            self.contentLabel.alpha = 0
+        default:
+            return
+        }
+        
+        /**
+         经过非常多调试试错出来的解决方案：
+         必须要setNeedsLayout和layoutIfNeeded搭配才能起到丝滑的动画过渡效果。
+         setNeedsLayout相当于layoutIfNeeded的信号，没有信号layoutIfNeeded将不起作用。
+         或者手动设置约束属性heightConstraint.constant = flag ? 100 : 0也可以作为layoutIfNeeded的信号
+         但是这里snp.updateConstraints却好像没有给layoutIfNeeded发送信号？所以我们要事先声明setNeedsLayout
+         参考：https://medium.com/@linhairui19/difference-between-setneedslayout-layoutifneeded-180a2310e2e6
+         */
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+    
     //MARK: -setupSegmentControl
     private func setupSegmentControl(){
         //如果是搜索模式，不显示页码选择器
@@ -329,52 +371,6 @@ extension monthCell{
         self.emojisLabel.text = ""
         self.pageSegmentControl.removeAllSegments()
     }
-}
-
-//MARK: -更新约束
-extension monthCell{
-    ///更新约束
-    func updateCons(){
-        if let diary = self.diary{
-            todoListView.updateViewHeightAndReloadData(newestDiary: diary)
-        }
-        
-        let contains = diary.containsImage
-        self.albumView.snp.updateConstraints { (make) in
-            make.height.equalTo(contains ? layoutParasManager.shared.albumViewHeight : 0)
-        }
-        
-        //瀑布流切换时
-        self.containerView.snp.updateConstraints { (update) in
-            update.width.equalTo(layoutParasManager.shared.monthCellWidth)
-        }
-        switch layoutParasManager.shared.collectioncolumnNumber {
-        case 1:// 单列
-            self.contentLabel.snp.updateConstraints { update in
-                update.height.lessThanOrEqualTo(200)//恢复内容高度
-            }
-            self.contentLabel.alpha = 1
-        case 2: // 双列
-            self.contentLabel.snp.updateConstraints { update in
-                update.height.lessThanOrEqualTo(0)//内容高度=0
-            }
-            self.contentLabel.alpha = 0
-        default:
-            return
-        }
-        
-        /**
-         经过非常多调试试错出来的解决方案：
-         必须要setNeedsLayout和layoutIfNeeded搭配才能起到丝滑的动画过渡效果。
-         setNeedsLayout相当于layoutIfNeeded的信号，没有信号layoutIfNeeded将不起作用。
-         或者手动设置约束属性heightConstraint.constant = flag ? 100 : 0也可以作为layoutIfNeeded的信号
-         但是这里snp.updateConstraints却好像没有给layoutIfNeeded发送信号？所以我们要事先声明setNeedsLayout
-         参考：https://medium.com/@linhairui19/difference-between-setneedslayout-layoutifneeded-180a2310e2e6
-         */
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
-    }
-    
 }
 
 //MARK: -选中状态

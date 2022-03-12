@@ -15,6 +15,11 @@ class layoutParasManager: NSObject {
     ///与布局有关的全局变量
     let collectionEdgesInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     
+    /// tabbar
+    /// 0表示日记、1表示待办
+    var tabbarType:Int = 0
+    
+    /// 单列、双列
     var collectioncolumnNumber:Int{
         get{
             return userDefaultManager.layoutType
