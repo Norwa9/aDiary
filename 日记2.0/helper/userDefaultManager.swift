@@ -429,7 +429,7 @@ class userDefaultManager{
             if let mode = shared?.object(forKey: constants.autoCreate) as? Bool {
                 return mode
             }else{
-                return true
+                return false
             }
         }
         set{

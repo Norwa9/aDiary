@@ -41,7 +41,7 @@ class NewUserGuideHelper{
             //page1
             let page1 = diaryInfo(dateString: date)
             // add image
-            page1.scalableImageModels = self.generateExampleImageModels(imagesLocations: [441])
+            page1.scalableImageModels = self.generateExampleImageModels(imagesLocations: [558])
             
             // add todos
             page1.lwTodoModels = self.generateExampleTodoModels(todoLocations: [69,71,73])

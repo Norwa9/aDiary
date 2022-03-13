@@ -71,7 +71,7 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
         
         titleLabel = UILabel()
         if mode == .newDay{
-            titleLabel.text = "进入今日"
+            titleLabel.text = "创建日记"
         }else{
             titleLabel.text = "创建新页面"
         }
