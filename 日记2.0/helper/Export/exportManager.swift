@@ -237,6 +237,7 @@ class exportManager{
         let dateFomatter = DateFormatter()
         dateFomatter.dateFormat = "yyyy年M月d日"
         let allDiary = LWRealmManager.queryAllDieryOnCurrentThread()
+        // 获取日期区间内日记（过滤区间外、模板）
         let filteredDiary = allDiary.filter { diary in
             let dateCN = diary.trueDate
             if let date = dateFomatter.date(from: dateCN){
@@ -245,11 +246,9 @@ class exportManager{
                     (date.compare(endDate) == .orderedAscending || date.compare(endDate) == .orderedSame)
                 {
                     return true
-                }else{
-                    return false
                 }
             }
-            return true
+            return false
         }
         let sortedAllDiary = filteredDiary.sorted { (m1, m2) -> Bool in
             let d1 = m1.trueDate

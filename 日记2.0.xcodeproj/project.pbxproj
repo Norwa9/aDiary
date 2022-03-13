@@ -80,7 +80,6 @@
 		EA96553D279463E3000B827B /* scalableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96553C279463E3000B827B /* scalableImage.swift */; };
 		EA96554127969FF8000B827B /* CKRecord+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96554027969FF8000B827B /* CKRecord+.swift */; };
 		EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */; };
-		EA96BDB727D340AD00392A84 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */; };
 		EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
@@ -143,6 +142,7 @@
 		EAA7347B27DCC3330014C02A /* LWCreateOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */; };
 		EAA7347D27DCC7F70014C02A /* LWCreateBlankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */; };
 		EAA7347F27DCEC840014C02A /* LWTemplateSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */; };
+		EAA7348127DE3A380014C02A /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAA7348027DE3A380014C02A /* wechat_group_code.jpg */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -292,7 +292,6 @@
 		EA96553C279463E3000B827B /* scalableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scalableImage.swift; sourceTree = "<group>"; };
 		EA96554027969FF8000B827B /* CKRecord+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+.swift"; sourceTree = "<group>"; };
 		EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoManager.swift; sourceTree = "<group>"; };
-		EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontPickerButton.swift; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
@@ -354,6 +353,7 @@
 		EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCreateOptionViewController.swift; sourceTree = "<group>"; };
 		EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCreateBlankView.swift; sourceTree = "<group>"; };
 		EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateSettingCell.swift; sourceTree = "<group>"; };
+		EAA7348027DE3A380014C02A /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -557,7 +557,7 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				EA96BDB627D340AD00392A84 /* wechat_group_code.jpg */,
+				EAA7348027DE3A380014C02A /* wechat_group_code.jpg */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
@@ -1081,7 +1081,7 @@
 			files = (
 				EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
-				EA96BDB727D340AD00392A84 /* wechat_group_code.jpg in Resources */,
+				EAA7348127DE3A380014C02A /* wechat_group_code.jpg in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
@@ -1479,7 +1479,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1506,7 +1506,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
