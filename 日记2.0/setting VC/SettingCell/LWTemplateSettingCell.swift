@@ -62,7 +62,7 @@ class LWTemplateSettingCell:UIView{
         view.backgroundColor = fontPickerButtonDynamicColor
         
         let Label = UILabel()
-        Label.text = "管理"
+        Label.text = "管理模板"
         Label.font = UIFont.systemFont(ofSize: 14)
         Label.adjustsFontSizeToFitWidth = true
         Label.textColor = .label

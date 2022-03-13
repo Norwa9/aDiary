@@ -82,6 +82,8 @@ class LWTemplateHelper{
         newDiary.content = template.content
         newDiary.rtfd = template.rtfd
         newDiary.containsImage = template.containsImage
+        newDiary.emojis = template.emojis
+        newDiary.tags = template.tags
         newDiary.scalableImageModels = template.scalableImageModels.map({ oldModel in
             return oldModel.copy()
         })
