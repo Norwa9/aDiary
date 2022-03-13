@@ -15,6 +15,7 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
     private var templateCollectionViewLayout = UICollectionViewFlowLayout()
     private var templates:[diaryInfo] = []
     private var editorVC:todayVC!
+    private var cellWidth:CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +49,11 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         self.view.backgroundColor = .systemBackground
         
         titleLabel = UILabel()
-        titleLabel.text = "模板"
+        titleLabel.text = "模板管理"
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
         
         promptLabel = UILabel()
-        promptLabel.text = "长按编辑"
+        promptLabel.text = "轻触编辑，长按删除"
         promptLabel.textColor = .secondaryLabel
         promptLabel.font = .systemFont(ofSize: 12)
         
@@ -69,10 +70,16 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLayoutSubviews() {
         // 获取正确的view.width
         super.viewDidLayoutSubviews()
-        templateCollectionViewLayout.itemSize = CGSize(
-            width: view.width - 20,
-            height: 50)
-        self.reloadData()
+        if let _ = cellWidth {
+            return
+        }else{
+            cellWidth = view.width - 20
+            templateCollectionViewLayout.itemSize = CGSize(
+                width: cellWidth!,
+                height: 50)
+            self.reloadData()
+        }
+        
     }
     
     private func setCons(){
@@ -82,12 +89,12 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         
         promptLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(titleLabel)
-            make.right.equalToSuperview().offset(-10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(titleLabel)
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(10)
+            make.top.equalTo(self.promptLabel.snp.bottom).offset(10)
             make.left.right.bottom.equalToSuperview()
         }
     }
@@ -102,7 +109,7 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
         if row == templates.count{
             cell.setPromptView(delegate: self)
         }else{
-            cell.setViewModel(model:templates[row])
+            cell.setViewModel(model:templates[row],editable: true)
         }
         
         return cell
@@ -145,14 +152,16 @@ class LWTemplateViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     func performRename(_ indexPath:IndexPath){
+        let template = self.templates[indexPath.row]
         let ac = UIAlertController(title: "重命名该模板", message: "请输入新的名称", preferredStyle: .alert)
-        ac.addTextField(configurationHandler: nil)
+        ac.addTextField { textfield in
+            textfield.text = template.date.trimPrefix(prefix: LWTemplateHelper.shared.TemplateNamePrefix)
+        }
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
             //
         }))
         ac.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
             if let text = ac.textFields?[0].text{
-                let template = self.templates[indexPath.row]
                 LWTemplateHelper.shared.modifyTempalteName(oldTemplateRawName: template.date.trimPrefix(prefix: LWTemplateHelper.shared.TemplateNamePrefix), newTemplateRawName: text)
                 self.reloadData()
             }

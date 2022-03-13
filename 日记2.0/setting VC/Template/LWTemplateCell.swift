@@ -10,8 +10,11 @@ import UIKit
 class LWTemplateCell: UICollectionViewCell {
     static let reuseID = "LWTemplateCell"
     private var titleLabel:UILabel!
-    private var model:diaryInfo!
+    
     private var delegate:LWTemplateViewController!
+    private var model:diaryInfo!
+    private var editable:Bool = false
+    private var editImageView:UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +25,8 @@ class LWTemplateCell: UICollectionViewCell {
     }
     
     /// case1：模板管理界面
-    public func setViewModel(model:diaryInfo){
+    public func setViewModel(model:diaryInfo,editable:Bool = false){
+        self.editable = editable
         self.model = model
         self.initUI()
         self.setCons()
@@ -43,12 +47,29 @@ class LWTemplateCell: UICollectionViewCell {
         titleLabel = UILabel()
         titleLabel.text = model.date.trimPrefix(prefix: LWTemplateHelper.shared.TemplateNamePrefix)
         titleLabel.font = UIFont(name: "DIN Alternate", size: 14)!
+        
+//        let image = UIImage(named: "chevron.forward.circle")
+        let image = UIImage(systemName: "chevron.forward")
+        editImageView = UIImageView(image: image)
+        editImageView.tintColor = .lightGray
+        editImageView.alpha = editable ? 1 : 0
+        
+        self.addSubview(editImageView)
         self.addSubview(titleLabel)
     }
     
     private func setCons(){
         titleLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+            make.top.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+        }
+        
+        editImageView.snp.makeConstraints { make in
+            make.left.equalTo(titleLabel.snp.right).offset(10)
+            make.right.equalToSuperview().offset(-10)
+            make.top.equalToSuperview().offset(15)
+            make.bottom.equalToSuperview().offset(-15)
+            make.width.equalTo(editImageView.snp.height).multipliedBy(0.6)
         }
     }
     
@@ -64,7 +85,7 @@ class LWTemplateCell: UICollectionViewCell {
         
         createButton.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(self.snp.height)
+            make.width.height.equalTo(self.snp.height).multipliedBy(0.8)
         }
     }
 }
