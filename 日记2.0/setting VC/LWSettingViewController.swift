@@ -697,6 +697,7 @@ class LWSettingViewController: UIViewController {
         //保存设置
         userDefaultManager.lineSpacing = tempLineSpacing
         userDefaultManager.imageSizeStyle = tempImageSizeStyle
+        userDefaultManager.fontSize = tempFontSize
         
         UIApplication.getMonthVC()?.reloadCollectionViewData()
         
