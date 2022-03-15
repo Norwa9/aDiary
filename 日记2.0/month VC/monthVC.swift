@@ -385,7 +385,7 @@ class monthVC: UIViewController {
         
     }
     
-    ///返回本月按钮
+    //MARK: 进入今日
     @objc func floatButtonDidTapped(){
         if isCurrentMonth{
             formatter.dateFormat = "yyyy年M月d日"
