@@ -74,8 +74,8 @@ class WhatsNewHelper{
         // And many more configuration properties...
         
         //MARK:-3:versionStore
-//        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
+//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
         guard let whatsNew = currentWhatsNew else{return nil}//无法取得（或没有定义）当前的whatsNew
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
