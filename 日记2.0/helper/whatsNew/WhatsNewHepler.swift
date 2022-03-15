@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 5, patch: 0)
+        let version = WhatsNew.Version(major: 3, minor: 5, patch: 1)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -24,12 +24,12 @@ class WhatsNewHelper{
             items: [
                 WhatsNew.Item(
                     title: "新增日记模板",
-                    subtitle: "",
+                    subtitle: "设置 -> 管理模板",
                     image: UIImage(systemName: "note.text.badge.plus")
                 ),
                 WhatsNew.Item(
-                    title: "如有任何问题，欢迎和开发者联系",
-                    subtitle: "设置->反馈，取得联系",
+                    title: "如有建议，可与开发者联系",
+                    subtitle: "设置 -> 反馈",
                     image: UIImage(systemName: "questionmark.circle")
                 )
                 
@@ -74,8 +74,8 @@ class WhatsNewHelper{
         // And many more configuration properties...
         
         //MARK:-3:versionStore
-        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+//        let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
+        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
         
         guard let whatsNew = currentWhatsNew else{return nil}//无法取得（或没有定义）当前的whatsNew
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
@@ -89,11 +89,11 @@ class WhatsNewHelper{
             return nil
         }
         
-//        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 3, patch: 0))
-//        {
-//            // 如果展示过3.3的欢迎页，则不需要再展示
-//            return nil
-//        }
+        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 5, patch: 0))
+        {
+            // 如果展示过3.5.0的欢迎页，则不需要再展示
+            return nil
+        }
         
         
         return viewController
