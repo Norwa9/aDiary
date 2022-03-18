@@ -66,12 +66,13 @@ class LWTodoModel:NSObject,Codable,YYModel{ // YYModel 必须加 @objc dynamic�
         return false
     }
     
-    func copy()->LWTodoModel{
+    func copy(dateBelongs:String)->LWTodoModel{
         let newuuid = UUID().uuidString
         let bounds = CGRect.init(string: self.bounds)
         ?? globalConstantsManager.shared.defaultTodoBounds
         
-        let model = LWTodoModel(dateBelongs: self.dateBelongs, location: self.location, bounds: bounds, state: self.state, remindDate: self.remindDate, content: self.content, note: self.note, needRemind: self.needRemind, uuid: newuuid)
+        // dateBelongs 需要更新，否者是“模板名称”，widget无法解码
+        let model = LWTodoModel(dateBelongs: dateBelongs, location: self.location, bounds: bounds, state: self.state, remindDate: self.remindDate, content: self.content, note: self.note, needRemind: self.needRemind, uuid: newuuid)
         
         return model
     }

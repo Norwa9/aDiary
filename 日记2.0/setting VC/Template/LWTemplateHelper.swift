@@ -71,12 +71,13 @@ class LWTemplateHelper{
     func createDiaryUsingTemplate(dateCN:String,pageIndex:Int,template:diaryInfo) -> diaryInfo?{
         // 拷贝
         var newDiary:diaryInfo
+        var dateString:String
         if pageIndex == 0{ // 创建主页面
-            newDiary = diaryInfo(dateString: dateCN)
-            
+            dateString = dateCN
+            newDiary = diaryInfo(dateString: dateString)
         }else{ // 创建子页面
-            let subPageDateCN = dateCN + "-" + "\(pageIndex)"
-            newDiary = diaryInfo(dateString: subPageDateCN)
+            dateString = dateCN + "-" + "\(pageIndex)"
+            newDiary = diaryInfo(dateString: dateString)
         }
         newDiary.modTime = Date()
         newDiary.content = template.content
@@ -88,7 +89,7 @@ class LWTemplateHelper{
             return oldModel.copy()
         })
         newDiary.lwTodoModels = template.lwTodoModels.map({ oldModel in
-            return oldModel.copy()
+            return oldModel.copy(dateBelongs: dateString)
         })
        
         // 保存&上传

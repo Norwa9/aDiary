@@ -44,11 +44,13 @@ struct todoListView: View{
     var body: some View{
         VStack(spacing:5){
             ForEach(todos) { todo in
-                Link(destination: URL(string: todo.dateBelongs)!) {
-                    // URL不能有中文
+                if let url = URL(string: todo.dateBelongs){
+                    Link(destination: url) { // TODO: URL不能有中文
+                        todoRow(todo: todo)
+                    }
+                }else{
                     todoRow(todo: todo)
                 }
-                
             }
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))

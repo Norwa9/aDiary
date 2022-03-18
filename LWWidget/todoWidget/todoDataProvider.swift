@@ -29,13 +29,15 @@ class todoDataProvider{
             todoDataArray.append(todoData)
         }
         
+        // TODO: 无法获取模板插入的子页面的todo
         // 2. 获取今日创建的所有todo
         for todayPage in LWRealmManager.shared.queryAllPages(ofDate: GetTodayDate()){
             for model in todayPage.lwTodoModels{
+                print("设置todo小组件，内容：\(model.content)，日期：\(todayPage.date)")
                 if todoDataArray.contains(where: { todo in
                     todo.id == model.uuid
                 }){
-                    continue
+                    continue // 已经在步骤1添加了这个todo
                 }
                 let todoData = todoData(
                     id: model.uuid,
