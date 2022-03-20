@@ -161,3 +161,19 @@ func getDocumentsDirectory() -> URL {
 }
 
 
+/// 转换时间格式：将1/60s为单位的值转换为分:秒:小数
+/// count 以1/60为基本单位
+func getConvertedTime(count:CGFloat?)->String{
+    if let time = count{
+        let count = Int(time)
+        let minute = count / 3600
+        let second = count / 60
+        let remainder = count % 60
+        let minute_s = String(format: "%02d", minute)
+        let second_s = String(format: "%02d", second)
+        let remainder_s = String(format: "%02d", remainder)
+        return "\(minute_s):\(second_s):\(remainder_s)"
+    }
+    return "null"
+}
+

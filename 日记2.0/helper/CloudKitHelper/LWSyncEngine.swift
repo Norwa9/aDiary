@@ -434,6 +434,8 @@ final class LWSyncEngine{
         }
         else if recordType == .scalableImage{
             ImageTool.shared.setUploaded(records: records)
+        }else if recordType == .LWSound{
+            LWSoundHelper.shared.setUploaded(records: records)
         }
     }
     
@@ -551,6 +553,8 @@ final class LWSyncEngine{
         }
         else if recordType == .scalableImage{
             ImageTool.shared.setDeleted(recordIDs: recordIDs)
+        }else if recordType == .LWSound{
+            LWSoundHelper.shared.setDeleted(recordIDs: recordIDs)
         }
         
         indicatorViewManager.shared.stop()
@@ -698,18 +702,25 @@ final class LWSyncEngine{
             return
         }
         
+        // 一、 获取变化
         var diaryRecords:[CKRecord] = []
         var imgRecords:[CKRecord] = []
+        var soundRecords:[CKRecord] = []
+        
         for record in changedRecords {
             if record.recordType == .diaryInfo{
                 diaryRecords.append(record)
             }
             else if record.recordType == .scalableImage{
                 imgRecords.append(record)
+            }else if record.recordType == .LWSound{
+                soundRecords.append(record)
             }
         }
-        print("获取到[修改]：\(diaryRecords.count)个日记修改，\(imgRecords.count)个图片修改。将这些变动同步到本地数据库...")
+        print("获取到[修改]：\(diaryRecords.count)个日记修改；\(imgRecords.count)个图片修改；\(soundRecords.count)个音频修改。将这些变动同步到本地数据库...")
         
+        
+        // 1. diary 的变化
         let changedDiaryInfoModels:[diaryInfo] = diaryRecords.compactMap { record in
             do {
                 return try diaryInfo(record: record)
@@ -720,6 +731,7 @@ final class LWSyncEngine{
         }
         DiaryStore.shared.updateAfterSync(changedDiaryInfoModels)
         
+        // 2. scalableImage 的变化
         let changedSiModels:[scalableImage] = imgRecords.compactMap { record in
             do {
                 return try scalableImage(record: record)
@@ -730,20 +742,36 @@ final class LWSyncEngine{
         }
         ImageTool.shared.updateAfterSync(changedSiModels)
         
+        // 3. LWSound的变化
+        let changedLWSounds:[LWSound] = soundRecords.compactMap { record in
+            do {
+                return try LWSound(record: record)
+            } catch {
+                os_log("Error decoding scalableImage from record: %{public}@", log: self.log, type: .error, String(describing: error))
+                return nil
+            }
+        }
+        LWSoundHelper.shared.updateAfterSync(changedLWSounds)
         
-        // deleted records
+        
+        // 二、 获取删除
         var diaryInfoIDs:[String] = []
         var siIDs:[String] = []
+        var soundIDs:[String] = []
+        
         for (deleteID,recordType) in deletedRecords{
             if recordType == .diaryInfo{
                 diaryInfoIDs.append(deleteID.recordName)
             }else if recordType == .scalableImage{
                 siIDs.append(deleteID.recordName)
+            }else if recordType == .LWSound{
+                soundIDs.append(deleteID.recordName)
             }
         }
-        print("获取到[删除]：\(diaryInfoIDs.count)个日记删除，\(siIDs.count)个图片删除。将这些变动同步到本地数据库...")
+        print("获取到[删除]：\(diaryInfoIDs.count)个日记删除;\(siIDs.count)个图片删除;\(soundRecords.count)个音频删除。将这些删除同步到本地数据库...")
         DiaryStore.shared.updateAfterDelete(diaryInfoIDs)
         ImageTool.shared.updateAfterDelete(siIDs)
+        LWSoundHelper.shared.updateAfterDelete(soundIDs)
         
         // 统一地更新UI：以上4个函数导致的UI变化在这里更新
         // 也仅运行到这里时，菊花转才停下。

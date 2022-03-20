@@ -310,8 +310,11 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
     }
     
     @objc func insertTimeToTextView(){
-        let textFormatter = TextFormatter(textView: textView)
-        textFormatter.insertTimeTag()
+//        let textFormatter = TextFormatter(textView: textView)
+//        textFormatter.insertTimeTag()
+        let soundVC = LWSoundsViewController()
+        soundVC.delegate = UIApplication.getTodayVC()?.subpagesView.curTextVC
+        UIApplication.getTodayVC()?.present(soundVC, animated: true, completion: nil)
     }
     
     @objc func insertImageToTextView(){

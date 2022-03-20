@@ -138,6 +138,16 @@ class globalConstantsManager{
         }
     }
     
+    var defaultLWSoundViewBounds:CGRect{
+        get{
+            let KSoundViewWidth = globalConstantsManager.shared.kScreenWidth * 0.95
+            // 默认的todo cell 高度
+            let defaultSoundViewHeight = 45.0
+            return CGRect(x: 0, y: 0, width: KSoundViewWidth, height: defaultSoundViewHeight)
+        }
+    }
+    
+    
     var deviceCenterPoint:CGPoint{
         get{
             return CGPoint(x: kScreenWidth / 2, y: kScreenHeight / 2)

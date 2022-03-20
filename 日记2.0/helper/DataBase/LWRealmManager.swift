@@ -36,6 +36,10 @@ class LWRealmManager{
        return realm.objects(scalableImage.self)
     }()
     
+    lazy var localSoundDatabase:Results<LWSound> = {
+       return realm.objects(LWSound.self)
+    }()
+    
     ///在调用该函数的线程中重新创建Realm实例，然后用这个实例查询
     ///Realm实例属于当前线程，其他线程不能访问。
     ///例如：Main Thread创建的实例不能再Background Thread中访问！

@@ -178,6 +178,15 @@ extension LWTextViewController:LWPhotoPickerDelegate,FMPhotoPickerViewController
     }
 }
 
+//MARK: 插入音频
+extension LWTextViewController:LWSoundDelegate{
+    func LWSoundDidFinishRecording(soundData: Data, soundFileLength: CGFloat) {
+        let textFormatter = TextFormatter(textView: self.textView)
+        textFormatter.insertAudio(soundData: soundData,soundFileLength: soundFileLength)
+        self.save()
+    }
+}
+
 extension LWTextViewController : UITextViewDelegate{
     //MARK: -textViewDidBeginEditing
     func textViewDidBeginEditing(_ textView: UITextView) {

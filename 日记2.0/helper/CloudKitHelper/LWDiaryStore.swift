@@ -35,6 +35,7 @@ public final class DiaryStore: ObservableObject {
         self.syncEngine = LWSyncEngine.init(defaults: self.defaults)
         
         ImageTool.shared.syncEngine = self.syncEngine // imageTool和DiaryStore共用一个syncEngine
+        LWSoundHelper.shared.syncEngine = self.syncEngine 
     }
     //MARK: :-public
     ///开始云同步逻辑
@@ -87,7 +88,8 @@ public final class DiaryStore: ObservableObject {
         syncEngine?.delete([id],recordType: .diaryInfo)
         
         // 3. 删除附带的图片
-        self.clearAllImgs(for: diaryToDel)
+        ImageTool.shared.clearAllImgs(for: diaryToDel)
+        LWSoundHelper.shared.clearAllSounds(for: diaryToDel)
         
         // 4. 再本地删除，因为需要引用diary
         let predicate = NSPredicate(format: "id == %@", id)
@@ -113,28 +115,7 @@ public final class DiaryStore: ObservableObject {
         }
     }
     
-    /// 删除一个页面时，需要手动地删除其内所有图片
-    private func clearAllImgs(for page:diaryInfo){
-        let siModels = page.scalableImageModels
-        let uuids = siModels.map({ m in
-            return m.uuid
-        })
-        print("删除页面： \(page.date) ...内有\(uuids.count)张图片。")
-        ImageTool.shared.deleteImages(uuidsToDel: uuids)
-    }
     
-    /// 删除一个页面时，需要手动地删除其内所有图片
-    private func clearAllImgs(for pageID:String){
-        guard let page = LWRealmManager.shared.queryDiaryWithID(pageID) else{
-            return
-        }
-        let siModels = page.scalableImageModels
-        let uuids = siModels.map({ m in
-            return m.uuid
-        })
-        print("删除页面： \(page.date) ...内有\(uuids.count)张图片。")
-        ImageTool.shared.deleteImages(uuidsToDel: uuids)
-    }
     
     /// 云端删除成功后，清空diary的待删除队列
     func setDeleted(recordIDs: [CKRecord.ID]?){
@@ -184,7 +165,8 @@ public final class DiaryStore: ObservableObject {
         //1.删除
         for id in deletedIDs{
             // 先删除imgModel
-            self.clearAllImgs(for: id)
+            ImageTool.shared.clearAllImgs(for: id)
+            LWSoundHelper.shared.clearAllSounds(for: id)
             
             // 再删除diaryModel
             let predicate = NSPredicate(format: "id == %@", id)

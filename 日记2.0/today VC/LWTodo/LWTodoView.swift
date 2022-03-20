@@ -196,6 +196,8 @@ class LWTodoView:UIView{
     }
     
     @objc func moreButtonTapped(_ sender:UIButton){
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         contentTextView.resignFirstResponder()
         viewModel.lwTextView?.resignFirstResponder()
         

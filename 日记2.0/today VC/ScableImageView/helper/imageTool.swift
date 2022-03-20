@@ -27,7 +27,6 @@ class ImageTool{
         let nonEmptyUploadQ = userDefaultManager.imageUploadQueue.filter { uuid in
             return uuid != ""
         }
-        userDefaultManager.imageUploadQueue = nonEmptyUploadQ
         let nonEmptyDeleteQ = userDefaultManager.imageDeleteQueue.filter { uuid in
             return uuid != ""
         }
@@ -248,5 +247,29 @@ class ImageTool{
         }
     }
     
+    
+    // MARK: 页面删除
+    /// 删除一个页面时，需要手动地删除其内所有图片
+    func clearAllImgs(for page:diaryInfo){
+        let siModels = page.scalableImageModels
+        let uuids = siModels.map({ m in
+            return m.uuid
+        })
+        print("删除页面： \(page.date) ...内有\(uuids.count)张图片。")
+        self.deleteImages(uuidsToDel: uuids)
+    }
+    
+    /// 删除一个页面时，需要手动地删除其内所有图片
+    func clearAllImgs(for pageID:String){
+        guard let page = LWRealmManager.shared.queryDiaryWithID(pageID) else{
+            return
+        }
+        let siModels = page.scalableImageModels
+        let uuids = siModels.map({ m in
+            return m.uuid
+        })
+        print("删除页面： \(page.date) ...内有\(uuids.count)张图片。")
+        self.deleteImages(uuidsToDel: uuids)
+    }
     
 }

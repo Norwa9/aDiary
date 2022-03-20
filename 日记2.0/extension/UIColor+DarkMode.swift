@@ -49,3 +49,12 @@ let fontPickerButtonDynamicColor = UIColor.init { (t) -> UIColor in
     }
 }
 
+/// soundView的动态色
+let soundViewDynamicColor = UIColor.init { (t) -> UIColor in
+    if t.userInterfaceStyle == .dark{
+        return UIColor.systemGray6
+    }else{
+        return UIColor.systemGray6.withAlphaComponent(0.5)
+    }
+}
+

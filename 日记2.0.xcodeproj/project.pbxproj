@@ -90,6 +90,17 @@
 		EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4DF267E10E200D77908 /* icon-120.png */; };
 		EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */; };
 		EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9AF51626821E5F00D77908 /* CloudKit.framework */; };
+		EAA1B4D227E573A200BBB80A /* LWSoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4D127E573A200BBB80A /* LWSoundsViewController.swift */; };
+		EAA1B4D627E5C82100BBB80A /* LWSoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4D527E5C82100BBB80A /* LWSoundView.swift */; };
+		EAA1B4D827E5C89000BBB80A /* LWSoundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4D727E5C89000BBB80A /* LWSoundModel.swift */; };
+		EAA1B4DA27E5C89C00BBB80A /* LWSoundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4D927E5C89C00BBB80A /* LWSoundViewModel.swift */; };
+		EAA1B4DC27E5C8AA00BBB80A /* LWSoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4DB27E5C8AA00BBB80A /* LWSoundHelper.swift */; };
+		EAA1B4DE27E5CD1C00BBB80A /* LWSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4DD27E5CD1C00BBB80A /* LWSound.swift */; };
+		EAA1B4E027E5DC7F00BBB80A /* LWSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4DF27E5DC7F00BBB80A /* LWSoundPlayer.swift */; };
+		EAA1B4E227E60B5800BBB80A /* diaryInfo+Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E127E60B5800BBB80A /* diaryInfo+Sound.swift */; };
+		EAA1B4E527E61EC700BBB80A /* LWTimingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E427E61EC700BBB80A /* LWTimingLabel.swift */; };
+		EAA1B4E727E61EDF00BBB80A /* LWRecodingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E627E61EDF00BBB80A /* LWRecodingButton.swift */; };
+		EAA1B4EA27E6EF6C00BBB80A /* LWPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E927E6EF6C00BBB80A /* LWPlayButton.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
 		EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E3225C5768200AA6971 /* Main.storyboard */; };
@@ -303,6 +314,17 @@
 		EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_roundCornor.png; sourceTree = "<group>"; };
 		EA9AF51426821E5700D77908 /* 日记2.0.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "日记2.0.entitlements"; sourceTree = "<group>"; };
 		EA9AF51626821E5F00D77908 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		EAA1B4D127E573A200BBB80A /* LWSoundsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundsViewController.swift; sourceTree = "<group>"; };
+		EAA1B4D527E5C82100BBB80A /* LWSoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundView.swift; sourceTree = "<group>"; };
+		EAA1B4D727E5C89000BBB80A /* LWSoundModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundModel.swift; sourceTree = "<group>"; };
+		EAA1B4D927E5C89C00BBB80A /* LWSoundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundViewModel.swift; sourceTree = "<group>"; };
+		EAA1B4DB27E5C8AA00BBB80A /* LWSoundHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundHelper.swift; sourceTree = "<group>"; };
+		EAA1B4DD27E5CD1C00BBB80A /* LWSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSound.swift; sourceTree = "<group>"; };
+		EAA1B4DF27E5DC7F00BBB80A /* LWSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundPlayer.swift; sourceTree = "<group>"; };
+		EAA1B4E127E60B5800BBB80A /* diaryInfo+Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+Sound.swift"; sourceTree = "<group>"; };
+		EAA1B4E427E61EC700BBB80A /* LWTimingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTimingLabel.swift; sourceTree = "<group>"; };
+		EAA1B4E627E61EDF00BBB80A /* LWRecodingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecodingButton.swift; sourceTree = "<group>"; };
+		EAA1B4E927E6EF6C00BBB80A /* LWPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPlayButton.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -550,6 +572,7 @@
 				1B2A56C726A124C00090D411 /* diaryInfo+Object.swift */,
 				EA67915B26D1F35C00B44ECA /* diaryinfo+subPages.swift */,
 				EA2235DD26D68F7D001FAD1D /* diaryinfo+ScalableImageView.swift */,
+				EAA1B4E127E60B5800BBB80A /* diaryInfo+Sound.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -648,6 +671,39 @@
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
 			);
 			path = "setting VC";
+			sourceTree = "<group>";
+		};
+		EAA1B4D027E5737700BBB80A /* LWSounds */ = {
+			isa = PBXGroup;
+			children = (
+				EAA1B4E827E6EF5000BBB80A /* LWSoundView */,
+				EAA1B4E327E61EAC00BBB80A /* recordView */,
+				EAA1B4DD27E5CD1C00BBB80A /* LWSound.swift */,
+				EAA1B4D727E5C89000BBB80A /* LWSoundModel.swift */,
+				EAA1B4D927E5C89C00BBB80A /* LWSoundViewModel.swift */,
+				EAA1B4DB27E5C8AA00BBB80A /* LWSoundHelper.swift */,
+				EAA1B4DF27E5DC7F00BBB80A /* LWSoundPlayer.swift */,
+			);
+			path = LWSounds;
+			sourceTree = "<group>";
+		};
+		EAA1B4E327E61EAC00BBB80A /* recordView */ = {
+			isa = PBXGroup;
+			children = (
+				EAA1B4D127E573A200BBB80A /* LWSoundsViewController.swift */,
+				EAA1B4E427E61EC700BBB80A /* LWTimingLabel.swift */,
+				EAA1B4E627E61EDF00BBB80A /* LWRecodingButton.swift */,
+			);
+			path = recordView;
+			sourceTree = "<group>";
+		};
+		EAA1B4E827E6EF5000BBB80A /* LWSoundView */ = {
+			isa = PBXGroup;
+			children = (
+				EAA1B4D527E5C82100BBB80A /* LWSoundView.swift */,
+				EAA1B4E927E6EF6C00BBB80A /* LWPlayButton.swift */,
+			);
+			path = LWSoundView;
 			sourceTree = "<group>";
 		};
 		EAA29E2025C5768200AA6971 = {
@@ -749,6 +805,7 @@
 			isa = PBXGroup;
 			children = (
 				EAA29E8125C5A75F00AA6971 /* todayVC.swift */,
+				EAA1B4D027E5737700BBB80A /* LWSounds */,
 				EAAFDDC9279EE414008286EB /* LWTodo */,
 				EA98C891272448CE00DD60EA /* animation */,
 				EA2235E326D6920A001FAD1D /* ScableImageView */,
@@ -1191,6 +1248,7 @@
 				EAAFDDCD279EE435008286EB /* LWTodoViewModel.swift in Sources */,
 				EAA4E90327B1604E005F93BD /* roamData.swift in Sources */,
 				EAA7346F27DB9BBA0014C02A /* LWTabBarItem.swift in Sources */,
+				EAA1B4E227E60B5800BBB80A /* diaryInfo+Sound.swift in Sources */,
 				EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */,
 				EAA4E94927C24383005F93BD /* LWWarningIndicatorView.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,
@@ -1205,12 +1263,14 @@
 				EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
+				EAA1B4D227E573A200BBB80A /* LWSoundsViewController.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
 				EA3189AF26934ED5001B9042 /* globalFuncs.swift in Sources */,
 				EA55A3A026D9436900FC9006 /* LWPopManger.swift in Sources */,
 				EAAFDDF327A12182008286EB /* LWTodoSettingViewController.swift in Sources */,
 				1B2A566E269D81280090D411 /* indicatorViewManager.swift in Sources */,
+				EAA1B4EA27E6EF6C00BBB80A /* LWPlayButton.swift in Sources */,
 				EA67915C26D1F35D00B44ECA /* diaryinfo+subPages.swift in Sources */,
 				EAA4E93227BCE1AD005F93BD /* todoData.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
@@ -1226,6 +1286,7 @@
 				EADBC2FA26B46CCE004D1A52 /* AlbumView.swift in Sources */,
 				EAA29E7E25C59E4700AA6971 /* topbarButton.swift in Sources */,
 				EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */,
+				EAA1B4DA27E5C89C00BBB80A /* LWSoundViewModel.swift in Sources */,
 				EA5CFF9E26739AFC008E06FA /* waterFallLayout.swift in Sources */,
 				EAA4E94227BFE59B005F93BD /* AlamofireHelper.swift in Sources */,
 				EA537B9D2632FD9500C2E9EE /* imageManager.swift in Sources */,
@@ -1248,6 +1309,7 @@
 				EA2235DE26D68F7D001FAD1D /* diaryinfo+ScalableImageView.swift in Sources */,
 				EACB1777267DC2FE007BF160 /* constants.swift in Sources */,
 				EA537BC3263582B000C2E9EE /* UITextView+.swift in Sources */,
+				EAA1B4DE27E5CD1C00BBB80A /* LWSound.swift in Sources */,
 				1B2A56262696D5B70090D411 /* LWSyncEngine+Notifications.swift in Sources */,
 				EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */,
 				EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */,
@@ -1273,16 +1335,20 @@
 				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
 				1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */,
+				EAA1B4E527E61EC700BBB80A /* LWTimingLabel.swift in Sources */,
 				EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
 				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
+				EAA1B4D627E5C82100BBB80A /* LWSoundView.swift in Sources */,
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */,
 				EAA7347D27DCC7F70014C02A /* LWCreateBlankView.swift in Sources */,
 				EA96001327007EF80008DC8A /* globalConfig.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
+				EAA1B4E027E5DC7F00BBB80A /* LWSoundPlayer.swift in Sources */,
 				EACB1714267790BA007BF160 /* String+.swift in Sources */,
+				EAA1B4D827E5C89000BBB80A /* LWSoundModel.swift in Sources */,
 				EAA29E7225C595C700AA6971 /* topbarView.swift in Sources */,
 				1B2A56D126A56C3F0090D411 /* TodoListCell.swift in Sources */,
 				1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */,
@@ -1291,11 +1357,13 @@
 				EA22360F26D6931A001FAD1D /* UIGestureRecognizerExtension.swift in Sources */,
 				EADA85DB26248759007D1134 /* UIFont+.swift in Sources */,
 				1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */,
+				EAA1B4DC27E5C8AA00BBB80A /* LWSoundHelper.swift in Sources */,
 				EA9AE75E26076B6900D44221 /* UIColor+.swift in Sources */,
 				EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */,
 				EAA7347B27DCC3330014C02A /* LWCreateOptionViewController.swift in Sources */,
 				EA66AAB526C935FD001D3D24 /* RoamDataProvider.swift in Sources */,
 				EA96554127969FF8000B827B /* CKRecord+.swift in Sources */,
+				EAA1B4E727E61EDF00BBB80A /* LWRecodingButton.swift in Sources */,
 				EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */,
 				EA2235FE26D692B0001FAD1D /* ScalableImageViewModel.swift in Sources */,
 				EA369A66276E39DB0051643F /* settingVCConfig.swift in Sources */,
@@ -1479,15 +1547,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.1;
+				MARKETING_VERSION = 3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1506,15 +1574,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.1;
+				MARKETING_VERSION = 3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

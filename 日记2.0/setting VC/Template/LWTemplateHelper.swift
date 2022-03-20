@@ -91,6 +91,9 @@ class LWTemplateHelper{
         newDiary.lwTodoModels = template.lwTodoModels.map({ oldModel in
             return oldModel.copy(dateBelongs: dateString)
         })
+        newDiary.lwSoundModels = template.lwSoundModels.map({ oldModel in
+            return oldModel.copy()
+        })
        
         // 保存&上传
         LWRealmManager.shared.add(newDiary)

@@ -8,6 +8,15 @@
 import Foundation
 
 extension Data{
+    /// 计算data的大小，返回kb值
+    func calSize() -> String{
+        let bcf = ByteCountFormatter()
+        bcf.allowedUnits = [.useKB] // optional: restricts the units to MB only
+        bcf.countStyle = .file
+        let string = bcf.string(fromByteCount: Int64(self.count))
+        return string
+    }
+    
     func printSize(){
         print("rtfd大小： \(self.count) bytes")
         let bcf = ByteCountFormatter()

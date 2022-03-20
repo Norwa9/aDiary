@@ -38,6 +38,8 @@ class userDefaultManager{
         static let autoCreate = "autoCreate"
         static let imageUploadQueue = "imageUploadQueue"
         static let imageDeleteQueue = "imageDeleteQueue"
+        static let audioUploadQueue = "audioUploadQueue"
+        static let audioDeleteQueue = "audioDeleteQueue"
         static let hasUpdated32 = "updated32"
         static let todoListViewStyle = "todoListViewStyle"
         static let purchaseEdition = "purchaseEdition"
@@ -406,6 +408,34 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.imageDeleteQueue)
+        }
+    }
+    
+    /// 音频待上传队列
+    static var audioUploadQueue:[String]{
+        get{
+            if let uuids = shared?.object(forKey: constants.audioUploadQueue) as? [String] {
+                return uuids
+            }else{
+                return []
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.audioUploadQueue)
+        }
+    }
+    
+    /// 音频待删除队列
+    static var audioDeleteQueue:[String]{
+        get{
+            if let uuids = shared?.object(forKey: constants.audioDeleteQueue) as? [String] {
+                return uuids
+            }else{
+                return []
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.audioDeleteQueue)
         }
     }
     

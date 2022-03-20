@@ -15,10 +15,11 @@ extension NSAttributedString{
     ///保存日记：需要解析attribuedText中的image属性和todo属性
     func parseAttribuedText(diary:diaryInfo)->(
         cleanText:String, // cleanText
+        NSAttributedString, // attrText
         containImage:Bool, // containsImage
         [LWTodoModel], // todoModels
         [ScalableImageModel], // imageModels
-        NSAttributedString // attrText
+        [LWSoundModel]
     ){
         let attrText = NSMutableAttributedString(attributedString: self)
         let attrTextForContent = NSMutableAttributedString(attributedString: self)
@@ -30,6 +31,11 @@ extension NSAttributedString{
         // todo
         let oldTodoModels = diary.lwTodoModels
         var newTodoModels = [LWTodoModel]()
+        
+        // sound
+        let oldSoundModels = diary.lwSoundModels
+        var newSoundModels = [LWSoundModel]()
+        
         
         attrText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: attrText.length), options: [], using: { [] (object, range, pointer) in
             let location = range.location
@@ -66,6 +72,18 @@ extension NSAttributedString{
                 attrText.replaceCharacters(in: palceHolderRange, with: "T")
                 
                 attrTextForContent.replaceCharacters(in: range, with: " ")
+            }else if let subViewAttchemnt = object as? SubviewTextAttachment,
+                     let view = subViewAttchemnt.view as? LWSoundView{
+                // 3. 持久化sound信息
+                let viewModel = view.viewModel
+                print("遍历到位置\(location)有一个sound model,内容:\(viewModel.uuid)")
+                viewModel.location = location // 更新viewModel的location为保存时刻的location
+                let model = viewModel.generateModel()
+                newSoundModels.append(model)
+                let palceHolderRange = NSRange(location: location, length: 1)
+                attrText.replaceCharacters(in: palceHolderRange, with: "S")
+                
+                attrTextForContent.replaceCharacters(in: range, with: " ")
             }
         })
 
@@ -77,15 +95,20 @@ extension NSAttributedString{
         //    todo的注册发生在TodoSettingViewController，因为用户可能在不修改日记的情况下就给todo设置时间
         //    因此保存日记时才处理todo的注册是不妥的。
         self.unregisterRemovedTodo(oldTodoModels: oldTodoModels, newTodoModels: newTodoModels)
+        
+        // 5. 处理Sound的删除
+        let delSoundUUIDs = arraySub(a1: oldSoundModels, a2: newSoundModels)
+        LWSoundHelper.shared.deleteSounds(uuidsToDel: delSoundUUIDs)
  
         let cleanText = attrTextForContent.string
         
         return (
                 cleanText,
+                attrText,
                 containsImage,
                 newTodoModels,
                 newImgModels,
-                attrText
+                newSoundModels
                 )
     }
     
@@ -97,6 +120,21 @@ extension NSAttributedString{
             return model.uuid
         }
         var res = [ScalableImageModel]()
+        for model in a1{
+            if !uuids2.contains(model.uuid){
+                res.append(model)
+            }
+        }
+        return res.map { m in
+            m.uuid
+        }
+    }
+    
+    private func arraySub(a1:[LWSoundModel],a2:[LWSoundModel]) -> [String]{
+        let uuids2:[String] = a2.map { model in
+            return model.uuid
+        }
+        var res = [LWSoundModel]()
         for model in a1{
             if !uuids2.contains(model.uuid){
                 res.append(model)

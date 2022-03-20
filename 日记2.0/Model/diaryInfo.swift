@@ -29,6 +29,7 @@ class diaryInfo:Object,Codable{
     @objc dynamic var modTime:Date? = nil
     @objc dynamic var editedButNotUploaded:Bool = false ///引入的目的是解决离线修改的同步问题(不必上传到云端)
     @objc dynamic var todoModelsJSON = ""
+    @objc dynamic var soundModelsJSON = ""
     
     var realmTodos:List<RealmString> = List<RealmString>() // 3.2版本后弃用
     var realmTags:List<RealmString> = List<RealmString>()
@@ -67,6 +68,10 @@ class diaryInfo:Object,Codable{
         }
         guard let todoModelsJSON = record[.todoModelsJSON] as? String else {
             throw RecordError.missingKey(.todoModelsJSON)
+        }
+        
+        guard let soundModelsJSON = record[.soundModelsJSON] as? String else{
+            throw RecordError.missingKey(.soundModelsJSON)
         }
         
         
@@ -118,6 +123,7 @@ class diaryInfo:Object,Codable{
         self.realmEmojis.append(objectsIn: emojis.map({ RealmString(value: [$0]) }))
         
         self.todoModelsJSON = todoModelsJSON
+        self.soundModelsJSON = soundModelsJSON
     }
     
     

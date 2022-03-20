@@ -51,10 +51,12 @@ class exportManager{
                     // 2. 正文
                     let imageModels = diary.scalableImageModels
                     let todoModels = diary.lwTodoModels
+                    let soundModels = diary.lwSoundModels
                     let contentAttributedString = formatter.processAttrString(
                         aString: aString,
                         todoModels: todoModels,
                         imageModels: imageModels,
+                        soundModels: soundModels,
                         isSharingMode: true,
                         isExportMode: true
                     )
@@ -143,9 +145,9 @@ class exportManager{
 
                 indicatorViewManager.shared.stop()
                 self.completion?()
+                // 分享
                 let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 let topVC = UIApplication.getTopViewController()!
-                
                 //ipad上要挂载到某个view上
                 let isPad = ( UIDevice.current.userInterfaceIdiom == .pad)
                 if isPad {
@@ -179,6 +181,14 @@ class exportManager{
     }
     
     func getTodoAdaptatedSize(size:CGSize)->CGSize{
+        let scale = size.height / size.width
+        let newWidth = self.pageW * 0.95 // 0.95是默认todo宽度与屏幕宽度的比值
+        let newHeight = newWidth * scale
+        return CGSize(width: newWidth, height: newHeight)
+        
+    }
+    
+    func getSoundAdaptatedSize(size:CGSize)->CGSize{
         let scale = size.height / size.width
         let newWidth = self.pageW * 0.95 // 0.95是默认todo宽度与屏幕宽度的比值
         let newHeight = newWidth * scale

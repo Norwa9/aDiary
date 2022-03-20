@@ -105,12 +105,17 @@ extension AppDelegate{
         // 5.初始化imageTool，[图片]云同步开始工作
         let imageTool = ImageTool.shared
         imageTool.startEngine()
+        
+        // 6.初始化LWSoundHelper，[音频]云同步开始工作
+        let soundHelper = LWSoundHelper.shared
+        soundHelper.startEngine()
     }
     
     ///配置数据库，用于数据库的迭代更新
     private func configureRealm(){
         // schemaVersion = 1：版本3.2，diaryinfo新增了todoModelsJSON属性
-        let schemaVersion: UInt64 = 1
+        // schemaVersion = 2：版本3.6，diaryinfo新增了soundModelsJSON属性
+        let schemaVersion: UInt64 = 2
         LWRealmManager.schemaVersion = schemaVersion
         let config = Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: { migration, oldSchemaVersion in
             //oldSchemaVersion从0开始

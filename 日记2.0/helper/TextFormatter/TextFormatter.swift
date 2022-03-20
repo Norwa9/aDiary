@@ -521,17 +521,60 @@ extension TextFormatter{
     
 }
 
+//MARK: 插入音频
+extension TextFormatter{
+    func insertAudio(soundData:Data,soundFileLength:CGFloat){
+        let location = selectedRange.location
+        // 插入换行
+        let Linebreak = NSMutableAttributedString(string: "\n").addingAttributes([
+            .font : userDefaultManager.font,
+            .foregroundColor : UIColor.label
+        ])
+        textView.textStorage.insert(Linebreak, at: location)
+        
+        
+        //插入音频
+        let viewModel = LWSoundViewModel(location: location + 1,
+                                         soundData: soundData,
+                                         soundFileLength: soundFileLength)
+        let view = LWSoundView(viewModel: viewModel)
+        let subViewAttchment = SubviewTextAttachment(view: view,
+                                                     size: viewModel.bounds.size)
+        textView.textStorage.insertAttachment(subViewAttchment, at: location + 1, with: textLeftParagraphStyle)
+        
+        //插入换行
+        textView.textStorage.insert(Linebreak, at: location + 2)
+        
+        //更新焦点
+        textView.selectedRange = NSRange(location: location + 3, length: 0)
+        if let bottomInset:CGFloat = globalConstantsManager.shared.bottomInset{
+            textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        }
+        textView.textViewController?.keyBoardToolsBar.reloadTextViewToolBar(type: 0)
+        textView.scrollRangeToVisible(textView.selectedRange)
+        textView.setLeftTypingAttributes()
+    }
+}
+
 //MARK: -保存
 extension TextFormatter{
     ///根据日期信息将富文本存储到文件目录
     func save(with diary:diaryInfo){
+//        cleanText,
+//        attrText,
+//        containsImage,
+//        newTodoModels,
+//        newImgModels,
+//        newSoundModels
         let attributedText = textView.attributedText!
         let result = attributedText.parseAttribuedText(diary: diary)
         let text = result.0
-        let containsImage = result.1
-        let todoModels = result.2
-        let imageModels = result.3
-        let recoveredAttributedText = result.4
+        let recoveredAttributedText = result.1
+        let containsImage = result.2
+        let todoModels = result.3
+        let imageModels = result.4
+        let soundModels = result.5
+        
         
         //1.保存到本地
         LWRealmManager.shared.update(updateBlock: {
@@ -546,6 +589,7 @@ extension TextFormatter{
             diary.containsImage = containsImage
             diary.scalableImageModels = imageModels
             diary.lwTodoModels = todoModels
+            diary.lwSoundModels = soundModels
         })
         
         //2.上传到云端
@@ -564,13 +608,15 @@ extension TextFormatter{
         let rtfd = diary.rtfd
         let imageModels = diary.scalableImageModels
         let todoModels = diary.lwTodoModels
+        let soundModels = diary.lwSoundModels
         
-        let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)//rtfd文件非常耗时，后台读取
-        //TODO:当用cleanContent替代rtfd时，遍历attribute有可能崩溃
+        let attributedText:NSAttributedString = LoadRTFD(rtfd: rtfd) ?? NSAttributedString(string: cleanContent)
+        //TODO: 当用cleanContent替代rtfd时，遍历attribute有可能崩溃
         let correctedAString = self.processAttrString(
             aString:attributedText,
             todoModels: todoModels,
-            imageModels: imageModels
+            imageModels: imageModels,
+            soundModels: soundModels
         )
         self.textView.attributedText = correctedAString
     }
@@ -581,6 +627,7 @@ extension TextFormatter{
     func processAttrString(aString:NSAttributedString,
                            todoModels:[LWTodoModel],
                            imageModels:[ScalableImageModel],
+                           soundModels:[LWSoundModel],
                            isSharingMode:Bool =  false,
                            isExportMode:Bool = false
     )->NSMutableAttributedString{
@@ -623,6 +670,18 @@ extension TextFormatter{
                 attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: textLeftParagraphStyle)
                 //TODO: 在深色模式下导出todo视图是黑色
             }
+            for model in soundModels{
+                let location = model.location
+                let viewModel = LWSoundViewModel(model: model)
+                let view = LWSoundView(viewModel: viewModel)
+                let viewSnapShot = view.asImage()
+                var size = viewModel.bounds.size
+                if isExportMode{
+                    size = exportManager.shared.getSoundAdaptatedSize(size: size)
+                }
+                let replacingAttchment = NSTextAttachment(image: viewSnapShot, size: size)
+                attrText.replaceAttchment(replacingAttchment, attchmentAt: location, with: textLeftParagraphStyle)
+            }
         }else{
             for model in imageModels{
                 let viewModel = ScalableImageViewModel(model: model)
@@ -638,6 +697,12 @@ extension TextFormatter{
                 let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
                 attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: textLeftParagraphStyle)
             }
+            for model in soundModels{
+                let viewModel = LWSoundViewModel(model: model)
+                let view = LWSoundView(viewModel: viewModel)
+                let subViewAttchment = SubviewTextAttachment(view: view, size: view.size)
+                attrText.replaceAttchment(subViewAttchment, attchmentAt: viewModel.location, with: textLeftParagraphStyle)
+            }
         }
         
         return attrText
@@ -648,11 +713,13 @@ extension TextFormatter{
     func reloadTextViewOnOrientionChange(with diary:diaryInfo){
         let imageModels = diary.scalableImageModels
         let todoModels = diary.lwTodoModels
+        let soundsModels = diary.lwSoundModels
         let attributedText = textView.attributedText ?? NSAttributedString(string: "")
         let correctedAString = self.processAttrString(
             aString:attributedText,
             todoModels: todoModels,
-            imageModels: imageModels
+            imageModels: imageModels,
+            soundModels: soundsModels
         )
         self.textView.attributedText = correctedAString
     }
@@ -681,12 +748,13 @@ extension TextFormatter{
         let attributedText = diary.attributedString
         let imageModels = diary.scalableImageModels
         let todoModels = diary.lwTodoModels
-        
+        let soundModels = diary.lwSoundModels
         
         let preparedText = self.processAttrString(
             aString:attributedText,
             todoModels: todoModels,
             imageModels: imageModels,
+            soundModels: soundModels,
             isSharingMode: true
         )
         
