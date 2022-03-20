@@ -81,7 +81,7 @@ class monthVC: UIViewController {
         
         if let vc = WhatsNewHelper.getWhatsNewViewController(){
             self.present(vc, animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {
                 vc.dismiss(animated: true, completion: nil)
             }
         }

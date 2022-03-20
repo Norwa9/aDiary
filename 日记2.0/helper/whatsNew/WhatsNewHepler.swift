@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 5, patch: 1)
+        let version = WhatsNew.Version(major: 3, minor: 6, patch: 0)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -23,9 +23,14 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "新增日记模板",
-                    subtitle: "设置 -> 管理模板",
-                    image: UIImage(systemName: "note.text.badge.plus")
+                    title: "新增音频功能",
+                    subtitle: "在日记中插入音频片段",
+                    image: UIImage(named: "sound")
+                ),
+                WhatsNew.Item(
+                    title: "修复了待办小组件无法显示的bug",
+                    subtitle: "",
+                    image: UIImage(systemName: "checkmark.circle")
                 ),
                 WhatsNew.Item(
                     title: "如有建议，可与开发者联系",
@@ -89,11 +94,11 @@ class WhatsNewHelper{
             return nil
         }
         
-        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 5, patch: 0))
-        {
-            // 如果展示过3.5.0的欢迎页，则不需要再展示
-            return nil
-        }
+//        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 5, patch: 0))
+//        {
+//            // 如果展示过3.5.0的欢迎页，则不需要再展示
+//            return nil
+//        }
         
         
         return viewController

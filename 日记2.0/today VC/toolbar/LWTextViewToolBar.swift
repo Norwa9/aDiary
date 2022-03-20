@@ -32,6 +32,8 @@ class LWTextViewToolBar: UIView {
     var insertImageButton:LWToolBarButton!
     var numberListButton:LWToolBarButton!
     var todoListButton:LWToolBarButton!
+    var insertSoundButton:LWToolBarButton!
+    
     var indicator:NVActivityIndicatorView!
     
     // undo/redo按钮
@@ -108,7 +110,11 @@ class LWTextViewToolBar: UIView {
         insertImageButton = LWToolBarButton(image: UIImage(named: "insertPicture"))
         insertImageButton.addTarget(self, action: #selector(insertImageToTextView), for: .touchUpInside)
         self.addSubview(insertImageButton)
-       
+        
+        //5. insert audio
+        insertSoundButton = LWToolBarButton(image: UIImage(named: "sound"))
+        insertSoundButton.addTarget(self, action: #selector(insertSound), for: .touchUpInside)
+        self.addSubview(insertSoundButton)
         
         // undo
         undoButton = LWToolBarButton(image: UIImage(named: "undo"),inset: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
@@ -162,7 +168,7 @@ class LWTextViewToolBar: UIView {
         
         
         
-        basicButtons = [insertTimeButton,insertImageButton,todoListButton,numberListButton,undoButton,redoButton]
+        basicButtons = [insertTimeButton,insertImageButton,todoListButton,numberListButton,insertSoundButton,undoButton,redoButton]
         richTextbuttons = [boldButton,italicButton,underLineButton,aligmentButton,fontColorButton,fontSizeButton]
         self.initRichTextButtonsCons()
         for button in richTextbuttons{
@@ -171,50 +177,57 @@ class LWTextViewToolBar: UIView {
     }
     
     private func initBasicButtonsCons(){
+        let padding = 8.0
         richTextPanelButton.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(padding)
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 30, height: 30))
         }
         
         insertTimeButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(richTextPanelButton)
-            make.left.equalTo(richTextPanelButton.snp.right).offset(10)
+            make.left.equalTo(richTextPanelButton.snp.right).offset(padding)
             make.size.equalTo(richTextPanelButton)
         }
         
         todoListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(insertTimeButton.snp.right).offset(10)
+            make.left.equalTo(insertTimeButton.snp.right).offset(padding)
             make.size.equalTo(insertTimeButton)
         }
         
         numberListButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(todoListButton.snp.right).offset(10)
+            make.left.equalTo(todoListButton.snp.right).offset(padding)
             make.size.equalTo(insertTimeButton)
         }
         
         insertImageButton.snp.makeConstraints { (make) in
             make.centerY.equalTo(insertTimeButton)
-            make.left.equalTo(numberListButton.snp.right).offset(10)
+            make.left.equalTo(numberListButton.snp.right).offset(padding)
+            make.size.equalTo(insertTimeButton)
+        }
+        
+        insertSoundButton.snp.makeConstraints { make in
+            make.centerY.equalTo(insertImageButton)
+            make.left.equalTo(insertImageButton.snp.right).offset(padding)
             make.size.equalTo(insertTimeButton)
         }
         
         undoButton.snp.makeConstraints { make in
             make.centerY.equalTo(saveButton)
-            make.right.equalTo(redoButton.snp.left).offset(-10)
+            make.right.equalTo(redoButton.snp.left).offset(-padding)
             make.size.equalTo(insertTimeButton)
         }
         
         redoButton.snp.makeConstraints { make in
             make.centerY.equalTo(saveButton)
-            make.right.equalTo(saveButton.snp.left).offset(-10)
+            make.right.equalTo(saveButton.snp.left).offset(-padding)
             make.size.equalTo(insertTimeButton)
         }
         
         saveButton.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(-10)
+            make.right.equalToSuperview().offset(-padding)
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 50, height: 30))
         }
@@ -310,15 +323,18 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
     }
     
     @objc func insertTimeToTextView(){
-//        let textFormatter = TextFormatter(textView: textView)
-//        textFormatter.insertTimeTag()
-        let soundVC = LWSoundsViewController()
-        soundVC.delegate = UIApplication.getTodayVC()?.subpagesView.curTextVC
-        UIApplication.getTodayVC()?.present(soundVC, animated: true, completion: nil)
+        let textFormatter = TextFormatter(textView: textView)
+        textFormatter.insertTimeTag()
     }
     
     @objc func insertImageToTextView(){
         delegate?.showPhotoPicker()
+    }
+    
+    @objc func insertSound(){
+        let soundVC = LWSoundsViewController()
+        soundVC.delegate = UIApplication.getTodayVC()?.subpagesView.curTextVC
+        UIApplication.getTodayVC()?.present(soundVC, animated: true, completion: nil)
     }
     
     @objc func insertNumberList(){
