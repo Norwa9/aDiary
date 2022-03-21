@@ -71,6 +71,7 @@
 		EA6EFE7A26285D27004B0FA1 /* privacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE7926285D27004B0FA1 /* privacyManager.swift */; };
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
+		EA770AC827E8D47000E51701 /* LWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AC727E8D47000E51701 /* LWButton.swift */; };
 		EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */; };
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
@@ -101,6 +102,8 @@
 		EAA1B4E527E61EC700BBB80A /* LWTimingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E427E61EC700BBB80A /* LWTimingLabel.swift */; };
 		EAA1B4E727E61EDF00BBB80A /* LWRecodingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E627E61EDF00BBB80A /* LWRecodingButton.swift */; };
 		EAA1B4EA27E6EF6C00BBB80A /* LWPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4E927E6EF6C00BBB80A /* LWPlayButton.swift */; };
+		EAA1B4EC27E78F1900BBB80A /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAA1B4EB27E78F1900BBB80A /* wechat_group_code.jpg */; };
+		EAA1B4EE27E8CF8000BBB80A /* LWSoundSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4ED27E8CF8000BBB80A /* LWSoundSettingViewController.swift */; };
 		EAA29E2D25C5768200AA6971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2C25C5768200AA6971 /* AppDelegate.swift */; };
 		EAA29E2F25C5768200AA6971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */; };
 		EAA29E3425C5768200AA6971 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E3225C5768200AA6971 /* Main.storyboard */; };
@@ -153,7 +156,6 @@
 		EAA7347B27DCC3330014C02A /* LWCreateOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */; };
 		EAA7347D27DCC7F70014C02A /* LWCreateBlankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */; };
 		EAA7347F27DCEC840014C02A /* LWTemplateSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */; };
-		EAA7348127DE3A380014C02A /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAA7348027DE3A380014C02A /* wechat_group_code.jpg */; };
 		EAADB70826DCC168007A624A /* LWToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70726DCC167007A624A /* LWToolBarButton.swift */; };
 		EAADB70B26DCC235007A624A /* LWTextViewToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */; };
 		EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */; };
@@ -294,6 +296,7 @@
 		EA6EFE7926285D27004B0FA1 /* privacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyManager.swift; sourceTree = "<group>"; };
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
+		EA770AC727E8D47000E51701 /* LWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWButton.swift; sourceTree = "<group>"; };
 		EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePagesAlertView.swift; sourceTree = "<group>"; };
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
@@ -325,6 +328,8 @@
 		EAA1B4E427E61EC700BBB80A /* LWTimingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTimingLabel.swift; sourceTree = "<group>"; };
 		EAA1B4E627E61EDF00BBB80A /* LWRecodingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecodingButton.swift; sourceTree = "<group>"; };
 		EAA1B4E927E6EF6C00BBB80A /* LWPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPlayButton.swift; sourceTree = "<group>"; };
+		EAA1B4EB27E78F1900BBB80A /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
+		EAA1B4ED27E8CF8000BBB80A /* LWSoundSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundSettingViewController.swift; sourceTree = "<group>"; };
 		EAA29E2925C5768200AA6971 /* 日记2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "日记2.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAA29E2C25C5768200AA6971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAA29E2E25C5768200AA6971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -375,7 +380,6 @@
 		EAA7347A27DCC3330014C02A /* LWCreateOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCreateOptionViewController.swift; sourceTree = "<group>"; };
 		EAA7347C27DCC7F70014C02A /* LWCreateBlankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWCreateBlankView.swift; sourceTree = "<group>"; };
 		EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTemplateSettingCell.swift; sourceTree = "<group>"; };
-		EAA7348027DE3A380014C02A /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAADB70726DCC167007A624A /* LWToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolBarButton.swift; sourceTree = "<group>"; };
 		EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTextViewToolBar.swift; sourceTree = "<group>"; };
 		EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontSizeSliderView.swift; sourceTree = "<group>"; };
@@ -580,7 +584,7 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				EAA7348027DE3A380014C02A /* wechat_group_code.jpg */,
+				EAA1B4EB27E78F1900BBB80A /* wechat_group_code.jpg */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
@@ -637,6 +641,15 @@
 			path = subPages;
 			sourceTree = "<group>";
 		};
+		EA770AC627E8D45900E51701 /* LWSoundSetting */ = {
+			isa = PBXGroup;
+			children = (
+				EAA1B4ED27E8CF8000BBB80A /* LWSoundSettingViewController.swift */,
+				EA770AC727E8D47000E51701 /* LWButton.swift */,
+			);
+			path = LWSoundSetting;
+			sourceTree = "<group>";
+		};
 		EA8E71092694972C007189B1 /* CloudKitHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,6 +689,7 @@
 		EAA1B4D027E5737700BBB80A /* LWSounds */ = {
 			isa = PBXGroup;
 			children = (
+				EA770AC627E8D45900E51701 /* LWSoundSetting */,
 				EAA1B4E827E6EF5000BBB80A /* LWSoundView */,
 				EAA1B4E327E61EAC00BBB80A /* recordView */,
 				EAA1B4DD27E5CD1C00BBB80A /* LWSound.swift */,
@@ -1138,7 +1152,7 @@
 			files = (
 				EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
-				EAA7348127DE3A380014C02A /* wechat_group_code.jpg in Resources */,
+				EAA1B4EC27E78F1900BBB80A /* wechat_group_code.jpg in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
@@ -1318,8 +1332,10 @@
 				1B1ED87E26D372E4008D88FC /* newUserGuideHelper.swift in Sources */,
 				EADBC2F626B44D02004D1A52 /* LWTagsView.swift in Sources */,
 				1B2A56CB26A569D70090D411 /* TodoListView.swift in Sources */,
+				EAA1B4EE27E8CF8000BBB80A /* LWSoundSettingViewController.swift in Sources */,
 				EA22360426D692E4001FAD1D /* CGRect+.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
+				EA770AC827E8D47000E51701 /* LWButton.swift in Sources */,
 				EAA4E92C27BC02C2005F93BD /* LWSwitchSettingCell.swift in Sources */,
 				EA537BBD26357FD300C2E9EE /* sharePresentVC.swift in Sources */,
 				EAA4E94727C1251B005F93BD /* exportSettingViewController.swift in Sources */,
@@ -1550,7 +1566,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1577,7 +1593,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

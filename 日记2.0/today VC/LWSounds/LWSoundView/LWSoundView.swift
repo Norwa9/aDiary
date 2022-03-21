@@ -28,25 +28,6 @@ class LWSoundView:UIView{
     /// 更多选项
     var moreButton:UIButton!
     
-    /// UIMenu
-    var soundViewMenuItems:[UIAction] {
-        return [
-            UIAction(title: "重命名", image: UIImage(systemName: "pencil.slash"), handler: { _ in
-                self.viewModel.renameSoundFile()
-            }),
-            UIAction(title: "保存", image: UIImage(systemName: "square.and.arrow.down"), handler: { _ in
-                self.viewModel.saveSoundFile()
-            }),
-            UIAction(title: "删除", image: UIImage(systemName: "trash"),attributes: .destructive, handler: { _ in
-                self.viewModel.deleteSoundView()
-            })
-        ]
-    }
-    var soundViewMenu:UIMenu{
-        let menu = UIMenu(title: "更多", image: nil, identifier: nil, options: [], children: soundViewMenuItems)
-        return menu
-    }
-    
     var viewModel:LWSoundViewModel
     
     init(viewModel:LWSoundViewModel) {
@@ -85,8 +66,7 @@ class LWSoundView:UIView{
         // moreButton
         moreButton = UIButton()
         moreButton.setImage(UIImage(named: "more"), for: .normal)
-        moreButton.menu = soundViewMenu
-        moreButton.showsMenuAsPrimaryAction = true
+        moreButton.addTarget(self, action: #selector(moreBtnDidTapped), for: .touchUpInside)
         
         
         self.addSubview(containerView)
@@ -155,6 +135,15 @@ class LWSoundView:UIView{
         }
         
         
+    }
+    
+    @objc func moreBtnDidTapped(){
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        
+        let vc = LWSoundSettingViewController(viewModel: viewModel)
+        UIApplication.getTodayVC()?.present(vc, animated: true, completion: nil)
     }
     
 }

@@ -110,7 +110,7 @@ class LWSoundViewModel:NSObject{
 
     }
     
-    func rename(newName:String){
+    private func rename(newName:String){
         soundFileName = newName
         soundView?.fileNameLabel.attributedText = self.getFileName() // 更新文件名
         if let lwTextVC = self.lwTextVC {
@@ -169,7 +169,7 @@ class LWSoundViewModel:NSObject{
     
     
     // MARK: soundView Actions
-    func renameSoundFile(){
+    public func renameSoundFile(){
         let ac = UIAlertController(title: "重命名音频文件", message: "", preferredStyle: .alert)
         ac.addTextField { textfield in
             textfield.text = self.soundFileName
@@ -181,10 +181,10 @@ class LWSoundViewModel:NSObject{
             self.rename(newName: newName)
         }))
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-        UIApplication.getTodayVC()?.present(ac, animated: true, completion: nil)
+        UIApplication.getTopViewController()?.present(ac, animated: true, completion: nil)
     }
     
-    func saveSoundFile(){
+    public func shareSoundFile(){
         if let soundData = soundData {
             let url = FileManager.default.temporaryDirectory.appendingPathComponent(self.soundFileName + ".m4a")
             do {
@@ -205,7 +205,7 @@ class LWSoundViewModel:NSObject{
         }
     }
     
-    func deleteSoundView(){
+    public func deleteSoundView(){
         if let lwTextView = lwTextView {
             self.getNewestLocation(attributedString: lwTextView.attributedText) {
                 lwTextView.textStorage.deleteCharacters(in: NSRange(location: location, length: 1))
