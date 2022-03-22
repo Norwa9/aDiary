@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 6, patch: 0)
+        let version = WhatsNew.Version(major: 3, minor: 6, patch: 1)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -80,7 +80,7 @@ class WhatsNewHelper{
         
         //MARK:-3:versionStore
         let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore()
+//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore() # 测试环境
         
         guard let whatsNew = currentWhatsNew else{return nil}//无法取得（或没有定义）当前的whatsNew
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
@@ -94,11 +94,11 @@ class WhatsNewHelper{
             return nil
         }
         
-//        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 5, patch: 0))
-//        {
-//            // 如果展示过3.5.0的欢迎页，则不需要再展示
-//            return nil
-//        }
+        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 6, patch: 0))
+        {
+            
+            return nil
+        }
         
         
         return viewController
