@@ -68,6 +68,7 @@ class LWTextViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
         print("textVC viewDidDisappear")
     }
     

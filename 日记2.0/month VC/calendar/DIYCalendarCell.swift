@@ -70,7 +70,7 @@ class DIYCalendarCell: FSCalendarCell {
         super.layoutSubviews()
 
         //1.更新cell的selected状态
-        self.backgroundView?.frame = self.bounds.insetBy(dx: 2, dy: 1)
+        self.backgroundView?.frame = self.bounds.insetBy(dx: 4, dy: 2)
         self.selectionLayer.frame = self.contentView.bounds
         switch selectionType {
         case .single:
