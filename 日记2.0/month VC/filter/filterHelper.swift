@@ -58,7 +58,15 @@ class filterHelper {
             }
         }
         
-        //2筛选：心情和标签(已去除)
+        
+        //2 过滤掉模板
+        resultDiaries = resultDiaries.filter{ (diary: diaryInfo) -> Bool in
+            if diary.date.starts(with: LWTemplateHelper.shared.TemplateNamePrefix){
+                return  false
+            }else{
+                return true
+            }
+        }
         
         //3筛选标签
         resultDiaries = resultDiaries.filter{ (item: diaryInfo) -> Bool in
