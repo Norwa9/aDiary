@@ -237,7 +237,7 @@ extension LWSubpagesView{
         managePagesAlertView.deleteAction = { [self] in
             // 删除当前页面（主页面不能删）
             let newModels = LWPagesManager.shared.deletePage(models: models, deleteIndex: currentPageIndex)
-            guard newModels.count > 1 else{
+            guard newModels.count >= 1 else{
                 return
             }
             currentPageIndex -= 1
