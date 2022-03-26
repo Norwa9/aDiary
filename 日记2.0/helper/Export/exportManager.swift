@@ -270,8 +270,8 @@ class exportManager{
                 }
                 //如果日期一样，页面号小的排在前
                 if date1.compare(date2) == .orderedSame{
-                    let pageIndex1 = m1.date.parseDateSuffix()
-                    let pageIndex2 = m2.date.parseDateSuffix()
+                    let pageIndex1 = m1.indexOfPage
+                    let pageIndex2 = m2.indexOfPage
                     return pageIndex1 < pageIndex2
                 }
             }

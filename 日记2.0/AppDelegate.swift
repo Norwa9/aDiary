@@ -115,7 +115,8 @@ extension AppDelegate{
     private func configureRealm(){
         // schemaVersion = 1：版本3.2，diaryinfo新增了todoModelsJSON属性
         // schemaVersion = 2：版本3.6，diaryinfo新增了soundModelsJSON属性
-        let schemaVersion: UInt64 = 2
+        // schemaVersion = 2：版本3.7，diaryinfo新增了metaDataJSON属性，从3.7版本开始，将使用metaData来排序子页面，而不是日期的数字后缀大小排序
+        let schemaVersion: UInt64 = 3
         LWRealmManager.schemaVersion = schemaVersion
         let config = Realm.Configuration(schemaVersion: schemaVersion, migrationBlock: { migration, oldSchemaVersion in
             //oldSchemaVersion从0开始

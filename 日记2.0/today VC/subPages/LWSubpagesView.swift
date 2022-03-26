@@ -70,9 +70,9 @@ class LWSubpagesView: UIView {
     ///currentIndex表示：进入页面后section的初始index
     func updateUI(currentIndex:Int){
         segmentTitles.removeAll()
+        // 根据页面的metaData重新排序
         for model in models{
-//            segmentTitles.append(model.date)
-            let pageIndex = model.date.parseDateSuffix()
+            let pageIndex = model.indexOfPage
             segmentTitles.append("\(pageIndex + 1)页")
         }
         segmentDataSource.titles = segmentTitles
@@ -164,7 +164,7 @@ extension LWSubpagesView : JXPagingViewDelegate{
     
     func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -> JXPagingViewListViewDelegate {
         print("initListAtIndex, index:\(index)")
-        currentPageIndex = index
+//        currentPageIndex = index // 这个currentPageIndex不能实时更新
         let vc = LWTextViewController()
         vc.model = models[index]
         return vc
@@ -178,7 +178,8 @@ extension LWSubpagesView : JXSegmentedViewDelegate{
     ///更新topView
     func segmentedView(_ segmentedView: JXSegmentedView, didSelectedItemAt index: Int) {
         guard index < self.models.count else {return}
-        
+        currentPageIndex = index
+        print("segmentedView didSelectedItemAt:\(currentPageIndex)")
         isDragging = false
         
         let model = models[index]
@@ -211,30 +212,19 @@ extension LWSubpagesView{
         // 创建页面设置
         let createOptVC = LWCreateOptionViewController(mode: .newPage)
         createOptVC.createPageAction = { [self] template in
-            // template 是选定的模板
-            var newPage:diaryInfo
-            if let template = template{
-                // 有模板，表示创建模板页面
-                if let templatedNewPage = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: mainPage.date, pageIndex: models.count, template: template){
-                    newPage = templatedNewPage
-                }else{
-                    // 模板页面创建失败
-                    return
-                }
-            }else{
-                // 没有模板，表示创建空页面
-                newPage = LWRealmManager.shared.createPage(withDate: mainPage.date, pageNumber: models.count)
-            }
-            models.append(newPage)
+            // 在当前页面之后插入一页
+            let newModels = LWPagesManager.shared.insertPage(models: models,mainPageDateCN: mainPage.date, insertAfter: currentPageIndex, template: template)
+            currentPageIndex += 1
+            self.models = newModels // models赋值时会自动调用updateUI
+            createOptVC.dismiss(animated: true, completion: nil)
+            
+            // 请求打分
             if models.count > 2{
-                //请求打分
                 if userDefaultManager.requestReviewTimes % 2 == 0{
                     SKStoreReviewController.requestReview()
                     userDefaultManager.requestReviewTimes += 1
                 }
             }
-            updateUI(currentIndex: models.count - 1)
-            createOptVC.dismiss(animated: true, completion: nil)
         }
         
         //定义创建页面操作
@@ -243,20 +233,15 @@ extension LWSubpagesView{
             todayVC?.present(createOptVC, animated: true, completion: nil)
         }
         
-        
-        
-        //定义删除页面操作
+        // 定义删除页面操作
         managePagesAlertView.deleteAction = { [self] in
-            //主页面不能删
-            guard let deleteDiary = models.last,models.count > 1 else{return}
-            models.removeLast()
-            DiaryStore.shared.delete(with: deleteDiary.id)
+            // 删除当前页面（主页面不能删）
+            let newModels = LWPagesManager.shared.deletePage(models: models, deleteIndex: currentPageIndex)
+            currentPageIndex -= 1
+            self.models = newModels
+             todayVC.model = models[currentPageIndex] // 防止返回到主页崩溃
             
-            //防止奔溃：
-            todayVC.model = models.first//1.编辑器的model指向主页面
             UIApplication.getMonthVC()?.reloadMonthVC()//2.刷新cell的model指向主页面
-            
-            updateUI(currentIndex: 0)
         }
         
         popover.show(managePagesAlertView, fromView: sender)

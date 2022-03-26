@@ -72,7 +72,7 @@ class ManagePagesAlertView: UIView {
     }
     
     @objc func deleteSubpage() {
-        let ac = UIAlertController(title: "将会删除最后一页", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "❗️删除当前页", message: nil, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) in
             self.dismissPopover()
         }))

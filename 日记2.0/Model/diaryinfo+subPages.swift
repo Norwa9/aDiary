@@ -31,11 +31,10 @@ extension diaryInfo{
     var indexOfPage:Int{
         get{
             if !date.contains("-"){
+                // 主页面
                 return 0
             }else{
-                let orderedSubPages = LWRealmManager.shared.querySubpages(ofDate: trueDate)
-                let subPageIndex = orderedSubPages.firstIndex(of: self)!//在子页中的下标
-                return subPageIndex + 1 //1表示主页
+                return metaData.pageIndex
             }
         }
     }

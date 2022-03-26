@@ -38,6 +38,7 @@ enum diaryInfoRecordKey: String {
     case emojis
     case todoModelsJSON
     case soundModelsJSON
+    case pageMetaDataJSON
     
 }
 //MARK:diaryInfo+CloudKit
@@ -61,6 +62,7 @@ extension diaryInfo {
         r[.emojis] = emojis
         r[.todoModelsJSON] = todoModelsJSON
         r[.soundModelsJSON] = soundModelsJSON
+        r[.pageMetaDataJSON] = pageMetaDataJSON
         return r
     }
     

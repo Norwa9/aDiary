@@ -72,6 +72,8 @@
 		EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE8226297E84004B0FA1 /* exportManager.swift */; };
 		EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6EFE892629C050004B0FA1 /* fileManager.swift */; };
 		EA770AC827E8D47000E51701 /* LWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AC727E8D47000E51701 /* LWButton.swift */; };
+		EA770ACA27EED4C000E51701 /* diaryInfo+pageMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AC927EED4C000E51701 /* diaryInfo+pageMetaData.swift */; };
+		EA770ACC27EEF23800E51701 /* LWPagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACB27EEF23800E51701 /* LWPagesManager.swift */; };
 		EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */; };
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
@@ -297,6 +299,8 @@
 		EA6EFE8226297E84004B0FA1 /* exportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exportManager.swift; sourceTree = "<group>"; };
 		EA6EFE892629C050004B0FA1 /* fileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileManager.swift; sourceTree = "<group>"; };
 		EA770AC727E8D47000E51701 /* LWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWButton.swift; sourceTree = "<group>"; };
+		EA770AC927EED4C000E51701 /* diaryInfo+pageMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+pageMetaData.swift"; sourceTree = "<group>"; };
+		EA770ACB27EEF23800E51701 /* LWPagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPagesManager.swift; sourceTree = "<group>"; };
 		EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePagesAlertView.swift; sourceTree = "<group>"; };
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
@@ -577,6 +581,7 @@
 				EA67915B26D1F35C00B44ECA /* diaryinfo+subPages.swift */,
 				EA2235DD26D68F7D001FAD1D /* diaryinfo+ScalableImageView.swift */,
 				EAA1B4E127E60B5800BBB80A /* diaryInfo+Sound.swift */,
+				EA770AC927EED4C000E51701 /* diaryInfo+pageMetaData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -637,6 +642,7 @@
 				EA67914226D1216200B44ECA /* LWSubpagesView.swift */,
 				EA67914526D1218400B44ECA /* LWTextViewController.swift */,
 				EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */,
+				EA770ACB27EEF23800E51701 /* LWPagesManager.swift */,
 			);
 			path = subPages;
 			sourceTree = "<group>";
@@ -1260,6 +1266,7 @@
 				EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */,
 				1B3AEB5A26CA105500C057A4 /* LWSettingViewController.swift in Sources */,
 				EAAFDDCD279EE435008286EB /* LWTodoViewModel.swift in Sources */,
+				EA770ACC27EEF23800E51701 /* LWPagesManager.swift in Sources */,
 				EAA4E90327B1604E005F93BD /* roamData.swift in Sources */,
 				EAA7346F27DB9BBA0014C02A /* LWTabBarItem.swift in Sources */,
 				EAA1B4E227E60B5800BBB80A /* diaryInfo+Sound.swift in Sources */,
@@ -1385,6 +1392,7 @@
 				EA369A66276E39DB0051643F /* settingVCConfig.swift in Sources */,
 				EAAFDDCB279EE427008286EB /* LWTodoModel.swift in Sources */,
 				EAA29E7925C59AD000AA6971 /* UIView+.swift in Sources */,
+				EA770ACA27EED4C000E51701 /* diaryInfo+pageMetaData.swift in Sources */,
 				EAA7346D27DB9ACA0014C02A /* LWTabBarView.swift in Sources */,
 				EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */,
 				1B3AEB1026C3A4B200C057A4 /* LWNotificationHelper.swift in Sources */,

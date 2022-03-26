@@ -54,10 +54,10 @@ extension String{
             let index2 = self.index(after: splitIndex)
             let indexString = String(self[index2..<endIndex])
             if let index =  Int(indexString){
-                return index
+                return index // 子页面返回其后缀数字
             }
         }
-        return 0
+        return 0 // 主页面返回0
     }
     
     ///提取准确的日期：例如2021年9月14日-1 -> 2021年9月14日

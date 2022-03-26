@@ -77,8 +77,8 @@ class filterHelper {
                         }
                         //如果日期一样，页面号小的排在前
                         if date1.compare(date2) == .orderedSame{
-                            let pageIndex1 = d1.date.parseDateSuffix()
-                            let pageIndex2 = d2.date.parseDateSuffix()
+                            let pageIndex1 = d1.indexOfPage
+                            let pageIndex2 = d2.indexOfPage
                             return pageIndex1 < pageIndex2
                         }
                     }
@@ -92,8 +92,8 @@ class filterHelper {
                         }
                         //如果日期一样，页面号小的排在前
                         if date1.compare(date2) == .orderedSame{
-                            let pageIndex1 = d1.date.parseDateSuffix()
-                            let pageIndex2 = d2.date.parseDateSuffix()
+                            let pageIndex1 = d1.indexOfPage
+                            let pageIndex2 = d2.indexOfPage
                             return pageIndex1 < pageIndex2
                         }
                     }

@@ -63,6 +63,7 @@ class LWRealmManager{
     ///创建子页面
     ///参数pageNumber：页面下标。从1开始，0已经被主日记所使用
     func createPage(withDate dateCN:String,pageNumber:Int) -> diaryInfo{
+        //TODO: 创建子页面后，
         let subPageDateCN = dateCN + "-" + "\(pageNumber)"
         let page = diaryInfo(dateString: subPageDateCN)
         self.add(page)
@@ -122,6 +123,24 @@ extension LWRealmManager{
         return LWRealmManager.shared.localDatabase.filter("id == %@",id).first
     }
     
+    
+    /// 从dateCN的所有子页面的后缀中找到最大值
+    /// 例如2022年1月14日-1,2022年1月14日-3,2022年1月14日-5，则返回5
+    /// - Parameter dateCN: 主页面的日期
+    /// - Returns: 所有子页面日期后缀中的最大值
+    func queryMaxSubpagesSuffix(dateCN:String)->Int{
+        let predicate = NSPredicate(format: "date BEGINSWITH %@", dateCN)
+        let res = self.query(predicate: predicate)
+        var max = -1
+        for page in res{
+            let suffix = page.date.parseDateSuffix()
+            if suffix > max{
+                max = suffix
+            }
+        }
+        return max
+    }
+    
     ///查询某日所有页面的数量
     func queryPagesNum(ofDate dateCN:String) ->Int{
         let predicate = NSPredicate(format: "date BEGINSWITH %@", dateCN)
@@ -137,9 +156,13 @@ extension LWRealmManager{
         let res = self.query(predicate: predicate)
         //按照子页面的序号的大小排序
         let sortedRes = res.sorted { (d1, d2) -> Bool in
-            let index1 = d1.date.parseDateSuffix()
-            let index2 = d2.date.parseDateSuffix()
+            let index1 = d1.metaData.pageIndex
+            let index2 = d2.metaData.pageIndex
             return index1 < index2
+        }
+        print("查询\(dateCN)所有子页面：")
+        for diary in sortedRes{
+            print("日期：\(diary.date),metaData.pageIndex：\(diary.metaData.pageIndex)")
         }
         return sortedRes
     }
