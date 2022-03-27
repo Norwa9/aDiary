@@ -74,6 +74,9 @@
 		EA770AC827E8D47000E51701 /* LWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AC727E8D47000E51701 /* LWButton.swift */; };
 		EA770ACA27EED4C000E51701 /* diaryInfo+pageMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AC927EED4C000E51701 /* diaryInfo+pageMetaData.swift */; };
 		EA770ACC27EEF23800E51701 /* LWPagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACB27EEF23800E51701 /* LWPagesManager.swift */; };
+		EA770ACE27EF630200E51701 /* LWBaseSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACD27EF630200E51701 /* LWBaseSettingCell.swift */; };
+		EA770AD027EF65CC00E51701 /* LWiCloudCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */; };
+		EA770AD227EF681F00E51701 /* LWiCloudTipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */; };
 		EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */; };
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
@@ -301,6 +304,9 @@
 		EA770AC727E8D47000E51701 /* LWButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWButton.swift; sourceTree = "<group>"; };
 		EA770AC927EED4C000E51701 /* diaryInfo+pageMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "diaryInfo+pageMetaData.swift"; sourceTree = "<group>"; };
 		EA770ACB27EEF23800E51701 /* LWPagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPagesManager.swift; sourceTree = "<group>"; };
+		EA770ACD27EF630200E51701 /* LWBaseSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWBaseSettingCell.swift; sourceTree = "<group>"; };
+		EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWiCloudCell.swift; sourceTree = "<group>"; };
+		EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWiCloudTipsViewController.swift; sourceTree = "<group>"; };
 		EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePagesAlertView.swift; sourceTree = "<group>"; };
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
@@ -688,6 +694,7 @@
 				EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */,
 				EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */,
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
+				EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */,
 			);
 			path = "setting VC";
 			sourceTree = "<group>";
@@ -967,12 +974,14 @@
 		EAAFDDFE27A82C23008286EB /* SettingCell */ = {
 			isa = PBXGroup;
 			children = (
+				EA770ACD27EF630200E51701 /* LWBaseSettingCell.swift */,
 				EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */,
 				EA11A954274215A20058A7A8 /* LWSettingCell.swift */,
 				EAAFDDFC27A6BF0F008286EB /* LWSegSettingCell.swift */,
 				EAAFDDFF27A82C5A008286EB /* LWIAPSettingCell.swift */,
 				EAA4E92B27BC02C2005F93BD /* LWSwitchSettingCell.swift */,
 				EAA7347E27DCEC840014C02A /* LWTemplateSettingCell.swift */,
+				EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */,
 			);
 			path = SettingCell;
 			sourceTree = "<group>";
@@ -1245,6 +1254,7 @@
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
 				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
 				EAAFDDF627A2CFBC008286EB /* todoListViewModel.swift in Sources */,
+				EA770AD227EF681F00E51701 /* LWiCloudTipsViewController.swift in Sources */,
 				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
 				EAAFDE0027A82C5A008286EB /* LWIAPSettingCell.swift in Sources */,
 				EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */,
@@ -1358,6 +1368,7 @@
 				EA3189AB2691EBC2001B9042 /* Error+CloudKit.swift in Sources */,
 				EA537BC026357FEA00C2E9EE /* popAnimator.swift in Sources */,
 				1BB6964B26A95D810009472F /* LWEmojiView.swift in Sources */,
+				EA770AD027EF65CC00E51701 /* LWiCloudCell.swift in Sources */,
 				EAA1B4E527E61EC700BBB80A /* LWTimingLabel.swift in Sources */,
 				EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
@@ -1377,6 +1388,7 @@
 				1B2A56242695B88F0090D411 /* diaryinfo+CloudKit.swift in Sources */,
 				EA6EFE8A2629C050004B0FA1 /* fileManager.swift in Sources */,
 				EA5CFFAA26749057008E06FA /* layoutParasManager.swift in Sources */,
+				EA770ACE27EF630200E51701 /* LWBaseSettingCell.swift in Sources */,
 				EA22360F26D6931A001FAD1D /* UIGestureRecognizerExtension.swift in Sources */,
 				EADA85DB26248759007D1134 /* UIFont+.swift in Sources */,
 				1BB6965126A9794B0009472F /* diaryInfo+emoji.swift in Sources */,

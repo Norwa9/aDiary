@@ -13,8 +13,8 @@ class LWSwitchSettingCell:UIView{
     var title:String
     var switchState:Bool
     var actionSelector:Selector
-    private var titleLabel:UILabel!
-    private var switcher:UISwitch!
+    var titleLabel:UILabel!
+    var switcher:UISwitch!
     
     init(delegate:LWSettingViewController,switchState:Bool,title:String,selector:Selector) {
         self.delegate = delegate // segmentActionSelector是定义在delegate中的
@@ -30,7 +30,7 @@ class LWSwitchSettingCell:UIView{
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initUI(){
+    func initUI(){
         titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = LWSettingViewController.contentFont
@@ -43,7 +43,7 @@ class LWSwitchSettingCell:UIView{
         self.addSubview(switcher)
     }
     
-    private func initCons(){
+    func initCons(){
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().offset(-10)
