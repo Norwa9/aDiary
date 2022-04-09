@@ -182,6 +182,7 @@
 		EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0927AA523A008286EB /* LWImageSaver.swift */; };
 		EABF78AA2801379400F007DD /* LWBaseCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78A92801379400F007DD /* LWBaseCardViewController.swift */; };
 		EABF78AC280158CF00F007DD /* LWWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */; };
+		EABF78AF280174E300F007DD /* LWToolbarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -413,6 +414,7 @@
 		EAAFDE0927AA523A008286EB /* LWImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWImageSaver.swift; sourceTree = "<group>"; };
 		EABF78A92801379400F007DD /* LWBaseCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWBaseCardViewController.swift; sourceTree = "<group>"; };
 		EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWelcomeViewController.swift; sourceTree = "<group>"; };
+		EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolbarCollectionView.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 		1BB6963C26A6CF8F0009472F /* toolbar */ = {
 			isa = PBXGroup;
 			children = (
+				EABF78AD280174AB00F007DD /* scrollToolbarView */,
 				EAADB73426DE0DD2007A624A /* LWFontSizeSliderView.swift */,
 				EAADB70726DCC167007A624A /* LWToolBarButton.swift */,
 				EAADB70A26DCC235007A624A /* LWTextViewToolBar.swift */,
@@ -991,6 +994,14 @@
 			path = SettingCell;
 			sourceTree = "<group>";
 		};
+		EABF78AD280174AB00F007DD /* scrollToolbarView */ = {
+			isa = PBXGroup;
+			children = (
+				EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */,
+			);
+			path = scrollToolbarView;
+			sourceTree = "<group>";
+		};
 		EACB1719267A1B63007BF160 /* extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -1271,6 +1282,7 @@
 				EA11A955274215A20058A7A8 /* LWSettingCell.swift in Sources */,
 				EA6EFE8326297E84004B0FA1 /* exportManager.swift in Sources */,
 				EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */,
+				EABF78AF280174E300F007DD /* LWToolbarCollectionView.swift in Sources */,
 				1BB6964F26A970040009472F /* LWEmojiCell.swift in Sources */,
 				EA22361426D696F6001FAD1D /* AttributedString+.swift in Sources */,
 				1BB6964626A820980009472F /* diaryInfo+Todo.swift in Sources */,

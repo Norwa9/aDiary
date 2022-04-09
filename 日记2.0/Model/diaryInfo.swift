@@ -64,22 +64,6 @@ class diaryInfo:Object,Codable{
         guard let mood = record[.mood] as? String else {
             throw RecordError.missingKey(.mood)
         }
-        guard let containsImage = record[.containsImage] as? Int else {
-            throw RecordError.missingKey(.containsImage)
-        }
-        guard let todoModelsJSON = record[.todoModelsJSON] as? String else {
-            throw RecordError.missingKey(.todoModelsJSON)
-        }
-        
-        guard let pageMetaDataJSON = record[.pageMetaDataJSON] as? String else{
-            throw RecordError.missingKey(.pageMetaDataJSON)
-        }
-        
-        guard let soundModelsJSON = record[.soundModelsJSON] as? String else{
-            throw RecordError.missingKey(.soundModelsJSON)
-        }
-        
-        
         /*
          随着App的更新，新版本中可能会加入新的字段。
          假设一台设备使用旧版本上传record到云端，由于旧版本缺少新字段，因此上传的record对应的字段被cloudkit自动填充为nil。
@@ -87,6 +71,12 @@ class diaryInfo:Object,Codable{
          这里的做法就是，如果record中没有某个key的值，则将key赋予一个初始值。
          */
         ///optional keys
+        
+        let containsImage = record[.containsImage] as? Int ?? 0
+        let todoModelsJSON = record[.todoModelsJSON] as? String ?? ""
+        let pageMetaDataJSON = record[.pageMetaDataJSON] as? String ?? ""
+        let soundModelsJSON = record[.soundModelsJSON] as? String ?? ""
+        
         var rtfdData:Data?
         if let rtfdAsset = record[.rtfd] as? CKAsset{
             rtfdData = rtfdAsset.data
