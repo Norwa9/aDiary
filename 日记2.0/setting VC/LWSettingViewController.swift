@@ -849,8 +849,8 @@ class LWSettingViewController: UIViewController {
     
     //MARK: - 管理模板
     @objc func templateCellDidTap(){
-//        let vc = LWTemplateViewController()
-        let vc = LWWelcomeViewController()
+        let vc = LWTemplateViewController()
+//        let vc = LWWelcomeViewController()
         self.present(vc, animated: true, completion: nil)
     }
     

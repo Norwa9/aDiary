@@ -43,6 +43,7 @@ class WhatsNewHelper{
     
     static func getWhatsNewViewController() -> UIViewController?{
         if userDefaultManager.needShowWelcome{
+            userDefaultManager.needShowWelcome = false
             return LWWelcomeViewController()
         }
         //MARK:-1:WhatsNew items
