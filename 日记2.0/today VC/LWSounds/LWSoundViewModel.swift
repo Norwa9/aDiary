@@ -36,7 +36,11 @@ class LWSoundViewModel:NSObject{
         return UIApplication.getTodayVC()?.subpagesView.curTextVC?.textView
     }
     weak var lwTextVC:LWTextViewController?{
-        return UIApplication.getTodayVC()?.subpagesView.curTextVC
+        if let soundSettingVC = UIApplication.getTopViewController() as? LWSoundSettingViewController,
+           let todayVC = soundSettingVC.presentingViewController as? todayVC{
+            return todayVC.subpagesView.curTextVC
+        }
+        return nil
     }
 
     
