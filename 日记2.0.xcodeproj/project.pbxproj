@@ -180,6 +180,7 @@
 		EAAFDE0427A9299A008286EB /* LWPurchaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */; };
 		EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */; };
 		EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0927AA523A008286EB /* LWImageSaver.swift */; };
+		EABF78AA2801379400F007DD /* LWBaseCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78A92801379400F007DD /* LWBaseCardViewController.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -409,6 +410,7 @@
 		EAAFDE0327A92999008286EB /* LWPurchaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPurchaseButton.swift; sourceTree = "<group>"; };
 		EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proEditionMaskHelper.swift; sourceTree = "<group>"; };
 		EAAFDE0927AA523A008286EB /* LWImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWImageSaver.swift; sourceTree = "<group>"; };
+		EABF78A92801379400F007DD /* LWBaseCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWBaseCardViewController.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 				EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */,
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
 				EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */,
+				EABF78A92801379400F007DD /* LWBaseCardViewController.swift */,
 			);
 			path = "setting VC";
 			sourceTree = "<group>";
@@ -1280,6 +1283,7 @@
 				EAA4E90327B1604E005F93BD /* roamData.swift in Sources */,
 				EAA7346F27DB9BBA0014C02A /* LWTabBarItem.swift in Sources */,
 				EAA1B4E227E60B5800BBB80A /* diaryInfo+Sound.swift in Sources */,
+				EABF78AA2801379400F007DD /* LWBaseCardViewController.swift in Sources */,
 				EA67914326D1216200B44ECA /* LWSubpagesView.swift in Sources */,
 				EAA4E94927C24383005F93BD /* LWWarningIndicatorView.swift in Sources */,
 				EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */,

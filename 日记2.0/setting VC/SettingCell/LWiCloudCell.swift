@@ -13,7 +13,7 @@ class LWiCloudCell:LWSwitchSettingCell{
     
     override init(delegate:LWSettingViewController,switchState:Bool,title:String,selector:Selector){
         super.init(delegate: delegate, switchState: switchState, title: title, selector: selector)
-        
+        // 不能再initUI，否者会调用两次initUI
     }
     
     required init?(coder: NSCoder) {
@@ -40,7 +40,7 @@ class LWiCloudCell:LWSwitchSettingCell{
     
     
     @objc func infoBtnDidTapped(){
-        let vc = LWiCloudTipsViewController()
+        let vc = LWiCloudTipsViewController(cardViewHeight: 400, cardTitle: "iCloud备份说明")
         UIApplication.getTopViewController()?.present(vc, animated: true, completion: nil)
     }
 }

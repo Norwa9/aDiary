@@ -60,14 +60,14 @@ class LWSettingViewController: UIViewController {
     var backupContainer:UIView!
     var backupContainerTitle:UILabel!
     var exportPDFButton:UIButton!
-    var iCloudTitle:UILabel!
-    var iCloudSwitch:UISwitch!
-    var autoCreateTitle:UILabel!
-    var autoCreateTitleSwitch:UISwitch!
+    var iCloudCell:LWiCloudCell!
+    
     
     //其它
     var otherContainer:UIView!
     var otherContainerTitle:UILabel!
+    var autoCreateTitle:UILabel!
+    var autoCreateTitleSwitch:UISwitch!
     
     // 每日提醒通知
     var dailyRemindLabel:UILabel!
@@ -185,11 +185,15 @@ class LWSettingViewController: UIViewController {
         containerView.addSubview(backupContainer)
         containerView.addSubview(backupContainerTitle)
         
-        iCloudTitle = UILabel()
-        iCloudSwitch = UISwitch()
+        
         exportPDFButton = UIButton()
-        backupContainer.addSubview(iCloudTitle)
-        backupContainer.addSubview(iCloudSwitch)
+        iCloudCell = LWiCloudCell(
+            delegate: self,
+            switchState: userDefaultManager.iCloudEnable,
+            title: "iClound备份",
+            selector: #selector(iCloudDidChange(_:))
+        )
+        backupContainer.addSubview(iCloudCell)
         backupContainer.addSubview(exportPDFButton)
         
         //-其它(评价，深色模式，本地通知)
@@ -349,10 +353,6 @@ class LWSettingViewController: UIViewController {
         backupContainer.setupShadow()
         backupContainer.layer.cornerRadius = 10
         
-        iCloudTitle.text = "iCloud备份"
-        iCloudTitle.font = LWSettingViewController.contentFont
-        iCloudSwitch.isOn = userDefaultManager.iCloudEnable
-        iCloudSwitch.addTarget(self, action: #selector(iCloudDidChange), for: .touchUpInside)
         exportPDFButton.setAttributedTitle(settingVCConfig.exportPDFButtonAttributedTitle(title: "导出日记",color: .link), for: .normal)
         exportPDFButton.contentHorizontalAlignment = .leading
         exportPDFButton.addTarget(self, action: #selector(showExportVC), for: .touchUpInside)
@@ -556,19 +556,14 @@ class LWSettingViewController: UIViewController {
             make.left.right.equalTo(fontContainerView)
         }
         
-        iCloudTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(10)
-        }
-
-        iCloudSwitch.snp.makeConstraints { make in
-            make.centerY.equalTo(iCloudTitle)
-            make.right.equalToSuperview().offset(-10)
+        iCloudCell.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalTo(exportPDFButton.snp.top)
         }
 
         exportPDFButton.snp.makeConstraints { make in
-            make.top.equalTo(iCloudTitle.snp.bottom).offset(15)
-            make.left.equalTo(iCloudTitle)
+            make.left.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().offset(-5)
             make.width.equalTo(200)
         }
