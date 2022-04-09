@@ -96,6 +96,7 @@ class IAPViewController: UIViewController {
         IAPHelper.purchaseCompletionBlock = {
             userDefaultManager.purchaseEdition = .purchased
             self.purchaseBtn.updateButtonState()
+            self.freeTrialStateLabel.alpha = 0 // 购买完成后隐藏试用label
             DispatchQueue.main.async {
                 indicatorViewManager.shared.stop()
             }
