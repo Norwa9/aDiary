@@ -111,6 +111,18 @@ class LWSoundSettingViewController:UIViewController{
     }
     
     @objc func deleteSoundView(){
+        let ac = UIAlertController(title: "是否删除该录音？", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "确定", style: .destructive, handler: { _ in
+            self.delete()
+        }))
+        ac.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
+            
+        }))
+        
+        UIApplication.getTopViewController()?.present(ac, animated: true, completion: nil)
+    }
+    
+    func delete(){
         self.dismiss(animated: true) {
             self.viewModel.deleteSoundView()
         }
