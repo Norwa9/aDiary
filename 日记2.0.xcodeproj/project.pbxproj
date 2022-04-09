@@ -183,6 +183,7 @@
 		EABF78AA2801379400F007DD /* LWBaseCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78A92801379400F007DD /* LWBaseCardViewController.swift */; };
 		EABF78AC280158CF00F007DD /* LWWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */; };
 		EABF78AF280174E300F007DD /* LWToolbarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */; };
+		EABF78B228017BCF00F007DD /* LWColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78B128017BCF00F007DD /* LWColorConstants.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -415,6 +416,7 @@
 		EABF78A92801379400F007DD /* LWBaseCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWBaseCardViewController.swift; sourceTree = "<group>"; };
 		EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWelcomeViewController.swift; sourceTree = "<group>"; };
 		EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolbarCollectionView.swift; sourceTree = "<group>"; };
+		EABF78B128017BCF00F007DD /* LWColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWColorConstants.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -781,6 +783,7 @@
 				EA51D1FC25D809550007BDFA /* resource */,
 				EADBC2FC26B4F000004D1A52 /* migration */,
 				EAA29E7725C59ABB00AA6971 /* helper */,
+				EABF78B028017BAB00F007DD /* Constants */,
 				EA63BAFB26C82197004E64E5 /* protocal */,
 			);
 			path = "日记2.0";
@@ -1000,6 +1003,14 @@
 				EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */,
 			);
 			path = scrollToolbarView;
+			sourceTree = "<group>";
+		};
+		EABF78B028017BAB00F007DD /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				EABF78B128017BCF00F007DD /* LWColorConstants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		EACB1719267A1B63007BF160 /* extension */ = {
@@ -1397,6 +1408,7 @@
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,
 				EA537CDE266273D800C2E9EE /* photoCell.swift in Sources */,
 				EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */,
+				EABF78B228017BCF00F007DD /* LWColorConstants.swift in Sources */,
 				EAA7347D27DCC7F70014C02A /* LWCreateBlankView.swift in Sources */,
 				EA96001327007EF80008DC8A /* globalConfig.swift in Sources */,
 				EA015EC3269898B400C3375D /* Results+.swift in Sources */,
