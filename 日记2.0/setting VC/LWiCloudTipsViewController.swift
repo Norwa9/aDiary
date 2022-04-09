@@ -57,7 +57,7 @@ class LWiCloudTipsViewController: LWBaseCardViewController {
         let tip = """
         开启后：
             1. 可在多设备间同步：一个设备做出的修改能够实时同步到其他设备。
-            2. 可生成云端备份：云端将会保持与本地一份相同的数据，App卸载重装后能够从云端恢复。
+            2. 可生成云端备份：云端将会保持一份与本地相同的数据，App卸载重装后能够从云端恢复。
         
         注意：
             请确保在系统设置中已启用iCloud，并有足够的iCloud存储空间。

@@ -45,6 +45,7 @@ class userDefaultManager{
         static let purchaseEdition = "purchaseEdition"
         static let downloadDate = "downloadDate"
         static let showLunar = "showLunar"
+        static let needShowWelcome = "needShowWelcome"
         
         
     }
@@ -257,6 +258,19 @@ class userDefaultManager{
         }
         set{
             shared?.set(newValue, forKey: constants.hasInitialized)
+        }
+    }
+    
+    static var needShowWelcome:Bool{
+        get{
+            if let need = shared?.object(forKey: constants.needShowWelcome) as? Bool {
+                return need
+            }else{
+                return true
+            }
+        }
+        set{
+            shared?.set(newValue, forKey: constants.needShowWelcome)
         }
     }
     

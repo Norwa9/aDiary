@@ -16,6 +16,7 @@ class NewUserGuideHelper{
     //MARK:-导入用户引导
     public func initUserGuideDiary(){
         if userDefaultManager.hasInitialized{
+            userDefaultManager.needShowWelcome = false // 老用户已经初始化过了
             return
         }
         

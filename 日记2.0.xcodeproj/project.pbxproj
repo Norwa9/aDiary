@@ -181,6 +181,7 @@
 		EAAFDE0627A98EAC008286EB /* proEditionMaskHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */; };
 		EAAFDE0A27AA523A008286EB /* LWImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAFDE0927AA523A008286EB /* LWImageSaver.swift */; };
 		EABF78AA2801379400F007DD /* LWBaseCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78A92801379400F007DD /* LWBaseCardViewController.swift */; };
+		EABF78AC280158CF00F007DD /* LWWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -411,6 +412,7 @@
 		EAAFDE0527A98EAC008286EB /* proEditionMaskHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = proEditionMaskHelper.swift; sourceTree = "<group>"; };
 		EAAFDE0927AA523A008286EB /* LWImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWImageSaver.swift; sourceTree = "<group>"; };
 		EABF78A92801379400F007DD /* LWBaseCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWBaseCardViewController.swift; sourceTree = "<group>"; };
+		EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWelcomeViewController.swift; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -1082,6 +1084,7 @@
 			isa = PBXGroup;
 			children = (
 				EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */,
+				EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */,
 			);
 			path = whatsNew;
 			sourceTree = "<group>";
@@ -1365,6 +1368,7 @@
 				EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */,
 				EAAFDDFD27A6BF0F008286EB /* LWSegSettingCell.swift in Sources */,
 				EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */,
+				EABF78AC280158CF00F007DD /* LWWelcomeViewController.swift in Sources */,
 				EAAFDDF127A11080008286EB /* Date+.swift in Sources */,
 				EA2235FD26D692B0001FAD1D /* ScalableImageModel.swift in Sources */,
 				EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */,
@@ -1595,7 +1599,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1622,7 +1626,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
