@@ -10,5 +10,10 @@ import UIKit
 
 
 class LWColorConstatnsManager{
-    static let tagColor:UIColor = .black
+    // 标签
+//    UIColor.colorWithHex(hexColor: 0xCCCCCC)
+//    .systemGray3
+    static let tagBGColor:UIColor = .black.withAlphaComponent(0.6)
+    static let tagTextColor:UIColor = .white
+    
 }

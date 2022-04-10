@@ -116,8 +116,8 @@ class monthCell: UICollectionViewCell {
         
         //tags Label
         tagsLabel.alignment = .left
-        tagsLabel.tagBackgroundColor = LWColorConstatnsManager.tagColor
-        tagsLabel.textColor = .white
+        tagsLabel.tagBackgroundColor = LWColorConstatnsManager.tagBGColor
+        tagsLabel.textColor = LWColorConstatnsManager.tagTextColor
         tagsLabel.cornerRadius = 5
         tagsLabel.clipsToBounds = true
         tagsLabel.isUserInteractionEnabled = false
