@@ -57,7 +57,7 @@ extension NSAttributedString{
                 attrText.replaceCharacters(in: palceHolderRange, with: "P")
                 
                 print("range:\(range),palceHolderRange:\(palceHolderRange)")
-                attrTextForContent.replaceCharacters(in: range, with: "P")
+                attrTextForContent.replaceCharacters(in: range, with: " ")
                 
                 // return
             }else if let subViewAttchemnt = object as? SubviewTextAttachment,

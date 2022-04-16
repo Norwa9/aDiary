@@ -134,13 +134,11 @@ extension String{
     ///处理纯文本
     func parsePlainText()->String{
         let text = self
-        var res:String
-        //替换图片的占位符"P"
-        res = text.replacingOccurrences(of: "P\\b", with: "[图片]",options: .regularExpression)
+        var res:String = text
         //最后删除头部和尾部多余的空格
         res = res.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // 处理纯文本
+        // 处理中间的空白行
         var cleanText = ""
         for para in res.components(separatedBy: "\n"){
             if para != " " && para != ""{

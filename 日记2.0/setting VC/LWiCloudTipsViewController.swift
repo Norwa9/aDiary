@@ -65,6 +65,7 @@ class LWiCloudTipsViewController: LWBaseCardViewController {
         let tipAT = NSMutableAttributedString(string: tip).addingAttributes([
             .paragraphStyle : para,
             .font : UIFont.systemFont(ofSize: 16),
+            .foregroundColor : UIColor.label
         ])
         
         
