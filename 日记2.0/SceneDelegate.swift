@@ -85,10 +85,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
         print("已经进入后台")
-        /*
-         app进入后台后，模糊内容以达到锁定app的目的
-         */
+        // 1. 锁定App
         self.lockApp()
+        
+        // 2. 保存内容
+        UIApplication.getTextVC()?.save()
+        
         
         // 刷新小组件内容
         if #available(iOS 14.0, *) {

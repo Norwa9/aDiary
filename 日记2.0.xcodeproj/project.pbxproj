@@ -183,7 +183,7 @@
 		EABF78AC280158CF00F007DD /* LWWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */; };
 		EABF78AF280174E300F007DD /* LWToolbarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */; };
 		EABF78B228017BCF00F007DD /* LWColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78B128017BCF00F007DD /* LWColorConstants.swift */; };
-		EABF78B42803227E00F007DD /* wechat_group_code.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EABF78B32803227E00F007DD /* wechat_group_code.jpeg */; };
+		EABF78B42803227E00F007DD /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EABF78B32803227E00F007DD /* wechat_group_code.jpg */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -416,7 +416,7 @@
 		EABF78AB280158CF00F007DD /* LWWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWelcomeViewController.swift; sourceTree = "<group>"; };
 		EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolbarCollectionView.swift; sourceTree = "<group>"; };
 		EABF78B128017BCF00F007DD /* LWColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWColorConstants.swift; sourceTree = "<group>"; };
-		EABF78B32803227E00F007DD /* wechat_group_code.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpeg; sourceTree = "<group>"; };
+		EABF78B32803227E00F007DD /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -604,7 +604,7 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				EABF78B32803227E00F007DD /* wechat_group_code.jpeg */,
+				EABF78B32803227E00F007DD /* wechat_group_code.jpg */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
@@ -1204,7 +1204,7 @@
 				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
 				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
-				EABF78B42803227E00F007DD /* wechat_group_code.jpeg in Resources */,
+				EABF78B42803227E00F007DD /* wechat_group_code.jpg in Resources */,
 				EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
 				EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */,

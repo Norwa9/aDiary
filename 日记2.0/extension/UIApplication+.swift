@@ -20,6 +20,13 @@ extension UIApplication{
         }
     }
     
+    static func getTextVC() -> LWTextViewController?{
+        if let todayVC = getTodayVC(){
+            return todayVC.subpagesView.curTextVC
+        }
+        return nil
+    }
+    
     /// 如果在编辑页，可以获取到当前的日记
     static func getCurDiaryModel() ->diaryInfo?{
         let todayVC = UIApplication.getTodayVC()
