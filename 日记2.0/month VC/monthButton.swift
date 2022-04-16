@@ -21,7 +21,7 @@ class monthButton: UIButton {
     }
     func configureUI(){
         //圆形
-        self.setupShadow()
+        self.setupShadow(opacity: 0.7, radius: 1, offset: .zero, color: .black.withAlphaComponent(0.3))
         
         //containView
         self.addSubview(containView)

@@ -49,6 +49,7 @@
 		EA384942262ED17A001B693F /* intro-page1.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA384941262ED17A001B693F /* intro-page1.txt */; };
 		EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */; };
 		EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA3ABAD625DFE05400911902 /* demoDiaries.txt */; };
+		EA51A451280A73D700254D9C /* icon_roundCornor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA51A450280A73D700254D9C /* icon_roundCornor.png */; };
 		EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D19C25D04D750007BDFA /* filterMenu.swift */; };
 		EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA51D19F25D04D7E0007BDFA /* filterMenu.xib */; };
 		EA51D1F725D7FCE10007BDFA /* dataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA51D1F625D7FCE10007BDFA /* dataManager.swift */; };
@@ -94,7 +95,6 @@
 		EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE7B3260F634200D44221 /* userDefaultManager.swift */; };
 		EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4D9267E109400D77908 /* icon-1024.png */; };
 		EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4DF267E10E200D77908 /* icon-120.png */; };
-		EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */ = {isa = PBXBuildFile; fileRef = EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */; };
 		EA9AF51726821E5F00D77908 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9AF51626821E5F00D77908 /* CloudKit.framework */; };
 		EAA1B4D227E573A200BBB80A /* LWSoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4D127E573A200BBB80A /* LWSoundsViewController.swift */; };
 		EAA1B4D627E5C82100BBB80A /* LWSoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA1B4D527E5C82100BBB80A /* LWSoundView.swift */; };
@@ -282,6 +282,7 @@
 		EA384941262ED17A001B693F /* intro-page1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "intro-page1.txt"; sourceTree = "<group>"; };
 		EA386F8C26A71A1200DBBAA9 /* AlbumViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewLayout.swift; sourceTree = "<group>"; };
 		EA3ABAD625DFE05400911902 /* demoDiaries.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demoDiaries.txt; sourceTree = "<group>"; };
+		EA51A450280A73D700254D9C /* icon_roundCornor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_roundCornor.png; sourceTree = "<group>"; };
 		EA51D19C25D04D750007BDFA /* filterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterMenu.swift; sourceTree = "<group>"; };
 		EA51D19F25D04D7E0007BDFA /* filterMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = filterMenu.xib; sourceTree = "<group>"; };
 		EA51D1F625D7FCE10007BDFA /* dataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataManager.swift; sourceTree = "<group>"; };
@@ -327,7 +328,6 @@
 		EA9AE7B3260F634200D44221 /* userDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultManager.swift; sourceTree = "<group>"; };
 		EA9AF4D9267E109400D77908 /* icon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-1024.png"; sourceTree = "<group>"; };
 		EA9AF4DF267E10E200D77908 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
-		EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_roundCornor.png; sourceTree = "<group>"; };
 		EA9AF51426821E5700D77908 /* 日记2.0.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "日记2.0.entitlements"; sourceTree = "<group>"; };
 		EA9AF51626821E5F00D77908 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		EAA1B4D127E573A200BBB80A /* LWSoundsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSoundsViewController.swift; sourceTree = "<group>"; };
@@ -602,11 +602,11 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				EA51A450280A73D700254D9C /* icon_roundCornor.png */,
 				EABF78B32803227E00F007DD /* wechat_group_code.jpg */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
 				EA9AF4D9267E109400D77908 /* icon-1024.png */,
-				EA9AF4E4267E11EF00D77908 /* icon_roundCornor.png */,
 				EA9AF4DF267E10E200D77908 /* icon-120.png */,
 				EA537B9F26345ABF00C2E9EE /* versionLog.txt */,
 				EA3ABAD625DFE05400911902 /* demoDiaries.txt */,
@@ -1190,13 +1190,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA9AF4E5267E11EF00D77908 /* icon_roundCornor.png in Resources */,
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EAAFDDC8279ED5A9008286EB /* emptyImage.jpg in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
+				EA51A451280A73D700254D9C /* icon_roundCornor.png in Resources */,
 				EA51D1A025D04D7E0007BDFA /* filterMenu.xib in Resources */,
 				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
 				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
