@@ -197,7 +197,7 @@ class monthVC: UIViewController {
         monthBtnStackView = UIView()
         monthBtnStackView.layer.cornerRadius = 10
         monthBtnStackView.backgroundColor = monthBtnStackViewDynamicColor
-        monthBtnStackView.setupShadow(opacity: 0.5, radius: 3, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
+        monthBtnStackView.setupShadow()
         
         for i in 0..<12{
             let button = monthButton(frame: .zero)

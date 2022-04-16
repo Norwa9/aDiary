@@ -10,7 +10,7 @@ import UIKit
 
 //MARK:-阴影和圆角
 extension UIView{
-    func setupShadow(opacity: Float = 0.5, radius: CGFloat = 2, offset: CGSize = CGSize(width: 0, height: 0), color: UIColor =  UIColor.black.withAlphaComponent(0.35)) {
+    func setupShadow(opacity: Float = 0.6, radius: CGFloat = 2, offset:CGSize = .zero, color: UIColor = LWColorConstatnsManager.LWShodowColor) {
         layer.shadowOpacity = opacity
         layer.shadowRadius = radius
         layer.shadowOffset = offset

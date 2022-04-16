@@ -172,7 +172,7 @@ class IconView: UIView {
     func initUI(){
         self.backgroundColor = .systemBackground
         self.layer.cornerRadius = 2
-        self.setupShadow(opacity: 0.5, radius: 1, offset: CGSize(width: 0, height: 0), color: .black)
+        self.setupShadow()
         
         self.addSubview(iconImageView)
         iconImageView.contentMode = .scaleAspectFit

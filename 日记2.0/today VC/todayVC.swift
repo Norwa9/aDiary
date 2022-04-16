@@ -217,7 +217,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
             topView.toolButtons.forEach { b in
                 b.alpha = 1 - progress
             }
-            view.setupShadow(opacity: Float(progress * 0.7), radius: 2, offset: .zero, color: .black)
+            view.setupShadow()
         case .cancelled,.ended:
             stopDismissPanGesture(gesture)
         default:
@@ -229,7 +229,7 @@ extension todayVC:UIGestureRecognizerDelegate,UIScrollViewDelegate{
     private func stopDismissPanGesture(_ gesture: UIPanGestureRecognizer) {
         draggingDownToDismiss = false
         interactiveStartingPoint = nil
-        view.setupShadow(opacity: 0, radius: 2, offset: .zero, color: .black)
+        view.setupShadow()
         
         UIView.animate(withDuration: 0.35) {
             self.topView.toolButtons.forEach { b in

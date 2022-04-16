@@ -16,4 +16,8 @@ class LWColorConstatnsManager{
     static let tagBGColor:UIColor = .black.withAlphaComponent(0.6)
     static let tagTextColor:UIColor = .white
     
+    
+    // 阴影
+    static let LWShodowColor:UIColor = UIColor.colorWithHex(hexColor: 0x9AAACF)
+    
 }

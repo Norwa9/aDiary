@@ -64,7 +64,7 @@ class monthCell: UICollectionViewCell {
         //contentView
         self.backgroundColor = UIColor.systemBackground
         self.clipsToBounds = false
-        self.setupShadow(opacity: 0.7, radius: 2, offset: .zero, color: UIColor.black.withAlphaComponent(0.35))
+        self.setupShadow()
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = false
         

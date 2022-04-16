@@ -122,7 +122,6 @@
 		EAA29E9925C8277A00AA6971 /* tagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9725C8277A00AA6971 /* tagsViewController.swift */; };
 		EAA29E9A25C8277A00AA6971 /* tagsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29E9825C8277A00AA6971 /* tagsViewController.xib */; };
 		EAA29E9E25C832F900AA6971 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29E9D25C832F900AA6971 /* extension.swift */; };
-		EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA025C833FF00AA6971 /* moodButton.swift */; };
 		EAA29EAB25C8370600AA6971 /* tagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EA925C8370600AA6971 /* tagsCell.swift */; };
 		EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAA29EAA25C8370600AA6971 /* tagsCell.xib */; };
 		EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA29EB125C864ED00AA6971 /* UIImage+.swift */; };
@@ -359,7 +358,6 @@
 		EAA29E9725C8277A00AA6971 /* tagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsViewController.swift; sourceTree = "<group>"; };
 		EAA29E9825C8277A00AA6971 /* tagsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsViewController.xib; sourceTree = "<group>"; };
 		EAA29E9D25C832F900AA6971 /* extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
-		EAA29EA025C833FF00AA6971 /* moodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodButton.swift; sourceTree = "<group>"; };
 		EAA29EA925C8370600AA6971 /* tagsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagsCell.swift; sourceTree = "<group>"; };
 		EAA29EAA25C8370600AA6971 /* tagsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = tagsCell.xib; sourceTree = "<group>"; };
 		EAA29EB125C864ED00AA6971 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
@@ -619,7 +617,6 @@
 		EA51D22225D986360007BDFA /* other */ = {
 			isa = PBXGroup;
 			children = (
-				EAA29EA025C833FF00AA6971 /* moodButton.swift */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -1280,7 +1277,6 @@
 				EA55A36A26D7EEA200FC9006 /* Data+.swift in Sources */,
 				EA386F8D26A71A1200DBBAA9 /* AlbumViewLayout.swift in Sources */,
 				1B2A5648269824CB0090D411 /* LWRealmManager.swift in Sources */,
-				EAA29EA125C833FF00AA6971 /* moodButton.swift in Sources */,
 				EAAFDDF627A2CFBC008286EB /* todoListViewModel.swift in Sources */,
 				EA770AD227EF681F00E51701 /* LWiCloudTipsViewController.swift in Sources */,
 				EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */,
