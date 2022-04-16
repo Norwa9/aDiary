@@ -77,7 +77,7 @@ class LWTextViewController: UIViewController {
         textView = LWTextView(frame: self.view.bounds, textContainer: nil)
         textView.delegate = self
         textView.textViewController = self
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: userDefaultManager.textInset, bottom: 0, right: userDefaultManager.textInset)
+        textView.textContainerInset = UIEdgeInsets(top: 5, left: userDefaultManager.textInset, bottom: 0, right: userDefaultManager.textInset)
         self.view.addSubview(textView)
         
         
