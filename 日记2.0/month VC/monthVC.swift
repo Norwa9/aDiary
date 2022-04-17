@@ -35,6 +35,11 @@ class monthVC: UIViewController {
     var searchBar:UISearchBar!
     var isFilterMode:Bool = false
     let kTopViewHeight:CGFloat = 40
+    //calendar
+    var lwCalendar: LWCalendar!
+    var formatter = DateFormatter()
+    var isShowingCalendar:Bool = false
+    let kCalendarHeight:CGFloat = 300
     //popover
     var filterView:filterMenu!
     var popover:Popover = {
@@ -47,11 +52,6 @@ class monthVC: UIViewController {
           ] as [PopoverOption]
         return Popover(options: options, showHandler: nil, dismissHandler: nil)
     }()
-    //calendar
-    var lwCalendar: LWCalendar!
-    var formatter = DateFormatter()
-    var isShowingCalendar:Bool = false
-    let kCalendarHeight:CGFloat = 300
     //collection view
     var collectionView:UICollectionView!
     var flowLayout:waterFallLayout!///瀑布流布局
@@ -368,6 +368,7 @@ class monthVC: UIViewController {
         }
     }
     
+    /// 显示日历
      func toggleCalendar(){
         isShowingCalendar.toggle()
         
