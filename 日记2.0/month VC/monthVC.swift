@@ -171,7 +171,7 @@ class monthVC: UIViewController {
             scene.window?.overrideUserInterfaceStyle = interfaceStyle
         }
         
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = LWColorConstatnsManager.LWSoftBGColor
         //topBar
         topbar = topbarView(frame: .zero)
         
@@ -182,7 +182,7 @@ class monthVC: UIViewController {
         flowLayout.lineSpacing = layoutParasManager.shared.collectionLineSpacing
         flowLayout.dateSource = filteredDiaries
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = LWColorConstatnsManager.LWSoftBGColor
         collectionView.contentInset = layoutParasManager.shared.collectionEdgesInset
         collectionView.delegate = self
         collectionView.dataSource = self

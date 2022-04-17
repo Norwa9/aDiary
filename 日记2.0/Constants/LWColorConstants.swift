@@ -20,4 +20,17 @@ class LWColorConstatnsManager{
     // 阴影
     static let LWShodowColor:UIColor = UIColor.colorWithHex(hexColor: 0x9AAACF)
     
+    // 背景白色/黑色
+    static let LWSoftBGColor:UIColor = .systemBackground
+//    static let LWSoftBGColor:UIColor = UIColor.init { (t) -> UIColor in
+//        if t.userInterfaceStyle == .dark{
+//            return UIColor.colorWithHex(hexColor: 0x1A1920)
+//        }else{
+//            return UIColor.colorWithHex(hexColor: 0xFCFAFF)
+//        }
+//    }
+    
+    
+
+    
 }

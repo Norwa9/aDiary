@@ -38,7 +38,7 @@ class topbarView: UIView {
     }
     
     func initUI(){
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = LWColorConstatnsManager.LWSoftBGColor
         
         //get current date
         let timeNow = Date()
