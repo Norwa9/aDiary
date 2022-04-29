@@ -83,7 +83,7 @@ final class LWSyncEngine{
         checkAccountStatus( {[weak self] accoutStatus,connected in
             guard let self = self else{return}
             if !connected{
-                indicatorViewManager.shared.stop(withText: "网络连接不可用，暂停同步")
+                indicatorViewManager.shared.stop(withText: "网络连接不可用，请检查网络设置")
                 return
             }
             switch accoutStatus{
@@ -97,7 +97,7 @@ final class LWSyncEngine{
                     self.fetchRemoteChanges()
                 }
             default:
-                indicatorViewManager.shared.stop(withText: "iCloud账户不可用，暂停同步")
+                indicatorViewManager.shared.stop(withText: "iCloud账户不可用，请检查系统设置")
                 break
             }
         })
