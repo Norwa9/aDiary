@@ -36,7 +36,7 @@ struct RoamViewWithPic: View{
                             .frame(maxWidth: .infinity,alignment: .leading) // 撑满父视图
                         Spacer()
                         ZStack{
-                            RoundedRectangle(cornerRadius: 6)
+                            RoundedRectangle(cornerRadius: 5)
                                     .foregroundColor(Color.init(hex: 0xE5E5E9))
                             Text(roamData.emojis.joined())
                                 .multilineTextAlignment(.trailing)
@@ -57,7 +57,7 @@ struct RoamViewWithPic: View{
                 .frame(minWidth: 0, maxWidth: .infinity,minHeight: 0, maxHeight: .infinity) // 撑满父视图
             }
             .padding(.horizontal,17)
-            .padding(.vertical,family == .systemLarge ? 40 : 20)
+            .padding(.vertical,family == .systemLarge ? 80 : 20)
         }
     }
 }
@@ -79,7 +79,7 @@ struct RoamViewWithoutPic: View{
                         .frame(maxWidth: .infinity,alignment: .leading) // 撑满父视图
                     Spacer()
                     ZStack{
-                        RoundedRectangle(cornerRadius: 6)
+                        RoundedRectangle(cornerRadius: 5)
                             .foregroundColor(colorScheme == .dark ? Color.init(hex: 0x2C2B2E) : Color.init(hex: 0xE5E5E9) )
                         Text(roamData.emojis.joined())
                             .multilineTextAlignment(.trailing)
@@ -144,9 +144,9 @@ struct tagView:View{
     }
 }
 
-// 采用了非常简单粗暴的方法解决了tags个数太多导致
+// 简单的方式限制tag的个数，计算一行最多能塞几个tag
 func filterTags(tags:[String])->[String]{
-    let maxCharacterPerLine = 18
+    let maxCharacterPerLine = 18 // 假设字号为20，一行大概能容20个字符。
     var n = 0
     var maxTagsNum = 0
     for tag in tags {
