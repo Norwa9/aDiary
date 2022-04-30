@@ -12,7 +12,7 @@ import Intents
 struct RoamProvider: IntentTimelineProvider {
     /// 提供一个默认的视图，当网络数据请求失败或者其他一些异常的时候，用于展示
     func placeholder(in context: Context) -> RoamEntry {
-        RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记"))
+        RoamEntry(date: Date(), data: RoamData(date: "", content: "随机浏览日记",tags: [],emojis: [], imageData: nil))
     }
 
     /// 为了在小部件库中显示小部件，WidgetKit要求提供者提供预览快照，在组件的添加页面可以看到效果
@@ -22,7 +22,7 @@ struct RoamProvider: IntentTimelineProvider {
             if case .success(let fetchedData) = result {
                 roamData = fetchedData
             } else {
-                roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.")
+                roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.",tags: [],emojis: [],imageData: nil)
             }
             let entry = RoamEntry(date: Date(), data: roamData)
             completion(entry)
@@ -41,13 +41,15 @@ struct RoamProvider: IntentTimelineProvider {
         RoamDataLoader.load { (result) in
             let roamData: RoamData
             if case .success(let fetchedData) = result {
+                print("更新回忆widget到最新数据")
                 roamData = fetchedData
             } else {
-                roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.")
+                roamData = RoamData(date: "", content: "很遗憾本次更新失败,等待下一次更新.",tags: [],emojis: [],imageData: nil)
             }
             let entry = RoamEntry(date: currentDate, data: roamData)
             //entries提供了下次更新的数据,policy提供了下次更新的时间。
-            let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
+//            let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
+            let timeline = Timeline(entries: [entry], policy: .never)
             // policy有: .atEnd, .after, .never
             // 当timeLine没有数据时，系统重新调用getTimeline
             // 这里，timeLine只有一个数据，且5分钟拿出一个数据，也就是过5分钟timeLine就没数据就要调用getTimeline重新获取数据了
@@ -82,7 +84,15 @@ struct RoamEntryView : View {
 
     @ViewBuilder
     var body: some View {
-        RoamView(roamData: RoamData(date: entry.data.date, content: entry.data.content))
+        let model = entry.data
+        switch family {
+        case .systemMedium:
+            RoamViewMedium(roamData: model)
+        case .systemLarge:
+            RoamViewLarge(roamData: model)
+        default :
+            RoamViewMedium(roamData: model)
+        }
     }
 }
 

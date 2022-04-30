@@ -95,7 +95,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 刷新小组件内容
         if #available(iOS 14.0, *) {
             todoDataProvider.shared.setData()
+            RoamDataProvider.shared.setRoamData()
             WidgetCenter.shared.reloadTimelines(ofKind: WidgetKindKeys.todoWidget)
+            WidgetCenter.shared.reloadTimelines(ofKind: WidgetKindKeys.RoamWidget)
         }
     }
 

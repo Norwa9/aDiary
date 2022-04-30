@@ -10,6 +10,9 @@ import Foundation
 struct RoamData:Codable{
     let date : String
     let content: String
+    let tags:[String]
+    let emojis:[String]
+    let imageData: Data?
 }
 
 struct RoamDataLoader {

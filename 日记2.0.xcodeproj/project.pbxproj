@@ -78,6 +78,7 @@
 		EA770ACE27EF630200E51701 /* LWBaseSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACD27EF630200E51701 /* LWBaseSettingCell.swift */; };
 		EA770AD027EF65CC00E51701 /* LWiCloudCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */; };
 		EA770AD227EF681F00E51701 /* LWiCloudTipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */; };
+		EA7CAFEB281C3ECD00FEA4ED /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7CAFEA281C3ECD00FEA4ED /* TagsView.swift */; };
 		EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */; };
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
@@ -89,6 +90,7 @@
 		EA96554127969FF8000B827B /* CKRecord+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96554027969FF8000B827B /* CKRecord+.swift */; };
 		EA96BDB527D25F6A00392A84 /* LWTodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */; };
 		EA96BDB927D3B02B00392A84 /* LWFontPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */; };
+		EA97563E281BDAEA00CAB726 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97563D281BDAEA00CAB726 /* String+.swift */; };
 		EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C8922724491300DD60EA /* editorAnimator.swift */; };
 		EA98C89527245E6000DD60EA /* editorBlurPresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */; };
 		EA9AE73C260625CC00D44221 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AE73B260625CC00D44221 /* UIApplication+.swift */; };
@@ -184,6 +186,7 @@
 		EABF78AF280174E300F007DD /* LWToolbarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */; };
 		EABF78B228017BCF00F007DD /* LWColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF78B128017BCF00F007DD /* LWColorConstants.swift */; };
 		EABF78B42803227E00F007DD /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EABF78B32803227E00F007DD /* wechat_group_code.jpg */; };
+		EAC107B9281BD05F00092AF2 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC107B8281BD05E00092AF2 /* Color+.swift */; };
 		EACB1714267790BA007BF160 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1713267790BA007BF160 /* String+.swift */; };
 		EACB1722267A1BC1007BF160 /* UIScrollView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1721267A1BC1007BF160 /* UIScrollView+.swift */; };
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
@@ -312,6 +315,7 @@
 		EA770ACD27EF630200E51701 /* LWBaseSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWBaseSettingCell.swift; sourceTree = "<group>"; };
 		EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWiCloudCell.swift; sourceTree = "<group>"; };
 		EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWiCloudTipsViewController.swift; sourceTree = "<group>"; };
+		EA7CAFEA281C3ECD00FEA4ED /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 		EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePagesAlertView.swift; sourceTree = "<group>"; };
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
@@ -323,6 +327,7 @@
 		EA96554027969FF8000B827B /* CKRecord+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+.swift"; sourceTree = "<group>"; };
 		EA96BDB427D25F6A00392A84 /* LWTodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWTodoManager.swift; sourceTree = "<group>"; };
 		EA96BDB827D3B02B00392A84 /* LWFontPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFontPickerButton.swift; sourceTree = "<group>"; };
+		EA97563D281BDAEA00CAB726 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EA98C8922724491300DD60EA /* editorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorAnimator.swift; sourceTree = "<group>"; };
 		EA98C89427245E6000DD60EA /* editorBlurPresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editorBlurPresentVC.swift; sourceTree = "<group>"; };
 		EA9AE73B260625CC00D44221 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
@@ -417,6 +422,7 @@
 		EABF78AE280174E300F007DD /* LWToolbarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWToolbarCollectionView.swift; sourceTree = "<group>"; };
 		EABF78B128017BCF00F007DD /* LWColorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWColorConstants.swift; sourceTree = "<group>"; };
 		EABF78B32803227E00F007DD /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
+		EAC107B8281BD05E00092AF2 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		EACB1713267790BA007BF160 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		EACB1721267A1BC1007BF160 /* UIScrollView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+.swift"; sourceTree = "<group>"; };
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -896,6 +902,7 @@
 		EAA4E8EC27B15B12005F93BD /* LWWidget */ = {
 			isa = PBXGroup;
 			children = (
+				EAC107B7281BD05000092AF2 /* extension */,
 				EAA4E90127B16007005F93BD /* mainWidget.swift */,
 				EAA4E92D27BCE163005F93BD /* todoWidget */,
 				EAA4E90427B16966005F93BD /* roamMemoryWidget */,
@@ -915,6 +922,7 @@
 				EAA4E8FD27B15FC4005F93BD /* roamData.swift */,
 				EAA4E8FF27B15FDF005F93BD /* roamWidgetView.swift */,
 				EAA4E8ED27B15B12005F93BD /* RoamWidget.swift */,
+				EA7CAFEA281C3ECD00FEA4ED /* TagsView.swift */,
 			);
 			path = roamMemoryWidget;
 			sourceTree = "<group>";
@@ -1022,6 +1030,15 @@
 				EABF78B128017BCF00F007DD /* LWColorConstants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		EAC107B7281BD05000092AF2 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				EAC107B8281BD05E00092AF2 /* Color+.swift */,
+				EA97563D281BDAEA00CAB726 /* String+.swift */,
+			);
+			path = extension;
 			sourceTree = "<group>";
 		};
 		EACB1719267A1B63007BF160 /* extension */ = {
@@ -1460,10 +1477,13 @@
 				EAA4E8FE27B15FC4005F93BD /* roamData.swift in Sources */,
 				EAA4E8EE27B15B12005F93BD /* RoamWidget.swift in Sources */,
 				EAA4E8F327B15B16005F93BD /* LWWidget.intentdefinition in Sources */,
+				EA7CAFEB281C3ECD00FEA4ED /* TagsView.swift in Sources */,
 				EAA4E93F27BCE9E5005F93BD /* Constants.swift in Sources */,
 				EAA4E93927BCE20C005F93BD /* TodoWidget.swift in Sources */,
 				EAA4E90027B15FDF005F93BD /* roamWidgetView.swift in Sources */,
+				EAC107B9281BD05F00092AF2 /* Color+.swift in Sources */,
 				EAA4E93D27BCE29E005F93BD /* myView.swift in Sources */,
+				EA97563E281BDAEA00CAB726 /* String+.swift in Sources */,
 				EAA4E93627BCE1BB005F93BD /* todoWidgetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
