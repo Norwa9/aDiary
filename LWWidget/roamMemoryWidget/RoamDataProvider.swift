@@ -15,40 +15,52 @@ class RoamDataProvider{
     
     func setRoamData(){
         let db = LWRealmManager.shared.localDatabase
-//        let roamDiary = db.randomElement()
-        let roamDiary = LWRealmManager.shared.queryFor(dateCN: "2022年4月30日").first
-        
-        if let diary = roamDiary,let dateEn = DateCNToUrl(pageDateCN: diary.trueDate){
-            // date
-            var dateTitle = dateEn
-            let pageNum = diary.indexOfPage
-            if pageNum > 0{
-                dateTitle += " page.\(pageNum + 1)"//转换为yyyy-MM-d page.X
+        var randDiaries:[diaryInfo] = []
+        let numPerSave = 12 // 每次保存12篇随机日记
+        while(true){
+            if let randDiary = db.randomElement(){
+                randDiaries.append(randDiary)
             }
-            // image
-            var imageData:Data?
-            if !diary.scalableImageModels.isEmpty,let randomImageModel = diary.scalableImageModels.randomElement(){
-                let image = ImageTool.shared.loadImage(uuid: randomImageModel.uuid)
-                imageData = image?.jpegData(compressionQuality: 1.0)
-            }
-            // content
-            let content = diary.content
-            // emojis
-            let emojis = diary.emojis
-            // tags
-            let tags = diary.tags
-            
-            // Model
-            let roamData = RoamData(date: dateTitle, content: content, tags: tags, emojis: emojis, imageData: imageData)
-            
-            let jsonEncoder = JSONEncoder()
-            if let storedData = try? jsonEncoder.encode(roamData) {
-                defaults.set(storedData, forKey: WidgetKindKeys.RoamWidget)
-                print("设置\(dateEn)的日记以展示:\(roamData)")
-            } else {
-                print("roam:Failed to save roamData")
+            if randDiaries.count == numPerSave{
+                break
             }
         }
+//        let roamDiary = LWRealmManager.shared.queryFor(dateCN: "2022年4月30日").first // for debug
+//        print("保存12篇随机日记：")
+//        print(randDiaries.count)
+//        print(randDiaries)
+        var roamDataArray:[RoamData] = []
+        for diary in randDiaries{
+            if let dateEn = DateCNToUrl(pageDateCN: diary.trueDate){
+                // date
+                let dateTitle = dateEn
+                // image
+                var imageData:Data?
+                if !diary.scalableImageModels.isEmpty,let randomImageModel = diary.scalableImageModels.randomElement(){
+                    let image = ImageTool.shared.loadImage(uuid: randomImageModel.uuid)
+                    imageData = image?.jpegData(compressionQuality: 1.0)
+                }
+                // content
+                let content = diary.content
+                // emojis
+                let emojis = diary.emojis
+                // tags
+                let tags = diary.tags
+                
+                // Model
+                let roamData = RoamData(date: dateTitle, content: content, tags: tags, emojis: emojis, imageData: imageData)
+                
+                roamDataArray.append(roamData)
+            }
+        }
+        let jsonEncoder = JSONEncoder()
+        if let storedData = try? jsonEncoder.encode(roamDataArray) {
+            defaults.set(storedData, forKey: WidgetKindKeys.RoamWidget)
+            print("设置\(roamDataArray.count)篇日记以展示")
+        } else {
+            print("roam:Failed to save roamDataArray")
+        }
+        
     }
     
     

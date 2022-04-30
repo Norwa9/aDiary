@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LWIAPHelper.shared.initFreeTrial()
         
         //4.Widget
-//        RoamDataProvider.shared.setRoamData()
+        RoamDataProvider.shared.setRoamData()
         // todoDataProvider.shared.setData()
         
         //5.注册通知

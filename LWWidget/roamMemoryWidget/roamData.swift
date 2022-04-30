@@ -16,7 +16,7 @@ struct RoamData:Codable{
 }
 
 struct RoamDataLoader {
-    static func load(completion: @escaping (Result<RoamData, Error>) -> Void){
+    static func load(completion: @escaping (Result<[RoamData], Error>) -> Void){
         guard let defaults = UserDefaults.init(suiteName: "group.luowei.prefix.aDiary.content") else{
             print("Failed to init defaults ")
             // 使用之前先给extension的target添加app groups 的capability
@@ -26,11 +26,11 @@ struct RoamDataLoader {
         
         let error = NSError(domain: "widget", code: 0, userInfo: nil   )
         
-        if let savedRoamData = defaults.object(forKey: WidgetKindKeys.RoamWidget) as? Data {
+        if let savedRoamDataArray = defaults.object(forKey: WidgetKindKeys.RoamWidget) as? Data {
             let jsonDecoder = JSONDecoder()
             do {
-               let roamData = try jsonDecoder.decode(RoamData.self, from: savedRoamData)
-                completion(.success(roamData))
+               let roamDataArray = try jsonDecoder.decode([RoamData].self, from: savedRoamDataArray)
+                completion(.success(roamDataArray))
             } catch {
                 completion(.failure(error))
                 print("Failed to decode json")
