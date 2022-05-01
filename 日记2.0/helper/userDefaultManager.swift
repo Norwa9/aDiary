@@ -339,7 +339,9 @@ class userDefaultManager{
         get{
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            let date = formatter.date(from: dailyRemindTimeString)!
+            guard let date = formatter.date(from: dailyRemindTimeString) else{
+                return Date() // 给一个默认值
+            }
             return date
         }
         set{
