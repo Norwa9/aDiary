@@ -44,11 +44,11 @@ extension UIFont {
     func bold() -> UIFont? {
         if (isItalic) {
             if let descriptor = fontDescriptor.withSymbolicTraits([.traitBold,.traitItalic]){
-                return UIFont(descriptor: descriptor, size: 0)
+                return UIFont(descriptor: descriptor, size: self.pointSize)
             }
         } else {
             if let descriptor = fontDescriptor.withSymbolicTraits([.traitBold]){
-                return UIFont(descriptor: descriptor, size: 0)
+                return UIFont(descriptor: descriptor, size: self.pointSize)
             }
         }
     
@@ -58,11 +58,11 @@ extension UIFont {
     func unBold() -> UIFont? {
         if (isItalic) {
             if let descriptor = fontDescriptor.withSymbolicTraits([.traitItalic]){
-                return UIFont(descriptor: descriptor, size: 0)
+                return UIFont(descriptor: descriptor, size: self.pointSize)
             }
         } else {
             if let descriptor = fontDescriptor.withSymbolicTraits([]){
-                return UIFont(descriptor: descriptor, size: 0)
+                return UIFont(descriptor: descriptor, size: self.pointSize)
             }
         }
     

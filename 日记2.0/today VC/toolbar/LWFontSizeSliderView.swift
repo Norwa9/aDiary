@@ -39,8 +39,8 @@ class LWFontSizeSliderView: UIView {
         self.addSubview(contentView)
         
         slider.backgroundColor = .secondarySystemBackground
-        slider.minimumValue = 5
-        slider.maximumValue = 100
+        slider.minimumValue = 10
+        slider.maximumValue = 50
         contentView.addSubview(slider)
         slider.addTarget(self, action: #selector(handleFontSizeChange(picker:)), for: .valueChanged)
         

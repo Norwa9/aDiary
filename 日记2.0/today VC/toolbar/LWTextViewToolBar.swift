@@ -431,7 +431,7 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
         let textFormatter = TextFormatter(textView: textView)
         if !isShowingPopover{
             let sliderView = LWFontSizeSliderView(toolbar: self)
-            sliderView.size = CGSize(width: 240, height: 30)
+            sliderView.size = CGSize(width: 240, height: 40)
             sliderView.defaultSize = textFormatter.getSelectedFontSize()
             popover.show(sliderView, fromView: sender)
         }else{
