@@ -56,7 +56,7 @@ struct RoamProvider: IntentTimelineProvider {
             var entries:[RoamEntry] = []
             //entries提供了下次更新的数据,policy提供了下次更新的时间。
             for (i,roamData) in roamDataArray.enumerated(){
-                let entryDate = Calendar.current.date(byAdding: .minute, value: i * 5, to: currentDate)!
+                let entryDate = Calendar.current.date(byAdding: .hour, value: i * 2, to: currentDate)!
                 let entry = RoamEntry(date: entryDate, data: roamData)
                 entries.append(entry)
             }
