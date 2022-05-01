@@ -143,6 +143,8 @@ class LWEmojiView: UIView {
 //MARK:-target action
 extension LWEmojiView{
     @objc func showEmojiPanel(){
+        collectionView.showBounceAnimation {}
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
         let viewSize = CGSize(width: 300, height:300 )
         let container = UIView(frame: CGRect(origin: .zero, size: viewSize))
         container.addSubview(emojiPanel)
@@ -150,6 +152,7 @@ extension LWEmojiView{
             make.edges.equalToSuperview()
         }
         popover.show(container, fromView: collectionView)
+        
     }
 }
 

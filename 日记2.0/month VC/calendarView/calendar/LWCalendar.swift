@@ -81,7 +81,7 @@ extension monthVC:FSCalendarDelegate{
         //self.configureVisibleCells()
         
         //1.bounce
-        cell?.bounceAnimation(usingSpringWithDamping: 0.8, scaleFactor: 0.9)
+        cell?.showBounceAnimation {}
         
         //2、进入日记
         formatter.dateFormat = "yyyy年M月d日"

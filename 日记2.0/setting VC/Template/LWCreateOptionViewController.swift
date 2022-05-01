@@ -179,19 +179,23 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
     
     // MARK: 创建空日记/页面
     @objc func createBlankDiary(){
-        if mode == .newDay{ // 新一天
-            if let monthVC = UIApplication.getMonthVC(){
-                let newDiary = diaryInfo(dateString: selectedDateCN ?? GetTodayDate())
-                LWRealmManager.shared.add(newDiary)
-                
-                monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
-                self.dismiss(animated: true){
-                    monthVC.presentEditorVC(withViewModel: newDiary)
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        creatNewBlankDiaryView.showBounceAnimation { [self] in
+            if mode == .newDay{ // 新一天
+                if let monthVC = UIApplication.getMonthVC(){
+                    let newDiary = diaryInfo(dateString: selectedDateCN ?? GetTodayDate())
+                    LWRealmManager.shared.add(newDiary)
+                    
+                    monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
+                    self.dismiss(animated: true){
+                        monthVC.presentEditorVC(withViewModel: newDiary)
+                    }
                 }
+            }else{ // 新页面
+                createPageAction(nil) // template = nil 表示创建空日记
             }
-        }else{ // 新页面
-            createPageAction(nil) // template = nil 表示创建空日记
         }
+        
         
     }
     
@@ -204,18 +208,21 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
     // MARK: 创建模板日记/模板页面
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let template = templates[indexPath.row]
+        let cell = collectionView.cellForItem(at: indexPath) as! LWTemplateCell
         
-        if mode == .newDay{
-            if let newDiary = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: selectedDateCN ?? GetTodayDate(), pageIndex: 0, template: template),let monthVC = UIApplication.getMonthVC(){
-                monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
-                self.dismiss(animated: true) {
-                    monthVC.presentEditorVC(withViewModel: newDiary)
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        cell.showBounceAnimation { [self] in
+            if mode == .newDay{
+                if let newDiary = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: selectedDateCN ?? GetTodayDate(), pageIndex: 0, template: template),let monthVC = UIApplication.getMonthVC(){
+                    monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
+                    self.dismiss(animated: true) {
+                        monthVC.presentEditorVC(withViewModel: newDiary)
+                    }
                 }
+            }else{
+                createPageAction(template)
             }
-        }else{
-            createPageAction(template)
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

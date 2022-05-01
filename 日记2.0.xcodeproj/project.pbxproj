@@ -79,6 +79,7 @@
 		EA770AD027EF65CC00E51701 /* LWiCloudCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */; };
 		EA770AD227EF681F00E51701 /* LWiCloudTipsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */; };
 		EA7CAFEB281C3ECD00FEA4ED /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7CAFEA281C3ECD00FEA4ED /* TagsView.swift */; };
+		EA7CAFED281E30F800FEA4ED /* LWImpactFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7CAFEC281E30F800FEA4ED /* LWImpactFeedbackGenerator.swift */; };
 		EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */; };
 		EA8E710B26949749007189B1 /* LWSyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710A26949749007189B1 /* LWSyncEngine.swift */; };
 		EA8E710F26949758007189B1 /* LWDiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8E710E26949758007189B1 /* LWDiaryStore.swift */; };
@@ -316,6 +317,7 @@
 		EA770ACF27EF65CC00E51701 /* LWiCloudCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWiCloudCell.swift; sourceTree = "<group>"; };
 		EA770AD127EF681F00E51701 /* LWiCloudTipsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWiCloudTipsViewController.swift; sourceTree = "<group>"; };
 		EA7CAFEA281C3ECD00FEA4ED /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		EA7CAFEC281E30F800FEA4ED /* LWImpactFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWImpactFeedbackGenerator.swift; sourceTree = "<group>"; };
 		EA84C31426D23B6F00FF118A /* managePagesAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePagesAlertView.swift; sourceTree = "<group>"; };
 		EA8E710A26949749007189B1 /* LWSyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWSyncEngine.swift; sourceTree = "<group>"; };
 		EA8E710E26949758007189B1 /* LWDiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWDiaryStore.swift; sourceTree = "<group>"; };
@@ -1062,6 +1064,7 @@
 				EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */,
 				EA96554027969FF8000B827B /* CKRecord+.swift */,
 				EAAFDDF027A11080008286EB /* Date+.swift */,
+				EA7CAFEC281E30F800FEA4ED /* LWImpactFeedbackGenerator.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -1358,6 +1361,7 @@
 				EAA1B4EA27E6EF6C00BBB80A /* LWPlayButton.swift in Sources */,
 				EA67915C26D1F35D00B44ECA /* diaryinfo+subPages.swift in Sources */,
 				EAA4E93227BCE1AD005F93BD /* todoData.swift in Sources */,
+				EA7CAFED281E30F800FEA4ED /* LWImpactFeedbackGenerator.swift in Sources */,
 				EA3189B526934F6F001B9042 /* diaryInfo.swift in Sources */,
 				EA51D19D25D04D750007BDFA /* filterMenu.swift in Sources */,
 				EAA7347527DC860F0014C02A /* LWTemplateCell.swift in Sources */,

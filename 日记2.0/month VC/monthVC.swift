@@ -63,7 +63,6 @@ class monthVC: UIViewController {
     var footer:MJRefreshAutoNormalFooter!
     //编辑器
     var editorVC:todayVC!
-    var selectedCell:monthCell!
     
     //MARK: -生命周期
     override func viewDidLoad() {
@@ -237,7 +236,7 @@ class monthVC: UIViewController {
         floatButton.backgroundColor = #colorLiteral(red: 0.007843137255, green: 0.6078431373, blue: 0.3529411765, alpha: 1)
         floatButton.layer.cornerRadius = 20
         floatButton.setupShadow()
-        floatButton.addTarget(self, action: #selector(floatButtonDidTapped), for: .touchUpInside)
+        floatButton.addTarget(self, action: #selector(floatButtonDidTapped(sender:)), for: .touchUpInside)
         
         
         
@@ -387,7 +386,9 @@ class monthVC: UIViewController {
     }
     
     //MARK: 进入今日
-    @objc func floatButtonDidTapped(){
+    @objc func floatButtonDidTapped(sender:UIButton){
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        sender.showBounceAnimation {}
         if isCurrentMonth{
             formatter.dateFormat = "yyyy年M月d日"
             let todayDateString = GetTodayDate()
@@ -410,9 +411,9 @@ class monthVC: UIViewController {
             //跳转日历
             lwCalendar?.setCurrentPage(curDate, animated: false)
         }
-        
     }
     
+    // MARK: FloatButton
     ///返回按钮的显示与否
     func updateFloatButton(){
         var title:String
@@ -437,21 +438,18 @@ class monthVC: UIViewController {
             self.floatButton.backgroundColor = colors.0
             self.floatButton.setAttributedTitle(attributedString, for: .normal)
         }
-        
-        
     }
     
-    ///-popover
-    @objc func filterButtonDidTapped(sender:topbarButton){
-        sender.bounceAnimation(usingSpringWithDamping: 0.8)
-        
-        //popover view
-        let viewSize = CGSize(width: 315, height:440 )
-        filterView = filterMenu(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: viewSize))
-        filterView.monthVC = self
-        searchBar.resignFirstResponder()
-        popover.show(filterView, fromView: filterButton)
+    func toggleFloatButton(toShow:Bool){
+        self.floatButton.snp.updateConstraints { make in
+            make.bottom.equalToSuperview().offset(toShow ? -100 : 100)
+        }
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [.curveEaseInOut]) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in}
     }
+    
+   
     
     //MARK:  topbar按钮触发事件
     func topToolButtonTapped(button: topbarButton){
@@ -564,12 +562,11 @@ extension monthVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let row = indexPath.row
         let selectedDiary = filteredDiaries[row]
         let cell = collectionView.cellForItem(at: indexPath) as! monthCell
-        selectedCell = collectionView.cellForItem(at: indexPath) as? monthCell
         
         //点击动画
-        cell.bounceAnimation(usingSpringWithDamping: 0.8)
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        cell.showBounceAnimation {}
         cell.showSelectionPrompt()
-        
         presentEditorVC(withViewModel: selectedDiary)
     }
     
@@ -642,6 +639,17 @@ extension monthVC{
 
 //MARK: -切换搜索界面
 extension monthVC:UISearchBarDelegate{
+    @objc func filterButtonDidTapped(sender:topbarButton){
+        sender.bounceAnimation(usingSpringWithDamping: 0.8)
+        
+        //popover view
+        let viewSize = CGSize(width: 315, height:440 )
+        filterView = filterMenu(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: viewSize))
+        filterView.monthVC = self
+        searchBar.resignFirstResponder()
+        popover.show(filterView, fromView: filterButton)
+    }
+    
     func switchToFilterView(button:topbarButton){
         isFilterMode.toggle()
         
@@ -652,8 +660,8 @@ extension monthVC:UISearchBarDelegate{
         if isShowingCalendar{
             toggleCalendar()
         }
-        //隐藏或显示backButton
-        updateFloatButton()
+        //隐藏或显示floatButton
+        self.toggleFloatButton(toShow: !isFilterMode)
         
         //searh图标是临时添加到button3上面的
         if isFilterMode{//进入搜索模式
@@ -724,13 +732,6 @@ extension monthVC:UISearchBarDelegate{
             
         }
     }
-    
-    func animateFilterButton(hasPara:Bool){
-//        UIView.animate(withDuration: 0.2) {
-//            self.filterButton.backgroundColor = hasPara ? APP_GREEN_COLOR() : .white
-//        }
-    }
-
 }
 
 //MARK:  -context Menu

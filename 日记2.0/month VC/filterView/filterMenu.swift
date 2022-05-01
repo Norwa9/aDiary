@@ -40,7 +40,6 @@ class filterMenu: UIView {
     @IBAction func done(){
         monthVC.popover.dismiss()
         monthVC.filter()
-        monthVC.animateFilterButton(hasPara: true)
     }
     
     @objc func sortStyleChange(_ sender:UISegmentedControl){
