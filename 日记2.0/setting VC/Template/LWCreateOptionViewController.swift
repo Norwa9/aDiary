@@ -186,7 +186,7 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
                     let newDiary = diaryInfo(dateString: selectedDateCN ?? GetTodayDate())
                     LWRealmManager.shared.add(newDiary)
                     
-                    monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
+                    monthVC.reloadCollectionViewAndDateView()
                     self.dismiss(animated: true){
                         monthVC.presentEditorVC(withViewModel: newDiary)
                     }
@@ -214,7 +214,7 @@ class LWCreateOptionViewController: UIViewController, UICollectionViewDelegate, 
         cell.showBounceAnimation { [self] in
             if mode == .newDay{
                 if let newDiary = LWTemplateHelper.shared.createDiaryUsingTemplate(dateCN: selectedDateCN ?? GetTodayDate(), pageIndex: 0, template: template),let monthVC = UIApplication.getMonthVC(){
-                    monthVC.configureDataSource(year: monthVC.selectedYear, month: monthVC.selectedMonth)
+                    monthVC.reloadCollectionViewAndDateView()
                     self.dismiss(animated: true) {
                         monthVC.presentEditorVC(withViewModel: newDiary)
                     }

@@ -687,14 +687,15 @@ class LWSettingViewController: UIViewController {
     }
     
     
-    //MARK: -字体
+    //MARK: -保存
     @objc func save(){
         //保存设置
         userDefaultManager.lineSpacing = tempLineSpacing
         userDefaultManager.imageSizeStyle = tempImageSizeStyle
         userDefaultManager.fontSize = tempFontSize
         
-        UIApplication.getMonthVC()?.reloadCollectionViewData()
+        // 刷新list，使待办列表样式生效
+        UIApplication.getMonthVC()?.diaryListView.reloadCollectionViewData()
         
         dismiss(animated: true, completion: nil)
     }
@@ -856,7 +857,7 @@ class LWSettingViewController: UIViewController {
     // MARK: -显示农历
     @objc func showLunarDidChange(_ sender: UISwitch){
         userDefaultManager.showLunar = sender.isOn
-        UIApplication.getMonthVC()?.lwCalendar.reloadData()
+        UIApplication.getMonthVC()?.topbarView.dateView.reloadData()
     }
 
     

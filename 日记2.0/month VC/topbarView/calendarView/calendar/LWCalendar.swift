@@ -7,11 +7,19 @@
 
 import UIKit
 import FSCalendar
+import Popover
 
 class LWCalendar: FSCalendar {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        initUI()
+    var viewModel:monthViewModel
+    let monthVC = UIApplication.getMonthVC()
+    let popover:Popover = LWPopoverHelper.shared.getCalendarPopover()
+    
+    init(viewModel:monthViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        self.dataSource = self
+        self.delegate = self
+        self.initUI()
     }
     
     required init?(coder: NSCoder) {
@@ -52,18 +60,18 @@ class LWCalendar: FSCalendar {
         self.appearance.selectionColor = eventDotDynamicColor
         self.appearance.eventDefaultColor = eventDotDynamicColor
         
+        self.reloadData()
     }
     
     
 }
 //MARK:   -DataSource
-extension monthVC:FSCalendarDataSource{
+extension LWCalendar:FSCalendarDataSource{
     //使用DIY cell
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position) as! DIYCalendarCell
-        
+        //print(date)
         cell.initUI(forDate: date)
-        
         return cell
     }
     
@@ -73,7 +81,7 @@ extension monthVC:FSCalendarDataSource{
 }
 
 //MARK: -Delegate
-extension monthVC:FSCalendarDelegate{
+extension LWCalendar:FSCalendarDelegate{
     //点击cell
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let cell = calendar.cell(for: date, at: monthPosition)
@@ -84,15 +92,17 @@ extension monthVC:FSCalendarDelegate{
         cell?.showBounceAnimation {}
         
         //2、进入日记
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy年M月d日"
         let dateString = formatter.string(from: date)
         let predicate = NSPredicate(format: "date = %@", dateString)
         if let selectedDiary = LWRealmManager.shared.query(predicate: predicate).first{
-            presentEditorVC(withViewModel: selectedDiary)
+            monthVC?.presentEditorVC(withViewModel: selectedDiary)
         }else{
             //3,补日记
             let popoverAlert = customAlertView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 75)))
             popoverAlert.dateString = dateString
+            popoverAlert.delegate = self
             popover.show(popoverAlert, fromView: cell!)
         }
         
@@ -107,12 +117,12 @@ extension monthVC:FSCalendarDelegate{
 }
 
 // MARK:   - FSCalendar自定义外观
-extension monthVC:FSCalendarDelegateAppearance{
+extension LWCalendar:FSCalendarDelegateAppearance{
     private func configureVisibleCells() {
         //参考自FSCalendar作者的demo
-        lwCalendar.visibleCells().forEach { (cell) in
-            let date = lwCalendar.date(for: cell)
-            let position = lwCalendar.monthPosition(for: cell)
+        self.visibleCells().forEach { (cell) in
+            let date = self.date(for: cell)
+            let position = self.monthPosition(for: cell)
             self.configure(cell: cell, for: date!, at: position)
         }
     }
@@ -121,7 +131,7 @@ extension monthVC:FSCalendarDelegateAppearance{
         let cell = (cell as! DIYCalendarCell)
         
         //设置cell的选取视图：圆环
-        if lwCalendar.selectedDates.contains(date){
+        if self.selectedDates.contains(date){
             cell.selectionType = .single
         }else{
             cell.selectionType = .none
@@ -164,7 +174,7 @@ extension monthVC:FSCalendarDelegateAppearance{
 }
 
 
-extension monthVC:ExtendedFSCalendarDelegate{
+extension LWCalendar:ExtendedFSCalendarDelegate{
     func didEndDecelerating(calendar: FSCalendar) {
         /*
          calendarCurrentPageDidChange存在问题：页面是willchange时调用而不是didchange时调用
@@ -172,14 +182,15 @@ extension monthVC:ExtendedFSCalendarDelegate{
          通过didEndDecelerating来真正实现page didchange时调用
         */
         //获取当前页面月份
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         let year = Int(formatter.string(from: calendar.currentPage))!
         formatter.dateFormat = "MM"
         let month = Int(formatter.string(from: calendar.currentPage))!
 
-        selectedYear = year
-        selectedMonth = month
-        updateUI()
+        viewModel.selectedYear = year
+        viewModel.selectedMonth = month
+        monthVC?.updateUIForDateChange()
     }
 }
 

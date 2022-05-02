@@ -777,7 +777,7 @@ final class LWSyncEngine{
         // 也仅运行到这里时，菊花转才停下。
         DispatchQueue.main.async {
             indicatorViewManager.shared.stop()
-            UIApplication.getMonthVC()?.reloadMonthVC()
+            UIApplication.getMonthVC()?.reloadCollectionViewAndDateView()
             
         }
 

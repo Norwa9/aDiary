@@ -95,7 +95,7 @@ public final class DiaryStore: ObservableObject {
         let predicate = NSPredicate(format: "id == %@", id)
         LWRealmManager.shared.delete(predicate: predicate)
         
-        UIApplication.getMonthVC()?.reloadMonthVC()
+        UIApplication.getMonthVC()?.reloadCollectionViewAndDateView()
     }
     
     ///删除一个日期的主页面和所有子页面

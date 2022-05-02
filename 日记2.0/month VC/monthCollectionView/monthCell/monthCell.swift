@@ -13,7 +13,7 @@ class monthCell: UICollectionViewCell {
     //static let KphotoHeight:CGFloat = 150
     var isFilterMode:Bool{
         get{
-            UIApplication.getMonthVC()?.isFilterMode ?? false
+            UIApplication.getMonthVC()?.viewModel.isFilterMode ?? false
         }
     }
     
@@ -432,10 +432,11 @@ extension monthCell{
         self.diary = selectedDiary
         self.updateUI()
         
-        //平滑更新collectionView的布局C =
-        monthVC.filteredDiaries[cellRow] = selectedDiary//替换之后，cell
-        monthVC.flowLayout.dateSource = monthVC.filteredDiaries//这样才能更新布局
-        monthVC.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//平滑更新布局
+        //平滑更新collectionView的布局
+        
+        monthVC.viewModel.dataSource[cellRow] = selectedDiary//替换之后，cell
+        monthVC.diaryListView.flowLayout.dataSource = monthVC.viewModel.dataSource//这样才能更新布局
+        monthVC.diaryListView.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//平滑更新布局
     }
 
 }

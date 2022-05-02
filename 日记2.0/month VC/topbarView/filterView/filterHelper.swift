@@ -15,25 +15,18 @@ class filterHelper {
     var searchText:String = ""
     var selectedTags = [String]()
     var selectedSortstyle:sortStyle = .dateDescending
-    var notificationToken:NotificationToken!
+    
     func clear(){
         self.searchText = ""
         self.selectedTags.removeAll()
         self.selectedSortstyle = .dateDescending
     }
     
-    ///根据条件异步筛选日记
-    typealias filterCompletion = ( (_ res:[diaryInfo],_ num:Int,_ wordCount:Int) -> Void)?
-    public func filter(completionHandler: filterCompletion ){
-        let res = self.filterDiary()//0.5s左右
-        completionHandler?(res.0,res.1,res.2)
-    }
-    
-    //MARK:-获取符合筛选条件的所有日记
-    private func filterDiary()->([diaryInfo],Int,Int){
-        let keywords = filterHelper.shared.searchText
-        let selectedTags = filterHelper.shared.selectedTags
-        let sortStyle = filterHelper.shared.selectedSortstyle
+    /// -根据已选条件筛选日记
+    public func filter()->([diaryInfo],Int,Int){
+        let keywords = searchText
+        let selectedTags = selectedTags
+        let sortStyle = selectedSortstyle
         
         let allDiary = LWRealmManager.shared.localDatabase
         

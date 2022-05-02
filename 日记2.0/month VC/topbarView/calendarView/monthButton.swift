@@ -13,8 +13,6 @@ class monthButton: UIButton {
     var monthLabel:UILabel = UILabel()
     var containView:UIView = UIView()
     
-    weak var monthVC:monthVC!
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -39,6 +37,8 @@ class monthButton: UIButton {
     }
     
     func animateBackgroundColor(){
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        self.showBounceAnimation {}
         if !hasSelected{
             hasSelected = true
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseIn) {

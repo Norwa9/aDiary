@@ -115,7 +115,7 @@ class LWTabBarView: UIView {
         }
         
         layoutParasManager.shared.tabbarType = 0
-        delegate.reloadCollectionViewData()
+        delegate.reloadCollectionViewAndDateView()
         
         
     }
@@ -133,7 +133,7 @@ class LWTabBarView: UIView {
             diaryItem.isSelected = false
         }
         layoutParasManager.shared.tabbarType = 1
-        delegate.reloadCollectionViewData()
+        delegate.reloadCollectionViewAndDateView()
         
     }
     

@@ -7,6 +7,8 @@
 
 import UIKit
 class customAlertView: UIView {
+    weak var delegate:LWCalendar?
+    
     let title = UILabel()
     let cancelButton = UIButton()
     let createDiaryButton = UIButton()
@@ -77,7 +79,7 @@ class customAlertView: UIView {
              */
             let dismissQueue = DispatchQueue(label: "串行")
             dismissQueue.sync {
-                self.monthVC?.popover.dismiss()
+                self.delegate?.popover.dismiss()
             }
             dismissQueue.sync {
                 //TODO:打开todayVC
@@ -89,7 +91,7 @@ class customAlertView: UIView {
     }
     
     @objc func cancel() {
-        monthVC?.popover.dismiss()
+        delegate?.popover.dismiss()
     }
     
     

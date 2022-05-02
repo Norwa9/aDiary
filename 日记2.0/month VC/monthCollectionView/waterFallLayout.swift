@@ -26,7 +26,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     ///行间距
     var lineSpacing:CGFloat!
     ///用来计算高度的数据源
-    var dateSource:[diaryInfo] = []
+    var dataSource:[diaryInfo] = []
     ///行数
     var columnNumber:Int!
     
@@ -70,7 +70,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
         self.columnHeightArray = Array.init(repeating: CGFloat(0), count: layoutParasManager.shared.collectioncolumnNumber)
         self.itemSizeArray = []
         
-        for index in 0..<self.dateSource.count{
+        for index in 0..<self.dataSource.count{
             let itemSize = self.calculateItemSizeWithIndex(index: index)
             let layoutAttributes = self.createLayoutAttributesWithItemSize(itemSize: itemSize, index: index)
             self.itemSizeArray.append(itemSize)
@@ -98,7 +98,7 @@ class waterFallLayout: UICollectionViewFlowLayout {
     ///使用数据填充cell，然后利用其autoLayout计算其准确的高度
     func calculateItemSizeWithIndex(index:Int) ->CGSize{
         let tempCell = self.templateCellWithReuseIdentifier(reuseIdentifier: monthCell.reusableID, index: index) as! monthCell
-        let diary = self.dateSource[index]
+        let diary = self.dataSource[index]
         
         tempCell.setViewModel(diary)//数据填充cell，以计算content高度
         

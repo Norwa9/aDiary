@@ -245,7 +245,7 @@ extension LWSubpagesView{
             self.models = newModels
             todayVC.model = models[currentPageIndex] // 防止返回到主页崩溃
             
-            UIApplication.getMonthVC()?.reloadMonthVC()//2.刷新cell的model指向主页面
+            UIApplication.getMonthVC()?.reloadCollectionViewAndDateView()//2.刷新cell的model指向主页面
         }
         
         popover.show(managePagesAlertView, fromView: sender)

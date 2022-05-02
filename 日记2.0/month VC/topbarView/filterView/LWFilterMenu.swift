@@ -7,8 +7,8 @@
 
 import UIKit
 
-class filterMenu: UIView {
-    weak var monthVC:monthVC!
+class LWFilterMenu: UIView {
+    weak var delegate:LWFilterView!
     var contentView:UIView!
     @IBOutlet weak var tableView:UITableView!
     let buttonSize = CGSize(width: 40, height: 40)
@@ -38,8 +38,8 @@ class filterMenu: UIView {
     }
     
     @IBAction func done(){
-        monthVC.popover.dismiss()
-        monthVC.filter()
+        delegate.popover.dismiss()
+        delegate.filter()
     }
     
     @objc func sortStyleChange(_ sender:UISegmentedControl){
@@ -86,7 +86,7 @@ class filterMenu: UIView {
 }
 
 //MARK:-tableView delegate
-extension filterMenu:UITableViewDelegate,UITableViewDataSource{
+extension LWFilterMenu:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataManager.shared.tags.count
     }
