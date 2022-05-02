@@ -42,6 +42,9 @@ class LWSettingViewController: UIViewController {
     
     var fontPickerTitle:UILabel!
     var fontPickerButton:LWFontPickerButton!
+    var cellFontPickerTitle:UILabel!
+    var cellFontPickerButton:LWFontPickerButton!
+    var selecedFontButton:FontPlace!
     
     var tempImageSizeStyle:Int = userDefaultManager.imageSizeStyle
     var tempFontSize:CGFloat = userDefaultManager.fontSize
@@ -160,9 +163,15 @@ class LWSettingViewController: UIViewController {
         fontContainerView.addSubview(lineSpacingStepper)
         
         fontPickerTitle = UILabel()
-        fontPickerButton = LWFontPickerButton(delegate: self, actionSelector: #selector(presentFontPickerVC))
+        fontPickerButton = LWFontPickerButton(delegate: self, actionSelector: #selector(presentFontPickerVC),fontPlace: .diary)
         fontContainerView.addSubview(fontPickerTitle)
         fontContainerView.addSubview(fontPickerButton)
+        
+        cellFontPickerTitle = UILabel()
+        cellFontPickerButton = LWFontPickerButton(delegate: self, actionSelector: #selector(presentCellFontPickerVC), fontPlace: .monthCell)
+        fontContainerView.addSubview(cellFontPickerTitle)
+        fontContainerView.addSubview(cellFontPickerButton)
+        
         
         //-隐私
         privacyContainer = UIView()
@@ -327,8 +336,11 @@ class LWSettingViewController: UIViewController {
         fontSizeStepper.value = Double(userDefaultManager.fontSize)
         fontSizeStepper.addTarget(self, action: #selector(fontSizeDidChange(_:)), for: .valueChanged)
         
-        fontPickerTitle.text = "默认字体"
+        fontPickerTitle.text = "日记字体"
         fontPickerTitle.font = LWSettingViewController.contentFont
+        
+        cellFontPickerTitle.text = "主页字体"
+        cellFontPickerTitle.font = LWSettingViewController.contentFont
         
         //隐私
         privacyContainerTitle.text = "隐私"
@@ -502,13 +514,26 @@ class LWSettingViewController: UIViewController {
         fontPickerTitle.snp.makeConstraints { make in
             make.left.equalTo(imageSizeTitle)
             make.top.equalTo(fontSizeTitle.snp.bottom).offset(20)
-            make.bottom.equalToSuperview().offset(-10)
+            
         }
         
         fontPickerButton.snp.makeConstraints { make in
             make.left.greaterThanOrEqualTo(fontPickerTitle.snp.right)
             make.right.equalTo(imageSizeSegment)
             make.centerY.equalTo(fontPickerTitle)
+            make.height.equalTo(fontSizeStepper)
+        }
+        
+        cellFontPickerTitle.snp.makeConstraints { make in
+            make.left.equalTo(imageSizeTitle)
+            make.top.equalTo(fontPickerTitle.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().offset(-10)
+        }
+        
+        cellFontPickerButton.snp.makeConstraints { make in
+            make.left.greaterThanOrEqualTo(cellFontPickerTitle.snp.right)
+            make.right.equalTo(imageSizeSegment)
+            make.centerY.equalTo(cellFontPickerTitle)
             make.height.equalTo(fontSizeStepper)
         }
         
@@ -922,7 +947,18 @@ class LWSettingViewController: UIViewController {
 
 //MARK: -选取字体
 extension LWSettingViewController:UIFontPickerViewControllerDelegate{
+    /// 选取日记字体
     @objc func presentFontPickerVC(){
+        self.selecedFontButton = .diary
+        let fontConfig = UIFontPickerViewController.Configuration()
+        fontConfig.includeFaces = true//选取字体族下的不同字体
+        let fontPicker = UIFontPickerViewController(configuration: fontConfig)
+        fontPicker.delegate = self
+        self.present(fontPicker, animated: true, completion: nil)
+    }
+    /// 选取主页字体
+    @objc func presentCellFontPickerVC(){
+        self.selecedFontButton = .monthCell
         let fontConfig = UIFontPickerViewController.Configuration()
         fontConfig.includeFaces = true//选取字体族下的不同字体
         let fontPicker = UIFontPickerViewController(configuration: fontConfig)
@@ -931,7 +967,7 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
     }
     
     func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
-        if let descriptor = viewController.selectedFontDescriptor{
+        if let descriptor = viewController.selectedFontDescriptor,let selecedFontButton = self.selecedFontButton{
             print(descriptor.fontAttributes)
             let selectedFont = UIFont(descriptor: descriptor, size: 20)
             let selectedFontName = selectedFont.fontName
@@ -946,12 +982,17 @@ extension LWSettingViewController:UIFontPickerViewControllerDelegate{
                 userDefaultManager.requestReviewTimes += 1
             }
             
+            if selecedFontButton == .diary{
+                userDefaultManager.fontSize = tempFontSize
+                userDefaultManager.fontName = tempFontName
+                fontPickerButton.updateFontLabel()
+            }else{
+                userDefaultManager.monthCellFontName = tempFontName
+                cellFontPickerButton.updateFontLabel()
+            }
             
-            userDefaultManager.fontSize = tempFontSize
-            userDefaultManager.fontName = tempFontName
         }
         viewController.dismiss(animated: true)
-        fontPickerButton.updateFontLabel()
     }
 }
 

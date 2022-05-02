@@ -8,15 +8,21 @@
 import Foundation
 import UIKit
 
+enum FontPlace:Int{
+    case monthCell // 主页的字体
+    case diary // 日记的字体
+}
+
 class LWFontPickerButton:UIView{
     private var fontNameLabel:UILabel!
+    var fontPlace:FontPlace!
     
     
-    init(delegate:LWSettingViewController,actionSelector:Selector) {
+    init(delegate:LWSettingViewController,actionSelector:Selector,fontPlace:FontPlace) {
         super.init(frame: .zero)
         let tapGes = UITapGestureRecognizer(target: delegate, action: actionSelector)
         self.addGestureRecognizer(tapGes)
-        
+        self.fontPlace = fontPlace
         initUI()
         setCons()
     }
@@ -31,8 +37,13 @@ class LWFontPickerButton:UIView{
         self.backgroundColor = fontPickerButtonDynamicColor
         
         fontNameLabel = UILabel()
-        fontNameLabel.text = userDefaultManager.fontName ?? "苹方"
-        fontNameLabel.font = userDefaultManager.customFont(withSize: 16)
+        if fontPlace == .diary{
+            fontNameLabel.text = userDefaultManager.fontName ?? "苹方"
+            fontNameLabel.font = userDefaultManager.customFont(withSize: 16)
+        }else{
+            fontNameLabel.text = userDefaultManager.monthCellFontName ?? "DIN Alternate"
+            fontNameLabel.font = userDefaultManager.customMonthCellFont(withSize: 16)
+        }
         fontNameLabel.adjustsFontSizeToFitWidth = true
         fontNameLabel.textColor = .label
         
@@ -49,8 +60,13 @@ class LWFontPickerButton:UIView{
     }
     
     public func updateFontLabel(){
-        fontNameLabel.text = userDefaultManager.fontName ?? "苹方"
-        fontNameLabel.font = userDefaultManager.customFont(withSize: 16)
+        if fontPlace == .diary{
+            fontNameLabel.text = userDefaultManager.fontName ?? "苹方"
+            fontNameLabel.font = userDefaultManager.customFont(withSize: 16)
+        }else{
+            fontNameLabel.text = userDefaultManager.monthCellFontName ?? "DIN Alternate"
+            fontNameLabel.font = userDefaultManager.customMonthCellFont(withSize: 16)
+        }
         fontNameLabel.adjustsFontSizeToFitWidth = true
         layoutIfNeeded()
     }

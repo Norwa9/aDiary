@@ -39,7 +39,7 @@ class LWCalendar: FSCalendar {
         self.placeholderType = .none//仅显示当月日期cell
         self.appearance.caseOptions = .weekdayUsesSingleUpperCase//设置为一、二···
         self.headerHeight = 0//移除年月份栏
-        self.appearance.weekdayFont = UIFont.boldSystemFont(ofSize: 17)
+        self.appearance.weekdayFont = userDefaultManager.calendarFont(ofSize: 17)
         self.appearance.weekdayTextColor = UIColor.colorWithHex(hexColor: 0x90969B)//石岩灰
         
         // title
@@ -47,7 +47,7 @@ class LWCalendar: FSCalendar {
         self.appearance.titleTodayColor = .label
         self.appearance.titleSelectionColor = .label
         self.appearance.titleDefaultColor = .label
-        self.appearance.titleFont = UIFont.appCalendarCellTitleFont()
+        self.appearance.titleFont = userDefaultManager.calendarFont(ofSize: 20)
         
         // subtitle
         self.appearance.subtitleDefaultColor = .secondaryLabel

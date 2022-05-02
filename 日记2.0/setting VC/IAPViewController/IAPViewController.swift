@@ -164,7 +164,7 @@ class IAPViewController: UIViewController {
         proEditionContentLabel = UILabel()
         proEditionContentLabel.textColor = UIColor.secondaryLabel
         proEditionContentLabel.font = IAPViewController.iapVCContentFont
-        proEditionContentLabel.text = "支持开发者未来的工作，以及获取更完整体验："
+        proEditionContentLabel.text = "支持未来的开发工作，以及获取更完整体验："
         layout2 = UICollectionViewFlowLayout()
         layout2.minimumLineSpacing = 0
         layout2.sectionInset = .zero

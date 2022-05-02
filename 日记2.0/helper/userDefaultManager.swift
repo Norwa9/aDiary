@@ -46,6 +46,7 @@ class userDefaultManager{
         static let downloadDate = "downloadDate"
         static let showLunar = "showLunar"
         static let needShowWelcome = "needShowWelcome"
+        static let monthCellFontName = "monthCellFontName"
         
         
     }
@@ -105,57 +106,106 @@ class userDefaultManager{
         }
     }
     
+    static var monthCellFontName:String?{
+        get{
+            if let returnFontName = shared?.object(forKey: constants.monthCellFontName) as? String{
+                //检查字体是否真实存在
+                if let _ = UIFont(name: returnFontName, size: self.fontSize){
+                    return returnFontName
+                }else{
+                    return nil
+                }
+            }else{
+                return nil
+            }
+        }
+        set{
+            shared?.setValue(newValue, forKey: constants.monthCellFontName)
+        }
+    }
+    
+    static func customMonthCellFont(withSize size:CGFloat) -> UIFont{
+        if let font = self.monthCellFontName{
+            return UIFont(name: font, size: size)!
+        }else{
+            //自定义字体被移除，重置fontName
+            self.monthCellFontName = nil
+            return UIFont.systemFont(ofSize: size, weight: .regular)
+        }
+    }
+    
+    /// 主页cell字体：日期
     static var monthCellDateLabelFont:UIFont{
-//        get{
-//            if let name = self.fontName{
-//                return UIFont(name: name, size: 20)!
-//            }else{
-//                return UIFont(name: "DIN Alternate", size: 20)!
-//            }
-//        }
         get{
-            return UIFont(name: "DIN Alternate", size: 20)!
+            if let fontName = self.monthCellFontName,let font = UIFont(name: fontName, size: 20)?.bold(){
+                return font
+            }else{
+                return UIFont(name: "DIN Alternate", size: 20)!
+            }
         }
     }
     
+    /// 主页cell字体：标题
     static var monthCellTitleFont:UIFont{
-//        get{
-//            if let name = self.fontName{
-//                return UIFont(name: name, size: 17)!
-//            }else{
-//                return UIFont(name: "DIN Alternate", size: 17)!
-//            }
-//        }
         get{
-            return UIFont(name: "DIN Alternate", size: 17)!
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 17){
+                return font
+            }else{
+                return UIFont(name: "DIN Alternate", size: 17)!
+            }
         }
     }
     
+    /// 主页cell字体：正文+todo
     static var monthCellContentFont:UIFont{
-//        get{
-//            if let name = self.fontName{
-//                return UIFont(name: name, size: 14)!
-//            }else{
-//                return UIFont(name: "DIN Alternate", size: 14)!
-//            }
-//        }
         get{
-            return UIFont(name: "DIN Alternate", size: 14)!
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 14){
+                return font
+            }else{
+                return UIFont(name: "DIN Alternate", size: 14)!
+            }
         }
     }
     
-    static var todoListFont:UIFont{
-//        get{
-//            if let name = self.fontName{
-//                return UIFont(name: name, size: 15)!
-//            }else{
-//                return UIFont(name: "DIN Alternate", size: 15)!
-//            }
-//        }
+    /// 主页字体：年份日期
+    static var monthVCYearDateFont:UIFont{
         get{
-            return UIFont(name: "DIN Alternate", size: 15)!
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 24)?.bold(){
+                return font
+            }else{
+                return UIFont(name: "DIN Alternate", size: 24)!
+            }
         }
     }
+    /// 主页字体：月份日期
+    static var monthVCMonthDateFont:UIFont{
+        get{
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 18)?.bold(){
+                return font
+            }else{
+                return UIFont(name: "DIN Alternate", size: 18)!
+            }
+        }
+    }
+    /// 主页字体：月份栏
+    static var monthButtonFont:UIFont{
+        get{
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 15)?.bold(){
+                return font
+            }else{
+                return UIFont(name: "DIN Alternate", size: 15)!
+            }
+        }
+    }
+    /// 主页字体：日历
+    static func calendarFont(ofSize size:CGFloat)->UIFont{
+        if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: size)?.bold(){
+            return font
+        }else{
+            return UIFont(name: "DIN Alternate", size: size)!
+        }
+    }
+    
     
     ///字体行间距
     static var lineSpacing: CGFloat {
