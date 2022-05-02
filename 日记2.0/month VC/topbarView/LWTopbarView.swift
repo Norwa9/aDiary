@@ -63,6 +63,7 @@ class LWTopbarView: UIView {
         backwordBtn.tag = 0
         backwordBtn.addTarget(self, action: #selector(yearChangeAction(_:)), for: .touchUpInside)
         self.addSubview(backwordBtn)
+        backwordBtn.alpha = 0
         
         //forward button
         forwardBtn = UIButton()
@@ -70,6 +71,7 @@ class LWTopbarView: UIView {
         forwardBtn.tag = 1
         forwardBtn.addTarget(self, action: #selector(yearChangeAction(_:)), for: .touchUpInside)
         self.addSubview(forwardBtn)
+        forwardBtn.alpha = 0
         
         //dataLable2
         dataLable2 = UILabel()
@@ -230,15 +232,11 @@ extension LWTopbarView{
             dataLable2.text = "共\(LWRealmManager.shared.localDatabase.count)篇，\(dataManager.shared.getTotalWordcount())字"
             dataLable1.sizeToFit() // 更新tempLabel1的宽度，使得rectbar1能够正确匹配它的长度
             dataLable2.sizeToFit()
-            forwardBtn.alpha = 0
-            backwordBtn.alpha = 0
         }else{//退出搜索模式
             button3.image = UIImage(named: "search")
             dataLable1.text = "\(viewModel.selectedYear)年"
             dataLable2.text = "\(viewModel.selectedMonth)月"
             dataLable1.sizeToFit()
-            forwardBtn.alpha = 1
-            backwordBtn.alpha = 1
         }
         UIView.animate(withDuration: 0.5, delay: 0,options: .curveEaseInOut) {
             self.button0.alpha = toShow ? 0:1 // 关闭日历按钮
@@ -254,7 +252,10 @@ extension LWTopbarView{
     /// 展示/收回DateView
     public func updateUIForDateView(){
         let toShow = viewModel.isShowingDateView
-        // 0. topbarView没有需要为DateView更新的视图
+        // 0. topbarView为DateView更新的视图
+        self.forwardBtn.alpha = toShow ? 1.0 : 0
+        self.backwordBtn.alpha = toShow ? 1.0 : 0
+        
         // 1. 修改UI
         dateView.updateUIForToggle(toShow: toShow)
         // 2. 修改布局约束
