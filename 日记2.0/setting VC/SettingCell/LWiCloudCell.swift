@@ -40,7 +40,7 @@ class LWiCloudCell:LWSwitchSettingCell{
     
     
     @objc func infoBtnDidTapped(){
-        let vc = LWiCloudTipsViewController(cardViewHeight: 300, cardTitle: "iCloud备份说明")
+        let vc = LWTipsViewController(cardViewHeight: 300, cardTitle: "iCloud备份说明",content: iCloudTipText)
         UIApplication.getTopViewController()?.present(vc, animated: true, completion: nil)
     }
 }

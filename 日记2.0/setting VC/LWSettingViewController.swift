@@ -43,6 +43,7 @@ class LWSettingViewController: UIViewController {
     var fontPickerTitle:UILabel!
     var fontPickerButton:LWFontPickerButton!
     var cellFontPickerTitle:UILabel!
+    var cellFontPickerTipBtn:UIButton!
     var cellFontPickerButton:LWFontPickerButton!
     var selecedFontButton:FontPlace!
     
@@ -168,8 +169,11 @@ class LWSettingViewController: UIViewController {
         fontContainerView.addSubview(fontPickerButton)
         
         cellFontPickerTitle = UILabel()
+        cellFontPickerTipBtn = UIButton()
+        cellFontPickerTipBtn.addTarget(self, action: #selector(showCellFontTips), for: .touchUpInside)
         cellFontPickerButton = LWFontPickerButton(delegate: self, actionSelector: #selector(presentCellFontPickerVC), fontPlace: .monthCell)
         fontContainerView.addSubview(cellFontPickerTitle)
+        fontContainerView.addSubview(cellFontPickerTipBtn)
         fontContainerView.addSubview(cellFontPickerButton)
         
         
@@ -341,6 +345,7 @@ class LWSettingViewController: UIViewController {
         
         cellFontPickerTitle.text = "主页字体"
         cellFontPickerTitle.font = LWSettingViewController.contentFont
+        cellFontPickerTipBtn.setImage(UIImage(systemName: "info.circle"), for: .normal)
         
         //隐私
         privacyContainerTitle.text = "隐私"
@@ -528,6 +533,12 @@ class LWSettingViewController: UIViewController {
             make.left.equalTo(imageSizeTitle)
             make.top.equalTo(fontPickerTitle.snp.bottom).offset(20)
             make.bottom.equalToSuperview().offset(-10)
+        }
+        
+        cellFontPickerTipBtn.snp.makeConstraints { make in
+            make.left.equalTo(cellFontPickerTitle.snp.right)
+            make.centerY.equalTo(cellFontPickerTitle)
+            make.height.width.equalTo(cellFontPickerTitle.snp.height)
         }
         
         cellFontPickerButton.snp.makeConstraints { make in
@@ -729,6 +740,54 @@ class LWSettingViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    
+    
+    //MARK: -示例textView
+    private func setupExampleTextView(imageScalingFactor:CGFloat){
+        self.view.layoutIfNeeded()
+        textView.attributedText = nil
+        
+        //插入文字
+        let shortVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        let text =
+        """
+
+        aDiary
+        版本\(shortVersionString)
+
+        """
+        textView.insertText(text)
+        
+        //更新textView的字体等信息
+        updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
+    }
+        
+    func updateExampleTextView(withFontSize fontSize:CGFloat,withFontStyle fontName:String?,withLineSpacing lineSpacing:CGFloat){
+        //1.行间距
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .center
+        paraStyle.lineSpacing = lineSpacing
+        
+        //2.字体
+        let nameAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontNameAttribute")
+        var font:UIFont
+        if let name = fontName{
+            font = UIFont(descriptor: UIFontDescriptor(fontAttributes: [nameAttr : name]), size: fontSize)
+        }else{
+            font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+        }
+        
+        
+        let attributes: [NSAttributedString.Key:Any] = [
+            .font: font,
+            .paragraphStyle : paraStyle
+        ]
+        let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
+        mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
+        textView.attributedText = mutableAttr
+    }
+    
+    // MARK: 字体、图片
     ///图片大小
     @objc func segmentedControlChanged(_ sender:UISegmentedControl){
         tempImageSizeStyle = sender.selectedSegmentIndex
@@ -747,6 +806,62 @@ class LWSettingViewController: UIViewController {
         tempLineSpacing = CGFloat(sender.value)
         updateExampleTextView(withFontSize:tempFontSize,withFontStyle: tempFontName,withLineSpacing: tempLineSpacing)
     }
+    
+    /// 选取日记字体
+    @objc func presentFontPickerVC(){
+        self.selecedFontButton = .diary
+        let fontConfig = UIFontPickerViewController.Configuration()
+        fontConfig.includeFaces = true//选取字体族下的不同字体
+        let fontPicker = UIFontPickerViewController(configuration: fontConfig)
+        fontPicker.delegate = self
+        self.present(fontPicker, animated: true, completion: nil)
+    }
+    /// 选取主页字体
+    @objc func presentCellFontPickerVC(){
+        self.selecedFontButton = .monthCell
+        let fontConfig = UIFontPickerViewController.Configuration()
+        fontConfig.includeFaces = true//选取字体族下的不同字体
+        let fontPicker = UIFontPickerViewController(configuration: fontConfig)
+        fontPicker.delegate = self
+        self.present(fontPicker, animated: true, completion: nil)
+    }
+    
+    @objc func showCellFontTips(){
+        let vc = LWTipsViewController(cardViewHeight: 200, cardTitle: "主页字体设置说明",content: cellFontTipText)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
+        if let descriptor = viewController.selectedFontDescriptor,let selecedFontButton = self.selecedFontButton{
+            print(descriptor.fontAttributes)
+            let selectedFont = UIFont(descriptor: descriptor, size: 20)
+            let selectedFontName = selectedFont.fontName
+            
+            //更新示例
+            tempFontName = selectedFontName
+            self.updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
+            
+            //打分
+            if userDefaultManager.requestReviewTimes % 2 == 0{
+                SKStoreReviewController.requestReview()
+                userDefaultManager.requestReviewTimes += 1
+            }
+            
+            if selecedFontButton == .diary{
+                userDefaultManager.fontSize = tempFontSize
+                userDefaultManager.fontName = tempFontName
+                fontPickerButton.updateFontLabel()
+            }else{
+                userDefaultManager.monthCellFontName = tempFontName
+                cellFontPickerButton.updateFontLabel()
+            }
+            
+        }
+        viewController.dismiss(animated: true)
+    }
+    
+    
+   
     
     //MARK: -密码
     ///生物识别
@@ -945,108 +1060,8 @@ class LWSettingViewController: UIViewController {
     }
 }
 
-//MARK: -选取字体
-extension LWSettingViewController:UIFontPickerViewControllerDelegate{
-    /// 选取日记字体
-    @objc func presentFontPickerVC(){
-        self.selecedFontButton = .diary
-        let fontConfig = UIFontPickerViewController.Configuration()
-        fontConfig.includeFaces = true//选取字体族下的不同字体
-        let fontPicker = UIFontPickerViewController(configuration: fontConfig)
-        fontPicker.delegate = self
-        self.present(fontPicker, animated: true, completion: nil)
-    }
-    /// 选取主页字体
-    @objc func presentCellFontPickerVC(){
-        self.selecedFontButton = .monthCell
-        let fontConfig = UIFontPickerViewController.Configuration()
-        fontConfig.includeFaces = true//选取字体族下的不同字体
-        let fontPicker = UIFontPickerViewController(configuration: fontConfig)
-        fontPicker.delegate = self
-        self.present(fontPicker, animated: true, completion: nil)
-    }
-    
-    func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
-        if let descriptor = viewController.selectedFontDescriptor,let selecedFontButton = self.selecedFontButton{
-            print(descriptor.fontAttributes)
-            let selectedFont = UIFont(descriptor: descriptor, size: 20)
-            let selectedFontName = selectedFont.fontName
-            
-            //更新示例
-            tempFontName = selectedFontName
-            self.updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
-            
-            //打分
-            if userDefaultManager.requestReviewTimes % 2 == 0{
-                SKStoreReviewController.requestReview()
-                userDefaultManager.requestReviewTimes += 1
-            }
-            
-            if selecedFontButton == .diary{
-                userDefaultManager.fontSize = tempFontSize
-                userDefaultManager.fontName = tempFontName
-                fontPickerButton.updateFontLabel()
-            }else{
-                userDefaultManager.monthCellFontName = tempFontName
-                cellFontPickerButton.updateFontLabel()
-            }
-            
-        }
-        viewController.dismiss(animated: true)
-    }
-}
-
-
-
-//MARK: -示例textView
-extension LWSettingViewController{
-    private func setupExampleTextView(imageScalingFactor:CGFloat){
-        self.view.layoutIfNeeded()
-        textView.attributedText = nil
-        
-        //插入文字
-        let shortVersionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-        let text =
-        """
-
-        aDiary
-        版本\(shortVersionString)
-
-        """
-        textView.insertText(text)
-        
-        //更新textView的字体等信息
-        updateExampleTextView(withFontSize: tempFontSize, withFontStyle: tempFontName, withLineSpacing: tempLineSpacing)
-    }
-        
-    func updateExampleTextView(withFontSize fontSize:CGFloat,withFontStyle fontName:String?,withLineSpacing lineSpacing:CGFloat){
-        //1.行间距
-        let paraStyle = NSMutableParagraphStyle()
-        paraStyle.alignment = .center
-        paraStyle.lineSpacing = lineSpacing
-        
-        //2.字体
-        let nameAttr = UIFontDescriptor.AttributeName.init(rawValue: "NSFontNameAttribute")
-        var font:UIFont
-        if let name = fontName{
-            font = UIFont(descriptor: UIFontDescriptor(fontAttributes: [nameAttr : name]), size: fontSize)
-        }else{
-            font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
-        }
-        
-        
-        let attributes: [NSAttributedString.Key:Any] = [
-            .font: font,
-            .paragraphStyle : paraStyle
-        ]
-        let mutableAttr = NSMutableAttributedString(attributedString: textView.attributedText)
-        mutableAttr.addAttributes(attributes, range: NSRange(location: 0, length: mutableAttr.length))
-        textView.attributedText = mutableAttr
-    }
-}
 
 // MARK:  - 联系我
-
 extension LWSettingViewController{
     @objc func jumpToWeibo(){
         let weiboUrl = URL(string: "sinaweibo://userinfo?uid=6394154593")
@@ -1073,4 +1088,7 @@ extension LWSettingViewController{
         let vc = weChatViewController()
         self.present(vc, animated: true, completion: nil)
     }
+}
+extension LWSettingViewController:UIFontPickerViewControllerDelegate{
+    
 }

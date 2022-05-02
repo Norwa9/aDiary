@@ -7,7 +7,8 @@
 
 import UIKit
 
-class LWiCloudTipsViewController: LWBaseCardViewController {
+class LWTipsViewController: LWBaseCardViewController {
+    var content:String
     var contentTextView:UITextView!
     var confirmButton:UIButton!
     
@@ -17,7 +18,8 @@ class LWiCloudTipsViewController: LWBaseCardViewController {
     ])
     
     
-    override init(cardViewHeight: CGFloat, cardTitle: String) {
+    init(cardViewHeight: CGFloat, cardTitle: String, content:String) {
+        self.content = content
         super.init(cardViewHeight: cardViewHeight, cardTitle: cardTitle)
     }
     
@@ -53,14 +55,7 @@ class LWiCloudTipsViewController: LWBaseCardViewController {
     func getAttributedContent() -> NSAttributedString{
         let para = NSMutableParagraphStyle()
         para.lineSpacing = 5
-        let tip = """
-        开启后：
-        1. 可在多设备间同步：一个设备做出的修改能够实时同步到其他设备。
-        2. 可生成云端备份：云端将会保持一份与本地相同的数据，App卸载重装后能够从云端恢复。
-        
-        注意：
-        请确保在系统设置中已启用iCloud，并有足够的iCloud存储空间。
-        """
+        let tip = self.content
         
         let tipAT = NSMutableAttributedString(string: tip).addingAttributes([
             .paragraphStyle : para,
