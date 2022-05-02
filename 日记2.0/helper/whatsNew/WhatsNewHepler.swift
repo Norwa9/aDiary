@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 7, patch: 1)
+        let version = WhatsNew.Version(major: 3, minor: 8, patch: 0)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -23,14 +23,29 @@ class WhatsNewHelper{
             // The features you want to showcase
             items: [
                 WhatsNew.Item(
-                    title: "常规更新",
-                    subtitle: "优化了App稳定性",
-                    image: UIImage(systemName: "heart.text.square")
+                    title: "新增<随机日记>小组件",
+                    subtitle: "在桌面随机显示过往的日记",
+                    image: UIImage(systemName: "shuffle.circle.fill")
                 ),
                 WhatsNew.Item(
-                    title: "如有建议，可与开发者联系",
+                    title: "默认隐藏月份栏",
+                    subtitle: "简化了主页面",
+                    image: UIImage(systemName: "eye.slash.circle.fill")
+                ),
+                WhatsNew.Item(
+                    title: "优化图片添加操作",
+                    subtitle: "更方便地添加最近的图片",
+                    image: UIImage(systemName: "hand.tap.fill")
+                ),
+                WhatsNew.Item(
+                    title: "其他的一些小改动",
+                    subtitle: "UI改进以及Bug优化",
+                    image: UIImage(systemName: "checkmark.circle.fill")
+                ),
+                WhatsNew.Item(
+                    title: "如有问题，可与开发者联系",
                     subtitle: "设置 -> 反馈",
-                    image: UIImage(systemName: "questionmark.circle")
+                    image: UIImage(systemName: "bubble.left.and.bubble.right.fill")
                 )
                 
             ]
@@ -79,7 +94,7 @@ class WhatsNewHelper{
         
         //MARK:-3:versionStore
         let versionStore:WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore() # 测试环境
+//        let versionStore:WhatsNewVersionStore = InMemoryWhatsNewVersionStore() // 测试环境
         
         guard let whatsNew = currentWhatsNew else{return nil}//无法取得（或没有定义）当前的whatsNew
         let whatsNewViewController: WhatsNewViewController? = WhatsNewViewController(
