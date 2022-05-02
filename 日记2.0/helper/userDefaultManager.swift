@@ -148,21 +148,21 @@ class userDefaultManager{
     /// 主页cell字体：标题
     static var monthCellTitleFont:UIFont{
         get{
-            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 17){
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 18){
                 return font
             }else{
-                return UIFont(name: "DIN Alternate", size: 17)!
+                return UIFont(name: "DIN Alternate", size: 18)!
             }
         }
     }
     
-    /// 主页cell字体：正文+todo
+    /// 主页cell字体：正文+todo+标签
     static var monthCellContentFont:UIFont{
         get{
-            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 14){
+            if let fontName = self.monthCellFontName, let font = UIFont(name: fontName, size: 16){
                 return font
             }else{
-                return UIFont(name: "DIN Alternate", size: 14)!
+                return UIFont(name: "DIN Alternate", size: 16)!
             }
         }
     }
