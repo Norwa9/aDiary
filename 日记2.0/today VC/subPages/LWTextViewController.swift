@@ -165,8 +165,7 @@ extension LWTextViewController:LWPhotoPickerDelegate,FMPhotoPickerViewController
         print(" didFinishPickingPhotoWith ")
     
         // 多选
-        let textFormatter = TextFormatter(textView: self.textView)
-        textFormatter.insertScalableImageView(images: photos)
+        self.insertPhotos(images: photos)
         self.save()
         
         
@@ -174,8 +173,35 @@ extension LWTextViewController:LWPhotoPickerDelegate,FMPhotoPickerViewController
         picker.dismiss(animated: true, completion: nil)
     }
     
+    func insertPhotos(images: [UIImage]){
+        let textFormatter = TextFormatter(textView: self.textView)
+        textFormatter.insertScalableImageView(images: images)
+    }
+    
     func fmImageEditorViewController(_ editor: FMImageEditorViewController, didFinishEdittingPhotoWith photo: UIImage) {
         print(" didFinishEdittingPhotoWith ")
+    }
+    
+    func toggleRecentPhotoPickerView(){
+        let inputView = LWRecentPhotosPickerView(
+            frame: CGRect(
+                origin: .zero,
+                size: CGSize(
+                    width: globalConstantsManager.shared.kScreenWidth,
+                    height: LWRecentPhotosPickerView.kRecentPhotosPickerViewHeight)
+            )
+        )
+        
+        if self.textView.inputView == nil{
+            self.textView.inputView = inputView
+        }else{
+            self.textView.inputView = nil
+        }
+        
+//        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction]) {
+//
+//        } completion: { _ in}
+        self.textView.reloadInputViews()
     }
 }
 
@@ -221,6 +247,7 @@ extension LWTextViewController : UITextViewDelegate{
     func textViewDidEndEditing(_ textView: UITextView) {
         print("textViewDidEndEditing")
         isTextViewEditing = false
+        self.textView.inputView = nil
         save()
     }
     

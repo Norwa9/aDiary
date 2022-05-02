@@ -12,6 +12,7 @@ import Colorful
 
 protocol LWPhotoPickerDelegate : NSObject {
     func showPhotoPicker()
+    func toggleRecentPhotoPickerView()
 }
 
 class LWTextViewToolBar: UIView {
@@ -328,7 +329,8 @@ extension LWTextViewToolBar:UIColorPickerViewControllerDelegate{
     }
     
     @objc func insertImageToTextView(){
-        delegate?.showPhotoPicker()
+        delegate?.toggleRecentPhotoPickerView()
+//        delegate?.showPhotoPicker()
     }
     
     @objc func insertSound(){

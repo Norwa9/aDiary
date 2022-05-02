@@ -199,6 +199,9 @@
 		EACB1777267DC2FE007BF160 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACB1776267DC2FE007BF160 /* constants.swift */; };
 		EAD20D9D26A071840014B8B5 /* NSMutableAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD20D9C26A071840014B8B5 /* NSMutableAttributedString+.swift */; };
 		EAD20DA026A071AE0014B8B5 /* NSAttributedStringKey+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */; };
+		EAD34265281FC7440018BFD8 /* LWFetchPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34264281FC7440018BFD8 /* LWFetchPhotoHelper.swift */; };
+		EAD34267281FC7570018BFD8 /* LWRecentPhotosPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34266281FC7570018BFD8 /* LWRecentPhotosPickerView.swift */; };
+		EAD34269281FC9940018BFD8 /* LWRecentPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */; };
 		EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */; };
 		EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85CB26232332007D1134 /* TextFormatter.swift */; };
 		EADA85DB26248759007D1134 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DA26248759007D1134 /* UIFont+.swift */; };
@@ -442,6 +445,9 @@
 		EACB1776267DC2FE007BF160 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		EAD20D9C26A071840014B8B5 /* NSMutableAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+.swift"; sourceTree = "<group>"; };
 		EAD20D9F26A071AE0014B8B5 /* NSAttributedStringKey+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedStringKey+.swift"; sourceTree = "<group>"; };
+		EAD34264281FC7440018BFD8 /* LWFetchPhotoHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFetchPhotoHelper.swift; sourceTree = "<group>"; };
+		EAD34266281FC7570018BFD8 /* LWRecentPhotosPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecentPhotosPickerView.swift; sourceTree = "<group>"; };
+		EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecentPhotoCell.swift; sourceTree = "<group>"; };
 		EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
 		EADA85CB26232332007D1134 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
 		EADA85DA26248759007D1134 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -890,6 +896,7 @@
 				EAAFDDC9279EE414008286EB /* LWTodo */,
 				EA98C891272448CE00DD60EA /* animation */,
 				EA2235E326D6920A001FAD1D /* ScableImageView */,
+				EAD34263281FC71D0018BFD8 /* LWRecentPhotoPicker */,
 				EA67913826D11D4600B44ECA /* subPages */,
 				EADBC2EF26B446F5004D1A52 /* topView */,
 				1BB6964926A95BBD0009472F /* LWemojiView */,
@@ -1100,6 +1107,16 @@
 				EADA85CB26232332007D1134 /* TextFormatter.swift */,
 			);
 			path = TextFormatter;
+			sourceTree = "<group>";
+		};
+		EAD34263281FC71D0018BFD8 /* LWRecentPhotoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				EAD34264281FC7440018BFD8 /* LWFetchPhotoHelper.swift */,
+				EAD34266281FC7570018BFD8 /* LWRecentPhotosPickerView.swift */,
+				EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */,
+			);
+			path = LWRecentPhotoPicker;
 			sourceTree = "<group>";
 		};
 		EADA85FC2625DA60007D1134 /* calendarView */ = {
@@ -1379,7 +1396,9 @@
 				EA7CAFF6281E70ED00FEA4ED /* LWFilterView.swift in Sources */,
 				EAADB73526DE0DD3007A624A /* LWFontSizeSliderView.swift in Sources */,
 				EA537BC726359C4300C2E9EE /* shareScrollView.swift in Sources */,
+				EAD34269281FC9940018BFD8 /* LWRecentPhotoCell.swift in Sources */,
 				EAA29EB225C864ED00AA6971 /* UIImage+.swift in Sources */,
+				EAD34267281FC7570018BFD8 /* LWRecentPhotosPickerView.swift in Sources */,
 				EAA1B4D227E573A200BBB80A /* LWSoundsViewController.swift in Sources */,
 				EADA85FE2625DA98007D1134 /* customAlertView.swift in Sources */,
 				1B2A56C826A124C00090D411 /* diaryInfo+Object.swift in Sources */,
@@ -1464,6 +1483,7 @@
 				EAA1B4E527E61EC700BBB80A /* LWTimingLabel.swift in Sources */,
 				EA98C8932724491300DD60EA /* editorAnimator.swift in Sources */,
 				EA9AE7B4260F634200D44221 /* userDefaultManager.swift in Sources */,
+				EAD34265281FC7440018BFD8 /* LWFetchPhotoHelper.swift in Sources */,
 				EADBC2F126B448C7004D1A52 /* TopView.swift in Sources */,
 				EAA1B4D627E5C82100BBB80A /* LWSoundView.swift in Sources */,
 				EA84C31526D23B6F00FF118A /* managePagesAlertView.swift in Sources */,

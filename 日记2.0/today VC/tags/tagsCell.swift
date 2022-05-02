@@ -69,6 +69,7 @@ class tagsCell: UITableViewCell {
     }
     
     func animateSelectedView(duration:TimeInterval = 0.35){
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
         //取消选中
         if self.hasSelected == true{
             self.hasSelected = false
@@ -76,7 +77,7 @@ class tagsCell: UITableViewCell {
                 self.tagSelectedPromptView.backgroundColor = .clear
                 selectedImageView.alpha = 0
                 
-                selectedImageView.transform = .identity
+//                selectedImageView.transform = .identity
             } completion: { (_) in
             }
         }else{
@@ -85,13 +86,14 @@ class tagsCell: UITableViewCell {
             UIView.animate(withDuration: duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.5, options: .curveEaseInOut) { [self] in
                 self.tagSelectedPromptView.backgroundColor = .systemGray6
                 
-                selectedImageView.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-                selectedImageView.transform = CGAffineTransform(translationX: 0, y: -5)
+//                selectedImageView.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+//                selectedImageView.transform = CGAffineTransform(translationX: 0, y: -5)
                 selectedImageView.alpha = 1
                 
             } completion: { (_) in
                 UIView.animate(withDuration: duration * 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseInOut) {
-                    self.selectedImageView.transform = CGAffineTransform(translationX: 0, y: 0)
+//                    self.selectedImageView.transform = CGAffineTransform(translationX: 0, y: 0)
+//                    self.selectedImageView.transform = .identity
                 } completion: { (_) in
                     
                 }
