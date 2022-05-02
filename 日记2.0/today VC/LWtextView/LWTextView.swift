@@ -124,7 +124,7 @@ extension LWTextView{
             if shouldAddDoneView{
                 newView.viewModel.isEditing = true
                 newView.viewModel.shouldShowDoneView = true
-                newView.addEditingView()
+                newView.addDotView()
             }
             let newAttchment = SubviewTextAttachment(view: newView, size: newView.size)
             self.attributedText = self.attributedText.replacingAttchment(newAttchment, attchmentAt: newViewModel.location, with: newViewModel.paraStyle)

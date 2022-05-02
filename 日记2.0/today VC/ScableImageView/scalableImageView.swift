@@ -9,11 +9,13 @@
 import Foundation
 import UIKit
 import PopMenu
+import JXPhotoBrowser
 
 class ScalableImageView:UIView, UIGestureRecognizerDelegate{
     private var imageView:UIImageView!
     private var dot: UIView?
     private var doneView:UIImageView?
+    var editViewBtn:UIButton!
     var startFrame:CGRect!
     weak var delegate:LWTextView?
     let popManager = LWPopManager()
@@ -48,18 +50,35 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
         
         //2.dotView
         if viewModel.isEditing{
-             addEditingView()
+             addDotView()
         }
         
         //3.tap gesture
-        let tapGes = UITapGestureRecognizer(target: self, action: #selector(handle(_:)))
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         self.addGestureRecognizer(tapGes)
         
-        //
+        // 4. editView
+        addEditView()
+        
         startFrame = self.frame
     }
     
-    func addEditingView(){
+    /// 弹出编辑框
+    func addEditView(){
+        let editViewSize = CGSize(width: 30.0, height: 30.0)
+        let padding:CGFloat = 5.0
+        editViewBtn = UIButton(frame: CGRect(x: self.width - padding - editViewSize.width, y: padding, width: editViewSize.width, height: editViewSize.height))
+        editViewBtn.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
+        editViewBtn.tintColor = .black
+        editViewBtn.addTarget(self, action: #selector(presentEditActionMenu(_:)), for: .touchUpInside)
+        editViewBtn.backgroundColor = LWColorConstatnsManager.imageEditBtnBGColor
+        editViewBtn.roundCorners(.allCorners, radius: 5)
+        self.addSubview(editViewBtn)
+    }
+    
+    
+    /// 修改大小的圆点View
+    func addDotView(){
         weak var wlabel = self
         
         //1.添加dot view
@@ -162,13 +181,47 @@ class ScalableImageView:UIView, UIGestureRecognizerDelegate{
 
 //MARK:-action target
 extension ScalableImageView{
-    @objc func handle(_ sender: UIGestureRecognizer!) {
-        print("tapped")
-        if let view = sender.view as? ScalableImageView{
-            if view == self{
-                popManager.PresentPopMenu(sourceView: view)
-            }
+    @objc func presentEditActionMenu(_ sender: UIButton){
+//        if let view = sender.view as? ScalableImageView{
+//            if view == self{
+//                popManager.PresentPopMenu(sourceView: view)
+//            }
+//        }
+        popManager.PresentPopMenu(scImage: self, sourceView: sender)
+    }
+    
+    @objc func imageTapped(_ sender: UIGestureRecognizer!) {
+        let view = self
+        guard let textView = view.delegate else {return}
+        let browser = JXPhotoBrowser()
+        let img = view.viewModel.image
+        let attachmentFrame = textView.layoutManager.boundingRect(forGlyphRange: NSRange(location: view.viewModel.location, length: 1), in: textView.textContainer)
+        //图片浏览器数据源
+        //将黑色背景替换为玻璃模糊
+        let effect = UIBlurEffect(style: .dark)
+        let blurView = UIVisualEffectView(effect: effect)
+        browser.maskView = blurView
+        
+        browser.numberOfItems = { 1 }
+        browser.reloadCellAtIndex = { context in
+            let browserCell = context.cell as? JXPhotoBrowserImageCell
+            browserCell?.imageView.image = img
         }
+        
+        //显示图片与收回图片的转场动画
+        browser.transitionAnimator = JXPhotoBrowserSmoothZoomAnimator(transitionViewAndFrame: { (index, toView) -> JXPhotoBrowserSmoothZoomAnimator.TransitionViewAndFrame? in
+            //toView:大图的imageView
+            //fromView:textView里的图片附件view
+            let fromView = UIImageView(image: img)
+            fromView.contentMode = .scaleAspectFit
+            fromView.clipsToBounds = true
+            //y + 8 是为了解决奇怪的偏移量bug
+            let fromFrame = CGRect(x: attachmentFrame.origin.x, y: attachmentFrame.origin.y + 8, width: attachmentFrame.size.width, height: attachmentFrame.size.height)
+            let thumbnailFrame = textView.convert(fromFrame, to: toView)
+            return (fromView,thumbnailFrame)
+        })
+        browser.show()
+        
     }
     
     func showDoneView(){

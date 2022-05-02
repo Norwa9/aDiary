@@ -31,6 +31,8 @@ class LWColorConstatnsManager{
 //    }
     
     
+    //MARK: ScalableImage
+    static let imageEditBtnBGColor:UIColor = UIColor.colorWithHex(hexColor: 0xE2E5EC)
 
     
 }
