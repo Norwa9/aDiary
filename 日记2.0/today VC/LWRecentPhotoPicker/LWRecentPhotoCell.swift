@@ -11,6 +11,9 @@ import UIKit
 
 class LWRecentPhotoCell:UICollectionViewCell{
     static let cellID = "LWRecentPhotoCell"
+    static let cellW:CGFloat = 114.0 // (187 - 35 ) / 4 * 3 = 114.0
+    static let cellH:CGFloat = 187.0
+    static let selectedDotW:CGFloat = 35
     var representedAssetIdentifier: String? = nil
     
     var photo:UIImage!{
@@ -20,6 +23,7 @@ class LWRecentPhotoCell:UICollectionViewCell{
     }
     var photoPreviewView:UIImageView!
     
+    var selectedDotBGView:UIView!
     var selectedDotView:UIImageView!
     
     
@@ -45,11 +49,19 @@ class LWRecentPhotoCell:UICollectionViewCell{
 //        photoPreviewView.layer.borderColor = UIColor.black.withAlphaComponent(0.5).cgColor
         self.addSubview(photoPreviewView)
         
+        
+        selectedDotBGView = UIView()
+        selectedDotBGView.backgroundColor = .clear
+        selectedDotBGView.layer.cornerRadius = 8
+        photoPreviewView.clipsToBounds = true
+        self.addSubview(selectedDotBGView)
+        
         selectedDotView = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+        selectedDotView.tintColor = .black
         selectedDotView.alpha = 0
         selectedDotView.contentMode = .scaleAspectFill
         selectedDotView.clipsToBounds = true
-        selectedDotView.layer.cornerRadius = 35.0 / 2.0
+        selectedDotView.layer.cornerRadius = LWRecentPhotoCell.selectedDotW / 2.0
         self.addSubview(selectedDotView)
   
         
@@ -59,12 +71,19 @@ class LWRecentPhotoCell:UICollectionViewCell{
     func setupConstraints(){
         //约束
         photoPreviewView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.left.right.equalToSuperview()
+        }
+        
+        selectedDotBGView.snp.makeConstraints { make in
+            make.top.equalTo(photoPreviewView.snp.bottom)
+            make.height.equalTo(selectedDotView)
+            make.left.right.bottom.equalToSuperview()
         }
         
         selectedDotView.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 35, height: 35))
-            make.right.bottom.equalToSuperview().offset(-10)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: LWRecentPhotoCell.selectedDotW, height: LWRecentPhotoCell.selectedDotW))
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -72,10 +91,10 @@ class LWRecentPhotoCell:UICollectionViewCell{
         UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction]) { [self] in
             if selected{
                 selectedDotView.alpha = 1
-                self.backgroundColor = .systemGray6
+                self.selectedDotBGView.backgroundColor = .systemGray6
             }else{
                 selectedDotView.alpha = 0
-                self.backgroundColor = .clear
+                self.selectedDotBGView.backgroundColor = .clear
             }
         } completion: { _ in}
     }

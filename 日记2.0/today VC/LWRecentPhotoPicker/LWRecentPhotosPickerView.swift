@@ -13,7 +13,11 @@ class LWRecentPhotosPickerView:UIView{
     static let kRecentPhotosPickerViewHeight:CGFloat = 300.0
     
     var latestPhotoAssetsFetched: PHFetchResult<PHAsset>? = nil
-    var selectedPhotoIndexSet:Set<Int> = []
+    var selectedPhotoIndexSet:Set<Int> = []{
+        didSet{
+            self.updateSelectedCountLabel()
+        }
+    }
     
     // UI
     var titleLabel:UILabel!
@@ -21,6 +25,7 @@ class LWRecentPhotosPickerView:UIView{
     var collectionView:UICollectionView!
     var cancelButton:UIButton!
     var doneButton:UIButton!
+    var selectedPhotoCountLabel:UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,8 +57,17 @@ class LWRecentPhotosPickerView:UIView{
         titleLabel.text = "选取图片"
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
+        selectedPhotoCountLabel = UILabel()
+        selectedPhotoCountLabel.layer.masksToBounds = true
+        selectedPhotoCountLabel.layer.cornerRadius = 15.0
+        selectedPhotoCountLabel.textAlignment = .center
+        selectedPhotoCountLabel.text = "0"
+        selectedPhotoCountLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        selectedPhotoCountLabel.backgroundColor = .systemGray6
+        
+        
         presentPhotoPickerBtn = UIButton()
-        presentPhotoPickerBtn.addTarget(self, action: #selector(presentPicker), for: .touchUpInside)
+        presentPhotoPickerBtn.addTarget(self, action: #selector(presentPicker(_:)), for: .touchUpInside)
         presentPhotoPickerBtn.setAttributedTitle(NSAttributedString(string: "从相册选取").addingAttributes(
             [.foregroundColor : UIColor.label,
              .font : UIFont.systemFont(ofSize: 16, weight: .bold),
@@ -65,7 +79,7 @@ class LWRecentPhotosPickerView:UIView{
         presentPhotoPickerBtn.contentHorizontalAlignment = .center
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 140.0, height: 190.0)
+        layout.itemSize = CGSize(width: LWRecentPhotoCell.cellW, height: LWRecentPhotoCell.cellH)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -91,6 +105,7 @@ class LWRecentPhotosPickerView:UIView{
         doneButton.layer.cornerRadius = 10
         
         self.addSubview(titleLabel)
+        self.addSubview(selectedPhotoCountLabel)
         self.addSubview(presentPhotoPickerBtn)
         self.addSubview(collectionView)
         self.addSubview(cancelButton)
@@ -101,6 +116,12 @@ class LWRecentPhotosPickerView:UIView{
         self.titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(18)
             make.top.equalToSuperview().offset(8)
+        }
+        
+        self.selectedPhotoCountLabel.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.centerX.equalTo(self.doneButton)
+            make.centerY.equalTo(self.titleLabel)
         }
         
         self.collectionView.snp.makeConstraints { make in
@@ -123,13 +144,16 @@ class LWRecentPhotosPickerView:UIView{
         self.presentPhotoPickerBtn.snp.makeConstraints { make in
             make.centerY.equalTo(doneButton)
             make.left.equalToSuperview().offset(18)
-            make.size.equalTo(CGSize(width: 110, height: 30))
+            make.size.equalTo(CGSize(width: 120, height: 30))
         }
     }
     
-    @objc func presentPicker(){
-        UIApplication.getTextVC()?.showPhotoPicker()
-        self.cancel()
+    @objc func presentPicker(_ sender:UIButton){
+        sender.showBounceAnimation {
+            UIApplication.getTextVC()?.showPhotoPicker()
+            self.cancel()
+        }
+        
     }
     
     @objc func cancel(){
@@ -161,6 +185,11 @@ class LWRecentPhotosPickerView:UIView{
         
         self.selectedPhotoIndexSet.removeAll()
         self.collectionView.reloadData()
+    }
+    
+    private func updateSelectedCountLabel(){
+        self.selectedPhotoCountLabel.showBounceAnimation {}
+        self.selectedPhotoCountLabel.text = "\(self.selectedPhotoIndexSet.count)"
     }
 }
 
