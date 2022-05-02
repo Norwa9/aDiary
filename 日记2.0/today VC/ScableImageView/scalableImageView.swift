@@ -187,20 +187,20 @@ extension ScalableImageView{
 //                popManager.PresentPopMenu(sourceView: view)
 //            }
 //        }
+        sender.showBounceAnimation {}
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
         popManager.PresentPopMenu(scImage: self, sourceView: sender)
     }
     
     @objc func imageTapped(_ sender: UIGestureRecognizer!) {
         let view = self
+        view.showBounceAnimation {}
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
         guard let textView = view.delegate else {return}
         let browser = JXPhotoBrowser()
         let img = view.viewModel.image
         let attachmentFrame = textView.layoutManager.boundingRect(forGlyphRange: NSRange(location: view.viewModel.location, length: 1), in: textView.textContainer)
-        //图片浏览器数据源
-        //将黑色背景替换为玻璃模糊
-        let effect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: effect)
-        browser.maskView = blurView
+//        browser.maskView = blurView 
         
         browser.numberOfItems = { 1 }
         browser.reloadCellAtIndex = { context in
