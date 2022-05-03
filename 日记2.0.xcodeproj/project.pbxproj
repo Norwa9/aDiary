@@ -203,6 +203,7 @@
 		EAD34269281FC9940018BFD8 /* LWRecentPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */; };
 		EAD3426B28202AD30018BFD8 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAD3426A28202AD30018BFD8 /* wechat_group_code.jpg */; };
 		EAD3426E28202DCD0018BFD8 /* TipsText.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD3426D28202DCD0018BFD8 /* TipsText.swift */; };
+		EAD3427028203CD10018BFD8 /* LWPhotoPrivacyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD3426F28203CD10018BFD8 /* LWPhotoPrivacyHelper.swift */; };
 		EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */; };
 		EADA85CC26232332007D1134 /* TextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85CB26232332007D1134 /* TextFormatter.swift */; };
 		EADA85DB26248759007D1134 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85DA26248759007D1134 /* UIFont+.swift */; };
@@ -450,6 +451,7 @@
 		EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecentPhotoCell.swift; sourceTree = "<group>"; };
 		EAD3426A28202AD30018BFD8 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAD3426D28202DCD0018BFD8 /* TipsText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsText.swift; sourceTree = "<group>"; };
+		EAD3426F28203CD10018BFD8 /* LWPhotoPrivacyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPhotoPrivacyHelper.swift; sourceTree = "<group>"; };
 		EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
 		EADA85CB26232332007D1134 /* TextFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormatter.swift; sourceTree = "<group>"; };
 		EADA85DA26248759007D1134 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
@@ -886,6 +888,7 @@
 				EA96001227007EF80008DC8A /* globalConfig.swift */,
 				EAAFDE0927AA523A008286EB /* LWImageSaver.swift */,
 				EA7CAFF7281E73C300FEA4ED /* LWPopoverHelper.swift */,
+				EAD3426F28203CD10018BFD8 /* LWPhotoPrivacyHelper.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -1470,6 +1473,7 @@
 				1B2A56CB26A569D70090D411 /* TodoListView.swift in Sources */,
 				EAA1B4EE27E8CF8000BBB80A /* LWSoundSettingViewController.swift in Sources */,
 				EA22360426D692E4001FAD1D /* CGRect+.swift in Sources */,
+				EAD3427028203CD10018BFD8 /* LWPhotoPrivacyHelper.swift in Sources */,
 				EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */,
 				EA770AC827E8D47000E51701 /* LWButton.swift in Sources */,
 				EAA4E92C27BC02C2005F93BD /* LWSwitchSettingCell.swift in Sources */,
@@ -1711,7 +1715,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1738,7 +1742,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

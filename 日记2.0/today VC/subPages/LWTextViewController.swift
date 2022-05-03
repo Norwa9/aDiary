@@ -183,25 +183,26 @@ extension LWTextViewController:LWPhotoPickerDelegate,FMPhotoPickerViewController
     }
     
     func toggleRecentPhotoPickerView(){
-        let inputView = LWRecentPhotosPickerView(
-            frame: CGRect(
-                origin: .zero,
-                size: CGSize(
-                    width: globalConstantsManager.shared.kScreenWidth,
-                    height: LWRecentPhotosPickerView.kRecentPhotosPickerViewHeight)
-            )
-        )
-        
         if self.textView.inputView == nil{
-            self.textView.inputView = inputView
+            LWPhotoPrivacyHelper.shared.checkPhotoAccessabality {
+                // 有图片访问权限，执行内部代码
+                let inputView = LWRecentPhotosPickerView(
+                    frame: CGRect(
+                        origin: .zero,
+                        size: CGSize(
+                            width: globalConstantsManager.shared.kScreenWidth,
+                            height: LWRecentPhotosPickerView.kRecentPhotosPickerViewHeight)
+                    )
+                )
+                self.textView.inputView = inputView
+                self.textView.reloadInputViews()
+            }
         }else{
             self.textView.inputView = nil
+            self.textView.reloadInputViews()
         }
         
-//        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction]) {
-//
-//        } completion: { _ in}
-        self.textView.reloadInputViews()
+        
     }
 }
 

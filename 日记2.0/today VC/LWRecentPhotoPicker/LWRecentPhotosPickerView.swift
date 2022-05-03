@@ -75,7 +75,7 @@ class LWRecentPhotosPickerView:UIView{
         presentPhotoPickerBtn.backgroundColor = .systemGray6
         presentPhotoPickerBtn.layer.cornerRadius = 10
         presentPhotoPickerBtn.setImage(UIImage(systemName: "person.2.crop.square.stack"), for: .normal)
-        presentPhotoPickerBtn.tintColor = .black
+        presentPhotoPickerBtn.tintColor = .label
         presentPhotoPickerBtn.contentHorizontalAlignment = .center
         
         let layout = UICollectionViewFlowLayout()

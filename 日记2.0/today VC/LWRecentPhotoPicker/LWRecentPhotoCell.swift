@@ -41,7 +41,6 @@ class LWRecentPhotoCell:UICollectionViewCell{
         self.layer.cornerRadius = 8
         //UI设置
         photoPreviewView = UIImageView()
-//        photoPreviewView.contentMode = .scaleAspectFill
         photoPreviewView.contentMode = .scaleAspectFit
         photoPreviewView.layer.cornerRadius = 8
         photoPreviewView.clipsToBounds = true
@@ -57,7 +56,7 @@ class LWRecentPhotoCell:UICollectionViewCell{
         self.addSubview(selectedDotBGView)
         
         selectedDotView = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
-        selectedDotView.tintColor = .black
+        selectedDotView.tintColor = .label
         selectedDotView.alpha = 0
         selectedDotView.contentMode = .scaleAspectFill
         selectedDotView.clipsToBounds = true

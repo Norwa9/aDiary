@@ -430,8 +430,8 @@
             filePath = "&#x65e5;&#x8bb0;2.0/today VC/LWRecentPhotoPicker/LWRecentPhotoCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "updateSelectedDotView(selected:)"
             landmarkType = "7">
          </BreakpointContent>
