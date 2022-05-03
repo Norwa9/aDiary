@@ -120,7 +120,7 @@ struct RoamWidget: Widget {
             RoamEntryView(entry: entry)
         }
         .configurationDisplayName("回忆")
-        .description("显示一篇随机的日记(开发中...)")
+        .description("显示一篇随机的日记")
         .supportedFamilies([.systemMedium,.systemLarge])
     }
 }
