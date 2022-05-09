@@ -14,7 +14,7 @@ class WhatsNewHelper{
     static func whatsNewsFactory()->[WhatsNew]{
         var arr:[WhatsNew] = []
         
-        let version = WhatsNew.Version(major: 3, minor: 8, patch: 0)
+        let version = WhatsNew.Version(major: 3, minor: 8, patch: 1)
         let whatsNew = WhatsNew(
             // The Version
             version: version,
@@ -108,11 +108,10 @@ class WhatsNewHelper{
             return nil
         }
         
-//        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 6, patch: 0))
-//        {
-//
-//            return nil
-//        }
+        if versionStore.has(version: WhatsNew.Version(major: 3, minor: 8, patch: 0))
+        {
+            return nil
+        }
         
         
         return viewController

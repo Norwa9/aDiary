@@ -201,7 +201,6 @@
 		EAD34265281FC7440018BFD8 /* LWFetchPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34264281FC7440018BFD8 /* LWFetchPhotoHelper.swift */; };
 		EAD34267281FC7570018BFD8 /* LWRecentPhotosPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34266281FC7570018BFD8 /* LWRecentPhotosPickerView.swift */; };
 		EAD34269281FC9940018BFD8 /* LWRecentPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */; };
-		EAD3426B28202AD30018BFD8 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAD3426A28202AD30018BFD8 /* wechat_group_code.jpg */; };
 		EAD3426E28202DCD0018BFD8 /* TipsText.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD3426D28202DCD0018BFD8 /* TipsText.swift */; };
 		EAD3427028203CD10018BFD8 /* LWPhotoPrivacyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD3426F28203CD10018BFD8 /* LWPhotoPrivacyHelper.swift */; };
 		EADA85C0261B33ED007D1134 /* DIYCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */; };
@@ -222,6 +221,7 @@
 		EADBC34C26BEAC3C004D1A52 /* SKProduct+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */; };
 		EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */; };
 		EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */; };
+		EAE0AC9C28296EC700AEE706 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAE0AC9B28296EC700AEE706 /* wechat_group_code.jpg */; };
 		EAFF2FE227440FFA00D37BA1 /* weChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */; };
 		EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */; };
 		EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */; };
@@ -449,7 +449,6 @@
 		EAD34264281FC7440018BFD8 /* LWFetchPhotoHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWFetchPhotoHelper.swift; sourceTree = "<group>"; };
 		EAD34266281FC7570018BFD8 /* LWRecentPhotosPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecentPhotosPickerView.swift; sourceTree = "<group>"; };
 		EAD34268281FC9940018BFD8 /* LWRecentPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWRecentPhotoCell.swift; sourceTree = "<group>"; };
-		EAD3426A28202AD30018BFD8 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAD3426D28202DCD0018BFD8 /* TipsText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsText.swift; sourceTree = "<group>"; };
 		EAD3426F28203CD10018BFD8 /* LWPhotoPrivacyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWPhotoPrivacyHelper.swift; sourceTree = "<group>"; };
 		EADA85BF261B33ED007D1134 /* DIYCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIYCalendarCell.swift; sourceTree = "<group>"; };
@@ -470,6 +469,7 @@
 		EADBC34B26BEAC3C004D1A52 /* SKProduct+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+.swift"; sourceTree = "<group>"; };
 		EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayView.swift; sourceTree = "<group>"; };
 		EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewHepler.swift; sourceTree = "<group>"; };
+		EAE0AC9B28296EC700AEE706 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
 		EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weChatViewController.swift; sourceTree = "<group>"; };
 		EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = weChatViewController.xib; sourceTree = "<group>"; };
 		EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_code.jpg; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				EAD3426A28202AD30018BFD8 /* wechat_group_code.jpg */,
+				EAE0AC9B28296EC700AEE706 /* wechat_group_code.jpg */,
 				EA51A450280A73D700254D9C /* icon_roundCornor.png */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
 				EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */,
@@ -1280,7 +1280,7 @@
 			files = (
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
-				EAD3426B28202AD30018BFD8 /* wechat_group_code.jpg in Resources */,
+				EAE0AC9C28296EC700AEE706 /* wechat_group_code.jpg in Resources */,
 				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EAAFDDC8279ED5A9008286EB /* emptyImage.jpg in Resources */,
@@ -1715,7 +1715,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1723,7 +1723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.8;
+				MARKETING_VERSION = 3.8.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -1742,7 +1742,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "日记2.0/日记2.0.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8MPPKRJW3Y;
 				INFOPLIST_FILE = "日记2.0/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1750,7 +1750,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.8;
+				MARKETING_VERSION = 3.8.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.LuoWei.aDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
