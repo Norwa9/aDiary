@@ -222,8 +222,9 @@
 		EADBC34F26BEB6BB004D1A52 /* ProductDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */; };
 		EADBC37B26C01BD1004D1A52 /* WhatsNewHepler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */; };
 		EAE0AC9C28296EC700AEE706 /* wechat_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAE0AC9B28296EC700AEE706 /* wechat_group_code.jpg */; };
-		EAFF2FE227440FFA00D37BA1 /* weChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */; };
-		EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */; };
+		EAE0AC9E282970DF00AEE706 /* qq_group_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAE0AC9D282970DF00AEE706 /* qq_group_code.jpg */; };
+		EAFF2FE227440FFA00D37BA1 /* joinUserGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFF2FE027440FFA00D37BA1 /* joinUserGroupController.swift */; };
+		EAFF2FE327440FFA00D37BA1 /* joinUserGroupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE127440FFA00D37BA1 /* joinUserGroupController.xib */; };
 		EAFF2FE92744113C00D37BA1 /* wechat_code.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */; };
 /* End PBXBuildFile section */
 
@@ -470,8 +471,9 @@
 		EADBC34E26BEB6BB004D1A52 /* ProductDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayView.swift; sourceTree = "<group>"; };
 		EADBC37A26C01BD1004D1A52 /* WhatsNewHepler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewHepler.swift; sourceTree = "<group>"; };
 		EAE0AC9B28296EC700AEE706 /* wechat_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_group_code.jpg; sourceTree = "<group>"; };
-		EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weChatViewController.swift; sourceTree = "<group>"; };
-		EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = weChatViewController.xib; sourceTree = "<group>"; };
+		EAE0AC9D282970DF00AEE706 /* qq_group_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = qq_group_code.jpg; sourceTree = "<group>"; };
+		EAFF2FE027440FFA00D37BA1 /* joinUserGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = joinUserGroupController.swift; sourceTree = "<group>"; };
+		EAFF2FE127440FFA00D37BA1 /* joinUserGroupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = joinUserGroupController.xib; sourceTree = "<group>"; };
 		EAFF2FE82744113C00D37BA1 /* wechat_code.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wechat_code.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -634,6 +636,7 @@
 		EA51D1FC25D809550007BDFA /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				EAE0AC9D282970DF00AEE706 /* qq_group_code.jpg */,
 				EAE0AC9B28296EC700AEE706 /* wechat_group_code.jpg */,
 				EA51A450280A73D700254D9C /* icon_roundCornor.png */,
 				EAAFDDC7279ED5A9008286EB /* emptyImage.jpg */,
@@ -753,8 +756,8 @@
 				EAAFDDFE27A82C23008286EB /* SettingCell */,
 				EA369A65276E39DB0051643F /* settingVCConfig.swift */,
 				1B3AEB5926CA105500C057A4 /* LWSettingViewController.swift */,
-				EAFF2FE027440FFA00D37BA1 /* weChatViewController.swift */,
-				EAFF2FE127440FFA00D37BA1 /* weChatViewController.xib */,
+				EAFF2FE027440FFA00D37BA1 /* joinUserGroupController.swift */,
+				EAFF2FE127440FFA00D37BA1 /* joinUserGroupController.xib */,
 				EABF78A92801379400F007DD /* LWBaseCardViewController.swift */,
 				EADBC34426BE9F8D004D1A52 /* IAPViewController */,
 			);
@@ -1281,7 +1284,7 @@
 				EADA86022625DAA1007D1134 /* customAlertView.xib in Resources */,
 				EA537BA026345ABF00C2E9EE /* versionLog.txt in Resources */,
 				EAE0AC9C28296EC700AEE706 /* wechat_group_code.jpg in Resources */,
-				EAFF2FE327440FFA00D37BA1 /* weChatViewController.xib in Resources */,
+				EAFF2FE327440FFA00D37BA1 /* joinUserGroupController.xib in Resources */,
 				EAA29E3925C5768600AA6971 /* LaunchScreen.storyboard in Resources */,
 				EAAFDDC8279ED5A9008286EB /* emptyImage.jpg in Resources */,
 				EA9AF4DA267E109400D77908 /* icon-1024.png in Resources */,
@@ -1290,6 +1293,7 @@
 				EA384942262ED17A001B693F /* intro-page1.txt in Resources */,
 				1B1ED88026D374E3008D88FC /* intro-page2.txt in Resources */,
 				EAA29EAC25C8370600AA6971 /* tagsCell.xib in Resources */,
+				EAE0AC9E282970DF00AEE706 /* qq_group_code.jpg in Resources */,
 				EAAFDDFA27A3F749008286EB /* deBugViewController.xib in Resources */,
 				EA3ABAD725DFE05400911902 /* demoDiaries.txt in Resources */,
 				EA9AF4E0267E10E200D77908 /* icon-120.png in Resources */,
@@ -1359,7 +1363,7 @@
 			files = (
 				EADBC34026BE988B004D1A52 /* LWIAPHelper.swift in Sources */,
 				EA2235FC26D692B0001FAD1D /* scalableImageView.swift in Sources */,
-				EAFF2FE227440FFA00D37BA1 /* weChatViewController.swift in Sources */,
+				EAFF2FE227440FFA00D37BA1 /* joinUserGroupController.swift in Sources */,
 				EAA7347F27DCEC840014C02A /* LWTemplateSettingCell.swift in Sources */,
 				EA7CAFF4281E6BE600FEA4ED /* monthViewModel.swift in Sources */,
 				EA22360826D692F6001FAD1D /* LWTextAligment.swift in Sources */,

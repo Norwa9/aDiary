@@ -277,7 +277,7 @@ class LWSettingViewController: UIViewController {
         contactWaysContainer.layer.cornerRadius = 10
         
         contactMeMailCell = LWSettingCell(text: "邮件联系", accessoryImage: nil, actionSelector: #selector(openMail), accessoryActionSelector: nil)
-        contactMeWeChat = LWSettingCell(text: "加入微信群", accessoryImage: nil, actionSelector: #selector(contactWeChat), accessoryActionSelector: nil)
+        contactMeWeChat = LWSettingCell(text: "加入用户群", accessoryImage: nil, actionSelector: #selector(joinUserGroup), accessoryActionSelector: nil)
         contactMeWeiboCell = LWSettingCell(text: "关注微博", accessoryImage: nil, actionSelector: #selector(jumpToWeibo), accessoryActionSelector: nil)
         contactMeMailCell.delegate = self
         contactMeWeiboCell.delegate = self
@@ -1084,8 +1084,8 @@ extension LWSettingViewController{
         }
     }
     
-    @objc func contactWeChat(){
-        let vc = weChatViewController()
+    @objc func joinUserGroup(){
+        let vc = joinUserGroupController()
         self.present(vc, animated: true, completion: nil)
     }
 }

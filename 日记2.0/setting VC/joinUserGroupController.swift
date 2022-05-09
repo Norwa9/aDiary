@@ -8,7 +8,7 @@
 import UIKit
 import Photos
 
-class weChatViewController: UIViewController {
+class joinUserGroupController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,11 @@ class weChatViewController: UIViewController {
         }
     }
     
+    @IBAction func qqGroupCode(_ sender: Any) {
+        if let groupCode = UIImage(named: "qq_group_code.jpg"){
+            LWImageSaver.shared.saveImage(image: groupCode)
+        }
+    }
     
     
 }
