@@ -31,13 +31,14 @@ struct RoamViewWithPic: View{
                     HStack{
                         Text(roamData.date)
                             .multilineTextAlignment(.leading)
-                            .font(.custom("DIN Alternate", size: 25))
+                            .font(.custom("DIN Alternate", size: 18))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity,alignment: .leading) // 撑满父视图
                         Spacer()
                         ZStack{
                             RoundedRectangle(cornerRadius: 5)
                                     .foregroundColor(Color.init(hex: 0xE5E5E9))
+                                    .opacity(0.8)
                             Text(roamData.emojis.joined())
                                 .multilineTextAlignment(.trailing)
                                 .font(.custom("DIN Alternate", size: 14))
@@ -74,13 +75,14 @@ struct RoamViewWithoutPic: View{
                 HStack{
                     Text(roamData.date)
                         .multilineTextAlignment(.leading)
-                        .font(.custom("DIN Alternate", size: 25))
+                        .font(.custom("DIN Alternate", size: 18))
                         .foregroundColor(colorScheme == .dark ? .white : .black)
                         .frame(maxWidth: .infinity,alignment: .leading) // 撑满父视图
                     Spacer()
                     ZStack{
                         RoundedRectangle(cornerRadius: 5)
                             .foregroundColor(colorScheme == .dark ? Color.init(hex: 0x2C2B2E) : Color.init(hex: 0xE5E5E9) )
+                            .opacity(0.8)
                         Text(roamData.emojis.joined())
                             .multilineTextAlignment(.trailing)
                             .font(.custom("DIN Alternate", size: 14))
