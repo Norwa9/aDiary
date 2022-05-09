@@ -80,6 +80,9 @@ class LWWelcomeViewController: UIViewController {
     }
     
     @objc func enter(){
-        self.dismiss(animated: true, completion: nil)
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        enterButton.showBounceAnimation {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }

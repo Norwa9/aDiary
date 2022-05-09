@@ -138,9 +138,8 @@ class LWSoundView:UIView{
     }
     
     @objc func moreBtnDidTapped(){
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-        
+        LWImpactFeedbackGenerator.impactOccurred(style: .light)
+        playButton.showBounceAnimation {}
         
         let vc = LWSoundSettingViewController(viewModel: viewModel)
         UIApplication.getTodayVC()?.present(vc, animated: true, completion: nil)
