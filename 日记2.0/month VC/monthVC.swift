@@ -199,12 +199,13 @@ extension monthVC{
     }
     
     /// 刷新主页的collectionView与calendar
+    /// 当row!=-1时，表示此时viewmodel中的dataSource无需全部更新，仅需更新第 row 行数据
     public func reloadCollectionViewAndDateView(forRow row:Int = -1){
         if viewModel.isFilterMode{
             viewModel.loadFilteredDataSource()
             diaryListView.updateDataSource()
         }else{
-            viewModel.loadDataSource(year: viewModel.selectedYear, month: viewModel.selectedMonth)
+            viewModel.loadDataSource(year: viewModel.selectedYear, month: viewModel.selectedMonth,forRow: row)
             diaryListView.updateDataSource(forRow: row)
             topbarView.dateView.reloadData()
         }

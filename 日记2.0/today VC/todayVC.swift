@@ -57,7 +57,7 @@ class todayVC: UIViewController{
         //更新monthVC的UI
         let monthVC = UIApplication.getMonthVC()
         if model.month == monthVC?.viewModel.selectedMonth{
-            //仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
+            // 1. 仅当日记对应的月份和当前monthvc显示的月份一致时，才需要刷新collectionView
             monthVC?.reloadCollectionViewAndDateView(forRow: model.row)
         }
     }

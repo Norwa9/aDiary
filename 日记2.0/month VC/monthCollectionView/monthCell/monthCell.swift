@@ -432,10 +432,10 @@ extension monthCell{
         self.diary = selectedDiary
         self.updateUI()
         
-        //平滑更新collectionView的布局
-        
-        monthVC.viewModel.dataSource[cellRow] = selectedDiary//替换之后，cell
-        monthVC.diaryListView.flowLayout.dataSource = monthVC.viewModel.dataSource//这样才能更新布局
+        // 平滑更新collectionView的布局
+        monthVC.diaryListView.dataSource[cellRow] = selectedDiary // 替换model为当前选择的页面
+        monthVC.viewModel.dataSource[cellRow] = selectedDiary // 替换model为当前选择的页面
+        monthVC.diaryListView.flowLayout.dataSource = monthVC.diaryListView.dataSource//这样才能更新布局
         monthVC.diaryListView.reloadCollectionViewData(forRow: -1,animated: true,animationDuration: 0.5)//平滑更新布局
     }
 

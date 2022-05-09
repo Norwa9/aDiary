@@ -47,9 +47,15 @@ class monthViewModel{
     
     /// 读取某年某月的日记，或读取全部日记
     /// year=0,month=0时表示读取全部日记
-    public func loadDataSource(year:Int,month:Int){
+    public func loadDataSource(year:Int,month:Int,forRow row:Int = -1){
         let dataSource = diariesForMonth(forYear: year, forMonth: month)
+        if row != -1 && self.dataSource.count > row{
+            // 仅需更新dataSource里的第 row 行数据
+            self.dataSource[row] = dataSource[row]
+            return
+        }
         self.dataSource = dataSource
+        
     }
     
     /// 读取选取的条件的日记，
