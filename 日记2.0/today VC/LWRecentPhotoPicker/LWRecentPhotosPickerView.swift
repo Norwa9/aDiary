@@ -182,6 +182,7 @@ class LWRecentPhotosPickerView:UIView{
             }
         }
         UIApplication.getTextVC()?.insertPhotos(images: selectedPhotos)
+        UIApplication.getTextVC()?.toggleRecentPhotoPickerView()
         
         self.selectedPhotoIndexSet.removeAll()
         self.collectionView.reloadData()

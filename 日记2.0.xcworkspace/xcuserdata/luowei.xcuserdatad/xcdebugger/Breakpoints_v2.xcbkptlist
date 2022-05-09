@@ -398,9 +398,9 @@
             filePath = "&#x65e5;&#x8bb0;2.0/month VC/monthCollectionView/LWDiaryListView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "loadMoreDiray()"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "performDelete(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

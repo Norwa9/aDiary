@@ -69,15 +69,6 @@ class LWDiaryListView : UIView{
     }
     
     
-    // MARK: Public
-//    func configureDataSource(year:Int,month:Int){
-//        //print("configureDataSource")
-//        let dataSource = diariesForMonth(forYear: year, forMonth: month)
-//        filteredDiaries.removeAll()
-//        filteredDiaries = dataSource
-//        flowLayout.dataSource = filteredDiaries
-//        reloadCollectionViewData()
-//    }
     /// 更新数据源
     public func updateDataSource(forRow row:Int = -1,animated:Bool = false, duration:TimeInterval = 1.0){
         self.dataSource.removeAll()
